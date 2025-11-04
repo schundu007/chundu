@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/custom.css">
-    <title>Hugo Affaticati</title>
+    <title>Sudhakar Chundu</title>
     
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CS1EZGDNJB"></script>
@@ -17,23 +17,22 @@
   gtag('config', 'G-CS1EZGDNJB');
 </script>
 
-
 </head>
 <body>
     <link rel="stylesheet" href="/assets/custom.css">
 
 <header>
     <div class="header-name">
-        Hugo Affaticati
+        Sudhakar Chundu
     </div>
     <nav>
         <button class="nav-toggle" aria-label="Open Menu" aria-expanded="false">&#9776;</button>
         <ul class="nav-menu">
             <li><a href="/" class="active">About</a></li>
-            <li><a href="/publications/" class="">Publications</a></li>
-            <li><a href="/videos/" class="">Videos</a></li>
-            <li><a href="/conferences/" class="">Conferences</a></li>
-            <li><a href="/contact/" class="">Contact</a></li>
+            <li><a href="/publications/">Publications</a></li>
+            <li><a href="/videos/">Videos</a></li>
+            <li><a href="/conferences/">Conferences</a></li>
+            <li><a href="/contact/">Contact</a></li>
         </ul>
     </nav>
 </header>
@@ -51,47 +50,185 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <main>
         <style>
+/* Navigation styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.header-name {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #333;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 30px;
+}
+
+.nav-menu li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.nav-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+.nav-menu a.active {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: block;
+    }
+    
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background-color: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        padding: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .nav-menu.nav-menu-visible {
+        display: flex;
+    }
+    
+    .nav-menu li {
+        width: 100%;
+    }
+}
+
+/* Bio section styling */
 .bio-list {
     font-size: 1em;
+    line-height: 1.8;
+}
+
+.bio-list a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.bio-list a:hover {
+    text-decoration: underline;
+}
+
+.publication-content {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.publication-left {
+    flex: 1;
+    min-width: 350px;
+}
+
+.publication-right {
+    flex: 0 0 340px;
+    min-width: 280px;
 }
 
 @media (max-width: 768px) {
     .bio-list {
-        font-size: 0.85em;
+        font-size: 0.9em;
+    }
+    
+    .publication-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .publication-left {
+        min-width: 100%;
+    }
+    
+    .publication-right {
+        flex: 1 1 auto;
+        width: 100%;
+        max-width: 340px;
+        margin: 0 auto;
     }
 }
 
 @media (max-width: 480px) {
     .bio-list {
-        font-size: 0.8em;
+        font-size: 0.85em;
+    }
+    
+    header {
+        padding: 15px 20px;
     }
 }
 </style>
 
 <div class="publications-header">
-    <h1>Meet Hugo</h1>
+    <h1>Meet Sudhakar</h1>
 </div>
 
 <div class="publication-container">
-    <div class="publication-entry has-right-text">
-	<div class="publication-left" style="margin-top: 10px;">
-            <p><strong>Data-driven engineer setting industry-leading records in enterprise AI training and inference at scale.</strong></p>
-            <div>
-                <div class="bio-list" style="margin-left: 20px; margin-bottom: 5px;">Senior Cloud Infrastructure Engineer at <a href="https://azure.microsoft.com/en-us/solutions/high-performance-computing/ai-infrastructure?msockid=1bca8350d65c681127b2939ad770690e" target="_blank">Microsoft Azure</a></div>
-                <div class="bio-list" style="margin-left: 20px; margin-bottom: 5px;">Technical Lead of <a href="https://github.com/Azure/AI-benchmarking-guide/tree/main" target="_blank">Azure AI Benchmarking Team</a></div>
-                <div class="bio-list" style="margin-left: 20px; margin-bottom: 5px;">Author of technical articles with 150K+ cumulative reads, featured in <a href="https://venturebeat.com/ai/large-language-models-broaden-ais-reach-in-industry-and-enterprises/" target="_blank">VentureBeat</a>, <a href="https://www.hpcwire.com/solution_content/microsoft-nvidia/azure-scales-530b-parameter-gpt-3-model-with-nvidia-nemo-megatron/" target="_blank">HPCwire</a>, and <a href="https://signal65.com/research/ai/leading-ai-scalability-benchmarks-with-microsoft-azure/" target="_blank">Signal65</a></div>
-                <div class="bio-list" style="margin-left: 20px; margin-bottom: 5px;">Speaker at <a href="https://www.nvidia.com/en-us/on-demand/session/gtc24-s63273/" target="_blank">GTC</a>, <a href="https://sc24.conference-program.com/presentation/?id=bof159&amp;sess=sess672" target="_blank">Supercomputing</a>, <a href="https://www.youtube.com/watch?v=QWvrCuuFsjg" target="_blank">Build</a>, and <a href="https://ignite.microsoft.com/en-US/sessions/BRK180?source=sessions" target="_blank">Ignite</a></div>
-                <div class="bio-list" style="margin-left: 20px; margin-bottom: 5px;">MS, Applied Physics, <a href="https://quantuminstitute.yale.edu/" target="_blank">Quantum Institute, Yale University</a></div>
+    <div class="publication-entry">
+	<div class="publication-content" style="display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap;">
+        <div class="publication-left" style="flex: 1; min-width: 350px;">
+            <p style="font-size: 1.1em; line-height: 1.6; margin-bottom: 20px;"><strong>Data-driven engineer setting industry-leading records in enterprise AI training and inference at scale.</strong></p>
+            <div style="line-height: 1.8;">
+                <div class="bio-list" style="margin-bottom: 8px;">Senior Cloud Infrastructure Engineer at <a href="https://azure.microsoft.com/en-us/solutions/high-performance-computing/ai-infrastructure?msockid=1bca8350d65c681127b2939ad770690e" target="_blank">Microsoft Azure</a></div>
+                <div class="bio-list" style="margin-bottom: 8px;">Technical Lead of <a href="https://github.com/Azure/AI-benchmarking-guide/tree/main" target="_blank">Azure AI Benchmarking Team</a></div>
+                <div class="bio-list" style="margin-bottom: 8px;">Author of technical articles with 150K+ cumulative reads, featured in <a href="https://venturebeat.com/ai/large-language-models-broaden-ais-reach-in-industry-and-enterprises/" target="_blank">VentureBeat</a>, <a href="https://www.hpcwire.com/solution_content/microsoft-nvidia/azure-scales-530b-parameter-gpt-3-model-with-nvidia-nemo-megatron/" target="_blank">HPCwire</a>, and <a href="https://signal65.com/research/ai/leading-ai-scalability-benchmarks-with-microsoft-azure/" target="_blank">Signal65</a></div>
+                <div class="bio-list" style="margin-bottom: 8px;">Speaker at <a href="https://www.nvidia.com/en-us/on-demand/session/gtc24-s63273/" target="_blank">GTC</a>, <a href="https://sc24.conference-program.com/presentation/?id=bof159&amp;sess=sess672" target="_blank">Supercomputing</a>, <a href="https://www.youtube.com/watch?v=QWvrCuuFsjg" target="_blank">Build</a>, and <a href="https://ignite.microsoft.com/en-US/sessions/BRK180?source=sessions" target="_blank">Ignite</a></div>
+                <div class="bio-list" style="margin-bottom: 20px;">MS, Applied Physics, <a href="https://quantuminstitute.yale.edu/" target="_blank">Quantum Institute, Yale University</a></div>
             </div>
-		<br />	
-	    <a href="/assets/resume/Resume_Hugo_Affaticati.pdf" class="resume-link">Resume (PDF)</a>
-		<br /><br />
+	    <a href="/assets/resume/Resume_Sudhakar_Chundu.pdf" class="resume-link" style="color: #007bff; text-decoration: none; font-weight: 500;">Resume (PDF)</a>
         </div>
 
-        <div class="publication-right" style="margin-top: 30px;">
-            <a href="https://www.linkedin.com/in/hugo-affaticati" target="_blank"><img src="/assets/images/hugo.png" alt="Hugo Affaticati" width="100%" /></a>
-            <p>Hugo Affaticati (he/him)</p>
+        <div class="publication-right" style="flex: 0 0 340px; min-width: 280px;">
+            <a href="https://www.linkedin.com/in/schundu/" target="_blank">
+                <img src="/assets/images/sudhakar.png" alt="Sudhakar Chundu" style="width: 100%; max-width: 340px; height: auto; display: block; border-radius: 4px;" />
+            </a>
+            <p style="text-align: center; margin-top: 15px; color: #333; font-size: 0.95em;">Sudhakar Chundu (he/him)</p>
         </div>
+	</div>
     </div>
 </div>
 
@@ -111,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <li>Reduced the <a href="https://signal65.com/research/ai/leading-ai-scalability-benchmarks-with-microsoft-azure/" target="_blank" style="color: #007bff; text-decoration: none; font-weight: bold;">cost performance of AI LLM Training by 28%</a> with NVIDIA H200 GPUs - highlighted by Satya Nadella (CEO, Microsoft) at <a href="https://youtu.be/3YiB2OvK6sY?t=2696" target="_blank" style="color: #007bff; text-decoration: none; font-weight: bold;">Microsoft Ignite 2024</a>.</li>
         </ul>
         
-        <p style="margin-bottom: 4px;"><strong>🌐 Pioneering AI Developements in the Cloud</strong></p>
+        <p style="margin-bottom: 4px;"><strong>🌐 Pioneering AI Developments in the Cloud</strong></p>
         <ul style="margin-top: 0; margin-bottom: 12px;">
             <li style="margin-bottom: 6px;">Executed the <a href="https://azure.microsoft.com/en-us/blog/azure-scales-530b-parameter-gpt3-model-with-nvidia-nemo-megatron/?msockid=294cf1baa0136fe33537e40ea15f6e30" target="_blank" style="color: #007bff; text-decoration: none; font-weight: bold;">first-ever public proof of concept for training Large Language Models</a> (GPT-3, 530B parameters) at scale in the cloud using NVIDIA NeMo framework - catalyzing the global rush for AI infrastructure, including OpenAI's move to Azure - highlighted by Satya Nadella (CEO, Microsoft) at <a href="https://youtu.be/pdSfgRYy8Ao?t=514" target="_blank" style="color: #007bff; text-decoration: none; font-weight: bold;">Microsoft Build 2022</a>.</li>
             <li>Proved <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/dgx-cloud-benchmarking-on-azure/4410826" target="_blank" style="color: #007bff; text-decoration: none; font-weight: bold;">on-par performance between cloud and on-premises infrastructures</a> across 10 foundation models — &lt;5% variance at scale.</li>
@@ -141,7 +278,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="publication-entry column">
         <h2>Latest content</h2>
         <div style="margin-bottom: 15px;">
-            <div><strong>Latest publication:</strong> <a href="https://blogs.microsoft.com/blog/2025/09/18/inside-the-worlds-most-powerful-ai-datacenter/" target="_blank" style="color: #007bff; text-decoration: none; font-weight: bold;">Inside the world’s most powerful AI datacenter</a></div>
+            <div><strong>Latest publication:</strong> <a href="https://blogs.microsoft.com/blog/2025/09/18/inside-the-worlds-most-powerful-ai-datacenter/" target="_blank" style="color: #007bff; text-decoration: none; font-weight: bold;">Inside the world's most powerful AI datacenter</a></div>
             <div style="margin-left: 0; margin-top: 5px; font-size: 0.9em; color: #666;">Official Microsoft Blog - Sep 18, 2025</div>
             <div style="margin-top: 10px;">
                 <a href="/publications/" style="display: inline-block; background-color: #007bff; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 0.9em;">View all publications</a>
@@ -164,18 +301,18 @@ document.addEventListener('DOMContentLoaded', function() {
     <p>Connect with me:</p>
     <ul>
       <li>
-        <a href="https://www.linkedin.com/in/hugo-affaticati" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.linkedin.com/in/schundu/" target="_blank" rel="noopener noreferrer">
           <img src="/assets/images/linkedin-logo.png" alt="LinkedIn" class="footer-icon"> LinkedIn
         </a>
       </li>
       <li>
-        <a href="https://github.com/haffaticati" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/schundu007" target="_blank" rel="noopener noreferrer">
           <img src="/assets/images/github-logo.png" alt="GitHub" class="footer-icon"> GitHub
         </a>
       </li>
     </ul>
   </div>
-  <p>&copy; Hugo Affaticati - All Rights Reserved | <a href="/privacy/">Privacy Policy</a></p>
+  <p>&copy; Sudhakar Chundu - All Rights Reserved | <a href="/privacy/">Privacy Policy</a></p>
 </footer>
 
 <style>
@@ -219,8 +356,5 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 </style>
 
-
-
 </body>
 </html>
-
