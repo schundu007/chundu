@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <title></title>
+    
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CS1EZGDNJB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-CS1EZGDNJB');
+</script>
+
+
+</head>
+<body>
+    <link rel="stylesheet" href="/assets/custom.css">
+
+<header>
+    <div class="header-name">
+        Hugo Affaticati
+    </div>
+    <nav>
+        <button class="nav-toggle" aria-label="Open Menu" aria-expanded="false">&#9776;</button>
+        <ul class="nav-menu">
+            <li><a href="/" class="">About</a></li>
+            <li><a href="/publications/" class="">Publications</a></li>
+            <li><a href="/videos/" class="">Videos</a></li>
+            <li><a href="/conferences/" class="">Conferences</a></li>
+            <li><a href="/contact/" class="active">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const toggle = document.querySelector('.nav-toggle');
+    const menu = document.querySelector('.nav-menu');
+    toggle.addEventListener('click', function() {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true' || false;
+        toggle.setAttribute('aria-expanded', !expanded);
+        menu.classList.toggle('nav-menu-visible');
+    });
+});
+</script>
+
+    <main>
+        <div class="publications-header">
+    <h1>Contact me</h1>
+    <br />
+    <br />
+</div>
+<div class="publication-container">
+    <h3>    
+    <form action="https://formspree.io/f/xdkavnrw" method="POST">
+  <div>
+    <label for="first-name">First Name:</label>
+    <input type="text" id="first-name" name="first-name" required="" />
+  </div>
+
+  <div>
+    <label for="last-name">Last Name:</label>
+    <input type="text" id="last-name" name="last-name" required="" />
+  </div>
+
+  <div>
+    <label for="email">Email Address:</label>
+    <input type="email" id="email" name="_replyto" required="" />
+  </div>
+
+  <div>
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" rows="4" required=""></textarea>
+  </div>
+
+  <button type="submit">Send Message</button>
+</form>
+
+
+</h3></div>
+
+    </main>
+    <footer>
+  <div class="footer-content">
+    <p>Connect with me:</p>
+    <ul>
+      <li>
+        <a href="https://www.linkedin.com/in/hugo-affaticati" target="_blank" rel="noopener noreferrer">
+          <img src="/assets/images/linkedin-logo.png" alt="LinkedIn" class="footer-icon"> LinkedIn
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/haffaticati" target="_blank" rel="noopener noreferrer">
+          <img src="/assets/images/github-logo.png" alt="GitHub" class="footer-icon"> GitHub
+        </a>
+      </li>
+    </ul>
+  </div>
+  <p>&copy; Hugo Affaticati - All Rights Reserved | <a href="/privacy/">Privacy Policy</a></p>
+</footer>
+
+<style>
+  footer {
+    background-color: #f8f9fa; /* Light background color */
+    color: #333;
+    padding: 20px;
+    text-align: center;
+  }
+
+  footer a {
+    color: #333;
+    text-decoration: none;
+    margin: 0 10px;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  .footer-content ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .footer-content ul li {
+    display: inline;
+    margin-right: 20px;
+  }
+
+  .footer-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  footer p {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+</style>
+
+
+
+</body>
+</html>
+

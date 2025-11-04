@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <title></title>
+    
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CS1EZGDNJB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-CS1EZGDNJB');
+</script>
+
+
+</head>
+<body>
+    <link rel="stylesheet" href="/assets/custom.css">
+
+<header>
+    <div class="header-name">
+        Hugo Affaticati
+    </div>
+    <nav>
+        <button class="nav-toggle" aria-label="Open Menu" aria-expanded="false">&#9776;</button>
+        <ul class="nav-menu">
+            <li><a href="/" class="">About</a></li>
+            <li><a href="/publications/" class="active">Publications</a></li>
+            <li><a href="/videos/" class="">Videos</a></li>
+            <li><a href="/conferences/" class="">Conferences</a></li>
+            <li><a href="/contact/" class="">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const toggle = document.querySelector('.nav-toggle');
+    const menu = document.querySelector('.nav-menu');
+    toggle.addEventListener('click', function() {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true' || false;
+        toggle.setAttribute('aria-expanded', !expanded);
+        menu.classList.toggle('nav-menu-visible');
+    });
+});
+</script>
+
+    <main>
+        <div class="publications-header">
+    <h1>Published Work</h1>
+</div>
+
+<div class="publication-container">
+            <div class="publication-entry">
+         <div class="publication-left">
+           <a href="https://blogs.microsoft.com/blog/2025/09/18/inside-the-worlds-most-powerful-ai-datacenter/" target="_blank">Inside the world’s most powerful AI datacenter</a>
+        <br />
+ Official Microsoft Blog - Sep 18, 2025
+        <br />
+        <br />
+        <b>TL;DR:</b> We introduced Fairwater, our newest US AI datacenter, the largest and most sophisticated AI factory we’ve built yet which delivers 865,000 tokens/s per rack.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://blogs.microsoft.com/blog/2025/09/18/inside-the-worlds-most-powerful-ai-datacenter/" target="_blank"><img src="https://blogs.microsoft.com/wp-content/uploads/2025/09/OMB-Image-1-Datacenter.jpg" alt="Research Paper SEO Image" width="10%" /></a>
+        </div>
+    </div>
+            <div class="publication-entry">
+         <div class="publication-left">
+           <a href="https://signal65.com/research/analyzing-microsoft-azures-gb200-inference-performance/" target="_blank">Optimizing Large-Scale AI Performance with Pretraining Validation on a Single Azure ND GB200 v6</a>
+        <br />
+ Signal65 White Paper - Sep 9, 2025
+        <br />
+        <br />
+        <b>TL;DR:</b> We focus on the Microsoft Azure ND GB200 v6 virtual machines (VMs) accelerated by the NVIDIA GB200 NVL4. We analyze Azure’s MLPerf results in the Llama2 70B and Llama3.1 405B benchmarks, explain why these tests matter for real deployments, and translate raw data into actionable insights.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://signal65.com/research/analyzing-microsoft-azures-gb200-inference-performance/" target="_blank"><img src="https://signal65.com/wp-content/uploads/2025/09/featured-microsoft-azure-1024x536.webp" alt="Research Paper SEO Image" width="10%" /></a>
+        </div>
+    </div>
+	    <div class="publication-entry">
+         <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/optimizing-large-scale-ai-performance-with-pretraining-validation-on-a-single-az/4445273" target="_blank">Optimizing Large-Scale AI Performance with Pretraining Validation on a Single Azure ND GB200 v6</a>
+        <br />
+ Azure High Performance Computing Blog - Aug 18, 2025
+        <br />
+	<br />
+        <b>TL;DR:</b> Single-VM benchmarking with lightweight Llama pretraining on Azure’s ND GB200 v6 VMs helps catch costly performance issues early by tuning parallelism parameters and analyzing telemetry before scaling to multi-node runs.
+        <br />
+	<br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/optimizing-large-scale-ai-performance-with-pretraining-validation-on-a-single-az/4445273" target="_blank"><img src="https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS00NDQ1MjczLXV5VWZBNw?revision=2&amp;image-dimensions=2000x2000&amp;constrain-image=true" alt="Research Paper SEO Image" width="10%" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+         <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/performance-at-scale-the-role-of-interconnects-in-azure-hpc--ai-infrastructure/4427238" target="_blank">Performance at Scale: The Role of Interconnects in Azure HPC &amp; AI Infrastructure</a>
+        <br />
+ Azure High Performance Computing Blog - Jun 25, 2025
+        <br />
+	<br />
+        <b>TL;DR:</b> Azure’s AI network enables efficient, scalable training for large AI models. Using xAI’s 314B Grok-1, performance scaled linearly from 8 to 1024 GPUs with NeMo, matching NVIDIA’s on-prem results.
+        <br />
+	<br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/performance-at-scale-the-role-of-interconnects-in-azure-hpc--ai-infrastructure/4427238" target="_blank"><img src="https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS00NDI3MjM4LUZHeWRmdg?revision=1&amp;image-dimensions=2000x2000&amp;constrain-image=true" alt="Research Paper SEO Image" width="10%" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+         <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/dgx-cloud-benchmarking-on-azure/4410826" target="_blank">DGX Cloud Benchmarking on Azure</a>
+        <br />
+ Azure High Performance Computing Blog - May 5, 2025
+        <br />
+        <br />
+        <b>TL;DR:</b> Azure’s ND H100 v5 platform and its highly optimized software stack deliver world-class LLM training performance. Here are the optimal NCCL parameters and NeMo configuration that enabled parity in throughput and scaling efficiency with NVIDIA DGX Cloud.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/dgx-cloud-benchmarking-on-azure/4410826" target="_blank"><img src="https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS00NDEwODI2LXBuUEhySA?revision=7" alt="Research Paper SEO Image" width="10%" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+         <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/azure%E2%80%99s-nd-gb200-v6-delivers-record-performance-for-inference-workloads/4399253" target="_blank">Azure’s ND GB200 v6 Delivers Record Performance for Inference Workloads</a>
+        <br />
+ Azure High Performance Computing Blog - Mar 31, 2025
+        <br />
+        <br />
+        <b>TL;DR:</b> Azure’s ND GB200 v6 VMs, powered by NVIDIA GB200 NVL72, set a new inference world record with 865,000 tokens/sec on LLAMA 2 70B—delivering 3.9× GPU-level and 9× rack-level throughput gains over ND H100 v5 for enterprise-scale AI workloads.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/azure%E2%80%99s-nd-gb200-v6-delivers-record-performance-for-inference-workloads/4399253" target="_blank"><img src="https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS00Mzk5MjUzLUZwcDBpRg?revision=3&amp;image-dimensions=2000x2000&amp;constrain-image=true" alt="Research Paper SEO Image" width="10%" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+         <div class="publication-left">
+           <a href="https://signal65.com/research/ai/leading-ai-scalability-benchmarks-with-microsoft-azure/" target="_blank">Leading AI Scalability Benchmarks with Microsoft Azure</a>
+        <br />
+ Signal65 White Paper - Nov 13, 2024
+        <br />
+        <br />
+        <b>TL;DR:</b> Azure leads in cloud-based AI scalability and efficiency, outperforming a top competitor by 28% in LLaMA 70B fine-tuning with identical GPU counts. MLPerf 4.1 benchmarks confirm Azure’s leadership in performance, scale, and price/performance for enterprise AI workloads.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://signal65.com/research/ai/leading-ai-scalability-benchmarks-with-microsoft-azure/" target="_blank"><img src="https://signal65.com/wp-content/uploads/2024/11/Featured-Post-Azure-768x402.webp" alt="Research Paper SEO Image" width="10%" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+         <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/optimizing-language-model-inference-on-azure/4248271" target="_blank">Optimizing Language Model Inference on Azure</a>
+        <br />
+ Azure High Performance Computing Blog - Oct 2, 2024
+        <br />
+        <br />
+        <b>TL;DR:</b> Azure’s ND H200 v5 VMs boost inference efficiency with 76% more GPU memory. Enabling optimized batch sizes that maximize throughput while balancing latency, customers can reduce costs by 20% through data-driven resource tuning.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/optimizing-language-model-inference-on-azure/4248271" target="_blank"><img src="https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS00MjQ4MjcxLTYyMTAxN2lFRDJCOTZDQ0JCMEY5QjlF?image-dimensions=300x400&amp;constrain-image=true" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">                                                                                                           <div class="publication-left">                                                                                                         <a href="https://azure.microsoft.com/en-us/blog/microsoft-azure-delivers-game-changing-performance-for-generative-ai-inference/" target="_blank">Microsoft Azure delivers game-changing performance for generative AI Inference</a>
+        <br />
+ Microsoft Azure - Mar 27, 2024
+        <br />
+        <br />
+        <b>TL;DR:</b> Azure’s investments in the 94GB HBM3 memory version of the NVIDIA H100 NVL GPUs deliver up to 46% better inference throughput than competitors. The represents a 1.6× speedup over prior Azure generations—enabling efficient handling of mega-models inference with unmatched memory and scalability in the cloud.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://azure.microsoft.com/en-us/blog/microsoft-azure-delivers-game-changing-performance-for-generative-ai-inference/" target="_blank"><img src="https://azure.microsoft.com/en-us/blog/wp-content/uploads/2024/03/Azure_Blog_3D_Illustration-08_1260x708-1024x575.jpg" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+         <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/a-quick-start-guide-to-benchmarking-ai-models-in-azure-llama-2-from-mlperf-infer/4097657" target="_blank">A quick start guide to benchmarking AI models in Azure: Llama 2 from MLPerf Inference v4.0</a>
+        <br />
+ Azure High Performance Computing Blog - Mar 27, 2024
+        <br />
+        <br />
+        <b>TL;DR:</b> Reproduce the MLPerf Inference v4.0 results in less than 1 hour on the new NC H100 v5 VMs.  
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/a-quick-start-guide-to-benchmarking-ai-models-in-azure-llama-2-from-mlperf-infer/4097657" target="_blank"><img src="https://th.bing.com/th/id/OIP.qw7UD4x7_QIUPq6CtDyZ6wHaEK?rs=1&amp;pid=ImgDetMain" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+         <div class="publication-left">
+           <a href="https://azure.microsoft.com/en-us/blog/azure-sets-a-scale-record-in-large-language-model-training/" target="_blank">Azure sets a scale record in large language model training</a>
+        <br />
+ Microsoft Azure - Nov 8, 2023
+        <br />
+        <br />
+        <b>TL;DR:</b> Azure set a new record by training GPT-3 (175B parameters) in 4 minutes on 10,752 NVIDIA H100 GPUs—achieving within 2% of bare-metal performance—showcasing its unmatched scale, efficiency, and virtualization in powering state-of-the-art LLM training and inference workloads.
+        <br />
+        <br />
+        </div>                                                                                                                               <div class="publication-right">                                                                                                              <a href="https://azure.microsoft.com/en-us/blog/azure-sets-a-scale-record-in-large-language-model-training/" target="_blank"><img src="https://azure.microsoft.com/en-us/blog/wp-content/uploads/2023/11/Figure-2-MLPerf-Nov-2023.jpg" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+         <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/a-quick-guide-to-benchmarking-ai-models-on-azure-resnet-with-mlperf-training-v3-/3859291" target="_blank">A Quick Guide to Benchmarking AI Models on Azure: ResNet with MLPerf Training v3.0</a>
+        <br />
+ Azure High Performance Computing Blog - Jun 28, 2023
+        <br />
+        <br />
+        <b>TL;DR:</b> Reproduce the MLPerf Training v3.0 results in less than 1 hour on the new ND H100 v5 VMs.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/a-quick-guide-to-benchmarking-ai-models-on-azure-resnet-with-mlperf-training-v3-/3859291" target="_blank"><img src="https://mlcommons.org/wp-content/themes/mlcommons/build/img/ML-Commons-Logo.svg" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+        <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/tackling-ai-inference-workloads-on-azure%E2%80%99s-nc-a100-v4-virtual-machines-with-time/3725991" target="_blank">Tackling AI Inference workloads on Azure’s NC A100 v4 virtual machines with time to spare</a>
+        <br />
+ Azure High Performance Computing Blog - Jan 26, 2023
+        <br />
+        <br />
+        <b>TL;DR:</b> Azure NC A100 v4-series VMs offer flexible, scalable AI compute with NVIDIA MIG technology and deliver up to 2.9x better cost efficiency than T4-based VMs: ideal for diverse workloads from small to mid-size AI inference and training.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/tackling-ai-inference-workloads-on-azure%E2%80%99s-nc-a100-v4-virtual-machines-with-time/3725991" target="_blank"><img src="https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS0zNzI1OTkxLTQzNTc0Nmk4NDdDNzg3QTcyMEY4MDVG?image-dimensions=721x400&amp;revision=4" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+        <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/a-quick-start-guide-to-benchmarking-ai-models-in-azure-mlperf-inference-v2-1-on-/3726316" target="_blank">A quick start guide to benchmarking AI models in Azure: MLPerf Inference v2.1 on Multi-Instance GPU</a>
+        <br />
+ Azure High Performance Computing Blog - Jan 26, 2023
+        <br />
+        <br />
+        <b>TL;DR:</b> Reproduce the MLPerf Inference v2.1 on up to 7 MIG partitions with the new NC A100 v4 VMs.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/a-quick-start-guide-to-benchmarking-ai-models-in-azure-mlperf-inference-v2-1-on-/3726316" target="_blank"><img src="https://dgtlinfra.com/wp-content/uploads/2023/01/AI-Model-Inferencing-Inference-Queries-per-Dollar-Chart.jpg" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+ <div class="publication-entry">                                                                                                                                 <div class="publication-left">                                                                                                                                 <a href="https://venturebeat.com/ai/large-language-models-broaden-ais-reach-in-industry-and-enterprises/" target="_blank">Large language models broaden AI’s reach in industry and enterprises</a>
+        <br />
+ VentureBeat Press Article - Dec 15, 2022
+        <br />
+        <br />
+        <b>TL;DR:</b> LLMs like ChatGPT are transforming AI across industries by enabling powerful language tasks. Their growth demands scalable, efficient infrastructure, made possible by Microsoft and NVIDIA leading cloud.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">                                                                                                                                     <a href="https://venturebeat.com/ai/large-language-models-broaden-ais-reach-in-industry-and-enterprises/" target="_blank"><img src="https://venturebeat.com/_next/image?url=https%3A%2F%2Folk2kzr7lpbpdtkx.public.blob.vercel-storage.com%2Fhome%2Fandy%2Fwork%2Fevrone%2Fventure_beat%2Fmedia%2Fwp-content%2Fuploads%2F2022%2F12%2Fimage007.png&amp;w=828&amp;q=75" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+        <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/azure-collaborates-with-hazy-research-and-nvidia-to-achieve-unmatched-mlperf-res/3667511" target="_blank">Azure Collaborates with Hazy Research and NVIDIA to Achieve Unmatched MLPerf Results</a>
+        <br />
+ Azure High Performance Computing Blog - Nov 9, 2022
+        <br />
+        <br />
+        <b>TL;DR:</b> Azure worked with Hazy Research’s FlashAttention software optimization to become the only submitter to train BERT in under 2 minutes on 16 VMs, demonstrating efficient, scalable AI training in the cloud that outperforms on-premises setups.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/azure-collaborates-with-hazy-research-and-nvidia-to-achieve-unmatched-mlperf-res/3667511" target="_blank"><img src="https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS0zNjY3NTExLTQxNjY0NWlFNzg0QkZGQTQyMEFGQjRD?image-dimensions=300x400&amp;constrain-image=true" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+        <div class="publication-left">
+           <a href="https://www.hpcwire.com/solution_content/microsoft-nvidia/azure-collaborates-with-hazy-research-and-nvidia-to-achieve-unmatched-mlperf-results/" target="_blank">HPC Wire - Azure Collaborates with Hazy Research and NVIDIA to Achieve Unmatched MLPerf Results</a>
+        <br />
+ HPC Wire Press Article - Nov 9, 2022
+        <br />
+        <br />
+        <b>TL;DR:</b> Learn about Hazy Research’s FlashAttention software optimization developed on Azure.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://www.hpcwire.com/solution_content/microsoft-nvidia/azure-collaborates-with-hazy-research-and-nvidia-to-achieve-unmatched-mlperf-results/" target="_blank"><img src="https://www.hpcwire.com/wp-content/uploads/2022/11/shutterstock_1799063125-675x380.jpg" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+        <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/a-quick-guide-to-benchmarking-ai-models-on-azure-mask-r-cnn-with-mlperf-training/3667465" target="_blank">A Quick Guide to Benchmarking AI models on Azure: Mask R-CNN with MLPerf Training v2.1</a>
+        <br />
+ Azure High Performance Computing Blog - Nov 9, 2022
+        <br />
+        <br />
+        <b>TL;DR:</b> Reproduce the MLPerf Training v2.1 results in less than 1 hour on the new NDm A100 v4 VMs. 
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/a-quick-guide-to-benchmarking-ai-models-on-azure-mask-r-cnn-with-mlperf-training/3667465" target="_blank"><img src="https://th.bing.com/th/id/OIP.nDq5lbRvzM796olxKHq_AQHaDY?rs=1&amp;pid=ImgDetMain" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+        <div class="publication-left">
+           <a href="https://www.hpcwire.com/solution_content/microsoft-nvidia/azure-scales-530b-parameter-gpt-3-model-with-nvidia-nemo-megatron/" target="_blank">Azure Scales 530B Parameter GPT-3 Model with NVIDIA NeMo Megatron</a>
+        <br />
+ HPC Wire Press Article - Oct 24, 2022
+        <br />
+        <br />
+        <b>TL;DR:</b> Training a 530-billion-parameter LLM in the cloud on Azure’s NDm A100 v4 VMs set a groundbreaking proof of concept for enabling and accelerating training AI models at massive scale.
+        <br />
+        <br />
+        </div>                                                                                                                               <div class="publication-right">
+                <a href="https://www.hpcwire.com/solution_content/microsoft-nvidia/azure-scales-530b-parameter-gpt-3-model-with-nvidia-nemo-megatron/" target="_blank"><img src="https://www.hpcwire.com/wp-content/uploads/2022/10/shutterstock_650730670-675x380.jpg" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+        <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/a-quick-start-guide-to-benchmarking-llm-models-in-azure-nvidia-nemo-megatron---r/3655111" target="_blank">A quick start guide to benchmarking LLM models in Azure: NVIDIA NeMo Megatron - Results</a>
+        <br />
+ Azure High Performance Computing Blog - Oct 24, 2022
+        <br />
+        <br />
+        <b>TL;DR:</b> Azure NDm A100 v4 VMs combined with NVIDIA NeMo Megatron demonstrated near-linear scaling and optimized training speeds for LLMs from 126 million to 530 billion parameters by efficiently balancing tensor and pipeline model parallelism.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/a-quick-start-guide-to-benchmarking-llm-models-in-azure-nvidia-nemo-megatron---r/3655111" target="_blank"><img src="https://th.bing.com/th/id/OIP.LgWkmP3V2zLNufEXRjGeRQHaEd?rs=1&amp;pid=ImgDetMain" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+         <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/a-quick-start-guide-to-benchmarking-llm-models-in-azure-nvidia-nemo-megatron---s/3655124" target="_blank">A quick start guide to benchmarking LLM models in Azure: NVIDIA NeMo Megatron - Steps</a>
+        <br />
+ Azure High Performance Computing Blog - Oct 24, 2022
+        <br />
+        <br />
+        <b>TL;DR:</b> Reproduce the GPT-3 Model training for 126M to 530B parameters.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/a-quick-start-guide-to-benchmarking-llm-models-in-azure-nvidia-nemo-megatron---s/3655124" target="_blank"><img src="https://blog.mashfords.com/wp-content/uploads/2022/10/74a401ab-b737-4144-a596-059842980bda.png" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+         <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/a-quick-start-guide-to-benchmarking-ai-models-in-azure-mlperf-inference-v2-1/3607414" target="_blank">A quick start guide to benchmarking AI models in Azure: MLPerf Inference v2.1</a>
+        <br />
+ Azure High Performance Computing Blog - Sep 8, 2022
+        <br />
+        <br />
+        <b>TL;DR:</b> Reproduce the MLPerf Inference v2.1 results in less than 1 hour on the new NV A10 v5 VMs.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/a-quick-start-guide-to-benchmarking-ai-models-in-azure-mlperf-inference-v2-1/3607414" target="_blank"><img src="https://th.bing.com/th/id/OIP.2uZPSpBlp53MenuFQnl6KQHaD5?rs=1&amp;pid=ImgDetMain" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+        <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/maximizing-ai-performance-with-the-azure-nc-a100-v4-series/3596175" target="_blank">Maximizing AI performance with the Azure NC A100 v4-series</a>
+        <br />
+ Azure High Performance Computing Blog - Aug 10, 2022
+        <br />
+        <br />
+        <b>TL;DR:</b> Azure’s new NC A100 v4-series VMs deliver industry-leading AI training and inference performance that rivals on-premises systems, offering up to 5x faster results and 2-3x better cost efficiency for diverse small-to-medium AI workloads.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/maximizing-ai-performance-with-the-azure-nc-a100-v4-series/3596175" target="_blank"><img src="https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS0zNTk2MTc1LTM5NDcyOGk4QTMyNjdGMzhEREFCMTRC?revision=4" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+        <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/a-quick-start-guide-to-benchmarking-ai-models-in-azure-mlperf-training-v2-0/3589341" target="_blank">A quick start guide to benchmarking AI models in Azure: MLPerf Training v2.0</a>
+        <br />
+ Azure High Performance Computing Blog - Aug 3, 2022
+        <br />
+        <br />
+        <b>TL;DR:</b> Reproduce the MLPerf Training v2.0 results in less than 1 hour on the new ND A100 v4 VMs.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/a-quick-start-guide-to-benchmarking-ai-models-in-azure-mlperf-training-v2-0/3589341" target="_blank"><img src="https://mlcommons.org/wp-content/themes/mlcommons/build/img/ML-Commons-Logo.svg" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+        <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/getting-started-with-multi-instance-gpu-mig-on-the-nc-a100-v4-series/3589288" target="_blank">Getting started with Multi-Instance GPU (MIG) on the NC A100 v4-series</a>
+        <br />
+ Azure High Performance Computing Blog - Aug 3, 2022
+        <br />
+        <br />
+        <b>TL;DR:</b> How to deploy MIG instances on the NC A100 v4 VMs in 10 min.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/getting-started-with-multi-instance-gpu-mig-on-the-nc-a100-v4-series/3589288" target="_blank"><img src="https://azure.microsoft.com/en-us/blog/wp-content/uploads/2022/04/92d27c7a-7cac-45cc-9cd6-8cddb2b16f6e.webp" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+        <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/getting-started-with-the-nc-a100-v4-series/3568843" target="_blank">Getting started with the NC A100 v4-series</a>
+        <br />
+ Azure High Performance Computing Blog - Jul 8, 2022
+        <br />
+        <br />
+        <b>TL;DR:</b> How to set up a NC A100 v4 VM in less than 4 min.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/getting-started-with-the-nc-a100-v4-series/3568843" target="_blank"><img src="https://th.bing.com/th/id/OIP.2uZPSpBlp53MenuFQnl6KQHaD5?rs=1&amp;pid=ImgDetMain" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+         <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurecompute/benchmarking-the-nc-a100-v4-ncsv3-and-ncas-t4-v3-series-with-nvidia-deep-learnin/3568823" target="_blank">Benchmarking the NC A100 v4, NCsv3, and NCas_T4_v3 series with NVIDIA Deep Learning Examples</a>
+        <br />
+ Azure High Performance Computing Blog - Jul 8, 2022
+        <br />
+        <br />
+        <b>TL;DR:</b> Reproduce the NVIDIA Deep Learning Examples benchmarks on all AI virtual machines on Azure.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurecompute/benchmarking-the-nc-a100-v4-ncsv3-and-ncas-t4-v3-series-with-nvidia-deep-learnin/3568823" target="_blank"><img src="https://th.bing.com/th/id/OIP.dLEzf3VirNPRzchhvNkcbwHaFS?rs=1&amp;pid=ImgDetMain" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+     <div class="publication-entry">
+        <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/getting-started-with-the-ncsv3-series-and-ncas-t4-v3-series/3568874" target="_blank">Getting started with the NCsv3 series and NCas_T4_v3 series</a>
+        <br />
+ Azure High Performance Computing Blog - Jul 8, 2022
+        <br />
+        <br />
+        <b>TL;DR:</b> How to set up a NC V100 v3 VM or a NC T4 v3 VM in less than 5 min.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/getting-started-with-the-ncsv3-series-and-ncas-t4-v3-series/3568874" target="_blank"><img src="https://tse1.mm.bing.net/th/id/OIP.PE__LM1e5EC1rou5TVmhlAHaEK?r=0&amp;pid=ImgDet&amp;w=474&amp;h=266&amp;rs=1&amp;o=7&amp;rm=3" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+   <div class="publication-entry">
+        <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/a-quick-start-to-benchmarking-in-azure-nvidia-deep-learning-examples-on-the-nc-s/3563884" target="_blank">A quick start to benchmarking in Azure: NVIDIA Deep Learning Examples on the NC-series</a>
+        <br />
+ Azure High Performance Computing Blog - Jul 6, 2022
+        <br />
+        <br />
+        <b>TL;DR:</b> Azure’s NC A100 v4-series VMs powered by NVIDIA A100 GPUs deliver significantly higher training and inference throughput across BERT, SSD, and ResNet-50 benchmarks—up to 9x faster than NC T4 and 4x faster than NC V100 series—especially at larger batch sizes, showcasing superior performance and scalability for AI workloads.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/a-quick-start-to-benchmarking-in-azure-nvidia-deep-learning-examples-on-the-nc-s/3563884" target="_blank"><img src="https://th.bing.com/th/id/OIP.2uZPSpBlp53MenuFQnl6KQHaD5?rs=1&amp;pid=ImgDetMain" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+        <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurecompute/a-quick-start-guide-to-benchmarking-ai-models-in-azure-mlperf-inferencing-v2-0/3273878" target="_blank">A quick start guide to benchmarking AI models in Azure: MLPerf Inferencing v2.0</a>
+        <br />
+ Azure High Performance Computing Blog - Apr 6, 2022
+        <br />
+        <br />
+        <b>TL;DR:</b> Reproduce the MLPerf Inference v2.0 results in less than 1 hour on the ND and NC A100 v4 VMs.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurecompute/a-quick-start-guide-to-benchmarking-ai-models-in-azure-mlperf-inferencing-v2-0/3273878" target="_blank"><img src="https://mlcommons.org/wp-content/themes/mlcommons/build/img/ML-Commons-Logo.svg" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+    <div class="publication-entry">
+        <div class="publication-left">
+           <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/azure-ai-supercomputer-delivers-record-mlperf-results/3024067" target="_blank">Azure AI Supercomputer Delivers Record MLPerf Results</a>
+        <br />
+ Azure High Performance Computing Blog - Dec 1, 2021
+        <br />
+        <br />
+        <b>TL;DR:</b> Azure’s debut in MLPerf 1.1 set a new standard for cloud-based AI, ranking #1 among cloud providers and #2 overall, with record-setting performance across BERT, ResNet-50, and Minigo benchmarks using over 2,000 NDm A100 v4 GPUs.
+        <br />
+        <br />
+        </div>
+        <div class="publication-right">
+                <a href="https://techcommunity.microsoft.com/blog/azurehighperformancecomputingblog/azure-ai-supercomputer-delivers-record-mlperf-results/3024067" target="_blank"><img src="https://th.bing.com/th/id/OIP.apmRk-Dht51_isAVlqjLhAHaEK?rs=1&amp;pid=ImgDetMain" alt="Research Paper SEO Image" /></a>
+        </div>
+    </div>
+</div>
+
+
+    </main>
+    <footer>
+  <div class="footer-content">
+    <p>Connect with me:</p>
+    <ul>
+      <li>
+        <a href="https://www.linkedin.com/in/hugo-affaticati" target="_blank" rel="noopener noreferrer">
+          <img src="/assets/images/linkedin-logo.png" alt="LinkedIn" class="footer-icon"> LinkedIn
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/haffaticati" target="_blank" rel="noopener noreferrer">
+          <img src="/assets/images/github-logo.png" alt="GitHub" class="footer-icon"> GitHub
+        </a>
+      </li>
+    </ul>
+  </div>
+  <p>&copy; Hugo Affaticati - All Rights Reserved | <a href="/privacy/">Privacy Policy</a></p>
+</footer>
+
+<style>
+  footer {
+    background-color: #f8f9fa; /* Light background color */
+    color: #333;
+    padding: 20px;
+    text-align: center;
+  }
+
+  footer a {
+    color: #333;
+    text-decoration: none;
+    margin: 0 10px;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  .footer-content ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .footer-content ul li {
+    display: inline;
+    margin-right: 20px;
+  }
+
+  .footer-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  footer p {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+</style>
+
+
+
+</body>
+</html>
+
