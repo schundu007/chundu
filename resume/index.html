@@ -290,9 +290,61 @@
             margin-bottom: 2rem;
             font-size: 0.9rem;
             color: var(--gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .edit-notice strong { color: var(--black); }
+
+        .edit-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .save-status {
+            font-size: 0.8rem;
+            color: var(--red);
+            font-weight: 500;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .save-btn {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        .save-btn:hover {
+            background: var(--red-dark);
+        }
+
+        .reset-btn {
+            background: var(--gray);
+            color: var(--white);
+        }
+
+        .reset-btn:hover {
+            background: var(--black);
+        }
 
         /* Print Styles */
         @media print {
@@ -368,7 +420,20 @@
     <!-- Resume Content -->
     <div class="resume-container">
         <div class="edit-notice">
-            <strong>Editable Resume:</strong> Click on any text to edit it directly. Use Ctrl+P (or Cmd+P on Mac) to print or save as PDF.
+            <div class="edit-notice-content">
+                <strong>Editable Resume:</strong> Click on any text to edit. Changes auto-save to your browser.
+            </div>
+            <div class="edit-actions">
+                <span id="save-status" class="save-status"></span>
+                <button onclick="saveResume()" class="action-btn save-btn">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17,21 17,13 7,13 7,21"/><polyline points="7,3 7,8 15,8"/></svg>
+                    Save
+                </button>
+                <button onclick="resetResume()" class="action-btn reset-btn">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    Reset
+                </button>
+            </div>
         </div>
 
         <!-- Contact Section -->
@@ -602,5 +667,69 @@
         </div>
         <p>&copy; 2024 Sudhakar Chundu. All rights reserved.</p>
     </footer>
+
+    <script>
+        // Resume Save/Load functionality
+        const STORAGE_KEY = 'resume_data';
+
+        // Save all editable content
+        function saveResume() {
+            const editables = document.querySelectorAll('[contenteditable="true"]');
+            const data = {};
+            editables.forEach((el, index) => {
+                data[index] = el.innerHTML;
+            });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            showSaveStatus('Saved!');
+        }
+
+        // Load saved content
+        function loadResume() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                const data = JSON.parse(saved);
+                const editables = document.querySelectorAll('[contenteditable="true"]');
+                editables.forEach((el, index) => {
+                    if (data[index] !== undefined) {
+                        el.innerHTML = data[index];
+                    }
+                });
+                showSaveStatus('Loaded saved data');
+            }
+        }
+
+        // Reset to original content
+        function resetResume() {
+            if (confirm('Are you sure you want to reset all changes? This cannot be undone.')) {
+                localStorage.removeItem(STORAGE_KEY);
+                location.reload();
+            }
+        }
+
+        // Show save status
+        function showSaveStatus(message) {
+            const status = document.getElementById('save-status');
+            status.textContent = message;
+            status.style.opacity = '1';
+            setTimeout(() => {
+                status.style.opacity = '0';
+            }, 2000);
+        }
+
+        // Auto-save on content change
+        document.addEventListener('DOMContentLoaded', () => {
+            loadResume();
+
+            const editables = document.querySelectorAll('[contenteditable="true"]');
+            let saveTimeout;
+
+            editables.forEach(el => {
+                el.addEventListener('input', () => {
+                    clearTimeout(saveTimeout);
+                    saveTimeout = setTimeout(saveResume, 1000); // Auto-save after 1 second of no typing
+                });
+            });
+        });
+    </script>
 </body>
 </html>
