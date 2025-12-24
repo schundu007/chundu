@@ -4,40 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Publications | Sudhakar Chundu</title>
-    <meta name="description" content="Technical articles and publications by Sudhakar Chundu on cloud architecture and DevOps.">
+    <meta name="description" content="Technical publications and articles by Sudhakar Chundu on cloud infrastructure, DevOps, and SRE practices.">
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <a href="../" class="logo">SUDHAKAR<span>.</span></a>
+            <a href="../" class="logo">
+                <span class="logo-icon">SC</span>
+                Sudhakar Chundu
+            </a>
             <ul class="nav-links">
                 <li><a href="../#about">About</a></li>
                 <li><a href="../#expertise">Expertise</a></li>
+                <li><a href="../#experience">Experience</a></li>
+                <li><a href="../resume/">Resume</a></li>
                 <li><a href="../conferences/">Conferences</a></li>
                 <li><a href="./" class="active">Publications</a></li>
-                <li><a href="../#contact">Contact</a></li>
+                <div class="nav-social">
+                    <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
             </ul>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
     <!-- Page Header -->
     <header class="page-header">
-        <h1>Publications</h1>
-        <p>Technical articles, guides, and thought leadership on cloud infrastructure and DevOps practices.</p>
+        <h1>Technical <span>Publications</span></h1>
+        <p>Articles, blog posts, and technical documentation on cloud infrastructure, DevOps, and reliability engineering.</p>
     </header>
 
     <!-- Content -->
-    <section class="section">
+    <section class="section section-alt">
         <div class="container">
             <div class="card-grid">
                 <div class="card">
-                    <div class="date">Technical Guide</div>
+                    <span class="date">Technical Guide</span>
                     <h3>Multi-Cloud Kubernetes Strategy</h3>
                     <p>A comprehensive guide to designing and implementing Kubernetes clusters across AWS, Azure, and GCP with unified management.</p>
                     <div class="tags">
@@ -48,7 +62,7 @@
                 </div>
 
                 <div class="card">
-                    <div class="date">Best Practices</div>
+                    <span class="date">Best Practices</span>
                     <h3>GPU Infrastructure for AI/ML</h3>
                     <p>Building and managing GPU clusters for machine learning workloads with optimal resource utilization and cost efficiency.</p>
                     <div class="tags">
@@ -59,7 +73,7 @@
                 </div>
 
                 <div class="card">
-                    <div class="date">Case Study</div>
+                    <span class="date">Case Study</span>
                     <h3>Zero-Downtime Migration to Kubernetes</h3>
                     <p>Lessons learned from migrating legacy applications to Kubernetes while maintaining 99.97% uptime SLAs.</p>
                     <div class="tags">
@@ -70,7 +84,7 @@
                 </div>
 
                 <div class="card">
-                    <div class="date">Technical Article</div>
+                    <span class="date">Technical Article</span>
                     <h3>Terraform Modules at Scale</h3>
                     <p>Designing reusable Terraform modules for enterprise infrastructure with versioning, testing, and documentation.</p>
                     <div class="tags">
@@ -81,7 +95,7 @@
                 </div>
 
                 <div class="card">
-                    <div class="date">Implementation Guide</div>
+                    <span class="date">Implementation Guide</span>
                     <h3>GitOps with ArgoCD</h3>
                     <p>Step-by-step guide to implementing GitOps workflows for Kubernetes deployments using ArgoCD and Helm.</p>
                     <div class="tags">
@@ -92,7 +106,7 @@
                 </div>
 
                 <div class="card">
-                    <div class="date">Security Guide</div>
+                    <span class="date">Security Guide</span>
                     <h3>Zero Trust for Cloud Infrastructure</h3>
                     <p>Implementing zero trust security model for cloud-native applications with service mesh and identity management.</p>
                     <div class="tags">
@@ -107,14 +121,22 @@
 
     <!-- Footer -->
     <footer>
-        <div class="footer-links">
-            <a href="../">Home</a>
-            <a href="../conferences/">Conferences</a>
-            <a href="../#contact">Contact</a>
-            <a href="https://github.com/schundu007" target="_blank">GitHub</a>
-            <a href="https://www.linkedin.com/in/schundu" target="_blank">LinkedIn</a>
+        <div class="footer-content">
+            <span class="footer-logo">Sudhakar Chundu</span>
+            <div class="footer-links">
+                <a href="../">Home</a>
+                <a href="../resume/">Resume</a>
+                <a href="../conferences/">Conferences</a>
+                <a href="../contact/">Contact</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/schundu007" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/schundu" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
         </div>
-        <p>&copy; 2024 Sudhakar Chundu. All rights reserved.</p>
+        <div style="text-align: center; margin-top: 2rem;">
+            <p>&copy; 2024 Sudhakar Chundu. All rights reserved.</p>
+        </div>
     </footer>
 </body>
 </html>
