@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume | Sudhakar Chundu</title>
+    <meta name="description" content="Resume of Sudhakar Chundu - Director of Cloud Engineering with 18+ years experience.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --red: #dc2626;
+            --red-dark: #b91c1c;
+            --black: #000000;
+            --black-soft: #111111;
+            --white: #ffffff;
+            --white-off: #f5f5f5;
+            --gray: #52525b;
+            --gray-light: #a1a1aa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--black);
+            line-height: 1.7;
+            background: var(--white);
+            font-size: 16px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--black);
+            z-index: 1000;
+            padding: 1.25rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .logo span { color: var(--red); }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover, .nav-links a.active { color: var(--red); }
+
+        /* Page Header */
+        .page-header {
+            padding: 10rem 2rem 4rem;
+            background: var(--black);
+            text-align: center;
+            color: var(--white);
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header h1 span { color: var(--red); }
+
+        .page-header p {
+            color: var(--gray-light);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--red);
+            color: var(--white);
+            text-decoration: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s;
+            border: 2px solid var(--red);
+        }
+
+        .download-btn:hover {
+            background: transparent;
+            color: var(--red);
+        }
+
+        /* Resume Content */
+        .resume-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .resume-section {
+            margin-bottom: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .resume-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            color: var(--red);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--red);
+            display: inline-block;
+        }
+
+        /* Contact Info */
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gray);
+        }
+
+        .contact-item a {
+            color: var(--black);
+            text-decoration: none;
+        }
+
+        .contact-item a:hover { color: var(--red); }
+
+        /* Summary */
+        .summary-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--gray);
+        }
+
+        /* Experience */
+        .experience-item {
+            margin-bottom: 2.5rem;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .job-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .company {
+            color: var(--red);
+            font-weight: 600;
+        }
+
+        .date-location {
+            color: var(--gray-light);
+            font-size: 0.9rem;
+        }
+
+        .experience-item ul {
+            margin-left: 1.25rem;
+            color: var(--gray);
+        }
+
+        .experience-item li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-category h4 {
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            color: var(--black);
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            padding: 0.35rem 0.75rem;
+            background: var(--black);
+            color: var(--white);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        /* Education & Certs */
+        .edu-item, .cert-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .edu-item h4, .cert-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .edu-item p, .cert-item p {
+            color: var(--gray);
+        }
+
+        /* Editable Styles */
+        [contenteditable="true"] {
+            outline: none;
+            border-radius: 2px;
+            transition: background 0.2s;
+        }
+
+        [contenteditable="true"]:hover {
+            background: rgba(220, 38, 38, 0.05);
+        }
+
+        [contenteditable="true"]:focus {
+            background: rgba(220, 38, 38, 0.1);
+            box-shadow: 0 0 0 2px var(--red);
+        }
+
+        .edit-notice {
+            background: var(--white-off);
+            border-left: 4px solid var(--red);
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .edit-notice strong { color: var(--black); }
+
+        /* Print Styles */
+        @media print {
+            nav, .edit-notice, .download-btn { display: none; }
+            .page-header { padding: 2rem; }
+            .resume-container { padding: 1rem; }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer p { opacity: 0.5; font-size: 0.875rem; }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            opacity: 0.7;
+            font-size: 0.875rem;
+            transition: opacity 0.2s;
+        }
+
+        .footer-links a:hover { opacity: 1; color: var(--red); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .page-header { padding: 8rem 2rem 3rem; }
+            .page-header h1 { font-size: 2rem; }
+            .experience-header { flex-direction: column; }
+            .skills-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="../" class="logo">SUDHAKAR<span>.</span></a>
+            <ul class="nav-links">
+                <li><a href="../#about">About</a></li>
+                <li><a href="../#expertise">Expertise</a></li>
+                <li><a href="./" class="active">Resume</a></li>
+                <li><a href="../conferences/">Conferences</a></li>
+                <li><a href="../publications/">Publications</a></li>
+                <li><a href="../#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>My <span>Resume</span></h1>
+        <p>18+ years of experience building and scaling enterprise cloud infrastructure</p>
+        <a href="#" class="download-btn" onclick="window.print(); return false;">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+            </svg>
+            Print / Download PDF
+        </a>
+    </header>
+
+    <!-- Resume Content -->
+    <div class="resume-container">
+        <div class="edit-notice">
+            <strong>Editable Resume:</strong> Click on any text to edit it directly. Use Ctrl+P (or Cmd+P on Mac) to print or save as PDF.
+        </div>
+
+        <!-- Contact Section -->
+        <section class="resume-section">
+            <h2 class="section-title">Contact Information</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span contenteditable="true">Sudhakar Chundu</span>
+                </div>
+                <div class="contact-item">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <span contenteditable="true">San Francisco Bay Area, CA</span>
+                </div>
+                <div class="contact-item">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+                    <a href="mailto:your.email@example.com" contenteditable="true">your.email@example.com</a>
+                </div>
+                <div class="contact-item">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                    <a href="https://www.linkedin.com/in/schundu" target="_blank">linkedin.com/in/schundu</a>
+                </div>
+                <div class="contact-item">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+                    <a href="https://github.com/schundu007" target="_blank">github.com/schundu007</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Professional Summary -->
+        <section class="resume-section">
+            <h2 class="section-title">Professional Summary</h2>
+            <p class="summary-text" contenteditable="true">
+                Distinguished Cloud Engineer and Director of Cloud Engineering with over 18 years of experience designing, implementing, and managing enterprise-scale cloud infrastructure. Expert in multi-cloud architectures (AWS, Azure, GCP, OCI), Kubernetes orchestration, and AI/ML infrastructure platforms. Proven track record of leading teams to achieve 99.97% uptime SLAs and delivering $8M+ in cost optimizations. Currently focused on GPU clusters and ML platforms, building the infrastructure needed for next-generation AI applications.
+            </p>
+        </section>
+
+        <!-- Experience -->
+        <section class="resume-section">
+            <h2 class="section-title">Professional Experience</h2>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <h3 class="job-title" contenteditable="true">Director of Cloud Engineering</h3>
+                        <p class="company" contenteditable="true">Current Company</p>
+                    </div>
+                    <span class="date-location" contenteditable="true">2020 - Present | San Francisco, CA</span>
+                </div>
+                <ul>
+                    <li contenteditable="true">Lead a team of 15+ cloud engineers managing multi-cloud infrastructure across AWS, Azure, and OCI</li>
+                    <li contenteditable="true">Architected and deployed GPU clusters with 65+ nodes supporting distributed ML training and inference at scale</li>
+                    <li contenteditable="true">Achieved 99.97% uptime SLA through implementation of comprehensive observability and SRE practices</li>
+                    <li contenteditable="true">Delivered $8M+ in cost optimizations through resource right-sizing, reserved instances, and automation</li>
+                    <li contenteditable="true">Implemented GitOps workflows using ArgoCD and Flux for Kubernetes deployments</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <h3 class="job-title" contenteditable="true">Senior Cloud Architect</h3>
+                        <p class="company" contenteditable="true">Previous Company</p>
+                    </div>
+                    <span class="date-location" contenteditable="true">2016 - 2020 | Seattle, WA</span>
+                </div>
+                <ul>
+                    <li contenteditable="true">Designed and implemented Kubernetes-based container orchestration platform serving 500+ microservices</li>
+                    <li contenteditable="true">Built CI/CD pipelines using Jenkins, CircleCI, and Azure DevOps for automated deployments</li>
+                    <li contenteditable="true">Implemented Infrastructure as Code using Terraform, Ansible, and CloudFormation</li>
+                    <li contenteditable="true">Established monitoring and alerting infrastructure using Prometheus, Grafana, and Datadog</li>
+                    <li contenteditable="true">Led migration of on-premises workloads to cloud, reducing infrastructure costs by 40%</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <h3 class="job-title" contenteditable="true">DevOps Engineer</h3>
+                        <p class="company" contenteditable="true">Earlier Company</p>
+                    </div>
+                    <span class="date-location" contenteditable="true">2012 - 2016 | Austin, TX</span>
+                </div>
+                <ul>
+                    <li contenteditable="true">Managed Docker containerization and orchestration for production applications</li>
+                    <li contenteditable="true">Developed automation scripts using Python, Bash, and Go for infrastructure management</li>
+                    <li contenteditable="true">Implemented configuration management using Ansible and Puppet</li>
+                    <li contenteditable="true">Built and maintained CI/CD pipelines for continuous integration and deployment</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <h3 class="job-title" contenteditable="true">Systems Administrator</h3>
+                        <p class="company" contenteditable="true">First Company</p>
+                    </div>
+                    <span class="date-location" contenteditable="true">2006 - 2012 | Various Locations</span>
+                </div>
+                <ul>
+                    <li contenteditable="true">Managed Linux/Unix server infrastructure and networking</li>
+                    <li contenteditable="true">Implemented backup and disaster recovery solutions</li>
+                    <li contenteditable="true">Automated routine tasks using shell scripting</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section class="resume-section">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h4>Cloud Platforms</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">Azure</span>
+                        <span class="skill-tag">GCP</span>
+                        <span class="skill-tag">OCI</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h4>Container & Orchestration</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Helm</span>
+                        <span class="skill-tag">Istio</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h4>Infrastructure as Code</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Terraform</span>
+                        <span class="skill-tag">Ansible</span>
+                        <span class="skill-tag">CloudFormation</span>
+                        <span class="skill-tag">Bicep</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h4>CI/CD & GitOps</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">ArgoCD</span>
+                        <span class="skill-tag">Flux</span>
+                        <span class="skill-tag">Jenkins</span>
+                        <span class="skill-tag">GitHub Actions</span>
+                        <span class="skill-tag">Azure DevOps</span>
+                        <span class="skill-tag">CircleCI</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h4>Monitoring & Observability</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Prometheus</span>
+                        <span class="skill-tag">Grafana</span>
+                        <span class="skill-tag">Datadog</span>
+                        <span class="skill-tag">CloudWatch</span>
+                        <span class="skill-tag">Azure Monitor</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h4>AI/ML & HPC</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Ray</span>
+                        <span class="skill-tag">Slurm</span>
+                        <span class="skill-tag">Kubeflow</span>
+                        <span class="skill-tag">MLflow</span>
+                        <span class="skill-tag">NVIDIA GPU</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h4>Programming Languages</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Go</span>
+                        <span class="skill-tag">Bash</span>
+                        <span class="skill-tag">TypeScript</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h4>Compliance & Security</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">HIPAA</span>
+                        <span class="skill-tag">SOC2</span>
+                        <span class="skill-tag">FedRAMP</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section class="resume-section">
+            <h2 class="section-title">Education</h2>
+            <div class="edu-item">
+                <h4 contenteditable="true">Master of Science in Computer Science</h4>
+                <p contenteditable="true">University Name | Graduation Year</p>
+            </div>
+            <div class="edu-item">
+                <h4 contenteditable="true">Bachelor of Science in Computer Science</h4>
+                <p contenteditable="true">University Name | Graduation Year</p>
+            </div>
+        </section>
+
+        <!-- Certifications -->
+        <section class="resume-section">
+            <h2 class="section-title">Certifications</h2>
+            <div class="cert-item">
+                <h4 contenteditable="true">AWS Solutions Architect Professional</h4>
+                <p contenteditable="true">Amazon Web Services</p>
+            </div>
+            <div class="cert-item">
+                <h4 contenteditable="true">Certified Kubernetes Administrator (CKA)</h4>
+                <p contenteditable="true">Cloud Native Computing Foundation</p>
+            </div>
+            <div class="cert-item">
+                <h4 contenteditable="true">Azure Solutions Architect Expert</h4>
+                <p contenteditable="true">Microsoft</p>
+            </div>
+            <div class="cert-item">
+                <h4 contenteditable="true">HashiCorp Certified: Terraform Associate</h4>
+                <p contenteditable="true">HashiCorp</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="../conferences/">Conferences</a>
+            <a href="../publications/">Publications</a>
+            <a href="../#contact">Contact</a>
+        </div>
+        <p>&copy; 2024 Sudhakar Chundu. All rights reserved.</p>
+    </footer>
+</body>
+</html>
