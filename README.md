@@ -13,19 +13,19 @@ Personal portfolio website showcasing cloud infrastructure and DevOps expertise.
 
 ```
 chundu/
-├── index.html              # Main portfolio page
-├── 404.html                # Custom 404 page
-├── favicon.ico             # Site favicon
-├── README.md               # This file
+├── index.html
+├── 404.html
+├── favicon.ic
+├── README.md
 ├── assets/
 │   └── css/
-│       └── style.css       # Shared styles
+│       └── style.css
 ├── conferences/
-│   └── index.html          # Conference talks
+│   └── index.html
 ├── publications/
-│   └── index.html          # Technical publications
+│   └── index.html
 └── contact/
-    └── index.html          # Contact information
+    └── index.html
 ```
 
 ## 🛠️ Technologies
