@@ -3,137 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/custom.css">
-    <title></title>
-    
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-CS1EZGDNJB"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-CS1EZGDNJB');
-</script>
-
-
+    <title>404 - Page Not Found | Sudhakar Chundu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fc;
+            text-align: center;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 500px;
+        }
+        h1 {
+            font-size: 8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+        h2 {
+            font-size: 1.5rem;
+            color: #1a1a2e;
+            margin: 1rem 0;
+        }
+        p {
+            color: #4a4a68;
+            margin-bottom: 2rem;
+        }
+        a {
+            display: inline-block;
+            padding: 0.875rem 1.75rem;
+            background: #0066cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        a:hover {
+            background: #004d99;
+            transform: translateY(-2px);
+        }
+    </style>
 </head>
 <body>
-    <link rel="stylesheet" href="/assets/custom.css">
-
-<header>
-    <div class="header-name">
-        Hugo Affaticati
+    <div class="container">
+        <h1>404</h1>
+        <h2>Page Not Found</h2>
+        <p>The page you're looking for doesn't exist or has been moved.</p>
+        <a href="/">Back to Home</a>
     </div>
-    <nav>
-        <button class="nav-toggle" aria-label="Open Menu" aria-expanded="false">&#9776;</button>
-        <ul class="nav-menu">
-            <li><a href="/" class="">About</a></li>
-            <li><a href="/publications/" class="">Publications</a></li>
-            <li><a href="/videos/" class="">Videos</a></li>
-            <li><a href="/conferences/" class="">Conferences</a></li>
-            <li><a href="/contact/" class="">Contact</a></li>
-        </ul>
-    </nav>
-</header>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const toggle = document.querySelector('.nav-toggle');
-    const menu = document.querySelector('.nav-menu');
-    toggle.addEventListener('click', function() {
-        const expanded = toggle.getAttribute('aria-expanded') === 'true' || false;
-        toggle.setAttribute('aria-expanded', !expanded);
-        menu.classList.toggle('nav-menu-visible');
-    });
-});
-</script>
-
-    <main>
-        <style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
-
-<div class="container">
-  <h1>404</h1>
-
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
-
-    </main>
-    <footer>
-  <div class="footer-content">
-    <p>Connect with me:</p>
-    <ul>
-      <li>
-        <a href="https://www.linkedin.com/in/hugo-affaticati" target="_blank" rel="noopener noreferrer">
-          <img src="/assets/images/linkedin-logo.png" alt="LinkedIn" class="footer-icon"> LinkedIn
-        </a>
-      </li>
-      <li>
-        <a href="https://github.com/haffaticati" target="_blank" rel="noopener noreferrer">
-          <img src="/assets/images/github-logo.png" alt="GitHub" class="footer-icon"> GitHub
-        </a>
-      </li>
-    </ul>
-  </div>
-  <p>&copy; Hugo Affaticati - All Rights Reserved | <a href="/privacy/">Privacy Policy</a></p>
-</footer>
-
-<style>
-  footer {
-    background-color: #f8f9fa; /* Light background color */
-    color: #333;
-    padding: 20px;
-    text-align: center;
-  }
-
-  footer a {
-    color: #333;
-    text-decoration: none;
-    margin: 0 10px;
-  }
-
-  footer a:hover {
-    text-decoration: underline;
-  }
-
-  .footer-content ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  .footer-content ul li {
-    display: inline;
-    margin-right: 20px;
-  }
-
-  .footer-icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 8px;
-    vertical-align: middle;
-  }
-
-  footer p {
-    margin-top: 10px;
-    font-size: 14px;
-  }
-</style>
-
-
-
 </body>
 </html>
-

@@ -3,150 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/custom.css">
-    <title></title>
-    
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-CS1EZGDNJB"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-CS1EZGDNJB');
-</script>
-
-
+    <title>Contact | Sudhakar Chundu</title>
+    <meta name="description" content="Get in touch with Sudhakar Chundu for cloud infrastructure consulting and collaboration.">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .contact-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+        }
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--bg-alt);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+        }
+        .contact-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .contact-card p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+        .contact-card a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .contact-card a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <link rel="stylesheet" href="/assets/custom.css">
-
-<header>
-    <div class="header-name">
-        Hugo Affaticati
-    </div>
+    <!-- Navigation -->
     <nav>
-        <button class="nav-toggle" aria-label="Open Menu" aria-expanded="false">&#9776;</button>
-        <ul class="nav-menu">
-            <li><a href="/" class="">About</a></li>
-            <li><a href="/publications/" class="">Publications</a></li>
-            <li><a href="/videos/" class="">Videos</a></li>
-            <li><a href="/conferences/" class="">Conferences</a></li>
-            <li><a href="/contact/" class="active">Contact</a></li>
-        </ul>
+        <div class="nav-container">
+            <a href="../" class="logo">SC</a>
+            <ul class="nav-links">
+                <li><a href="../#about">About</a></li>
+                <li><a href="../#expertise">Expertise</a></li>
+                <li><a href="../conferences/">Conferences</a></li>
+                <li><a href="../publications/">Publications</a></li>
+                <li><a href="./" class="active">Contact</a></li>
+                <li><a href="https://github.com/schundu007" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
     </nav>
-</header>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const toggle = document.querySelector('.nav-toggle');
-    const menu = document.querySelector('.nav-menu');
-    toggle.addEventListener('click', function() {
-        const expanded = toggle.getAttribute('aria-expanded') === 'true' || false;
-        toggle.setAttribute('aria-expanded', !expanded);
-        menu.classList.toggle('nav-menu-visible');
-    });
-});
-</script>
 
-    <main>
-        <div class="publications-header">
-    <h1>Contact me</h1>
-    <br />
-    <br />
-</div>
-<div class="publication-container">
-    <h3>    
-    <form action="https://formspree.io/f/xdkavnrw" method="POST">
-  <div>
-    <label for="first-name">First Name:</label>
-    <input type="text" id="first-name" name="first-name" required="" />
-  </div>
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>Get in Touch</h1>
+        <p>Interested in discussing cloud architecture, DevOps practices, or collaboration opportunities? Let's connect.</p>
+    </header>
 
-  <div>
-    <label for="last-name">Last Name:</label>
-    <input type="text" id="last-name" name="last-name" required="" />
-  </div>
+    <!-- Content -->
+    <section class="section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </div>
+                    <h3>LinkedIn</h3>
+                    <p>Connect for professional networking and opportunities.</p>
+                    <a href="https://linkedin.com/in/sudhakar-chundu" target="_blank">Connect on LinkedIn →</a>
+                </div>
 
-  <div>
-    <label for="email">Email Address:</label>
-    <input type="email" id="email" name="_replyto" required="" />
-  </div>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </div>
+                    <h3>GitHub</h3>
+                    <p>Check out my open source projects and contributions.</p>
+                    <a href="https://github.com/schundu007" target="_blank">View GitHub Profile →</a>
+                </div>
 
-  <div>
-    <label for="message">Message:</label>
-    <textarea id="message" name="message" rows="4" required=""></textarea>
-  </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📍</div>
+                    <h3>Location</h3>
+                    <p>Based in San Jose, California. Available for remote collaboration worldwide.</p>
+                    <span style="color: var(--text-light);">San Jose, CA, USA</span>
+                </div>
+            </div>
 
-  <button type="submit">Send Message</button>
-</form>
+            <div style="text-align: center; margin-top: 4rem;">
+                <h2 style="margin-bottom: 1rem;">Open to Opportunities</h2>
+                <p style="color: var(--text-light); max-width: 600px; margin: 0 auto 2rem;">
+                    Currently exploring senior leadership roles in cloud infrastructure, 
+                    platform engineering, and AI/ML infrastructure. Open to both full-time 
+                    positions and consulting engagements.
+                </p>
+                <a href="https://linkedin.com/in/sudhakar-chundu" class="btn btn-primary" target="_blank">
+                    Let's Connect
+                </a>
+            </div>
+        </div>
+    </section>
 
-
-</h3></div>
-
-    </main>
+    <!-- Footer -->
     <footer>
-  <div class="footer-content">
-    <p>Connect with me:</p>
-    <ul>
-      <li>
-        <a href="https://www.linkedin.com/in/hugo-affaticati" target="_blank" rel="noopener noreferrer">
-          <img src="/assets/images/linkedin-logo.png" alt="LinkedIn" class="footer-icon"> LinkedIn
-        </a>
-      </li>
-      <li>
-        <a href="https://github.com/haffaticati" target="_blank" rel="noopener noreferrer">
-          <img src="/assets/images/github-logo.png" alt="GitHub" class="footer-icon"> GitHub
-        </a>
-      </li>
-    </ul>
-  </div>
-  <p>&copy; Hugo Affaticati - All Rights Reserved | <a href="/privacy/">Privacy Policy</a></p>
-</footer>
-
-<style>
-  footer {
-    background-color: #f8f9fa; /* Light background color */
-    color: #333;
-    padding: 20px;
-    text-align: center;
-  }
-
-  footer a {
-    color: #333;
-    text-decoration: none;
-    margin: 0 10px;
-  }
-
-  footer a:hover {
-    text-decoration: underline;
-  }
-
-  .footer-content ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  .footer-content ul li {
-    display: inline;
-    margin-right: 20px;
-  }
-
-  .footer-icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 8px;
-    vertical-align: middle;
-  }
-
-  footer p {
-    margin-top: 10px;
-    font-size: 14px;
-  }
-</style>
-
-
-
+        <div class="footer-links">
+            <a href="../">Home</a>
+            <a href="../conferences/">Conferences</a>
+            <a href="../publications/">Publications</a>
+            <a href="https://github.com/schundu007" target="_blank">GitHub</a>
+            <a href="https://linkedin.com/in/sudhakar-chundu" target="_blank">LinkedIn</a>
+        </div>
+        <p>&copy; 2024 Sudhakar Chundu. All rights reserved.</p>
+    </footer>
 </body>
 </html>
-
