@@ -671,26 +671,44 @@
 
     <script>
         // Resume Save/Load functionality
+
+        /**
+         * @typedef {Record<number, string>} ResumeData
+         * Stores editable content indexed by element position
+         */
+
+        /** @type {string} */
         const STORAGE_KEY = 'resume_data';
 
-        // Save all editable content
+        /**
+         * Save all editable content to localStorage
+         * @returns {void}
+         */
         function saveResume() {
+            /** @type {NodeListOf<Element>} */
             const editables = document.querySelectorAll('[contenteditable="true"]');
+            /** @type {ResumeData} */
             const data = {};
-            editables.forEach((el, index) => {
+            editables.forEach((/** @type {Element} */ el, /** @type {number} */ index) => {
                 data[index] = el.innerHTML;
             });
             localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
             showSaveStatus('Saved!');
         }
 
-        // Load saved content
+        /**
+         * Load saved content from localStorage
+         * @returns {void}
+         */
         function loadResume() {
+            /** @type {string | null} */
             const saved = localStorage.getItem(STORAGE_KEY);
             if (saved) {
-                const data = JSON.parse(saved);
+                /** @type {ResumeData} */
+                const data = /** @type {ResumeData} */ (JSON.parse(saved));
+                /** @type {NodeListOf<Element>} */
                 const editables = document.querySelectorAll('[contenteditable="true"]');
-                editables.forEach((el, index) => {
+                editables.forEach((/** @type {Element} */ el, /** @type {number} */ index) => {
                     if (data[index] !== undefined) {
                         el.innerHTML = data[index];
                     }
@@ -699,7 +717,10 @@
             }
         }
 
-        // Reset to original content
+        /**
+         * Reset to original content by clearing localStorage and reloading
+         * @returns {void}
+         */
         function resetResume() {
             if (confirm('Are you sure you want to reset all changes? This cannot be undone.')) {
                 localStorage.removeItem(STORAGE_KEY);
@@ -707,24 +728,35 @@
             }
         }
 
-        // Show save status
+        /**
+         * Show save status message to user
+         * @param {string} message - The status message to display
+         * @returns {void}
+         */
         function showSaveStatus(message) {
+            /** @type {HTMLElement | null} */
             const status = document.getElementById('save-status');
-            status.textContent = message;
-            status.style.opacity = '1';
-            setTimeout(() => {
-                status.style.opacity = '0';
-            }, 2000);
+            if (status) {
+                status.textContent = message;
+                status.style.opacity = '1';
+                setTimeout(() => {
+                    status.style.opacity = '0';
+                }, 2000);
+            }
         }
 
-        // Auto-save on content change
+        /**
+         * Initialize auto-save functionality on DOM content loaded
+         */
         document.addEventListener('DOMContentLoaded', () => {
             loadResume();
 
+            /** @type {NodeListOf<Element>} */
             const editables = document.querySelectorAll('[contenteditable="true"]');
+            /** @type {number | undefined} */
             let saveTimeout;
 
-            editables.forEach(el => {
+            editables.forEach((/** @type {Element} */ el) => {
                 el.addEventListener('input', () => {
                     clearTimeout(saveTimeout);
                     saveTimeout = setTimeout(saveResume, 1000); // Auto-save after 1 second of no typing
