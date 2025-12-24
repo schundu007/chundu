@@ -25,12 +25,12 @@
         :root {
             --red: #dc2626;
             --red-dark: #b91c1c;
-            --red-light: #fecaca;
             --black: #000000;
-            --black-soft: #0a0a0a;
+            --black-soft: #111111;
             --white: #ffffff;
-            --white-off: #fafafa;
-            --gray: #71717a;
+            --white-off: #f5f5f5;
+            --gray: #52525b;
+            --gray-light: #a1a1aa;
         }
 
         * {
@@ -46,13 +46,15 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             color: var(--black);
-            line-height: 1.6;
+            line-height: 1.7;
             background: var(--white);
+            font-size: 16px;
         }
 
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
+            line-height: 1.2;
         }
 
         /* Navigation */
@@ -62,11 +64,11 @@
             width: 100%;
             background: var(--black);
             z-index: 1000;
-            padding: 1rem 0;
+            padding: 1.25rem 0;
         }
 
         .nav-container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
             display: flex;
@@ -97,9 +99,9 @@
             color: var(--white);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.08em;
             transition: color 0.2s;
             position: relative;
         }
@@ -107,7 +109,7 @@
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -4px;
+            bottom: -6px;
             left: 0;
             width: 0;
             height: 2px;
@@ -128,61 +130,55 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 8rem 2rem 4rem;
-            background: var(--white);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 50%;
-            height: 100%;
+            padding: 8rem 2rem 6rem;
             background: var(--black);
-            clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+            position: relative;
         }
 
         .hero-container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 5rem;
             align-items: center;
-            position: relative;
-            z-index: 1;
+        }
+
+        .hero-content {
+            color: var(--white);
+        }
+
+        .hero-label {
+            display: inline-block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
         }
 
         .hero-content h1 {
-            font-size: 4rem;
+            font-size: 3.75rem;
             font-weight: 700;
-            line-height: 1.05;
-            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.75rem;
             letter-spacing: -0.03em;
+            color: var(--white);
         }
 
         .hero-content h1 span {
             color: var(--red);
+            display: block;
         }
 
-        .hero-content .subtitle {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.25rem;
-            color: var(--gray);
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .hero-content p {
-            color: var(--gray);
+        .hero-content .lead {
+            color: var(--gray-light);
             margin-bottom: 2.5rem;
-            font-size: 1.1rem;
-            max-width: 500px;
+            font-size: 1.125rem;
+            line-height: 1.8;
+            max-width: 480px;
         }
 
         .cta-buttons {
@@ -191,18 +187,18 @@
         }
 
         .btn {
-            padding: 1rem 2rem;
+            padding: 1rem 1.75rem;
             border-radius: 0;
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             text-decoration: none;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.06em;
             transition: all 0.3s;
             display: inline-flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.6rem;
             border: 2px solid transparent;
         }
 
@@ -213,19 +209,20 @@
         }
 
         .btn-primary:hover {
-            background: transparent;
+            background: var(--white);
             color: var(--red);
+            border-color: var(--white);
         }
 
-        .btn-secondary {
+        .btn-outline {
             background: transparent;
-            color: var(--black);
-            border-color: var(--black);
+            color: var(--white);
+            border-color: var(--white);
         }
 
-        .btn-secondary:hover {
-            background: var(--black);
-            color: var(--white);
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--black);
         }
 
         .hero-visual {
@@ -236,15 +233,15 @@
 
         .profile-frame {
             position: relative;
-            width: 420px;
-            height: 520px;
+            width: 380px;
+            height: 480px;
         }
 
         .profile-frame::before {
             content: '';
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 16px;
+            left: 16px;
             width: 100%;
             height: 100%;
             border: 3px solid var(--red);
@@ -255,7 +252,7 @@
             position: relative;
             width: 100%;
             height: 100%;
-            background: var(--gray);
+            background: var(--black-soft);
             overflow: hidden;
             z-index: 1;
         }
@@ -264,62 +261,131 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(0%);
-            transition: filter 0.3s;
-        }
-
-        .profile-frame:hover .profile-image img {
-            filter: grayscale(0%);
         }
 
         .profile-badge {
             position: absolute;
-            bottom: -20px;
-            left: -20px;
+            bottom: -16px;
+            left: -16px;
             background: var(--red);
             color: var(--white);
-            padding: 1.5rem;
+            padding: 1.25rem 1.5rem;
             z-index: 2;
         }
 
-        .profile-badge .years {
+        .profile-badge .number {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 700;
             line-height: 1;
         }
 
         .profile-badge .label {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
+            margin-top: 0.25rem;
         }
 
-        /* Section Styles */
-        .section {
-            padding: 6rem 2rem;
+        /* About Section */
+        .about-section {
+            padding: 7rem 2rem;
+            background: var(--white);
         }
 
-        .section-dark {
-            background: var(--black);
-            color: var(--white);
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start;
         }
 
-        .section-light {
+        .about-header {
+            position: sticky;
+            top: 120px;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .about-header h2 {
+            font-size: 2.75rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .about-header h2 span {
+            color: var(--red);
+        }
+
+        .about-content p {
+            color: var(--gray);
+            font-size: 1.0625rem;
+            line-height: 1.85;
+            margin-bottom: 1.5rem;
+            max-width: 520px;
+        }
+
+        .about-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .about-highlights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .highlight-item {
+            padding: 1.5rem;
+            background: var(--white-off);
+            border-left: 3px solid var(--red);
+        }
+
+        .highlight-item .value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 0.25rem;
+        }
+
+        .highlight-item .label {
+            font-size: 0.8rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Expertise Section */
+        .expertise-section {
+            padding: 7rem 2rem;
             background: var(--white-off);
         }
 
-        .container {
-            max-width: 1400px;
+        .expertise-container {
+            max-width: 1200px;
             margin: 0 auto;
         }
 
         .section-header {
             margin-bottom: 4rem;
+            max-width: 560px;
         }
 
         .section-header h2 {
-            font-size: 3rem;
+            font-size: 2.75rem;
             margin-bottom: 1rem;
             letter-spacing: -0.02em;
         }
@@ -330,28 +396,26 @@
 
         .section-header p {
             color: var(--gray);
-            max-width: 600px;
-            font-size: 1.1rem;
-        }
-
-        .section-dark .section-header p {
-            color: rgba(255,255,255,0.6);
+            font-size: 1.0625rem;
+            line-height: 1.7;
         }
 
         /* Skills Grid */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 2px;
-            background: var(--black);
-            border: 2px solid var(--black);
+            gap: 1.5rem;
         }
 
         .skill-card {
             background: var(--white);
-            padding: 2.5rem;
+            padding: 2rem;
+            border: 1px solid rgba(0,0,0,0.08);
             transition: all 0.3s;
             position: relative;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
         }
 
         .skill-card::before {
@@ -359,67 +423,71 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 4px;
-            height: 0;
+            width: 0;
+            height: 3px;
             background: var(--red);
-            transition: height 0.3s;
+            transition: width 0.3s;
         }
 
         .skill-card:hover::before {
-            height: 100%;
+            width: 100%;
         }
 
         .skill-card:hover {
-            background: var(--white-off);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            transform: translateY(-4px);
         }
 
         .skill-number {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 1rem;
+            font-size: 0.875rem;
             color: var(--red);
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
             font-weight: 600;
         }
 
         .skill-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            margin-bottom: 0.875rem;
             letter-spacing: -0.01em;
         }
 
         .skill-card p {
             color: var(--gray);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
+            font-size: 0.9375rem;
+            line-height: 1.7;
+            margin-bottom: 1.25rem;
+            flex-grow: 1;
         }
 
         .tech-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.4rem;
+            margin-top: auto;
         }
 
         .tech-tag {
-            padding: 0.35rem 0.75rem;
+            padding: 0.3rem 0.6rem;
             background: var(--black);
             color: var(--white);
-            font-size: 0.75rem;
+            font-size: 0.6875rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
             font-weight: 500;
         }
 
         /* Stats Section */
         .stats-section {
             background: var(--red);
-            padding: 4rem 2rem;
+            padding: 5rem 2rem;
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            max-width: 1400px;
+            gap: 3rem;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
@@ -430,14 +498,14 @@
 
         .stat-number {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 700;
             line-height: 1;
             margin-bottom: 0.5rem;
         }
 
         .stat-label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             opacity: 0.9;
@@ -447,18 +515,18 @@
         .contact-section {
             background: var(--black);
             color: var(--white);
-            padding: 6rem 2rem;
+            padding: 7rem 2rem;
         }
 
         .contact-content {
-            max-width: 800px;
+            max-width: 680px;
             margin: 0 auto;
             text-align: center;
         }
 
         .contact-content h2 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 3rem;
+            margin-bottom: 1.25rem;
             letter-spacing: -0.02em;
         }
 
@@ -467,9 +535,13 @@
         }
 
         .contact-content p {
-            color: rgba(255,255,255,0.6);
-            margin-bottom: 3rem;
-            font-size: 1.1rem;
+            color: var(--gray-light);
+            margin-bottom: 2.5rem;
+            font-size: 1.0625rem;
+            line-height: 1.7;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .contact-buttons {
@@ -486,19 +558,21 @@
         }
 
         .btn-white:hover {
-            background: transparent;
+            background: var(--red);
             color: var(--white);
+            border-color: var(--red);
         }
 
         .btn-outline-white {
             background: transparent;
             color: var(--white);
-            border-color: var(--white);
+            border-color: rgba(255,255,255,0.3);
         }
 
         .btn-outline-white:hover {
             background: var(--white);
             color: var(--black);
+            border-color: var(--white);
         }
 
         /* Footer */
@@ -506,11 +580,11 @@
             background: var(--black);
             color: var(--white);
             padding: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255,255,255,0.08);
         }
 
         .footer-content {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -519,7 +593,7 @@
 
         footer p {
             opacity: 0.5;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
         }
 
         .footer-links {
@@ -531,7 +605,7 @@
             color: var(--white);
             text-decoration: none;
             opacity: 0.5;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             transition: opacity 0.2s;
         }
 
@@ -562,18 +636,21 @@
             .hero-container {
                 grid-template-columns: 1fr;
                 text-align: center;
-            }
-
-            .hero::before {
-                display: none;
+                gap: 3rem;
             }
 
             .hero-content h1 {
                 font-size: 3rem;
             }
 
-            .hero-content p {
+            .hero-content h1 span {
+                display: inline;
+            }
+
+            .hero-content .lead {
                 max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
             }
 
             .cta-buttons {
@@ -583,6 +660,20 @@
             .profile-frame {
                 width: 320px;
                 height: 400px;
+                margin: 0 auto;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .about-header {
+                position: static;
+            }
+
+            .about-content p {
+                max-width: 100%;
             }
 
             .skills-grid {
@@ -591,6 +682,7 @@
 
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
             }
         }
 
@@ -603,16 +695,25 @@
                 display: block;
             }
 
-            .hero-content h1 {
-                font-size: 2.5rem;
+            .hero {
+                padding: 7rem 1.5rem 4rem;
             }
 
-            .section-header h2 {
+            .hero-content h1 {
+                font-size: 2.25rem;
+            }
+
+            .section-header h2,
+            .about-header h2 {
                 font-size: 2rem;
             }
 
             .skills-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .skill-card {
+                min-height: auto;
             }
 
             .stat-number {
@@ -632,6 +733,10 @@
             .profile-frame {
                 width: 280px;
                 height: 350px;
+            }
+
+            .about-highlights {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -657,23 +762,23 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero" id="about">
+    <section class="hero">
         <div class="hero-container">
             <div class="hero-content">
-                <p class="subtitle">Cloud Infrastructure Leader</p>
-                <h1>Hi, I'm <span>Sudhakar Chundu</span></h1>
-                <p>
-                    Building scalable cloud infrastructure and leading engineering teams to deliver
-                    high-availability platforms. Specialized in Kubernetes, AI/ML infrastructure,
-                    and DevOps automation.
+                <span class="hero-label">Cloud Infrastructure Leader</span>
+                <h1>Building the Future <span>of Cloud Infrastructure</span></h1>
+                <p class="lead">
+                    I'm Sudhakar Chundu — a Distinguished Cloud Engineer
+                    leading teams to build scalable, high-availability
+                    platforms that power modern enterprises.
                 </p>
                 <div class="cta-buttons">
                     <a href="#contact" class="btn btn-primary">
                         Get in Touch
-                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </a>
-                    <a href="https://www.linkedin.com/in/schundu" class="btn btn-secondary" target="_blank">
-                        LinkedIn
+                    <a href="https://www.linkedin.com/in/schundu" class="btn btn-outline" target="_blank">
+                        LinkedIn Profile
                     </a>
                 </div>
             </div>
@@ -683,7 +788,7 @@
                         <img src="assets/images/profile.jpg" alt="Sudhakar Chundu">
                     </div>
                     <div class="profile-badge">
-                        <div class="years">18+</div>
+                        <div class="number">18+</div>
                         <div class="label">Years Experience</div>
                     </div>
                 </div>
@@ -691,19 +796,66 @@
         </div>
     </section>
 
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="about-container">
+            <div class="about-header">
+                <span class="section-label">About Me</span>
+                <h2>Passionate About <span>Scalable Systems</span></h2>
+            </div>
+            <div class="about-content">
+                <p>
+                    With over 18 years in the industry, I specialize in
+                    designing and implementing cloud infrastructure that
+                    scales seamlessly while maintaining exceptional reliability.
+                </p>
+                <p>
+                    My expertise spans multi-cloud architectures, Kubernetes
+                    orchestration, AI/ML infrastructure, and DevOps automation.
+                    I've led teams that achieved 99.97% uptime SLAs and
+                    delivered over $8M in cost optimizations.
+                </p>
+                <p>
+                    Currently focused on GPU clusters and ML platforms,
+                    helping organizations build the infrastructure needed
+                    for the next generation of AI applications.
+                </p>
+                <div class="about-highlights">
+                    <div class="highlight-item">
+                        <div class="value">65+</div>
+                        <div class="label">GPU Nodes Managed</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="value">99.97%</div>
+                        <div class="label">Uptime Achieved</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Expertise Section -->
-    <section class="section section-light" id="expertise">
-        <div class="container">
+    <section class="expertise-section" id="expertise">
+        <div class="expertise-container">
             <div class="section-header">
+                <span class="section-label">What I Do</span>
                 <h2>Areas of <span>Expertise</span></h2>
-                <p>Building and scaling enterprise infrastructure across multiple cloud platforms</p>
+                <p>
+                    Building and scaling enterprise infrastructure
+                    across multiple cloud platforms with focus on
+                    reliability, performance, and cost efficiency.
+                </p>
             </div>
 
             <div class="skills-grid">
                 <div class="skill-card">
                     <div class="skill-number">01</div>
                     <h3>Multi-Cloud Architecture</h3>
-                    <p>Designing infrastructure across AWS, Azure and OCI with focus on cost optimization and high availability.</p>
+                    <p>
+                        Designing infrastructure across AWS, Azure and
+                        OCI with focus on cost optimization and
+                        high availability.
+                    </p>
                     <div class="tech-tags">
                         <span class="tech-tag">AWS</span>
                         <span class="tech-tag">Azure</span>
@@ -715,7 +867,11 @@
                 <div class="skill-card">
                     <div class="skill-number">02</div>
                     <h3>Kubernetes & Containers</h3>
-                    <p>Managing large-scale Kubernetes clusters with advanced orchestration and GitOps workflows.</p>
+                    <p>
+                        Managing large-scale Kubernetes clusters
+                        with advanced orchestration, service mesh,
+                        and GitOps workflows.
+                    </p>
                     <div class="tech-tags">
                         <span class="tech-tag">Kubernetes</span>
                         <span class="tech-tag">Helm</span>
@@ -727,7 +883,11 @@
                 <div class="skill-card">
                     <div class="skill-number">03</div>
                     <h3>AI/ML Infrastructure</h3>
-                    <p>Building GPU clusters and ML platforms supporting distributed training at scale.</p>
+                    <p>
+                        Building GPU clusters and ML platforms
+                        supporting distributed training and
+                        inference at scale.
+                    </p>
                     <div class="tech-tags">
                         <span class="tech-tag">GPU Clusters</span>
                         <span class="tech-tag">Ray</span>
@@ -739,18 +899,26 @@
                 <div class="skill-card">
                     <div class="skill-number">04</div>
                     <h3>Infrastructure as Code</h3>
-                    <p>Automating infrastructure provisioning with modern IaC tools and CI/CD pipelines.</p>
+                    <p>
+                        Automating infrastructure provisioning
+                        with modern IaC tools and robust
+                        CI/CD pipelines.
+                    </p>
                     <div class="tech-tags">
                         <span class="tech-tag">Terraform</span>
                         <span class="tech-tag">Ansible</span>
-                        <span class="tech-tag">Biceps</span>
+                        <span class="tech-tag">Bicep</span>
                     </div>
                 </div>
 
                 <div class="skill-card">
                     <div class="skill-number">05</div>
                     <h3>Observability & SRE</h3>
-                    <p>Implementing comprehensive monitoring and alerting for 99.97% uptime SLAs.</p>
+                    <p>
+                        Implementing comprehensive monitoring
+                        and alerting systems for 99.97%
+                        uptime SLAs.
+                    </p>
                     <div class="tech-tags">
                         <span class="tech-tag">Prometheus</span>
                         <span class="tech-tag">Grafana</span>
@@ -761,7 +929,11 @@
                 <div class="skill-card">
                     <div class="skill-number">06</div>
                     <h3>Security & Compliance</h3>
-                    <p>Ensuring infrastructure meets security standards across regulated sectors.</p>
+                    <p>
+                        Ensuring infrastructure meets security
+                        standards across healthcare, financial,
+                        and government sectors.
+                    </p>
                     <div class="tech-tags">
                         <span class="tech-tag">HIPAA</span>
                         <span class="tech-tag">SOC2</span>
@@ -797,12 +969,17 @@
     <!-- Contact Section -->
     <section class="contact-section" id="contact">
         <div class="contact-content">
+            <span class="section-label" style="color: var(--red);">Get in Touch</span>
             <h2>Let's <span>Connect</span></h2>
-            <p>Interested in discussing cloud architecture, DevOps practices, or collaboration opportunities? I'd love to hear from you.</p>
+            <p>
+                Interested in discussing cloud architecture, DevOps
+                practices, or collaboration opportunities?
+                I'd love to hear from you.
+            </p>
             <div class="contact-buttons">
                 <a href="https://www.linkedin.com/in/schundu" class="btn btn-white" target="_blank">
                     Connect on LinkedIn
-                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
                 </a>
                 <a href="https://github.com/schundu007" class="btn btn-outline-white" target="_blank">
                     View GitHub
