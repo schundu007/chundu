@@ -1,7 +1,7 @@
-/* Modern Red/Black/White Theme */
+/* Modern Black/White Theme */
 :root {
-    --red: #dc2626;
-    --red-dark: #b91c1c;
+    --accent: #333333;
+    --accent-dark: #111111;
     --black: #000000;
     --black-soft: #0a0a0a;
     --white: #ffffff;
@@ -59,7 +59,7 @@ nav {
 }
 
 .logo span {
-    color: var(--red);
+    color: var(--gray-light);
 }
 
 .nav-links {
@@ -86,7 +86,7 @@ nav {
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--red);
+    background: var(--gray-light);
     transition: width 0.3s;
 }
 
@@ -97,7 +97,7 @@ nav {
 
 .nav-links a:hover,
 .nav-links a.active {
-    color: var(--red);
+    color: var(--gray-light);
 }
 
 /* Page Header */
@@ -117,7 +117,7 @@ nav {
     transform: translateX(-50%);
     width: 100px;
     height: 4px;
-    background: var(--red);
+    background: var(--gray);
 }
 
 .page-header h1 {
@@ -127,7 +127,7 @@ nav {
 }
 
 .page-header h1 span {
-    color: var(--red);
+    color: var(--gray-light);
 }
 
 .page-header p {
@@ -176,7 +176,7 @@ nav {
     left: 0;
     width: 4px;
     height: 0;
-    background: var(--red);
+    background: var(--gray);
     transition: height 0.3s;
 }
 
@@ -195,7 +195,7 @@ nav {
 }
 
 .card .date {
-    color: var(--red);
+    color: var(--gray);
     font-size: 0.8rem;
     font-weight: 600;
     margin-bottom: 0.75rem;
@@ -244,14 +244,14 @@ nav {
 }
 
 .btn-primary {
-    background: var(--red);
+    background: var(--black);
     color: var(--white);
-    border-color: var(--red);
+    border-color: var(--black);
 }
 
 .btn-primary:hover {
     background: transparent;
-    color: var(--red);
+    color: var(--black);
 }
 
 .btn-secondary {
@@ -297,7 +297,7 @@ footer a {
 
 footer a:hover {
     opacity: 1;
-    color: var(--red);
+    color: var(--gray-light);
 }
 
 /* Responsive */

@@ -13,8 +13,8 @@
 
     <style>
         :root {
-            --red: #dc2626;
-            --red-dark: #b91c1c;
+            --accent: #333333;
+            --accent-dark: #111111;
             --black: #000000;
             --black-soft: #111111;
             --white: #ffffff;
@@ -67,7 +67,7 @@
             text-decoration: none;
         }
 
-        .logo span { color: var(--red); }
+        .logo span { color: var(--gray); }
 
         .nav-links {
             display: flex;
@@ -85,7 +85,7 @@
             transition: color 0.2s;
         }
 
-        .nav-links a:hover, .nav-links a.active { color: var(--red); }
+        .nav-links a:hover, .nav-links a.active { color: var(--gray); }
 
         /* Page Header */
         .page-header {
@@ -100,7 +100,7 @@
             margin-bottom: 1rem;
         }
 
-        .page-header h1 span { color: var(--red); }
+        .page-header h1 span { color: var(--gray); }
 
         .page-header p {
             color: var(--gray-light);
@@ -114,7 +114,7 @@
             align-items: center;
             gap: 0.5rem;
             padding: 1rem 2rem;
-            background: var(--red);
+            background: var(--gray);
             color: var(--white);
             text-decoration: none;
             font-family: 'Space Grotesk', sans-serif;
@@ -122,12 +122,12 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             transition: all 0.3s;
-            border: 2px solid var(--red);
+            border: 2px solid var(--gray);
         }
 
         .download-btn:hover {
             background: transparent;
-            color: var(--red);
+            color: var(--gray);
         }
 
         /* Resume Content */
@@ -148,13 +148,13 @@
         }
 
         .section-title {
-            color: var(--red);
+            color: var(--gray);
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.15em;
             margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--red);
+            border-bottom: 2px solid var(--gray);
             display: inline-block;
         }
 
@@ -178,7 +178,7 @@
             text-decoration: none;
         }
 
-        .contact-item a:hover { color: var(--red); }
+        .contact-item a:hover { color: var(--gray); }
 
         /* Summary */
         .summary-text {
@@ -207,7 +207,7 @@
         }
 
         .company {
-            color: var(--red);
+            color: var(--gray);
             font-weight: 600;
         }
 
@@ -275,17 +275,17 @@
         }
 
         [contenteditable="true"]:hover {
-            background: rgba(220, 38, 38, 0.05);
+            background: rgba(0, 0, 0, 0.03);
         }
 
         [contenteditable="true"]:focus {
-            background: rgba(220, 38, 38, 0.1);
-            box-shadow: 0 0 0 2px var(--red);
+            background: rgba(0, 0, 0, 0.06);
+            box-shadow: 0 0 0 2px var(--gray);
         }
 
         .edit-notice {
             background: var(--white-off);
-            border-left: 4px solid var(--red);
+            border-left: 4px solid var(--gray);
             padding: 1rem 1.5rem;
             margin-bottom: 2rem;
             font-size: 0.9rem;
@@ -307,7 +307,7 @@
 
         .save-status {
             font-size: 0.8rem;
-            color: var(--red);
+            color: var(--gray);
             font-weight: 500;
             opacity: 0;
             transition: opacity 0.3s;
@@ -329,12 +329,12 @@
         }
 
         .save-btn {
-            background: var(--red);
+            background: var(--gray);
             color: var(--white);
         }
 
         .save-btn:hover {
-            background: var(--red-dark);
+            background: var(--accent-dark);
         }
 
         .reset-btn {
@@ -378,7 +378,7 @@
             transition: opacity 0.2s;
         }
 
-        .footer-links a:hover { opacity: 1; color: var(--red); }
+        .footer-links a:hover { opacity: 1; color: var(--gray); }
 
         @media (max-width: 768px) {
             .nav-links { display: none; }
