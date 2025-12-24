@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-/* Modern Black/White Theme */
-:root {
-    --accent: #333333;
-    --accent-dark: #111111;
-    --black: #000000;
-    --black-soft: #0a0a0a;
-=======
 /* Volcano.sh Inspired Design System */
 :root {
     --primary: #eb1616;
@@ -14,7 +6,6 @@
     --dark-soft: #414550;
     --text: rgba(0,0,0,0.8);
     --text-muted: rgba(0,0,0,0.54);
->>>>>>> 79c5ebb (Redesign portfolio with volcano.sh inspired theme and add resume page)
     --white: #ffffff;
     --light: #f8f9fa;
     --light-alt: #F2F2F3;
@@ -86,10 +77,6 @@ nav {
     gap: 0.5rem;
 }
 
-<<<<<<< HEAD
-.logo span {
-    color: var(--gray-light);
-=======
 .logo-icon {
     width: 36px;
     height: 36px;
@@ -101,7 +88,6 @@ nav {
     color: white;
     font-weight: 700;
     font-size: 1.1rem;
->>>>>>> 79c5ebb (Redesign portfolio with volcano.sh inspired theme and add resume page)
 }
 
 .nav-links {
@@ -117,33 +103,10 @@ nav {
     font-weight: 500;
     font-size: 0.95rem;
     transition: color 0.2s;
-<<<<<<< HEAD
-    position: relative;
-}
-
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--gray-light);
-    transition: width 0.3s;
-}
-
-.nav-links a:hover::after,
-.nav-links a.active::after {
-    width: 100%;
-=======
->>>>>>> 79c5ebb (Redesign portfolio with volcano.sh inspired theme and add resume page)
 }
 
 .nav-links a:hover,
 .nav-links a.active {
-<<<<<<< HEAD
-    color: var(--gray-light);
-=======
     color: var(--primary);
 }
 
@@ -162,7 +125,6 @@ nav {
 
 .nav-social a:hover {
     color: var(--primary);
->>>>>>> 79c5ebb (Redesign portfolio with volcano.sh inspired theme and add resume page)
 }
 
 /* Page Header */
@@ -171,21 +133,6 @@ nav {
     background: var(--dark);
     text-align: center;
     color: var(--white);
-<<<<<<< HEAD
-    position: relative;
-}
-
-.page-header::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 4px;
-    background: var(--gray);
-=======
->>>>>>> 79c5ebb (Redesign portfolio with volcano.sh inspired theme and add resume page)
 }
 
 .page-header h1 {
@@ -195,11 +142,7 @@ nav {
 }
 
 .page-header h1 span {
-<<<<<<< HEAD
-    color: var(--gray-light);
-=======
     color: var(--primary);
->>>>>>> 79c5ebb (Redesign portfolio with volcano.sh inspired theme and add resume page)
 }
 
 .page-header p {
@@ -238,26 +181,7 @@ nav {
     padding: 2rem;
     box-shadow: var(--shadow);
     transition: all 0.3s;
-<<<<<<< HEAD
-    position: relative;
-}
-
-.card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 0;
-    background: var(--gray);
-    transition: height 0.3s;
-}
-
-.card:hover::before {
-    height: 100%;
-=======
     border: 1px solid var(--border);
->>>>>>> 79c5ebb (Redesign portfolio with volcano.sh inspired theme and add resume page)
 }
 
 .card:hover {
@@ -272,13 +196,8 @@ nav {
 }
 
 .card .date {
-<<<<<<< HEAD
-    color: var(--gray);
-    font-size: 0.8rem;
-=======
     color: var(--primary);
     font-size: 0.85rem;
->>>>>>> 79c5ebb (Redesign portfolio with volcano.sh inspired theme and add resume page)
     font-weight: 600;
     margin-bottom: 0.75rem;
 }
@@ -320,16 +239,6 @@ nav {
 }
 
 .btn-primary {
-<<<<<<< HEAD
-    background: var(--black);
-    color: var(--white);
-    border-color: var(--black);
-}
-
-.btn-primary:hover {
-    background: transparent;
-    color: var(--black);
-=======
     background: var(--primary);
     color: var(--white);
     border-color: var(--primary);
@@ -340,7 +249,6 @@ nav {
     border-color: var(--primary-dark);
     color: var(--white);
     transform: translateY(-1px);
->>>>>>> 79c5ebb (Redesign portfolio with volcano.sh inspired theme and add resume page)
 }
 
 .btn-outline {
@@ -396,9 +304,6 @@ footer p {
 
 .footer-links a:hover {
     opacity: 1;
-<<<<<<< HEAD
-    color: var(--gray-light);
-=======
     color: var(--primary);
 }
 
@@ -436,7 +341,6 @@ footer p {
     height: 2px;
     background: var(--dark);
     transition: 0.3s;
->>>>>>> 79c5ebb (Redesign portfolio with volcano.sh inspired theme and add resume page)
 }
 
 /* Responsive */
