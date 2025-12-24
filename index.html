@@ -23,8 +23,8 @@
 
     <style>
         :root {
-            --red: #dc2626;
-            --red-dark: #b91c1c;
+            --accent: #333333;
+            --accent-light: #555555;
             --black: #000000;
             --black-soft: #111111;
             --white: #ffffff;
@@ -86,7 +86,7 @@
         }
 
         .logo span {
-            color: var(--red);
+            color: var(--gray);
         }
 
         .nav-links {
@@ -113,7 +113,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--red);
+            background: var(--gray);
             transition: width 0.3s;
         }
 
@@ -122,7 +122,7 @@
         }
 
         .nav-links a:hover {
-            color: var(--red);
+            color: var(--gray);
         }
 
         /* Hero Section */
@@ -152,7 +152,7 @@
             display: inline-block;
             font-family: 'Space Grotesk', sans-serif;
             font-size: 0.8rem;
-            color: var(--red);
+            color: var(--gray);
             text-transform: uppercase;
             letter-spacing: 0.2em;
             margin-bottom: 1.5rem;
@@ -169,7 +169,7 @@
         }
 
         .hero-content h1 span {
-            color: var(--red);
+            color: var(--gray);
             display: block;
         }
 
@@ -203,14 +203,14 @@
         }
 
         .btn-primary {
-            background: var(--red);
+            background: var(--gray);
             color: var(--white);
-            border-color: var(--red);
+            border-color: var(--gray);
         }
 
         .btn-primary:hover {
             background: var(--white);
-            color: var(--red);
+            color: var(--gray);
             border-color: var(--white);
         }
 
@@ -244,7 +244,7 @@
             left: 16px;
             width: 100%;
             height: 100%;
-            border: 3px solid var(--red);
+            border: 3px solid var(--gray);
             z-index: 0;
         }
 
@@ -267,7 +267,7 @@
             position: absolute;
             bottom: -16px;
             left: -16px;
-            background: var(--red);
+            background: var(--gray);
             color: var(--white);
             padding: 1.25rem 1.5rem;
             z-index: 2;
@@ -311,7 +311,7 @@
             display: inline-block;
             font-family: 'Space Grotesk', sans-serif;
             font-size: 0.8rem;
-            color: var(--red);
+            color: var(--gray);
             text-transform: uppercase;
             letter-spacing: 0.2em;
             margin-bottom: 1rem;
@@ -325,7 +325,7 @@
         }
 
         .about-header h2 span {
-            color: var(--red);
+            color: var(--gray);
         }
 
         .about-content p {
@@ -350,7 +350,7 @@
         .highlight-item {
             padding: 1.5rem;
             background: var(--white-off);
-            border-left: 3px solid var(--red);
+            border-left: 3px solid var(--gray);
         }
 
         .highlight-item .value {
@@ -406,8 +406,8 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: var(--red);
-            border-bottom: 2px solid var(--red);
+            color: var(--gray);
+            border-bottom: 2px solid var(--gray);
         }
 
         .tools-table td {
@@ -442,8 +442,8 @@
         .tool-tag {
             display: inline-block;
             padding: 0.4rem 0.85rem;
-            background: rgba(220, 38, 38, 0.15);
-            border: 1px solid rgba(220, 38, 38, 0.3);
+            background: rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.2);
             color: var(--white);
             font-size: 0.8rem;
             font-weight: 500;
@@ -451,8 +451,8 @@
         }
 
         .tool-tag:hover {
-            background: var(--red);
-            border-color: var(--red);
+            background: var(--gray);
+            border-color: var(--gray);
             transform: translateY(-2px);
         }
 
@@ -495,7 +495,7 @@
             }
 
             .category-cell {
-                background: rgba(220, 38, 38, 0.2);
+                background: rgba(0, 0, 0, 0.1);
                 padding: 0.75rem 1rem;
                 font-size: 0.8rem;
                 text-transform: uppercase;
@@ -531,7 +531,7 @@
         }
 
         .section-header h2 span {
-            color: var(--red);
+            color: var(--gray);
         }
 
         .section-header p {
@@ -565,7 +565,7 @@
             left: 0;
             width: 0;
             height: 3px;
-            background: var(--red);
+            background: var(--gray);
             transition: width 0.3s;
         }
 
@@ -581,7 +581,7 @@
         .skill-number {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 0.875rem;
-            color: var(--red);
+            color: var(--gray);
             margin-bottom: 1.25rem;
             font-weight: 600;
         }
@@ -619,7 +619,7 @@
 
         /* Stats Section */
         .stats-section {
-            background: var(--red);
+            background: var(--gray);
             padding: 5rem 2rem;
         }
 
@@ -671,7 +671,7 @@
         }
 
         .contact-content h2 span {
-            color: var(--red);
+            color: var(--gray);
         }
 
         .contact-content p {
@@ -698,9 +698,9 @@
         }
 
         .btn-white:hover {
-            background: var(--red);
+            background: var(--gray);
             color: var(--white);
-            border-color: var(--red);
+            border-color: var(--gray);
         }
 
         .btn-outline-white {
@@ -1203,7 +1203,7 @@
     <!-- Contact Section -->
     <section class="contact-section" id="contact">
         <div class="contact-content">
-            <span class="section-label" style="color: var(--red);">Get in Touch</span>
+            <span class="section-label" style="color: var(--gray);">Get in Touch</span>
             <h2>Let's <span>Connect</span></h2>
             <p>
                 Interested in discussing cloud architecture, DevOps
