@@ -481,8 +481,10 @@
         }
 
         .tool-tag {
-            display: inline-block;
-            padding: 0.3rem 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.35rem 0.65rem;
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: rgba(255, 255, 255, 0.9);
@@ -494,10 +496,16 @@
         }
 
         .tool-tag:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: var(--white);
-            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .tool-tag img {
+            width: 14px;
+            height: 14px;
+            object-fit: contain;
         }
 
         /* Skills Grid - Modern */
@@ -1020,10 +1028,10 @@
                         <span class="tool-card-title">Cloud Platforms</span>
                     </div>
                     <div class="tool-tags">
-                        <span class="tool-tag">AWS</span>
-                        <span class="tool-tag">Azure</span>
-                        <span class="tool-tag">GCP</span>
-                        <span class="tool-tag">OCI</span>
+                        <span class="tool-tag"><img src="assets/icons/aws.svg" alt="AWS">AWS</span>
+                        <span class="tool-tag"><img src="assets/icons/azure.svg" alt="Azure">Azure</span>
+                        <span class="tool-tag"><img src="assets/icons/gcp.svg" alt="GCP">GCP</span>
+                        <span class="tool-tag"><img src="assets/icons/oracle.svg" alt="OCI">OCI</span>
                     </div>
                 </div>
 
@@ -1033,10 +1041,10 @@
                         <span class="tool-card-title">Container & Orchestration</span>
                     </div>
                     <div class="tool-tags">
-                        <span class="tool-tag">Docker</span>
-                        <span class="tool-tag">Kubernetes</span>
-                        <span class="tool-tag">Helm</span>
-                        <span class="tool-tag">Istio</span>
+                        <span class="tool-tag"><img src="assets/icons/docker.svg" alt="Docker">Docker</span>
+                        <span class="tool-tag"><img src="assets/icons/kubernetes.svg" alt="Kubernetes">Kubernetes</span>
+                        <span class="tool-tag"><img src="assets/icons/helm.svg" alt="Helm">Helm</span>
+                        <span class="tool-tag"><img src="assets/icons/istio.svg" alt="Istio">Istio</span>
                     </div>
                 </div>
 
@@ -1046,10 +1054,10 @@
                         <span class="tool-card-title">Infrastructure as Code</span>
                     </div>
                     <div class="tool-tags">
-                        <span class="tool-tag">Terraform</span>
-                        <span class="tool-tag">Ansible</span>
-                        <span class="tool-tag">CloudFormation</span>
-                        <span class="tool-tag">Bicep</span>
+                        <span class="tool-tag"><img src="assets/icons/terraform.svg" alt="Terraform">Terraform</span>
+                        <span class="tool-tag"><img src="assets/icons/ansible.svg" alt="Ansible">Ansible</span>
+                        <span class="tool-tag"><img src="assets/icons/aws.svg" alt="CloudFormation">CloudFormation</span>
+                        <span class="tool-tag"><img src="assets/icons/azure.svg" alt="Bicep">Bicep</span>
                     </div>
                 </div>
 
@@ -1059,11 +1067,10 @@
                         <span class="tool-card-title">CI/CD & GitOps</span>
                     </div>
                     <div class="tool-tags">
-                        <span class="tool-tag">ArgoCD</span>
-                        <span class="tool-tag">GitHub Actions</span>
-                        <span class="tool-tag">Flux</span>
-                        <span class="tool-tag">Jenkins</span>
-                        <span class="tool-tag">Azure DevOps</span>
+                        <span class="tool-tag"><img src="assets/icons/argocd.svg" alt="ArgoCD">ArgoCD</span>
+                        <span class="tool-tag"><img src="assets/icons/githubactions.svg" alt="GitHub Actions">GitHub Actions</span>
+                        <span class="tool-tag"><img src="assets/icons/jenkins.svg" alt="Jenkins">Jenkins</span>
+                        <span class="tool-tag"><img src="assets/icons/azuredevops.svg" alt="Azure DevOps">Azure DevOps</span>
                     </div>
                 </div>
 
@@ -1073,10 +1080,10 @@
                         <span class="tool-card-title">Monitoring & Observability</span>
                     </div>
                     <div class="tool-tags">
-                        <span class="tool-tag">Prometheus</span>
-                        <span class="tool-tag">Grafana</span>
-                        <span class="tool-tag">Datadog</span>
-                        <span class="tool-tag">OpenTelemetry</span>
+                        <span class="tool-tag"><img src="assets/icons/prometheus.svg" alt="Prometheus">Prometheus</span>
+                        <span class="tool-tag"><img src="assets/icons/grafana.svg" alt="Grafana">Grafana</span>
+                        <span class="tool-tag"><img src="assets/icons/datadog.svg" alt="Datadog">Datadog</span>
+                        <span class="tool-tag"><img src="assets/icons/opentelemetry.svg" alt="OpenTelemetry">OpenTelemetry</span>
                     </div>
                 </div>
 
@@ -1086,11 +1093,10 @@
                         <span class="tool-card-title">AI/ML & HPC</span>
                     </div>
                     <div class="tool-tags">
-                        <span class="tool-tag">Ray</span>
-                        <span class="tool-tag">Slurm</span>
-                        <span class="tool-tag">Kubeflow</span>
-                        <span class="tool-tag">MLflow</span>
-                        <span class="tool-tag">NVIDIA GPU</span>
+                        <span class="tool-tag"><img src="assets/icons/kubernetes.svg" alt="Kubeflow">Kubeflow</span>
+                        <span class="tool-tag"><img src="assets/icons/nvidia.svg" alt="NVIDIA">NVIDIA GPU</span>
+                        <span class="tool-tag"><i class="fas fa-server" style="font-size:12px;color:#76B900;"></i>Slurm</span>
+                        <span class="tool-tag"><i class="fas fa-brain" style="font-size:12px;color:#0194E2;"></i>MLflow</span>
                     </div>
                 </div>
 
@@ -1100,10 +1106,10 @@
                         <span class="tool-card-title">Languages & Scripting</span>
                     </div>
                     <div class="tool-tags">
-                        <span class="tool-tag">Python</span>
-                        <span class="tool-tag">Go</span>
-                        <span class="tool-tag">Bash</span>
-                        <span class="tool-tag">TypeScript</span>
+                        <span class="tool-tag"><img src="assets/icons/python.svg" alt="Python">Python</span>
+                        <span class="tool-tag"><img src="assets/icons/go.svg" alt="Go">Go</span>
+                        <span class="tool-tag"><img src="assets/icons/bash.svg" alt="Bash">Bash</span>
+                        <span class="tool-tag"><img src="assets/icons/typescript.svg" alt="TypeScript">TypeScript</span>
                     </div>
                 </div>
 
@@ -1113,11 +1119,10 @@
                         <span class="tool-card-title">Security & Compliance</span>
                     </div>
                     <div class="tool-tags">
-                        <span class="tool-tag">Snyk</span>
-                        <span class="tool-tag">Vanta</span>
-                        <span class="tool-tag">Vault</span>
-                        <span class="tool-tag">SOC2</span>
-                        <span class="tool-tag">FedRAMP</span>
+                        <span class="tool-tag"><img src="assets/icons/snyk.svg" alt="Snyk">Snyk</span>
+                        <span class="tool-tag"><img src="assets/icons/vault.svg" alt="Vault">Vault</span>
+                        <span class="tool-tag"><i class="fas fa-shield-alt" style="font-size:12px;color:#00A98F;"></i>SOC2</span>
+                        <span class="tool-tag"><i class="fas fa-certificate" style="font-size:12px;color:#112E51;"></i>FedRAMP</span>
                     </div>
                 </div>
             </div>
