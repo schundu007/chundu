@@ -41,9 +41,18 @@ body {
     font-family: var(--font-sans);
     color: var(--text);
     line-height: 1.6;
-    background: var(--white);
+    background: var(--light);
     font-size: 14px;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+/* Centered Layout */
+.main-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: var(--white);
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.08);
+    min-height: calc(100vh - 56px);
 }
 
 h1, h2, h3, h4, h5, h6 {
