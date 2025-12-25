@@ -917,8 +917,8 @@
 
         .testimonials-track {
             display: flex;
-            gap: 1.5rem;
-            animation: scroll-testimonials 60s linear infinite;
+            gap: 1.25rem;
+            animation: scroll-testimonials 45s linear infinite;
             width: max-content;
         }
 
@@ -933,10 +933,10 @@
 
         .testimonial-card {
             flex-shrink: 0;
-            width: 400px;
+            width: 340px;
             background: var(--white);
             border-radius: var(--radius-lg);
-            padding: 1.75rem;
+            padding: 1.5rem;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
             transition: all 0.3s ease;
@@ -1020,11 +1020,15 @@
 
         @media (max-width: 768px) {
             .testimonial-card {
-                width: 320px;
+                width: 290px;
             }
 
             .testimonials-section {
                 padding: 40px 1rem;
+            }
+
+            .testimonials-track {
+                gap: 1rem;
             }
         }
     </style>
