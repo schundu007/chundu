@@ -11,6 +11,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .card-with-image {
+            padding: 0;
+            overflow: hidden;
+        }
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        .card-content {
+            padding: 1.5rem;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -52,14 +67,17 @@
     <section class="section">
         <div class="container">
             <div class="card-grid">
-                <div class="card">
-                    <span class="date">KubeCon + CloudNativeCon</span>
-                    <h3>Scaling GPU Clusters for ML Workloads</h3>
-                    <p>Best practices for managing large-scale GPU infrastructure on Kubernetes for distributed machine learning training.</p>
-                    <div class="tags">
-                        <span class="tag">Kubernetes</span>
-                        <span class="tag">GPU</span>
-                        <span class="tag">ML Infrastructure</span>
+                <div class="card card-with-image">
+                    <img src="../assets/images/MLW.jpeg" alt="KubeCon + CloudNativeCon" class="card-image">
+                    <div class="card-content">
+                        <span class="date">KubeCon + CloudNativeCon</span>
+                        <h3>Scaling GPU Clusters for ML Workloads</h3>
+                        <p>Best practices for managing large-scale GPU infrastructure on Kubernetes for distributed machine learning training.</p>
+                        <div class="tags">
+                            <span class="tag">Kubernetes</span>
+                            <span class="tag">GPU</span>
+                            <span class="tag">ML Infrastructure</span>
+                        </div>
                     </div>
                 </div>
 
@@ -85,36 +103,45 @@
                     </div>
                 </div>
 
-                <div class="card">
-                    <span class="date">DevOps Days</span>
-                    <h3>GitOps for Multi-Cluster Kubernetes</h3>
-                    <p>Implementing GitOps workflows with ArgoCD for managing deployments across multiple Kubernetes clusters.</p>
-                    <div class="tags">
-                        <span class="tag">GitOps</span>
-                        <span class="tag">ArgoCD</span>
-                        <span class="tag">CI/CD</span>
+                <div class="card card-with-image">
+                    <img src="../assets/images/DevOpsDays.jpeg" alt="DevOps Days" class="card-image">
+                    <div class="card-content">
+                        <span class="date">DevOps Days</span>
+                        <h3>GitOps for Multi-Cluster Kubernetes</h3>
+                        <p>Implementing GitOps workflows with ArgoCD for managing deployments across multiple Kubernetes clusters.</p>
+                        <div class="tags">
+                            <span class="tag">GitOps</span>
+                            <span class="tag">ArgoCD</span>
+                            <span class="tag">CI/CD</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="card">
-                    <span class="date">Cloud Summit</span>
-                    <h3>Cost Optimization: $8M Savings Journey</h3>
-                    <p>Real-world strategies for reducing cloud infrastructure costs while maintaining performance and reliability.</p>
-                    <div class="tags">
-                        <span class="tag">FinOps</span>
-                        <span class="tag">Cost Optimization</span>
-                        <span class="tag">Cloud</span>
+                <div class="card card-with-image">
+                    <img src="../assets/images/CS.jpeg" alt="Cloud Summit" class="card-image">
+                    <div class="card-content">
+                        <span class="date">Cloud Summit</span>
+                        <h3>Cost Optimization: $8M Savings Journey</h3>
+                        <p>Real-world strategies for reducing cloud infrastructure costs while maintaining performance and reliability.</p>
+                        <div class="tags">
+                            <span class="tag">FinOps</span>
+                            <span class="tag">Cost Optimization</span>
+                            <span class="tag">Cloud</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="card">
-                    <span class="date">Platform Engineering Summit</span>
-                    <h3>Building Internal Developer Platforms</h3>
-                    <p>Creating self-service platforms that accelerate developer productivity while maintaining governance and security.</p>
-                    <div class="tags">
-                        <span class="tag">Platform Engineering</span>
-                        <span class="tag">Developer Experience</span>
-                        <span class="tag">Self-Service</span>
+                <div class="card card-with-image">
+                    <img src="../assets/images/PES.jpeg" alt="Platform Engineering Summit" class="card-image">
+                    <div class="card-content">
+                        <span class="date">Platform Engineering Summit</span>
+                        <h3>Building Internal Developer Platforms</h3>
+                        <p>Creating self-service platforms that accelerate developer productivity while maintaining governance and security.</p>
+                        <div class="tags">
+                            <span class="tag">Platform Engineering</span>
+                            <span class="tag">Developer Experience</span>
+                            <span class="tag">Self-Service</span>
+                        </div>
                     </div>
                 </div>
             </div>
