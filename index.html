@@ -883,6 +883,150 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 60px 1.5rem;
+            background: linear-gradient(135deg, var(--light) 0%, var(--white) 50%, var(--light-alt) 100%);
+            overflow: hidden;
+        }
+
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .testimonials-header h2 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .testimonials-header h2 span {
+            color: var(--primary);
+        }
+
+        .testimonials-header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .testimonials-track {
+            display: flex;
+            gap: 1.5rem;
+            animation: scroll-testimonials 60s linear infinite;
+            width: max-content;
+        }
+
+        .testimonials-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll-testimonials {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .testimonial-card {
+            flex-shrink: 0;
+            width: 400px;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .testimonial-quote {
+            color: var(--text);
+            font-size: 0.85rem;
+            line-height: 1.7;
+            margin-bottom: 1.25rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 6;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .testimonial-avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .testimonial-info h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.15rem;
+            color: var(--dark);
+        }
+
+        .testimonial-info p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .testimonial-company {
+            color: var(--primary) !important;
+            font-weight: 500;
+        }
+
+        .linkedin-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--light);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .linkedin-badge i {
+            color: #0077b5;
+        }
+
+        .linkedin-badge a {
+            color: #0077b5;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .testimonial-card {
+                width: 320px;
+            }
+
+            .testimonials-section {
+                padding: 40px 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -968,6 +1112,264 @@
                         <span class="profile-tag">GPU/Slurm</span>
                         <span class="profile-tag">Multi-Cloud</span>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="testimonials-container">
+            <div class="testimonials-header">
+                <span class="section-label">Recommendations</span>
+                <h2>What <span>Colleagues</span> Say</h2>
+                <p>Trusted by leaders across engineering, product, and executive teams at Trackonomy</p>
+            </div>
+            <div class="testimonials-track">
+                <!-- First set of testimonials -->
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "I had the opportunity to work closely with Chundu at Trackonomy, and he was someone I consistently trusted on our most critical cloud and AI initiatives. Chundu has a rare ability to combine deep technical expertise with clear, practical decision-making. Beyond the technology, Chundu is a thoughtful leader and collaborator."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">NP</div>
+                        <div class="testimonial-info">
+                            <h4>Nirali Patidar</h4>
+                            <p>Mission-Driven TPM Leader | AI/ML</p>
+                            <p class="testimonial-company">Former Atlassian, Cisco, Oracle</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "Sudhakar always focused on impact. His approach in every project was to ask how it supports revenue and enhances competitive position. He always applied tech to business, knew how to rally teams from both sides, and communicate to see our projects through. The best of the best. Learned a lot from him."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">MY</div>
+                        <div class="testimonial-info">
+                            <h4>Manal Yaqub</h4>
+                            <p>Startups @ Databricks</p>
+                            <p class="testimonial-company">Client Partner</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "Sudhakar made a real difference in how we built and deployed software. He streamlined our development process with automation, improved our CI/CD pipelines, and introduced solid DevSecOps practices. Whenever there was a DevOps challenge, Sudhakar was the go-to person everyone trusted."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">KR</div>
+                        <div class="testimonial-info">
+                            <h4>Kedar Rajwade</h4>
+                            <p>Director of Engineering</p>
+                            <p class="testimonial-company">Distributed Systems | Agentic AI</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "Sudhakar was instrumental in establishing our comprehensive compliance and security posture. His expertise enabled Trackonomy to successfully complete our first SOC2 Type II audit. He also led an initiative that reduced our annual hosting spend by hundreds of thousands of dollars."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">KA</div>
+                        <div class="testimonial-info">
+                            <h4>Keith Abrams</h4>
+                            <p>General Counsel</p>
+                            <p class="testimonial-company">Trackonomy Systems</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "Sudhakar has been instrumental in shaping a secure, scalable foundation for our AI-driven mobile stack. He designed Android CI/CD pipelines with DevSecOps tightly integrated. His work with OAuth and IAM ensured secure, seamless authentication while protecting sensitive data."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">DR</div>
+                        <div class="testimonial-info">
+                            <h4>Diwakar Reddy</h4>
+                            <p>Technical Lead | Mobile Engineering</p>
+                            <p class="testimonial-company">Industrial IoT | AI and ML</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "From day one, Sudhakar impressed me with a rare combination of deep technical knowledge and thoughtful problem-solving. He architected our CI/CD pipelines and cloud infrastructure with precision — reducing deployment time by 95% and dramatically increasing system reliability."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">KV</div>
+                        <div class="testimonial-info">
+                            <h4>Kasi Viswanath</h4>
+                            <p>Senior DevOps Engineer</p>
+                            <p class="testimonial-company">Trackonomy Systems</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "Sudhakar is a certified DevOps expert and an industry veteran. He developed seamless pipelines to enhance developer velocity. His emphasis on automation and constant exploration of new technologies helped make the company cloud agnostic and reduce infrastructure cost."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">AP</div>
+                        <div class="testimonial-info">
+                            <h4>Abhijeet Purkar</h4>
+                            <p>Software and Data | CMU</p>
+                            <p class="testimonial-company">Gold Medalist OU</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "Sudhakar is a highly knowledgeable engineer whom I worked with for multiple 'missions impossible', addressing fires that thanks to his quick thinking and action we were able to solve. He understood end to end the needs for the customers as well as the behavior of the product."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">RA</div>
+                        <div class="testimonial-info">
+                            <h4>Raymundo Alatorre</h4>
+                            <p>Sr. Manager Automation & IIoT</p>
+                            <p class="testimonial-company">Flex</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "Sudhakar is very knowledgeable in cloud infrastructure management as well as FinOps. He was a solid partner in the business, working to ensure reliable/scalable infrastructure, while also understanding and meeting the needs of others in the business."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">TF</div>
+                        <div class="testimonial-info">
+                            <h4>Troy Ford</h4>
+                            <p>CFO</p>
+                            <p class="testimonial-company">Private Equity, M&A</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "I worked with Sudhakar at Trackonomy and appreciated his strong work ethic and dedication to the DevOps initiatives he helped organize. He consistently put in significant effort and took ownership of the areas he was responsible for."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">PS</div>
+                        <div class="testimonial-info">
+                            <h4>Patty Steiman</h4>
+                            <p>Vice President Customer Success</p>
+                            <p class="testimonial-company">Trackonomy | IoT Expertise</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "I've been fortunate to collaborate with Sudhakar across two companies during my career. He demonstrates a strong work ethic and unwavering dedication to the DevOps initiatives he supports. He excels when working on clearly defined tasks, approaching them with determination."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">SB</div>
+                        <div class="testimonial-info">
+                            <h4>Sravani Bolla</h4>
+                            <p>Senior DevOps Engineer</p>
+                            <p class="testimonial-company">Trackonomy Systems</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Duplicate set for seamless scrolling -->
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "I had the opportunity to work closely with Chundu at Trackonomy, and he was someone I consistently trusted on our most critical cloud and AI initiatives. Chundu has a rare ability to combine deep technical expertise with clear, practical decision-making. Beyond the technology, Chundu is a thoughtful leader and collaborator."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">NP</div>
+                        <div class="testimonial-info">
+                            <h4>Nirali Patidar</h4>
+                            <p>Mission-Driven TPM Leader | AI/ML</p>
+                            <p class="testimonial-company">Former Atlassian, Cisco, Oracle</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "Sudhakar always focused on impact. His approach in every project was to ask how it supports revenue and enhances competitive position. He always applied tech to business, knew how to rally teams from both sides, and communicate to see our projects through. The best of the best. Learned a lot from him."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">MY</div>
+                        <div class="testimonial-info">
+                            <h4>Manal Yaqub</h4>
+                            <p>Startups @ Databricks</p>
+                            <p class="testimonial-company">Client Partner</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "Sudhakar made a real difference in how we built and deployed software. He streamlined our development process with automation, improved our CI/CD pipelines, and introduced solid DevSecOps practices. Whenever there was a DevOps challenge, Sudhakar was the go-to person everyone trusted."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">KR</div>
+                        <div class="testimonial-info">
+                            <h4>Kedar Rajwade</h4>
+                            <p>Director of Engineering</p>
+                            <p class="testimonial-company">Distributed Systems | Agentic AI</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "Sudhakar was instrumental in establishing our comprehensive compliance and security posture. His expertise enabled Trackonomy to successfully complete our first SOC2 Type II audit. He also led an initiative that reduced our annual hosting spend by hundreds of thousands of dollars."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">KA</div>
+                        <div class="testimonial-info">
+                            <h4>Keith Abrams</h4>
+                            <p>General Counsel</p>
+                            <p class="testimonial-company">Trackonomy Systems</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "Sudhakar has been instrumental in shaping a secure, scalable foundation for our AI-driven mobile stack. He designed Android CI/CD pipelines with DevSecOps tightly integrated. His work with OAuth and IAM ensured secure, seamless authentication while protecting sensitive data."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">DR</div>
+                        <div class="testimonial-info">
+                            <h4>Diwakar Reddy</h4>
+                            <p>Technical Lead | Mobile Engineering</p>
+                            <p class="testimonial-company">Industrial IoT | AI and ML</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "From day one, Sudhakar impressed me with a rare combination of deep technical knowledge and thoughtful problem-solving. He architected our CI/CD pipelines and cloud infrastructure with precision — reducing deployment time by 95% and dramatically increasing system reliability."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">KV</div>
+                        <div class="testimonial-info">
+                            <h4>Kasi Viswanath</h4>
+                            <p>Senior DevOps Engineer</p>
+                            <p class="testimonial-company">Trackonomy Systems</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <div class="linkedin-badge">
+                    <i class="fab fa-linkedin"></i>
+                    View all recommendations on <a href="https://www.linkedin.com/in/schundu/details/recommendations/" target="_blank">LinkedIn</a>
                 </div>
             </div>
         </div>
