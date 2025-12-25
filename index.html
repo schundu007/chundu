@@ -298,6 +298,21 @@
             background: var(--white);
         }
 
+        .about-section-header {
+            max-width: 1100px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .about-section-header h2 {
+            font-size: 2rem;
+            line-height: 1.3;
+            margin: 0;
+        }
+
+        .about-section-header h2 span {
+            color: var(--primary);
+        }
+
         .about-container {
             max-width: 1100px;
             margin: 0 auto;
@@ -305,11 +320,6 @@
             grid-template-columns: 1.2fr 1fr;
             gap: 4rem;
             align-items: start;
-        }
-
-        .about-header {
-            position: sticky;
-            top: 100px;
         }
 
         .section-label {
@@ -1452,14 +1462,16 @@
 
     <!-- About Section -->
     <section class="about-section" id="about">
+        <div class="about-section-header">
+            <div class="about-title-row">
+                <span class="section-label">About Me</span>
+                <span class="title-divider">|</span>
+                <p class="about-subtitle">Building and operating infrastructure at scale for global enterprises</p>
+            </div>
+            <h2>Professional <span>Experience</span></h2>
+        </div>
         <div class="about-container">
             <div class="about-content">
-                <div class="about-title-row">
-                    <span class="section-label">About Me</span>
-                    <span class="title-divider">|</span>
-                    <p class="about-subtitle">Building and operating infrastructure at scale for global enterprises</p>
-                </div>
-                <h2>Professional <span>Experience</span></h2>
                 <p>
                     With 18+ years of hands-on experience building and operating large-scale GPU compute platforms,
                     AI/ML infrastructure, and distributed systems at planetary scale. Leading global teams of 13+ engineers
@@ -1476,16 +1488,14 @@
                     and HITRUST compliance.
                 </p>
             </div>
-            <div class="about-header">
-                <div class="about-highlights">
-                    <div class="highlight-item">
-                        <div class="value">99.97%</div>
-                        <div class="label">GPU Cluster Uptime</div>
-                    </div>
-                    <div class="highlight-item">
-                        <div class="value">$15M+</div>
-                        <div class="label">Budget Managed</div>
-                    </div>
+            <div class="about-highlights">
+                <div class="highlight-item">
+                    <div class="value">99.97%</div>
+                    <div class="label">GPU Cluster Uptime</div>
+                </div>
+                <div class="highlight-item">
+                    <div class="value">$15M+</div>
+                    <div class="label">Budget Managed</div>
                 </div>
             </div>
         </div>
