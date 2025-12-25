@@ -318,8 +318,20 @@
             color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            margin-bottom: 0.75rem;
             font-weight: 600;
+        }
+
+        .about-title-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .title-divider {
+            color: var(--border);
+            font-weight: 300;
         }
 
         .about-header h2 {
@@ -333,15 +345,10 @@
         }
 
         .about-subtitle {
-            font-size: 1.25rem;
+            font-size: 1rem;
             color: var(--text-muted);
             font-weight: 500;
-            margin-bottom: 1rem;
-        }
-
-        .about-subtitle span {
-            color: var(--primary);
-            font-weight: 600;
+            margin: 0;
         }
 
         .about-content p {
@@ -1437,9 +1444,12 @@
     <section class="about-section" id="about">
         <div class="about-container">
             <div class="about-header">
-                <span class="section-label">About Me</span>
+                <div class="about-title-row">
+                    <span class="section-label">About Me</span>
+                    <span class="title-divider">|</span>
+                    <p class="about-subtitle">Building and operating infrastructure at scale for global enterprises</p>
+                </div>
                 <h2>Professional <span>Experience</span></h2>
-                <p class="about-subtitle">Building and operating infrastructure at scale for global enterprises</p>
             </div>
             <div class="about-content">
                 <p>
