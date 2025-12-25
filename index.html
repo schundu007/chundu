@@ -28,10 +28,10 @@
     <link rel="stylesheet" href="assets/css/style.css">
 
     <style>
-        /* Hero Section - Compact */
+        /* Hero Section - Modern */
         .hero {
-            padding: 80px 1.5rem 50px;
-            background: linear-gradient(135deg, var(--light) 0%, var(--white) 100%);
+            padding: 90px 1.5rem 60px;
+            background: linear-gradient(135deg, var(--light) 0%, var(--white) 50%, var(--light-alt) 100%);
             position: relative;
             overflow: hidden;
         }
@@ -41,10 +41,27 @@
             position: absolute;
             top: -50%;
             right: -20%;
-            width: 60%;
-            height: 150%;
-            background: radial-gradient(circle, rgba(235,22,22,0.05) 0%, transparent 70%);
+            width: 70%;
+            height: 160%;
+            background: radial-gradient(circle, rgba(235,22,22,0.06) 0%, transparent 60%);
             pointer-events: none;
+            animation: pulse-slow 8s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(235,22,22,0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        @keyframes pulse-slow {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
         }
 
         .hero-container {
@@ -65,19 +82,41 @@
         .hero-badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.35rem;
+            gap: 0.5rem;
             background: var(--white);
-            padding: 0.35rem 0.75rem;
+            padding: 0.4rem 0.85rem;
             border-radius: 50px;
             font-size: 0.7rem;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--primary);
-            box-shadow: var(--shadow);
-            margin-bottom: 1rem;
+            box-shadow: 0 2px 12px rgba(235,22,22,0.15);
+            margin-bottom: 1.25rem;
+            border: 1px solid rgba(235,22,22,0.1);
         }
 
-        .hero-badge i {
-            font-size: 0.5rem;
+        .hero-badge .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .hero-badge .pulse-dot::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse-ring 2s ease-out infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
         }
 
         .hero-content h1 {
@@ -102,25 +141,41 @@
 
         .hero-stats {
             display: flex;
-            gap: 1.75rem;
-            margin-bottom: 1.25rem;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem 0;
         }
 
         .hero-stat {
             text-align: left;
+            padding: 0.75rem 1rem;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .hero-stat:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-color: var(--primary);
         }
 
         .hero-stat-value {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--dark);
+            color: var(--primary);
             line-height: 1;
+            font-family: var(--font-mono);
         }
 
         .hero-stat-label {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
-            margin-top: 0.15rem;
+            margin-top: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .cta-buttons {
@@ -316,15 +371,30 @@
             letter-spacing: 0.05em;
         }
 
-        /* Toolset Section - Compact */
+        /* Toolset Section - Modern Grid */
         .toolset-section {
-            padding: 50px 1.5rem;
-            background: var(--dark);
+            padding: 60px 1.5rem;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-soft) 50%, var(--dark-muted) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toolset-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
         }
 
         .toolset-container {
             max-width: 1100px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         .toolset-section .section-header h2 {
@@ -335,51 +405,76 @@
             color: rgba(255,255,255,0.7);
         }
 
-        .tools-table {
-            width: 100%;
-            margin-top: 1.5rem;
-            border-collapse: collapse;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
         }
 
-        .tools-table thead {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .tools-table th {
-            padding: 0.6rem 1rem;
-            text-align: left;
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: rgba(255,255,255,0.6);
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .tools-table td {
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            vertical-align: middle;
-        }
-
-        .tools-table tbody tr:hover {
+        .tool-card {
             background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .tools-table tbody tr:last-child td {
-            border-bottom: none;
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), #ff4444);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        .category-cell {
-            font-weight: 600;
-            font-size: 0.75rem;
+        .tool-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .tool-card:hover::before {
+            opacity: 1;
+        }
+
+        .tool-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .tool-card-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), #ff4444);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: var(--white);
-            white-space: nowrap;
-            width: 25%;
+            font-size: 0.9rem;
+            flex-shrink: 0;
         }
 
-        .tools-cell {
+        .tool-card-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: 0.02em;
+        }
+
+        .tool-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 0.35rem;
@@ -387,102 +482,160 @@
 
         .tool-tag {
             display: inline-block;
-            padding: 0.25rem 0.5rem;
+            padding: 0.3rem 0.6rem;
             background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.9);
             font-size: 0.65rem;
             font-weight: 500;
-            border-radius: 3px;
+            border-radius: 50px;
             transition: all 0.2s ease;
+            font-family: var(--font-mono);
         }
 
         .tool-tag:hover {
             background: var(--primary);
             border-color: var(--primary);
+            color: var(--white);
+            transform: scale(1.05);
         }
 
-        /* Skills Grid - Compact */
+        /* Skills Grid - Modern */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
+            gap: 1.25rem;
         }
 
         .skill-card {
             background: var(--white);
-            border-radius: var(--radius);
-            padding: 1.25rem;
-            box-shadow: var(--shadow);
-            transition: all 0.2s;
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), #ff4444);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
         .skill-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
-            border-color: var(--primary);
+            border-color: transparent;
+        }
+
+        .skill-card:hover::before {
+            opacity: 1;
         }
 
         .skill-icon {
-            width: 36px;
-            height: 36px;
-            background: rgba(235,22,22,0.1);
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, rgba(235,22,22,0.1), rgba(235,22,22,0.05));
             border-radius: var(--radius);
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--primary);
-            font-size: 1rem;
-            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+
+        .skill-card:hover .skill-icon {
+            background: linear-gradient(135deg, var(--primary), #ff4444);
+            color: var(--white);
+            transform: scale(1.1);
         }
 
         .skill-card h3 {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             margin-bottom: 0.5rem;
+            font-weight: 600;
         }
 
         .skill-card p {
             color: var(--text-muted);
-            font-size: 0.75rem;
-            margin-bottom: 0.75rem;
-            line-height: 1.5;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
         }
 
         .tech-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.25rem;
+            gap: 0.3rem;
             margin-top: auto;
         }
 
         .tech-tag {
-            padding: 0.2rem 0.4rem;
+            padding: 0.25rem 0.5rem;
             background: var(--light);
             color: var(--dark-soft);
-            font-size: 0.6rem;
-            border-radius: 3px;
+            font-size: 0.65rem;
+            border-radius: 50px;
             font-weight: 500;
-        }
-
-        /* Experience Section - Compact */
-        .experience-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .experience-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: var(--radius);
-            padding: 1.25rem;
-            border: 1px solid rgba(255,255,255,0.1);
+            font-family: var(--font-mono);
             transition: all 0.2s;
         }
 
+        .tech-tag:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        /* Experience Section - Modern */
+        .experience-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .experience-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experience-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--primary), #ff4444);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
         .experience-card:hover {
-            background: rgba(255,255,255,0.08);
-            border-color: var(--primary);
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.2);
+            transform: translateX(4px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        }
+
+        .experience-card:hover::before {
+            opacity: 1;
         }
 
         .experience-header {
@@ -521,64 +674,109 @@
             margin-bottom: 0.35rem;
         }
 
-        /* Stats Section - Compact */
+        /* Stats Section - Modern */
         .stats-section {
-            background: var(--primary);
-            padding: 35px 1.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 50px 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
+            gap: 2rem;
             max-width: 1100px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         .stat-item {
             text-align: center;
             color: var(--white);
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: var(--radius-lg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+
+        .stat-item:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
         }
 
         .stat-number {
-            font-size: 1.75rem;
+            font-size: 2rem;
             font-weight: 700;
             line-height: 1;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.35rem;
+            font-family: var(--font-mono);
         }
 
         .stat-label {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        /* Contact Section - Compact */
+        /* Contact Section - Modern */
         .contact-section {
-            background: var(--light);
-            padding: 50px 1.5rem;
+            background: linear-gradient(135deg, var(--light) 0%, var(--white) 100%);
+            padding: 60px 1.5rem;
+            position: relative;
         }
 
         .contact-content {
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
             text-align: center;
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
         }
 
         .contact-content h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .contact-content h2 span {
+            background: linear-gradient(135deg, var(--primary), #ff4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .contact-content p {
             color: var(--text-muted);
-            margin-bottom: 1.25rem;
-            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            line-height: 1.7;
         }
 
         .contact-buttons {
             display: flex;
             justify-content: center;
-            gap: 0.75rem;
+            gap: 1rem;
             flex-wrap: wrap;
         }
 
@@ -673,54 +871,8 @@
                 grid-template-columns: 1fr;
             }
 
-            .tools-table th,
-            .tools-table td {
-                padding: 0.5rem;
-            }
-
-            .category-cell {
-                font-size: 0.7rem;
-                width: 35%;
-            }
-
-            .tool-tag {
-                font-size: 0.6rem;
-                padding: 0.2rem 0.4rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .tools-table {
-                display: block;
-            }
-
-            .tools-table thead {
-                display: none;
-            }
-
-            .tools-table tbody,
-            .tools-table tr,
-            .tools-table td {
-                display: block;
-                width: 100%;
-            }
-
-            .tools-table tr {
-                margin-bottom: 1rem;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-            }
-
-            .category-cell {
-                background: rgba(0, 0, 0, 0.1);
-                padding: 0.5rem 0.75rem;
-                font-size: 0.65rem;
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
-                width: 100%;
-            }
-
-            .tools-cell {
-                padding: 0.75rem;
+            .tools-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -758,7 +910,7 @@
         <div class="hero-container">
             <div class="hero-content">
                 <div class="hero-badge">
-                    <i class="fas fa-circle"></i>
+                    <span class="pulse-dot"></span>
                     Available for Opportunities
                 </div>
                 <h1>Distinguished Cloud <span>AI Architect</span></h1>
@@ -861,85 +1013,114 @@
                     reliable cloud infrastructure and AI/ML platforms.
                 </p>
             </div>
-            <table class="tools-table">
-                <thead>
-                    <tr>
-                        <th>Category</th>
-                        <th>Tools</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="category-cell">Cloud Platforms</td>
-                        <td class="tools-cell">
-                            <span class="tool-tag">AWS</span>
-                            <span class="tool-tag">Azure</span>
-                            <span class="tool-tag">GCP</span>
-                            <span class="tool-tag">OCI</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="category-cell">Container & Orchestration</td>
-                        <td class="tools-cell">
-                            <span class="tool-tag">Docker</span>
-                            <span class="tool-tag">Kubernetes</span>
-                            <span class="tool-tag">Helm</span>
-                            <span class="tool-tag">Istio</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="category-cell">Infrastructure as Code</td>
-                        <td class="tools-cell">
-                            <span class="tool-tag">Terraform</span>
-                            <span class="tool-tag">Ansible</span>
-                            <span class="tool-tag">CloudFormation</span>
-                            <span class="tool-tag">Bicep</span>
-                            <span class="tool-tag">Shell/Bash</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="category-cell">CI/CD & GitOps</td>
-                        <td class="tools-cell">
-                            <span class="tool-tag">ArgoCD</span>
-                            <span class="tool-tag">GitHub Actions</span>
-                            <span class="tool-tag">Flux</span>
-                            <span class="tool-tag">Jenkins</span>
-                            <span class="tool-tag">CircleCI</span>
-                            <span class="tool-tag">Azure DevOps</span>
-                            <span class="tool-tag">Git</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="category-cell">Monitoring & Observability</td>
-                        <td class="tools-cell">
-                            <span class="tool-tag">Prometheus</span>
-                            <span class="tool-tag">Grafana</span>
-                            <span class="tool-tag">Datadog</span>
-                            <span class="tool-tag">Azure Monitor</span>
-                            <span class="tool-tag">CloudWatch</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="category-cell">AI/ML & HPC</td>
-                        <td class="tools-cell">
-                            <span class="tool-tag">Ray</span>
-                            <span class="tool-tag">Slurm</span>
-                            <span class="tool-tag">Kubeflow</span>
-                            <span class="tool-tag">MLflow</span>
-                            <span class="tool-tag">NVIDIA GPU</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="category-cell">Languages & Scripting</td>
-                        <td class="tools-cell">
-                            <span class="tool-tag">Python</span>
-                            <span class="tool-tag">Go</span>
-                            <span class="tool-tag">Bash</span>
-                            <span class="tool-tag">TypeScript</span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-card-icon"><i class="fas fa-cloud"></i></div>
+                        <span class="tool-card-title">Cloud Platforms</span>
+                    </div>
+                    <div class="tool-tags">
+                        <span class="tool-tag">AWS</span>
+                        <span class="tool-tag">Azure</span>
+                        <span class="tool-tag">GCP</span>
+                        <span class="tool-tag">OCI</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-card-icon"><i class="fas fa-dharmachakra"></i></div>
+                        <span class="tool-card-title">Container & Orchestration</span>
+                    </div>
+                    <div class="tool-tags">
+                        <span class="tool-tag">Docker</span>
+                        <span class="tool-tag">Kubernetes</span>
+                        <span class="tool-tag">Helm</span>
+                        <span class="tool-tag">Istio</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-card-icon"><i class="fas fa-code"></i></div>
+                        <span class="tool-card-title">Infrastructure as Code</span>
+                    </div>
+                    <div class="tool-tags">
+                        <span class="tool-tag">Terraform</span>
+                        <span class="tool-tag">Ansible</span>
+                        <span class="tool-tag">CloudFormation</span>
+                        <span class="tool-tag">Bicep</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-card-icon"><i class="fas fa-code-branch"></i></div>
+                        <span class="tool-card-title">CI/CD & GitOps</span>
+                    </div>
+                    <div class="tool-tags">
+                        <span class="tool-tag">ArgoCD</span>
+                        <span class="tool-tag">GitHub Actions</span>
+                        <span class="tool-tag">Flux</span>
+                        <span class="tool-tag">Jenkins</span>
+                        <span class="tool-tag">Azure DevOps</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-card-icon"><i class="fas fa-chart-line"></i></div>
+                        <span class="tool-card-title">Monitoring & Observability</span>
+                    </div>
+                    <div class="tool-tags">
+                        <span class="tool-tag">Prometheus</span>
+                        <span class="tool-tag">Grafana</span>
+                        <span class="tool-tag">Datadog</span>
+                        <span class="tool-tag">OpenTelemetry</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-card-icon"><i class="fas fa-microchip"></i></div>
+                        <span class="tool-card-title">AI/ML & HPC</span>
+                    </div>
+                    <div class="tool-tags">
+                        <span class="tool-tag">Ray</span>
+                        <span class="tool-tag">Slurm</span>
+                        <span class="tool-tag">Kubeflow</span>
+                        <span class="tool-tag">MLflow</span>
+                        <span class="tool-tag">NVIDIA GPU</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-card-icon"><i class="fas fa-terminal"></i></div>
+                        <span class="tool-card-title">Languages & Scripting</span>
+                    </div>
+                    <div class="tool-tags">
+                        <span class="tool-tag">Python</span>
+                        <span class="tool-tag">Go</span>
+                        <span class="tool-tag">Bash</span>
+                        <span class="tool-tag">TypeScript</span>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <div class="tool-card-icon"><i class="fas fa-shield-alt"></i></div>
+                        <span class="tool-card-title">Security & Compliance</span>
+                    </div>
+                    <div class="tool-tags">
+                        <span class="tool-tag">Snyk</span>
+                        <span class="tool-tag">Vanta</span>
+                        <span class="tool-tag">Vault</span>
+                        <span class="tool-tag">SOC2</span>
+                        <span class="tool-tag">FedRAMP</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1198,7 +1379,7 @@
             </div>
         </div>
         <div style="text-align: center; margin-top: 2rem;">
-            <p>&copy; 2024 Sudhakar Chundu. All rights reserved.</p>
+            <p>&copy; 2025 Sudhakar Chundu. All rights reserved.</p>
         </div>
     </footer>
 </body>
