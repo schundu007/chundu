@@ -734,68 +734,67 @@
         function stripHtml(html) {
             if (!html) return '';
             try {
-                // Create a temporary element to decode HTML entities
                 const tmp = document.createElement('div');
+
+                // Step 1: Decode HTML entities (handles double-encoded content like &lt; -> <)
                 tmp.innerHTML = html;
-                // Get text content (this strips all HTML tags)
+                let decoded = tmp.innerHTML; // First decode
+
+                // Step 2: Now set as innerHTML again to parse as actual HTML and extract text
+                tmp.innerHTML = decoded;
                 let text = tmp.textContent || tmp.innerText || '';
 
-                // Check if result still contains HTML (double-encoded)
+                // Step 3: Check if still contains HTML tags (triple-encoded edge case)
                 if (text.includes('<') && text.includes('>')) {
                     tmp.innerHTML = text;
                     text = tmp.textContent || tmp.innerText || '';
                 }
 
-                // Clean up extra whitespace
+                // Clean up whitespace
                 text = text.replace(/\s+/g, ' ').trim();
 
-                // Try to find job-related sections and extract from there
-                const jobSectionPatterns = [
-                    /what you['']?ll do[:\s]*/i,
-                    /responsibilities[:\s]*/i,
-                    /the role[:\s]*/i,
-                    /about the role[:\s]*/i,
-                    /in this role[,:\s]*/i,
-                    /your responsibilities[:\s]*/i,
-                    /what you will do[:\s]*/i,
-                    /key responsibilities[:\s]*/i,
-                    /role overview[:\s]*/i,
-                    /job description[:\s]*/i,
-                    /about this job[:\s]*/i,
-                    /the opportunity[:\s]*/i,
+                // Find job-related section (skip company intro)
+                const jobMarkers = [
+                    'what you\'ll do',
+                    'what you'll do',
+                    'what you will do',
+                    'responsibilities',
+                    'the role',
+                    'about the role',
+                    'in this role',
+                    'your impact',
+                    'the opportunity',
+                    'job summary',
+                    'position overview'
                 ];
 
-                let jobText = text;
-                for (const pattern of jobSectionPatterns) {
-                    const match = text.match(pattern);
-                    if (match) {
-                        const idx = text.search(pattern);
-                        if (idx !== -1 && idx < text.length / 2) {
-                            jobText = text.substring(idx).replace(pattern, '').trim();
-                            break;
-                        }
+                const lowerText = text.toLowerCase();
+                let bestIdx = text.length;
+                let foundMarker = '';
+
+                for (const marker of jobMarkers) {
+                    const idx = lowerText.indexOf(marker);
+                    if (idx !== -1 && idx < bestIdx && idx < text.length * 0.6) {
+                        bestIdx = idx;
+                        foundMarker = marker;
                     }
                 }
 
-                // If we found a job section, use it; otherwise use original but skip company intro
-                if (jobText !== text) {
-                    text = jobText;
-                } else {
-                    // Skip common company intro phrases at the beginning
-                    text = text
-                        .replace(/^who we are[:\s]*.{0,500}?(what you|responsibilities|the role|about the role)/i, '$1')
-                        .replace(/^about [a-z]+[:\s]*.{0,300}?(what you|responsibilities|the role)/i, '$1')
-                        .replace(/^[a-z]+ is (a |the |an ).{0,400}?(we are|what you|responsibilities)/i, '$2');
+                // Extract from the job section if found
+                if (bestIdx < text.length && foundMarker) {
+                    text = text.substring(bestIdx + foundMarker.length).trim();
+                    // Remove leading punctuation
+                    text = text.replace(/^[:\s-]+/, '').trim();
                 }
 
-                // Truncate to reasonable length
-                if (text.length > 350) {
-                    text = text.substring(0, 350) + '...';
+                // Truncate
+                if (text.length > 300) {
+                    text = text.substring(0, 300) + '...';
                 }
-                return text;
+
+                return text || 'View job details on company website';
             } catch (e) {
-                // Fallback: just remove HTML tags with regex
-                return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 350);
+                return 'View job details on company website';
             }
         }
 
