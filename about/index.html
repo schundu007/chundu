@@ -12,98 +12,243 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <style>
-        .about-section {
-            padding: 70px 1.5rem;
+        .about-intro {
+            padding: 60px 1.5rem;
             background: var(--white);
         }
-        .about-container {
+        .intro-container {
             max-width: 1100px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1.2fr 1fr;
+            grid-template-columns: 300px 1fr;
             gap: 4rem;
             align-items: start;
         }
-        .section-label {
-            display: inline-block;
-            font-size: 0.8rem;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            font-weight: 600;
+        .profile-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid var(--border);
+            position: sticky;
+            top: 80px;
         }
-        .about-title-row {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            flex-wrap: wrap;
-        }
-        .title-divider {
-            color: var(--border);
-            font-weight: 300;
-        }
-        .about-subtitle {
-            font-size: 1rem;
-            color: var(--text-muted);
-            font-weight: 500;
-            margin: 0;
-        }
-        .about-section-header {
-            max-width: 1100px;
-            margin: 0 auto 2.5rem;
-        }
-        .about-section-header h2 {
-            font-size: 2rem;
-            line-height: 1.3;
-            margin: 0;
-        }
-        .about-section-header h2 span {
-            color: var(--primary);
-        }
-        .about-content p {
-            color: var(--text-muted);
-            font-size: 1rem;
-            line-height: 1.8;
+        .profile-image {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: var(--radius);
+            overflow: hidden;
             margin-bottom: 1.25rem;
         }
-        .about-content p:last-of-type {
-            margin-bottom: 0;
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
-        .about-highlights {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.25rem;
-            margin-top: 2rem;
-        }
-        .highlight-item {
-            padding: 1.25rem;
-            background: var(--light);
-            border-left: 4px solid var(--primary);
-            border-radius: var(--radius);
-        }
-        .highlight-item .value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--dark);
+        .profile-card h3 {
+            font-size: 1.25rem;
             margin-bottom: 0.25rem;
         }
-        .highlight-item .label {
-            font-size: 0.75rem;
+        .profile-card .title {
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        .profile-card .location {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            margin-bottom: 1.25rem;
+        }
+        .profile-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        .profile-tag {
+            background: var(--light);
+            color: var(--dark-soft);
+            padding: 0.3rem 0.6rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+        .profile-cta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .profile-cta .btn {
+            width: 100%;
+            justify-content: center;
+        }
+        .intro-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+        .intro-content h2 span {
+            color: var(--primary);
+        }
+        .intro-content p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        .intro-content p.lead {
+            font-size: 1.15rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .highlights-section {
+            padding: 60px 1.5rem;
+            background: var(--light);
+        }
+        .highlights-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+        .highlight-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .highlight-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+        .highlight-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+        .highlight-card .label {
+            font-size: 0.8rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
-        @media (max-width: 768px) {
-            .about-container {
+
+        .philosophy-section {
+            padding: 60px 1.5rem;
+            background: var(--white);
+        }
+        .philosophy-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .philosophy-card {
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: var(--radius-lg);
+            border-left: 4px solid var(--primary);
+        }
+        .philosophy-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .philosophy-card h4 i {
+            color: var(--primary);
+        }
+        .philosophy-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .cta-section {
+            padding: 60px 1.5rem;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-soft) 100%);
+            text-align: center;
+        }
+        .cta-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .cta-content h2 {
+            color: var(--white);
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .cta-content h2 span {
+            color: var(--primary);
+        }
+        .cta-content p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn-white {
+            background: var(--white);
+            color: var(--dark);
+        }
+        .btn-white:hover {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        @media (max-width: 1024px) {
+            .intro-container {
                 grid-template-columns: 1fr;
                 gap: 2rem;
             }
-            .about-highlights {
+            .profile-card {
+                max-width: 300px;
+                margin: 0 auto;
+                position: static;
+            }
+            .highlights-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .philosophy-grid {
                 grid-template-columns: 1fr;
             }
-            .about-section {
-                padding: 50px 1rem;
+        }
+        @media (max-width: 768px) {
+            .about-intro, .highlights-section, .philosophy-section {
+                padding: 40px 1rem;
+            }
+            .highlights-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+            .highlight-card .value {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -144,46 +289,137 @@
         <p>Building and operating infrastructure at scale for global enterprises</p>
     </header>
 
-    <!-- About Content -->
-    <section class="about-section">
-        <div class="about-section-header">
-            <h2>Professional <span>Experience</span></h2>
-        </div>
-        <div class="about-container">
-            <div class="about-content">
-                <p>
-                    With 18+ years of hands-on experience building and operating large-scale GPU compute platforms,
-                    AI/ML infrastructure, and distributed systems at planetary scale. Leading global teams of 13+ engineers
-                    across Infrastructure, Security, Networking, and DevOps.
+    <!-- Intro Section with Photo -->
+    <section class="about-intro">
+        <div class="intro-container">
+            <div class="profile-card">
+                <div class="profile-image">
+                    <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu">
+                </div>
+                <h3>Sudhakar Chundu</h3>
+                <p class="title">Distinguished Cloud AI Architect</p>
+                <p class="location"><i class="fas fa-map-marker-alt"></i> San Jose, California</p>
+                <div class="profile-tags">
+                    <span class="profile-tag">AI/ML Infrastructure</span>
+                    <span class="profile-tag">GPU/Slurm</span>
+                    <span class="profile-tag">Kubernetes</span>
+                    <span class="profile-tag">Multi-Cloud</span>
+                </div>
+                <div class="profile-cta">
+                    <a href="../resume/" class="btn btn-primary">
+                        <i class="fas fa-file-alt"></i> View Resume
+                    </a>
+                    <a href="https://www.linkedin.com/in/schundu" class="btn btn-outline" target="_blank">
+                        <i class="fab fa-linkedin"></i> Connect
+                    </a>
+                </div>
+            </div>
+            <div class="intro-content">
+                <h2>Building <span>AI/ML Platforms</span> at Planetary Scale</h2>
+                <p class="lead">
+                    I'm a Distinguished Cloud AI Architect and Platform Engineering Leader with 18+ years of experience
+                    transforming how enterprises build and operate infrastructure.
                 </p>
                 <p>
-                    Currently Distinguished AI Architect at Trackonomy, managing $15M+ budgets while delivering
-                    $8M+ in documented cost savings. Built infrastructure team from 0 to 6 engineers serving Pharma, Airlines,
-                    Government, Manufacturing, Healthcare, and IoT sectors globally across 8 countries.
+                    My career spans the full evolution of cloud computing — from bare-metal data centers to
+                    multi-cloud Kubernetes deployments to GPU-accelerated AI/ML platforms. I've led infrastructure
+                    initiatives at Fortune 500 companies including work with ExxonMobil, Chevron, BP, Shell,
+                    Harvard Pilgrim Health Care, CNA Insurance, PwC, and Verizon.
                 </p>
                 <p>
-                    Expert in Slurm-based GPU compute platforms (65 GPUs, 99.97% uptime), serverless GPU infrastructure,
-                    Databricks/Spark/Kafka real-time pipelines, and comprehensive DevSecOps with SOC2, HIPAA, FedRAMP,
-                    and HITRUST compliance.
+                    Currently at Trackonomy Systems, I serve as Distinguished AI Architect where I designed and
+                    built the company's Slurm-based GPU compute platform from the ground up — 65 GPUs across 8 nodes
+                    delivering 99.97% uptime for enterprise AI inference and training workloads.
+                </p>
+                <p>
+                    I'm passionate about solving complex infrastructure challenges: reducing cloud costs by 73%
+                    ($10M to $2.7M annually), achieving enterprise compliance (SOC2, HIPAA, FedRAMP, HITRUST),
+                    and building self-service platforms that accelerate developer velocity while maintaining
+                    security and governance.
+                </p>
+                <p>
+                    I lead global teams of 13+ engineers across Infrastructure, Security, Networking, and DevOps,
+                    with experience managing $15M+ budgets and delivering $8M+ in documented cost savings.
                 </p>
             </div>
-            <div class="about-highlights">
-                <div class="highlight-item">
-                    <div class="value">99.97%</div>
-                    <div class="label">GPU Cluster Uptime</div>
-                </div>
-                <div class="highlight-item">
-                    <div class="value">$15M+</div>
-                    <div class="label">Budget Managed</div>
-                </div>
-                <div class="highlight-item">
+        </div>
+    </section>
+
+    <!-- Highlights Section -->
+    <section class="highlights-section">
+        <div class="highlights-container">
+            <div class="highlights-grid">
+                <div class="highlight-card">
                     <div class="value">18+</div>
                     <div class="label">Years Experience</div>
                 </div>
-                <div class="highlight-item">
+                <div class="highlight-card">
                     <div class="value">$8M+</div>
                     <div class="label">Annual Savings</div>
                 </div>
+                <div class="highlight-card">
+                    <div class="value">99.97%</div>
+                    <div class="label">GPU Cluster Uptime</div>
+                </div>
+                <div class="highlight-card">
+                    <div class="value">13+</div>
+                    <div class="label">Engineers Led</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="philosophy-section">
+        <div class="philosophy-container">
+            <h2 style="text-align: center; margin-bottom: 0.5rem;">My <span style="color: var(--primary);">Approach</span></h2>
+            <p style="text-align: center; color: var(--text-muted); max-width: 600px; margin: 0 auto;">
+                Guiding principles that drive how I build and lead infrastructure teams
+            </p>
+            <div class="philosophy-grid">
+                <div class="philosophy-card">
+                    <h4><i class="fas fa-dollar-sign"></i> Cost-Conscious Architecture</h4>
+                    <p>Every architectural decision considers TCO. I've driven 73% cost reductions through right-sizing, spot instances, reserved capacity, and vendor consolidation without sacrificing reliability.</p>
+                </div>
+                <div class="philosophy-card">
+                    <h4><i class="fas fa-shield-alt"></i> Security as Foundation</h4>
+                    <p>Security isn't an afterthought — it's built into every layer. From zero-trust networking to DevSecOps pipelines, I ensure compliance with SOC2, HIPAA, FedRAMP, and HITRUST from day one.</p>
+                </div>
+                <div class="philosophy-card">
+                    <h4><i class="fas fa-rocket"></i> Developer Velocity</h4>
+                    <p>Great infrastructure is invisible to developers. I build self-service platforms with golden paths that accelerate delivery — reducing deployment times by 95% while maintaining governance.</p>
+                </div>
+                <div class="philosophy-card">
+                    <h4><i class="fas fa-chart-line"></i> Observability First</h4>
+                    <p>You can't improve what you can't measure. I implement comprehensive monitoring, tracing, and alerting that enables data-driven decisions and rapid incident response.</p>
+                </div>
+                <div class="philosophy-card">
+                    <h4><i class="fas fa-code-branch"></i> Infrastructure as Code</h4>
+                    <p>All infrastructure should be version-controlled, reviewed, and reproducible. I've created 50+ Terraform modules and established GitOps workflows that ensure consistency at scale.</p>
+                </div>
+                <div class="philosophy-card">
+                    <h4><i class="fas fa-users"></i> Team Empowerment</h4>
+                    <p>Technology is only as good as the team operating it. I focus on building high-performing teams through mentorship, clear ownership, and creating environments where engineers thrive.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Let's <span>Connect</span></h2>
+            <p>
+                Currently exploring Cloud AI Architect and platform engineering leadership roles.
+                Open to both full-time positions and consulting engagements.
+            </p>
+            <div class="cta-buttons">
+                <a href="../resume/" class="btn btn-white">
+                    <i class="fas fa-file-alt"></i> View Resume
+                </a>
+                <a href="https://www.linkedin.com/in/schundu" class="btn btn-primary" target="_blank">
+                    <i class="fab fa-linkedin"></i> Connect on LinkedIn
+                </a>
             </div>
         </div>
     </section>
