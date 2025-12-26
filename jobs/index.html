@@ -1257,12 +1257,12 @@
                     location: 'San Jose, CA',
                     dates: 'Oct 2023 – Present',
                     bullets: [
-                        'Designed Slurm-based GPU compute platform — 65 GPUs across 8 nodes using Slurm, Slinky, and NVIDIA BCM; achieved 99.97% uptime serving 12+ enterprise clients for AI inference and training',
-                        'Architected serverless GPU infrastructure using AWS Lambda containers, reducing inference costs by 65% while serving 5M+ daily predictions',
-                        'Reduced cloud costs 73% ($10M→$2.7M/year) through GPU utilization optimization, fair-share scheduling, and vendor consolidation',
-                        'Built CI/CD pipelines for 100+ applications using GitHub Actions, Docker, Terraform, and GitOps; reduced deployment time 95%',
-                        'Implemented DevSecOps with Trivy, Falco, OPA, Gitleaks, and HashiCorp Vault; achieved SOC2, HIPAA, FedRAMP, HITRUST compliance',
-                        'Built team 0 → 6 engineers | Managed $15M+ budgets | Led incident response and on-call rotations'
+                        'GPU/HPC Infrastructure: Designed Slurm-based GPU compute platform — 65 GPUs across 8 nodes using Slurm, Slinky (Slurm-on-Kubernetes), and NVIDIA BCM; achieved 99.97% uptime serving 12+ enterprise clients for AI inference and training',
+                        'Serverless AI: Architected serverless GPU infrastructure using AWS Lambda containers, reducing inference costs by 65% while serving 5M+ daily predictions',
+                        'Cloud FinOps: Reduced cloud costs 73% ($10M→$2.7M/year) through GPU utilization optimization, fair-share scheduling, reserved instance planning, and vendor consolidation',
+                        'Platform Engineering: Built CI/CD pipelines for 100+ applications using GitHub Actions, Docker, Terraform, and GitOps (ArgoCD, FluxCD); reduced deployment time 95% (days→15 minutes)',
+                        'Security & Compliance: Implemented DevSecOps with Trivy, Falco, OPA, Gitleaks, and HashiCorp Vault; achieved SOC2, HIPAA, FedRAMP, HITRUST compliance for GenAI/LLM platform',
+                        'Leadership: Built team 0→6 engineers | Managed $15M+ budgets | Led incident response and on-call rotations'
                     ]
                 },
                 {
@@ -1271,20 +1271,23 @@
                     location: 'Seattle, WA',
                     dates: 'Feb 2020 – Oct 2023',
                     bullets: [
-                        'Architected OSDU R3 data platform processing exabytes of seismic data on GPU-accelerated Kubernetes clusters for ExxonMobil, Chevron, BP, Shell',
-                        'Delivered GPU cluster management at scale with Kubernetes, Istio, and KEDA, ensuring 99.95% availability for ML inference workloads',
-                        'Created 50+ Terraform modules (VPC, EKS, RDS, DynamoDB, S3, SageMaker, IAM); implemented GitOps with Jenkins pipelines',
-                        'Built observability stack with Prometheus/Grafana/ELK and GPU metrics; created automation in Go/Python reducing manual operations 85%'
+                        'Platform: Architected OSDU R3 data platform processing exabytes of seismic data on GPU-accelerated Kubernetes clusters (EKS/Fargate) with Docker, Spark, Kafka, and Hadoop/HDFS for ExxonMobil, Chevron, BP, Shell',
+                        'Infrastructure: Delivered GPU cluster management at scale with Kubernetes, Istio, and KEDA, ensuring 99.95% availability for ML inference workloads across multi-region deployments',
+                        'IaC & GitOps: Created 50+ Terraform modules (VPC, EKS, RDS, DynamoDB, S3, SageMaker, IAM); implemented GitOps (ArgoCD/FluxCD) with Jenkins pipelines; reduced deployment time 80%',
+                        'Security & Quality: Integrated Trivy, Kube-bench, and SonarQube into CI/CD; implemented OPA policies and Ansible automation for compliance enforcement',
+                        'Observability: Built observability stack with Prometheus/Grafana/ELK and GPU metrics; created automation in Go/Python reducing manual operations 85%; led 24x7 on-call rotations'
                     ]
                 },
                 {
-                    title: 'Cloud Architect — Harvard Pilgrim Health Care',
+                    title: 'Multi-Cloud Architect / Senior Infrastructure Engineer',
                     company: 'Tata Consultancy Services',
-                    location: 'Boston, MA',
-                    dates: 'Jun 2018 – Feb 2020',
+                    location: 'Multiple Locations (Boston, Chicago, Dallas)',
+                    dates: 'May 2007 – Feb 2020',
                     bullets: [
-                        'Led cloud modernization for HIPAA/HITRUST-regulated AI/ML applications to AWS; implemented GPU-enabled EKS clusters',
-                        'Implemented Jenkins/Ansible CI/CD pipelines; DevSecOps (HashiCorp Vault, SonarQube, OWASP); managed $6M infrastructure budget'
+                        'Cloud Architect — Harvard Pilgrim Health Care (Jun 2018 – Feb 2020): Led cloud modernization for HIPAA/HITRUST-regulated AI/ML applications to AWS; implemented GPU-enabled EKS clusters with NFS-backed persistent storage; Jenkins/Ansible CI/CD pipelines; DevSecOps (HashiCorp Vault, SonarQube, OWASP); managed $6M infrastructure budget',
+                        'Cloud Senior Engineer — CNA Insurance (May 2015 – Jun 2018): Managed Kubernetes/Helm deployments on AWS; built reproducible K8s applications; automated provisioning with Ansible playbooks; Led cloud migrations to AWS, Azure, OpenStack; pioneered Docker/Kubernetes adoption (2013-2014); implemented CI/CD with Jenkins/Ansible',
+                        'Solutions Architect — PwC (Jan 2011 – Apr 2015): Led infrastructure deployments for 20+ facility buildouts including branch offices, call centers, and data centers; managed $15M+ annual budgets; Integrated Chef/Jenkins deployment pipelines; migrated VMware VMs to AWS (EC2, S3, ELB)',
+                        'Middleware Engineer — Verizon, Owens Corning (May 2007 – Jan 2011): Deep Linux/Unix administration with WebSphere/WebLogic middleware; JVM optimization, clustering, and HA configurations; Managed large-scale production systems on bare-metal serving millions of users; led capacity planning, performance testing, and 24x7 L3 operations'
                     ]
                 }
             ],
@@ -1716,21 +1719,60 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             }));
 
             USER_PROFILE.experience.forEach(exp => {
+                // Job title - bold for ATS
                 children.push(new Paragraph({
-                    children: [new TextRun({ text: exp.title, bold: true, size: 22 })],
-                    spacing: { before: 150 }
+                    children: [new TextRun({ text: exp.title, bold: true, size: 24 })],
+                    spacing: { before: 200 }
                 }));
+                // Company, location, dates - clear separation for ATS parsing
                 children.push(new Paragraph({
-                    children: [new TextRun({ text: `${exp.company} | ${exp.location} | ${exp.dates}`, italics: true, size: 20, color: '666666' })]
+                    children: [
+                        new TextRun({ text: exp.company, bold: true, size: 22 }),
+                        new TextRun({ text: ` | ${exp.location} | `, size: 22, color: '666666' }),
+                        new TextRun({ text: exp.dates, size: 22, color: '666666' })
+                    ]
                 }));
+                // All bullets - full text for ATS keyword scanning
                 exp.bullets.forEach(bullet => {
                     children.push(new Paragraph({
-                        children: [new TextRun({ text: `• ${bullet}`, size: 22 })],
-                        spacing: { before: 40 }
+                        children: [new TextRun({ text: `• ${bullet}`, size: 21 })],
+                        spacing: { before: 60, after: 40 }
                     }));
                 });
+                // Add spacing between jobs
+                children.push(new Paragraph({ children: [], spacing: { after: 100 } }));
             });
-            children.push(new Paragraph({ children: [], spacing: { after: 200 } }));
+            children.push(new Paragraph({ children: [], spacing: { after: 100 } }));
+
+            // Section: ATS Keywords (hidden but parseable)
+            children.push(new Paragraph({
+                children: [new TextRun({ text: 'TECHNICAL KEYWORDS', bold: true, size: 24, color: '2563eb' })],
+                border: { bottom: { color: '2563eb', size: 6, style: BorderStyle.SINGLE } },
+                spacing: { before: 200, after: 100 }
+            }));
+            // Build ATS keyword string from job and profile
+            const atsKeywords = [
+                // From job
+                job.title,
+                // Core skills
+                'Cloud Architect', 'Platform Engineer', 'Site Reliability Engineer', 'SRE', 'DevOps', 'Infrastructure Engineer',
+                'GPU', 'HPC', 'Slurm', 'NVIDIA', 'A100', 'V100', 'DGX', 'CUDA', 'TensorRT',
+                'Kubernetes', 'K8s', 'EKS', 'AKS', 'Docker', 'Helm', 'Istio', 'ArgoCD', 'FluxCD', 'GitOps',
+                'AWS', 'Azure', 'GCP', 'Multi-Cloud', 'Hybrid Cloud',
+                'Terraform', 'Ansible', 'CloudFormation', 'Infrastructure as Code', 'IaC',
+                'CI/CD', 'Jenkins', 'GitHub Actions', 'GitLab CI',
+                'Python', 'Go', 'Golang', 'Bash', 'Shell Scripting',
+                'Prometheus', 'Grafana', 'Datadog', 'ELK', 'Observability', 'Monitoring',
+                'AI/ML', 'Machine Learning', 'MLOps', 'PyTorch', 'TensorFlow', 'SageMaker', 'MLflow', 'Kubeflow',
+                'Spark', 'Kafka', 'Hadoop', 'Big Data', 'Data Engineering',
+                'SOC2', 'HIPAA', 'FedRAMP', 'HITRUST', 'Security', 'Compliance', 'DevSecOps',
+                'Microservices', 'Distributed Systems', 'High Availability', 'Scalability',
+                'Leadership', 'Team Management', 'Budget Management', 'Incident Response', 'On-Call'
+            ].join(', ');
+            children.push(new Paragraph({
+                children: [new TextRun({ text: atsKeywords, size: 18, color: '888888' })],
+                spacing: { after: 100 }
+            }));
 
             // Section: Education & Certifications
             children.push(new Paragraph({
