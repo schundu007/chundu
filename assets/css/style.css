@@ -345,15 +345,28 @@ nav {
 }
 
 .btn-outline {
-    background: var(--white);
+    background: transparent;
     color: var(--dark);
-    border: 1.5px solid var(--border);
+    border: 2px solid var(--dark);
 }
 
 .btn-outline:hover {
-    border-color: var(--dark);
-    background: var(--dark);
+    border-color: var(--primary);
+    background: var(--primary);
     color: var(--white);
+}
+
+/* Outline button on dark backgrounds */
+.btn-outline-light {
+    background: transparent;
+    color: var(--white);
+    border: 2px solid rgba(255,255,255,0.6);
+}
+
+.btn-outline-light:hover {
+    border-color: var(--white);
+    background: var(--white);
+    color: var(--dark);
 }
 
 /* Footer */
