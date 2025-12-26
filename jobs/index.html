@@ -11,6 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- docx library for Word document generation -->
+    <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <style>
         .jobs-section {
             padding: 40px 1.5rem 60px;
@@ -1457,32 +1460,309 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             return resume;
         }
 
-        // Download cover letter as text file
-        function downloadCoverLetter(job) {
-            const coverLetter = generateCoverLetter(job);
-            const blob = new Blob([coverLetter], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `Cover_Letter_${job.company.replace(/[^a-zA-Z0-9]/g, '_')}_${job.title.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 30)}.txt`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+        // Download cover letter as Word document
+        async function downloadCoverLetter(job) {
+            const { Document, Packer, Paragraph, TextRun, AlignmentType, HeadingLevel } = docx;
+            const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            const skillsList = Object.keys(USER_PROFILE.skills).slice(0, 4).join(', ');
+            const exp = USER_PROFILE.experience[0];
+
+            const doc = new Document({
+                sections: [{
+                    properties: {},
+                    children: [
+                        // Header with contact info
+                        new Paragraph({
+                            children: [new TextRun({ text: USER_PROFILE.name, bold: true, size: 28 })],
+                            alignment: AlignmentType.LEFT
+                        }),
+                        new Paragraph({
+                            children: [new TextRun({ text: USER_PROFILE.title, italics: true, size: 22 })]
+                        }),
+                        new Paragraph({
+                            children: [new TextRun({ text: `${USER_PROFILE.location} | ${USER_PROFILE.email} | ${USER_PROFILE.phone}`, size: 20 })]
+                        }),
+                        new Paragraph({
+                            children: [new TextRun({ text: `${USER_PROFILE.linkedin} | ${USER_PROFILE.website}`, size: 20 })]
+                        }),
+                        new Paragraph({ children: [] }), // Empty line
+                        // Date
+                        new Paragraph({
+                            children: [new TextRun({ text: today, size: 22 })]
+                        }),
+                        new Paragraph({ children: [] }),
+                        // Recipient
+                        new Paragraph({
+                            children: [new TextRun({ text: 'Hiring Manager', size: 22 })]
+                        }),
+                        new Paragraph({
+                            children: [new TextRun({ text: job.company, size: 22 })]
+                        }),
+                        new Paragraph({
+                            children: [new TextRun({ text: job.location, size: 22 })]
+                        }),
+                        new Paragraph({ children: [] }),
+                        // Salutation
+                        new Paragraph({
+                            children: [new TextRun({ text: 'Dear Hiring Manager,', size: 22 })]
+                        }),
+                        new Paragraph({ children: [] }),
+                        // Body paragraph 1
+                        new Paragraph({
+                            children: [new TextRun({
+                                text: `I am writing to express my strong interest in the ${job.title} position at ${job.company}. With ${USER_PROFILE.yearsExperience} years of experience in cloud infrastructure, platform engineering, and AI/ML systems, I am excited about the opportunity to contribute to your team.`,
+                                size: 22
+                            })]
+                        }),
+                        new Paragraph({ children: [] }),
+                        // Body paragraph 2
+                        new Paragraph({
+                            children: [new TextRun({ text: USER_PROFILE.summary, size: 22 })]
+                        }),
+                        new Paragraph({ children: [] }),
+                        // Key qualifications header
+                        new Paragraph({
+                            children: [new TextRun({ text: 'Key qualifications that align with this role:', bold: true, size: 22 })]
+                        }),
+                        new Paragraph({ children: [] }),
+                        // Bullet points
+                        new Paragraph({
+                            children: [new TextRun({ text: `• ${exp.bullets[0]}`, size: 22 })]
+                        }),
+                        new Paragraph({
+                            children: [new TextRun({ text: `• ${exp.bullets[1]}`, size: 22 })]
+                        }),
+                        new Paragraph({
+                            children: [new TextRun({ text: `• ${exp.bullets[2]}`, size: 22 })]
+                        }),
+                        new Paragraph({
+                            children: [new TextRun({ text: `• ${exp.bullets[3]}`, size: 22 })]
+                        }),
+                        new Paragraph({ children: [] }),
+                        // Body paragraph 3
+                        new Paragraph({
+                            children: [new TextRun({
+                                text: `My technical expertise spans ${skillsList}, which directly aligns with the requirements for this position. I am particularly drawn to ${job.company}'s mission and the opportunity to work on ${job.department ? job.department + ' initiatives' : 'cutting-edge infrastructure challenges'}.`,
+                                size: 22
+                            })]
+                        }),
+                        new Paragraph({ children: [] }),
+                        // Closing paragraph
+                        new Paragraph({
+                            children: [new TextRun({
+                                text: `I am confident that my experience leading large-scale platform engineering initiatives, combined with my passion for building reliable and scalable systems, would make me a valuable addition to your team.`,
+                                size: 22
+                            })]
+                        }),
+                        new Paragraph({ children: [] }),
+                        new Paragraph({
+                            children: [new TextRun({
+                                text: `I would welcome the opportunity to discuss how my background and skills can contribute to ${job.company}'s continued success. Thank you for considering my application.`,
+                                size: 22
+                            })]
+                        }),
+                        new Paragraph({ children: [] }),
+                        // Signature
+                        new Paragraph({
+                            children: [new TextRun({ text: 'Sincerely,', size: 22 })]
+                        }),
+                        new Paragraph({ children: [] }),
+                        new Paragraph({
+                            children: [new TextRun({ text: USER_PROFILE.name, bold: true, size: 22 })]
+                        }),
+                        new Paragraph({
+                            children: [new TextRun({ text: USER_PROFILE.title, size: 22 })]
+                        })
+                    ]
+                }]
+            });
+
+            const blob = await Packer.toBlob(doc);
+            saveAs(blob, `Cover_Letter_${job.company.replace(/[^a-zA-Z0-9]/g, '_')}_${job.title.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 30)}.docx`);
         }
 
-        // Download resume as text file
-        function downloadResume(job) {
-            const resume = generateResume(job);
-            const blob = new Blob([resume], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `Resume_${USER_PROFILE.name.replace(/\s+/g, '_')}_${job.company.replace(/[^a-zA-Z0-9]/g, '_')}.txt`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+        // Download resume as Word document
+        async function downloadResume(job) {
+            const { Document, Packer, Paragraph, TextRun, AlignmentType, BorderStyle, HeadingLevel, TableOfContents } = docx;
+            const jobTitle = job.title.toLowerCase();
+            const jobDesc = (job.description || '').toLowerCase();
+
+            // Determine which skills to highlight based on job
+            let relevantSkillCategories = [];
+            if (jobTitle.includes('ml') || jobTitle.includes('ai') || jobTitle.includes('machine learning') || jobDesc.includes('ml') || jobDesc.includes('machine learning')) {
+                relevantSkillCategories.push('AI/ML Infrastructure', 'GPU/HPC Computing');
+            }
+            if (jobTitle.includes('sre') || jobTitle.includes('reliability') || jobDesc.includes('sre') || jobDesc.includes('reliability')) {
+                relevantSkillCategories.push('SRE & Observability', 'Container Orchestration');
+            }
+            if (jobTitle.includes('devops') || jobDesc.includes('devops') || jobDesc.includes('ci/cd')) {
+                relevantSkillCategories.push('Infrastructure as Code', 'Container Orchestration');
+            }
+            if (jobTitle.includes('cloud') || jobTitle.includes('architect') || jobDesc.includes('aws') || jobDesc.includes('azure')) {
+                relevantSkillCategories.push('Cloud Platforms', 'Infrastructure as Code');
+            }
+            if (jobTitle.includes('platform') || jobDesc.includes('platform') || jobDesc.includes('kubernetes')) {
+                relevantSkillCategories.push('Container Orchestration', 'Cloud Platforms');
+            }
+            if (jobTitle.includes('data') || jobDesc.includes('spark') || jobDesc.includes('kafka')) {
+                relevantSkillCategories.push('Big Data & Streaming');
+            }
+
+            // Default skills if none matched
+            if (relevantSkillCategories.length === 0) {
+                relevantSkillCategories = ['Cloud Platforms', 'Container Orchestration', 'Infrastructure as Code', 'SRE & Observability'];
+            }
+
+            // Remove duplicates and limit to 6
+            relevantSkillCategories = [...new Set(relevantSkillCategories)].slice(0, 6);
+
+            // Build document children
+            const children = [];
+
+            // Header - Name
+            children.push(new Paragraph({
+                children: [new TextRun({ text: USER_PROFILE.name.toUpperCase(), bold: true, size: 36 })],
+                alignment: AlignmentType.CENTER,
+                spacing: { after: 100 }
+            }));
+
+            // Title
+            children.push(new Paragraph({
+                children: [new TextRun({ text: USER_PROFILE.title, size: 24, color: '666666' })],
+                alignment: AlignmentType.CENTER,
+                spacing: { after: 200 }
+            }));
+
+            // Contact info
+            children.push(new Paragraph({
+                children: [new TextRun({ text: `${USER_PROFILE.location} | ${USER_PROFILE.phone} | ${USER_PROFILE.email}`, size: 20 })],
+                alignment: AlignmentType.CENTER
+            }));
+            children.push(new Paragraph({
+                children: [new TextRun({ text: `${USER_PROFILE.linkedin} | ${USER_PROFILE.github} | ${USER_PROFILE.website}`, size: 20 })],
+                alignment: AlignmentType.CENTER,
+                spacing: { after: 300 }
+            }));
+
+            // Section: Professional Summary
+            children.push(new Paragraph({
+                children: [new TextRun({ text: 'PROFESSIONAL SUMMARY', bold: true, size: 24, color: '2563eb' })],
+                border: { bottom: { color: '2563eb', size: 6, style: BorderStyle.SINGLE } },
+                spacing: { before: 200, after: 100 }
+            }));
+            children.push(new Paragraph({
+                children: [new TextRun({ text: USER_PROFILE.summary, size: 22 })],
+                spacing: { after: 200 }
+            }));
+
+            // Section: Key Achievements
+            children.push(new Paragraph({
+                children: [new TextRun({ text: 'KEY ACHIEVEMENTS', bold: true, size: 24, color: '2563eb' })],
+                border: { bottom: { color: '2563eb', size: 6, style: BorderStyle.SINGLE } },
+                spacing: { before: 200, after: 100 }
+            }));
+            USER_PROFILE.keyMetrics.forEach(m => {
+                children.push(new Paragraph({
+                    children: [
+                        new TextRun({ text: `• ${m.value}`, bold: true, size: 22 }),
+                        new TextRun({ text: ` - ${m.label}`, size: 22 })
+                    ]
+                }));
+            });
+            children.push(new Paragraph({ children: [], spacing: { after: 200 } }));
+
+            // Section: Core Technical Skills (tailored)
+            children.push(new Paragraph({
+                children: [new TextRun({ text: 'CORE TECHNICAL SKILLS', bold: true, size: 24, color: '2563eb' })],
+                border: { bottom: { color: '2563eb', size: 6, style: BorderStyle.SINGLE } },
+                spacing: { before: 200, after: 100 }
+            }));
+            children.push(new Paragraph({
+                children: [new TextRun({ text: `(Tailored for: ${job.title} at ${job.company})`, italics: true, size: 18, color: '888888' })],
+                spacing: { after: 100 }
+            }));
+
+            // Prioritized skills first
+            relevantSkillCategories.forEach(cat => {
+                if (USER_PROFILE.skills[cat]) {
+                    children.push(new Paragraph({
+                        children: [
+                            new TextRun({ text: `${cat}: `, bold: true, size: 22 }),
+                            new TextRun({ text: USER_PROFILE.skills[cat], size: 22 })
+                        ],
+                        spacing: { after: 80 }
+                    }));
+                }
+            });
+            // Remaining skills
+            Object.keys(USER_PROFILE.skills).forEach(cat => {
+                if (!relevantSkillCategories.includes(cat)) {
+                    children.push(new Paragraph({
+                        children: [
+                            new TextRun({ text: `${cat}: `, bold: true, size: 22 }),
+                            new TextRun({ text: USER_PROFILE.skills[cat], size: 22 })
+                        ],
+                        spacing: { after: 80 }
+                    }));
+                }
+            });
+            children.push(new Paragraph({ children: [], spacing: { after: 200 } }));
+
+            // Section: Professional Experience
+            children.push(new Paragraph({
+                children: [new TextRun({ text: 'PROFESSIONAL EXPERIENCE', bold: true, size: 24, color: '2563eb' })],
+                border: { bottom: { color: '2563eb', size: 6, style: BorderStyle.SINGLE } },
+                spacing: { before: 200, after: 100 }
+            }));
+
+            USER_PROFILE.experience.forEach(exp => {
+                children.push(new Paragraph({
+                    children: [new TextRun({ text: exp.title, bold: true, size: 22 })],
+                    spacing: { before: 150 }
+                }));
+                children.push(new Paragraph({
+                    children: [new TextRun({ text: `${exp.company} | ${exp.location} | ${exp.dates}`, italics: true, size: 20, color: '666666' })]
+                }));
+                exp.bullets.forEach(bullet => {
+                    children.push(new Paragraph({
+                        children: [new TextRun({ text: `• ${bullet}`, size: 22 })],
+                        spacing: { before: 40 }
+                    }));
+                });
+            });
+            children.push(new Paragraph({ children: [], spacing: { after: 200 } }));
+
+            // Section: Education & Certifications
+            children.push(new Paragraph({
+                children: [new TextRun({ text: 'EDUCATION & CERTIFICATIONS', bold: true, size: 24, color: '2563eb' })],
+                border: { bottom: { color: '2563eb', size: 6, style: BorderStyle.SINGLE } },
+                spacing: { before: 200, after: 100 }
+            }));
+            children.push(new Paragraph({
+                children: [new TextRun({ text: USER_PROFILE.education.degree, bold: true, size: 22 })]
+            }));
+            children.push(new Paragraph({
+                children: [new TextRun({ text: USER_PROFILE.education.school, size: 22 })],
+                spacing: { after: 150 }
+            }));
+            children.push(new Paragraph({
+                children: [new TextRun({ text: 'Certifications:', bold: true, size: 22 })]
+            }));
+            USER_PROFILE.certifications.forEach(cert => {
+                children.push(new Paragraph({
+                    children: [new TextRun({ text: `• ${cert}`, size: 22 })]
+                }));
+            });
+
+            const doc = new Document({
+                sections: [{
+                    properties: {},
+                    children: children
+                }]
+            });
+
+            const blob = await Packer.toBlob(doc);
+            saveAs(blob, `Resume_${USER_PROFILE.name.replace(/\s+/g, '_')}_${job.company.replace(/[^a-zA-Z0-9]/g, '_')}.docx`);
         }
 
         // Store jobs globally for cover letter/resume access
