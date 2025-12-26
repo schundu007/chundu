@@ -137,6 +137,7 @@ nav {
     height: 32px;
     border-radius: 50%;
     object-fit: cover;
+    object-position: top center;
     border: 2px solid var(--primary);
     transition: var(--transition);
 }
