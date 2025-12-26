@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Listings | Sudhakar Chundu</title>
-    <meta name="description" content="Live job listings from top tech companies matching Cloud Architect, Platform Engineering, and DevOps roles.">
+    <meta name="description" content="Live US job listings from top tech companies - Cloud Architect, Platform Engineering, DevOps & SRE roles. Bay Area, Texas, Florida, North Carolina.">
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -514,7 +514,7 @@
     <!-- Page Header -->
     <header class="page-header">
         <h1>Job <span>Listings</span></h1>
-        <p>Live job openings from top tech companies matching Cloud Architect, Platform Engineering, and DevOps roles.</p>
+        <p>Live US job openings from top tech companies - Cloud Architect, Platform Engineering, DevOps & SRE roles. Priority: Bay Area, Texas, Florida, North Carolina.</p>
     </header>
 
     <!-- Jobs Section -->
@@ -546,12 +546,14 @@
                     <input type="text" id="search-input" placeholder="Search jobs by title, company, or keywords...">
                 </div>
                 <select class="filter-select" id="location-filter">
-                    <option value="">All Locations</option>
-                    <option value="remote">Remote</option>
-                    <option value="us">United States</option>
-                    <option value="sf">San Francisco</option>
+                    <option value="us" selected>All US Locations</option>
+                    <option value="remote">Remote (US)</option>
+                    <option value="bayarea">SF Bay Area / California</option>
+                    <option value="texas">Texas</option>
+                    <option value="florida">Florida</option>
+                    <option value="nc">North Carolina</option>
                     <option value="ny">New York</option>
-                    <option value="seattle">Seattle</option>
+                    <option value="seattle">Seattle / Washington</option>
                 </select>
                 <select class="filter-select" id="date-filter">
                     <option value="">All Dates</option>
@@ -772,16 +774,81 @@
             return jobs.filter(job => job.postedDate >= cutoffDate);
         }
 
-        // Filter jobs by location
+        // US states and cities for filtering
+        const US_LOCATIONS = [
+            'united states', 'usa', 'u.s.', 'us-', ', us',
+            'alabama', 'alaska', 'arizona', 'arkansas', 'california', 'colorado', 'connecticut',
+            'delaware', 'florida', 'georgia', 'hawaii', 'idaho', 'illinois', 'indiana', 'iowa',
+            'kansas', 'kentucky', 'louisiana', 'maine', 'maryland', 'massachusetts', 'michigan',
+            'minnesota', 'mississippi', 'missouri', 'montana', 'nebraska', 'nevada', 'new hampshire',
+            'new jersey', 'new mexico', 'new york', 'north carolina', 'north dakota', 'ohio',
+            'oklahoma', 'oregon', 'pennsylvania', 'rhode island', 'south carolina', 'south dakota',
+            'tennessee', 'texas', 'utah', 'vermont', 'virginia', 'washington', 'west virginia',
+            'wisconsin', 'wyoming', 'dc', 'd.c.',
+            // Major US cities
+            'san francisco', 'san jose', 'milpitas', 'sunnyvale', 'mountain view', 'palo alto',
+            'cupertino', 'santa clara', 'fremont', 'oakland', 'berkeley', 'los angeles', 'san diego',
+            'seattle', 'new york', 'nyc', 'brooklyn', 'manhattan', 'austin', 'dallas', 'houston',
+            'denver', 'boston', 'chicago', 'atlanta', 'miami', 'phoenix', 'portland', 'raleigh',
+            'charlotte', 'durham', 'tampa', 'orlando', 'jacksonville'
+        ];
+
+        const NON_US_LOCATIONS = [
+            'london', 'uk', 'united kingdom', 'dublin', 'ireland', 'berlin', 'germany', 'amsterdam',
+            'paris', 'france', 'singapore', 'tokyo', 'japan', 'sydney', 'australia', 'toronto',
+            'canada', 'vancouver', 'india', 'bangalore', 'mumbai', 'hyderabad', 'tel aviv', 'israel',
+            'brazil', 'mexico', 'china', 'hong kong', 'korea', 'sweden', 'norway', 'denmark',
+            'finland', 'poland', 'spain', 'italy', 'portugal', 'argentina', 'chile', 'colombia',
+            'emea', 'apac', 'latam'
+        ];
+
+        // Check if job is in USA
+        function isUSLocation(location) {
+            const loc = location.toLowerCase();
+            // Exclude non-US locations first
+            if (NON_US_LOCATIONS.some(nonUS => loc.includes(nonUS))) return false;
+            // Include if matches US locations or contains Remote (assuming US remote)
+            if (loc.includes('remote') && !NON_US_LOCATIONS.some(nonUS => loc.includes(nonUS))) return true;
+            return US_LOCATIONS.some(usLoc => loc.includes(usLoc));
+        }
+
+        // Filter jobs by location (US only)
         function filterByLocation(jobs, location) {
-            if (!location) return jobs;
-            return jobs.filter(job => {
+            // First filter to US-only
+            let usJobs = jobs.filter(job => isUSLocation(job.location));
+
+            if (!location || location === 'us') return usJobs;
+
+            return usJobs.filter(job => {
                 const loc = job.location.toLowerCase();
                 if (location === 'remote') return loc.includes('remote');
-                if (location === 'us') return loc.includes('united states') || loc.includes('usa') || loc.includes('us');
-                if (location === 'sf') return loc.includes('san francisco') || loc.includes('sf');
-                if (location === 'ny') return loc.includes('new york') || loc.includes('nyc');
-                if (location === 'seattle') return loc.includes('seattle');
+                if (location === 'bayarea') {
+                    return loc.includes('san francisco') || loc.includes('san jose') || loc.includes('milpitas') ||
+                           loc.includes('sunnyvale') || loc.includes('mountain view') || loc.includes('palo alto') ||
+                           loc.includes('cupertino') || loc.includes('santa clara') || loc.includes('fremont') ||
+                           loc.includes('oakland') || loc.includes('berkeley') || loc.includes('bay area') ||
+                           loc.includes('california') || loc.includes(', ca');
+                }
+                if (location === 'texas') {
+                    return loc.includes('texas') || loc.includes(', tx') || loc.includes('austin') ||
+                           loc.includes('dallas') || loc.includes('houston') || loc.includes('san antonio');
+                }
+                if (location === 'florida') {
+                    return loc.includes('florida') || loc.includes(', fl') || loc.includes('miami') ||
+                           loc.includes('tampa') || loc.includes('orlando') || loc.includes('jacksonville');
+                }
+                if (location === 'nc') {
+                    return loc.includes('north carolina') || loc.includes(', nc') || loc.includes('raleigh') ||
+                           loc.includes('charlotte') || loc.includes('durham') || loc.includes('research triangle');
+                }
+                if (location === 'ny') {
+                    return loc.includes('new york') || loc.includes('nyc') || loc.includes(', ny') ||
+                           loc.includes('brooklyn') || loc.includes('manhattan');
+                }
+                if (location === 'seattle') {
+                    return loc.includes('seattle') || loc.includes('washington') || loc.includes(', wa') ||
+                           loc.includes('bellevue') || loc.includes('redmond');
+                }
                 return true;
             });
         }
