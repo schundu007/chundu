@@ -802,88 +802,109 @@
         function isRelevantJob(job) {
             const title = job.title.toLowerCase();
 
-            // MUST contain one of these core infrastructure keywords
-            const coreKeywords = [
-                'cloud', 'infrastructure', 'platform', 'devops', 'sre',
-                'site reliability', 'kubernetes', 'k8s', 'mlops',
-                'terraform', 'aws', 'azure', 'gcp'
-            ];
-
-            const hasCoreKeyword = coreKeywords.some(kw => title.includes(kw));
-
-            // EXACT role patterns that match resume
+            // EXACT role patterns that match resume (Senior/Staff/Principal+ only)
             const exactMatches = [
-                // Architect roles (always include if has core keyword)
-                /cloud architect/i,
-                /solutions architect/i,
-                /platform architect/i,
-                /infrastructure architect/i,
-                /enterprise architect/i,
-                /systems architect/i,
+                // Architect roles
+                /(staff|senior|principal|lead)?\s*cloud architect/i,
+                /(staff|senior|principal|lead)?\s*solutions architect/i,
+                /(staff|senior|principal|lead)?\s*platform architect/i,
+                /(staff|senior|principal|lead)?\s*infrastructure architect/i,
+                /(staff|senior|principal|lead)?\s*enterprise architect/i,
+                /(staff|senior|principal|lead)?\s*systems architect/i,
+                /(staff|senior|principal|lead)?\s*technical architect/i,
 
-                // Platform Engineering
-                /(senior|staff|principal|lead).*platform engineer/i,
-                /platform engineer.*(senior|staff|principal|lead)/i,
-                /platform.*(manager|director|lead|head)/i,
+                // DevOps (Senior/Staff+)
+                /(senior|staff|principal|lead)\s+devops/i,
+                /devops\s+(senior|staff|principal|lead|manager|director|architect)/i,
+                /(senior|staff|principal|lead)\s+dev\s*ops/i,
 
-                // SRE roles
-                /(senior|staff|principal|lead).*sre/i,
-                /sre.*(manager|director|lead)/i,
-                /(senior|staff|principal|lead).*site reliability/i,
-                /site reliability.*(manager|director)/i,
+                // SRE roles (Senior/Staff+)
+                /(senior|staff|principal|lead)\s+sre/i,
+                /sre\s+(senior|staff|principal|lead|manager|director)/i,
+                /(senior|staff|principal|lead)\s+site reliability/i,
+                /site reliability\s+(senior|staff|principal|lead|manager|director)/i,
 
-                // Infrastructure roles
-                /(senior|staff|principal|lead).*infrastructure/i,
-                /infrastructure.*(manager|director|lead|head)/i,
+                // Platform Engineering (Senior/Staff+)
+                /(senior|staff|principal|lead)\s+platform engineer/i,
+                /platform engineer\s+(senior|staff|principal|lead)/i,
+                /platform\s+(manager|director|lead|head)/i,
 
-                // DevOps
-                /(senior|staff|principal|lead).*devops/i,
-                /devops.*(manager|director|lead|architect)/i,
+                // Infrastructure (Senior/Staff+)
+                /(senior|staff|principal|lead)\s+infrastructure/i,
+                /infrastructure\s+(senior|staff|principal|lead|manager|director)/i,
 
-                // Cloud Engineering
-                /(senior|staff|principal|lead).*cloud engineer/i,
-                /cloud.*(manager|director|lead)/i,
+                // Cloud Engineering (Senior/Staff+)
+                /(senior|staff|principal|lead)\s+cloud engineer/i,
+                /cloud engineer\s+(senior|staff|principal|lead)/i,
 
-                // MLOps / AI Infrastructure (must have infra context)
-                /mlops/i,
-                /ml platform/i,
-                /ml infrastructure/i,
-                /ai infrastructure/i,
+                // AI/ML Infrastructure & MLOps
+                /ai\s*infrastructure/i,
+                /ml\s*infrastructure/i,
+                /ai.?ml\s*(devops|infrastructure|platform)/i,
+                /(senior|staff|principal|lead)?\s*mlops/i,
+                /mlops\s+(senior|staff|principal|lead|manager|engineer)/i,
+                /aiops/i,
+                /ml\s*platform/i,
+                /gpu\s*(infrastructure|platform|engineer|architect)/i,
 
-                // Director/VP level (only if has core keyword)
+                // Director/VP/Head level (infrastructure/cloud focused)
                 /director.*(infrastructure|platform|cloud|sre|devops)/i,
-                /vp.*(infrastructure|platform|cloud)/i,
+                /vp.*(infrastructure|platform|cloud|sre|devops)/i,
                 /head of.*(infrastructure|platform|cloud|sre|devops)/i,
+
+                // Engineering Manager (infrastructure focused)
+                /engineering manager.*(infrastructure|platform|cloud|sre|devops)/i,
             ];
 
             const matchesExact = exactMatches.some(pattern => pattern.test(title));
+            if (!matchesExact) return false;
 
-            // Must match exact pattern OR have core keyword with architect
-            if (!matchesExact) {
-                if (!(hasCoreKeyword && title.includes('architect'))) {
-                    return false;
-                }
-            }
-
-            // STRICT exclusions - hardware, mechanical, product, etc.
+            // STRICT exclusions
             const strictExclusions = [
+                // Hardware/Mechanical
                 /mechanical/i, /hardware/i, /electrical/i, /firmware/i,
-                /sensor/i, /av /i, /autonomous vehicle/i, /robotics/i,
+                /sensor/i, /av\s/i, /autonomous vehicle/i, /robotics/i,
+                /embedded/i, /fpga/i, /asic/i, /chip/i,
+
+                // Product/Design
                 /product engineer/i, /product manager/i, /product owner/i,
                 /product design/i, /commercialization/i,
+                /ux/i, /ui engineer/i, /design engineer/i,
+
+                // Frontend/Backend/Full Stack
                 /frontend/i, /front-end/i, /backend/i, /back-end/i,
                 /full.?stack/i, /fullstack/i,
-                /ux/i, /ui engineer/i, /design engineer/i,
+
+                // Data Science/ML Research
                 /data scientist/i, /machine learning engineer/i,
                 /research scientist/i, /applied scientist/i,
+
+                // Generic Software (without infra context)
                 /software engineer(?!.*(infrastructure|platform|sre|cloud|devops))/i,
+
+                // Business/Non-technical
                 /sales/i, /marketing/i, /recruiter/i,
                 /customer/i, /account/i, /legal/i, /finance/i,
-                /mobile/i, /ios/i, /android/i,
+
+                // Mobile
+                /mobile/i, /ios\s/i, /android/i,
+
+                // QA/Testing
                 /qa engineer/i, /test engineer/i, /quality/i,
-                /intern/i, /associate/i, /junior/i, /entry level/i,
-                /manufacturing/i, /supply chain/i, /operations(?!.*(sre|devops))/i,
-                /embedded/i, /fpga/i, /asic/i, /chip/i,
+
+                // Entry-level / New Grad / Intern
+                /intern/i, /internship/i,
+                /fresher/i, /fresh graduate/i,
+                /new grad/i, /new graduate/i, /recent grad/i,
+                /associate(?!\s*(director|vp))/i,
+                /junior/i, /entry.?level/i,
+                /graduate\s*(program|engineer|role)/i,
+                /university\s*grad/i, /college\s*grad/i,
+                /early career/i, /early.?in.?career/i,
+
+                // Manufacturing/Operations
+                /manufacturing/i, /supply chain/i,
+                /operations(?!.*(sre|devops|platform|cloud))/i,
             ];
 
             const isExcluded = strictExclusions.some(pattern => pattern.test(title));
