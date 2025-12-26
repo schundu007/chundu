@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Source | Sudhakar Chundu</title>
+    <meta name="description" content="Open source contributions, GitHub repositories, and technical articles by Sudhakar Chundu.">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        /* GitHub Section Styles */
+        .github-section {
+            padding: 60px 1.5rem;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-soft) 50%, var(--dark-muted) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .github-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .github-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .github-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .github-header h2 {
+            color: var(--white);
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .github-header h2 span {
+            color: var(--primary);
+        }
+
+        .github-header p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1rem;
+        }
+
+        .github-content {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .github-sidebar {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .github-profile {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .github-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--primary);
+            overflow: hidden;
+        }
+
+        .github-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .github-profile h3 {
+            color: var(--white);
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .github-profile .username {
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-family: var(--font-mono);
+        }
+
+        .github-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .github-stat {
+            background: rgba(255,255,255,0.05);
+            padding: 0.75rem;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+
+        .github-stat-value {
+            color: var(--primary);
+            font-size: 1.25rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+        }
+
+        .github-stat-label {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .github-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .github-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .github-link-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .github-link-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            color: var(--white);
+        }
+
+        .github-link-secondary {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .github-link-secondary:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
+            color: var(--white);
+        }
+
+        .github-repos {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .repo-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .repo-card:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: var(--primary);
+            transform: translateY(-4px);
+        }
+
+        .repo-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .repo-header i {
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .repo-name {
+            color: var(--white);
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: var(--font-mono);
+        }
+
+        .repo-description {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.8rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .repo-meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .repo-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.75rem;
+        }
+
+        .repo-meta-item i {
+            font-size: 0.7rem;
+        }
+
+        .repo-lang-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .lang-terraform { background: #5c4ee5; }
+        .lang-python { background: #3572A5; }
+        .lang-shell { background: #89e051; }
+        .lang-javascript { background: #f1e05a; }
+        .lang-html { background: #e34c26; }
+        .lang-go { background: #00ADD8; }
+
+        /* Medium Section Styles */
+        .medium-section {
+            padding: 60px 1.5rem;
+            background: var(--light);
+        }
+
+        .medium-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .medium-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .medium-header h2 {
+            color: var(--dark);
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .medium-header h2 span {
+            color: var(--primary);
+        }
+
+        .medium-header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .medium-content {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .medium-sidebar {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+        }
+
+        .medium-profile {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .medium-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            border: 3px solid #00ab6c;
+            overflow: hidden;
+            background: linear-gradient(135deg, #00ab6c, #00d47e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .medium-avatar i {
+            font-size: 2.5rem;
+            color: var(--white);
+        }
+
+        .medium-profile h3 {
+            color: var(--dark);
+            font-size: 1.15rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .medium-profile .username {
+            color: #00ab6c;
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+        }
+
+        .medium-bio {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.6;
+            margin-top: 0.75rem;
+        }
+
+        .medium-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .medium-stat {
+            background: var(--light);
+            padding: 0.75rem;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+
+        .medium-stat-value {
+            color: #00ab6c;
+            font-size: 1.15rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+        }
+
+        .medium-stat-label {
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .medium-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .medium-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .medium-link-primary {
+            background: #00ab6c;
+            color: var(--white);
+        }
+
+        .medium-link-primary:hover {
+            background: #009960;
+            transform: translateY(-2px);
+            color: var(--white);
+        }
+
+        .medium-link-secondary {
+            background: var(--light);
+            color: var(--dark);
+            border: 1px solid var(--border);
+        }
+
+        .medium-link-secondary:hover {
+            border-color: #00ab6c;
+            color: #00ab6c;
+            transform: translateY(-2px);
+        }
+
+        .medium-articles {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+        }
+
+        .article-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .article-card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: #00ab6c;
+            transform: translateY(-4px);
+        }
+
+        .article-category {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            background: rgba(0, 171, 108, 0.1);
+            color: #00ab6c;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: 50px;
+            margin-bottom: 0.75rem;
+        }
+
+        .article-title {
+            color: var(--dark);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .article-excerpt {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+        }
+
+        .article-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .article-meta-item i {
+            color: #00ab6c;
+            font-size: 0.65rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .github-content {
+                grid-template-columns: 1fr;
+            }
+
+            .github-sidebar {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .github-repos {
+                grid-template-columns: 1fr;
+            }
+
+            .medium-content {
+                grid-template-columns: 1fr;
+            }
+
+            .medium-sidebar {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .medium-articles {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .github-section {
+                padding: 40px 1rem;
+            }
+
+            .github-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .medium-section {
+                padding: 40px 1rem;
+            }
+
+            .medium-header h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="../" class="logo">
+                <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu" class="logo-icon">
+                Sudhakar Chundu
+            </a>
+            <ul class="nav-links">
+                <li><a href="../about/">About</a></li>
+                <li><a href="../resume/">Resume</a></li>
+                <li><a href="./" class="active">Open Source</a></li>
+                <li><a href="../expertise/">Expertise</a></li>
+                <li><a href="../experience/">Experience</a></li>
+                <li><a href="../projects/">Projects</a></li>
+                <li><a href="../conferences/">Conferences</a></li>
+                <li><a href="../publications/">Publications</a></li>
+                <div class="nav-social">
+                    <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </ul>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>Open <span>Source</span></h1>
+        <p>GitHub repositories, automation tools, and technical articles on cloud infrastructure and DevOps.</p>
+    </header>
+
+    <!-- GitHub Section -->
+    <section class="github-section">
+        <div class="github-container">
+            <div class="github-header">
+                <h2>GitHub <span>Repositories</span></h2>
+                <p>Infrastructure as Code, DevOps tools, and cloud automation projects</p>
+            </div>
+
+            <div class="github-content">
+                <!-- Sidebar with Profile -->
+                <div class="github-sidebar">
+                    <div class="github-profile">
+                        <div class="github-avatar">
+                            <img src="https://avatars.githubusercontent.com/schundu007" alt="Sudhakar Chundu GitHub">
+                        </div>
+                        <h3>Sudhakar Chundu</h3>
+                        <p class="username">@schundu007</p>
+                    </div>
+
+                    <div class="github-stats">
+                        <div class="github-stat">
+                            <div class="github-stat-value" id="repo-count">20+</div>
+                            <div class="github-stat-label">Repositories</div>
+                        </div>
+                        <div class="github-stat">
+                            <div class="github-stat-value">18+</div>
+                            <div class="github-stat-label">Years Exp</div>
+                        </div>
+                        <div class="github-stat">
+                            <div class="github-stat-value">50+</div>
+                            <div class="github-stat-label">Terraform Modules</div>
+                        </div>
+                        <div class="github-stat">
+                            <div class="github-stat-value">100+</div>
+                            <div class="github-stat-label">Contributions</div>
+                        </div>
+                    </div>
+
+                    <div class="github-links">
+                        <a href="https://github.com/schundu007" target="_blank" class="github-link github-link-primary">
+                            <i class="fab fa-github"></i>
+                            View Full Profile
+                        </a>
+                        <a href="https://github.com/schundu007?tab=repositories" target="_blank" class="github-link github-link-secondary">
+                            <i class="fas fa-folder-open"></i>
+                            All Repositories
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Repository Cards -->
+                <div class="github-repos">
+                    <a href="https://github.com/schundu007/chundu" target="_blank" class="repo-card">
+                        <div class="repo-header">
+                            <i class="fas fa-book"></i>
+                            <span class="repo-name">chundu</span>
+                        </div>
+                        <p class="repo-description">Personal portfolio website - Cloud AI Architect profile showcasing enterprise infrastructure and AI/ML platform projects</p>
+                        <div class="repo-meta">
+                            <span class="repo-meta-item">
+                                <span class="repo-lang-dot lang-html"></span>
+                                HTML/CSS
+                            </span>
+                            <span class="repo-meta-item">
+                                <i class="fas fa-code-branch"></i>
+                                main
+                            </span>
+                        </div>
+                    </a>
+
+                    <a href="https://github.com/schundu007/automation" target="_blank" class="repo-card">
+                        <div class="repo-header">
+                            <i class="fas fa-robot"></i>
+                            <span class="repo-name">automation</span>
+                        </div>
+                        <p class="repo-description">Infrastructure automation scripts and tools for cloud provisioning, CI/CD pipelines, and DevOps workflows</p>
+                        <div class="repo-meta">
+                            <span class="repo-meta-item">
+                                <span class="repo-lang-dot lang-python"></span>
+                                Python
+                            </span>
+                            <span class="repo-meta-item">
+                                <i class="fas fa-cogs"></i>
+                                DevOps
+                            </span>
+                        </div>
+                    </a>
+
+                    <a href="https://github.com/schundu007/scripts" target="_blank" class="repo-card">
+                        <div class="repo-header">
+                            <i class="fas fa-terminal"></i>
+                            <span class="repo-name">scripts</span>
+                        </div>
+                        <p class="repo-description">Collection of shell scripts and utilities for system administration, monitoring, and infrastructure management</p>
+                        <div class="repo-meta">
+                            <span class="repo-meta-item">
+                                <span class="repo-lang-dot lang-shell"></span>
+                                Shell
+                            </span>
+                            <span class="repo-meta-item">
+                                <i class="fas fa-tools"></i>
+                                Utilities
+                            </span>
+                        </div>
+                    </a>
+
+                    <a href="https://github.com/schundu007/vmProvisioning" target="_blank" class="repo-card">
+                        <div class="repo-header">
+                            <i class="fas fa-server"></i>
+                            <span class="repo-name">vmProvisioning</span>
+                        </div>
+                        <p class="repo-description">Virtual machine provisioning templates and automation for cloud and on-premises infrastructure deployment</p>
+                        <div class="repo-meta">
+                            <span class="repo-meta-item">
+                                <span class="repo-lang-dot lang-terraform"></span>
+                                Terraform
+                            </span>
+                            <span class="repo-meta-item">
+                                <i class="fas fa-cloud"></i>
+                                IaC
+                            </span>
+                        </div>
+                    </a>
+
+                    <a href="https://github.com/schundu007/documents" target="_blank" class="repo-card">
+                        <div class="repo-header">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="repo-name">documents</span>
+                        </div>
+                        <p class="repo-description">Technical documentation, architecture diagrams, runbooks, and best practices guides for cloud infrastructure</p>
+                        <div class="repo-meta">
+                            <span class="repo-meta-item">
+                                <span class="repo-lang-dot lang-html"></span>
+                                Markdown
+                            </span>
+                            <span class="repo-meta-item">
+                                <i class="fas fa-book-open"></i>
+                                Docs
+                            </span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Medium Section -->
+    <section class="medium-section">
+        <div class="medium-container">
+            <div class="medium-header">
+                <h2>Technical <span>Articles</span></h2>
+                <p>Sharing insights on cloud infrastructure, DevOps, and reliability engineering on Medium</p>
+            </div>
+
+            <div class="medium-content">
+                <!-- Sidebar with Profile -->
+                <div class="medium-sidebar">
+                    <div class="medium-profile">
+                        <div class="medium-avatar">
+                            <i class="fab fa-medium-m"></i>
+                        </div>
+                        <h3>Sudhakar Chundu</h3>
+                        <p class="username">@chundubabu</p>
+                        <p class="medium-bio">Cloud AI Architect sharing insights on enterprise infrastructure, Kubernetes, and platform engineering.</p>
+                    </div>
+
+                    <div class="medium-stats">
+                        <div class="medium-stat">
+                            <div class="medium-stat-value">10+</div>
+                            <div class="medium-stat-label">Articles</div>
+                        </div>
+                        <div class="medium-stat">
+                            <div class="medium-stat-value">18+</div>
+                            <div class="medium-stat-label">Years Exp</div>
+                        </div>
+                    </div>
+
+                    <div class="medium-links">
+                        <a href="https://medium.com/@chundubabu" target="_blank" class="medium-link medium-link-primary">
+                            <i class="fab fa-medium-m"></i>
+                            Follow on Medium
+                        </a>
+                        <a href="https://medium.com/@chundubabu" target="_blank" class="medium-link medium-link-secondary">
+                            <i class="fas fa-rss"></i>
+                            Subscribe to Updates
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Article Cards -->
+                <div class="medium-articles">
+                    <a href="https://medium.com/@chundubabu" target="_blank" class="article-card">
+                        <span class="article-category">Kubernetes</span>
+                        <h3 class="article-title">Multi-Cloud Kubernetes Strategy for Enterprise Workloads</h3>
+                        <p class="article-excerpt">A comprehensive guide to designing and implementing Kubernetes clusters across AWS and Azure with unified management and GitOps practices.</p>
+                        <div class="article-meta">
+                            <span class="article-meta-item">
+                                <i class="fas fa-clock"></i>
+                                8 min read
+                            </span>
+                            <span class="article-meta-item">
+                                <i class="fas fa-tag"></i>
+                                DevOps
+                            </span>
+                        </div>
+                    </a>
+
+                    <a href="https://medium.com/@chundubabu" target="_blank" class="article-card">
+                        <span class="article-category">AI/ML Infrastructure</span>
+                        <h3 class="article-title">Building GPU Clusters for ML Workloads at Scale</h3>
+                        <p class="article-excerpt">Best practices for managing large-scale GPU infrastructure with Slurm and Kubernetes for distributed machine learning training.</p>
+                        <div class="article-meta">
+                            <span class="article-meta-item">
+                                <i class="fas fa-clock"></i>
+                                12 min read
+                            </span>
+                            <span class="article-meta-item">
+                                <i class="fas fa-tag"></i>
+                                GPU
+                            </span>
+                        </div>
+                    </a>
+
+                    <a href="https://medium.com/@chundubabu" target="_blank" class="article-card">
+                        <span class="article-category">Terraform</span>
+                        <h3 class="article-title">Terraform Modules at Enterprise Scale</h3>
+                        <p class="article-excerpt">Designing reusable Terraform modules for enterprise infrastructure with versioning, testing, and documentation best practices.</p>
+                        <div class="article-meta">
+                            <span class="article-meta-item">
+                                <i class="fas fa-clock"></i>
+                                10 min read
+                            </span>
+                            <span class="article-meta-item">
+                                <i class="fas fa-tag"></i>
+                                IaC
+                            </span>
+                        </div>
+                    </a>
+
+                    <a href="https://medium.com/@chundubabu" target="_blank" class="article-card">
+                        <span class="article-category">GitOps</span>
+                        <h3 class="article-title">GitOps with ArgoCD for Multi-Cluster Deployments</h3>
+                        <p class="article-excerpt">Step-by-step guide to implementing GitOps workflows for Kubernetes deployments using ArgoCD and Helm across multiple clusters.</p>
+                        <div class="article-meta">
+                            <span class="article-meta-item">
+                                <i class="fas fa-clock"></i>
+                                15 min read
+                            </span>
+                            <span class="article-meta-item">
+                                <i class="fas fa-tag"></i>
+                                CI/CD
+                            </span>
+                        </div>
+                    </a>
+
+                    <a href="https://medium.com/@chundubabu" target="_blank" class="article-card">
+                        <span class="article-category">Cost Optimization</span>
+                        <h3 class="article-title">FinOps: Achieving $8M Cloud Cost Savings</h3>
+                        <p class="article-excerpt">Real-world strategies for reducing cloud infrastructure costs while maintaining performance and reliability at enterprise scale.</p>
+                        <div class="article-meta">
+                            <span class="article-meta-item">
+                                <i class="fas fa-clock"></i>
+                                9 min read
+                            </span>
+                            <span class="article-meta-item">
+                                <i class="fas fa-tag"></i>
+                                FinOps
+                            </span>
+                        </div>
+                    </a>
+
+                    <a href="https://medium.com/@chundubabu" target="_blank" class="article-card">
+                        <span class="article-category">SRE</span>
+                        <h3 class="article-title">Achieving 99.97% Uptime: Lessons Learned</h3>
+                        <p class="article-excerpt">Strategies and lessons learned from maintaining high availability across multi-cloud infrastructure serving millions of users.</p>
+                        <div class="article-meta">
+                            <span class="article-meta-item">
+                                <i class="fas fa-clock"></i>
+                                11 min read
+                            </span>
+                            <span class="article-meta-item">
+                                <i class="fas fa-tag"></i>
+                                Reliability
+                            </span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <span class="footer-logo">Sudhakar Chundu</span>
+            <div class="footer-links">
+                <a href="../">Home</a>
+                <a href="../resume/">Resume</a>
+                <a href="../conferences/">Conferences</a>
+                <a href="../publications/">Publications</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/schundu007" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/schundu" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://medium.com/@chundubabu" target="_blank"><i class="fab fa-medium"></i></a>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem;">
+            <p>&copy; 2025 Sudhakar Chundu. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
