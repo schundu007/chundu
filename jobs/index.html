@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search | Sudhakar Chundu</title>
+    <meta name="description" content="Curated job search links for Cloud AI Architect, Platform Engineering, and DevOps leadership roles.">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        /* Job Search Page Styles */
+        .job-search-section {
+            padding: 60px 1.5rem;
+            background: var(--white);
+        }
+
+        .job-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .job-intro {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .job-intro h2 {
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .job-intro h2 span {
+            color: var(--primary);
+        }
+
+        .job-intro p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Target Roles Section */
+        .target-roles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .role-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.25rem;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .role-tag:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        /* Job Platform Cards */
+        .platforms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .platform-card {
+            background: var(--light);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .platform-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        .platform-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .platform-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .platform-icon.linkedin { background: linear-gradient(135deg, #0077b5, #005885); }
+        .platform-icon.indeed { background: linear-gradient(135deg, #2164f3, #1a4fc9); }
+        .platform-icon.glassdoor { background: linear-gradient(135deg, #0caa41, #098a34); }
+        .platform-icon.dice { background: linear-gradient(135deg, #eb1c26, #c41820); }
+        .platform-icon.levels { background: linear-gradient(135deg, #6366f1, #4f46e5); }
+        .platform-icon.wellfound { background: linear-gradient(135deg, #000, #333); }
+        .platform-icon.builtin { background: linear-gradient(135deg, #ff6b35, #e55a2b); }
+        .platform-icon.ycombinator { background: linear-gradient(135deg, #ff6600, #e55c00); }
+
+        .platform-info h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .platform-info p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .platform-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .job-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: var(--white);
+            border-radius: var(--radius);
+            text-decoration: none;
+            color: var(--dark);
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .job-link:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .job-link i {
+            color: var(--primary);
+            font-size: 0.75rem;
+        }
+
+        /* Quick Apply Section */
+        .quick-apply-section {
+            padding: 60px 1.5rem;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-soft) 50%, var(--dark-muted) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-apply-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .quick-apply-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .quick-apply-container h2 {
+            color: var(--white);
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .quick-apply-container h2 span {
+            color: var(--primary);
+        }
+
+        .quick-apply-container > p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .resource-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: left;
+            transition: all 0.3s;
+        }
+
+        .resource-card:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: var(--primary);
+            transform: translateY(-4px);
+        }
+
+        .resource-card i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .resource-card h4 {
+            color: var(--white);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .resource-card p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: var(--radius);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            color: var(--white);
+        }
+
+        /* Skills Filter */
+        .skills-section {
+            padding: 40px 1.5rem;
+            background: var(--light);
+        }
+
+        .skills-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .skills-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .skills-header h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .skills-header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .skill-chip {
+            padding: 0.5rem 1rem;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .skill-chip:hover,
+        .skill-chip.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .job-search-section {
+                padding: 40px 1rem;
+            }
+
+            .job-intro h2 {
+                font-size: 1.5rem;
+            }
+
+            .platforms-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-apply-section {
+                padding: 40px 1rem;
+            }
+
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="../" class="logo">
+                <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu" class="logo-icon">
+                Sudhakar Chundu
+            </a>
+            <ul class="nav-links">
+                <li><a href="../about/">About</a></li>
+                <li><a href="../resume/">Resume</a></li>
+                <li><a href="../opensource/">Open Source</a></li>
+                <li><a href="../projects/">Projects</a></li>
+                <li><a href="./" class="active">Jobs</a></li>
+                <li><a href="../conferences/">Conferences</a></li>
+                <div class="nav-social">
+                    <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </ul>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>Job <span>Search</span></h1>
+        <p>Curated job search links for Cloud AI Architect, Platform Engineering, and DevOps leadership roles.</p>
+    </header>
+
+    <!-- Target Roles -->
+    <section class="job-search-section">
+        <div class="job-container">
+            <div class="job-intro">
+                <h2>Target <span>Roles</span></h2>
+                <p>Looking for senior leadership positions in cloud infrastructure, AI/ML platforms, and site reliability engineering.</p>
+            </div>
+
+            <div class="target-roles">
+                <span class="role-tag"><i class="fas fa-cloud"></i> Cloud AI Architect</span>
+                <span class="role-tag"><i class="fas fa-cogs"></i> Platform Engineering Director</span>
+                <span class="role-tag"><i class="fas fa-server"></i> SRE Manager</span>
+                <span class="role-tag"><i class="fas fa-code-branch"></i> DevOps Director</span>
+                <span class="role-tag"><i class="fas fa-microchip"></i> ML Infrastructure Lead</span>
+                <span class="role-tag"><i class="fas fa-shield-alt"></i> Cloud Security Architect</span>
+            </div>
+
+            <!-- Job Platforms -->
+            <div class="platforms-grid">
+                <!-- LinkedIn -->
+                <div class="platform-card">
+                    <div class="platform-header">
+                        <div class="platform-icon linkedin">
+                            <i class="fab fa-linkedin-in"></i>
+                        </div>
+                        <div class="platform-info">
+                            <h3>LinkedIn Jobs</h3>
+                            <p>Professional network job listings</p>
+                        </div>
+                    </div>
+                    <div class="platform-links">
+                        <a href="https://www.linkedin.com/jobs/search/?keywords=Cloud%20Architect&f_TPR=r604800&f_E=4%2C5&location=United%20States" target="_blank" class="job-link">
+                            Cloud Architect <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/jobs/search/?keywords=Platform%20Engineering%20Director&f_TPR=r604800&f_E=4%2C5&location=United%20States" target="_blank" class="job-link">
+                            Platform Engineering Director <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/jobs/search/?keywords=SRE%20Manager&f_TPR=r604800&f_E=4%2C5&location=United%20States" target="_blank" class="job-link">
+                            SRE Manager <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/jobs/search/?keywords=DevOps%20Director&f_TPR=r604800&f_E=4%2C5&location=United%20States" target="_blank" class="job-link">
+                            DevOps Director <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Indeed -->
+                <div class="platform-card">
+                    <div class="platform-header">
+                        <div class="platform-icon indeed">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="platform-info">
+                            <h3>Indeed</h3>
+                            <p>Comprehensive job search engine</p>
+                        </div>
+                    </div>
+                    <div class="platform-links">
+                        <a href="https://www.indeed.com/jobs?q=cloud+architect&l=United+States&fromage=7&explvl=senior_level" target="_blank" class="job-link">
+                            Cloud Architect <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="https://www.indeed.com/jobs?q=platform+engineering+manager&l=United+States&fromage=7&explvl=senior_level" target="_blank" class="job-link">
+                            Platform Engineering Manager <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="https://www.indeed.com/jobs?q=site+reliability+engineer+manager&l=United+States&fromage=7&explvl=senior_level" target="_blank" class="job-link">
+                            SRE Manager <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="https://www.indeed.com/jobs?q=AI+ML+infrastructure&l=United+States&fromage=7&explvl=senior_level" target="_blank" class="job-link">
+                            AI/ML Infrastructure <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Glassdoor -->
+                <div class="platform-card">
+                    <div class="platform-header">
+                        <div class="platform-icon glassdoor">
+                            <i class="fas fa-door-open"></i>
+                        </div>
+                        <div class="platform-info">
+                            <h3>Glassdoor</h3>
+                            <p>Jobs with company reviews & salaries</p>
+                        </div>
+                    </div>
+                    <div class="platform-links">
+                        <a href="https://www.glassdoor.com/Job/jobs.htm?sc.keyword=Cloud%20Architect&fromAge=7&seniorityType=director" target="_blank" class="job-link">
+                            Cloud Architect <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="https://www.glassdoor.com/Job/jobs.htm?sc.keyword=DevOps%20Director&fromAge=7&seniorityType=director" target="_blank" class="job-link">
+                            DevOps Director <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="https://www.glassdoor.com/Job/jobs.htm?sc.keyword=Infrastructure%20Engineering%20Manager&fromAge=7" target="_blank" class="job-link">
+                            Infrastructure Manager <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Dice -->
+                <div class="platform-card">
+                    <div class="platform-header">
+                        <div class="platform-icon dice">
+                            <i class="fas fa-dice-d6"></i>
+                        </div>
+                        <div class="platform-info">
+                            <h3>Dice</h3>
+                            <p>Tech-focused job board</p>
+                        </div>
+                    </div>
+                    <div class="platform-links">
+                        <a href="https://www.dice.com/jobs?q=Cloud%20Architect&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=20&filters.postedDate=SEVEN&language=en" target="_blank" class="job-link">
+                            Cloud Architect <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="https://www.dice.com/jobs?q=Kubernetes%20Platform&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=20&filters.postedDate=SEVEN&language=en" target="_blank" class="job-link">
+                            Kubernetes Platform <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="https://www.dice.com/jobs?q=DevOps%20Manager&countryCode=US&radius=30&radiusUnit=mi&page=1&pageSize=20&filters.postedDate=SEVEN&language=en" target="_blank" class="job-link">
+                            DevOps Manager <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Levels.fyi -->
+                <div class="platform-card">
+                    <div class="platform-header">
+                        <div class="platform-icon levels">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="platform-info">
+                            <h3>Levels.fyi</h3>
+                            <p>Tech jobs with salary data</p>
+                        </div>
+                    </div>
+                    <div class="platform-links">
+                        <a href="https://www.levels.fyi/jobs?searchText=Cloud%20Architect&jobFamily=Infrastructure" target="_blank" class="job-link">
+                            Cloud Architect <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="https://www.levels.fyi/jobs?searchText=Platform%20Engineer&jobFamily=Infrastructure" target="_blank" class="job-link">
+                            Platform Engineer <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="https://www.levels.fyi/jobs?searchText=SRE&jobFamily=Infrastructure" target="_blank" class="job-link">
+                            Site Reliability Engineer <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Wellfound (AngelList) -->
+                <div class="platform-card">
+                    <div class="platform-header">
+                        <div class="platform-icon wellfound">
+                            <i class="fab fa-angellist"></i>
+                        </div>
+                        <div class="platform-info">
+                            <h3>Wellfound</h3>
+                            <p>Startup job opportunities</p>
+                        </div>
+                    </div>
+                    <div class="platform-links">
+                        <a href="https://wellfound.com/role/l/cloud-architect/united-states" target="_blank" class="job-link">
+                            Cloud Architect <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="https://wellfound.com/role/l/devops-engineer/united-states" target="_blank" class="job-link">
+                            DevOps Engineer <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="https://wellfound.com/role/l/infrastructure-engineer/united-states" target="_blank" class="job-link">
+                            Infrastructure Engineer <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Built In -->
+                <div class="platform-card">
+                    <div class="platform-header">
+                        <div class="platform-icon builtin">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="platform-info">
+                            <h3>Built In</h3>
+                            <p>Tech hub city jobs</p>
+                        </div>
+                    </div>
+                    <div class="platform-links">
+                        <a href="https://builtin.com/jobs/dev-engineering/cloud?search=architect" target="_blank" class="job-link">
+                            Cloud Architect <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="https://builtin.com/jobs/dev-engineering/devops-sysadmin" target="_blank" class="job-link">
+                            DevOps & SysAdmin <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="https://builtin.com/jobs/dev-engineering?search=platform%20engineering" target="_blank" class="job-link">
+                            Platform Engineering <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Y Combinator -->
+                <div class="platform-card">
+                    <div class="platform-header">
+                        <div class="platform-icon ycombinator">
+                            <i class="fab fa-y-combinator"></i>
+                        </div>
+                        <div class="platform-info">
+                            <h3>Y Combinator</h3>
+                            <p>YC startup jobs</p>
+                        </div>
+                    </div>
+                    <div class="platform-links">
+                        <a href="https://www.ycombinator.com/jobs/role/devops-engineer" target="_blank" class="job-link">
+                            DevOps Engineer <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="https://www.ycombinator.com/jobs/role/infrastructure-engineer" target="_blank" class="job-link">
+                            Infrastructure Engineer <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="https://www.ycombinator.com/jobs/role/engineering-manager" target="_blank" class="job-link">
+                            Engineering Manager <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Keywords -->
+    <section class="skills-section">
+        <div class="skills-container">
+            <div class="skills-header">
+                <h3>Search by <span style="color: var(--primary);">Keywords</span></h3>
+                <p>Copy these keywords to refine your job search</p>
+            </div>
+            <div class="skills-grid">
+                <span class="skill-chip">Kubernetes</span>
+                <span class="skill-chip">AWS</span>
+                <span class="skill-chip">Azure</span>
+                <span class="skill-chip">Terraform</span>
+                <span class="skill-chip">Docker</span>
+                <span class="skill-chip">GitOps</span>
+                <span class="skill-chip">ArgoCD</span>
+                <span class="skill-chip">Prometheus</span>
+                <span class="skill-chip">Grafana</span>
+                <span class="skill-chip">GPU Infrastructure</span>
+                <span class="skill-chip">Slurm</span>
+                <span class="skill-chip">MLOps</span>
+                <span class="skill-chip">LLM Infrastructure</span>
+                <span class="skill-chip">Platform Engineering</span>
+                <span class="skill-chip">Site Reliability</span>
+                <span class="skill-chip">DevSecOps</span>
+                <span class="skill-chip">SOC2</span>
+                <span class="skill-chip">HIPAA</span>
+                <span class="skill-chip">FinOps</span>
+                <span class="skill-chip">Multi-Cloud</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Apply Resources -->
+    <section class="quick-apply-section">
+        <div class="quick-apply-container">
+            <h2>Quick Apply <span>Resources</span></h2>
+            <p>Tools and templates to streamline your job application process</p>
+
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <i class="fas fa-file-alt"></i>
+                    <h4>Resume Templates</h4>
+                    <p>ATS-optimized resume templates tailored for cloud and infrastructure roles.</p>
+                    <a href="../resume/" class="download-btn">
+                        <i class="fas fa-eye"></i> View Resume
+                    </a>
+                </div>
+
+                <div class="resource-card">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <h4>Cover Letter Generator</h4>
+                    <p>Use the local automation tool to generate tailored cover letters with AI.</p>
+                    <a href="https://github.com/schundu007/chundu/tree/main/tools" target="_blank" class="download-btn">
+                        <i class="fab fa-github"></i> Automation Tools
+                    </a>
+                </div>
+
+                <div class="resource-card">
+                    <i class="fas fa-robot"></i>
+                    <h4>Job Matcher Script</h4>
+                    <p>Python script to fetch jobs and match them against your skills automatically.</p>
+                    <a href="https://github.com/schundu007/chundu/tree/main/tools" target="_blank" class="download-btn">
+                        <i class="fas fa-download"></i> Get Script
+                    </a>
+                </div>
+
+                <div class="resource-card">
+                    <i class="fas fa-linkedin"></i>
+                    <h4>LinkedIn Profile</h4>
+                    <p>Optimized LinkedIn profile for recruiter visibility and Easy Apply.</p>
+                    <a href="https://www.linkedin.com/in/schundu" target="_blank" class="download-btn">
+                        <i class="fab fa-linkedin"></i> View Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <span class="footer-logo">Sudhakar Chundu</span>
+            <div class="footer-links">
+                <a href="../">Home</a>
+                <a href="../resume/">Resume</a>
+                <a href="../conferences/">Conferences</a>
+                <a href="../publications/">Publications</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/schundu007" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/schundu" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://medium.com/@sudhakarchundu" target="_blank"><i class="fab fa-medium"></i></a>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem;">
+            <p>&copy; 2025 Sudhakar Chundu. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Copy skill to clipboard
+        document.querySelectorAll('.skill-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                navigator.clipboard.writeText(chip.textContent);
+                chip.classList.add('active');
+                setTimeout(() => chip.classList.remove('active'), 1000);
+            });
+        });
+    </script>
+</body>
+</html>
