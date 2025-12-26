@@ -1,13 +1,13 @@
 # Sudhakar Chundu - Personal Website
 
-[![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-brightgreen)](https://schundu007.github.io/chundu/)
+[![Website](https://img.shields.io/badge/Website-Live-brightgreen)](https://www.sudhakarchundu.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Personal portfolio website showcasing cloud infrastructure and DevOps expertise.
 
 ## 🚀 Live Site
 
-**[schundu007.github.io/chundu](https://schundu007.github.io/chundu/)**
+**[www.sudhakarchundu.org](https://www.sudhakarchundu.org/)**
 
 ## 📁 Structure
 
@@ -57,7 +57,7 @@ This site is automatically deployed via GitHub Pages when changes are pushed to 
 1. Push changes to `main` branch
 2. Go to repository Settings → Pages
 3. Ensure source is set to `main` branch
-4. Site will be available at `https://schundu007.github.io/chundu/`
+4. Site will be available at `https://www.sudhakarchundu.org/`
 
 ## 📄 License
 
