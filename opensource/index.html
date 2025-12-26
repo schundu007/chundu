@@ -262,6 +262,149 @@
             display: inline-block;
         }
 
+        /* Gists Section Styles */
+        .gists-section {
+            padding: 60px 1.5rem;
+            background: var(--white);
+        }
+
+        .gists-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .gists-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .gists-header h2 {
+            color: var(--dark);
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .gists-header h2 span {
+            color: var(--primary);
+        }
+
+        .gists-header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .gists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .gist-card {
+            background: var(--light);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .gist-card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+            transform: translateY(-4px);
+        }
+
+        .gist-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .gist-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-light);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .gist-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .gist-filename {
+            color: var(--dark);
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: var(--font-mono);
+            word-break: break-word;
+        }
+
+        .gist-type {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: 50px;
+            margin-top: 0.35rem;
+        }
+
+        .gist-description {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .gist-meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .gist-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        .gist-meta-item i {
+            color: var(--primary);
+            font-size: 0.7rem;
+        }
+
+        .gist-files-count {
+            background: var(--white);
+            padding: 0.25rem 0.6rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+
+        .gists-view-all {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
         /* Medium Section Styles */
         .medium-section {
             padding: 60px 1.5rem;
@@ -565,6 +708,18 @@
                 font-size: 1.5rem;
             }
 
+            .gists-section {
+                padding: 40px 1rem;
+            }
+
+            .gists-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .gists-grid {
+                grid-template-columns: 1fr;
+            }
+
             .medium-section {
                 padding: 40px 1rem;
             }
@@ -681,6 +836,63 @@
                         <p class="repo-description loading-skeleton" style="height:40px;"></p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GitHub Gists Section -->
+    <section class="gists-section">
+        <div class="gists-container">
+            <div class="gists-header">
+                <h2>GitHub <span>Gists</span></h2>
+                <p>Code snippets, scripts, and quick solutions for common DevOps and infrastructure tasks</p>
+            </div>
+
+            <div class="gists-grid" id="github-gists">
+                <!-- Loading skeleton -->
+                <div class="gist-card">
+                    <div class="gist-header">
+                        <div class="gist-icon loading-skeleton-light" style="width:40px;height:40px;"></div>
+                        <div class="gist-info">
+                            <span class="gist-filename loading-skeleton-light" style="width:70%;height:18px;display:block;"></span>
+                        </div>
+                    </div>
+                    <p class="gist-description loading-skeleton-light" style="height:40px;"></p>
+                </div>
+                <div class="gist-card">
+                    <div class="gist-header">
+                        <div class="gist-icon loading-skeleton-light" style="width:40px;height:40px;"></div>
+                        <div class="gist-info">
+                            <span class="gist-filename loading-skeleton-light" style="width:70%;height:18px;display:block;"></span>
+                        </div>
+                    </div>
+                    <p class="gist-description loading-skeleton-light" style="height:40px;"></p>
+                </div>
+                <div class="gist-card">
+                    <div class="gist-header">
+                        <div class="gist-icon loading-skeleton-light" style="width:40px;height:40px;"></div>
+                        <div class="gist-info">
+                            <span class="gist-filename loading-skeleton-light" style="width:70%;height:18px;display:block;"></span>
+                        </div>
+                    </div>
+                    <p class="gist-description loading-skeleton-light" style="height:40px;"></p>
+                </div>
+                <div class="gist-card">
+                    <div class="gist-header">
+                        <div class="gist-icon loading-skeleton-light" style="width:40px;height:40px;"></div>
+                        <div class="gist-info">
+                            <span class="gist-filename loading-skeleton-light" style="width:70%;height:18px;display:block;"></span>
+                        </div>
+                    </div>
+                    <p class="gist-description loading-skeleton-light" style="height:40px;"></p>
+                </div>
+            </div>
+
+            <div class="gists-view-all">
+                <a href="https://gist.github.com/schundu007" target="_blank" class="btn btn-primary">
+                    <i class="fab fa-github"></i>
+                    View All Gists
+                </a>
             </div>
         </div>
     </section>
@@ -871,6 +1083,110 @@
             }
         }
 
+        // Fetch GitHub Gists
+        async function fetchGitHubGists() {
+            try {
+                const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/gists?per_page=8`);
+                if (!response.ok) throw new Error('Failed to fetch gists');
+                const gists = await response.json();
+
+                const gistsContainer = document.getElementById('github-gists');
+
+                if (gists.length === 0) {
+                    gistsContainer.innerHTML = `
+                        <div class="gist-card">
+                            <div class="gist-header">
+                                <div class="gist-icon"><i class="fas fa-info-circle"></i></div>
+                                <div class="gist-info">
+                                    <span class="gist-filename">No public gists yet</span>
+                                </div>
+                            </div>
+                            <p class="gist-description">Check back later for code snippets and quick solutions.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                gistsContainer.innerHTML = gists.map(gist => {
+                    // Get the first file to display
+                    const files = Object.values(gist.files);
+                    const firstFile = files[0];
+                    const filename = firstFile ? firstFile.filename : 'Untitled';
+                    const language = firstFile ? firstFile.language || 'Text' : 'Text';
+                    const fileCount = files.length;
+
+                    // Format date
+                    const createdDate = new Date(gist.created_at);
+                    const formattedDate = createdDate.toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+
+                    // Get file extension icon
+                    const getIcon = (lang) => {
+                        const icons = {
+                            'Shell': 'fa-terminal',
+                            'Bash': 'fa-terminal',
+                            'Python': 'fa-python',
+                            'JavaScript': 'fa-js',
+                            'TypeScript': 'fa-js',
+                            'YAML': 'fa-file-code',
+                            'JSON': 'fa-file-code',
+                            'Dockerfile': 'fa-docker',
+                            'HCL': 'fa-file-code',
+                            'Terraform': 'fa-file-code',
+                            'Markdown': 'fa-file-alt'
+                        };
+                        return icons[lang] || 'fa-code';
+                    };
+
+                    return `
+                        <a href="${gist.html_url}" target="_blank" class="gist-card">
+                            <div class="gist-header">
+                                <div class="gist-icon">
+                                    <i class="fas ${getIcon(language)}"></i>
+                                </div>
+                                <div class="gist-info">
+                                    <span class="gist-filename">${filename}</span>
+                                    <span class="gist-type">${language}</span>
+                                </div>
+                            </div>
+                            <p class="gist-description">${gist.description || 'No description provided'}</p>
+                            <div class="gist-meta">
+                                <span class="gist-meta-item">
+                                    <i class="fas fa-calendar"></i>
+                                    ${formattedDate}
+                                </span>
+                                <span class="gist-files-count">
+                                    <i class="fas fa-file"></i> ${fileCount} file${fileCount > 1 ? 's' : ''}
+                                </span>
+                                ${gist.comments > 0 ? `
+                                    <span class="gist-meta-item">
+                                        <i class="fas fa-comment"></i>
+                                        ${gist.comments}
+                                    </span>
+                                ` : ''}
+                            </div>
+                        </a>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('Error fetching GitHub gists:', error);
+                document.getElementById('github-gists').innerHTML = `
+                    <div class="gist-card">
+                        <div class="gist-header">
+                            <div class="gist-icon"><i class="fas fa-exclamation-circle"></i></div>
+                            <div class="gist-info">
+                                <span class="gist-filename">Unable to load gists</span>
+                            </div>
+                        </div>
+                        <p class="gist-description">Please visit GitHub directly to see all gists.</p>
+                    </div>
+                `;
+            }
+        }
+
         // Fetch Medium Articles
         async function fetchMediumArticles() {
             try {
@@ -967,6 +1283,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             fetchGitHubProfile();
             fetchGitHubRepos();
+            fetchGitHubGists();
             fetchMediumArticles();
         });
     </script>
