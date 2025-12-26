@@ -693,9 +693,38 @@
 
         // ============ COMPANY LIST ============
         const COMPANIES = [
-            // Greenhouse-based companies
+            // ===== AI/ML Companies =====
+            { name: 'OpenAI', board: 'openai', type: 'greenhouse', logo: 'https://logo.clearbit.com/openai.com' },
+            { name: 'Anthropic', board: 'anthropic', type: 'greenhouse', logo: 'https://logo.clearbit.com/anthropic.com' },
+            { name: 'Google DeepMind', board: 'deepmind', type: 'greenhouse', logo: 'https://logo.clearbit.com/deepmind.com' },
+            { name: 'Cohere', board: 'cohere', type: 'lever', logo: 'https://logo.clearbit.com/cohere.com' },
+            { name: 'Hugging Face', board: 'huggingface', type: 'greenhouse', logo: 'https://logo.clearbit.com/huggingface.co' },
+            { name: 'Runway', board: 'runwayml', type: 'greenhouse', logo: 'https://logo.clearbit.com/runwayml.com' },
+            { name: 'Stability AI', board: 'stabilityai', type: 'greenhouse', logo: 'https://logo.clearbit.com/stability.ai' },
+            { name: 'Mistral AI', board: 'mistral', type: 'greenhouse', logo: 'https://logo.clearbit.com/mistral.ai' },
+            { name: 'Character AI', board: 'character', type: 'greenhouse', logo: 'https://logo.clearbit.com/character.ai' },
+            { name: 'Perplexity', board: 'perplexityai', type: 'greenhouse', logo: 'https://logo.clearbit.com/perplexity.ai' },
+            { name: 'Together AI', board: 'togetherai', type: 'lever', logo: 'https://logo.clearbit.com/together.ai' },
+            { name: 'Weights & Biases', board: 'wandb', type: 'lever', logo: 'https://logo.clearbit.com/wandb.com' },
+            { name: 'Scale AI', board: 'scaleai', type: 'lever', logo: 'https://logo.clearbit.com/scale.com' },
+            { name: 'Anyscale', board: 'anyscale', type: 'lever', logo: 'https://logo.clearbit.com/anyscale.com' },
+            { name: 'Modal', board: 'modal', type: 'lever', logo: 'https://logo.clearbit.com/modal.com' },
+            { name: 'Replicate', board: 'replicate', type: 'lever', logo: 'https://logo.clearbit.com/replicate.com' },
+
+            // ===== GPU/AI Infrastructure =====
+            { name: 'CoreWeave', board: 'coreweave', type: 'greenhouse', logo: 'https://logo.clearbit.com/coreweave.com' },
+            { name: 'Lambda Labs', board: 'lambdalabs', type: 'lever', logo: 'https://logo.clearbit.com/lambdalabs.com' },
+            { name: 'Crusoe Energy', board: 'crusoe', type: 'greenhouse', logo: 'https://logo.clearbit.com/crusoeenergy.com' },
+            { name: 'Applied Intuition', board: 'appliedintuition', type: 'greenhouse', logo: 'https://logo.clearbit.com/appliedintuition.com' },
+
+            // ===== ByteDance/TikTok =====
+            { name: 'TikTok', board: 'tiktok', type: 'greenhouse', logo: 'https://logo.clearbit.com/tiktok.com' },
+            { name: 'ByteDance', board: 'bytedance', type: 'greenhouse', logo: 'https://logo.clearbit.com/bytedance.com' },
+
+            // ===== Big Tech with Greenhouse/Lever =====
             { name: 'Stripe', board: 'stripe', type: 'greenhouse', logo: 'https://logo.clearbit.com/stripe.com' },
             { name: 'Airbnb', board: 'airbnb', type: 'greenhouse', logo: 'https://logo.clearbit.com/airbnb.com' },
+            { name: 'Netflix', board: 'netflix', type: 'lever', logo: 'https://logo.clearbit.com/netflix.com' },
             { name: 'Discord', board: 'discord', type: 'greenhouse', logo: 'https://logo.clearbit.com/discord.com' },
             { name: 'Figma', board: 'figma', type: 'greenhouse', logo: 'https://logo.clearbit.com/figma.com' },
             { name: 'Notion', board: 'notion', type: 'greenhouse', logo: 'https://logo.clearbit.com/notion.so' },
@@ -707,6 +736,8 @@
             { name: 'Plaid', board: 'plaid', type: 'greenhouse', logo: 'https://logo.clearbit.com/plaid.com' },
             { name: 'Square', board: 'square', type: 'greenhouse', logo: 'https://logo.clearbit.com/squareup.com' },
             { name: 'Robinhood', board: 'robinhood', type: 'greenhouse', logo: 'https://logo.clearbit.com/robinhood.com' },
+
+            // ===== Data/Cloud Infrastructure =====
             { name: 'Databricks', board: 'databricks', type: 'greenhouse', logo: 'https://logo.clearbit.com/databricks.com' },
             { name: 'Snowflake', board: 'snowflakecomputing', type: 'greenhouse', logo: 'https://logo.clearbit.com/snowflake.com' },
             { name: 'HashiCorp', board: 'hashicorp', type: 'greenhouse', logo: 'https://logo.clearbit.com/hashicorp.com' },
@@ -714,37 +745,46 @@
             { name: 'Confluent', board: 'confluent', type: 'greenhouse', logo: 'https://logo.clearbit.com/confluent.io' },
             { name: 'MongoDB', board: 'mongodb', type: 'greenhouse', logo: 'https://logo.clearbit.com/mongodb.com' },
             { name: 'Elastic', board: 'elastic', type: 'greenhouse', logo: 'https://logo.clearbit.com/elastic.co' },
+            { name: 'Cloudflare', board: 'cloudflare', type: 'lever', logo: 'https://logo.clearbit.com/cloudflare.com' },
+            { name: 'DigitalOcean', board: 'digitalocean98', type: 'lever', logo: 'https://logo.clearbit.com/digitalocean.com' },
+            { name: 'Vercel', board: 'vercel', type: 'lever', logo: 'https://logo.clearbit.com/vercel.com' },
+            { name: 'Supabase', board: 'supabase', type: 'lever', logo: 'https://logo.clearbit.com/supabase.com' },
+            { name: 'Cockroach Labs', board: 'cockroach-labs', type: 'lever', logo: 'https://logo.clearbit.com/cockroachlabs.com' },
+
+            // ===== Observability/DevOps =====
             { name: 'Datadog', board: 'datadog', type: 'greenhouse', logo: 'https://logo.clearbit.com/datadoghq.com' },
             { name: 'PagerDuty', board: 'pagerduty', type: 'greenhouse', logo: 'https://logo.clearbit.com/pagerduty.com' },
             { name: 'Splunk', board: 'splunk', type: 'greenhouse', logo: 'https://logo.clearbit.com/splunk.com' },
             { name: 'New Relic', board: 'newrelic', type: 'greenhouse', logo: 'https://logo.clearbit.com/newrelic.com' },
+            { name: 'Grafana Labs', board: 'grafanalabs', type: 'lever', logo: 'https://logo.clearbit.com/grafana.com' },
+            { name: 'Sumo Logic', board: 'sumologic', type: 'lever', logo: 'https://logo.clearbit.com/sumologic.com' },
+            { name: 'CircleCI', board: 'circleci', type: 'lever', logo: 'https://logo.clearbit.com/circleci.com' },
+            { name: 'LaunchDarkly', board: 'launchdarkly', type: 'lever', logo: 'https://logo.clearbit.com/launchdarkly.com' },
+
+            // ===== Security =====
             { name: 'Okta', board: 'okta', type: 'greenhouse', logo: 'https://logo.clearbit.com/okta.com' },
             { name: 'CrowdStrike', board: 'crowdstrike', type: 'greenhouse', logo: 'https://logo.clearbit.com/crowdstrike.com' },
             { name: 'Zscaler', board: 'zscaler', type: 'greenhouse', logo: 'https://logo.clearbit.com/zscaler.com' },
             { name: 'SentinelOne', board: 'sentinelone', type: 'greenhouse', logo: 'https://logo.clearbit.com/sentinelone.com' },
             { name: 'Lacework', board: 'lacework', type: 'greenhouse', logo: 'https://logo.clearbit.com/lacework.com' },
             { name: 'Snyk', board: 'snyk', type: 'greenhouse', logo: 'https://logo.clearbit.com/snyk.io' },
-            // Lever-based companies
-            { name: 'Netflix', board: 'netflix', type: 'lever', logo: 'https://logo.clearbit.com/netflix.com' },
-            { name: 'Cloudflare', board: 'cloudflare', type: 'lever', logo: 'https://logo.clearbit.com/cloudflare.com' },
+            { name: 'Wiz', board: 'wizinc', type: 'greenhouse', logo: 'https://logo.clearbit.com/wiz.io' },
+            { name: '1Password', board: '1password', type: 'greenhouse', logo: 'https://logo.clearbit.com/1password.com' },
+
+            // ===== Other Tech =====
             { name: 'Twilio', board: 'twilio', type: 'lever', logo: 'https://logo.clearbit.com/twilio.com' },
             { name: 'Auth0', board: 'auth0', type: 'lever', logo: 'https://logo.clearbit.com/auth0.com' },
             { name: 'Segment', board: 'segment', type: 'lever', logo: 'https://logo.clearbit.com/segment.com' },
-            { name: 'CircleCI', board: 'circleci', type: 'lever', logo: 'https://logo.clearbit.com/circleci.com' },
-            { name: 'LaunchDarkly', board: 'launchdarkly', type: 'lever', logo: 'https://logo.clearbit.com/launchdarkly.com' },
-            { name: 'Sumo Logic', board: 'sumologic', type: 'lever', logo: 'https://logo.clearbit.com/sumologic.com' },
-            { name: 'Cockroach Labs', board: 'cockroach-labs', type: 'lever', logo: 'https://logo.clearbit.com/cockroachlabs.com' },
-            { name: 'DigitalOcean', board: 'digitalocean98', type: 'lever', logo: 'https://logo.clearbit.com/digitalocean.com' },
-            { name: 'Grafana Labs', board: 'grafanalabs', type: 'lever', logo: 'https://logo.clearbit.com/grafana.com' },
             { name: 'Miro', board: 'miro', type: 'lever', logo: 'https://logo.clearbit.com/miro.com' },
             { name: 'Webflow', board: 'webflow', type: 'lever', logo: 'https://logo.clearbit.com/webflow.com' },
-            { name: 'Vercel', board: 'vercel', type: 'lever', logo: 'https://logo.clearbit.com/vercel.com' },
-            { name: 'Supabase', board: 'supabase', type: 'lever', logo: 'https://logo.clearbit.com/supabase.com' },
             { name: 'Linear', board: 'linear', type: 'lever', logo: 'https://logo.clearbit.com/linear.app' },
             { name: 'Retool', board: 'retool', type: 'lever', logo: 'https://logo.clearbit.com/retool.com' },
-            { name: 'Weights & Biases', board: 'wandb', type: 'lever', logo: 'https://logo.clearbit.com/wandb.com' },
-            { name: 'Scale AI', board: 'scaleai', type: 'lever', logo: 'https://logo.clearbit.com/scale.com' },
-            { name: 'Anyscale', board: 'anyscale', type: 'lever', logo: 'https://logo.clearbit.com/anyscale.com' },
+            { name: 'Ramp', board: 'ramp', type: 'greenhouse', logo: 'https://logo.clearbit.com/ramp.com' },
+            { name: 'Brex', board: 'brex', type: 'greenhouse', logo: 'https://logo.clearbit.com/brex.com' },
+            { name: 'Rippling', board: 'rippling', type: 'greenhouse', logo: 'https://logo.clearbit.com/rippling.com' },
+            { name: 'Gusto', board: 'gusto', type: 'greenhouse', logo: 'https://logo.clearbit.com/gusto.com' },
+            { name: 'Faire', board: 'faire', type: 'greenhouse', logo: 'https://logo.clearbit.com/faire.com' },
+            { name: 'Flexport', board: 'flexport', type: 'greenhouse', logo: 'https://logo.clearbit.com/flexport.com' },
         ];
 
         let allJobs = [];
