@@ -210,6 +210,11 @@
             min-width: 150px;
         }
 
+        .col-distance {
+            min-width: 130px;
+            white-space: nowrap;
+        }
+
         .col-date {
             min-width: 100px;
             white-space: nowrap;
@@ -284,6 +289,30 @@
             color: #16a34a;
             font-weight: 600;
         }
+
+        .distance-badge {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            border-radius: 50px;
+            white-space: nowrap;
+        }
+
+        /* Distance priority colors - green (close) to yellow/orange (far) */
+        .priority-1 { background: rgba(34, 197, 94, 0.15); color: #16a34a; }
+        .priority-2 { background: rgba(34, 197, 94, 0.12); color: #22c55e; }
+        .priority-3 { background: rgba(132, 204, 22, 0.15); color: #65a30d; }
+        .priority-4 { background: rgba(234, 179, 8, 0.15); color: #ca8a04; }
+        .priority-5 { background: rgba(249, 115, 22, 0.12); color: #ea580c; }
+        .priority-6 { background: rgba(99, 102, 241, 0.12); color: #6366f1; }
+        .priority-7 { background: rgba(99, 102, 241, 0.1); color: #818cf8; }
+        .priority-8 { background: rgba(236, 72, 153, 0.12); color: #db2777; }
+        .priority-9 { background: rgba(168, 85, 247, 0.12); color: #a855f7; }
+        .priority-10 { background: rgba(6, 182, 212, 0.12); color: #0891b2; }
+        .priority-11 { background: rgba(148, 163, 184, 0.15); color: #64748b; }
+        .priority-12 { background: rgba(148, 163, 184, 0.12); color: #94a3b8; }
+        .priority-99 { background: rgba(239, 68, 68, 0.1); color: #dc2626; }
 
         .description-text {
             color: var(--text-muted);
@@ -471,7 +500,7 @@
                 width: 100%;
             }
 
-            .col-location, .col-date {
+            .col-location, .col-distance, .col-date {
                 display: none;
             }
 
@@ -677,6 +706,7 @@
                             <th class="col-role sortable" data-sort="title">Role <i class="fas fa-sort"></i></th>
                             <th class="col-company sortable" data-sort="company">Company <i class="fas fa-sort"></i></th>
                             <th class="col-location">Location</th>
+                            <th class="col-distance sortable" data-sort="distance">Distance <i class="fas fa-sort"></i></th>
                             <th class="col-date sortable" data-sort="date">Posted <i class="fas fa-sort"></i></th>
                             <th class="col-description">Description</th>
                             <th class="col-apply">Action</th>
@@ -684,7 +714,7 @@
                     </thead>
                     <tbody id="jobs-tbody">
                         <tr class="loading-row">
-                            <td colspan="6">
+                            <td colspan="7">
                                 <span class="loading-spinner"></span>
                                 Loading jobs from company career portals...
                             </td>
@@ -911,6 +941,96 @@
             return !isExcluded;
         }
 
+        // ============ DISTANCE PRIORITY FROM SAN JOSE ============
+        // Returns priority score (lower = closer to San Jose)
+        function getDistancePriority(location) {
+            if (!location) return 999;
+            const loc = location.toLowerCase();
+
+            // Priority 1: San Jose and immediate neighbors (0-15 miles)
+            if (/san jose|san josé|santa clara|milpitas|sunnyvale|cupertino|campbell|los gatos|saratoga|mountain view/i.test(loc)) {
+                return 1;
+            }
+
+            // Priority 2: South Bay / Peninsula (15-30 miles)
+            if (/palo alto|menlo park|redwood city|fremont|newark|union city|hayward|foster city|san mateo|burlingame|belmont/i.test(loc)) {
+                return 2;
+            }
+
+            // Priority 3: SF and East Bay (30-50 miles)
+            if (/san francisco|sf,|oakland|berkeley|emeryville|alameda|walnut creek|pleasanton|dublin|livermore|daly city/i.test(loc)) {
+                return 3;
+            }
+
+            // Priority 4: Greater Bay Area (50-80 miles)
+            if (/bay area|south bay|peninsula|east bay|napa|sonoma|santa cruz|gilroy|morgan hill|concord|richmond/i.test(loc)) {
+                return 4;
+            }
+
+            // Priority 5: California (other)
+            if (/california|ca,|\bca\b|los angeles|san diego|sacramento|irvine|pasadena|la,/i.test(loc)) {
+                return 5;
+            }
+
+            // Priority 6: Remote (US-based)
+            if (/remote/i.test(loc) && /us|usa|united states|america/i.test(loc)) {
+                return 6;
+            }
+
+            // Priority 7: Remote (unspecified)
+            if (/remote/i.test(loc)) {
+                return 7;
+            }
+
+            // Priority 8: Texas (user's secondary preference)
+            if (/texas|tx,|\btx\b|austin|dallas|houston|san antonio|plano|irving/i.test(loc)) {
+                return 8;
+            }
+
+            // Priority 9: Florida (user's preference)
+            if (/florida|fl,|\bfl\b|miami|orlando|tampa|jacksonville|fort lauderdale/i.test(loc)) {
+                return 9;
+            }
+
+            // Priority 10: North Carolina (user's preference)
+            if (/north carolina|nc,|\bnc\b|charlotte|raleigh|durham|research triangle/i.test(loc)) {
+                return 10;
+            }
+
+            // Priority 11: Other major tech hubs
+            if (/seattle|washington|new york|ny,|\bny\b|boston|chicago|denver|portland|atlanta|phoenix/i.test(loc)) {
+                return 11;
+            }
+
+            // Priority 12: Other US locations
+            if (/united states|usa|\bus\b/i.test(loc)) {
+                return 12;
+            }
+
+            // Priority 99: Everything else (non-US)
+            return 99;
+        }
+
+        // Get human-readable distance label
+        function getDistanceLabel(priority) {
+            const labels = {
+                1: 'San Jose Area (0-15 mi)',
+                2: 'South Bay/Peninsula (15-30 mi)',
+                3: 'SF/East Bay (30-50 mi)',
+                4: 'Greater Bay Area (50-80 mi)',
+                5: 'California',
+                6: 'Remote (US)',
+                7: 'Remote',
+                8: 'Texas',
+                9: 'Florida',
+                10: 'North Carolina',
+                11: 'Other Tech Hub',
+                12: 'Other US',
+                99: 'Outside US'
+            };
+            return labels[priority] || 'Unknown';
+        }
+
         // ============ COMPANY LIST ============
         const COMPANIES = [
             // ===== AI/ML Companies =====
@@ -940,6 +1060,14 @@
             // ===== ByteDance/TikTok =====
             { name: 'TikTok', board: 'tiktok', type: 'greenhouse', logo: 'https://logo.clearbit.com/tiktok.com' },
             { name: 'ByteDance', board: 'bytedance', type: 'greenhouse', logo: 'https://logo.clearbit.com/bytedance.com' },
+
+            // ===== E-Commerce Giants =====
+            { name: 'Coupang', board: 'coupang', type: 'greenhouse', logo: 'https://logo.clearbit.com/coupang.com' },
+            { name: 'Mercari', board: 'mercari', type: 'greenhouse', logo: 'https://logo.clearbit.com/mercari.com' },
+            { name: 'Wish', board: 'wish', type: 'greenhouse', logo: 'https://logo.clearbit.com/wish.com' },
+            { name: 'Etsy', board: 'etsy', type: 'greenhouse', logo: 'https://logo.clearbit.com/etsy.com' },
+            { name: 'Wayfair', board: 'wayfair', type: 'greenhouse', logo: 'https://logo.clearbit.com/wayfair.com' },
+            { name: 'Chewy', board: 'chewy', type: 'greenhouse', logo: 'https://logo.clearbit.com/chewy.com' },
 
             // ===== Big Tech with Greenhouse/Lever =====
             { name: 'Stripe', board: 'stripe', type: 'greenhouse', logo: 'https://logo.clearbit.com/stripe.com' },
@@ -1052,6 +1180,65 @@
             { name: 'Figma', board: 'figma', type: 'greenhouse', logo: 'https://logo.clearbit.com/figma.com' },
             { name: 'Loom', board: 'loom', type: 'greenhouse', logo: 'https://logo.clearbit.com/loom.com' },
             { name: 'Calendly', board: 'calendly', type: 'greenhouse', logo: 'https://logo.clearbit.com/calendly.com' },
+
+            // ===== Emerging AI Startups =====
+            { name: 'xAI', board: 'xai', type: 'greenhouse', logo: 'https://logo.clearbit.com/x.ai' },
+            { name: 'Inflection AI', board: 'inflectionai', type: 'greenhouse', logo: 'https://logo.clearbit.com/inflection.ai' },
+            { name: 'Adept AI', board: 'adept', type: 'lever', logo: 'https://logo.clearbit.com/adept.ai' },
+            { name: 'Midjourney', board: 'midjourney', type: 'lever', logo: 'https://logo.clearbit.com/midjourney.com' },
+            { name: 'Jasper AI', board: 'jasper', type: 'greenhouse', logo: 'https://logo.clearbit.com/jasper.ai' },
+            { name: 'Writer', board: 'writer', type: 'greenhouse', logo: 'https://logo.clearbit.com/writer.com' },
+            { name: 'Glean', board: 'glaboratories', type: 'greenhouse', logo: 'https://logo.clearbit.com/glean.com' },
+
+            // ===== Enterprise Software =====
+            { name: 'SAP', board: 'sap', type: 'greenhouse', logo: 'https://logo.clearbit.com/sap.com' },
+            { name: 'Adobe', board: 'adobe', type: 'greenhouse', logo: 'https://logo.clearbit.com/adobe.com' },
+            { name: 'VMware', board: 'vmware', type: 'greenhouse', logo: 'https://logo.clearbit.com/vmware.com' },
+            { name: 'Nutanix', board: 'nutanix', type: 'greenhouse', logo: 'https://logo.clearbit.com/nutanix.com' },
+            { name: 'Palo Alto Networks', board: 'paloaltonetworks', type: 'greenhouse', logo: 'https://logo.clearbit.com/paloaltonetworks.com' },
+            { name: 'Fortinet', board: 'fortinet', type: 'greenhouse', logo: 'https://logo.clearbit.com/fortinet.com' },
+            { name: 'Pure Storage', board: 'purestorage', type: 'lever', logo: 'https://logo.clearbit.com/purestorage.com' },
+            { name: 'NetApp', board: 'netapp', type: 'greenhouse', logo: 'https://logo.clearbit.com/netapp.com' },
+
+            // ===== Semiconductors & Hardware =====
+            { name: 'AMD', board: 'amd', type: 'greenhouse', logo: 'https://logo.clearbit.com/amd.com' },
+            { name: 'Qualcomm', board: 'qualcomm', type: 'greenhouse', logo: 'https://logo.clearbit.com/qualcomm.com' },
+            { name: 'Marvell', board: 'marvell', type: 'greenhouse', logo: 'https://logo.clearbit.com/marvell.com' },
+            { name: 'Broadcom', board: 'broadcom', type: 'greenhouse', logo: 'https://logo.clearbit.com/broadcom.com' },
+            { name: 'Cerebras', board: 'cerebras', type: 'greenhouse', logo: 'https://logo.clearbit.com/cerebras.net' },
+            { name: 'Groq', board: 'groq', type: 'lever', logo: 'https://logo.clearbit.com/groq.com' },
+            { name: 'SambaNova', board: 'sambanovasystems', type: 'lever', logo: 'https://logo.clearbit.com/sambanova.ai' },
+
+            // ===== Healthcare Tech =====
+            { name: 'Veeva Systems', board: 'veeva', type: 'greenhouse', logo: 'https://logo.clearbit.com/veeva.com' },
+            { name: 'Oscar Health', board: 'oscar', type: 'greenhouse', logo: 'https://logo.clearbit.com/hioscar.com' },
+            { name: 'Ro', board: 'ro', type: 'greenhouse', logo: 'https://logo.clearbit.com/ro.co' },
+            { name: 'Tempus', board: 'tempus', type: 'greenhouse', logo: 'https://logo.clearbit.com/tempus.com' },
+            { name: 'Flatiron Health', board: 'flatironhealth', type: 'greenhouse', logo: 'https://logo.clearbit.com/flatiron.com' },
+
+            // ===== Payments & Fintech =====
+            { name: 'PayPal', board: 'paypal', type: 'greenhouse', logo: 'https://logo.clearbit.com/paypal.com' },
+            { name: 'Adyen', board: 'adyen', type: 'greenhouse', logo: 'https://logo.clearbit.com/adyen.com' },
+            { name: 'Bill.com', board: 'billcom', type: 'greenhouse', logo: 'https://logo.clearbit.com/bill.com' },
+            { name: 'Checkout.com', board: 'checkout', type: 'greenhouse', logo: 'https://logo.clearbit.com/checkout.com' },
+            { name: 'Revolut', board: 'revolut', type: 'lever', logo: 'https://logo.clearbit.com/revolut.com' },
+
+            // ===== Gaming & Entertainment =====
+            { name: 'Roblox', board: 'roblox', type: 'greenhouse', logo: 'https://logo.clearbit.com/roblox.com' },
+            { name: 'Epic Games', board: 'epicgames', type: 'greenhouse', logo: 'https://logo.clearbit.com/epicgames.com' },
+            { name: 'Unity', board: 'unity3d', type: 'greenhouse', logo: 'https://logo.clearbit.com/unity.com' },
+            { name: 'Niantic', board: 'niantic', type: 'greenhouse', logo: 'https://logo.clearbit.com/nianticlabs.com' },
+            { name: 'Electronic Arts', board: 'ea', type: 'greenhouse', logo: 'https://logo.clearbit.com/ea.com' },
+
+            // ===== Cloud & Infrastructure =====
+            { name: 'Akamai', board: 'akamai', type: 'greenhouse', logo: 'https://logo.clearbit.com/akamai.com' },
+            { name: 'Fastly', board: 'fastly', type: 'lever', logo: 'https://logo.clearbit.com/fastly.com' },
+            { name: 'Fly.io', board: 'fly', type: 'lever', logo: 'https://logo.clearbit.com/fly.io' },
+            { name: 'Render', board: 'render', type: 'lever', logo: 'https://logo.clearbit.com/render.com' },
+            { name: 'Railway', board: 'railway', type: 'lever', logo: 'https://logo.clearbit.com/railway.app' },
+            { name: 'PlanetScale', board: 'planetscale', type: 'lever', logo: 'https://logo.clearbit.com/planetscale.com' },
+            { name: 'Neon', board: 'neondatabase', type: 'lever', logo: 'https://logo.clearbit.com/neon.tech' },
+            { name: 'Upstash', board: 'upstash', type: 'lever', logo: 'https://logo.clearbit.com/upstash.com' },
         ];
 
         let allJobs = [];
@@ -1263,7 +1450,7 @@
             if (pageJobs.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="6">
+                        <td colspan="7">
                             <div class="empty-state">
                                 <i class="fas fa-search"></i>
                                 <h3>No jobs found</h3>
@@ -1299,6 +1486,9 @@
                                 ${escapeHtml(job.location.substring(0, 30))}
                             </span>
                             ${isRemote ? '<span class="remote-badge">Remote</span>' : ''}
+                        </td>
+                        <td class="col-distance">
+                            <span class="distance-badge priority-${getDistancePriority(job.location)}">${getDistanceLabel(getDistancePriority(job.location))}</span>
                         </td>
                         <td class="col-date">
                             <span class="${dateClass}">${dateText}</span>
@@ -1386,8 +1576,13 @@
             // Apply search
             filteredJobs = searchJobs(filteredJobs, searchQuery);
 
-            // Sort by date (newest first)
-            filteredJobs.sort((a, b) => b.postedDate - a.postedDate);
+            // Sort by distance from San Jose (closest first), then by date
+            filteredJobs.sort((a, b) => {
+                const distA = getDistancePriority(a.location);
+                const distB = getDistancePriority(b.location);
+                if (distA !== distB) return distA - distB;
+                return b.postedDate - a.postedDate; // Tiebreaker: newest first
+            });
 
             currentPage = 1;
             updateStats();
@@ -1407,7 +1602,7 @@
             const tbody = document.getElementById('jobs-tbody');
             tbody.innerHTML = `
                 <tr class="loading-row">
-                    <td colspan="6">
+                    <td colspan="7">
                         <span class="loading-spinner"></span>
                         Loading jobs from ${COMPANIES.length} company career portals...
                     </td>
@@ -1467,6 +1662,12 @@
             th.addEventListener('click', () => {
                 const sortKey = th.dataset.sort;
                 filteredJobs.sort((a, b) => {
+                    if (sortKey === 'distance') {
+                        const distA = getDistancePriority(a.location);
+                        const distB = getDistancePriority(b.location);
+                        if (distA !== distB) return distA - distB;
+                        return b.postedDate - a.postedDate;
+                    }
                     if (sortKey === 'date') return b.postedDate - a.postedDate;
                     if (sortKey === 'title') return a.title.localeCompare(b.title);
                     if (sortKey === 'company') return a.company.localeCompare(b.company);
