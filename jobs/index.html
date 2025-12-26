@@ -633,7 +633,65 @@
     </footer>
 
     <script>
-        // Top companies with Greenhouse/Lever job board APIs
+        // ============ UTILITY FUNCTIONS (MUST BE FIRST) ============
+
+        // Strip HTML tags and decode entities - robust version
+        function stripHtml(html) {
+            if (!html) return '';
+            try {
+                // Create a temporary element to decode HTML entities
+                const tmp = document.createElement('div');
+                tmp.innerHTML = html;
+                // Get text content (this strips all HTML tags)
+                let text = tmp.textContent || tmp.innerText || '';
+                // Clean up extra whitespace
+                text = text.replace(/\s+/g, ' ').trim();
+                // Truncate if too long
+                if (text.length > 500) {
+                    text = text.substring(0, 500) + '...';
+                }
+                return text;
+            } catch (e) {
+                // Fallback: just remove HTML tags with regex
+                return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 500);
+            }
+        }
+
+        // Check if job title matches resume-relevant roles
+        function isRelevantJob(job) {
+            const title = job.title.toLowerCase();
+
+            // Keywords that MUST appear in job title (any one of these)
+            const mustHaveKeywords = [
+                'architect', 'infrastructure', 'platform', 'devops', 'sre',
+                'reliability', 'cloud', 'kubernetes', 'k8s', 'mlops',
+                'director', 'vp', 'head of', 'engineering manager'
+            ];
+
+            // Check if title contains at least one must-have keyword
+            const hasKeyword = mustHaveKeywords.some(kw => title.includes(kw));
+            if (!hasKeyword) return false;
+
+            // Exclude non-relevant roles even if they have keywords
+            const excludePatterns = [
+                'frontend', 'front-end', 'front end',
+                'ui engineer', 'ux engineer', 'ui/ux',
+                'product manager', 'product designer',
+                'sales', 'marketing', 'recruiter', 'hr ',
+                'customer success', 'account', 'legal',
+                'content', 'copywriter', 'graphic',
+                'mobile engineer', 'ios engineer', 'android engineer',
+                'data analyst', 'business analyst',
+                'support engineer', 'technical support'
+            ];
+
+            const isExcluded = excludePatterns.some(pattern => title.includes(pattern));
+            if (isExcluded) return false;
+
+            return true;
+        }
+
+        // ============ COMPANY LIST ============
         const COMPANIES = [
             // Greenhouse-based companies
             { name: 'Stripe', board: 'stripe', type: 'greenhouse', logo: 'https://logo.clearbit.com/stripe.com' },
@@ -689,19 +747,13 @@
             { name: 'Anyscale', board: 'anyscale', type: 'lever', logo: 'https://logo.clearbit.com/anyscale.com' },
         ];
 
-        // Keywords to filter relevant jobs
-        const RELEVANT_KEYWORDS = [
-            'cloud', 'architect', 'infrastructure', 'platform', 'devops', 'sre', 'reliability',
-            'kubernetes', 'k8s', 'docker', 'aws', 'azure', 'gcp', 'terraform', 'mlops',
-            'director', 'manager', 'lead', 'senior', 'principal', 'staff', 'engineering manager',
-            'ai', 'ml', 'machine learning', 'gpu', 'data platform', 'security', 'devsecops'
-        ];
-
         let allJobs = [];
         let filteredJobs = [];
         let currentPage = 1;
         const jobsPerPage = 25;
         let activeCompanyFilter = null;
+
+        // ============ API FETCH FUNCTIONS ============
 
         // Fetch jobs from Greenhouse
         async function fetchGreenhouseJobs(company) {
@@ -717,7 +769,7 @@
                     companyLogo: company.logo,
                     location: job.location?.name || 'Not specified',
                     department: job.departments?.[0]?.name || '',
-                    description: stripHtml(job.content || '').substring(0, 500),
+                    description: stripHtml(job.content || ''),
                     url: job.absolute_url,
                     postedDate: new Date(job.updated_at),
                     source: 'greenhouse'
@@ -742,7 +794,7 @@
                     companyLogo: company.logo,
                     location: job.categories?.location || 'Not specified',
                     department: job.categories?.team || job.categories?.department || '',
-                    description: stripHtml(job.descriptionPlain || job.description || '').substring(0, 500),
+                    description: stripHtml(job.descriptionPlain || job.description || ''),
                     url: job.hostedUrl,
                     postedDate: new Date(job.createdAt),
                     source: 'lever'
@@ -751,19 +803,6 @@
                 console.error(`Error fetching from ${company.name}:`, error);
                 return [];
             }
-        }
-
-        // Strip HTML tags
-        function stripHtml(html) {
-            const tmp = document.createElement('div');
-            tmp.innerHTML = html;
-            return tmp.textContent || tmp.innerText || '';
-        }
-
-        // Check if job is relevant based on keywords
-        function isRelevantJob(job) {
-            const searchText = `${job.title} ${job.department} ${job.description}`.toLowerCase();
-            return RELEVANT_KEYWORDS.some(keyword => searchText.includes(keyword.toLowerCase()));
         }
 
         // Filter jobs by date
