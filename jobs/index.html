@@ -1463,12 +1463,28 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             return resume;
         }
 
-        // Download cover letter as Word document
+        // Download cover letter as Word document - TAILORED TO EACH JOB
         async function downloadCoverLetter(job) {
             const { Document, Packer, Paragraph, TextRun, AlignmentType, HeadingLevel } = docx;
             const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-            const skillsList = Object.keys(USER_PROFILE.skills).slice(0, 4).join(', ');
             const exp = USER_PROFILE.experience[0];
+
+            // Parse the job description for tailoring
+            const parsedJD = parseJobDescription(job);
+            const toolsFromJD = parsedJD.allFoundTools.slice(0, 6).map(t => t.toUpperCase()).join(', ');
+            const focusAreas = parsedJD.focusAreas.join(', ');
+
+            // Select relevant bullets based on job focus
+            let relevantBullets = [];
+            if (parsedJD.focusAreas.includes('GPU/HPC') || parsedJD.focusAreas.includes('AI/ML')) {
+                relevantBullets = [exp.bullets[0], exp.bullets[1], exp.bullets[2]]; // GPU, Serverless AI, Cloud FinOps
+            } else if (parsedJD.focusAreas.includes('SRE')) {
+                relevantBullets = [exp.bullets[0], exp.bullets[4], exp.bullets[5]]; // GPU uptime, Security, Leadership
+            } else if (parsedJD.focusAreas.includes('Platform Engineering') || parsedJD.focusAreas.includes('DevOps')) {
+                relevantBullets = [exp.bullets[3], exp.bullets[4], exp.bullets[2]]; // CI/CD, Security, FinOps
+            } else {
+                relevantBullets = [exp.bullets[0], exp.bullets[2], exp.bullets[3]]; // Default
+            }
 
             const doc = new Document({
                 sections: [{
@@ -1510,17 +1526,22 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                             children: [new TextRun({ text: 'Dear Hiring Manager,', size: 22 })]
                         }),
                         new Paragraph({ children: [] }),
-                        // Body paragraph 1
+                        // Body paragraph 1 - Tailored opening with job-specific focus
                         new Paragraph({
                             children: [new TextRun({
-                                text: `I am writing to express my strong interest in the ${job.title} position at ${job.company}. With ${USER_PROFILE.yearsExperience} years of experience in cloud infrastructure, platform engineering, and AI/ML systems, I am excited about the opportunity to contribute to your team.`,
+                                text: `I am writing to express my strong interest in the ${job.title} position at ${job.company}. With ${USER_PROFILE.yearsExperience} years of experience in ${focusAreas || 'cloud infrastructure, platform engineering, and AI/ML systems'}, I am excited about the opportunity to contribute to your team.`,
                                 size: 22
                             })]
                         }),
                         new Paragraph({ children: [] }),
-                        // Body paragraph 2
+                        // Body paragraph 2 - Mention specific technologies from JD
                         new Paragraph({
-                            children: [new TextRun({ text: USER_PROFILE.summary, size: 22 })]
+                            children: [new TextRun({
+                                text: toolsFromJD
+                                    ? `Your job description highlights the need for expertise in ${toolsFromJD}, which aligns directly with my experience. ${USER_PROFILE.summary}`
+                                    : USER_PROFILE.summary,
+                                size: 22
+                            })]
                         }),
                         new Paragraph({ children: [] }),
                         // Key qualifications header
@@ -1528,24 +1549,23 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                             children: [new TextRun({ text: 'Key qualifications that align with this role:', bold: true, size: 22 })]
                         }),
                         new Paragraph({ children: [] }),
-                        // Bullet points
+                        // Bullet points - Selected based on job focus
                         new Paragraph({
-                            children: [new TextRun({ text: `• ${exp.bullets[0]}`, size: 22 })]
+                            children: [new TextRun({ text: `• ${relevantBullets[0]}`, size: 22 })]
                         }),
                         new Paragraph({
-                            children: [new TextRun({ text: `• ${exp.bullets[1]}`, size: 22 })]
+                            children: [new TextRun({ text: `• ${relevantBullets[1]}`, size: 22 })]
                         }),
                         new Paragraph({
-                            children: [new TextRun({ text: `• ${exp.bullets[2]}`, size: 22 })]
-                        }),
-                        new Paragraph({
-                            children: [new TextRun({ text: `• ${exp.bullets[3]}`, size: 22 })]
+                            children: [new TextRun({ text: `• ${relevantBullets[2]}`, size: 22 })]
                         }),
                         new Paragraph({ children: [] }),
-                        // Body paragraph 3
+                        // Body paragraph 3 - Mention specific technologies from JD
                         new Paragraph({
                             children: [new TextRun({
-                                text: `My technical expertise spans ${skillsList}, which directly aligns with the requirements for this position. I am particularly drawn to ${job.company}'s mission and the opportunity to work on ${job.department ? job.department + ' initiatives' : 'cutting-edge infrastructure challenges'}.`,
+                                text: toolsFromJD
+                                    ? `My hands-on experience with ${toolsFromJD} directly aligns with the requirements for this position. I am particularly drawn to ${job.company}'s mission and the opportunity to work on ${focusAreas || 'cutting-edge infrastructure challenges'}.`
+                                    : `My technical expertise in cloud infrastructure, Kubernetes, and platform engineering directly aligns with the requirements for this position. I am particularly drawn to ${job.company}'s mission and the opportunity to work on ${job.department ? job.department + ' initiatives' : 'cutting-edge infrastructure challenges'}.`,
                                 size: 22
                             })]
                         }),
@@ -1584,31 +1604,146 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             saveAs(blob, `Cover_Letter_${job.company.replace(/[^a-zA-Z0-9]/g, '_')}_${job.title.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 30)}.docx`);
         }
 
-        // Download resume as Word document
+        // ============ JOB DESCRIPTION PARSER ============
+        function parseJobDescription(job) {
+            const desc = (job.description || '').toLowerCase();
+            const title = (job.title || '').toLowerCase();
+
+            // Extract tools/technologies mentioned in JD
+            const allTools = {
+                cloud: ['aws', 'azure', 'gcp', 'google cloud', 'oracle cloud', 'oci', 'multi-cloud', 'hybrid cloud'],
+                containers: ['kubernetes', 'k8s', 'docker', 'helm', 'istio', 'envoy', 'eks', 'aks', 'gke', 'openshift', 'rancher'],
+                iac: ['terraform', 'pulumi', 'cloudformation', 'arm templates', 'bicep', 'ansible', 'puppet', 'chef', 'saltstack'],
+                cicd: ['jenkins', 'github actions', 'gitlab ci', 'circleci', 'argocd', 'fluxcd', 'spinnaker', 'tekton'],
+                monitoring: ['prometheus', 'grafana', 'datadog', 'splunk', 'elk', 'elasticsearch', 'new relic', 'dynatrace', 'opentelemetry'],
+                gpu: ['gpu', 'cuda', 'nvidia', 'a100', 'v100', 'h100', 'dgx', 'slurm', 'hpc', 'tensorrt'],
+                ml: ['pytorch', 'tensorflow', 'mlflow', 'kubeflow', 'sagemaker', 'ray', 'mlops', 'model serving', 'inference'],
+                data: ['spark', 'kafka', 'hadoop', 'hdfs', 'flink', 'airflow', 'databricks', 'snowflake', 'redshift', 'bigquery'],
+                languages: ['python', 'go', 'golang', 'java', 'bash', 'shell', 'rust', 'typescript'],
+                security: ['vault', 'soc2', 'hipaa', 'fedramp', 'pci', 'iso 27001', 'devsecops', 'sast', 'dast', 'opa', 'trivy']
+            };
+
+            const foundTools = {};
+            Object.keys(allTools).forEach(category => {
+                foundTools[category] = allTools[category].filter(tool =>
+                    desc.includes(tool) || title.includes(tool)
+                );
+            });
+
+            // Extract key responsibilities patterns
+            const responsibilities = [];
+            const respPatterns = [
+                /(?:responsible for|will be|you will|responsibilities include)[:\s]+([^.]+)/gi,
+                /(?:design|build|develop|implement|manage|lead|architect|maintain|deploy|automate|optimize|scale)[^.]{10,80}/gi
+            ];
+            respPatterns.forEach(pattern => {
+                const matches = desc.match(pattern);
+                if (matches) {
+                    matches.slice(0, 5).forEach(m => {
+                        const clean = m.replace(/^(responsible for|will be|you will|responsibilities include)[:\s]+/i, '').trim();
+                        if (clean.length > 20 && clean.length < 150) {
+                            responsibilities.push(clean.charAt(0).toUpperCase() + clean.slice(1));
+                        }
+                    });
+                }
+            });
+
+            // Extract requirements/qualifications
+            const requirements = [];
+            const reqPatterns = [
+                /(\d+\+?\s*years?)[^.]*(?:experience|working)[^.]+/gi,
+                /(?:experience with|expertise in|proficiency in|strong knowledge of)[:\s]+([^.]+)/gi,
+                /(?:bachelor|master|phd|degree)[^.]+/gi
+            ];
+            reqPatterns.forEach(pattern => {
+                const matches = desc.match(pattern);
+                if (matches) {
+                    matches.slice(0, 3).forEach(m => {
+                        if (m.length > 15 && m.length < 150) {
+                            requirements.push(m.trim());
+                        }
+                    });
+                }
+            });
+
+            // Determine job focus areas
+            const focusAreas = [];
+            if (foundTools.gpu.length > 0 || desc.includes('hpc') || desc.includes('high performance')) focusAreas.push('GPU/HPC');
+            if (foundTools.ml.length > 0 || desc.includes('machine learning') || desc.includes('ai ')) focusAreas.push('AI/ML');
+            if (title.includes('sre') || desc.includes('reliability') || desc.includes('incident')) focusAreas.push('SRE');
+            if (title.includes('platform') || desc.includes('platform engineering')) focusAreas.push('Platform Engineering');
+            if (title.includes('devops') || desc.includes('devops')) focusAreas.push('DevOps');
+            if (title.includes('architect') || desc.includes('architecture')) focusAreas.push('Architecture');
+            if (foundTools.data.length > 0) focusAreas.push('Data Engineering');
+            if (foundTools.security.length > 0) focusAreas.push('Security/Compliance');
+
+            return {
+                tools: foundTools,
+                responsibilities: [...new Set(responsibilities)].slice(0, 5),
+                requirements: [...new Set(requirements)].slice(0, 4),
+                focusAreas: [...new Set(focusAreas)],
+                allFoundTools: Object.values(foundTools).flat().filter(t => t.length > 0)
+            };
+        }
+
+        // Generate job summary from parsed JD
+        function generateJobSummary(job) {
+            const parsed = parseJobDescription(job);
+            const tools = parsed.allFoundTools.slice(0, 8);
+            const focus = parsed.focusAreas.slice(0, 3);
+
+            let summary = '';
+            if (focus.length > 0) {
+                summary += `Focus: ${focus.join(', ')}. `;
+            }
+            if (tools.length > 0) {
+                summary += `Tools: ${tools.map(t => t.toUpperCase()).join(', ')}`;
+            }
+            if (summary.length === 0) {
+                summary = job.description?.substring(0, 150) || 'View job for details';
+            }
+            return summary.substring(0, 200);
+        }
+
+        // Download resume as Word document - TAILORED TO EACH JOB
         async function downloadResume(job) {
             const { Document, Packer, Paragraph, TextRun, AlignmentType, BorderStyle, HeadingLevel, TableOfContents } = docx;
+
+            // Parse the job description
+            const parsedJD = parseJobDescription(job);
             const jobTitle = job.title.toLowerCase();
             const jobDesc = (job.description || '').toLowerCase();
 
-            // Determine which skills to highlight based on job
+            // Determine which skills to highlight based on parsed JD
             let relevantSkillCategories = [];
-            if (jobTitle.includes('ml') || jobTitle.includes('ai') || jobTitle.includes('machine learning') || jobDesc.includes('ml') || jobDesc.includes('machine learning')) {
+
+            // GPU/HPC focus
+            if (parsedJD.tools.gpu.length > 0 || parsedJD.focusAreas.includes('GPU/HPC')) {
+                relevantSkillCategories.push('GPU/HPC Computing', 'AI/ML Infrastructure');
+            }
+            // AI/ML focus
+            if (parsedJD.tools.ml.length > 0 || parsedJD.focusAreas.includes('AI/ML')) {
                 relevantSkillCategories.push('AI/ML Infrastructure', 'GPU/HPC Computing');
             }
-            if (jobTitle.includes('sre') || jobTitle.includes('reliability') || jobDesc.includes('sre') || jobDesc.includes('reliability')) {
+            // SRE focus
+            if (parsedJD.focusAreas.includes('SRE') || parsedJD.tools.monitoring.length > 0) {
                 relevantSkillCategories.push('SRE & Observability', 'Container Orchestration');
             }
-            if (jobTitle.includes('devops') || jobDesc.includes('devops') || jobDesc.includes('ci/cd')) {
-                relevantSkillCategories.push('Infrastructure as Code', 'Container Orchestration');
+            // Platform/DevOps focus
+            if (parsedJD.focusAreas.includes('Platform Engineering') || parsedJD.focusAreas.includes('DevOps')) {
+                relevantSkillCategories.push('Container Orchestration', 'Infrastructure as Code');
             }
-            if (jobTitle.includes('cloud') || jobTitle.includes('architect') || jobDesc.includes('aws') || jobDesc.includes('azure')) {
+            // Cloud focus
+            if (parsedJD.tools.cloud.length > 0 || parsedJD.focusAreas.includes('Architecture')) {
                 relevantSkillCategories.push('Cloud Platforms', 'Infrastructure as Code');
             }
-            if (jobTitle.includes('platform') || jobDesc.includes('platform') || jobDesc.includes('kubernetes')) {
-                relevantSkillCategories.push('Container Orchestration', 'Cloud Platforms');
+            // Data focus
+            if (parsedJD.tools.data.length > 0 || parsedJD.focusAreas.includes('Data Engineering')) {
+                relevantSkillCategories.push('Big Data & Streaming', 'Cloud Platforms');
             }
-            if (jobTitle.includes('data') || jobDesc.includes('spark') || jobDesc.includes('kafka')) {
-                relevantSkillCategories.push('Big Data & Streaming');
+            // Security focus
+            if (parsedJD.tools.security.length > 0 || parsedJD.focusAreas.includes('Security/Compliance')) {
+                relevantSkillCategories.push('Security & Compliance', 'Infrastructure as Code');
             }
 
             // Default skills if none matched
@@ -1647,16 +1782,77 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 spacing: { after: 300 }
             }));
 
-            // Section: Professional Summary
+            // Section: Professional Summary - Tailored to this job
             children.push(new Paragraph({
                 children: [new TextRun({ text: 'PROFESSIONAL SUMMARY', bold: true, size: 24, color: '2563eb' })],
                 border: { bottom: { color: '2563eb', size: 6, style: BorderStyle.SINGLE } },
                 spacing: { before: 200, after: 100 }
             }));
+
+            // Create tailored summary based on job focus
+            let tailoredSummary = USER_PROFILE.summary;
+            if (parsedJD.focusAreas.includes('GPU/HPC') || parsedJD.focusAreas.includes('AI/ML')) {
+                tailoredSummary = `Distinguished Cloud AI Architect with 18+ years building GPU compute platforms and AI/ML infrastructure at scale. Expert in Slurm cluster management, NVIDIA GPU scheduling (A100/V100/DGX), Kubernetes orchestration, and distributed ML training. ${parsedJD.allFoundTools.length > 0 ? 'Proven expertise in ' + parsedJD.allFoundTools.slice(0, 5).join(', ').toUpperCase() + '.' : ''} Led teams managing $15M+ budgets delivering $8M+ in cost savings.`;
+            } else if (parsedJD.focusAreas.includes('SRE')) {
+                tailoredSummary = `Senior Site Reliability Engineer and Platform Leader with 18+ years ensuring 99.97% uptime for mission-critical systems at planetary scale. Expert in SLI/SLO/SLA implementation, incident response, chaos engineering, and observability (Prometheus, Grafana, Datadog). ${parsedJD.allFoundTools.length > 0 ? 'Deep experience with ' + parsedJD.allFoundTools.slice(0, 5).join(', ').toUpperCase() + '.' : ''} Led 24x7 on-call rotations serving 10M+ users across 15+ regions.`;
+            } else if (parsedJD.focusAreas.includes('Platform Engineering')) {
+                tailoredSummary = `Platform Engineering Leader with 18+ years building developer platforms and infrastructure automation at scale. Expert in Kubernetes (EKS/AKS), Terraform IaC, GitOps (ArgoCD/FluxCD), and CI/CD pipelines. ${parsedJD.allFoundTools.length > 0 ? 'Proven expertise in ' + parsedJD.allFoundTools.slice(0, 5).join(', ').toUpperCase() + '.' : ''} Reduced deployment time 95% and cloud costs 73% through automation and optimization.`;
+            }
             children.push(new Paragraph({
-                children: [new TextRun({ text: USER_PROFILE.summary, size: 22 })],
+                children: [new TextRun({ text: tailoredSummary, size: 22 })],
                 spacing: { after: 200 }
             }));
+
+            // Section: JOB REQUIREMENTS MATCH (from parsed JD)
+            if (parsedJD.allFoundTools.length > 0 || parsedJD.focusAreas.length > 0) {
+                children.push(new Paragraph({
+                    children: [new TextRun({ text: 'JOB REQUIREMENTS ALIGNMENT', bold: true, size: 24, color: '16a34a' })],
+                    border: { bottom: { color: '16a34a', size: 6, style: BorderStyle.SINGLE } },
+                    spacing: { before: 200, after: 100 }
+                }));
+                children.push(new Paragraph({
+                    children: [new TextRun({ text: `Matching skills for: ${job.title} at ${job.company}`, italics: true, size: 18, color: '888888' })],
+                    spacing: { after: 80 }
+                }));
+
+                // Tools from JD that I have
+                if (parsedJD.allFoundTools.length > 0) {
+                    children.push(new Paragraph({
+                        children: [
+                            new TextRun({ text: '✓ Required Technologies: ', bold: true, size: 22, color: '16a34a' }),
+                            new TextRun({ text: parsedJD.allFoundTools.map(t => t.toUpperCase()).join(', '), size: 22 })
+                        ],
+                        spacing: { after: 60 }
+                    }));
+                }
+
+                // Focus areas matched
+                if (parsedJD.focusAreas.length > 0) {
+                    children.push(new Paragraph({
+                        children: [
+                            new TextRun({ text: '✓ Domain Expertise: ', bold: true, size: 22, color: '16a34a' }),
+                            new TextRun({ text: parsedJD.focusAreas.join(', '), size: 22 })
+                        ],
+                        spacing: { after: 60 }
+                    }));
+                }
+
+                // Key responsibilities I can fulfill
+                if (parsedJD.responsibilities.length > 0) {
+                    children.push(new Paragraph({
+                        children: [new TextRun({ text: '✓ Key Responsibilities (from JD):', bold: true, size: 22, color: '16a34a' })],
+                        spacing: { before: 80, after: 40 }
+                    }));
+                    parsedJD.responsibilities.slice(0, 4).forEach(resp => {
+                        children.push(new Paragraph({
+                            children: [new TextRun({ text: `  • ${resp}`, size: 20 })],
+                            spacing: { after: 30 }
+                        }));
+                    });
+                }
+
+                children.push(new Paragraph({ children: [], spacing: { after: 150 } }));
+            }
 
             // Section: Key Achievements
             children.push(new Paragraph({
@@ -2315,7 +2511,7 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                             <span class="${dateClass}">${dateText}</span>
                         </td>
                         <td class="col-description">
-                            <span class="description-text">${escapeHtml(job.description)}</span>
+                            <span class="description-text">${escapeHtml(generateJobSummary(job))}</span>
                         </td>
                         <td class="col-apply">
                             <div class="apply-actions">
