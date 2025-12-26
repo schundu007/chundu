@@ -375,6 +375,31 @@
             font-size: 0.85rem;
         }
 
+        .resume-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--light);
+            color: #16a34a;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .resume-btn:hover {
+            background: #16a34a;
+            color: var(--white);
+            border-color: #16a34a;
+            transform: translateY(-1px);
+        }
+
+        .resume-btn i {
+            font-size: 0.85rem;
+        }
+
         /* Loading State */
         .loading-row td {
             padding: 2rem;
@@ -1110,45 +1135,99 @@
             return labels[priority] || 'Unknown';
         }
 
-        // ============ USER PROFILE FOR COVER LETTER ============
+        // ============ USER PROFILE FOR COVER LETTER & RESUME ============
         const USER_PROFILE = {
             name: 'Sudhakar Chundu',
             title: 'Distinguished Cloud AI Architect',
             email: 'chundubabu@gmail.com',
-            phone: '(408) 555-0123',
+            phone: '(513) 666-0099',
             linkedin: 'linkedin.com/in/schundu',
+            github: 'github.com/schundu007',
+            website: 'sudhakarchundu.org',
             location: 'San Jose, CA',
             yearsExperience: '18+',
-            summary: 'Distinguished Cloud AI Architect with 18+ years of experience leading platform engineering, cloud infrastructure, and AI/ML systems at scale. Expert in Kubernetes, Terraform, AWS, Azure, and GPU infrastructure for machine learning workloads.',
-            skills: [
-                'Cloud Architecture (AWS, Azure)',
-                'Kubernetes & Container Orchestration',
-                'Platform Engineering & SRE',
-                'AI/ML Infrastructure & GPU Clusters',
-                'Terraform & Infrastructure as Code',
-                'DevOps & CI/CD Pipelines',
-                'Team Leadership (50+ engineers)',
-                'Cost Optimization ($10M+ savings)'
+            summary: 'Distinguished Cloud AI Architect and Platform Engineering Leader with 18+ years of hands-on experience building and operating large-scale GPU compute platforms, AI/ML infrastructure, and distributed systems at planetary scale. Expert in Slurm cluster management, GPU scheduling (NVIDIA A100/V100/T4/DGX), Kubernetes orchestration, and multi-cloud architecture (AWS, Azure, OCI). Lead global teams of 13+ engineers across Infrastructure, Security, Networking, and DevOps, managing $15M+ budgets while delivering $8M+ in documented cost savings.',
+            keyMetrics: [
+                { value: '$8M+', label: 'Annual Savings | 73% Cost Reduction' },
+                { value: '10M+', label: 'Users Served | 15+ Regions' },
+                { value: '99.97%', label: 'GPU Cluster Uptime' }
             ],
-            achievements: [
-                'Led migration of 500+ microservices to Kubernetes with 99.99% uptime',
-                'Built GPU infrastructure supporting 1000+ ML training jobs daily',
-                'Reduced cloud costs by $10M annually through optimization',
-                'Managed platform teams of 50+ engineers across multiple regions'
-            ]
+            skills: {
+                'GPU/HPC Computing': 'Slurm, Slinky, NVIDIA BCM/DGX, vcluster, CUDA, TensorRT, A100/V100/T4 scheduling, Triton Inference Server, vLLM',
+                'AI/ML Infrastructure': 'PyTorch, Ray, Flyte, MLflow, Kubeflow, SageMaker, Azure ML, TorchServe, KServe, distributed training',
+                'Cloud Platforms': 'AWS (EKS, EC2, SageMaker, EMR), Azure (AKS, APIM, ML), OCI',
+                'Container Orchestration': 'Kubernetes (EKS/AKS), Docker, Helm, Istio Service Mesh, KEDA, ArgoCD, FluxCD',
+                'Infrastructure as Code': 'Terraform (50+ modules), Ansible, ARM/Bicep, CloudFormation, Packer, GitOps, OPA, Checkov',
+                'Big Data & Streaming': 'Databricks, Apache Spark, Flink, Kafka, Hadoop/HDFS, Hive, Trino, Airflow, Delta Lake',
+                'Security & Compliance': 'SOC2, HIPAA, FedRAMP, ISO 27001, HITRUST, DevSecOps (Snyk, SonarQube), Vault, ZTNA',
+                'SRE & Observability': 'SLI/SLO/SLA, error budgets, chaos engineering, Prometheus, Grafana, Datadog, OpenTelemetry'
+            },
+            experience: [
+                {
+                    title: 'Distinguished Cloud AI Architect / Director of Platform Engineering',
+                    company: 'Trackonomy Systems',
+                    location: 'San Jose, CA',
+                    dates: 'Oct 2023 – Present',
+                    bullets: [
+                        'Designed Slurm-based GPU compute platform — 65 GPUs across 8 nodes using Slurm, Slinky, and NVIDIA BCM; achieved 99.97% uptime serving 12+ enterprise clients for AI inference and training',
+                        'Architected serverless GPU infrastructure using AWS Lambda containers, reducing inference costs by 65% while serving 5M+ daily predictions',
+                        'Reduced cloud costs 73% ($10M→$2.7M/year) through GPU utilization optimization, fair-share scheduling, and vendor consolidation',
+                        'Built CI/CD pipelines for 100+ applications using GitHub Actions, Docker, Terraform, and GitOps; reduced deployment time 95%',
+                        'Implemented DevSecOps with Trivy, Falco, OPA, Gitleaks, and HashiCorp Vault; achieved SOC2, HIPAA, FedRAMP, HITRUST compliance',
+                        'Built team 0 → 6 engineers | Managed $15M+ budgets | Led incident response and on-call rotations'
+                    ]
+                },
+                {
+                    title: 'Senior SRE / Cloud Architect — ML Infrastructure',
+                    company: 'Wipro Technologies — OSDU Data Platform',
+                    location: 'Seattle, WA',
+                    dates: 'Feb 2020 – Oct 2023',
+                    bullets: [
+                        'Architected OSDU R3 data platform processing exabytes of seismic data on GPU-accelerated Kubernetes clusters for ExxonMobil, Chevron, BP, Shell',
+                        'Delivered GPU cluster management at scale with Kubernetes, Istio, and KEDA, ensuring 99.95% availability for ML inference workloads',
+                        'Created 50+ Terraform modules (VPC, EKS, RDS, DynamoDB, S3, SageMaker, IAM); implemented GitOps with Jenkins pipelines',
+                        'Built observability stack with Prometheus/Grafana/ELK and GPU metrics; created automation in Go/Python reducing manual operations 85%'
+                    ]
+                },
+                {
+                    title: 'Cloud Architect — Harvard Pilgrim Health Care',
+                    company: 'Tata Consultancy Services',
+                    location: 'Boston, MA',
+                    dates: 'Jun 2018 – Feb 2020',
+                    bullets: [
+                        'Led cloud modernization for HIPAA/HITRUST-regulated AI/ML applications to AWS; implemented GPU-enabled EKS clusters',
+                        'Implemented Jenkins/Ansible CI/CD pipelines; DevSecOps (HashiCorp Vault, SonarQube, OWASP); managed $6M infrastructure budget'
+                    ]
+                }
+            ],
+            certifications: [
+                'AWS Solutions Architect Professional',
+                'Azure Solutions Architect Expert',
+                'AWS ML Specialty',
+                'Azure AI Engineer',
+                'NVIDIA DLI Infrastructure',
+                'CKA (Kubernetes)',
+                'HashiCorp Terraform',
+                'Databricks Certified',
+                'TOGAF 9',
+                'ITIL v4'
+            ],
+            education: {
+                degree: 'Bachelor of Engineering in Mechanical Engineering',
+                school: 'Acharya Nagarjuna University'
+            }
         };
 
         // ============ COVER LETTER GENERATOR ============
         function generateCoverLetter(job) {
             const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-
-            // Match skills to job
-            const relevantSkills = USER_PROFILE.skills.slice(0, 4).join(', ');
+            const skillsList = Object.keys(USER_PROFILE.skills).slice(0, 4).join(', ');
+            const exp = USER_PROFILE.experience[0];
 
             const coverLetter = `${USER_PROFILE.name}
 ${USER_PROFILE.location}
 ${USER_PROFILE.email} | ${USER_PROFILE.phone}
-${USER_PROFILE.linkedin}
+${USER_PROFILE.linkedin} | ${USER_PROFILE.website}
 
 ${today}
 
@@ -1164,12 +1243,12 @@ ${USER_PROFILE.summary}
 
 Key qualifications that align with this role:
 
-• ${USER_PROFILE.achievements[0]}
-• ${USER_PROFILE.achievements[1]}
-• ${USER_PROFILE.achievements[2]}
-• ${USER_PROFILE.achievements[3]}
+• ${exp.bullets[0]}
+• ${exp.bullets[1]}
+• ${exp.bullets[2]}
+• ${exp.bullets[3]}
 
-My technical expertise includes ${relevantSkills}, which directly aligns with the requirements for this position. I am particularly drawn to ${job.company}'s mission and the opportunity to work on ${job.department ? job.department + ' initiatives' : 'cutting-edge infrastructure challenges'}.
+My technical expertise spans ${skillsList}, which directly aligns with the requirements for this position. I am particularly drawn to ${job.company}'s mission and the opportunity to work on ${job.department ? job.department + ' initiatives' : 'cutting-edge infrastructure challenges'}.
 
 I am confident that my experience leading large-scale platform engineering initiatives, combined with my passion for building reliable and scalable systems, would make me a valuable addition to your team.
 
@@ -1180,6 +1259,117 @@ ${USER_PROFILE.name}
 ${USER_PROFILE.title}`;
 
             return coverLetter;
+        }
+
+        // ============ TAILORED RESUME GENERATOR ============
+        function generateResume(job) {
+            const jobTitle = job.title.toLowerCase();
+            const jobDesc = (job.description || '').toLowerCase();
+
+            // Determine which skills to highlight based on job
+            let relevantSkillCategories = [];
+            if (jobTitle.includes('ml') || jobTitle.includes('ai') || jobTitle.includes('machine learning') || jobDesc.includes('ml') || jobDesc.includes('machine learning')) {
+                relevantSkillCategories.push('AI/ML Infrastructure', 'GPU/HPC Computing');
+            }
+            if (jobTitle.includes('sre') || jobTitle.includes('reliability') || jobDesc.includes('sre') || jobDesc.includes('reliability')) {
+                relevantSkillCategories.push('SRE & Observability', 'Container Orchestration');
+            }
+            if (jobTitle.includes('devops') || jobDesc.includes('devops') || jobDesc.includes('ci/cd')) {
+                relevantSkillCategories.push('Infrastructure as Code', 'Container Orchestration');
+            }
+            if (jobTitle.includes('cloud') || jobTitle.includes('architect') || jobDesc.includes('aws') || jobDesc.includes('azure')) {
+                relevantSkillCategories.push('Cloud Platforms', 'Infrastructure as Code');
+            }
+            if (jobTitle.includes('platform') || jobDesc.includes('platform') || jobDesc.includes('kubernetes')) {
+                relevantSkillCategories.push('Container Orchestration', 'Cloud Platforms');
+            }
+            if (jobTitle.includes('data') || jobDesc.includes('spark') || jobDesc.includes('kafka')) {
+                relevantSkillCategories.push('Big Data & Streaming');
+            }
+
+            // Default skills if none matched
+            if (relevantSkillCategories.length === 0) {
+                relevantSkillCategories = ['Cloud Platforms', 'Container Orchestration', 'Infrastructure as Code', 'SRE & Observability'];
+            }
+
+            // Remove duplicates and limit to 6
+            relevantSkillCategories = [...new Set(relevantSkillCategories)].slice(0, 6);
+
+            // Build skills section
+            let skillsSection = '';
+            relevantSkillCategories.forEach(cat => {
+                if (USER_PROFILE.skills[cat]) {
+                    skillsSection += `${cat.toUpperCase()}\n${USER_PROFILE.skills[cat]}\n\n`;
+                }
+            });
+
+            // Add remaining skills
+            Object.keys(USER_PROFILE.skills).forEach(cat => {
+                if (!relevantSkillCategories.includes(cat)) {
+                    skillsSection += `${cat.toUpperCase()}\n${USER_PROFILE.skills[cat]}\n\n`;
+                }
+            });
+
+            // Build experience section
+            let experienceSection = '';
+            USER_PROFILE.experience.forEach(exp => {
+                experienceSection += `${exp.title}\n${exp.company} | ${exp.location} | ${exp.dates}\n`;
+                exp.bullets.forEach(bullet => {
+                    experienceSection += `• ${bullet}\n`;
+                });
+                experienceSection += '\n';
+            });
+
+            // Build resume
+            const resume = `================================================================================
+                              ${USER_PROFILE.name.toUpperCase()}
+                         ${USER_PROFILE.title}
+================================================================================
+
+${USER_PROFILE.location} | ${USER_PROFILE.phone} | ${USER_PROFILE.email}
+${USER_PROFILE.linkedin} | ${USER_PROFILE.github} | ${USER_PROFILE.website}
+
+================================================================================
+                           PROFESSIONAL SUMMARY
+================================================================================
+
+${USER_PROFILE.summary}
+
+================================================================================
+                            KEY ACHIEVEMENTS
+================================================================================
+
+${USER_PROFILE.keyMetrics.map(m => `• ${m.value} - ${m.label}`).join('\n')}
+
+================================================================================
+                          CORE TECHNICAL SKILLS
+================================================================================
+(Tailored for: ${job.title} at ${job.company})
+
+${skillsSection}
+================================================================================
+                         PROFESSIONAL EXPERIENCE
+================================================================================
+
+${experienceSection}
+================================================================================
+                        EDUCATION & CERTIFICATIONS
+================================================================================
+
+${USER_PROFILE.education.degree}
+${USER_PROFILE.education.school}
+
+CERTIFICATIONS:
+${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
+
+================================================================================
+                              END OF RESUME
+        Generated for: ${job.title} at ${job.company}
+        Date: ${new Date().toLocaleDateString()}
+================================================================================
+`;
+
+            return resume;
         }
 
         // Download cover letter as text file
@@ -1196,7 +1386,21 @@ ${USER_PROFILE.title}`;
             URL.revokeObjectURL(url);
         }
 
-        // Store jobs globally for cover letter access
+        // Download resume as text file
+        function downloadResume(job) {
+            const resume = generateResume(job);
+            const blob = new Blob([resume], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Resume_${USER_PROFILE.name.replace(/\s+/g, '_')}_${job.company.replace(/[^a-zA-Z0-9]/g, '_')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Store jobs globally for cover letter/resume access
         let jobsMap = {};
 
         // ============ COMPANY LIST ============
@@ -1713,6 +1917,9 @@ ${USER_PROFILE.title}`;
                                 </a>
                                 <button class="cover-letter-btn" onclick="downloadCoverLetter(jobsMap['${job.id}'])" title="Download Cover Letter">
                                     <i class="fas fa-file-alt"></i>
+                                </button>
+                                <button class="resume-btn" onclick="downloadResume(jobsMap['${job.id}'])" title="Download Tailored Resume">
+                                    <i class="fas fa-file-download"></i>
                                 </button>
                             </div>
                         </td>
