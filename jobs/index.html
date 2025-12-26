@@ -730,7 +730,7 @@
     <script>
         // ============ UTILITY FUNCTIONS (MUST BE FIRST) ============
 
-        // Strip HTML tags and decode entities - robust version
+        // Extract job description (not company overview)
         function stripHtml(html) {
             if (!html) return '';
             try {
@@ -741,7 +741,6 @@
                 let text = tmp.textContent || tmp.innerText || '';
 
                 // Check if result still contains HTML (double-encoded)
-                // If so, decode again
                 if (text.includes('<') && text.includes('>')) {
                     tmp.innerHTML = text;
                     text = tmp.textContent || tmp.innerText || '';
@@ -750,25 +749,53 @@
                 // Clean up extra whitespace
                 text = text.replace(/\s+/g, ' ').trim();
 
-                // Remove common boilerplate phrases to get to the core JD
-                const boilerplatePhrases = [
-                    /^who we are\s*/i,
-                    /^about\s+\w+\s*/i,
-                    /^about the (company|role|team)\s*/i,
-                    /^the (company|role|team)\s*/i,
+                // Try to find job-related sections and extract from there
+                const jobSectionPatterns = [
+                    /what you['']?ll do[:\s]*/i,
+                    /responsibilities[:\s]*/i,
+                    /the role[:\s]*/i,
+                    /about the role[:\s]*/i,
+                    /in this role[,:\s]*/i,
+                    /your responsibilities[:\s]*/i,
+                    /what you will do[:\s]*/i,
+                    /key responsibilities[:\s]*/i,
+                    /role overview[:\s]*/i,
+                    /job description[:\s]*/i,
+                    /about this job[:\s]*/i,
+                    /the opportunity[:\s]*/i,
                 ];
-                for (const phrase of boilerplatePhrases) {
-                    text = text.replace(phrase, '');
+
+                let jobText = text;
+                for (const pattern of jobSectionPatterns) {
+                    const match = text.match(pattern);
+                    if (match) {
+                        const idx = text.search(pattern);
+                        if (idx !== -1 && idx < text.length / 2) {
+                            jobText = text.substring(idx).replace(pattern, '').trim();
+                            break;
+                        }
+                    }
                 }
 
-                // Truncate if too long
-                if (text.length > 400) {
-                    text = text.substring(0, 400) + '...';
+                // If we found a job section, use it; otherwise use original but skip company intro
+                if (jobText !== text) {
+                    text = jobText;
+                } else {
+                    // Skip common company intro phrases at the beginning
+                    text = text
+                        .replace(/^who we are[:\s]*.{0,500}?(what you|responsibilities|the role|about the role)/i, '$1')
+                        .replace(/^about [a-z]+[:\s]*.{0,300}?(what you|responsibilities|the role)/i, '$1')
+                        .replace(/^[a-z]+ is (a |the |an ).{0,400}?(we are|what you|responsibilities)/i, '$2');
+                }
+
+                // Truncate to reasonable length
+                if (text.length > 350) {
+                    text = text.substring(0, 350) + '...';
                 }
                 return text;
             } catch (e) {
                 // Fallback: just remove HTML tags with regex
-                return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 500);
+                return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 350);
             }
         }
 
