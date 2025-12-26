@@ -1,27 +1,28 @@
-/* Modern Enterprise Design System */
+/* Modern AI Enterprise Design System */
 :root {
     --primary: #eb1616;
     --primary-dark: #c8000b;
     --primary-light: rgba(235, 22, 22, 0.1);
-    --dark: #0f0f0f;
-    --dark-soft: #1a1a1a;
-    --dark-muted: #2d2d2d;
-    --text: #1a1a1a;
-    --text-muted: #6b7280;
+    --dark: #0a0a0a;
+    --dark-soft: #141414;
+    --dark-muted: #1f1f1f;
+    --text: #0a0a0a;
+    --text-muted: #52525b;
     --white: #ffffff;
-    --light: #f9fafb;
-    --light-alt: #f3f4f6;
-    --border: #e5e7eb;
-    --border-light: rgba(0,0,0,0.06);
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-    --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-    --radius: 8px;
-    --radius-lg: 12px;
-    --radius-xl: 16px;
-    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --light: #fafafa;
+    --light-alt: #f4f4f5;
+    --border: #e4e4e7;
+    --border-light: rgba(0,0,0,0.04);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
+    --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.08), 0 10px 10px -5px rgba(0,0,0,0.03);
+    --radius: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
@@ -40,10 +41,32 @@ html {
 body {
     font-family: var(--font-sans);
     color: var(--text);
-    line-height: 1.6;
+    line-height: 1.7;
     background: var(--light);
-    font-size: 14px;
-    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+}
+
+/* Modern AI Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+}
+
+h1 { font-size: 3rem; font-weight: 700; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1.1rem; }
+
+/* Gradient text effect for emphasis */
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary) 0%, #ff6b6b 50%, #ffa726 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 /* Centered Layout */
