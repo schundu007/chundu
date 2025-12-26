@@ -520,6 +520,244 @@
         .lang-html { background: #e34c26; }
         .lang-go { background: #00ADD8; }
 
+        /* Medium Section Styles */
+        .medium-section {
+            padding: 60px 1.5rem;
+            background: var(--light);
+        }
+
+        .medium-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .medium-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .medium-header h2 {
+            color: var(--dark);
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .medium-header h2 span {
+            color: var(--primary);
+        }
+
+        .medium-header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .medium-content {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .medium-sidebar {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+        }
+
+        .medium-profile {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .medium-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            border: 3px solid #00ab6c;
+            overflow: hidden;
+            background: linear-gradient(135deg, #00ab6c, #00d47e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .medium-avatar i {
+            font-size: 2.5rem;
+            color: var(--white);
+        }
+
+        .medium-profile h3 {
+            color: var(--dark);
+            font-size: 1.15rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .medium-profile .username {
+            color: #00ab6c;
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+        }
+
+        .medium-bio {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.6;
+            margin-top: 0.75rem;
+        }
+
+        .medium-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .medium-stat {
+            background: var(--light);
+            padding: 0.75rem;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+
+        .medium-stat-value {
+            color: #00ab6c;
+            font-size: 1.15rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+        }
+
+        .medium-stat-label {
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .medium-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .medium-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .medium-link-primary {
+            background: #00ab6c;
+            color: var(--white);
+        }
+
+        .medium-link-primary:hover {
+            background: #009960;
+            transform: translateY(-2px);
+            color: var(--white);
+        }
+
+        .medium-link-secondary {
+            background: var(--light);
+            color: var(--dark);
+            border: 1px solid var(--border);
+        }
+
+        .medium-link-secondary:hover {
+            border-color: #00ab6c;
+            color: #00ab6c;
+            transform: translateY(-2px);
+        }
+
+        .medium-articles {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+        }
+
+        .article-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .article-card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: #00ab6c;
+            transform: translateY(-4px);
+        }
+
+        .article-category {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            background: rgba(0, 171, 108, 0.1);
+            color: #00ab6c;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: 50px;
+            margin-bottom: 0.75rem;
+        }
+
+        .article-title {
+            color: var(--dark);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .article-excerpt {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+        }
+
+        .article-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .article-meta-item i {
+            color: #00ab6c;
+            font-size: 0.65rem;
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .github-content {
@@ -532,6 +770,19 @@
             }
 
             .github-repos {
+                grid-template-columns: 1fr;
+            }
+
+            .medium-content {
+                grid-template-columns: 1fr;
+            }
+
+            .medium-sidebar {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .medium-articles {
                 grid-template-columns: 1fr;
             }
         }
@@ -563,6 +814,14 @@
             }
 
             .github-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .medium-section {
+                padding: 40px 1rem;
+            }
+
+            .medium-header h2 {
                 font-size: 1.5rem;
             }
         }
@@ -1080,6 +1339,151 @@
                             <span class="repo-meta-item">
                                 <i class="fas fa-eye"></i>
                                 Monitoring
+                            </span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Medium Section -->
+    <section class="medium-section">
+        <div class="medium-container">
+            <div class="medium-header">
+                <h2>Technical <span>Articles</span></h2>
+                <p>Sharing insights on cloud infrastructure, DevOps, and reliability engineering on Medium</p>
+            </div>
+
+            <div class="medium-content">
+                <!-- Sidebar with Profile -->
+                <div class="medium-sidebar">
+                    <div class="medium-profile">
+                        <div class="medium-avatar">
+                            <i class="fab fa-medium-m"></i>
+                        </div>
+                        <h3>Sudhakar Chundu</h3>
+                        <p class="username">@chundubabu</p>
+                        <p class="medium-bio">Cloud AI Architect sharing insights on enterprise infrastructure, Kubernetes, and platform engineering.</p>
+                    </div>
+
+                    <div class="medium-stats">
+                        <div class="medium-stat">
+                            <div class="medium-stat-value">10+</div>
+                            <div class="medium-stat-label">Articles</div>
+                        </div>
+                        <div class="medium-stat">
+                            <div class="medium-stat-value">18+</div>
+                            <div class="medium-stat-label">Years Exp</div>
+                        </div>
+                    </div>
+
+                    <div class="medium-links">
+                        <a href="https://medium.com/@chundubabu" target="_blank" class="medium-link medium-link-primary">
+                            <i class="fab fa-medium-m"></i>
+                            Follow on Medium
+                        </a>
+                        <a href="https://medium.com/@chundubabu" target="_blank" class="medium-link medium-link-secondary">
+                            <i class="fas fa-rss"></i>
+                            Subscribe to Updates
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Article Cards -->
+                <div class="medium-articles">
+                    <a href="https://medium.com/@chundubabu" target="_blank" class="article-card">
+                        <span class="article-category">Kubernetes</span>
+                        <h3 class="article-title">Multi-Cloud Kubernetes Strategy for Enterprise Workloads</h3>
+                        <p class="article-excerpt">A comprehensive guide to designing and implementing Kubernetes clusters across AWS and Azure with unified management and GitOps practices.</p>
+                        <div class="article-meta">
+                            <span class="article-meta-item">
+                                <i class="fas fa-clock"></i>
+                                8 min read
+                            </span>
+                            <span class="article-meta-item">
+                                <i class="fas fa-tag"></i>
+                                DevOps
+                            </span>
+                        </div>
+                    </a>
+
+                    <a href="https://medium.com/@chundubabu" target="_blank" class="article-card">
+                        <span class="article-category">AI/ML Infrastructure</span>
+                        <h3 class="article-title">Building GPU Clusters for ML Workloads at Scale</h3>
+                        <p class="article-excerpt">Best practices for managing large-scale GPU infrastructure with Slurm and Kubernetes for distributed machine learning training.</p>
+                        <div class="article-meta">
+                            <span class="article-meta-item">
+                                <i class="fas fa-clock"></i>
+                                12 min read
+                            </span>
+                            <span class="article-meta-item">
+                                <i class="fas fa-tag"></i>
+                                GPU
+                            </span>
+                        </div>
+                    </a>
+
+                    <a href="https://medium.com/@chundubabu" target="_blank" class="article-card">
+                        <span class="article-category">Terraform</span>
+                        <h3 class="article-title">Terraform Modules at Enterprise Scale</h3>
+                        <p class="article-excerpt">Designing reusable Terraform modules for enterprise infrastructure with versioning, testing, and documentation best practices.</p>
+                        <div class="article-meta">
+                            <span class="article-meta-item">
+                                <i class="fas fa-clock"></i>
+                                10 min read
+                            </span>
+                            <span class="article-meta-item">
+                                <i class="fas fa-tag"></i>
+                                IaC
+                            </span>
+                        </div>
+                    </a>
+
+                    <a href="https://medium.com/@chundubabu" target="_blank" class="article-card">
+                        <span class="article-category">GitOps</span>
+                        <h3 class="article-title">GitOps with ArgoCD for Multi-Cluster Deployments</h3>
+                        <p class="article-excerpt">Step-by-step guide to implementing GitOps workflows for Kubernetes deployments using ArgoCD and Helm across multiple clusters.</p>
+                        <div class="article-meta">
+                            <span class="article-meta-item">
+                                <i class="fas fa-clock"></i>
+                                15 min read
+                            </span>
+                            <span class="article-meta-item">
+                                <i class="fas fa-tag"></i>
+                                CI/CD
+                            </span>
+                        </div>
+                    </a>
+
+                    <a href="https://medium.com/@chundubabu" target="_blank" class="article-card">
+                        <span class="article-category">Cost Optimization</span>
+                        <h3 class="article-title">FinOps: Achieving $8M Cloud Cost Savings</h3>
+                        <p class="article-excerpt">Real-world strategies for reducing cloud infrastructure costs while maintaining performance and reliability at enterprise scale.</p>
+                        <div class="article-meta">
+                            <span class="article-meta-item">
+                                <i class="fas fa-clock"></i>
+                                9 min read
+                            </span>
+                            <span class="article-meta-item">
+                                <i class="fas fa-tag"></i>
+                                FinOps
+                            </span>
+                        </div>
+                    </a>
+
+                    <a href="https://medium.com/@chundubabu" target="_blank" class="article-card">
+                        <span class="article-category">SRE</span>
+                        <h3 class="article-title">Achieving 99.97% Uptime: Lessons Learned</h3>
+                        <p class="article-excerpt">Strategies and lessons learned from maintaining high availability across multi-cloud infrastructure serving millions of users.</p>
+                        <div class="article-meta">
+                            <span class="article-meta-item">
+                                <i class="fas fa-clock"></i>
+                                11 min read
+                            </span>
+                            <span class="article-meta-item">
+                                <i class="fas fa-tag"></i>
+                                Reliability
                             </span>
                         </div>
                     </a>
