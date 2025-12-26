@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience | Sudhakar Chundu</title>
+    <meta name="description" content="Professional experience of Sudhakar Chundu - 18+ years building large-scale GPU compute platforms and AI/ML infrastructure at Fortune 500 companies.">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .experience-section {
+            padding: 60px 1.5rem;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-soft) 50%, var(--dark-muted) 100%);
+        }
+        .experience-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .experience-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        .experience-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .experience-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--primary), #ff4444);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .experience-card:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.2);
+            transform: translateX(4px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        }
+        .experience-card:hover::before {
+            opacity: 1;
+        }
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .experience-title h3 {
+            color: var(--white);
+            font-size: 1rem;
+            margin-bottom: 0.15rem;
+        }
+        .experience-title p {
+            color: var(--primary);
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
+        .experience-date {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.75rem;
+        }
+        .experience-description {
+            color: rgba(255,255,255,0.75);
+            line-height: 1.6;
+            font-size: 0.8rem;
+        }
+        .experience-description li {
+            margin-bottom: 0.35rem;
+        }
+        .experience-description ul {
+            padding-left: 1.25rem;
+            margin: 0;
+        }
+        @media (max-width: 768px) {
+            .experience-section {
+                padding: 40px 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="../" class="logo">
+                <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu" class="logo-icon">
+                Sudhakar Chundu
+            </a>
+            <ul class="nav-links">
+                <li><a href="../about/">About</a></li>
+                <li><a href="../expertise/">Expertise</a></li>
+                <li><a href="./" class="active">Experience</a></li>
+                <li><a href="../projects/">Projects</a></li>
+                <li><a href="../resume/">Resume</a></li>
+                <li><a href="../conferences/">Conferences</a></li>
+                <li><a href="../publications/">Publications</a></li>
+                <div class="nav-social">
+                    <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </ul>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>Professional <span>Experience</span></h1>
+        <p>Building and operating infrastructure at scale for global enterprises</p>
+    </header>
+
+    <!-- Experience Content -->
+    <section class="experience-section">
+        <div class="experience-container">
+            <div class="experience-list">
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div class="experience-title">
+                            <h3>Distinguished Cloud AI Architect / Director of Platform Engineering</h3>
+                            <p>Trackonomy Systems</p>
+                        </div>
+                        <span class="experience-date">Oct 2023 – Present</span>
+                    </div>
+                    <div class="experience-description">
+                        <ul>
+                            <li>Designed Slurm-based GPU compute platform (65 GPUs, 8 nodes) with Slinky and NVIDIA BCM; achieved 99.97% uptime serving 12+ enterprise clients for AI inference and training</li>
+                            <li>Reduced cloud costs 73% ($10M to $2.7M/year) through GPU utilization optimization, fair-share scheduling, and vendor consolidation; led FinOps practice with showback/chargeback models</li>
+                            <li>Built team 0 to 6 engineers | Managed $15M+ budgets | SOC2, HIPAA, FedRAMP, HITRUST compliance | Secured GenAI/LLM platform against prompt injection and data exfiltration</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div class="experience-title">
+                            <h3>Senior SRE / Cloud Architect — ML Infrastructure</h3>
+                            <p>Wipro Technologies (OSDU Data Platform)</p>
+                        </div>
+                        <span class="experience-date">Feb 2020 – Oct 2023</span>
+                    </div>
+                    <div class="experience-description">
+                        <ul>
+                            <li>Architected OSDU R3 data platform processing exabytes of seismic data on GPU-accelerated Kubernetes (EKS/Fargate) with Spark, Kafka, Hadoop/HDFS for ExxonMobil, Chevron, BP, Shell</li>
+                            <li>Created 50+ Terraform modules; implemented GitOps (ArgoCD/FluxCD), KEDA autoscaling; reduced deployment time 80%</li>
+                            <li>Built observability stack with Prometheus/Grafana/ELK and GPU metrics; implemented HA architecture achieving 55% downtime reduction via capacity planning</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div class="experience-title">
+                            <h3>Multi-Cloud Architect / Senior Infrastructure Engineer</h3>
+                            <p>Tata Consultancy Services</p>
+                        </div>
+                        <span class="experience-date">May 2007 – Feb 2020</span>
+                    </div>
+                    <div class="experience-description">
+                        <p style="margin-bottom: 1rem; opacity: 0.8;">Progressive 13-year career across Fortune 500 clients in healthcare, government, telecom, and financial services.</p>
+                        <!-- Sub-role 1 -->
+                        <div style="margin-bottom: 1.5rem; padding-left: 1rem; border-left: 2px solid var(--primary);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <strong style="color: var(--white);">Cloud Architect — Harvard Pilgrim Health Care</strong>
+                                <span style="font-size: 0.85rem; opacity: 0.7;">Jun 2018 – Feb 2020</span>
+                            </div>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Led cloud modernization for HIPAA/HITRUST-regulated AI/ML applications to AWS with GPU-enabled EKS clusters</li>
+                                <li>Implemented Jenkins/Ansible CI/CD pipelines | DevSecOps with HashiCorp Vault, SonarQube | Managed $6M budget</li>
+                            </ul>
+                        </div>
+                        <!-- Sub-role 2 -->
+                        <div style="margin-bottom: 1.5rem; padding-left: 1rem; border-left: 2px solid var(--primary);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <strong style="color: var(--white);">Cloud Senior Engineer — CNA Insurance</strong>
+                                <span style="font-size: 0.85rem; opacity: 0.7;">May 2015 – Jun 2018</span>
+                            </div>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Managed Kubernetes/Helm deployments on AWS; pioneered Docker/Kubernetes adoption (2013-2014)</li>
+                                <li>Led cloud migrations to AWS, Azure, OpenStack | CI/CD with Jenkins/Ansible</li>
+                            </ul>
+                        </div>
+                        <!-- Sub-role 3 -->
+                        <div style="margin-bottom: 1.5rem; padding-left: 1rem; border-left: 2px solid var(--primary);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <strong style="color: var(--white);">Solutions Architect — PwC</strong>
+                                <span style="font-size: 0.85rem; opacity: 0.7;">Jan 2011 – Apr 2015</span>
+                            </div>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>Led infrastructure deployments for 20+ facility buildouts including branch offices, call centers, and data centers</li>
+                                <li>Integrated Chef/Jenkins deployment pipelines | Migrated VMware VMs to AWS | Managed $15M+ budgets</li>
+                            </ul>
+                        </div>
+                        <!-- Sub-role 4 -->
+                        <div style="padding-left: 1rem; border-left: 2px solid var(--primary);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <strong style="color: var(--white);">Middleware Engineer — Verizon, Owens Corning</strong>
+                                <span style="font-size: 0.85rem; opacity: 0.7;">May 2007 – Jan 2011</span>
+                            </div>
+                            <ul style="margin-top: 0.5rem;">
+                                <li>5 years deep Linux/Unix administration with WebSphere/WebLogic middleware; kernel tuning, JVM optimization</li>
+                                <li>Managed large-scale production systems on bare-metal serving millions of users | 24x7 L3 operations</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <span class="footer-logo">Sudhakar Chundu</span>
+            <div class="footer-links">
+                <a href="../">Home</a>
+                <a href="../resume/">Resume</a>
+                <a href="../conferences/">Conferences</a>
+                <a href="../contact/">Contact</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/schundu007" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/schundu" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem;">
+            <p>&copy; 2025 Sudhakar Chundu. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

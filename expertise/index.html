@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expertise | Sudhakar Chundu</title>
+    <meta name="description" content="Areas of expertise of Sudhakar Chundu - Linux systems, Kubernetes, multi-cloud architecture, observability, infrastructure as code, and networking.">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .expertise-section {
+            padding: 60px 1.5rem;
+            background: var(--light);
+        }
+        .expertise-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+        .skill-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), #ff4444);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .skill-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: transparent;
+        }
+        .skill-card:hover::before {
+            opacity: 1;
+        }
+        .skill-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, rgba(235,22,22,0.1), rgba(235,22,22,0.05));
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+        .skill-card:hover .skill-icon {
+            background: linear-gradient(135deg, var(--primary), #ff4444);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+        .skill-card h3 {
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .skill-card p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-top: auto;
+        }
+        .tech-tag {
+            padding: 0.25rem 0.5rem;
+            background: var(--light);
+            color: var(--dark-soft);
+            font-size: 0.65rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.2s;
+        }
+        .tech-tag:hover {
+            background: rgba(235,22,22,0.1);
+            color: var(--primary);
+        }
+        @media (max-width: 1024px) {
+            .skills-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            .expertise-section {
+                padding: 40px 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="../" class="logo">
+                <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu" class="logo-icon">
+                Sudhakar Chundu
+            </a>
+            <ul class="nav-links">
+                <li><a href="../about/">About</a></li>
+                <li><a href="./" class="active">Expertise</a></li>
+                <li><a href="../experience/">Experience</a></li>
+                <li><a href="../projects/">Projects</a></li>
+                <li><a href="../resume/">Resume</a></li>
+                <li><a href="../conferences/">Conferences</a></li>
+                <li><a href="../publications/">Publications</a></li>
+                <div class="nav-social">
+                    <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </ul>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>Areas of <span>Expertise</span></h1>
+        <p>Building and scaling enterprise infrastructure across bare-metal and multi-cloud platforms</p>
+    </header>
+
+    <!-- Expertise Content -->
+    <section class="expertise-section">
+        <div class="expertise-container">
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3>Linux & Systems</h3>
+                    <p>Deep expertise in Linux systems administration, performance tuning, and kernel debugging at scale.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Ubuntu</span>
+                        <span class="tech-tag">RHEL</span>
+                        <span class="tech-tag">Shell</span>
+                        <span class="tech-tag">Systemd</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-dharmachakra"></i>
+                    </div>
+                    <h3>Containers & Kubernetes</h3>
+                    <p>Managing large-scale Kubernetes clusters with advanced orchestration and GitOps workflows.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Kubernetes</span>
+                        <span class="tech-tag">Helm</span>
+                        <span class="tech-tag">ArgoCD</span>
+                        <span class="tech-tag">Istio</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>Multi-Cloud Architecture</h3>
+                    <p>Designing infrastructure across AWS, Azure, GCP, and OCI with focus on cost optimization.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">AWS</span>
+                        <span class="tech-tag">Azure</span>
+                        <span class="tech-tag">GCP</span>
+                        <span class="tech-tag">OCI</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Observability & SRE</h3>
+                    <p>Implementing comprehensive monitoring, alerting, and SLO-driven reliability engineering.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Prometheus</span>
+                        <span class="tech-tag">Grafana</span>
+                        <span class="tech-tag">Datadog</span>
+                        <span class="tech-tag">OpenTelemetry</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <h3>Infrastructure as Code</h3>
+                    <p>Automating infrastructure provisioning with modern IaC tools and robust CI/CD pipelines.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Terraform</span>
+                        <span class="tech-tag">Ansible</span>
+                        <span class="tech-tag">GitHub Actions</span>
+                        <span class="tech-tag">Jenkins</span>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3>Networking & Load Balancing</h3>
+                    <p>Expert in TCP/IP, DNS, service mesh, and multi-region load balancing architectures.</p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Route53</span>
+                        <span class="tech-tag">HAProxy</span>
+                        <span class="tech-tag">Envoy</span>
+                        <span class="tech-tag">VPC</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <span class="footer-logo">Sudhakar Chundu</span>
+            <div class="footer-links">
+                <a href="../">Home</a>
+                <a href="../resume/">Resume</a>
+                <a href="../conferences/">Conferences</a>
+                <a href="../contact/">Contact</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/schundu007" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/schundu" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem;">
+            <p>&copy; 2025 Sudhakar Chundu. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
