@@ -983,27 +983,40 @@
 
         // ============ API FETCH FUNCTIONS ============
 
+        // Fetch with timeout helper
+        async function fetchWithTimeout(url, timeout = 8000) {
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), timeout);
+            try {
+                const response = await fetch(url, { signal: controller.signal });
+                clearTimeout(id);
+                return response;
+            } catch (e) {
+                clearTimeout(id);
+                return null;
+            }
+        }
+
         // Fetch jobs from Greenhouse
         async function fetchGreenhouseJobs(company) {
             try {
-                const response = await fetch(`https://boards-api.greenhouse.io/v1/boards/${company.board}/jobs?content=true`);
-                if (!response.ok) return [];
+                const response = await fetchWithTimeout(`https://boards-api.greenhouse.io/v1/boards/${company.board}/jobs?content=true`);
+                if (!response || !response.ok) return [];
                 const data = await response.json();
 
                 return (data.jobs || []).map(job => ({
                     id: job.id,
-                    title: job.title,
+                    title: job.title || '',
                     company: company.name,
                     companyLogo: company.logo,
-                    location: job.location?.name || 'Not specified',
+                    location: job.location?.name || 'Remote',
                     department: job.departments?.[0]?.name || '',
                     description: stripHtml(job.content || ''),
-                    url: job.absolute_url,
-                    postedDate: new Date(job.updated_at),
+                    url: job.absolute_url || '',
+                    postedDate: new Date(job.updated_at || Date.now()),
                     source: 'greenhouse'
                 }));
             } catch (error) {
-                console.error(`Error fetching from ${company.name}:`, error);
                 return [];
             }
         }
@@ -1011,24 +1024,24 @@
         // Fetch jobs from Lever
         async function fetchLeverJobs(company) {
             try {
-                const response = await fetch(`https://api.lever.co/v0/postings/${company.board}?mode=json`);
-                if (!response.ok) return [];
+                const response = await fetchWithTimeout(`https://api.lever.co/v0/postings/${company.board}?mode=json`);
+                if (!response || !response.ok) return [];
                 const jobs = await response.json();
+                if (!Array.isArray(jobs)) return [];
 
                 return jobs.map(job => ({
                     id: job.id,
-                    title: job.text,
+                    title: job.text || '',
                     company: company.name,
                     companyLogo: company.logo,
-                    location: job.categories?.location || 'Not specified',
+                    location: job.categories?.location || 'Remote',
                     department: job.categories?.team || job.categories?.department || '',
                     description: stripHtml(job.descriptionPlain || job.description || ''),
-                    url: job.hostedUrl,
-                    postedDate: new Date(job.createdAt),
+                    url: job.hostedUrl || '',
+                    postedDate: new Date(job.createdAt || Date.now()),
                     source: 'lever'
                 }));
             } catch (error) {
-                console.error(`Error fetching from ${company.name}:`, error);
                 return [];
             }
         }
@@ -1310,7 +1323,7 @@
             document.getElementById('last-updated').textContent = new Date().toLocaleTimeString();
         }
 
-        // Fetch all jobs
+        // Fetch all jobs with batching to avoid overwhelming APIs
         async function fetchAllJobs() {
             const tbody = document.getElementById('jobs-tbody');
             tbody.innerHTML = `
@@ -1324,20 +1337,39 @@
 
             document.getElementById('refresh-btn').classList.add('loading');
 
-            const fetchPromises = COMPANIES.map(company => {
-                if (company.type === 'greenhouse') {
-                    return fetchGreenhouseJobs(company);
-                } else {
-                    return fetchLeverJobs(company);
+            try {
+                // Batch requests to avoid rate limiting (20 at a time)
+                const batchSize = 20;
+                let allResults = [];
+
+                for (let i = 0; i < COMPANIES.length; i += batchSize) {
+                    const batch = COMPANIES.slice(i, i + batchSize);
+                    const batchPromises = batch.map(company => {
+                        if (company.type === 'greenhouse') {
+                            return fetchGreenhouseJobs(company);
+                        } else {
+                            return fetchLeverJobs(company);
+                        }
+                    });
+
+                    const batchResults = await Promise.allSettled(batchPromises);
+                    allResults = allResults.concat(batchResults);
+
+                    // Small delay between batches
+                    if (i + batchSize < COMPANIES.length) {
+                        await new Promise(r => setTimeout(r, 100));
+                    }
                 }
-            });
 
-            const results = await Promise.allSettled(fetchPromises);
+                allJobs = allResults
+                    .filter(r => r.status === 'fulfilled')
+                    .flatMap(r => r.value || [])
+                    .filter(job => job && isRelevantJob(job));
 
-            allJobs = results
-                .filter(r => r.status === 'fulfilled')
-                .flatMap(r => r.value)
-                .filter(isRelevantJob);
+            } catch (e) {
+                console.error('Error fetching jobs:', e);
+                allJobs = [];
+            }
 
             document.getElementById('refresh-btn').classList.remove('loading');
 
