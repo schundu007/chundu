@@ -480,6 +480,29 @@
                 gap: 1rem;
             }
         }
+
+        /* Company Link Buttons */
+        .company-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--dark);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .company-link-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+        }
     </style>
 </head>
 <body>
@@ -517,12 +540,76 @@
         <p>Live US job openings from top tech companies - Cloud Architect, Platform Engineering, DevOps & SRE roles. Priority: Bay Area, Texas, Florida, North Carolina.</p>
     </header>
 
+    <!-- Featured Companies (No Public API) -->
+    <section style="padding: 30px 1.5rem; background: var(--light);">
+        <div style="max-width: 1400px; margin: 0 auto;">
+            <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--dark);">
+                <i class="fas fa-star" style="color: var(--primary); margin-right: 0.5rem;"></i>
+                Featured Companies <span style="font-weight: 400; color: var(--text-muted); font-size: 0.85rem;">(Direct Career Links)</span>
+            </h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                <a href="https://careers.microsoft.com/us/en/search-results?keywords=cloud%20infrastructure%20platform" target="_blank" class="company-link-btn">
+                    <img src="https://logo.clearbit.com/microsoft.com" alt="Microsoft" style="width: 20px; height: 20px; border-radius: 4px;">
+                    Microsoft
+                </a>
+                <a href="https://www.amazon.jobs/en/search?base_query=cloud+infrastructure+platform&loc_query=United+States" target="_blank" class="company-link-btn">
+                    <img src="https://logo.clearbit.com/amazon.com" alt="AWS" style="width: 20px; height: 20px; border-radius: 4px;">
+                    AWS / Amazon
+                </a>
+                <a href="https://www.google.com/about/careers/applications/jobs/results?location=United%20States&q=cloud%20infrastructure%20platform%20SRE" target="_blank" class="company-link-btn">
+                    <img src="https://logo.clearbit.com/google.com" alt="Google" style="width: 20px; height: 20px; border-radius: 4px;">
+                    Google
+                </a>
+                <a href="https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite?locationCountry=bc33aa3152ec42d4995f4791a106ed09&q=cloud%20infrastructure%20platform" target="_blank" class="company-link-btn">
+                    <img src="https://logo.clearbit.com/nvidia.com" alt="NVIDIA" style="width: 20px; height: 20px; border-radius: 4px;">
+                    NVIDIA
+                </a>
+                <a href="https://careers.salesforce.com/en/jobs/?search=cloud+infrastructure+platform&country=United+States" target="_blank" class="company-link-btn">
+                    <img src="https://logo.clearbit.com/salesforce.com" alt="Salesforce" style="width: 20px; height: 20px; border-radius: 4px;">
+                    Salesforce
+                </a>
+                <a href="https://www.metacareers.com/jobs?q=infrastructure%20platform%20cloud&locations[0]=United%20States" target="_blank" class="company-link-btn">
+                    <img src="https://logo.clearbit.com/meta.com" alt="Meta" style="width: 20px; height: 20px; border-radius: 4px;">
+                    Meta
+                </a>
+                <a href="https://jobs.apple.com/en-us/search?search=cloud%20infrastructure%20platform&sort=relevance" target="_blank" class="company-link-btn">
+                    <img src="https://logo.clearbit.com/apple.com" alt="Apple" style="width: 20px; height: 20px; border-radius: 4px;">
+                    Apple
+                </a>
+                <a href="https://jobs.intuit.com/search-jobs?k=cloud%20infrastructure%20platform" target="_blank" class="company-link-btn">
+                    <img src="https://logo.clearbit.com/intuit.com" alt="Intuit" style="width: 20px; height: 20px; border-radius: 4px;">
+                    Intuit
+                </a>
+                <a href="https://kla.wd1.myworkdayjobs.com/Search?q=infrastructure%20cloud%20platform" target="_blank" class="company-link-btn">
+                    <img src="https://logo.clearbit.com/kla.com" alt="KLA" style="width: 20px; height: 20px; border-radius: 4px;">
+                    KLA
+                </a>
+                <a href="https://www.oracle.com/careers/search/?keyword=cloud%20infrastructure%20platform&location=United%20States" target="_blank" class="company-link-btn">
+                    <img src="https://logo.clearbit.com/oracle.com" alt="Oracle" style="width: 20px; height: 20px; border-radius: 4px;">
+                    Oracle
+                </a>
+                <a href="https://careers.ibm.com/job/search?q=cloud%20infrastructure%20platform&lo=United%20States" target="_blank" class="company-link-btn">
+                    <img src="https://logo.clearbit.com/ibm.com" alt="IBM" style="width: 20px; height: 20px; border-radius: 4px;">
+                    IBM
+                </a>
+                <a href="https://jobs.cisco.com/jobs/SearchJobs/cloud%20infrastructure%20platform?listFilterMode=1&21178--3=274" target="_blank" class="company-link-btn">
+                    <img src="https://logo.clearbit.com/cisco.com" alt="Cisco" style="width: 20px; height: 20px; border-radius: 4px;">
+                    Cisco
+                </a>
+                <a href="https://www.linkedin.com/jobs/search/?keywords=cloud%20architect%20platform%20infrastructure&location=United%20States" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
+                    <i class="fab fa-linkedin"></i>
+                    Search LinkedIn Jobs
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Jobs Section -->
     <section class="jobs-section">
         <div class="jobs-container">
             <!-- Header with Stats -->
             <div class="jobs-header">
-                <h2>Available <span>Positions</span></h2>
+                <h2>Live Job <span>Listings</span></h2>
                 <div class="jobs-stats">
                     <div class="jobs-stat">
                         <i class="fas fa-briefcase"></i>
@@ -644,11 +731,31 @@
                 tmp.innerHTML = html;
                 // Get text content (this strips all HTML tags)
                 let text = tmp.textContent || tmp.innerText || '';
+
+                // Check if result still contains HTML (double-encoded)
+                // If so, decode again
+                if (text.includes('<') && text.includes('>')) {
+                    tmp.innerHTML = text;
+                    text = tmp.textContent || tmp.innerText || '';
+                }
+
                 // Clean up extra whitespace
                 text = text.replace(/\s+/g, ' ').trim();
+
+                // Remove common boilerplate phrases to get to the core JD
+                const boilerplatePhrases = [
+                    /^who we are\s*/i,
+                    /^about\s+\w+\s*/i,
+                    /^about the (company|role|team)\s*/i,
+                    /^the (company|role|team)\s*/i,
+                ];
+                for (const phrase of boilerplatePhrases) {
+                    text = text.replace(phrase, '');
+                }
+
                 // Truncate if too long
-                if (text.length > 500) {
-                    text = text.substring(0, 500) + '...';
+                if (text.length > 400) {
+                    text = text.substring(0, 400) + '...';
                 }
                 return text;
             } catch (e) {
