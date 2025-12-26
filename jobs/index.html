@@ -344,6 +344,37 @@
             transform: translateY(-1px);
         }
 
+        .apply-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .cover-letter-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--light);
+            color: var(--primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cover-letter-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .cover-letter-btn i {
+            font-size: 0.85rem;
+        }
+
         /* Loading State */
         .loading-row td {
             padding: 2rem;
@@ -1079,6 +1110,95 @@
             return labels[priority] || 'Unknown';
         }
 
+        // ============ USER PROFILE FOR COVER LETTER ============
+        const USER_PROFILE = {
+            name: 'Sudhakar Chundu',
+            title: 'Distinguished Cloud AI Architect',
+            email: 'chundubabu@gmail.com',
+            phone: '(408) 555-0123',
+            linkedin: 'linkedin.com/in/schundu',
+            location: 'San Jose, CA',
+            yearsExperience: '18+',
+            summary: 'Distinguished Cloud AI Architect with 18+ years of experience leading platform engineering, cloud infrastructure, and AI/ML systems at scale. Expert in Kubernetes, Terraform, AWS, Azure, and GPU infrastructure for machine learning workloads.',
+            skills: [
+                'Cloud Architecture (AWS, Azure)',
+                'Kubernetes & Container Orchestration',
+                'Platform Engineering & SRE',
+                'AI/ML Infrastructure & GPU Clusters',
+                'Terraform & Infrastructure as Code',
+                'DevOps & CI/CD Pipelines',
+                'Team Leadership (50+ engineers)',
+                'Cost Optimization ($10M+ savings)'
+            ],
+            achievements: [
+                'Led migration of 500+ microservices to Kubernetes with 99.99% uptime',
+                'Built GPU infrastructure supporting 1000+ ML training jobs daily',
+                'Reduced cloud costs by $10M annually through optimization',
+                'Managed platform teams of 50+ engineers across multiple regions'
+            ]
+        };
+
+        // ============ COVER LETTER GENERATOR ============
+        function generateCoverLetter(job) {
+            const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            // Match skills to job
+            const relevantSkills = USER_PROFILE.skills.slice(0, 4).join(', ');
+
+            const coverLetter = `${USER_PROFILE.name}
+${USER_PROFILE.location}
+${USER_PROFILE.email} | ${USER_PROFILE.phone}
+${USER_PROFILE.linkedin}
+
+${today}
+
+Hiring Manager
+${job.company}
+${job.location}
+
+Dear Hiring Manager,
+
+I am writing to express my strong interest in the ${job.title} position at ${job.company}. With ${USER_PROFILE.yearsExperience} years of experience in cloud infrastructure, platform engineering, and AI/ML systems, I am excited about the opportunity to contribute to your team.
+
+${USER_PROFILE.summary}
+
+Key qualifications that align with this role:
+
+• ${USER_PROFILE.achievements[0]}
+• ${USER_PROFILE.achievements[1]}
+• ${USER_PROFILE.achievements[2]}
+• ${USER_PROFILE.achievements[3]}
+
+My technical expertise includes ${relevantSkills}, which directly aligns with the requirements for this position. I am particularly drawn to ${job.company}'s mission and the opportunity to work on ${job.department ? job.department + ' initiatives' : 'cutting-edge infrastructure challenges'}.
+
+I am confident that my experience leading large-scale platform engineering initiatives, combined with my passion for building reliable and scalable systems, would make me a valuable addition to your team.
+
+I would welcome the opportunity to discuss how my background and skills can contribute to ${job.company}'s continued success. Thank you for considering my application.
+
+Sincerely,
+${USER_PROFILE.name}
+${USER_PROFILE.title}`;
+
+            return coverLetter;
+        }
+
+        // Download cover letter as text file
+        function downloadCoverLetter(job) {
+            const coverLetter = generateCoverLetter(job);
+            const blob = new Blob([coverLetter], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Cover_Letter_${job.company.replace(/[^a-zA-Z0-9]/g, '_')}_${job.title.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 30)}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Store jobs globally for cover letter access
+        let jobsMap = {};
+
         // ============ COMPANY LIST ============
         const COMPANIES = [
             // ===== AI/ML Companies =====
@@ -1587,13 +1707,23 @@
                             <span class="description-text">${escapeHtml(job.description)}</span>
                         </td>
                         <td class="col-apply">
-                            <a href="${job.url}" target="_blank" class="apply-btn">
-                                Apply <i class="fas fa-external-link-alt"></i>
-                            </a>
+                            <div class="apply-actions">
+                                <a href="${job.url}" target="_blank" class="apply-btn">
+                                    Apply <i class="fas fa-external-link-alt"></i>
+                                </a>
+                                <button class="cover-letter-btn" onclick="downloadCoverLetter(jobsMap['${job.id}'])" title="Download Cover Letter">
+                                    <i class="fas fa-file-alt"></i>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 `;
             }).join('');
+
+            // Store jobs in map for cover letter access
+            pageJobs.forEach(job => {
+                jobsMap[job.id] = job;
+            });
 
             renderPagination();
         }
