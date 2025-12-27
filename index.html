@@ -34,8 +34,10 @@
         }
 
         .main-content {
-            width: 100%;
-            background: var(--white);
+            max-width: 960px;
+            margin: 0 auto;
+            background: transparent;
+            padding: 0 1rem;
         }
 
         /* Floating Blob Decorations */
@@ -81,9 +83,12 @@
 
         /* Hero Section */
         .hero {
-            padding: 60px 1.5rem 40px;
+            padding: 60px 2rem 40px;
             position: relative;
             background: var(--white);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
 
         .hero-container {
@@ -380,8 +385,10 @@
 
         /* Toolset Section */
         .toolset-section {
-            padding: 50px 1.5rem;
+            padding: 50px 2rem;
             background: #1e293b;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
         }
 
         .toolset-container {
@@ -485,8 +492,11 @@
 
         /* Expertise Section - AG Grid Style */
         .expertise-section {
-            padding: 50px 1.5rem;
-            background: #f8fafc;
+            padding: 50px 2rem;
+            background: var(--white);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
 
         .expertise-table-container {
@@ -576,7 +586,9 @@
         /* Experience Section */
         .experience-section {
             background: #1e293b;
-            padding: 50px 1.5rem;
+            padding: 50px 2rem;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
         }
 
         .experience-list {
@@ -644,8 +656,10 @@
 
         /* Stats Section */
         .stats-section {
-            padding: 50px 1.5rem;
+            padding: 50px 2rem;
             background: var(--primary);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
         }
 
         .stats-grid {
@@ -770,9 +784,12 @@
 
         /* Testimonials Section - Clean */
         .testimonials-section {
-            padding: 40px 1.5rem;
+            padding: 40px 2rem;
             overflow: hidden;
-            background: #f8fafc;
+            background: var(--white);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
 
         .testimonials-container {
@@ -1578,8 +1595,8 @@
     </main>
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-content">
+    <footer style="max-width: 960px; margin: 0 auto 1.5rem; padding: 2rem; border-radius: 16px;">
+        <div class="footer-content" style="max-width: 100%;">
             <span class="footer-logo">Sudhakar Chundu</span>
             <div class="footer-links">
                 <a href="resume/">Resume</a>
