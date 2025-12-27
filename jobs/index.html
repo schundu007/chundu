@@ -923,7 +923,7 @@
                     Walmart - Platform
                 </a>
                 <!-- Tech Giants -->
-                <a href="https://careers.salesforce.com/en/jobs/?search=cloud+architect&country=United+States" target="_blank" class="company-link-btn">
+                <a href="https://careers.salesforce.com/en/jobs/" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/salesforce.png" alt="Salesforce" class="company-link-logo">
                     Salesforce
                 </a>
@@ -2946,23 +2946,7 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             };
         }
 
-        // Mobile menu
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenuBtn.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenuBtn.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
-
-        // Initialize
+        // Initialize - load jobs
         fetchAllJobs();
     </script>
 </body>
