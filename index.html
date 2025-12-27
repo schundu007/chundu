@@ -921,24 +921,14 @@
 
         /* LinkedIn Profile Highlights Card */
         .linkedin-profile-card {
-            background: linear-gradient(135deg, #0077b5 0%, #005885 100%);
+            background: #f1f5f9;
             border-radius: 16px;
             padding: 2rem;
             margin-bottom: 1.5rem;
-            color: white;
+            color: var(--dark);
             position: relative;
             overflow: hidden;
-        }
-
-        .linkedin-profile-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -15%;
-            width: 350px;
-            height: 350px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 50%;
+            border: 1px solid var(--border);
         }
 
         .linkedin-profile-header {
@@ -961,20 +951,20 @@
         .linkedin-profile-info h3 {
             font-size: 1.8rem;
             margin-bottom: 0.35rem;
-            color: white;
+            color: var(--dark);
             font-weight: 700;
         }
 
         .linkedin-profile-info .headline {
             font-size: 0.95rem;
-            color: rgba(255,255,255,0.9);
+            color: var(--text-muted);
             margin-bottom: 0.5rem;
             line-height: 1.4;
         }
 
         .linkedin-profile-info .location {
             font-size: 0.85rem;
-            color: rgba(255,255,255,0.7);
+            color: var(--text-muted);
             display: flex;
             align-items: center;
             gap: 0.4rem;
@@ -990,23 +980,24 @@
         }
 
         .linkedin-metric {
-            background: rgba(255,255,255,0.12);
+            background: var(--white);
             padding: 1rem;
             border-radius: 12px;
             text-align: center;
+            border: 1px solid var(--border);
         }
 
         .linkedin-metric .value {
             font-size: 1.5rem;
             font-weight: 700;
-            color: white;
+            color: var(--primary);
             line-height: 1;
             margin-bottom: 0.35rem;
         }
 
         .linkedin-metric .label {
             font-size: 0.7rem;
-            color: rgba(255,255,255,0.8);
+            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.04em;
         }
@@ -1021,12 +1012,13 @@
         }
 
         .linkedin-profile-skill {
-            background: rgba(255,255,255,0.15);
-            color: white;
+            background: var(--white);
+            color: var(--dark);
             padding: 0.45rem 1rem;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 500;
+            border: 1px solid var(--border);
         }
 
         .linkedin-profile-footer {
@@ -1039,7 +1031,7 @@
 
         .linkedin-profile-tagline {
             font-size: 0.9rem;
-            color: rgba(255,255,255,0.85);
+            color: var(--text-muted);
             font-style: italic;
         }
 
@@ -1047,8 +1039,8 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: white;
-            color: #0077b5;
+            background: #0077b5;
+            color: white;
             padding: 0.7rem 1.5rem;
             border-radius: 25px;
             font-size: 0.9rem;
@@ -1059,8 +1051,8 @@
 
         .linkedin-profile-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-            color: #005885;
+            box-shadow: 0 6px 20px rgba(0,119,181,0.3);
+            color: white;
         }
 
         @media (max-width: 768px) {
