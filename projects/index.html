@@ -354,8 +354,29 @@
                         </div>
                         <p class="project-description" style="margin-top: 1rem; font-size: 0.85rem; text-align: center; color: var(--text-muted);">
                             <i class="fas fa-diagram-project" style="color: var(--primary);"></i>
-                            Multi-tenant Azure Platform - AKS, CPU Infrastructure, and Enterprise Security
+                            Multi-tenant Azure Platform - AKS, Microservices, and Enterprise Security
                         </p>
+                    </div>
+
+                    <!-- Azure Infrastructure Provisioning -->
+                    <div class="project-section">
+                        <h3 class="project-section-title">
+                            <i class="fas fa-cloud"></i>
+                            Azure Infrastructure Provisioning
+                        </h3>
+                        <p class="project-description">
+                            Designed and provisioned enterprise-grade Azure infrastructure using Infrastructure as Code (Terraform)
+                            with GitOps workflows (ArgoCD) for consistent, repeatable deployments across development, staging, and production environments.
+                        </p>
+                        <ul class="responsibility-list">
+                            <li><strong>AKS Cluster:</strong> Provisioned production-grade Azure Kubernetes Service with node auto-scaling, availability zones, Azure CNI networking, and Istio service mesh for traffic management and mTLS.</li>
+                            <li><strong>Network Architecture:</strong> Designed hub-spoke VNet topology with Azure Firewall, NSGs, private endpoints, and Azure WAF for defense-in-depth security posture.</li>
+                            <li><strong>Identity & Access:</strong> Implemented Azure AD integration with RBAC, Managed Identities for workload authentication, and Azure Key Vault for secrets management with automatic rotation.</li>
+                            <li><strong>Data Services:</strong> Provisioned Azure PostgreSQL Flexible Server, Cosmos DB (multi-region), Azure Service Bus, and Event Hubs with private link connectivity and geo-redundancy.</li>
+                            <li><strong>Observability Stack:</strong> Deployed Prometheus/Grafana on AKS with Datadog integration, Azure Monitor, and custom dashboards for GPU utilization and SLO tracking.</li>
+                            <li><strong>CI/CD Pipeline:</strong> GitHub Actions → ArgoCD GitOps workflow with Terraform state in Azure Storage, automated drift detection, and policy-as-code with Azure Policy.</li>
+                            <li><strong>External Integrations:</strong> Configured Power BI for analytics dashboards, Google API integrations, and secure API gateway with Azure API Management.</li>
+                        </ul>
                     </div>
 
                     <!-- Key Metrics -->
@@ -516,8 +537,48 @@
                         </div>
                         <p class="project-description" style="margin-top: 1rem; font-size: 0.85rem; text-align: center; color: var(--text-muted);">
                             <i class="fas fa-diagram-project" style="color: var(--primary);"></i>
-                            Multi-tenant deployment with AKS, Event Hubs, and Cosmos DB
+                            Multi-tenant OSDU R3 deployment with AKS, Event Hubs, and Cosmos DB
                         </p>
+                    </div>
+
+                    <!-- AWS Infrastructure Provisioning -->
+                    <div class="project-section">
+                        <h3 class="project-section-title">
+                            <i class="fab fa-aws"></i>
+                            AWS Infrastructure Provisioning
+                        </h3>
+                        <p class="project-description">
+                            Provisioned OSDU R3 platform on AWS for ExxonMobil and Chevron with enterprise landing zones,
+                            GPU-accelerated compute for seismic processing, and petabyte-scale data lake architecture.
+                        </p>
+                        <ul class="responsibility-list">
+                            <li><strong>Landing Zone:</strong> Deployed AWS Control Tower with multi-account strategy (workload, shared services, logging, security), SCPs, and AWS Organizations for governance at scale.</li>
+                            <li><strong>EKS Clusters:</strong> Provisioned production EKS clusters with Karpenter auto-scaling, GPU node groups (p4d/p3 instances) for seismic ML workloads, and Bottlerocket OS for security hardening.</li>
+                            <li><strong>Network Architecture:</strong> Designed Transit Gateway hub connecting VPCs across regions, AWS PrivateLink for service connectivity, and Direct Connect for on-premises integration.</li>
+                            <li><strong>Data Lake:</strong> Built petabyte-scale data lake on S3 with Lake Formation for governance, Glue for ETL, and Athena/Redshift Spectrum for analytics on seismic datasets.</li>
+                            <li><strong>Streaming Pipeline:</strong> Provisioned Amazon MSK (Kafka) and Kinesis for real-time seismic data ingestion at 10+ GB/s throughput with exactly-once delivery guarantees.</li>
+                            <li><strong>Security Controls:</strong> Implemented AWS IAM Identity Center (SSO), Secrets Manager with automatic rotation, GuardDuty, Security Hub, and CloudTrail for FedRAMP compliance.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Azure Infrastructure Provisioning -->
+                    <div class="project-section">
+                        <h3 class="project-section-title">
+                            <i class="fab fa-microsoft"></i>
+                            Azure Infrastructure Provisioning
+                        </h3>
+                        <p class="project-description">
+                            Provisioned OSDU R3 platform on Azure for BP, Shell, and TotalEnergies with enterprise-scale landing zones,
+                            multi-tier architecture, and Azure-native services for data management and analytics.
+                        </p>
+                        <ul class="responsibility-list">
+                            <li><strong>Landing Zone:</strong> Deployed Azure Enterprise-Scale landing zone with Management Groups hierarchy, Azure Policy initiatives, and subscription vending for multi-tenant isolation.</li>
+                            <li><strong>AKS Clusters:</strong> Provisioned AKS clusters across 3 tiers (Frontend, Platform, Data Services) with availability zones, Azure CNI overlay, and GPU node pools (NC/ND series) for ML training.</li>
+                            <li><strong>Network Architecture:</strong> Designed hub-spoke topology with Azure Virtual WAN, ExpressRoute for hybrid connectivity, and Azure Firewall Premium for IDPS and TLS inspection.</li>
+                            <li><strong>Data Services:</strong> Provisioned Cosmos DB (multi-region write), Azure Event Hubs (Kafka protocol), Azure Storage (ADLS Gen2) with hierarchical namespace for seismic data organization.</li>
+                            <li><strong>API Layer:</strong> Deployed Azure API Management with OAuth 2.0/OIDC, rate limiting, and developer portal for OSDU API consumption by partner applications.</li>
+                            <li><strong>CI/CD Automation:</strong> Built Azure DevOps pipelines with Terraform modules, environment promotion gates, and integration with Azure Policy for compliance-as-code.</li>
+                        </ul>
                     </div>
 
                     <!-- Key Metrics -->
