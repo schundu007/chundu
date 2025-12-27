@@ -13,33 +13,31 @@
     <link rel="stylesheet" href="../assets/css/style.css">
     <style>
         .about-intro {
-            padding: 60px 1.5rem;
             background: var(--white);
+            border-radius: 16px;
+            padding: 50px 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
         .intro-container {
-            max-width: 1100px;
-            margin: 0 auto;
             display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 4rem;
+            grid-template-columns: 240px 1fr;
+            gap: 3rem;
             align-items: start;
         }
         .profile-card {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
+            background: #f8fafc;
+            border-radius: 12px;
             padding: 1.5rem;
             text-align: center;
             border: 1px solid var(--border);
-            position: sticky;
-            top: 80px;
         }
         .profile-image {
             width: 100%;
             aspect-ratio: 1;
-            border-radius: var(--radius);
+            border-radius: 8px;
             overflow: hidden;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
         }
         .profile-image img {
             width: 100%;
@@ -48,51 +46,53 @@
             object-position: top center;
         }
         .profile-card h3 {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             margin-bottom: 0.25rem;
         }
         .profile-card .title {
             color: var(--primary);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 500;
             margin-bottom: 0.5rem;
         }
         .profile-card .location {
             color: var(--text-muted);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.35rem;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
         }
         .profile-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 0.35rem;
             justify-content: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
         .profile-tag {
-            background: var(--light);
-            color: var(--dark-soft);
-            padding: 0.3rem 0.6rem;
-            border-radius: 50px;
-            font-size: 0.7rem;
+            background: var(--white);
+            color: var(--text-muted);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.65rem;
             font-weight: 500;
         }
         .profile-cta {
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 0.5rem;
         }
         .profile-cta .btn {
             width: 100%;
             justify-content: center;
+            font-size: 0.75rem;
+            padding: 0.5rem 1rem;
         }
         .intro-content h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
             line-height: 1.3;
         }
         .intro-content h2 span {
@@ -100,23 +100,21 @@
         }
         .intro-content p {
             color: var(--text-muted);
-            font-size: 1.05rem;
+            font-size: 0.9rem;
             line-height: 1.8;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
         .intro-content p.lead {
-            font-size: 1.15rem;
+            font-size: 1rem;
             color: var(--text);
             font-weight: 500;
         }
 
         .highlights-section {
-            padding: 60px 1.5rem;
-            background: var(--light);
-        }
-        .highlights-container {
-            max-width: 1100px;
-            margin: 0 auto;
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 40px 2rem;
+            margin-bottom: 1.5rem;
         }
         .highlights-grid {
             display: grid;
@@ -124,94 +122,81 @@
             gap: 1.5rem;
         }
         .highlight-card {
-            background: var(--white);
-            padding: 1.5rem;
-            border-radius: var(--radius-lg);
             text-align: center;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border);
-            transition: all 0.3s;
-        }
-        .highlight-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary);
         }
         .highlight-card .value {
-            font-size: 2rem;
+            font-size: 1.75rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--white);
             margin-bottom: 0.25rem;
         }
         .highlight-card .label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.7);
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
         .philosophy-section {
-            padding: 60px 1.5rem;
             background: var(--white);
-        }
-        .philosophy-container {
-            max-width: 1100px;
-            margin: 0 auto;
+            border-radius: 16px;
+            padding: 50px 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
         .philosophy-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            margin-top: 1.5rem;
         }
         .philosophy-card {
-            padding: 1.5rem;
-            background: var(--light);
-            border-radius: var(--radius-lg);
-            border-left: 4px solid var(--primary);
+            padding: 1.25rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            border-left: 3px solid var(--primary);
         }
         .philosophy-card h4 {
-            font-size: 1rem;
-            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
         .philosophy-card h4 i {
             color: var(--primary);
+            font-size: 0.85rem;
         }
         .philosophy-card p {
             color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.7;
+            font-size: 0.8rem;
+            line-height: 1.6;
         }
 
         .cta-section {
-            padding: 60px 1.5rem;
-            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-soft) 100%);
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 50px 2rem;
             text-align: center;
-        }
-        .cta-content {
-            max-width: 600px;
-            margin: 0 auto;
+            margin-bottom: 1.5rem;
         }
         .cta-content h2 {
             color: var(--white);
-            font-size: 1.75rem;
-            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
         }
         .cta-content h2 span {
             color: var(--primary);
         }
         .cta-content p {
             color: rgba(255,255,255,0.7);
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
+            margin-bottom: 1.25rem;
+            font-size: 0.9rem;
         }
         .cta-buttons {
             display: flex;
             justify-content: center;
-            gap: 1rem;
+            gap: 0.75rem;
             flex-wrap: wrap;
         }
         .btn-white {
@@ -219,34 +204,24 @@
             color: var(--dark);
         }
         .btn-white:hover {
-            background: var(--light);
-            color: var(--dark);
+            opacity: 0.9;
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 768px) {
             .intro-container {
                 grid-template-columns: 1fr;
                 gap: 2rem;
             }
             .profile-card {
-                max-width: 300px;
+                max-width: 260px;
                 margin: 0 auto;
-                position: static;
             }
             .highlights-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
             }
             .philosophy-grid {
                 grid-template-columns: 1fr;
-            }
-        }
-        @media (max-width: 768px) {
-            .about-intro, .highlights-section, .philosophy-section {
-                padding: 40px 1rem;
-            }
-            .highlights-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 1rem;
             }
             .highlight-card .value {
                 font-size: 1.5rem;
