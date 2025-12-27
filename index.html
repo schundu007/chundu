@@ -28,6 +28,11 @@
     <link rel="stylesheet" href="assets/css/style.css">
 
     <style>
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
         /* Modern Enterprise Design - Light Theme */
         body {
             background: #f8fafc;
@@ -176,10 +181,14 @@
             padding: 0.5rem 0.3rem;
             border-radius: 6px;
             transition: all 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
         }
 
         .hero-stat:hover {
-            background: rgba(99,102,241,0.04);
+            background: rgba(37, 99, 235, 0.06);
+            transform: translateY(-2px);
         }
 
         .hero-stat-icon {
@@ -350,6 +359,14 @@
             padding: 0.25rem 0.5rem;
             font-size: 0.65rem;
             font-weight: 500;
+            text-decoration: none;
+            transition: color 0.2s, background 0.2s;
+            border-radius: 4px;
+        }
+
+        a.profile-tag:hover {
+            color: var(--primary);
+            background: rgba(37, 99, 235, 0.08);
         }
 
         /* Section Styles */
@@ -1093,6 +1110,14 @@
             font-size: 0.8rem;
             font-weight: 500;
             border: 1px solid var(--border);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        a.linkedin-profile-skill:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-1px);
         }
 
         .linkedin-profile-footer {
@@ -1181,7 +1206,7 @@
 
     <main class="main-content">
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="hero">
         <!-- Floating decorative shapes -->
         <div class="hero-shapes">
             <div class="hero-shape hero-shape-1"></div>
@@ -1210,62 +1235,62 @@
                 </svg>
 
                 <div class="hero-stats" id="statsContainer">
-                    <div class="hero-stat">
+                    <a href="#experience" class="hero-stat">
                         <div class="hero-stat-logo">
                             <img src="assets/icons/kubernetes.svg" alt="Kubernetes">
                         </div>
                         <div class="hero-stat-value"><span class="counter" data-target="18">0</span>+</div>
                         <div class="hero-stat-label">Years Hands-On</div>
-                    </div>
-                    <div class="hero-stat">
+                    </a>
+                    <a href="#expertise" class="hero-stat">
                         <div class="hero-stat-logo">
                             <img src="assets/icons/prometheus.svg" alt="Prometheus">
                         </div>
                         <div class="hero-stat-value">99.95%</div>
                         <div class="hero-stat-label">SLO Maintained</div>
-                    </div>
-                    <div class="hero-stat">
+                    </a>
+                    <a href="#experience" class="hero-stat">
                         <div class="hero-stat-logo">
                             <img src="assets/icons/nvidia.svg" alt="NVIDIA">
                         </div>
                         <div class="hero-stat-value"><span class="counter" data-target="65">0</span>+</div>
                         <div class="hero-stat-label">GPUs Managed</div>
-                    </div>
-                    <div class="hero-stat">
+                    </a>
+                    <a href="#expertise" class="hero-stat">
                         <div class="hero-stat-logo">
                             <img src="assets/icons/snyk.svg" alt="Security">
                         </div>
                         <div class="hero-stat-value"><span class="counter" data-target="4">0</span></div>
                         <div class="hero-stat-label">Compliance Certs</div>
-                    </div>
-                    <div class="hero-stat">
+                    </a>
+                    <a href="#expertise" class="hero-stat">
                         <div class="hero-stat-logo">
                             <img src="assets/icons/grafana.svg" alt="Grafana">
                         </div>
                         <div class="hero-stat-value"><span class="counter" data-target="12">0</span>m</div>
                         <div class="hero-stat-label">MTTR</div>
-                    </div>
-                    <div class="hero-stat">
+                    </a>
+                    <a href="#tools" class="hero-stat">
                         <div class="hero-stat-logo">
                             <img src="assets/icons/argocd.svg" alt="ArgoCD">
                         </div>
                         <div class="hero-stat-value"><span class="counter" data-target="68">0</span>%</div>
                         <div class="hero-stat-label">Fewer Deploy Failures</div>
-                    </div>
-                    <div class="hero-stat">
+                    </a>
+                    <a href="#tools" class="hero-stat">
                         <div class="hero-stat-logo">
                             <img src="assets/icons/terraform.svg" alt="Terraform">
                         </div>
                         <div class="hero-stat-value"><span class="counter" data-target="50">0</span>+</div>
                         <div class="hero-stat-label">Terraform Modules</div>
-                    </div>
-                    <div class="hero-stat">
+                    </a>
+                    <a href="#experience" class="hero-stat">
                         <div class="hero-stat-logo">
                             <img src="assets/icons/aws.svg" alt="AWS">
                         </div>
                         <div class="hero-stat-value">$<span class="counter" data-target="8">0</span>M</div>
                         <div class="hero-stat-label">Infra Cost Saved</div>
-                    </div>
+                    </a>
                 </div>
                 <div class="cta-buttons">
                     <a href="resume/" class="btn btn-primary">
@@ -1288,10 +1313,10 @@
                         <p>San Jose, California</p>
                     </div>
                     <div class="profile-tags">
-                        <span class="profile-tag">AI/ML</span>
-                        <span class="profile-tag">Kubernetes</span>
-                        <span class="profile-tag">GPU/Slurm</span>
-                        <span class="profile-tag">Multi-Cloud</span>
+                        <a href="#expertise" class="profile-tag">AI/ML</a>
+                        <a href="#tools" class="profile-tag">Kubernetes</a>
+                        <a href="#experience" class="profile-tag">GPU/Slurm</a>
+                        <a href="#tools" class="profile-tag">Multi-Cloud</a>
                     </div>
                 </div>
             </div>
@@ -1299,7 +1324,7 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section class="testimonials-section">
+    <section class="testimonials-section" id="testimonials">
         <div class="testimonials-container">
             <div class="testimonials-header" style="text-align: center;">
                 <span class="section-label">Recommendations</span>
@@ -1559,7 +1584,7 @@
     </section>
 
     <!-- LinkedIn Profile Highlights -->
-    <section class="linkedin-profile-card">
+    <section class="linkedin-profile-card" id="profile">
         <div class="linkedin-profile-header">
             <img src="assets/images/profile.jpg" alt="Sudhakar Chundu" class="linkedin-profile-photo">
             <div class="linkedin-profile-info">
@@ -1587,14 +1612,14 @@
             </div>
         </div>
         <div class="linkedin-profile-skills">
-            <span class="linkedin-profile-skill">Kubernetes</span>
-            <span class="linkedin-profile-skill">GPU/Slurm</span>
-            <span class="linkedin-profile-skill">Terraform</span>
-            <span class="linkedin-profile-skill">DevSecOps</span>
-            <span class="linkedin-profile-skill">SLOs</span>
-            <span class="linkedin-profile-skill">Incident Response</span>
-            <span class="linkedin-profile-skill">AWS/Azure/GCP</span>
-            <span class="linkedin-profile-skill">Python/Go</span>
+            <a href="#tools" class="linkedin-profile-skill">Kubernetes</a>
+            <a href="#experience" class="linkedin-profile-skill">GPU/Slurm</a>
+            <a href="#tools" class="linkedin-profile-skill">Terraform</a>
+            <a href="#expertise" class="linkedin-profile-skill">DevSecOps</a>
+            <a href="#expertise" class="linkedin-profile-skill">SLOs</a>
+            <a href="#expertise" class="linkedin-profile-skill">Incident Response</a>
+            <a href="#tools" class="linkedin-profile-skill">AWS/Azure/GCP</a>
+            <a href="#tools" class="linkedin-profile-skill">Python/Go</a>
         </div>
         <div class="linkedin-profile-footer">
             <span class="linkedin-profile-tagline">"Production ownership across reliability, GPU infrastructure, and security"</span>
@@ -1757,7 +1782,7 @@
     </section>
 
     <!-- Toolset Section -->
-    <section class="toolset-section">
+    <section class="toolset-section" id="tools">
         <div class="toolset-container">
             <div class="section-header">
                 <span class="section-label">Technical Focus Areas</span>
