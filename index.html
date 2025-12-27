@@ -537,12 +537,9 @@
         }
 
         .about-container {
-            max-width: 1100px;
+            max-width: 100%;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 4rem;
-            align-items: start;
+            display: block;
         }
 
         .section-label {
@@ -596,9 +593,10 @@
 
         .about-content p {
             color: var(--text-muted);
-            font-size: 1rem;
+            font-size: 1.05rem;
             line-height: 1.8;
             margin-bottom: 1.25rem;
+            max-width: 100%;
         }
 
         .about-content p:last-of-type {
@@ -1908,25 +1906,15 @@
                     across Infrastructure, Security, Networking, and DevOps.
                 </p>
                 <p>
-                    Currently Distinguished AI Architect at Trackonomy, managing $15M+ budgets while delivering
-                    $8M+ in documented cost savings. Built infrastructure team from 0 → 6 engineers serving Pharma, Airlines,
-                    Government, Manufacturing, Healthcare, and IoT sectors globally across 8 countries.
+                    Currently Distinguished AI Architect at Trackonomy, delivering documented cost savings and building
+                    infrastructure team from 0 → 6 engineers serving Pharma, Airlines, Government, Manufacturing,
+                    Healthcare, and IoT sectors globally across 8 countries.
                 </p>
                 <p>
-                    Expert in Slurm-based GPU compute platforms (65 GPUs, 99.97% uptime), serverless GPU infrastructure,
+                    Expert in Slurm-based GPU compute platforms (65 GPUs), serverless GPU infrastructure,
                     Databricks/Spark/Kafka real-time pipelines, and comprehensive DevSecOps with SOC2, HIPAA, FedRAMP,
                     and HITRUST compliance.
                 </p>
-            </div>
-            <div class="about-highlights">
-                <div class="highlight-item">
-                    <div class="value">99.97%</div>
-                    <div class="label">GPU Cluster Uptime</div>
-                </div>
-                <div class="highlight-item">
-                    <div class="value">$15M+</div>
-                    <div class="label">Budget Managed</div>
-                </div>
             </div>
         </div>
     </section>
