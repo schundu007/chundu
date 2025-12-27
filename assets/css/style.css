@@ -1,8 +1,8 @@
-/* Modern AI Enterprise Design System */
+/* Professional Portfolio Design System */
 :root {
-    --primary: #6366f1;
-    --primary-dark: #4f46e5;
-    --primary-light: rgba(99, 102, 241, 0.1);
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: rgba(37, 99, 235, 0.1);
     --dark: #1e293b;
     --dark-soft: #334155;
     --dark-muted: #475569;
@@ -63,7 +63,7 @@ h4 { font-size: 1.1rem; }
 
 /* Gradient text effect for emphasis */
 .gradient-text {
-    background: linear-gradient(135deg, var(--primary) 0%, #818cf8 50%, #a78bfa 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, #3b82f6 50%, #60a5fa 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
