@@ -781,10 +781,10 @@
         </div>
     </nav>
 
-    <!-- Fresh Jobs Ticker -->
+    <!-- Fresh Jobs Ticker - Last 6 Hours -->
     <div class="fresh-jobs-ticker">
         <div class="ticker-label">
-            <i class="fas fa-bolt"></i> FRESH JOBS
+            <i class="fas fa-bolt"></i> LAST 6 HRS
         </div>
         <div class="ticker-wrapper">
             <div class="ticker-content" id="freshJobsTicker">
@@ -2866,7 +2866,7 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             applyFilters();
         }
 
-        // Update the scrolling ticker with fresh jobs
+        // Update the scrolling ticker with jobs from last 6 hours
         function updateFreshJobsTicker() {
             const ticker = document.getElementById('freshJobsTicker');
             if (!ticker || allJobs.length === 0) {
@@ -2874,22 +2874,28 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 return;
             }
 
-            // Sort by date (newest first) and get top 20 freshest jobs
+            // Filter to only jobs posted in the last 6 hours
+            const sixHoursAgo = new Date(Date.now() - 6 * 60 * 60 * 1000);
             const freshJobs = [...allJobs]
-                .sort((a, b) => b.postedDate - a.postedDate)
-                .slice(0, 20);
+                .filter(job => job.postedDate >= sixHoursAgo)
+                .sort((a, b) => b.postedDate - a.postedDate);
+
+            // If no jobs in last 6 hours, show message
+            if (freshJobs.length === 0) {
+                ticker.innerHTML = '<span class="ticker-item">No jobs posted in the last 6 hours. Showing jobs from selected date range below.</span>';
+                return;
+            }
 
             // Format time ago
             function timeAgo(date) {
                 const now = new Date();
                 const diffMs = now - date;
+                const diffMins = Math.floor(diffMs / (1000 * 60));
                 const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-                const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-                if (diffHours < 1) return 'Just now';
-                if (diffHours < 24) return `${diffHours}h ago`;
-                if (diffDays === 1) return '1 day ago';
-                return `${diffDays} days ago`;
+                if (diffMins < 5) return 'Just now';
+                if (diffMins < 60) return `${diffMins}m ago`;
+                return `${diffHours}h ago`;
             }
 
             // Create ticker items (duplicate for seamless loop)
