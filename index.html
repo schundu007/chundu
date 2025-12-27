@@ -86,12 +86,12 @@
         }
 
         .hero-container {
-            max-width: 1100px;
+            max-width: 900px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1fr 320px;
-            gap: 3rem;
-            align-items: center;
+            grid-template-columns: 1fr 280px;
+            gap: 2.5rem;
+            align-items: start;
             position: relative;
         }
 
@@ -280,8 +280,8 @@
         }
 
         .profile-image {
-            width: 280px;
-            height: 320px;
+            width: 260px;
+            height: 300px;
             border-radius: 18px;
             overflow: hidden;
             position: relative;
@@ -337,18 +337,19 @@
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
         .section-header {
-            text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .section-header h2 {
-            font-size: 1.35rem;
-            margin-bottom: 0.35rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            color: var(--dark);
         }
 
         .section-header h2 span {
@@ -357,9 +358,7 @@
 
         .section-header p {
             color: var(--text-muted);
-            max-width: 500px;
-            margin: 0 auto;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
 
         .section-dark .section-header p {
@@ -372,72 +371,18 @@
 
         /* About Section - Clean */
         .about-section {
-            padding: 35px 1.5rem;
-        }
-
-        .about-section-header {
-            max-width: 1100px;
-            margin: 0 auto 1.5rem;
-        }
-
-        .about-section-header h2 {
-            font-size: 1.5rem;
-            line-height: 1.3;
-            margin: 0;
-        }
-
-        .about-section-header h2 span {
-            color: var(--primary);
+            padding: 40px 1.5rem;
         }
 
         .about-container {
-            max-width: 1100px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .section-label {
-            display: inline-block;
-            font-size: 0.7rem;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 600;
-        }
-
-        .about-title-row {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .title-divider {
-            color: var(--border);
-            font-weight: 300;
-        }
-
-        .about-header h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0.35rem;
-            line-height: 1.3;
-        }
-
-        .about-header h2 span {
-            color: var(--primary);
-        }
-
-        .about-subtitle {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            font-weight: 500;
-            margin: 0;
         }
 
         .about-content h2 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
             line-height: 1.3;
         }
 
@@ -445,30 +390,21 @@
             color: var(--primary);
         }
 
-        .about-content p {
+        .about-subtitle {
+            font-size: 0.85rem;
             color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-content p {
+            color: var(--text);
             font-size: 0.9rem;
-            line-height: 1.7;
+            line-height: 1.8;
             margin-bottom: 1rem;
-            text-align: justify;
         }
 
         .about-content p:last-of-type {
             margin-bottom: 0;
-        }
-
-        .about-highlights {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.25rem;
-            margin-top: 2rem;
-        }
-
-        .highlight-item {
-            padding: 1.25rem;
-            background: var(--light);
-            border-left: 4px solid var(--primary);
-            border-radius: var(--radius);
         }
 
         .highlight-item .value {
@@ -491,7 +427,7 @@
         }
 
         .toolset-container {
-            max-width: 1100px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
@@ -588,8 +524,8 @@
         /* Skills Grid - Clean */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem 2rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
         }
 
         .skill-card {
@@ -597,48 +533,48 @@
         }
 
         .skill-icon {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             background: var(--primary);
             border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 0.9rem;
-            margin-bottom: 0.75rem;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
         }
 
         .skill-card h3 {
-            font-size: 0.9rem;
-            margin-bottom: 0.35rem;
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
             font-weight: 600;
         }
 
         .skill-card p {
             color: var(--text-muted);
-            font-size: 0.75rem;
-            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
             line-height: 1.5;
         }
 
         .tech-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.25rem;
+            gap: 0.35rem;
         }
 
         .tech-tag {
-            padding: 0.15rem 0;
             color: var(--text-muted);
-            font-size: 0.65rem;
+            font-size: 0.75rem;
             font-weight: 500;
             font-family: var(--font-mono);
         }
 
         .tech-tag::after {
-            content: ',';
-            margin-right: 0.25rem;
+            content: ' •';
+            margin-left: 0.35rem;
+            color: var(--border);
         }
 
         .tech-tag:last-child::after {
@@ -649,12 +585,12 @@
         .experience-list {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
         .experience-card {
             padding: 0;
-            padding-bottom: 1.5rem;
+            padding-bottom: 2rem;
             border-bottom: 1px solid var(--border);
         }
 
@@ -667,37 +603,46 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
             flex-wrap: wrap;
-            gap: 0.35rem;
+            gap: 0.5rem;
         }
 
         .experience-title h3 {
             color: var(--dark);
-            font-size: 0.95rem;
-            margin-bottom: 0.1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.15rem;
         }
 
         .experience-title p {
             color: var(--primary);
             font-weight: 500;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
         }
 
         .experience-date {
             color: var(--text-muted);
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             font-family: var(--font-mono);
         }
 
         .experience-description {
-            color: var(--text-muted);
-            line-height: 1.6;
-            font-size: 0.8rem;
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 0.9rem;
+        }
+
+        .experience-description ul {
+            padding-left: 1.25rem;
         }
 
         .experience-description li {
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-description strong {
+            color: var(--dark);
         }
 
         /* Stats Section - Clean */
@@ -711,7 +656,7 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
-            max-width: 1100px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
@@ -720,7 +665,7 @@
         }
 
         .stat-number {
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             font-weight: 700;
             line-height: 1;
             margin-bottom: 0.25rem;
@@ -729,10 +674,8 @@
         }
 
         .stat-label {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
         }
 
         /* Contact Section - Clean */
@@ -741,14 +684,14 @@
         }
 
         .contact-content {
-            max-width: 600px;
+            max-width: 900px;
             margin: 0 auto;
-            text-align: center;
         }
 
         .contact-content h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
 
         .contact-content h2 span {
@@ -764,7 +707,6 @@
 
         .contact-buttons {
             display: flex;
-            justify-content: center;
             gap: 0.75rem;
             flex-wrap: wrap;
         }
@@ -915,24 +857,18 @@
         }
 
         .testimonials-container {
-            max-width: 1100px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
-        .testimonials-wrapper {
-            overflow: hidden;
-            margin: 0 -1.5rem;
-            padding: 0 1.5rem;
-        }
-
         .testimonials-header {
-            text-align: center;
             margin-bottom: 1.5rem;
         }
 
         .testimonials-header h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0.35rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
         }
 
         .testimonials-header h2 span {
@@ -941,12 +877,18 @@
 
         .testimonials-header p {
             color: var(--text-muted);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        .testimonials-wrapper {
+            overflow: hidden;
+            margin: 0 -1.5rem;
+            padding: 0 1.5rem;
         }
 
         .testimonials-track {
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
             animation: scroll-testimonials 40s linear infinite;
             width: max-content;
         }
@@ -962,8 +904,7 @@
 
         .testimonial-card {
             flex-shrink: 0;
-            width: 300px;
-            padding: 0;
+            width: 320px;
         }
 
         .testimonial-quote {
