@@ -241,17 +241,17 @@
             font-size: 0.95rem;
             color: var(--text-muted);
             margin-bottom: 1.25rem;
-            max-width: 600px;
+            max-width: 100%;
             line-height: 1.6;
         }
 
         .hero-stats {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 0.75rem;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 0.6rem;
             margin-bottom: 1.5rem;
             padding: 1rem 0;
-            max-width: 600px;
+            max-width: 100%;
         }
 
         .hero-stat {
@@ -1154,37 +1154,37 @@
             }
 
             .hero-stats {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 0.5rem;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0.4rem;
                 max-width: 100%;
             }
 
             .hero-stat {
-                padding: 0.6rem 0.4rem;
+                padding: 0.5rem 0.3rem;
             }
 
             .hero-stat-icon {
-                width: 30px;
-                height: 30px;
-                font-size: 0.75rem;
-                margin-bottom: 0.4rem;
+                width: 26px;
+                height: 26px;
+                font-size: 0.65rem;
+                margin-bottom: 0.3rem;
             }
 
             .stat-ring {
-                width: 35px;
-                height: 35px;
+                width: 30px;
+                height: 30px;
             }
 
             .stat-ring .value {
-                font-size: 0.5rem;
+                font-size: 0.4rem;
             }
 
             .hero-stat-value {
-                font-size: 0.9rem;
+                font-size: 0.75rem;
             }
 
             .hero-stat-label {
-                font-size: 0.45rem;
+                font-size: 0.4rem;
             }
 
             .cta-buttons {
@@ -1579,6 +1579,23 @@
                         </div>
                         <div class="hero-stat-value"><span class="counter" data-target="50">0</span>+</div>
                         <div class="hero-stat-label">Daily Releases</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="stat-ring">
+                            <svg viewBox="0 0 50 50">
+                                <circle class="bg" cx="25" cy="25" r="22"/>
+                                <circle class="progress" cx="25" cy="25" r="22" data-percent="99.97"/>
+                            </svg>
+                            <span class="value">99.97%</span>
+                        </div>
+                        <div class="hero-stat-label">GPU Uptime</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-icon" style="background: linear-gradient(135deg, #0ea5e9, #0284c7);">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="hero-stat-value">$<span class="counter" data-target="15">0</span>M+</div>
+                        <div class="hero-stat-label">Budget Managed</div>
                     </div>
                 </div>
                 <div class="cta-buttons">
