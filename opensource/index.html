@@ -15,9 +15,10 @@
         /* GitHub Section Styles */
         .github-section {
             padding: 50px 2rem;
-            background: #111827;
+            background: #f1f5f9;
             border-radius: 16px;
             margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
         }
 
         .github-container {
@@ -31,7 +32,7 @@
         }
 
         .github-header h2 {
-            color: var(--white);
+            color: var(--dark);
             font-size: 2rem;
             margin-bottom: 0.75rem;
         }
@@ -41,7 +42,7 @@
         }
 
         .github-header p {
-            color: rgba(255,255,255,0.7);
+            color: var(--text-muted);
             font-size: 1rem;
         }
 
@@ -53,18 +54,18 @@
         }
 
         .github-sidebar {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(10px);
+            background: var(--white);
             border-radius: var(--radius-xl);
             padding: 1.5rem;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
 
         .github-profile {
             text-align: center;
             margin-bottom: 1.5rem;
             padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid var(--border);
         }
 
         .github-avatar {
@@ -84,7 +85,7 @@
         }
 
         .github-profile h3 {
-            color: var(--white);
+            color: var(--dark);
             font-size: 1.25rem;
             margin-bottom: 0.25rem;
         }
@@ -96,7 +97,7 @@
         }
 
         .github-profile .bio {
-            color: rgba(255,255,255,0.6);
+            color: var(--text-muted);
             font-size: 0.8rem;
             margin-top: 0.5rem;
             line-height: 1.5;
@@ -110,10 +111,11 @@
         }
 
         .github-stat {
-            background: rgba(255,255,255,0.05);
+            background: #f8fafc;
             padding: 0.75rem;
             border-radius: var(--radius);
             text-align: center;
+            border: 1px solid var(--border);
         }
 
         .github-stat-value {
@@ -124,7 +126,7 @@
         }
 
         .github-stat-label {
-            color: rgba(255,255,255,0.6);
+            color: var(--text-muted);
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -160,14 +162,14 @@
         }
 
         .github-link-secondary {
-            background: rgba(255,255,255,0.1);
-            color: var(--white);
-            border: 1px solid rgba(255,255,255,0.2);
+            background: #f8fafc;
+            color: var(--dark);
+            border: 1px solid var(--border);
         }
 
         .github-link-secondary:hover {
-            background: rgba(255,255,255,0.15);
-            color: var(--white);
+            border-color: var(--primary);
+            color: var(--primary);
         }
 
         .github-repos {
@@ -177,14 +179,14 @@
         }
 
         .repo-card {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(10px);
+            background: var(--white);
             border-radius: 12px;
             padding: 1.25rem;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid var(--border);
             transition: border-color 0.2s ease;
             text-decoration: none;
             display: block;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
 
         .repo-card:hover {
@@ -204,14 +206,14 @@
         }
 
         .repo-name {
-            color: var(--white);
+            color: var(--dark);
             font-size: 0.95rem;
             font-weight: 600;
             font-family: var(--font-mono);
         }
 
         .repo-description {
-            color: rgba(255,255,255,0.6);
+            color: var(--text-muted);
             font-size: 0.8rem;
             line-height: 1.6;
             margin-bottom: 1rem;
@@ -231,7 +233,7 @@
             display: flex;
             align-items: center;
             gap: 0.35rem;
-            color: rgba(255,255,255,0.5);
+            color: var(--text-muted);
             font-size: 0.75rem;
         }
 
@@ -628,7 +630,7 @@
 
         /* Loading State */
         .loading-skeleton {
-            background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
             background-size: 200% 100%;
             animation: shimmer 1.5s infinite;
             border-radius: var(--radius);

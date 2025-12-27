@@ -111,10 +111,11 @@
         }
 
         .highlights-section {
-            background: #111827;
+            background: #f1f5f9;
             border-radius: 16px;
             padding: 40px 2rem;
             margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
         }
         .highlights-grid {
             display: grid;
@@ -127,12 +128,12 @@
         .highlight-card .value {
             font-size: 1.75rem;
             font-weight: 700;
-            color: var(--white);
+            color: var(--primary);
             margin-bottom: 0.25rem;
         }
         .highlight-card .label {
             font-size: 0.7rem;
-            color: rgba(255,255,255,0.7);
+            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
@@ -174,14 +175,15 @@
         }
 
         .cta-section {
-            background: #111827;
+            background: #f1f5f9;
             border-radius: 16px;
             padding: 50px 2rem;
             text-align: center;
             margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
         }
         .cta-content h2 {
-            color: var(--white);
+            color: var(--dark);
             font-size: 1.5rem;
             margin-bottom: 0.75rem;
         }
@@ -189,7 +191,7 @@
             color: var(--primary);
         }
         .cta-content p {
-            color: rgba(255,255,255,0.7);
+            color: var(--text-muted);
             margin-bottom: 1.25rem;
             font-size: 0.9rem;
         }
@@ -198,13 +200,6 @@
             justify-content: center;
             gap: 0.75rem;
             flex-wrap: wrap;
-        }
-        .btn-white {
-            background: var(--white);
-            color: var(--dark);
-        }
-        .btn-white:hover {
-            opacity: 0.9;
         }
 
         @media (max-width: 768px) {
@@ -389,7 +384,7 @@
                 Open to both full-time positions and consulting engagements.
             </p>
             <div class="cta-buttons">
-                <a href="../resume/" class="btn btn-white">
+                <a href="../resume/" class="btn btn-outline">
                     <i class="fas fa-file-alt"></i> View Resume
                 </a>
                 <a href="https://www.linkedin.com/in/schundu" class="btn btn-primary" target="_blank">

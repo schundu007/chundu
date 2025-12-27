@@ -189,18 +189,19 @@ nav {
 /* Page Header - Card Style */
 .page-header {
     padding: 80px 2rem 30px;
-    background: #111827;
+    background: #f1f5f9;
     text-align: center;
-    color: var(--white);
+    color: var(--dark);
     position: relative;
     border-radius: 16px;
     margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
 }
 
 .page-header h1 {
     font-size: 1.75rem;
     margin-bottom: 0.5rem;
-    color: var(--white);
+    color: var(--dark);
     font-weight: 700;
     letter-spacing: -0.03em;
 }
@@ -210,7 +211,7 @@ nav {
 }
 
 .page-header p {
-    color: rgba(255,255,255,0.7);
+    color: var(--text-muted);
     font-size: 0.9rem;
     max-width: 500px;
     margin: 0 auto;
@@ -342,12 +343,13 @@ nav {
 
 /* Footer */
 footer {
-    background: var(--dark);
-    color: var(--white);
+    background: #f1f5f9;
+    color: var(--dark);
     padding: 2rem;
     max-width: 960px;
     margin: 0 auto 1.5rem;
     border-radius: 16px;
+    border: 1px solid var(--border);
 }
 
 .footer-content {
@@ -361,10 +363,11 @@ footer {
 .footer-logo {
     font-weight: 600;
     font-size: 1rem;
+    color: var(--dark);
 }
 
 footer p {
-    opacity: 0.5;
+    color: var(--text-muted);
     font-size: 0.75rem;
 }
 
@@ -374,13 +377,12 @@ footer p {
 }
 
 .footer-links a {
-    color: var(--white);
-    opacity: 0.7;
+    color: var(--text-muted);
     font-size: 0.8rem;
 }
 
 .footer-links a:hover {
-    opacity: 1;
+    color: var(--primary);
 }
 
 .footer-social {
@@ -389,14 +391,13 @@ footer p {
 }
 
 .footer-social a {
-    color: var(--white);
-    opacity: 0.7;
+    color: var(--text-muted);
     font-size: 1.1rem;
     padding: 0.5rem;
 }
 
 .footer-social a:hover {
-    opacity: 1;
+    color: var(--primary);
 }
 
 /* Mobile Menu */
