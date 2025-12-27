@@ -453,7 +453,7 @@
             align-items: center;
             gap: 0.5rem;
             font-weight: 500;
-            color: var(--white);
+            color: var(--dark);
         }
 
         .tool-category-icon {
@@ -479,9 +479,9 @@
             align-items: center;
             gap: 0.25rem;
             padding: 0.2rem 0.5rem;
-            background: rgba(255,255,255,0.08);
+            background: #e2e8f0;
             border-radius: 4px;
-            color: rgba(255,255,255,0.9);
+            color: var(--dark);
             font-size: 0.7rem;
             font-weight: 500;
         }
@@ -571,7 +571,7 @@
         .experience-card {
             padding: 0;
             padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid #cbd5e1;
         }
 
         .experience-card:last-child {
@@ -1547,40 +1547,40 @@
     <section class="experience-section" id="experience">
         <div class="container">
             <div class="section-header">
-                <h2 style="color: var(--white);">Professional <span>Experience</span></h2>
+                <h2 style="color: var(--dark);">Professional <span>Experience</span></h2>
             </div>
 
             <!-- What I Own -->
-            <div class="experience-summary" style="margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+            <div class="experience-summary" style="margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border);">
                 <h3 style="color: var(--primary); font-size: 1rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">What I Own</h3>
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
                     <div>
-                        <h4 style="color: rgba(255,255,255,0.95); font-size: 0.85rem; margin-bottom: 0.6rem; font-weight: 600;">Reliability & SRE</h4>
-                        <ul style="color: rgba(255,255,255,0.8); font-size: 0.85rem; line-height: 1.8; list-style: none; padding: 0; margin: 0;">
+                        <h4 style="color: var(--dark); font-size: 0.85rem; margin-bottom: 0.6rem; font-weight: 600;">Reliability & SRE</h4>
+                        <ul style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.8; list-style: none; padding: 0; margin: 0;">
                             <li style="margin-bottom: 0.35rem; padding-left: 1rem; position: relative;"><span style="position: absolute; left: 0; color: var(--primary);">&#8226;</span> On-call for production systems; SLOs and error budgets</li>
                             <li style="margin-bottom: 0.35rem; padding-left: 1rem; position: relative;"><span style="position: absolute; left: 0; color: var(--primary);">&#8226;</span> Incident command for P1/P2 outages; postmortems</li>
                             <li style="padding-left: 1rem; position: relative;"><span style="position: absolute; left: 0; color: var(--primary);">&#8226;</span> MTTR reduction; alert fatigue elimination</li>
                         </ul>
                     </div>
                     <div>
-                        <h4 style="color: rgba(255,255,255,0.95); font-size: 0.85rem; margin-bottom: 0.6rem; font-weight: 600;">DevOps & Platform</h4>
-                        <ul style="color: rgba(255,255,255,0.8); font-size: 0.85rem; line-height: 1.8; list-style: none; padding: 0; margin: 0;">
+                        <h4 style="color: var(--dark); font-size: 0.85rem; margin-bottom: 0.6rem; font-weight: 600;">DevOps & Platform</h4>
+                        <ul style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.8; list-style: none; padding: 0; margin: 0;">
                             <li style="margin-bottom: 0.35rem; padding-left: 1rem; position: relative;"><span style="position: absolute; left: 0; color: var(--primary);">&#8226;</span> CI/CD with canary, rollback, and deployment gates</li>
                             <li style="margin-bottom: 0.35rem; padding-left: 1rem; position: relative;"><span style="position: absolute; left: 0; color: var(--primary);">&#8226;</span> Terraform modules and GitOps workflows</li>
                             <li style="padding-left: 1rem; position: relative;"><span style="position: absolute; left: 0; color: var(--primary);">&#8226;</span> Platform standards adopted across teams</li>
                         </ul>
                     </div>
                     <div>
-                        <h4 style="color: rgba(255,255,255,0.95); font-size: 0.85rem; margin-bottom: 0.6rem; font-weight: 600;">GPU & Data Infrastructure</h4>
-                        <ul style="color: rgba(255,255,255,0.8); font-size: 0.85rem; line-height: 1.8; list-style: none; padding: 0; margin: 0;">
+                        <h4 style="color: var(--dark); font-size: 0.85rem; margin-bottom: 0.6rem; font-weight: 600;">GPU & Data Infrastructure</h4>
+                        <ul style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.8; list-style: none; padding: 0; margin: 0;">
                             <li style="margin-bottom: 0.35rem; padding-left: 1rem; position: relative;"><span style="position: absolute; left: 0; color: var(--primary);">&#8226;</span> GPU cluster operations (K8s + Slurm); NVIDIA scheduling</li>
                             <li style="margin-bottom: 0.35rem; padding-left: 1rem; position: relative;"><span style="position: absolute; left: 0; color: var(--primary);">&#8226;</span> ML/AI workload reliability and capacity planning</li>
                             <li style="padding-left: 1rem; position: relative;"><span style="position: absolute; left: 0; color: var(--primary);">&#8226;</span> Spark, Flink, Kafka pipeline operations</li>
                         </ul>
                     </div>
                     <div>
-                        <h4 style="color: rgba(255,255,255,0.95); font-size: 0.85rem; margin-bottom: 0.6rem; font-weight: 600;">Cloud Security & DevSecOps</h4>
-                        <ul style="color: rgba(255,255,255,0.8); font-size: 0.85rem; line-height: 1.8; list-style: none; padding: 0; margin: 0;">
+                        <h4 style="color: var(--dark); font-size: 0.85rem; margin-bottom: 0.6rem; font-weight: 600;">Cloud Security & DevSecOps</h4>
+                        <ul style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.8; list-style: none; padding: 0; margin: 0;">
                             <li style="margin-bottom: 0.35rem; padding-left: 1rem; position: relative;"><span style="position: absolute; left: 0; color: var(--primary);">&#8226;</span> Secrets management; IAM and least-privilege</li>
                             <li style="margin-bottom: 0.35rem; padding-left: 1rem; position: relative;"><span style="position: absolute; left: 0; color: var(--primary);">&#8226;</span> CI/CD security gates (SAST, scanning)</li>
                             <li style="padding-left: 1rem; position: relative;"><span style="position: absolute; left: 0; color: var(--primary);">&#8226;</span> SOC2, HIPAA, FedRAMP compliance</li>
@@ -1639,12 +1639,12 @@
                         <span class="experience-date">May 2007 – Feb 2020</span>
                     </div>
                     <div class="experience-description">
-                        <p style="margin-bottom: 1rem; color: rgba(255,255,255,0.7);">13 years building and operating production infrastructure for Fortune 500 clients in healthcare, insurance, telecom, and financial services.</p>
+                        <p style="margin-bottom: 1rem; color: var(--text-muted);">13 years building and operating production infrastructure for Fortune 500 clients in healthcare, insurance, telecom, and financial services.</p>
                         <!-- Sub-role 1 -->
                         <div style="margin-bottom: 1.25rem; padding-left: 1rem; border-left: 2px solid var(--primary);">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem; flex-wrap: wrap; gap: 0.5rem;">
-                                <strong style="color: var(--white); font-size: 0.9rem;">DevOps Engineer — Harvard Pilgrim Health Care</strong>
-                                <span style="font-size: 0.75rem; color: rgba(255,255,255,0.6); font-family: var(--font-mono);">Jun 2018 – Feb 2020</span>
+                                <strong style="color: var(--dark); font-size: 0.9rem;">DevOps Engineer — Harvard Pilgrim Health Care</strong>
+                                <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">Jun 2018 – Feb 2020</span>
                             </div>
                             <ul style="margin-top: 0.35rem;">
                                 <li>Built CI/CD pipelines for HIPAA-regulated healthcare applications on AWS EKS</li>
@@ -1655,8 +1655,8 @@
                         <!-- Sub-role 2 -->
                         <div style="margin-bottom: 1.25rem; padding-left: 1rem; border-left: 2px solid var(--primary);">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem; flex-wrap: wrap; gap: 0.5rem;">
-                                <strong style="color: var(--white); font-size: 0.9rem;">Infrastructure Engineer — CNA Insurance</strong>
-                                <span style="font-size: 0.75rem; color: rgba(255,255,255,0.6); font-family: var(--font-mono);">May 2015 – Jun 2018</span>
+                                <strong style="color: var(--dark); font-size: 0.9rem;">Infrastructure Engineer — CNA Insurance</strong>
+                                <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">May 2015 – Jun 2018</span>
                             </div>
                             <ul style="margin-top: 0.35rem;">
                                 <li>Early Kubernetes adopter (2013-2014); managed production deployments with Helm on AWS</li>
@@ -1667,8 +1667,8 @@
                         <!-- Sub-role 3 -->
                         <div style="padding-left: 1rem; border-left: 2px solid var(--primary);">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem; flex-wrap: wrap; gap: 0.5rem;">
-                                <strong style="color: var(--white); font-size: 0.9rem;">Systems Engineer — Verizon, PwC</strong>
-                                <span style="font-size: 0.75rem; color: rgba(255,255,255,0.6); font-family: var(--font-mono);">May 2007 – Apr 2015</span>
+                                <strong style="color: var(--dark); font-size: 0.9rem;">Systems Engineer — Verizon, PwC</strong>
+                                <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">May 2007 – Apr 2015</span>
                             </div>
                             <ul style="margin-top: 0.5rem;">
                                 <li>Linux/Unix systems administration; WebSphere/WebLogic middleware operations</li>
