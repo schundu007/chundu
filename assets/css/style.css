@@ -3,10 +3,10 @@
     --primary: #2563eb;
     --primary-dark: #1d4ed8;
     --primary-light: rgba(37, 99, 235, 0.1);
-    --dark: #1e293b;
-    --dark-soft: #334155;
-    --dark-muted: #475569;
-    --text: #1e293b;
+    --dark: #111827;
+    --dark-soft: #1f2937;
+    --dark-muted: #374151;
+    --text: #111827;
     --text-muted: #52525b;
     --white: #ffffff;
     --light: #fafafa;
@@ -189,7 +189,7 @@ nav {
 /* Page Header - Card Style */
 .page-header {
     padding: 80px 2rem 30px;
-    background: #1e293b;
+    background: #111827;
     text-align: center;
     color: var(--white);
     position: relative;
