@@ -241,25 +241,26 @@
             font-size: 0.95rem;
             color: var(--text-muted);
             margin-bottom: 1.25rem;
-            max-width: 480px;
+            max-width: 600px;
             line-height: 1.6;
         }
 
         .hero-stats {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.75rem;
             margin-bottom: 1.5rem;
             padding: 1rem 0;
+            max-width: 600px;
         }
 
         .hero-stat {
             text-align: center;
-            padding: 1.25rem 1rem;
+            padding: 0.75rem 0.5rem;
             background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border-radius: 20px;
+            border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.8);
             border: 1px solid rgba(255,255,255,0.6);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -291,14 +292,14 @@
         }
 
         .hero-stat-icon {
-            width: 50px;
-            height: 50px;
-            margin: 0 auto 0.75rem;
+            width: 36px;
+            height: 36px;
+            margin: 0 auto 0.5rem;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-size: 0.9rem;
             color: white;
             position: relative;
         }
@@ -313,9 +314,9 @@
 
         /* Circular progress ring for percentage stats */
         .stat-ring {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 0.5rem;
+            width: 42px;
+            height: 42px;
+            margin: 0 auto 0.35rem;
             position: relative;
         }
 
@@ -347,14 +348,14 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 0.85rem;
+            font-size: 0.65rem;
             font-weight: 700;
             color: var(--primary);
             font-family: var(--font-mono);
         }
 
         .hero-stat-value {
-            font-size: 1.75rem;
+            font-size: 1.1rem;
             font-weight: 700;
             background: linear-gradient(135deg, var(--primary), #8b5cf6);
             -webkit-background-clip: text;
@@ -362,14 +363,14 @@
             background-clip: text;
             line-height: 1;
             font-family: var(--font-mono);
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.15rem;
         }
 
         .hero-stat-label {
-            font-size: 0.7rem;
+            font-size: 0.55rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.03em;
             font-weight: 500;
         }
 
@@ -1153,32 +1154,37 @@
             }
 
             .hero-stats {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.75rem;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5rem;
+                max-width: 100%;
             }
 
             .hero-stat {
-                padding: 1rem 0.75rem;
+                padding: 0.6rem 0.4rem;
             }
 
             .hero-stat-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
-                margin-bottom: 0.5rem;
+                width: 30px;
+                height: 30px;
+                font-size: 0.75rem;
+                margin-bottom: 0.4rem;
             }
 
             .stat-ring {
-                width: 50px;
-                height: 50px;
+                width: 35px;
+                height: 35px;
+            }
+
+            .stat-ring .value {
+                font-size: 0.5rem;
             }
 
             .hero-stat-value {
-                font-size: 1.35rem;
+                font-size: 0.9rem;
             }
 
             .hero-stat-label {
-                font-size: 0.6rem;
+                font-size: 0.45rem;
             }
 
             .cta-buttons {
