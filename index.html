@@ -377,59 +377,6 @@
             color: var(--white);
         }
 
-        /* About Section */
-        .about-section {
-            padding: 50px 1.5rem;
-            background: var(--white);
-        }
-
-        .about-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .about-content h2 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-            line-height: 1.3;
-        }
-
-        .about-content h2 span {
-            color: var(--primary);
-        }
-
-        .about-subtitle {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-        }
-
-        .about-content p {
-            color: var(--text);
-            font-size: 0.9rem;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-
-        .about-content p:last-of-type {
-            margin-bottom: 0;
-        }
-
-        .highlight-item .value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 0.25rem;
-        }
-
-        .highlight-item .label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
         /* Toolset Section */
         .toolset-section {
             padding: 50px 1.5rem;
@@ -535,18 +482,62 @@
             object-fit: contain;
         }
 
-        /* Skills Grid - Clean */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
+        /* Expertise Section - AG Grid Style */
+        .expertise-section {
+            padding: 50px 1.5rem;
+            background: #f8fafc;
         }
 
-        .skill-card {
-            padding: 0;
+        .expertise-table-container {
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--white);
         }
 
-        .skill-icon {
+        .expertise-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .expertise-table th {
+            background: #f1f5f9;
+            color: var(--dark);
+            font-weight: 600;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .expertise-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            color: var(--text);
+            vertical-align: middle;
+        }
+
+        .expertise-table tr:hover td {
+            background: #f8fafc;
+        }
+
+        .expertise-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .expertise-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .expertise-icon {
             width: 28px;
             height: 28px;
             background: var(--primary);
@@ -555,44 +546,30 @@
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 0.8rem;
-            margin-bottom: 0.5rem;
+            font-size: 0.7rem;
         }
 
-        .skill-card h3 {
-            font-size: 0.95rem;
-            margin-bottom: 0.25rem;
-            font-weight: 600;
-        }
-
-        .skill-card p {
+        .expertise-desc {
             color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
             line-height: 1.5;
         }
 
-        .tech-tags {
+        .expertise-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 0.35rem;
         }
 
-        .tech-tag {
-            color: var(--text-muted);
-            font-size: 0.75rem;
+        .expertise-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.2rem 0.5rem;
+            background: #f1f5f9;
+            border-radius: 4px;
+            color: var(--text);
+            font-size: 0.7rem;
             font-weight: 500;
-            font-family: var(--font-mono);
-        }
-
-        .tech-tag::after {
-            content: ' •';
-            margin-left: 0.35rem;
-            color: var(--border);
-        }
-
-        .tech-tag:last-child::after {
-            content: '';
         }
 
         /* Experience Section */
@@ -789,23 +766,6 @@
                 display: none;
             }
 
-            .about-container {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .about-header {
-                position: static;
-            }
-
-            .about-content p {
-                max-width: 100%;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
@@ -835,32 +795,8 @@
                 font-size: 1.25rem;
             }
 
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .skill-card {
-                min-height: auto;
-            }
-
             .stat-number {
                 font-size: 1.5rem;
-            }
-
-            .about-section {
-                padding: 50px 1rem;
-            }
-
-            .about-header h2 {
-                font-size: 1.5rem;
-            }
-
-            .about-content p {
-                font-size: 0.95rem;
-            }
-
-            .about-highlights {
-                grid-template-columns: 1fr;
             }
 
             .tools-grid {
@@ -1443,38 +1379,30 @@
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about-section" id="about">
-        <div class="about-container">
-            <div class="section-header">
-                <h2>Professional <span>Summary</span></h2>
-            </div>
-            <div class="about-content">
-                <p>
-                    With 18+ years of hands-on experience building and operating large-scale GPU compute platforms,
-                    AI/ML infrastructure, and distributed systems at planetary scale. Leading global teams of 13+ engineers
-                    across Infrastructure, Security, Networking, and DevOps.
-                </p>
-                <p>
-                    Currently Distinguished AI Architect at Trackonomy, delivering documented cost savings and building
-                    infrastructure team from 0 → 6 engineers serving Pharma, Airlines, Government, Manufacturing,
-                    Healthcare, and IoT sectors globally across 8 countries.
-                </p>
-                <p>
-                    Expert in Slurm-based GPU compute platforms (65 GPUs), serverless GPU infrastructure,
-                    Databricks/Spark/Kafka real-time pipelines, and comprehensive DevSecOps with SOC2, HIPAA, FedRAMP,
-                    and HITRUST compliance.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Experience Section -->
+    <!-- Professional Experience Section -->
     <section class="experience-section" id="experience">
         <div class="container">
             <div class="section-header">
                 <h2 style="color: var(--white);">Professional <span>Experience</span></h2>
-                <p style="color: rgba(255,255,255,0.7);">Building and operating infrastructure at scale for global enterprises</p>
+            </div>
+
+            <!-- Summary -->
+            <div class="experience-summary" style="margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <p style="color: rgba(255,255,255,0.85); font-size: 0.95rem; line-height: 1.8; margin-bottom: 1rem;">
+                    With 18+ years of hands-on experience building and operating large-scale GPU compute platforms,
+                    AI/ML infrastructure, and distributed systems at planetary scale. Leading global teams of 13+ engineers
+                    across Infrastructure, Security, Networking, and DevOps.
+                </p>
+                <p style="color: rgba(255,255,255,0.85); font-size: 0.95rem; line-height: 1.8; margin-bottom: 1rem;">
+                    Currently Distinguished AI Architect at Trackonomy, delivering documented cost savings and building
+                    infrastructure team from 0 → 6 engineers serving Pharma, Airlines, Government, Manufacturing,
+                    Healthcare, and IoT sectors globally across 8 countries.
+                </p>
+                <p style="color: rgba(255,255,255,0.85); font-size: 0.95rem; line-height: 1.8;">
+                    Expert in Slurm-based GPU compute platforms (65 GPUs), serverless GPU infrastructure,
+                    Databricks/Spark/Kafka real-time pipelines, and comprehensive DevSecOps with SOC2, HIPAA, FedRAMP,
+                    and HITRUST compliance.
+                </p>
             </div>
 
             <div class="experience-list">
@@ -1630,7 +1558,7 @@
     </section>
 
     <!-- Expertise Section -->
-    <section class="section section-light" id="expertise">
+    <section class="expertise-section" id="expertise">
         <div class="container">
             <div class="section-header">
                 <span class="section-label">What I Do</span>
@@ -1638,89 +1566,48 @@
                 <p>Building and scaling enterprise infrastructure across bare-metal and multi-cloud platforms</p>
             </div>
 
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="fas fa-server"></i>
-                    </div>
-                    <h3>Linux & Systems</h3>
-                    <p>Deep expertise in Linux systems administration and performance tuning at scale.</p>
-                    <div class="tech-tags">
-                        <span class="tech-tag">Ubuntu</span>
-                        <span class="tech-tag">RHEL</span>
-                        <span class="tech-tag">Shell</span>
-                        <span class="tech-tag">Systemd</span>
-                    </div>
-                </div>
-
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="fas fa-dharmachakra"></i>
-                    </div>
-                    <h3>Containers & Kubernetes</h3>
-                    <p>Managing large-scale Kubernetes clusters with advanced orchestration and GitOps workflows.</p>
-                    <div class="tech-tags">
-                        <span class="tech-tag">Kubernetes</span>
-                        <span class="tech-tag">Helm</span>
-                        <span class="tech-tag">ArgoCD</span>
-                        <span class="tech-tag">Istio</span>
-                    </div>
-                </div>
-
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="fas fa-cloud"></i>
-                    </div>
-                    <h3>Multi-Cloud Architecture</h3>
-                    <p>Designing infrastructure across AWS, Azure, and OCI with focus on cost optimization.</p>
-                    <div class="tech-tags">
-                        <span class="tech-tag">AWS</span>
-                        <span class="tech-tag">Azure</span>
-                        <span class="tech-tag">OCI</span>
-                    </div>
-                </div>
-
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Observability & SRE</h3>
-                    <p>Implementing comprehensive monitoring, alerting, and SLO-driven reliability engineering.</p>
-                    <div class="tech-tags">
-                        <span class="tech-tag">Prometheus</span>
-                        <span class="tech-tag">Grafana</span>
-                        <span class="tech-tag">Datadog</span>
-                        <span class="tech-tag">OpenTelemetry</span>
-                    </div>
-                </div>
-
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="fas fa-code-branch"></i>
-                    </div>
-                    <h3>Infrastructure as Code</h3>
-                    <p>Automating infrastructure provisioning with modern IaC tools and robust CI/CD pipelines.</p>
-                    <div class="tech-tags">
-                        <span class="tech-tag">Terraform</span>
-                        <span class="tech-tag">Ansible</span>
-                        <span class="tech-tag">GitHub Actions</span>
-                        <span class="tech-tag">Jenkins</span>
-                    </div>
-                </div>
-
-                <div class="skill-card">
-                    <div class="skill-icon">
-                        <i class="fas fa-network-wired"></i>
-                    </div>
-                    <h3>Networking & Load Balancing</h3>
-                    <p>Expert in TCP/IP, DNS, service mesh, and multi-region load balancing architectures.</p>
-                    <div class="tech-tags">
-                        <span class="tech-tag">Route53</span>
-                        <span class="tech-tag">HAProxy</span>
-                        <span class="tech-tag">Envoy</span>
-                        <span class="tech-tag">VPC</span>
-                    </div>
-                </div>
+            <div class="expertise-table-container">
+                <table class="expertise-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 200px;">Expertise Area</th>
+                            <th style="width: 320px;">Description</th>
+                            <th>Technologies</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><div class="expertise-cell"><span class="expertise-icon"><i class="fas fa-server"></i></span>Linux & Systems</div></td>
+                            <td class="expertise-desc">Deep expertise in Linux systems administration and performance tuning at scale.</td>
+                            <td><div class="expertise-tags"><span class="expertise-tag">Ubuntu</span><span class="expertise-tag">RHEL</span><span class="expertise-tag">Shell</span><span class="expertise-tag">Systemd</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="expertise-cell"><span class="expertise-icon"><i class="fas fa-dharmachakra"></i></span>Containers & K8s</div></td>
+                            <td class="expertise-desc">Managing large-scale Kubernetes clusters with advanced orchestration and GitOps workflows.</td>
+                            <td><div class="expertise-tags"><span class="expertise-tag">Kubernetes</span><span class="expertise-tag">Helm</span><span class="expertise-tag">ArgoCD</span><span class="expertise-tag">Istio</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="expertise-cell"><span class="expertise-icon"><i class="fas fa-cloud"></i></span>Multi-Cloud</div></td>
+                            <td class="expertise-desc">Designing infrastructure across AWS, Azure, and OCI with focus on cost optimization.</td>
+                            <td><div class="expertise-tags"><span class="expertise-tag">AWS</span><span class="expertise-tag">Azure</span><span class="expertise-tag">OCI</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="expertise-cell"><span class="expertise-icon"><i class="fas fa-chart-line"></i></span>Observability & SRE</div></td>
+                            <td class="expertise-desc">Implementing comprehensive monitoring, alerting, and SLO-driven reliability engineering.</td>
+                            <td><div class="expertise-tags"><span class="expertise-tag">Prometheus</span><span class="expertise-tag">Grafana</span><span class="expertise-tag">Datadog</span><span class="expertise-tag">OpenTelemetry</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="expertise-cell"><span class="expertise-icon"><i class="fas fa-code-branch"></i></span>Infrastructure as Code</div></td>
+                            <td class="expertise-desc">Automating infrastructure provisioning with modern IaC tools and robust CI/CD pipelines.</td>
+                            <td><div class="expertise-tags"><span class="expertise-tag">Terraform</span><span class="expertise-tag">Ansible</span><span class="expertise-tag">GitHub Actions</span><span class="expertise-tag">Jenkins</span></div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="expertise-cell"><span class="expertise-icon"><i class="fas fa-network-wired"></i></span>Networking</div></td>
+                            <td class="expertise-desc">Expert in TCP/IP, DNS, service mesh, and multi-region load balancing architectures.</td>
+                            <td><div class="expertise-tags"><span class="expertise-tag">Route53</span><span class="expertise-tag">HAProxy</span><span class="expertise-tag">Envoy</span><span class="expertise-tag">VPC</span></div></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
