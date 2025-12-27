@@ -625,6 +625,59 @@
             color: var(--dark);
         }
 
+        /* Company and Client Highlights */
+        .company-highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .client-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        .clients-served {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            background: var(--white);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .clients-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .client-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), #1d4ed8);
+            color: white;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .client-inline {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
         /* Stats Section */
         .stats-section {
             padding: 50px 2rem;
@@ -1587,11 +1640,18 @@
                     <div class="experience-header">
                         <div class="experience-title">
                             <h3>Staff DevOps Engineer / SRE</h3>
-                            <p>Trackonomy Systems</p>
+                            <p><span class="company-highlight">Trackonomy Systems</span></p>
                         </div>
                         <span class="experience-date">Oct 2023 – Present</span>
                     </div>
                     <div class="experience-description">
+                        <div class="clients-served">
+                            <span class="clients-label">Clients:</span>
+                            <span class="client-tag">UPS</span>
+                            <span class="client-tag">Delta Airlines</span>
+                            <span class="client-tag">TriMedX</span>
+                            <span class="client-tag">Singapore Airlines</span>
+                        </div>
                         <ul>
                             <li><strong>Production Reliability:</strong> Primary on-call for Kubernetes clusters and GPU compute infrastructure; maintained 99.95% SLO for 18 months</li>
                             <li><strong>GPU Infrastructure:</strong> Built and operate 65+ GPU Slurm cluster for ML/AI training and inference; NVIDIA scheduling, capacity planning, 99.97% uptime</li>
@@ -1607,11 +1667,18 @@
                     <div class="experience-header">
                         <div class="experience-title">
                             <h3>Senior SRE / DevOps Engineer</h3>
-                            <p>Wipro Technologies (OSDU Data Platform)</p>
+                            <p><span class="company-highlight">Wipro Technologies</span> <span class="client-badge">OSDU Data Platform</span></p>
                         </div>
                         <span class="experience-date">Feb 2020 – Oct 2023</span>
                     </div>
                     <div class="experience-description">
+                        <div class="clients-served">
+                            <span class="clients-label">Clients:</span>
+                            <span class="client-tag">ExxonMobil</span>
+                            <span class="client-tag">Chevron</span>
+                            <span class="client-tag">Shell</span>
+                            <span class="client-tag">BP</span>
+                        </div>
                         <ul>
                             <li><strong>SLO Ownership:</strong> Defined and enforced SLOs for data platform serving Fortune 500 oil & gas clients; achieved 99.95% availability</li>
                             <li><strong>Data Infrastructure:</strong> Operated Spark, Flink, and Kafka pipelines at petabyte scale; capacity planning and performance tuning</li>
@@ -1627,7 +1694,7 @@
                     <div class="experience-header">
                         <div class="experience-title">
                             <h3>DevOps / Infrastructure Engineer</h3>
-                            <p>Tata Consultancy Services</p>
+                            <p><span class="company-highlight">Tata Consultancy Services</span></p>
                         </div>
                         <span class="experience-date">May 2007 – Feb 2020</span>
                     </div>
@@ -1636,7 +1703,7 @@
                         <!-- Sub-role 1 -->
                         <div style="margin-bottom: 1.25rem; padding-left: 1rem; border-left: 2px solid var(--primary);">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem; flex-wrap: wrap; gap: 0.5rem;">
-                                <strong style="color: var(--dark); font-size: 0.9rem;">DevOps Engineer — Harvard Pilgrim Health Care</strong>
+                                <strong style="color: var(--dark); font-size: 0.9rem;">DevOps Engineer — <span class="client-inline">Harvard Pilgrim Health Care</span></strong>
                                 <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">Jun 2018 – Feb 2020</span>
                             </div>
                             <ul style="margin-top: 0.35rem;">
@@ -1648,7 +1715,7 @@
                         <!-- Sub-role 2 -->
                         <div style="margin-bottom: 1.25rem; padding-left: 1rem; border-left: 2px solid var(--primary);">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem; flex-wrap: wrap; gap: 0.5rem;">
-                                <strong style="color: var(--dark); font-size: 0.9rem;">Infrastructure Engineer — CNA Insurance</strong>
+                                <strong style="color: var(--dark); font-size: 0.9rem;">Infrastructure Engineer — <span class="client-inline">CNA Insurance</span></strong>
                                 <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">May 2015 – Jun 2018</span>
                             </div>
                             <ul style="margin-top: 0.35rem;">
@@ -1660,7 +1727,7 @@
                         <!-- Sub-role 3 -->
                         <div style="padding-left: 1rem; border-left: 2px solid var(--primary);">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem; flex-wrap: wrap; gap: 0.5rem;">
-                                <strong style="color: var(--dark); font-size: 0.9rem;">Systems Engineer — Verizon, PwC</strong>
+                                <strong style="color: var(--dark); font-size: 0.9rem;">Systems Engineer — <span class="client-inline">Verizon</span>, <span class="client-inline">PwC</span></strong>
                                 <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">May 2007 – Apr 2015</span>
                             </div>
                             <ul style="margin-top: 0.5rem;">
