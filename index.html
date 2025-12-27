@@ -1409,22 +1409,49 @@
         .linkedin-badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            margin-top: 1.5rem;
-            padding: 0.5rem 1rem;
-            background: var(--light);
+            gap: 0.75rem;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #0077b5, #005885);
             border-radius: 50px;
-            font-size: 0.8rem;
-            color: var(--text-muted);
+            font-size: 1rem;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 8px 30px rgba(0, 119, 181, 0.3);
+            transition: all 0.3s ease;
+            animation: pulse-linkedin 2s ease-in-out infinite;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @keyframes pulse-linkedin {
+            0%, 100% { box-shadow: 0 8px 30px rgba(0, 119, 181, 0.3); }
+            50% { box-shadow: 0 8px 40px rgba(0, 119, 181, 0.5); }
+        }
+
+        .linkedin-badge:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(0, 119, 181, 0.4);
+            color: white;
         }
 
         .linkedin-badge i {
-            color: #0077b5;
+            color: white;
+            font-size: 1.25rem;
         }
 
-        .linkedin-badge a {
-            color: #0077b5;
-            font-weight: 500;
+        .linkedin-badge i.fa-arrow-right {
+            font-size: 0.9rem;
+            transition: transform 0.3s ease;
+        }
+
+        .linkedin-badge:hover i.fa-arrow-right {
+            transform: translateX(4px);
+        }
+
+        .linkedin-badge strong {
+            text-decoration: underline;
+            text-underline-offset: 3px;
         }
 
         @media (max-width: 768px) {
@@ -1848,10 +1875,11 @@
             </div>
             </div>
             <div style="text-align: center;">
-                <div class="linkedin-badge">
+                <a href="https://www.linkedin.com/in/schundu/details/recommendations/" target="_blank" class="linkedin-badge">
                     <i class="fab fa-linkedin"></i>
-                    View all recommendations on <a href="https://www.linkedin.com/in/schundu/details/recommendations/" target="_blank">LinkedIn</a>
-                </div>
+                    View all recommendations on <strong>LinkedIn</strong>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
         </div>
     </section>
