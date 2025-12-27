@@ -135,9 +135,10 @@ nav {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    object-fit: cover;
-    object-position: top center;
+    object-fit: contain;
+    object-position: center;
     border: none;
+    background: #f1f5f9;
 }
 
 .nav-links {
@@ -193,7 +194,7 @@ nav {
     text-align: center;
     color: var(--dark);
     position: relative;
-    border-radius: 16px;
+    border-radius: 32px 8px 32px 8px;
     margin-bottom: 1.5rem;
     border: 1px solid var(--border);
 }
@@ -221,9 +222,17 @@ nav {
 .section {
     padding: 50px 2rem;
     background: var(--white);
-    border-radius: 16px;
+    border-radius: 24px;
     margin-bottom: 1.5rem;
     box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.section:nth-child(odd) {
+    border-radius: 8px 28px 8px 28px;
+}
+
+.section:nth-child(even) {
+    border-radius: 28px 8px 28px 8px;
 }
 
 .section-alt {
@@ -245,14 +254,28 @@ nav {
 
 .card {
     background: #f8fafc;
-    border-radius: 12px;
+    border-radius: 16px;
     padding: 1.5rem;
     border: 1px solid var(--border);
-    transition: border-color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .card:hover {
     border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+/* Varied card shapes for visual interest */
+.card:nth-child(3n+1) {
+    border-radius: 24px 8px 24px 8px;
+}
+
+.card:nth-child(3n+2) {
+    border-radius: 8px 24px 8px 24px;
+}
+
+.card:nth-child(3n) {
+    border-radius: 20px;
 }
 
 .card h3 {
