@@ -15,6 +15,24 @@
     <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <style>
+        /* Override shared CSS for full-width jobs page */
+        .main-content {
+            max-width: 100%;
+            padding: 0;
+            background: var(--white);
+        }
+
+        .page-header {
+            border-radius: 0;
+            margin-bottom: 0;
+        }
+
+        footer {
+            max-width: 100%;
+            border-radius: 0;
+            margin: 0;
+        }
+
         /* Fresh Jobs Ticker */
         .fresh-jobs-ticker {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
@@ -747,30 +765,19 @@
         }
     </script>
 
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <a href="../" class="logo">
-                <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu" class="logo-icon">
-                Sudhakar Chundu
+    <!-- Simple Navigation -->
+    <nav style="background: #1e293b; border-bottom: none;">
+        <div class="nav-container" style="justify-content: space-between;">
+            <a href="../" class="logo" style="color: white;">
+                <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i>
+                Back to Portfolio
             </a>
-            <ul class="nav-links">
-                <li><a href="../about/">About</a></li>
-                <li><a href="../resume/">Resume</a></li>
-                <li><a href="../opensource/">Open Source</a></li>
-                <li><a href="../projects/">Projects</a></li>
-                <li><a href="../conferences/">Conferences</a></li>
-                <li><a href="../publications/">Publications</a></li>
-                <div class="nav-social">
-                    <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                </div>
-            </ul>
-            <button class="mobile-menu-btn" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <span style="color: rgba(255,255,255,0.7); font-size: 0.85rem;">
+                    <i class="fas fa-briefcase" style="color: var(--primary); margin-right: 0.5rem;"></i>
+                    Job Listings Dashboard
+                </span>
+            </div>
         </div>
     </nav>
 
@@ -1052,8 +1059,8 @@
                 <select class="filter-select" id="date-filter">
                     <option value="">All Dates</option>
                     <option value="1">Last 24 hours</option>
-                    <option value="3">Last 3 days</option>
-                    <option value="7" selected>Last 7 days</option>
+                    <option value="3" selected>Last 3 days</option>
+                    <option value="7">Last 7 days</option>
                     <option value="14">Last 14 days</option>
                     <option value="30">Last 30 days</option>
                 </select>
@@ -1107,23 +1114,12 @@
     </main>
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <span class="footer-logo">Sudhakar Chundu</span>
-            <div class="footer-links">
-                <a href="../">Home</a>
-                <a href="../resume/">Resume</a>
-                <a href="../conferences/">Conferences</a>
-                <a href="../publications/">Publications</a>
-            </div>
-            <div class="footer-social">
-                <a href="https://github.com/schundu007" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/schundu" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://medium.com/@sudhakarchundu" target="_blank"><i class="fab fa-medium"></i></a>
-            </div>
-        </div>
-        <div style="text-align: center; margin-top: 2rem;">
-            <p>&copy; 2025 Sudhakar Chundu. All rights reserved.</p>
+    <footer style="padding: 1.5rem 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <a href="../" style="color: white; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fas fa-arrow-left"></i> Back to Portfolio
+            </a>
+            <p style="opacity: 0.6; font-size: 0.8rem; margin: 0;">&copy; 2025 Sudhakar Chundu. Private job listings dashboard.</p>
         </div>
     </footer>
 

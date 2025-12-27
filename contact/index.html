@@ -15,75 +15,67 @@
         .contact-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-top: 2rem;
+            gap: 1.25rem;
         }
 
         .contact-card {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 2.5rem 2rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
             text-align: center;
-            box-shadow: var(--shadow);
-            transition: all 0.3s;
             border: 1px solid var(--border);
         }
 
         .contact-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
             border-color: var(--primary);
         }
 
         .contact-icon {
-            width: 64px;
-            height: 64px;
-            background: rgba(99,102,241,0.1);
-            border-radius: var(--radius);
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.25rem;
-            color: var(--primary);
-            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+            color: var(--white);
+            font-size: 1.1rem;
         }
 
         .contact-card h3 {
-            font-size: 1.25rem;
+            font-size: 1rem;
             margin-bottom: 0.5rem;
         }
 
         .contact-card p {
             color: var(--text-muted);
-            margin-bottom: 1.25rem;
-            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
             line-height: 1.6;
         }
 
         .contact-card a.link {
             color: var(--primary);
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
-            transition: all 0.2s;
-        }
-
-        .contact-card a.link:hover {
-            color: var(--primary-dark);
         }
 
         .cta-section {
-            background: var(--dark);
-            padding: 80px 2rem;
+            background: #1e293b;
+            padding: 50px 2rem;
             text-align: center;
             color: var(--white);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
         }
 
         .cta-section h2 {
-            font-size: 2.25rem;
-            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
             color: var(--white);
         }
 
@@ -93,42 +85,31 @@
 
         .cta-section p {
             color: rgba(255,255,255,0.7);
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto 1.5rem;
+            font-size: 0.9rem;
             line-height: 1.7;
         }
 
         .cta-buttons {
             display: flex;
             justify-content: center;
-            gap: 1rem;
+            gap: 0.75rem;
             flex-wrap: wrap;
         }
 
         .btn-white {
             background: var(--white);
             color: var(--dark);
-            border-color: var(--white);
         }
 
         .btn-white:hover {
-            background: var(--light);
-            border-color: var(--light);
-            color: var(--dark);
+            opacity: 0.9;
         }
 
         @media (max-width: 768px) {
             .contact-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .cta-section {
-                padding: 60px 1.5rem;
-            }
-
-            .cta-section h2 {
-                font-size: 1.75rem;
             }
         }
     </style>

@@ -14,28 +14,15 @@
     <style>
         /* GitHub Section Styles */
         .github-section {
-            padding: 60px 1.5rem;
-            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-soft) 50%, var(--dark-muted) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .github-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            pointer-events: none;
+            padding: 50px 2rem;
+            background: #1e293b;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
         }
 
         .github-container {
-            max-width: 1100px;
+            max-width: 100%;
             margin: 0 auto;
-            position: relative;
-            z-index: 1;
         }
 
         .github-header {
@@ -168,8 +155,7 @@
         }
 
         .github-link-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
+            opacity: 0.9;
             color: var(--white);
         }
 
@@ -181,7 +167,6 @@
 
         .github-link-secondary:hover {
             background: rgba(255,255,255,0.15);
-            transform: translateY(-2px);
             color: var(--white);
         }
 
@@ -194,18 +179,16 @@
         .repo-card {
             background: rgba(255,255,255,0.05);
             backdrop-filter: blur(10px);
-            border-radius: var(--radius-lg);
+            border-radius: 12px;
             padding: 1.25rem;
             border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s;
+            transition: border-color 0.2s ease;
             text-decoration: none;
             display: block;
         }
 
         .repo-card:hover {
-            background: rgba(255,255,255,0.08);
             border-color: var(--primary);
-            transform: translateY(-4px);
         }
 
         .repo-header {
@@ -265,12 +248,15 @@
 
         /* Gists Section Styles */
         .gists-section {
-            padding: 60px 1.5rem;
+            padding: 50px 2rem;
             background: var(--white);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
 
         .gists-container {
-            max-width: 1100px;
+            max-width: 100%;
             margin: 0 auto;
         }
 
@@ -301,19 +287,17 @@
         }
 
         .gist-card {
-            background: var(--light);
-            border-radius: var(--radius-lg);
+            background: #f8fafc;
+            border-radius: 12px;
             padding: 1.5rem;
             border: 1px solid var(--border);
-            transition: all 0.3s;
+            transition: border-color 0.2s ease;
             text-decoration: none;
             display: block;
         }
 
         .gist-card:hover {
-            box-shadow: var(--shadow-lg);
             border-color: var(--primary);
-            transform: translateY(-4px);
         }
 
         .gist-header {
@@ -408,12 +392,14 @@
 
         /* Medium Section Styles */
         .medium-section {
-            padding: 60px 1.5rem;
-            background: var(--light);
+            padding: 50px 2rem;
+            background: #f8fafc;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
         }
 
         .medium-container {
-            max-width: 1100px;
+            max-width: 100%;
             margin: 0 auto;
         }
 
@@ -446,9 +432,9 @@
 
         .medium-sidebar {
             background: var(--white);
-            border-radius: var(--radius-xl);
+            border-radius: 16px;
             padding: 1.5rem;
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
             border: 1px solid var(--border);
         }
 
@@ -549,8 +535,7 @@
         }
 
         .medium-link-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
+            opacity: 0.9;
             color: var(--white);
         }
 
@@ -563,7 +548,6 @@
         .medium-link-secondary:hover {
             border-color: var(--primary);
             color: var(--primary);
-            transform: translateY(-2px);
         }
 
         .medium-articles {
@@ -574,19 +558,17 @@
 
         .article-card {
             background: var(--white);
-            border-radius: var(--radius-lg);
+            border-radius: 12px;
             padding: 1.5rem;
-            box-shadow: var(--shadow);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
             border: 1px solid var(--border);
-            transition: all 0.3s;
+            transition: border-color 0.2s ease;
             text-decoration: none;
             display: block;
         }
 
         .article-card:hover {
-            box-shadow: var(--shadow-lg);
             border-color: var(--primary);
-            transform: translateY(-4px);
         }
 
         .article-category {
