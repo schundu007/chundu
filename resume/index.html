@@ -518,161 +518,6 @@
             }
         }
 
-        /* Document Selector Panel */
-        .documents-panel {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--border);
-        }
-
-        .documents-panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .documents-panel-title {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .documents-panel-title i {
-            color: var(--primary);
-        }
-
-        .manage-docs-link {
-            font-size: 0.85rem;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.35rem;
-        }
-
-        .manage-docs-link:hover {
-            text-decoration: underline;
-        }
-
-        .documents-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 0.75rem;
-        }
-
-        .doc-item {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 0.75rem 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .doc-item:hover {
-            border-color: var(--primary);
-            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
-        }
-
-        .doc-item.active {
-            border-color: #16a34a;
-            background: rgba(22, 163, 74, 0.05);
-        }
-
-        .doc-item-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .doc-item-icon.resume {
-            background: rgba(37, 99, 235, 0.1);
-            color: var(--primary);
-        }
-
-        .doc-item-icon.cover-letter {
-            background: rgba(168, 85, 247, 0.1);
-            color: #a855f7;
-        }
-
-        .doc-item-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .doc-item-name {
-            font-weight: 500;
-            font-size: 0.85rem;
-            color: var(--dark);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .doc-item-meta {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-        }
-
-        .doc-item-badge {
-            background: #16a34a;
-            color: white;
-            padding: 0.15rem 0.5rem;
-            border-radius: 50px;
-            font-size: 0.65rem;
-            font-weight: 600;
-        }
-
-        .no-docs-message {
-            text-align: center;
-            padding: 1.5rem;
-            color: var(--text-muted);
-            background: white;
-            border-radius: 10px;
-            border: 1px dashed var(--border);
-        }
-
-        .no-docs-message i {
-            font-size: 1.5rem;
-            color: var(--border);
-            margin-bottom: 0.5rem;
-        }
-
-        .no-docs-message a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .no-docs-message a:hover {
-            text-decoration: underline;
-        }
-
-        .docs-section-title {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .docs-section-title:first-child {
-            margin-top: 0;
-        }
     </style>
 </head>
 <body>
@@ -720,25 +565,17 @@
                     <i class="fas fa-download"></i>
                     Download Resume
                 </a>
+                <a id="view-cover-letter-btn" href="#" class="btn btn-secondary" target="_blank" style="display: none;">
+                    <i class="fas fa-envelope-open-text"></i>
+                    View Cover Letter
+                </a>
+                <a id="download-cover-letter-btn" href="#" class="btn btn-primary" download style="display: none;">
+                    <i class="fas fa-download"></i>
+                    Download Cover Letter
+                </a>
             </div>
         </div>
     </header>
-
-    <!-- Documents Panel - Shows uploaded documents from Jobs page -->
-    <section class="documents-panel" id="documents-panel">
-        <div class="documents-panel-header">
-            <div class="documents-panel-title">
-                <i class="fas fa-folder-open"></i>
-                <span>My Documents</span>
-            </div>
-            <a href="../jobs/" class="manage-docs-link">
-                <i class="fas fa-cog"></i> Manage Documents
-            </a>
-        </div>
-        <div id="documents-list-container">
-            <!-- Documents will be rendered here by JavaScript -->
-        </div>
-    </section>
 
     <!-- Resume Content -->
     <div class="resume-section-wrapper">
@@ -1059,6 +896,7 @@
 
         // ========================================
         // DOCUMENT MANAGER INTEGRATION
+        // Shows only active resume and cover letter to users
         // ========================================
 
         // Storage keys (must match jobs page)
@@ -1079,13 +917,6 @@
                 resume: localStorage.getItem(ACTIVE_RESUME_KEY),
                 coverLetter: localStorage.getItem(ACTIVE_COVER_LETTER_KEY)
             };
-        }
-
-        // Format file size
-        function formatFileSize(bytes) {
-            if (bytes < 1024) return bytes + ' B';
-            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-            return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
         }
 
         // Download document from localStorage
@@ -1122,110 +953,62 @@
             }
         }
 
-        // Update header buttons based on active resume
+        // Update header buttons based on active documents
         function updateHeaderButtons() {
             const docs = getDocuments();
             const activeIds = getActiveDocuments();
-            const viewBtn = document.getElementById('view-resume-btn');
-            const downloadBtn = document.getElementById('download-resume-btn');
 
+            // Resume buttons
+            const viewResumeBtn = document.getElementById('view-resume-btn');
+            const downloadResumeBtn = document.getElementById('download-resume-btn');
+
+            // Cover letter buttons
+            const viewCoverLetterBtn = document.getElementById('view-cover-letter-btn');
+            const downloadCoverLetterBtn = document.getElementById('download-cover-letter-btn');
+
+            // Handle Resume
             if (activeIds.resume) {
                 const activeResume = docs.find(d => d.id === activeIds.resume && d.type === 'resume');
                 if (activeResume) {
-                    // Update buttons to use localStorage document
-                    viewBtn.href = 'javascript:void(0)';
-                    viewBtn.onclick = () => viewDoc(activeResume.id);
-
-                    downloadBtn.href = 'javascript:void(0)';
-                    downloadBtn.onclick = () => downloadDoc(activeResume.id);
-                    downloadBtn.removeAttribute('download');
-                    return;
+                    viewResumeBtn.href = 'javascript:void(0)';
+                    viewResumeBtn.onclick = () => viewDoc(activeResume.id);
+                    downloadResumeBtn.href = 'javascript:void(0)';
+                    downloadResumeBtn.onclick = () => downloadDoc(activeResume.id);
+                    downloadResumeBtn.removeAttribute('download');
                 }
+            } else {
+                // Fall back to default PDF
+                viewResumeBtn.href = DEFAULT_RESUME_PATH;
+                viewResumeBtn.onclick = null;
+                downloadResumeBtn.href = DEFAULT_RESUME_PATH;
+                downloadResumeBtn.onclick = null;
+                downloadResumeBtn.setAttribute('download', '');
             }
 
-            // Fall back to default PDF
-            viewBtn.href = DEFAULT_RESUME_PATH;
-            viewBtn.onclick = null;
-            downloadBtn.href = DEFAULT_RESUME_PATH;
-            downloadBtn.onclick = null;
-            downloadBtn.setAttribute('download', '');
+            // Handle Cover Letter - only show if one is set as active
+            if (activeIds.coverLetter) {
+                const activeCoverLetter = docs.find(d => d.id === activeIds.coverLetter && d.type === 'cover-letter');
+                if (activeCoverLetter) {
+                    viewCoverLetterBtn.style.display = 'inline-flex';
+                    downloadCoverLetterBtn.style.display = 'inline-flex';
+                    viewCoverLetterBtn.href = 'javascript:void(0)';
+                    viewCoverLetterBtn.onclick = () => viewDoc(activeCoverLetter.id);
+                    downloadCoverLetterBtn.href = 'javascript:void(0)';
+                    downloadCoverLetterBtn.onclick = () => downloadDoc(activeCoverLetter.id);
+                    downloadCoverLetterBtn.removeAttribute('download');
+                } else {
+                    viewCoverLetterBtn.style.display = 'none';
+                    downloadCoverLetterBtn.style.display = 'none';
+                }
+            } else {
+                viewCoverLetterBtn.style.display = 'none';
+                downloadCoverLetterBtn.style.display = 'none';
+            }
         }
 
-        // Render the documents panel
-        function renderDocumentsPanel() {
-            const docs = getDocuments();
-            const activeIds = getActiveDocuments();
-            const container = document.getElementById('documents-list-container');
-            const panel = document.getElementById('documents-panel');
-
-            // Separate by type
-            const resumes = docs.filter(d => d.type === 'resume');
-            const coverLetters = docs.filter(d => d.type === 'cover-letter');
-
-            if (docs.length === 0) {
-                container.innerHTML = `
-                    <div class="no-docs-message">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>No documents uploaded yet.<br>
-                        <a href="../jobs/">Go to Jobs page</a> to upload resumes and cover letters.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            let html = '';
-
-            // Resumes section
-            if (resumes.length > 0) {
-                html += '<div class="docs-section-title">Resumes</div>';
-                html += '<div class="documents-list">';
-                resumes.forEach(doc => {
-                    const isActive = activeIds.resume === doc.id;
-                    html += `
-                        <div class="doc-item ${isActive ? 'active' : ''}" onclick="downloadDoc('${doc.id}')">
-                            <div class="doc-item-icon resume">
-                                <i class="fas fa-file-alt"></i>
-                            </div>
-                            <div class="doc-item-info">
-                                <div class="doc-item-name">${doc.name}</div>
-                                <div class="doc-item-meta">${formatFileSize(doc.size)}</div>
-                            </div>
-                            ${isActive ? '<span class="doc-item-badge">Active</span>' : ''}
-                        </div>
-                    `;
-                });
-                html += '</div>';
-            }
-
-            // Cover Letters section
-            if (coverLetters.length > 0) {
-                html += '<div class="docs-section-title">Cover Letters</div>';
-                html += '<div class="documents-list">';
-                coverLetters.forEach(doc => {
-                    const isActive = activeIds.coverLetter === doc.id;
-                    html += `
-                        <div class="doc-item ${isActive ? 'active' : ''}" onclick="downloadDoc('${doc.id}')">
-                            <div class="doc-item-icon cover-letter">
-                                <i class="fas fa-envelope-open-text"></i>
-                            </div>
-                            <div class="doc-item-info">
-                                <div class="doc-item-name">${doc.name}</div>
-                                <div class="doc-item-meta">${formatFileSize(doc.size)}</div>
-                            </div>
-                            ${isActive ? '<span class="doc-item-badge">Active</span>' : ''}
-                        </div>
-                    `;
-                });
-                html += '</div>';
-            }
-
-            container.innerHTML = html;
-        }
-
-        // Initialize document manager on page load
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             updateHeaderButtons();
-            renderDocumentsPanel();
         });
     </script>
 </body>
