@@ -3722,8 +3722,10 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             }
 
             try {
-                // Step 1: Get the file SHA from GitHub
+                // Step 1: Try to get the file SHA from GitHub
                 const filePath = `assets/resume/${filename}`;
+                let fileExistsOnGitHub = false;
+
                 const getResponse = await fetch(
                     `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}`,
                     {
@@ -3734,35 +3736,34 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                     }
                 );
 
-                if (!getResponse.ok) {
-                    throw new Error('File not found on GitHub');
-                }
+                if (getResponse.ok) {
+                    const fileData = await getResponse.json();
+                    fileExistsOnGitHub = true;
 
-                const fileData = await getResponse.json();
+                    // Step 2: Delete the file from GitHub
+                    const deleteResponse = await fetch(
+                        `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}`,
+                        {
+                            method: 'DELETE',
+                            headers: {
+                                'Authorization': `token ${token}`,
+                                'Accept': 'application/vnd.github.v3+json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                message: `Delete ${type === 'resume' ? 'resume' : 'cover letter'}: ${displayName}`,
+                                sha: fileData.sha
+                            })
+                        }
+                    );
 
-                // Step 2: Delete the file from GitHub
-                const deleteResponse = await fetch(
-                    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}`,
-                    {
-                        method: 'DELETE',
-                        headers: {
-                            'Authorization': `token ${token}`,
-                            'Accept': 'application/vnd.github.v3+json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            message: `Delete ${type === 'resume' ? 'resume' : 'cover letter'}: ${displayName}`,
-                            sha: fileData.sha
-                        })
+                    if (!deleteResponse.ok) {
+                        const error = await deleteResponse.json();
+                        throw new Error(error.message || 'Failed to delete file');
                     }
-                );
-
-                if (!deleteResponse.ok) {
-                    const error = await deleteResponse.json();
-                    throw new Error(error.message || 'Failed to delete file');
                 }
 
-                // Step 3: Remove from manifest
+                // Step 3: Remove from manifest (even if file wasn't on GitHub)
                 if (type === 'resume') {
                     documentsManifest.resumes = documentsManifest.resumes.filter(r => r.file !== filename);
                 } else {
@@ -3778,7 +3779,12 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 // Success - close overlay and refresh
                 cancelDelete();
                 renderDocumentManager();
-                alert('Document deleted successfully! Changes will be live in ~1 minute.');
+
+                if (fileExistsOnGitHub) {
+                    alert('Document deleted successfully! Changes will be live in ~1 minute.');
+                } else {
+                    alert('Entry removed from manifest. (File was not found on GitHub - may have been deleted already)');
+                }
 
             } catch (error) {
                 console.error('Delete error:', error);
