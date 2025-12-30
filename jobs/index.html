@@ -997,6 +997,107 @@
             color: #166534;
             background: #f0fdf4;
         }
+
+        /* Delete Button */
+        .btn-delete {
+            background: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+            color: white;
+            border-color: #dc2626;
+        }
+
+        .btn-delete:disabled {
+            background: #f3f4f6;
+            color: #9ca3af;
+            border-color: #e5e7eb;
+            cursor: not-allowed;
+        }
+
+        .delete-confirm-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .delete-confirm-dialog {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .delete-confirm-dialog h3 {
+            margin: 0 0 0.5rem;
+            color: #dc2626;
+        }
+
+        .delete-confirm-dialog p {
+            margin: 0 0 1rem;
+            color: #4b5563;
+            font-size: 0.9rem;
+        }
+
+        .delete-confirm-dialog .filename {
+            background: #f3f4f6;
+            padding: 0.5rem;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            word-break: break-all;
+        }
+
+        .delete-confirm-buttons {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .delete-confirm-buttons button {
+            padding: 0.6rem 1.25rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-cancel {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-cancel:hover {
+            background: #d1d5db;
+        }
+
+        .btn-confirm-delete {
+            background: #dc2626;
+            color: white;
+        }
+
+        .btn-confirm-delete:hover {
+            background: #b91c1c;
+        }
     </style>
 </head>
 <body>
@@ -3576,6 +3677,125 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             }
         }
 
+        // Delete Document Functions
+        let pendingDelete = null;
+
+        function confirmDelete(type, filename, displayName) {
+            pendingDelete = { type, filename, displayName };
+
+            const overlay = document.createElement('div');
+            overlay.className = 'delete-confirm-overlay';
+            overlay.id = 'delete-confirm-overlay';
+            overlay.innerHTML = `
+                <div class="delete-confirm-dialog">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Delete Document</h3>
+                    <p>Are you sure you want to permanently delete this ${type === 'resume' ? 'resume' : 'cover letter'}?</p>
+                    <div class="filename">${displayName}<br><small>${filename}</small></div>
+                    <p style="color: #dc2626; font-weight: 600;">This action cannot be undone!</p>
+                    <div class="delete-confirm-buttons">
+                        <button class="btn-cancel" onclick="cancelDelete()">Cancel</button>
+                        <button class="btn-confirm-delete" onclick="executeDelete()">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+        }
+
+        function cancelDelete() {
+            pendingDelete = null;
+            const overlay = document.getElementById('delete-confirm-overlay');
+            if (overlay) overlay.remove();
+        }
+
+        async function executeDelete() {
+            if (!pendingDelete) return;
+
+            const { type, filename, displayName } = pendingDelete;
+            const overlay = document.getElementById('delete-confirm-overlay');
+
+            // Update dialog to show loading
+            overlay.querySelector('.delete-confirm-dialog').innerHTML = `
+                <div style="padding: 1rem;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: #dc2626;"></i>
+                    <p style="margin-top: 1rem; color: #4b5563;">Deleting from GitHub...</p>
+                </div>
+            `;
+
+            const token = getGithubToken();
+            if (!token) {
+                alert('Please configure your GitHub token first.');
+                cancelDelete();
+                return;
+            }
+
+            try {
+                // Step 1: Get the file SHA from GitHub
+                const filePath = `assets/resume/${filename}`;
+                const getResponse = await fetch(
+                    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}`,
+                    {
+                        headers: {
+                            'Authorization': `token ${token}`,
+                            'Accept': 'application/vnd.github.v3+json'
+                        }
+                    }
+                );
+
+                if (!getResponse.ok) {
+                    throw new Error('File not found on GitHub');
+                }
+
+                const fileData = await getResponse.json();
+
+                // Step 2: Delete the file from GitHub
+                const deleteResponse = await fetch(
+                    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}`,
+                    {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `token ${token}`,
+                            'Accept': 'application/vnd.github.v3+json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            message: `Delete ${type === 'resume' ? 'resume' : 'cover letter'}: ${displayName}`,
+                            sha: fileData.sha
+                        })
+                    }
+                );
+
+                if (!deleteResponse.ok) {
+                    const error = await deleteResponse.json();
+                    throw new Error(error.message || 'Failed to delete file');
+                }
+
+                // Step 3: Remove from manifest
+                if (type === 'resume') {
+                    documentsManifest.resumes = documentsManifest.resumes.filter(r => r.file !== filename);
+                } else {
+                    documentsManifest.coverLetters = documentsManifest.coverLetters.filter(c => c.file !== filename);
+                }
+
+                // Step 4: Update manifest on GitHub
+                const manifestResult = await updateManifestOnGitHub();
+                if (!manifestResult.success) {
+                    console.warn('File deleted but manifest update failed:', manifestResult.message);
+                }
+
+                // Success - close overlay and refresh
+                cancelDelete();
+                renderDocumentManager();
+                alert('Document deleted successfully! Changes will be live in ~1 minute.');
+
+            } catch (error) {
+                console.error('Delete error:', error);
+                cancelDelete();
+                alert('Error deleting document: ' + error.message);
+            }
+        }
+
         // GitHub API: Update manifest.json
         async function updateManifestOnGitHub() {
             const token = getGithubToken();
@@ -3698,6 +3918,9 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                                 Set Active
                             </button>
                         `}
+                        <button class="btn-delete" onclick="confirmDelete('resume', '${resume.file}', '${resume.name.replace(/'/g, "\\'")}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </div>
                 `;
             });
@@ -3744,6 +3967,9 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                                 Set Active
                             </button>
                         `}
+                        <button class="btn-delete" onclick="confirmDelete('coverLetter', '${letter.file}', '${letter.name.replace(/'/g, "\\'")}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </div>
                 `;
             });
