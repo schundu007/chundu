@@ -862,11 +862,6 @@
             animation: spin 1s linear infinite;
         }
 
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
         /* Upload Section */
         .upload-section {
             background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
@@ -1253,10 +1248,7 @@
                                 <i class="fas fa-upload"></i> Upload to GitHub
                             </button>
                         </div>
-                        <div id="upload-status" class="upload-status">
-                            <i class="fas fa-spinner fa-spin"></i>
-                            <span id="upload-status-text">Uploading...</span>
-                        </div>
+                        <div id="upload-status" class="upload-status"></div>
                     </div>
                 </div>
             </div>
@@ -3526,7 +3518,6 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
 
         function showUploadStatus(message, type) {
             const statusEl = document.getElementById('upload-status');
-            const textEl = document.getElementById('upload-status-text');
             statusEl.className = 'upload-status show ' + type;
 
             if (type === 'error') {
@@ -3874,9 +3865,6 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
         function renderDocumentManager() {
             const container = document.getElementById('doc-manager-content');
             if (!documentsManifest) return;
-
-            const activeResume = documentsManifest.resumes.find(r => r.active);
-            const activeCoverLetter = documentsManifest.coverLetters.find(c => c.active);
 
             let html = `
                 <!-- Resumes Section -->
