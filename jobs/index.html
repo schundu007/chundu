@@ -3429,15 +3429,18 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
         }
 
         function saveGithubToken() {
-            const token = document.getElementById('github-token').value.trim();
-            if (token) {
+            const inputEl = document.getElementById('github-token');
+            const token = inputEl.value.trim();
+
+            // Only save if a new token is entered (not empty)
+            if (token && token.startsWith('ghp_')) {
                 localStorage.setItem('github_token', token);
                 updateTokenStatus();
-                alert('GitHub token saved! You can now set active documents with auto-sync.');
-            } else {
-                localStorage.removeItem('github_token');
-                updateTokenStatus();
+                alert('GitHub token saved! It will persist across sessions.');
+            } else if (token) {
+                alert('Invalid token format. GitHub tokens start with "ghp_"');
             }
+            // If empty, do nothing (keep existing token)
         }
 
         function updateTokenStatus() {
@@ -3448,10 +3451,15 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             if (token) {
                 statusEl.textContent = 'Configured';
                 statusEl.className = 'token-status configured';
-                if (inputEl) inputEl.value = token.substring(0, 4) + '...' + token.substring(token.length - 4);
+                // Clear input and show placeholder instead of masked token
+                if (inputEl) {
+                    inputEl.value = '';
+                    inputEl.placeholder = 'Token saved (' + token.substring(0, 4) + '...' + token.substring(token.length - 4) + ')';
+                }
             } else {
                 statusEl.textContent = 'Not Configured';
                 statusEl.className = 'token-status not-configured';
+                if (inputEl) inputEl.placeholder = 'ghp_xxxxxxxxxxxxxxxxxxxx';
             }
         }
 
