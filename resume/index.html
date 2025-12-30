@@ -598,6 +598,39 @@
             border: none;
         }
 
+        .viewer-footer {
+            padding: 1rem 1.5rem;
+            background: var(--light);
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .viewer-footer .btn {
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+        }
+
+        .viewer-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .viewer-loading i {
+            font-size: 2.5rem;
+        }
+
+        .viewer-content {
+            position: relative;
+        }
+
         @media (max-width: 768px) {
             .viewer-header {
                 flex-direction: column;
@@ -648,22 +681,14 @@
                 <p>Staff DevOps Engineer | SRE + GPU Infrastructure + Cloud Security | 18+ Years Hands-On</p>
             </div>
             <div class="header-buttons">
-                <button id="view-resume-btn" class="btn btn-secondary" onclick="viewDocument('resume')">
+                <button id="view-resume-btn" class="btn btn-primary" onclick="viewDocument('resume')">
                     <i class="fas fa-eye"></i>
                     View Resume
                 </button>
-                <a id="download-resume-btn" href="../assets/resume/Sudhakar_Chundu_Resume.pdf" class="btn btn-primary" download>
-                    <i class="fas fa-download"></i>
-                    Download Resume
-                </a>
                 <button id="view-cover-letter-btn" class="btn btn-secondary" onclick="viewDocument('cover-letter')" style="display: none;">
                     <i class="fas fa-envelope-open-text"></i>
                     View Cover Letter
                 </button>
-                <a id="download-cover-letter-btn" href="#" class="btn btn-primary" download style="display: none;">
-                    <i class="fas fa-download"></i>
-                    Download Cover Letter
-                </a>
             </div>
         </div>
     </header>
@@ -684,7 +709,17 @@
             </button>
         </div>
         <div class="viewer-content">
-            <iframe id="document-frame" src="" frameborder="0"></iframe>
+            <div id="viewer-loading" class="viewer-loading">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>Loading document...</span>
+            </div>
+            <iframe id="document-frame" src="" frameborder="0" onload="hideLoading()"></iframe>
+        </div>
+        <div class="viewer-footer">
+            <a id="viewer-download-btn" href="#" class="btn btn-primary" download>
+                <i class="fas fa-download"></i>
+                Download Document
+            </a>
         </div>
     </section>
 
@@ -1016,9 +1051,7 @@
         let activeCoverLetterPath = null;
 
         async function loadActiveDocuments() {
-            const downloadResumeBtn = document.getElementById('download-resume-btn');
             const viewCoverLetterBtn = document.getElementById('view-cover-letter-btn');
-            const downloadCoverLetterBtn = document.getElementById('download-cover-letter-btn');
             const tabCoverLetter = document.getElementById('tab-cover-letter');
 
             try {
@@ -1029,10 +1062,8 @@
                 const activeResume = manifest.resumes.find(r => r.active);
                 if (activeResume) {
                     activeResumePath = activeResume.file;
-                    downloadResumeBtn.href = BASE_PATH + activeResume.file;
                 } else {
                     activeResumePath = DEFAULT_RESUME;
-                    downloadResumeBtn.href = BASE_PATH + DEFAULT_RESUME;
                 }
 
                 // Find active cover letter
@@ -1040,21 +1071,16 @@
                 if (activeCoverLetter) {
                     activeCoverLetterPath = activeCoverLetter.file;
                     viewCoverLetterBtn.style.display = 'inline-flex';
-                    downloadCoverLetterBtn.style.display = 'inline-flex';
-                    downloadCoverLetterBtn.href = BASE_PATH + activeCoverLetter.file;
                     tabCoverLetter.style.display = 'inline-flex';
                 } else {
                     activeCoverLetterPath = null;
                     viewCoverLetterBtn.style.display = 'none';
-                    downloadCoverLetterBtn.style.display = 'none';
                     tabCoverLetter.style.display = 'none';
                 }
             } catch (error) {
                 console.error('Error loading manifest:', error);
                 activeResumePath = DEFAULT_RESUME;
-                downloadResumeBtn.href = BASE_PATH + DEFAULT_RESUME;
                 viewCoverLetterBtn.style.display = 'none';
-                downloadCoverLetterBtn.style.display = 'none';
             }
         }
 
@@ -1062,24 +1088,38 @@
         function viewDocument(type) {
             const viewer = document.getElementById('document-viewer');
             const frame = document.getElementById('document-frame');
+            const loading = document.getElementById('viewer-loading');
+            const downloadBtn = document.getElementById('viewer-download-btn');
             const tabResume = document.getElementById('tab-resume');
             const tabCoverLetter = document.getElementById('tab-cover-letter');
 
             let filePath = '';
+            let docLabel = '';
             if (type === 'resume' && activeResumePath) {
                 filePath = activeResumePath;
+                docLabel = 'Resume';
                 tabResume.classList.add('active');
                 tabCoverLetter.classList.remove('active');
             } else if (type === 'cover-letter' && activeCoverLetterPath) {
                 filePath = activeCoverLetterPath;
+                docLabel = 'Cover Letter';
                 tabResume.classList.remove('active');
                 tabCoverLetter.classList.add('active');
             } else {
                 return;
             }
 
-            // Use Google Docs Viewer for DOCX files, direct embed for PDF
+            // Show loading indicator
+            loading.style.display = 'flex';
+            frame.style.opacity = '0';
+
+            // Set download button
+            downloadBtn.href = BASE_PATH + filePath;
+            downloadBtn.innerHTML = '<i class="fas fa-download"></i> Download ' + docLabel;
+
             const fullUrl = SITE_URL + filePath;
+
+            // Use Google Docs Viewer for DOCX, direct embed for PDF
             if (filePath.endsWith('.docx') || filePath.endsWith('.doc')) {
                 frame.src = `https://docs.google.com/gview?url=${encodeURIComponent(fullUrl)}&embedded=true`;
             } else {
@@ -1090,12 +1130,22 @@
             viewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
+        // Hide loading when iframe loads
+        function hideLoading() {
+            const loading = document.getElementById('viewer-loading');
+            const frame = document.getElementById('document-frame');
+            loading.style.display = 'none';
+            frame.style.opacity = '1';
+        }
+
         // Close the viewer
         function closeViewer() {
             const viewer = document.getElementById('document-viewer');
             const frame = document.getElementById('document-frame');
+            const loading = document.getElementById('viewer-loading');
             viewer.style.display = 'none';
             frame.src = '';
+            loading.style.display = 'flex';
         }
 
         // Initialize on page load
