@@ -29,6 +29,11 @@
       "name": "Main Resume (PDF)",
       "file": "Sudhakar_Chundu_Resume.pdf",
       "active": false
+    },
+    {
+      "name": "CHUNDU BABU Resume",
+      "file": "CHUNDU_BABU_Resume.pdf",
+      "active": false
     }
   ],
   "coverLetters": [
