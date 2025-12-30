@@ -1,11 +1,6 @@
 {
   "resumes": [
     {
-      "name": "Microsoft Data Infra Resume",
-      "file": "Sudhakar_Chundu_Microsoft_DataInfra_Resume.docx",
-      "active": false
-    },
-    {
       "name": "Rubrik Resume (ATS)",
       "file": "Sudhakar_Chundu_Rubrik_Resume_ATS.docx",
       "active": true
