@@ -713,6 +713,251 @@
             object-fit: contain;
             flex-shrink: 0;
         }
+
+        /* Document Manager Section */
+        .doc-manager-section {
+            padding: 30px 1.5rem;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .doc-manager-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .doc-manager-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .doc-manager-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .doc-manager-title h3 {
+            font-size: 1.1rem;
+            margin: 0;
+            color: var(--dark);
+        }
+
+        .doc-manager-title .badge {
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.6rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .upload-btns {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .upload-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            border: 2px dashed var(--primary);
+            background: rgba(37, 99, 235, 0.05);
+            color: var(--primary);
+            border-radius: var(--radius);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .upload-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-style: solid;
+        }
+
+        .upload-btn input[type="file"] {
+            display: none;
+        }
+
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .document-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .document-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-color: var(--primary);
+        }
+
+        .document-card.active-doc {
+            border-color: #16a34a;
+            background: rgba(22, 163, 74, 0.03);
+        }
+
+        .document-card.active-doc::before {
+            content: 'ACTIVE FOR DOWNLOAD';
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            background: #16a34a;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 50px;
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+
+        .doc-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .doc-icon.resume {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+        }
+
+        .doc-icon.cover-letter {
+            background: rgba(168, 85, 247, 0.1);
+            color: #a855f7;
+        }
+
+        .doc-info {
+            flex: 1;
+        }
+
+        .doc-name {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+            word-break: break-word;
+        }
+
+        .doc-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .doc-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .doc-action-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            background: var(--light);
+            border-radius: var(--radius);
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            transition: all 0.2s;
+        }
+
+        .doc-action-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .doc-action-btn.set-active {
+            background: #16a34a;
+            color: white;
+            border-color: #16a34a;
+        }
+
+        .doc-action-btn.set-active:hover {
+            background: #15803d;
+        }
+
+        .doc-action-btn.delete {
+            color: #dc2626;
+        }
+
+        .doc-action-btn.delete:hover {
+            background: #dc2626;
+            color: white;
+            border-color: #dc2626;
+        }
+
+        .empty-docs {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border: 2px dashed var(--border);
+            border-radius: var(--radius-lg);
+            color: var(--text-muted);
+        }
+
+        .empty-docs i {
+            font-size: 2.5rem;
+            color: var(--border);
+            margin-bottom: 1rem;
+        }
+
+        .empty-docs h4 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .doc-type-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .doc-type-tab {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: var(--radius);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .doc-type-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .doc-type-tab:hover:not(.active) {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
     </style>
 </head>
 <body>
@@ -799,6 +1044,53 @@
         <h1>Job <span>Listings</span></h1>
         <p>Live US job openings from top tech companies - Cloud Architect, Platform Engineering, DevOps & SRE roles. Priority: Bay Area, Texas, Florida, North Carolina.</p>
     </header>
+
+    <!-- Document Manager Section -->
+    <section class="doc-manager-section">
+        <div class="doc-manager-container">
+            <div class="doc-manager-header">
+                <div class="doc-manager-title">
+                    <i class="fas fa-folder-open" style="color: var(--primary); font-size: 1.25rem;"></i>
+                    <h3>Document Manager</h3>
+                    <span class="badge" id="doc-count">0 docs</span>
+                </div>
+                <div class="upload-btns">
+                    <label class="upload-btn">
+                        <i class="fas fa-file-alt"></i>
+                        Upload Resume
+                        <input type="file" id="resume-upload" accept=".pdf,.doc,.docx" onchange="handleFileUpload(event, 'resume')">
+                    </label>
+                    <label class="upload-btn">
+                        <i class="fas fa-envelope-open-text"></i>
+                        Upload Cover Letter
+                        <input type="file" id="cover-letter-upload" accept=".pdf,.doc,.docx" onchange="handleFileUpload(event, 'cover-letter')">
+                    </label>
+                </div>
+            </div>
+
+            <div class="doc-type-tabs">
+                <button class="doc-type-tab active" onclick="filterDocuments('all')" data-filter="all">
+                    <i class="fas fa-layer-group"></i> All Documents
+                </button>
+                <button class="doc-type-tab" onclick="filterDocuments('resume')" data-filter="resume">
+                    <i class="fas fa-file-alt"></i> Resumes
+                </button>
+                <button class="doc-type-tab" onclick="filterDocuments('cover-letter')" data-filter="cover-letter">
+                    <i class="fas fa-envelope-open-text"></i> Cover Letters
+                </button>
+            </div>
+
+            <div id="documents-grid" class="documents-grid">
+                <!-- Documents will be rendered here -->
+            </div>
+
+            <div id="empty-docs" class="empty-docs" style="display: none;">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <h4>No Documents Yet</h4>
+                <p>Upload your resumes and cover letters to manage them here.<br>Set one as active to make it available for download on your resume page.</p>
+            </div>
+        </div>
+    </section>
 
     <!-- Featured Companies (No Public API) -->
     <section style="padding: 30px 1.5rem; background: var(--light);">
@@ -2951,6 +3243,212 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 timeout = setTimeout(later, wait);
             };
         }
+
+        // ========================================
+        // DOCUMENT MANAGER
+        // ========================================
+
+        // Document storage key in localStorage
+        const DOC_STORAGE_KEY = 'portfolio_documents';
+        const ACTIVE_RESUME_KEY = 'portfolio_active_resume';
+        const ACTIVE_COVER_LETTER_KEY = 'portfolio_active_cover_letter';
+        let currentFilter = 'all';
+
+        // Get all documents from localStorage
+        function getDocuments() {
+            const docs = localStorage.getItem(DOC_STORAGE_KEY);
+            return docs ? JSON.parse(docs) : [];
+        }
+
+        // Save documents to localStorage
+        function saveDocuments(docs) {
+            localStorage.setItem(DOC_STORAGE_KEY, JSON.stringify(docs));
+        }
+
+        // Get active document IDs
+        function getActiveDocuments() {
+            return {
+                resume: localStorage.getItem(ACTIVE_RESUME_KEY),
+                coverLetter: localStorage.getItem(ACTIVE_COVER_LETTER_KEY)
+            };
+        }
+
+        // Set active document
+        function setActiveDocument(docId, docType) {
+            const key = docType === 'resume' ? ACTIVE_RESUME_KEY : ACTIVE_COVER_LETTER_KEY;
+            localStorage.setItem(key, docId);
+            renderDocuments();
+        }
+
+        // Handle file upload
+        function handleFileUpload(event, docType) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Check file size (max 5MB for localStorage)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File size exceeds 5MB limit. Please upload a smaller file.');
+                event.target.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const docs = getDocuments();
+                const newDoc = {
+                    id: Date.now().toString(),
+                    name: file.name,
+                    type: docType,
+                    size: file.size,
+                    mimeType: file.type,
+                    data: e.target.result,
+                    uploadedAt: new Date().toISOString()
+                };
+                docs.push(newDoc);
+                saveDocuments(docs);
+
+                // Auto-set as active if it's the first of its type
+                const activeIds = getActiveDocuments();
+                if (docType === 'resume' && !activeIds.resume) {
+                    setActiveDocument(newDoc.id, 'resume');
+                } else if (docType === 'cover-letter' && !activeIds.coverLetter) {
+                    setActiveDocument(newDoc.id, 'cover-letter');
+                }
+
+                renderDocuments();
+                event.target.value = ''; // Reset input
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Delete document
+        function deleteDocument(docId) {
+            if (!confirm('Are you sure you want to delete this document?')) return;
+
+            let docs = getDocuments();
+            const doc = docs.find(d => d.id === docId);
+            docs = docs.filter(d => d.id !== docId);
+            saveDocuments(docs);
+
+            // Clear active if deleted
+            const activeIds = getActiveDocuments();
+            if (activeIds.resume === docId) {
+                localStorage.removeItem(ACTIVE_RESUME_KEY);
+            }
+            if (activeIds.coverLetter === docId) {
+                localStorage.removeItem(ACTIVE_COVER_LETTER_KEY);
+            }
+
+            renderDocuments();
+        }
+
+        // Download document
+        function downloadDocument(docId) {
+            const docs = getDocuments();
+            const doc = docs.find(d => d.id === docId);
+            if (!doc) return;
+
+            const link = document.createElement('a');
+            link.href = doc.data;
+            link.download = doc.name;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Filter documents
+        function filterDocuments(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.doc-type-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.filter === filter);
+            });
+            renderDocuments();
+        }
+
+        // Format file size
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+        }
+
+        // Format date
+        function formatDocDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        // Render documents
+        function renderDocuments() {
+            const docs = getDocuments();
+            const activeIds = getActiveDocuments();
+            const grid = document.getElementById('documents-grid');
+            const emptyState = document.getElementById('empty-docs');
+            const docCount = document.getElementById('doc-count');
+
+            // Filter documents
+            const filteredDocs = currentFilter === 'all'
+                ? docs
+                : docs.filter(d => d.type === currentFilter);
+
+            // Update count
+            docCount.textContent = `${docs.length} doc${docs.length !== 1 ? 's' : ''}`;
+
+            if (filteredDocs.length === 0) {
+                grid.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            grid.style.display = 'grid';
+            emptyState.style.display = 'none';
+
+            grid.innerHTML = filteredDocs.map(doc => {
+                const isActive = (doc.type === 'resume' && activeIds.resume === doc.id) ||
+                                 (doc.type === 'cover-letter' && activeIds.coverLetter === doc.id);
+                const iconClass = doc.type === 'resume' ? 'resume' : 'cover-letter';
+                const icon = doc.type === 'resume' ? 'fa-file-alt' : 'fa-envelope-open-text';
+
+                return `
+                    <div class="document-card ${isActive ? 'active-doc' : ''}">
+                        <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                            <div class="doc-icon ${iconClass}">
+                                <i class="fas ${icon}"></i>
+                            </div>
+                            <div class="doc-info">
+                                <div class="doc-name">${doc.name}</div>
+                                <div class="doc-meta">
+                                    <span><i class="fas fa-calendar"></i> ${formatDocDate(doc.uploadedAt)}</span>
+                                    <span><i class="fas fa-file"></i> ${formatFileSize(doc.size)}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="doc-actions">
+                            <button class="doc-action-btn" onclick="downloadDocument('${doc.id}')" title="Download">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                            ${!isActive ? `
+                                <button class="doc-action-btn set-active" onclick="setActiveDocument('${doc.id}', '${doc.type}')" title="Set as Active">
+                                    <i class="fas fa-check"></i> Set Active
+                                </button>
+                            ` : `
+                                <button class="doc-action-btn" disabled style="opacity: 0.6; cursor: default;">
+                                    <i class="fas fa-check-circle"></i> Active
+                                </button>
+                            `}
+                            <button class="doc-action-btn delete" onclick="deleteDocument('${doc.id}')" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Initialize document manager on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            renderDocuments();
+        });
 
         // Initialize - load jobs
         fetchAllJobs();
