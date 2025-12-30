@@ -3,7 +3,7 @@
     {
       "name": "Microsoft SRE Resume",
       "file": "Sudhakar_Chundu_Microsoft_SRE.docx",
-      "active": true
+      "active": false
     },
     {
       "name": "Microsoft Data Infra Resume",
@@ -13,7 +13,7 @@
     {
       "name": "Rubrik Resume (ATS)",
       "file": "Sudhakar_Chundu_Rubrik_Resume_ATS.docx",
-      "active": false
+      "active": true
     },
     {
       "name": "General SRE Resume",
