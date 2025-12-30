@@ -895,33 +895,50 @@
         });
 
         // ========================================
-        // ACTIVE DOCUMENTS CONFIG
-        // Edit these paths to change what users see
-        // Files must exist in assets/resume/ folder
+        // LOAD ACTIVE DOCUMENTS FROM MANIFEST
         // ========================================
-        const ACTIVE_RESUME = '../assets/resume/Sudhakar_Chundu_Microsoft_SRE.docx';
-        const ACTIVE_COVER_LETTER = '../assets/resume/Sudhakar_Chundu_Microsoft_SRE_Cover_Letter.docx';
+        const BASE_PATH = '../assets/resume/';
+        const DEFAULT_RESUME = 'Sudhakar_Chundu_Resume.pdf';
 
-        // Update header buttons based on config
-        function updateHeaderButtons() {
+        async function loadActiveDocuments() {
             const viewResumeBtn = document.getElementById('view-resume-btn');
             const downloadResumeBtn = document.getElementById('download-resume-btn');
             const viewCoverLetterBtn = document.getElementById('view-cover-letter-btn');
             const downloadCoverLetterBtn = document.getElementById('download-cover-letter-btn');
 
-            // Set resume buttons
-            if (ACTIVE_RESUME) {
-                viewResumeBtn.href = ACTIVE_RESUME;
-                downloadResumeBtn.href = ACTIVE_RESUME;
-            }
+            try {
+                const response = await fetch('../assets/resume/manifest.json');
+                const manifest = await response.json();
 
-            // Show/hide cover letter buttons
-            if (ACTIVE_COVER_LETTER) {
-                viewCoverLetterBtn.style.display = 'inline-flex';
-                downloadCoverLetterBtn.style.display = 'inline-flex';
-                viewCoverLetterBtn.href = ACTIVE_COVER_LETTER;
-                downloadCoverLetterBtn.href = ACTIVE_COVER_LETTER;
-            } else {
+                // Find active resume
+                const activeResume = manifest.resumes.find(r => r.active);
+                if (activeResume) {
+                    const resumePath = BASE_PATH + activeResume.file;
+                    viewResumeBtn.href = resumePath;
+                    downloadResumeBtn.href = resumePath;
+                } else {
+                    // Fallback to default
+                    viewResumeBtn.href = BASE_PATH + DEFAULT_RESUME;
+                    downloadResumeBtn.href = BASE_PATH + DEFAULT_RESUME;
+                }
+
+                // Find active cover letter
+                const activeCoverLetter = manifest.coverLetters.find(c => c.active);
+                if (activeCoverLetter) {
+                    const coverLetterPath = BASE_PATH + activeCoverLetter.file;
+                    viewCoverLetterBtn.style.display = 'inline-flex';
+                    downloadCoverLetterBtn.style.display = 'inline-flex';
+                    viewCoverLetterBtn.href = coverLetterPath;
+                    downloadCoverLetterBtn.href = coverLetterPath;
+                } else {
+                    viewCoverLetterBtn.style.display = 'none';
+                    downloadCoverLetterBtn.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error loading manifest:', error);
+                // Fallback to default resume
+                viewResumeBtn.href = BASE_PATH + DEFAULT_RESUME;
+                downloadResumeBtn.href = BASE_PATH + DEFAULT_RESUME;
                 viewCoverLetterBtn.style.display = 'none';
                 downloadCoverLetterBtn.style.display = 'none';
             }
@@ -929,7 +946,7 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            updateHeaderButtons();
+            loadActiveDocuments();
         });
     </script>
 </body>

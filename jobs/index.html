@@ -867,48 +867,8 @@
                 </a>
             </div>
 
-            <div style="background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid var(--border);">
-                <h4 style="margin: 0 0 1rem; color: var(--dark); font-size: 1rem;">
-                    <i class="fas fa-file-alt" style="color: var(--primary); margin-right: 0.5rem;"></i>
-                    Active Resume for Users
-                </h4>
-                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(22, 163, 74, 0.05); border: 1px solid #16a34a; border-radius: 8px; margin-bottom: 1rem;">
-                    <i class="fas fa-check-circle" style="color: #16a34a; font-size: 1.5rem;"></i>
-                    <div>
-                        <div style="font-weight: 600; color: var(--dark);">Sudhakar_Chundu_Microsoft_SRE.docx</div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted);">This is currently shown to users on the Resume page</div>
-                    </div>
-                    <a href="../assets/resume/Sudhakar_Chundu_Microsoft_SRE.docx" target="_blank" class="btn btn-secondary" style="margin-left: auto; font-size: 0.8rem; padding: 0.5rem 1rem;">
-                        <i class="fas fa-eye"></i> Preview
-                    </a>
-                </div>
-
-                <h4 style="margin: 1.5rem 0 1rem; color: var(--dark); font-size: 1rem;">
-                    <i class="fas fa-envelope-open-text" style="color: #a855f7; margin-right: 0.5rem;"></i>
-                    Active Cover Letter for Users
-                </h4>
-                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(168, 85, 247, 0.05); border: 1px solid #a855f7; border-radius: 8px;">
-                    <i class="fas fa-check-circle" style="color: #a855f7; font-size: 1.5rem;"></i>
-                    <div>
-                        <div style="font-weight: 600; color: var(--dark);">Sudhakar_Chundu_Microsoft_SRE_Cover_Letter.docx</div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted);">This is currently shown to users on the Resume page</div>
-                    </div>
-                    <a href="../assets/resume/Sudhakar_Chundu_Microsoft_SRE_Cover_Letter.docx" target="_blank" class="btn btn-secondary" style="margin-left: auto; font-size: 0.8rem; padding: 0.5rem 1rem;">
-                        <i class="fas fa-eye"></i> Preview
-                    </a>
-                </div>
-
-                <div style="margin-top: 1.5rem; padding: 1rem; background: #fffbeb; border: 1px solid #fbbf24; border-radius: 8px;">
-                    <h5 style="margin: 0 0 0.5rem; color: #92400e; font-size: 0.9rem;">
-                        <i class="fas fa-info-circle" style="margin-right: 0.5rem;"></i>
-                        How to Update Active Documents
-                    </h5>
-                    <ol style="margin: 0; padding-left: 1.25rem; color: #92400e; font-size: 0.85rem; line-height: 1.6;">
-                        <li>Add PDF files to <code style="background: rgba(0,0,0,0.1); padding: 0.1rem 0.3rem; border-radius: 4px;">assets/resume/</code> folder</li>
-                        <li>Edit <code style="background: rgba(0,0,0,0.1); padding: 0.1rem 0.3rem; border-radius: 4px;">resume/index.html</code> - update ACTIVE_RESUME and ACTIVE_COVER_LETTER paths</li>
-                        <li>Commit and push to deploy changes</li>
-                    </ol>
-                </div>
+            <div id="doc-manager-content" style="background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid var(--border);">
+                <p style="color: var(--text-muted); text-align: center;">Loading documents...</p>
             </div>
         </div>
     </section>
@@ -3064,6 +3024,149 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 timeout = setTimeout(later, wait);
             };
         }
+
+        // ========================================
+        // DOCUMENT MANAGER
+        // ========================================
+
+        let documentsManifest = null;
+
+        async function loadDocumentManifest() {
+            try {
+                const response = await fetch('../assets/resume/manifest.json');
+                documentsManifest = await response.json();
+                renderDocumentManager();
+            } catch (error) {
+                console.error('Error loading document manifest:', error);
+                document.getElementById('doc-manager-content').innerHTML = `
+                    <p style="color: #dc2626; text-align: center;">
+                        <i class="fas fa-exclamation-triangle"></i> Error loading documents
+                    </p>
+                `;
+            }
+        }
+
+        function renderDocumentManager() {
+            const container = document.getElementById('doc-manager-content');
+            if (!documentsManifest) return;
+
+            const activeResume = documentsManifest.resumes.find(r => r.active);
+            const activeCoverLetter = documentsManifest.coverLetters.find(c => c.active);
+
+            let html = `
+                <!-- Resumes Section -->
+                <h4 style="margin: 0 0 1rem; color: var(--dark); font-size: 1rem;">
+                    <i class="fas fa-file-alt" style="color: var(--primary); margin-right: 0.5rem;"></i>
+                    Resumes <span style="color: var(--text-muted); font-weight: 400;">(${documentsManifest.resumes.length} available)</span>
+                </h4>
+                <div style="display: grid; gap: 0.5rem; margin-bottom: 1.5rem;">
+            `;
+
+            documentsManifest.resumes.forEach(resume => {
+                const isActive = resume.active;
+                html += `
+                    <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1rem;
+                         background: ${isActive ? 'rgba(22, 163, 74, 0.05)' : 'var(--light)'};
+                         border: 1px solid ${isActive ? '#16a34a' : 'var(--border)'};
+                         border-radius: 8px;">
+                        <i class="fas ${isActive ? 'fa-check-circle' : 'fa-file-alt'}"
+                           style="color: ${isActive ? '#16a34a' : 'var(--primary)'}; font-size: 1.25rem;"></i>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: var(--dark); font-size: 0.9rem;">${resume.name}</div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted);">${resume.file}</div>
+                        </div>
+                        <a href="../assets/resume/${resume.file}" target="_blank"
+                           class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.4rem 0.75rem;">
+                            <i class="fas fa-eye"></i> View
+                        </a>
+                        <a href="../assets/resume/${resume.file}" download
+                           class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.4rem 0.75rem;">
+                            <i class="fas fa-download"></i>
+                        </a>
+                        ${isActive ? `
+                            <span style="background: #16a34a; color: white; padding: 0.25rem 0.6rem; border-radius: 50px; font-size: 0.7rem; font-weight: 600;">
+                                ACTIVE
+                            </span>
+                        ` : `
+                            <button onclick="setActiveResume('${resume.file}')"
+                                    style="background: var(--primary); color: white; border: none; padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;">
+                                Set Active
+                            </button>
+                        `}
+                    </div>
+                `;
+            });
+
+            html += `
+                </div>
+
+                <!-- Cover Letters Section -->
+                <h4 style="margin: 0 0 1rem; color: var(--dark); font-size: 1rem;">
+                    <i class="fas fa-envelope-open-text" style="color: #a855f7; margin-right: 0.5rem;"></i>
+                    Cover Letters <span style="color: var(--text-muted); font-weight: 400;">(${documentsManifest.coverLetters.length} available)</span>
+                </h4>
+                <div style="display: grid; gap: 0.5rem;">
+            `;
+
+            documentsManifest.coverLetters.forEach(letter => {
+                const isActive = letter.active;
+                html += `
+                    <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1rem;
+                         background: ${isActive ? 'rgba(168, 85, 247, 0.05)' : 'var(--light)'};
+                         border: 1px solid ${isActive ? '#a855f7' : 'var(--border)'};
+                         border-radius: 8px;">
+                        <i class="fas ${isActive ? 'fa-check-circle' : 'fa-envelope-open-text'}"
+                           style="color: ${isActive ? '#a855f7' : '#a855f7'}; font-size: 1.25rem;"></i>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: var(--dark); font-size: 0.9rem;">${letter.name}</div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted);">${letter.file}</div>
+                        </div>
+                        <a href="../assets/resume/${letter.file}" target="_blank"
+                           class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.4rem 0.75rem;">
+                            <i class="fas fa-eye"></i> View
+                        </a>
+                        <a href="../assets/resume/${letter.file}" download
+                           class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.4rem 0.75rem;">
+                            <i class="fas fa-download"></i>
+                        </a>
+                        ${isActive ? `
+                            <span style="background: #a855f7; color: white; padding: 0.25rem 0.6rem; border-radius: 50px; font-size: 0.7rem; font-weight: 600;">
+                                ACTIVE
+                            </span>
+                        ` : `
+                            <button onclick="setActiveCoverLetter('${letter.file}')"
+                                    style="background: #a855f7; color: white; border: none; padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;">
+                                Set Active
+                            </button>
+                        `}
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function setActiveResume(filename) {
+            // Update manifest in memory
+            documentsManifest.resumes.forEach(r => r.active = (r.file === filename));
+            // Save to localStorage for persistence
+            localStorage.setItem('activeResume', filename);
+            renderDocumentManager();
+            alert('Active resume updated! Note: To make this permanent for all users, update the manifest.json file.');
+        }
+
+        function setActiveCoverLetter(filename) {
+            // Update manifest in memory
+            documentsManifest.coverLetters.forEach(c => c.active = (c.file === filename));
+            // Save to localStorage for persistence
+            localStorage.setItem('activeCoverLetter', filename);
+            renderDocumentManager();
+            alert('Active cover letter updated! Note: To make this permanent for all users, update the manifest.json file.');
+        }
+
+        // Load document manager
+        loadDocumentManifest();
 
         // Initialize - load jobs
         fetchAllJobs();

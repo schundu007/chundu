@@ -1,0 +1,56 @@
+{
+  "resumes": [
+    {
+      "name": "Microsoft SRE Resume",
+      "file": "Sudhakar_Chundu_Microsoft_SRE.docx",
+      "active": true
+    },
+    {
+      "name": "Microsoft Data Infra Resume",
+      "file": "Sudhakar_Chundu_Microsoft_DataInfra_Resume.docx",
+      "active": false
+    },
+    {
+      "name": "Rubrik Resume (ATS)",
+      "file": "Sudhakar_Chundu_Rubrik_Resume_ATS.docx",
+      "active": false
+    },
+    {
+      "name": "General SRE Resume",
+      "file": "Sudhakar_Chundu_SRE.docx",
+      "active": false
+    },
+    {
+      "name": "General Resume",
+      "file": "Sudhakar_Chundu.docx",
+      "active": false
+    },
+    {
+      "name": "Main Resume (PDF)",
+      "file": "Sudhakar_Chundu_Resume.pdf",
+      "active": false
+    }
+  ],
+  "coverLetters": [
+    {
+      "name": "Microsoft SRE Cover Letter",
+      "file": "Sudhakar_Chundu_Microsoft_SRE_Cover_Letter.docx",
+      "active": true
+    },
+    {
+      "name": "Microsoft Data Infra Cover Letter",
+      "file": "Sudhakar_Chundu_Microsoft_DataInfra_Cover_Letter.docx",
+      "active": false
+    },
+    {
+      "name": "Figure Cover Letter",
+      "file": "Sudhakar_Chundu_Figure_Cover_Letter.docx",
+      "active": false
+    },
+    {
+      "name": "Rubrik Cover Letter",
+      "file": "Sudhakar_Chundu_Rubrik_Cover_Letter.docx",
+      "active": false
+    }
+  ]
+}
