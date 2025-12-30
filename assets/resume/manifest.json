@@ -1,4 +1,10 @@
 {
-  "resumes": [],
+  "resumes": [
+    {
+      "name": "Sudhakar Chundu Microsoft SRE",
+      "file": "Sudhakar_Chundu_Microsoft_SRE (1).docx",
+      "active": false
+    }
+  ],
   "coverLetters": []
 }
