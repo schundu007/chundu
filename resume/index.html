@@ -518,6 +518,97 @@
             }
         }
 
+        /* Document Viewer Styles */
+        .document-viewer {
+            background: var(--white);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .viewer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .viewer-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .viewer-tab {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+            color: var(--text-muted);
+        }
+
+        .viewer-tab:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .viewer-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .viewer-close {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #dc2626;
+            transition: all 0.2s;
+        }
+
+        .viewer-close:hover {
+            background: #dc2626;
+            color: white;
+            border-color: #dc2626;
+        }
+
+        .viewer-content {
+            height: 80vh;
+            min-height: 600px;
+        }
+
+        .viewer-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            .viewer-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .viewer-content {
+                height: 60vh;
+                min-height: 400px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -557,18 +648,18 @@
                 <p>Staff DevOps Engineer | SRE + GPU Infrastructure + Cloud Security | 18+ Years Hands-On</p>
             </div>
             <div class="header-buttons">
-                <a id="view-resume-btn" href="../assets/resume/Sudhakar_Chundu_Resume.pdf" class="btn btn-secondary" target="_blank">
+                <button id="view-resume-btn" class="btn btn-secondary" onclick="viewDocument('resume')">
                     <i class="fas fa-eye"></i>
                     View Resume
-                </a>
+                </button>
                 <a id="download-resume-btn" href="../assets/resume/Sudhakar_Chundu_Resume.pdf" class="btn btn-primary" download>
                     <i class="fas fa-download"></i>
                     Download Resume
                 </a>
-                <a id="view-cover-letter-btn" href="#" class="btn btn-secondary" target="_blank" style="display: none;">
+                <button id="view-cover-letter-btn" class="btn btn-secondary" onclick="viewDocument('cover-letter')" style="display: none;">
                     <i class="fas fa-envelope-open-text"></i>
                     View Cover Letter
-                </a>
+                </button>
                 <a id="download-cover-letter-btn" href="#" class="btn btn-primary" download style="display: none;">
                     <i class="fas fa-download"></i>
                     Download Cover Letter
@@ -576,6 +667,26 @@
             </div>
         </div>
     </header>
+
+    <!-- Document Viewer Section -->
+    <section id="document-viewer" class="document-viewer" style="display: none;">
+        <div class="viewer-header">
+            <div class="viewer-tabs">
+                <button id="tab-resume" class="viewer-tab active" onclick="viewDocument('resume')">
+                    <i class="fas fa-file-alt"></i> Resume
+                </button>
+                <button id="tab-cover-letter" class="viewer-tab" onclick="viewDocument('cover-letter')" style="display: none;">
+                    <i class="fas fa-envelope-open-text"></i> Cover Letter
+                </button>
+            </div>
+            <button class="viewer-close" onclick="closeViewer()">
+                <i class="fas fa-times"></i> Close
+            </button>
+        </div>
+        <div class="viewer-content">
+            <iframe id="document-frame" src="" frameborder="0"></iframe>
+        </div>
+    </section>
 
     <!-- Resume Content -->
     <div class="resume-section-wrapper">
@@ -895,16 +1006,20 @@
         });
 
         // ========================================
-        // LOAD ACTIVE DOCUMENTS FROM MANIFEST
+        // DOCUMENT VIEWER & MANAGER
         // ========================================
         const BASE_PATH = '../assets/resume/';
         const DEFAULT_RESUME = 'Sudhakar_Chundu_Resume.pdf';
+        const SITE_URL = 'https://sudhakarchundu.org/assets/resume/';
+
+        let activeResumePath = null;
+        let activeCoverLetterPath = null;
 
         async function loadActiveDocuments() {
-            const viewResumeBtn = document.getElementById('view-resume-btn');
             const downloadResumeBtn = document.getElementById('download-resume-btn');
             const viewCoverLetterBtn = document.getElementById('view-cover-letter-btn');
             const downloadCoverLetterBtn = document.getElementById('download-cover-letter-btn');
+            const tabCoverLetter = document.getElementById('tab-cover-letter');
 
             try {
                 const response = await fetch('../assets/resume/manifest.json');
@@ -913,35 +1028,74 @@
                 // Find active resume
                 const activeResume = manifest.resumes.find(r => r.active);
                 if (activeResume) {
-                    const resumePath = BASE_PATH + activeResume.file;
-                    viewResumeBtn.href = resumePath;
-                    downloadResumeBtn.href = resumePath;
+                    activeResumePath = activeResume.file;
+                    downloadResumeBtn.href = BASE_PATH + activeResume.file;
                 } else {
-                    // Fallback to default
-                    viewResumeBtn.href = BASE_PATH + DEFAULT_RESUME;
+                    activeResumePath = DEFAULT_RESUME;
                     downloadResumeBtn.href = BASE_PATH + DEFAULT_RESUME;
                 }
 
                 // Find active cover letter
                 const activeCoverLetter = manifest.coverLetters.find(c => c.active);
                 if (activeCoverLetter) {
-                    const coverLetterPath = BASE_PATH + activeCoverLetter.file;
+                    activeCoverLetterPath = activeCoverLetter.file;
                     viewCoverLetterBtn.style.display = 'inline-flex';
                     downloadCoverLetterBtn.style.display = 'inline-flex';
-                    viewCoverLetterBtn.href = coverLetterPath;
-                    downloadCoverLetterBtn.href = coverLetterPath;
+                    downloadCoverLetterBtn.href = BASE_PATH + activeCoverLetter.file;
+                    tabCoverLetter.style.display = 'inline-flex';
                 } else {
+                    activeCoverLetterPath = null;
                     viewCoverLetterBtn.style.display = 'none';
                     downloadCoverLetterBtn.style.display = 'none';
+                    tabCoverLetter.style.display = 'none';
                 }
             } catch (error) {
                 console.error('Error loading manifest:', error);
-                // Fallback to default resume
-                viewResumeBtn.href = BASE_PATH + DEFAULT_RESUME;
+                activeResumePath = DEFAULT_RESUME;
                 downloadResumeBtn.href = BASE_PATH + DEFAULT_RESUME;
                 viewCoverLetterBtn.style.display = 'none';
                 downloadCoverLetterBtn.style.display = 'none';
             }
+        }
+
+        // View document in inline viewer
+        function viewDocument(type) {
+            const viewer = document.getElementById('document-viewer');
+            const frame = document.getElementById('document-frame');
+            const tabResume = document.getElementById('tab-resume');
+            const tabCoverLetter = document.getElementById('tab-cover-letter');
+
+            let filePath = '';
+            if (type === 'resume' && activeResumePath) {
+                filePath = activeResumePath;
+                tabResume.classList.add('active');
+                tabCoverLetter.classList.remove('active');
+            } else if (type === 'cover-letter' && activeCoverLetterPath) {
+                filePath = activeCoverLetterPath;
+                tabResume.classList.remove('active');
+                tabCoverLetter.classList.add('active');
+            } else {
+                return;
+            }
+
+            // Use Google Docs Viewer for DOCX files, direct embed for PDF
+            const fullUrl = SITE_URL + filePath;
+            if (filePath.endsWith('.docx') || filePath.endsWith('.doc')) {
+                frame.src = `https://docs.google.com/gview?url=${encodeURIComponent(fullUrl)}&embedded=true`;
+            } else {
+                frame.src = BASE_PATH + filePath;
+            }
+
+            viewer.style.display = 'block';
+            viewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Close the viewer
+        function closeViewer() {
+            const viewer = document.getElementById('document-viewer');
+            const frame = document.getElementById('document-frame');
+            viewer.style.display = 'none';
+            frame.src = '';
         }
 
         // Initialize on page load
