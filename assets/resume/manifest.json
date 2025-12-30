@@ -35,7 +35,7 @@
     {
       "name": "Microsoft SRE Cover Letter",
       "file": "Sudhakar_Chundu_Microsoft_SRE_Cover_Letter.docx",
-      "active": true
+      "active": false
     },
     {
       "name": "Microsoft Data Infra Cover Letter",
@@ -50,7 +50,7 @@
     {
       "name": "Rubrik Cover Letter",
       "file": "Sudhakar_Chundu_Rubrik_Cover_Letter.docx",
-      "active": false
+      "active": true
     }
   ]
 }
