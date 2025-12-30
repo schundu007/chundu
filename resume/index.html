@@ -895,111 +895,32 @@
         });
 
         // ========================================
-        // DOCUMENT MANAGER INTEGRATION
-        // Shows only active resume and cover letter to users
+        // ACTIVE DOCUMENTS CONFIG
+        // Edit these paths to change what users see
+        // Files must exist in assets/resume/ folder
         // ========================================
+        const ACTIVE_RESUME = '../assets/resume/Sudhakar_Chundu_Resume.pdf';
+        const ACTIVE_COVER_LETTER = null; // Set to path like '../assets/resume/Cover_Letter.pdf' or null to hide
 
-        // Storage keys (must match jobs page)
-        const DOC_STORAGE_KEY = 'portfolio_documents';
-        const ACTIVE_RESUME_KEY = 'portfolio_active_resume';
-        const ACTIVE_COVER_LETTER_KEY = 'portfolio_active_cover_letter';
-        const DEFAULT_RESUME_PATH = '../assets/resume/Sudhakar_Chundu_Resume.pdf';
-
-        // Get all documents from localStorage
-        function getDocuments() {
-            const docs = localStorage.getItem(DOC_STORAGE_KEY);
-            return docs ? JSON.parse(docs) : [];
-        }
-
-        // Get active document IDs
-        function getActiveDocuments() {
-            return {
-                resume: localStorage.getItem(ACTIVE_RESUME_KEY),
-                coverLetter: localStorage.getItem(ACTIVE_COVER_LETTER_KEY)
-            };
-        }
-
-        // Download document from localStorage
-        function downloadDoc(docId) {
-            const docs = getDocuments();
-            const doc = docs.find(d => d.id === docId);
-            if (!doc) return;
-
-            const link = document.createElement('a');
-            link.href = doc.data;
-            link.download = doc.name;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        // View document from localStorage (opens in new tab)
-        function viewDoc(docId) {
-            const docs = getDocuments();
-            const doc = docs.find(d => d.id === docId);
-            if (!doc) return;
-
-            // Open data URL in new tab
-            const newWindow = window.open();
-            if (newWindow) {
-                newWindow.document.write(`
-                    <html>
-                    <head><title>${doc.name}</title></head>
-                    <body style="margin:0; padding:0;">
-                        <iframe src="${doc.data}" style="width:100%; height:100vh; border:none;"></iframe>
-                    </body>
-                    </html>
-                `);
-            }
-        }
-
-        // Update header buttons based on active documents
+        // Update header buttons based on config
         function updateHeaderButtons() {
-            const docs = getDocuments();
-            const activeIds = getActiveDocuments();
-
-            // Resume buttons
             const viewResumeBtn = document.getElementById('view-resume-btn');
             const downloadResumeBtn = document.getElementById('download-resume-btn');
-
-            // Cover letter buttons
             const viewCoverLetterBtn = document.getElementById('view-cover-letter-btn');
             const downloadCoverLetterBtn = document.getElementById('download-cover-letter-btn');
 
-            // Handle Resume
-            if (activeIds.resume) {
-                const activeResume = docs.find(d => d.id === activeIds.resume && d.type === 'resume');
-                if (activeResume) {
-                    viewResumeBtn.href = 'javascript:void(0)';
-                    viewResumeBtn.onclick = () => viewDoc(activeResume.id);
-                    downloadResumeBtn.href = 'javascript:void(0)';
-                    downloadResumeBtn.onclick = () => downloadDoc(activeResume.id);
-                    downloadResumeBtn.removeAttribute('download');
-                }
-            } else {
-                // Fall back to default PDF
-                viewResumeBtn.href = DEFAULT_RESUME_PATH;
-                viewResumeBtn.onclick = null;
-                downloadResumeBtn.href = DEFAULT_RESUME_PATH;
-                downloadResumeBtn.onclick = null;
-                downloadResumeBtn.setAttribute('download', '');
+            // Set resume buttons
+            if (ACTIVE_RESUME) {
+                viewResumeBtn.href = ACTIVE_RESUME;
+                downloadResumeBtn.href = ACTIVE_RESUME;
             }
 
-            // Handle Cover Letter - only show if one is set as active
-            if (activeIds.coverLetter) {
-                const activeCoverLetter = docs.find(d => d.id === activeIds.coverLetter && d.type === 'cover-letter');
-                if (activeCoverLetter) {
-                    viewCoverLetterBtn.style.display = 'inline-flex';
-                    downloadCoverLetterBtn.style.display = 'inline-flex';
-                    viewCoverLetterBtn.href = 'javascript:void(0)';
-                    viewCoverLetterBtn.onclick = () => viewDoc(activeCoverLetter.id);
-                    downloadCoverLetterBtn.href = 'javascript:void(0)';
-                    downloadCoverLetterBtn.onclick = () => downloadDoc(activeCoverLetter.id);
-                    downloadCoverLetterBtn.removeAttribute('download');
-                } else {
-                    viewCoverLetterBtn.style.display = 'none';
-                    downloadCoverLetterBtn.style.display = 'none';
-                }
+            // Show/hide cover letter buttons
+            if (ACTIVE_COVER_LETTER) {
+                viewCoverLetterBtn.style.display = 'inline-flex';
+                downloadCoverLetterBtn.style.display = 'inline-flex';
+                viewCoverLetterBtn.href = ACTIVE_COVER_LETTER;
+                downloadCoverLetterBtn.href = ACTIVE_COVER_LETTER;
             } else {
                 viewCoverLetterBtn.style.display = 'none';
                 downloadCoverLetterBtn.style.display = 'none';
