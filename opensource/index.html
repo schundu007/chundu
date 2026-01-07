@@ -982,6 +982,25 @@
         const GITHUB_USERNAME = 'schundu007';
         const MEDIUM_RSS_FEED = 'https://medium.com/feed/@sudhakarchundu';
 
+        // Static fallback data for when GitHub API rate limits
+        const FALLBACK_REPOS = [
+            { name: 'automation', description: 'Infrastructure automation scripts and tools for cloud environments', html_url: 'https://github.com/schundu007/automation', language: 'HCL', stargazers_count: 0, forks_count: 0, fork: false },
+            { name: 'chundu', description: 'Personal official GitHub page and portfolio website', html_url: 'https://github.com/schundu007/chundu', language: 'HTML', stargazers_count: 0, forks_count: 0, fork: false },
+            { name: 'scripts', description: 'DevOps and SRE automation utilities for infrastructure management', html_url: 'https://github.com/schundu007/scripts', language: 'Shell', stargazers_count: 0, forks_count: 0, fork: false },
+            { name: 'vmProvisioning', description: 'Terraform-based VM provisioning for multi-cloud environments', html_url: 'https://github.com/schundu007/vmProvisioning', language: 'HCL', stargazers_count: 0, forks_count: 0, fork: false },
+            { name: 'documents', description: 'Documentation repository for tools, tasks, and runbooks', html_url: 'https://github.com/schundu007/documents', language: 'Markdown', stargazers_count: 0, forks_count: 0, fork: false },
+            { name: 'mlflow', description: 'Fork of MLflow - building AI agents and models with confidence', html_url: 'https://github.com/schundu007/mlflow', language: 'Python', stargazers_count: 0, forks_count: 0, fork: true }
+        ];
+
+        const FALLBACK_GISTS = [
+            { html_url: 'https://gist.github.com/schundu007', description: 'Kubernetes kubectl command reference and cheat sheet', files: { 'K8sCheatSheet.md': { filename: 'K8sCheatSheet.md', language: 'Markdown' } }, created_at: '2024-01-15', comments: 0 },
+            { html_url: 'https://gist.github.com/schundu007', description: 'Azure Infra provisioning through Terraform and ADO pipelines', files: { 'azure-infra.sh': { filename: 'azure-infra.sh', language: 'Shell' } }, created_at: '2024-01-10', comments: 0 },
+            { html_url: 'https://gist.github.com/schundu007', description: 'Elasticsearch deployment on Azure Kubernetes Service (AKS)', files: { 'elasticSearchonAKS.yaml': { filename: 'elasticSearchonAKS.yaml', language: 'YAML' } }, created_at: '2024-01-08', comments: 0 },
+            { html_url: 'https://gist.github.com/schundu007', description: 'Elasticsearch deployment on AWS EKS cluster', files: { 'elasticSearchonEKS.yaml': { filename: 'elasticSearchonEKS.yaml', language: 'YAML' } }, created_at: '2024-01-05', comments: 0 },
+            { html_url: 'https://gist.github.com/schundu007', description: 'Ubuntu development environment setup script', files: { 'UserEnvSetupOnUbuntu.sh': { filename: 'UserEnvSetupOnUbuntu.sh', language: 'Shell' } }, created_at: '2024-01-03', comments: 0 },
+            { html_url: 'https://gist.github.com/schundu007', description: 'KubeRay operator configuration manifest for GPU clusters', files: { 'RayClusterGPU.yaml': { filename: 'RayClusterGPU.yaml', language: 'YAML' } }, created_at: '2024-01-01', comments: 0 }
+        ];
+
         // Language colors for GitHub
         const langColors = {
             'JavaScript': '#f1e05a',
@@ -994,8 +1013,125 @@
             'Dockerfile': '#384d54',
             'Go': '#00ADD8',
             'Java': '#b07219',
-            'Terraform': '#5c4ee5'
+            'Terraform': '#5c4ee5',
+            'Markdown': '#083fa1'
         };
+
+        // Render repos helper function
+        function renderRepos(repos) {
+            const reposContainer = document.getElementById('github-repos');
+            reposContainer.innerHTML = repos.map(repo => `
+                <a href="${repo.html_url}" target="_blank" class="repo-card">
+                    <div class="repo-header">
+                        <i class="fas ${repo.fork ? 'fa-code-branch' : 'fa-book'}"></i>
+                        <span class="repo-name">${repo.name}</span>
+                    </div>
+                    <p class="repo-description">${repo.description || 'No description available'}</p>
+                    <div class="repo-meta">
+                        ${repo.language ? `
+                            <span class="repo-meta-item">
+                                <span class="repo-lang-dot" style="background: ${langColors[repo.language] || '#858585'}"></span>
+                                ${repo.language}
+                            </span>
+                        ` : ''}
+                        ${repo.stargazers_count > 0 ? `
+                            <span class="repo-meta-item">
+                                <i class="fas fa-star"></i>
+                                ${repo.stargazers_count}
+                            </span>
+                        ` : ''}
+                        ${repo.forks_count > 0 ? `
+                            <span class="repo-meta-item">
+                                <i class="fas fa-code-branch"></i>
+                                ${repo.forks_count}
+                            </span>
+                        ` : ''}
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        // Render gists helper function
+        function renderGists(gists) {
+            const gistsContainer = document.getElementById('github-gists');
+
+            if (gists.length === 0) {
+                gistsContainer.innerHTML = `
+                    <div class="gist-card">
+                        <div class="gist-header">
+                            <div class="gist-icon"><i class="fas fa-info-circle"></i></div>
+                            <div class="gist-info">
+                                <span class="gist-filename">No public gists yet</span>
+                            </div>
+                        </div>
+                        <p class="gist-description">Check back later for code snippets and quick solutions.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            gistsContainer.innerHTML = gists.map(gist => {
+                const files = Object.values(gist.files);
+                const firstFile = files[0];
+                const filename = firstFile ? firstFile.filename : 'Untitled';
+                const language = firstFile ? firstFile.language || 'Text' : 'Text';
+                const fileCount = files.length;
+
+                const createdDate = new Date(gist.created_at);
+                const formattedDate = createdDate.toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                });
+
+                const getIcon = (lang) => {
+                    const icons = {
+                        'Shell': 'fa-terminal',
+                        'Bash': 'fa-terminal',
+                        'Python': 'fa-python',
+                        'JavaScript': 'fa-js',
+                        'TypeScript': 'fa-js',
+                        'YAML': 'fa-file-code',
+                        'JSON': 'fa-file-code',
+                        'Dockerfile': 'fa-docker',
+                        'HCL': 'fa-file-code',
+                        'Terraform': 'fa-file-code',
+                        'Markdown': 'fa-file-alt'
+                    };
+                    return icons[lang] || 'fa-code';
+                };
+
+                return `
+                    <a href="${gist.html_url}" target="_blank" class="gist-card">
+                        <div class="gist-header">
+                            <div class="gist-icon">
+                                <i class="fas ${getIcon(language)}"></i>
+                            </div>
+                            <div class="gist-info">
+                                <span class="gist-filename">${filename}</span>
+                                <span class="gist-type">${language}</span>
+                            </div>
+                        </div>
+                        <p class="gist-description">${gist.description || 'No description provided'}</p>
+                        <div class="gist-meta">
+                            <span class="gist-meta-item">
+                                <i class="fas fa-calendar"></i>
+                                ${formattedDate}
+                            </span>
+                            <span class="gist-files-count">
+                                <i class="fas fa-file"></i> ${fileCount} file${fileCount > 1 ? 's' : ''}
+                            </span>
+                            ${gist.comments > 0 ? `
+                                <span class="gist-meta-item">
+                                    <i class="fas fa-comment"></i>
+                                    ${gist.comments}
+                                </span>
+                            ` : ''}
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
 
         // Fetch GitHub Profile
         async function fetchGitHubProfile() {
@@ -1023,49 +1159,12 @@
                 const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=6`);
                 if (!response.ok) throw new Error('Failed to fetch repos');
                 const repos = await response.json();
-
-                const reposContainer = document.getElementById('github-repos');
-                reposContainer.innerHTML = repos.map(repo => `
-                    <a href="${repo.html_url}" target="_blank" class="repo-card">
-                        <div class="repo-header">
-                            <i class="fas ${repo.fork ? 'fa-code-branch' : 'fa-book'}"></i>
-                            <span class="repo-name">${repo.name}</span>
-                        </div>
-                        <p class="repo-description">${repo.description || 'No description available'}</p>
-                        <div class="repo-meta">
-                            ${repo.language ? `
-                                <span class="repo-meta-item">
-                                    <span class="repo-lang-dot" style="background: ${langColors[repo.language] || '#858585'}"></span>
-                                    ${repo.language}
-                                </span>
-                            ` : ''}
-                            ${repo.stargazers_count > 0 ? `
-                                <span class="repo-meta-item">
-                                    <i class="fas fa-star"></i>
-                                    ${repo.stargazers_count}
-                                </span>
-                            ` : ''}
-                            ${repo.forks_count > 0 ? `
-                                <span class="repo-meta-item">
-                                    <i class="fas fa-code-branch"></i>
-                                    ${repo.forks_count}
-                                </span>
-                            ` : ''}
-                        </div>
-                    </a>
-                `).join('');
+                renderRepos(repos);
             } catch (error) {
                 console.error('Error fetching GitHub repos:', error);
-                // Show fallback
-                document.getElementById('github-repos').innerHTML = `
-                    <div class="repo-card">
-                        <div class="repo-header">
-                            <i class="fas fa-exclamation-circle"></i>
-                            <span class="repo-name">Unable to load repositories</span>
-                        </div>
-                        <p class="repo-description">Please visit GitHub directly to see all repositories.</p>
-                    </div>
-                `;
+                // Use fallback static data
+                console.log('Using fallback repository data');
+                renderRepos(FALLBACK_REPOS);
             }
         }
 
@@ -1075,101 +1174,12 @@
                 const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/gists?per_page=8`);
                 if (!response.ok) throw new Error('Failed to fetch gists');
                 const gists = await response.json();
-
-                const gistsContainer = document.getElementById('github-gists');
-
-                if (gists.length === 0) {
-                    gistsContainer.innerHTML = `
-                        <div class="gist-card">
-                            <div class="gist-header">
-                                <div class="gist-icon"><i class="fas fa-info-circle"></i></div>
-                                <div class="gist-info">
-                                    <span class="gist-filename">No public gists yet</span>
-                                </div>
-                            </div>
-                            <p class="gist-description">Check back later for code snippets and quick solutions.</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                gistsContainer.innerHTML = gists.map(gist => {
-                    // Get the first file to display
-                    const files = Object.values(gist.files);
-                    const firstFile = files[0];
-                    const filename = firstFile ? firstFile.filename : 'Untitled';
-                    const language = firstFile ? firstFile.language || 'Text' : 'Text';
-                    const fileCount = files.length;
-
-                    // Format date
-                    const createdDate = new Date(gist.created_at);
-                    const formattedDate = createdDate.toLocaleDateString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric'
-                    });
-
-                    // Get file extension icon
-                    const getIcon = (lang) => {
-                        const icons = {
-                            'Shell': 'fa-terminal',
-                            'Bash': 'fa-terminal',
-                            'Python': 'fa-python',
-                            'JavaScript': 'fa-js',
-                            'TypeScript': 'fa-js',
-                            'YAML': 'fa-file-code',
-                            'JSON': 'fa-file-code',
-                            'Dockerfile': 'fa-docker',
-                            'HCL': 'fa-file-code',
-                            'Terraform': 'fa-file-code',
-                            'Markdown': 'fa-file-alt'
-                        };
-                        return icons[lang] || 'fa-code';
-                    };
-
-                    return `
-                        <a href="${gist.html_url}" target="_blank" class="gist-card">
-                            <div class="gist-header">
-                                <div class="gist-icon">
-                                    <i class="fas ${getIcon(language)}"></i>
-                                </div>
-                                <div class="gist-info">
-                                    <span class="gist-filename">${filename}</span>
-                                    <span class="gist-type">${language}</span>
-                                </div>
-                            </div>
-                            <p class="gist-description">${gist.description || 'No description provided'}</p>
-                            <div class="gist-meta">
-                                <span class="gist-meta-item">
-                                    <i class="fas fa-calendar"></i>
-                                    ${formattedDate}
-                                </span>
-                                <span class="gist-files-count">
-                                    <i class="fas fa-file"></i> ${fileCount} file${fileCount > 1 ? 's' : ''}
-                                </span>
-                                ${gist.comments > 0 ? `
-                                    <span class="gist-meta-item">
-                                        <i class="fas fa-comment"></i>
-                                        ${gist.comments}
-                                    </span>
-                                ` : ''}
-                            </div>
-                        </a>
-                    `;
-                }).join('');
+                renderGists(gists);
             } catch (error) {
                 console.error('Error fetching GitHub gists:', error);
-                document.getElementById('github-gists').innerHTML = `
-                    <div class="gist-card">
-                        <div class="gist-header">
-                            <div class="gist-icon"><i class="fas fa-exclamation-circle"></i></div>
-                            <div class="gist-info">
-                                <span class="gist-filename">Unable to load gists</span>
-                            </div>
-                        </div>
-                        <p class="gist-description">Please visit GitHub directly to see all gists.</p>
-                    </div>
-                `;
+                // Use fallback static data
+                console.log('Using fallback gist data');
+                renderGists(FALLBACK_GISTS);
             }
         }
 
