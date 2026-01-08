@@ -19,21 +19,182 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
     <style>
-        .card-with-image {
-            padding: 0;
-            overflow: hidden;
+        .conferences-hero {
+            padding: 120px 2rem 60px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            position: relative;
         }
-        .card-image {
+
+        .conferences-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 70% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .conferences-hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .conferences-hero h1 span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .conferences-hero p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .conferences-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .conferences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .conference-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            transition: var(--transition-normal);
+        }
+
+        .conference-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-4px);
+            box-shadow: var(--glow-blue);
+        }
+
+        .conference-image {
             width: 100%;
-            height: 220px;
+            height: 180px;
             object-fit: contain;
             object-position: center;
-            display: block;
-            background: #f1f5f9;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--glass-border);
         }
-        .card-content {
+
+        .conference-content {
             padding: 1.5rem;
+        }
+
+        .conference-venue {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+        }
+
+        .conference-card h3 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .conference-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .conference-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .conference-tag {
+            padding: 0.25rem 0.6rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .cta-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .cta-section h2 span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .conferences-hero {
+                padding: 100px 1rem 40px;
+            }
+
+            .conferences-hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .conferences-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -52,11 +213,10 @@
                 <li><a href="../projects/">Projects</a></li>
                 <li><a href="./" class="active">Conferences</a></li>
                 <li><a href="../publications/">Publications</a></li>
-                <div class="nav-social">
-                    <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                </div>
             </ul>
+            <div class="nav-auth">
+                <button class="btn-signin" onclick="showLoginModal()">Sign In</button>
+            </div>
             <button class="mobile-menu-btn" aria-label="Menu">
                 <span></span>
                 <span></span>
@@ -66,135 +226,145 @@
     </nav>
 
     <main class="main-content">
-    <!-- Page Header -->
-    <header class="page-header">
-        <h1>Conference <span>Talks</span></h1>
-        <p>Sharing insights on cloud infrastructure, Kubernetes, and site reliability engineering at industry events.</p>
-    </header>
+        <!-- Hero Section -->
+        <section class="conferences-hero">
+            <h1>Conference <span>Talks</span></h1>
+            <p>Sharing insights on cloud infrastructure, Kubernetes, and site reliability engineering at industry events.</p>
+        </section>
 
-    <!-- Content -->
-    <section class="section">
-        <div class="container">
-            <div class="card-grid">
-                <div class="card card-with-image">
-                    <img src="../assets/images/MLW.jpeg" alt="KubeCon + CloudNativeCon" class="card-image">
-                    <div class="card-content">
-                        <span class="date">KubeCon + CloudNativeCon</span>
+        <!-- Conferences Content -->
+        <div class="conferences-container">
+            <div class="conferences-grid">
+                <article class="conference-card">
+                    <img src="../assets/images/MLW.jpeg" alt="KubeCon + CloudNativeCon" class="conference-image">
+                    <div class="conference-content">
+                        <span class="conference-venue">KubeCon + CloudNativeCon</span>
                         <h3>Scaling GPU Clusters for ML Workloads</h3>
                         <p>Best practices for managing large-scale GPU infrastructure on Kubernetes for distributed machine learning training.</p>
-                        <div class="tags">
-                            <span class="tag">Kubernetes</span>
-                            <span class="tag">GPU</span>
-                            <span class="tag">ML Infrastructure</span>
+                        <div class="conference-tags">
+                            <span class="conference-tag">Kubernetes</span>
+                            <span class="conference-tag">GPU</span>
+                            <span class="conference-tag">ML Infrastructure</span>
                         </div>
                     </div>
-                </div>
+                </article>
 
-                <div class="card">
-                    <span class="date">SREcon</span>
-                    <h3>Achieving 99.97% Uptime at Scale</h3>
-                    <p>Strategies and lessons learned from maintaining high availability across multi-cloud infrastructure serving millions of users.</p>
-                    <div class="tags">
-                        <span class="tag">SRE</span>
-                        <span class="tag">High Availability</span>
-                        <span class="tag">Multi-Cloud</span>
+                <article class="conference-card">
+                    <div class="conference-content">
+                        <span class="conference-venue">SREcon</span>
+                        <h3>Achieving 99.97% Uptime at Scale</h3>
+                        <p>Strategies and lessons learned from maintaining high availability across multi-cloud infrastructure serving millions of users.</p>
+                        <div class="conference-tags">
+                            <span class="conference-tag">SRE</span>
+                            <span class="conference-tag">High Availability</span>
+                            <span class="conference-tag">Multi-Cloud</span>
+                        </div>
                     </div>
-                </div>
+                </article>
 
-                <div class="card">
-                    <span class="date">HashiConf</span>
-                    <h3>Terraform at Enterprise Scale</h3>
-                    <p>Managing infrastructure as code across multiple cloud providers with Terraform modules, workspaces, and automation.</p>
-                    <div class="tags">
-                        <span class="tag">Terraform</span>
-                        <span class="tag">IaC</span>
-                        <span class="tag">Enterprise</span>
+                <article class="conference-card">
+                    <div class="conference-content">
+                        <span class="conference-venue">HashiConf</span>
+                        <h3>Terraform at Enterprise Scale</h3>
+                        <p>Managing infrastructure as code across multiple cloud providers with Terraform modules, workspaces, and automation.</p>
+                        <div class="conference-tags">
+                            <span class="conference-tag">Terraform</span>
+                            <span class="conference-tag">IaC</span>
+                            <span class="conference-tag">Enterprise</span>
+                        </div>
                     </div>
-                </div>
+                </article>
 
-                <div class="card card-with-image">
-                    <img src="../assets/images/DevOpsDays.jpeg" alt="DevOps Days" class="card-image">
-                    <div class="card-content">
-                        <span class="date">DevOps Days</span>
+                <article class="conference-card">
+                    <img src="../assets/images/DevOpsDays.jpeg" alt="DevOps Days" class="conference-image">
+                    <div class="conference-content">
+                        <span class="conference-venue">DevOps Days</span>
                         <h3>GitOps for Multi-Cluster Kubernetes</h3>
                         <p>Implementing GitOps workflows with ArgoCD for managing deployments across multiple Kubernetes clusters.</p>
-                        <div class="tags">
-                            <span class="tag">GitOps</span>
-                            <span class="tag">ArgoCD</span>
-                            <span class="tag">CI/CD</span>
+                        <div class="conference-tags">
+                            <span class="conference-tag">GitOps</span>
+                            <span class="conference-tag">ArgoCD</span>
+                            <span class="conference-tag">CI/CD</span>
                         </div>
                     </div>
-                </div>
+                </article>
 
-                <div class="card card-with-image">
-                    <img src="../assets/images/CS.jpeg" alt="Cloud Summit" class="card-image">
-                    <div class="card-content">
-                        <span class="date">Cloud Summit</span>
+                <article class="conference-card">
+                    <img src="../assets/images/CS.jpeg" alt="Cloud Summit" class="conference-image">
+                    <div class="conference-content">
+                        <span class="conference-venue">Cloud Summit</span>
                         <h3>Cost Optimization: $8M Savings Journey</h3>
                         <p>Real-world strategies for reducing cloud infrastructure costs while maintaining performance and reliability.</p>
-                        <div class="tags">
-                            <span class="tag">FinOps</span>
-                            <span class="tag">Cost Optimization</span>
-                            <span class="tag">Cloud</span>
+                        <div class="conference-tags">
+                            <span class="conference-tag">FinOps</span>
+                            <span class="conference-tag">Cost Optimization</span>
+                            <span class="conference-tag">Cloud</span>
                         </div>
                     </div>
-                </div>
+                </article>
 
-                <div class="card card-with-image">
-                    <img src="../assets/images/PES.jpeg" alt="Platform Engineering Summit" class="card-image">
-                    <div class="card-content">
-                        <span class="date">Platform Engineering Summit</span>
+                <article class="conference-card">
+                    <img src="../assets/images/PES.jpeg" alt="Platform Engineering Summit" class="conference-image">
+                    <div class="conference-content">
+                        <span class="conference-venue">Platform Engineering Summit</span>
                         <h3>Building Internal Developer Platforms</h3>
                         <p>Creating self-service platforms that accelerate developer productivity while maintaining governance and security.</p>
-                        <div class="tags">
-                            <span class="tag">Platform Engineering</span>
-                            <span class="tag">Developer Experience</span>
-                            <span class="tag">Self-Service</span>
+                        <div class="conference-tags">
+                            <span class="conference-tag">Platform Engineering</span>
+                            <span class="conference-tag">Developer Experience</span>
+                            <span class="conference-tag">Self-Service</span>
                         </div>
                     </div>
+                </article>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <h2>View Full <span>Resume</span></h2>
+                <p>See my complete experience, certifications, and technical skills in detail.</p>
+                <div class="cta-buttons">
+                    <a href="../resume/" class="btn btn-primary">
+                        <i class="fas fa-file-alt"></i> View Resume
+                    </a>
+                    <a href="https://www.linkedin.com/in/schundu" class="btn btn-secondary" target="_blank">
+                        <i class="fab fa-linkedin"></i> Connect on LinkedIn
+                    </a>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- CTA Section -->
-    <section style="padding: 50px 2rem; background: #f1f5f9; text-align: center; border-radius: 16px; margin-bottom: 1.5rem; border: 1px solid #e4e4e7;">
-        <h2 style="color: #111827; font-size: 1.5rem; margin-bottom: 0.75rem;">View Full <span style="color: var(--primary);">Resume</span></h2>
-        <p style="color: #52525b; margin-bottom: 1.25rem; font-size: 0.9rem;">
-            See my complete experience, certifications, and technical skills in detail.
-        </p>
-        <div style="display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
-            <a href="../resume/" class="btn btn-primary">
-                <i class="fas fa-file-alt"></i> View Resume
-            </a>
-            <a href="https://www.linkedin.com/in/schundu" class="btn btn-outline" target="_blank">
-                <i class="fab fa-linkedin"></i> Connect on LinkedIn
-            </a>
+            <!-- Comments Section -->
+            <div id="comments-container"></div>
         </div>
-    </section>
-
     </main>
 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <span class="footer-logo">Sudhakar Chundu</span>
+            <div class="footer-brand">
+                <span class="footer-logo">Sudhakar Chundu</span>
+                <p>Staff DevOps Engineer | SRE | GPU Infrastructure</p>
+            </div>
             <div class="footer-links">
                 <a href="../">Home</a>
+                <a href="../about/">About</a>
                 <a href="../resume/">Resume</a>
-                <a href="../publications/">Publications</a>
                 <a href="../contact/">Contact</a>
             </div>
             <div class="footer-social">
-                <a href="https://github.com/schundu007" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/schundu" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://medium.sudhakarchundu.org/" target="_blank"><i class="fab fa-medium"></i></a>
+                <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://medium.sudhakarchundu.org/" target="_blank" title="Medium"><i class="fab fa-medium"></i></a>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 2rem;">
+        <div class="footer-bottom">
             <p>&copy; 2025 Sudhakar Chundu. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Firebase Config and Auth -->
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/comments.js"></script>
 
     <script>
         // Mobile menu toggle
@@ -206,7 +376,6 @@
             navLinks.classList.toggle('active');
         });
 
-        // Close menu when clicking a link
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenuBtn.classList.remove('active');

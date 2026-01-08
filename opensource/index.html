@@ -19,97 +19,146 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
     <style>
-        /* GitHub Section Styles */
-        .github-section {
-            padding: 50px 2rem;
-            background: #f1f5f9;
-            border-radius: 16px;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--border);
-        }
-
-        .github-container {
-            max-width: 100%;
-            margin: 0 auto;
-        }
-
-        .github-header {
+        .opensource-hero {
+            padding: 120px 2rem 60px;
             text-align: center;
-            margin-bottom: 2.5rem;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            position: relative;
         }
 
-        .github-header h2 {
-            color: var(--dark);
-            font-size: 2rem;
-            margin-bottom: 0.75rem;
+        .opensource-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+            pointer-events: none;
         }
 
-        .github-header h2 span {
-            color: var(--primary);
+        .opensource-hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
         }
 
-        .github-header p {
-            color: var(--text-muted);
-            font-size: 1rem;
+        .opensource-hero h1 span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .opensource-hero p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .opensource-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* GitHub Section */
+        .github-section {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(20px);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header h2 span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
         }
 
         .github-content {
             display: grid;
-            grid-template-columns: 320px 1fr;
+            grid-template-columns: 280px 1fr;
             gap: 2rem;
             align-items: start;
         }
 
+        /* GitHub Sidebar */
         .github-sidebar {
-            background: var(--white);
-            border-radius: var(--radius-xl);
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
             padding: 1.5rem;
-            border: 1px solid var(--border);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
 
         .github-profile {
             text-align: center;
             margin-bottom: 1.5rem;
             padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .github-avatar {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             margin: 0 auto 1rem;
-            border: 3px solid var(--primary);
+            border: 3px solid var(--accent-blue);
             overflow: hidden;
         }
 
         .github-avatar img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            object-position: center;
-            background: #f1f5f9;
+            object-fit: cover;
         }
 
         .github-profile h3 {
-            color: var(--dark);
-            font-size: 1.25rem;
+            color: var(--text-primary);
+            font-size: 1.1rem;
             margin-bottom: 0.25rem;
         }
 
         .github-profile .username {
-            color: var(--primary);
-            font-size: 0.9rem;
+            color: var(--accent-blue);
+            font-size: 0.85rem;
             font-family: var(--font-mono);
         }
 
         .github-profile .bio {
             color: var(--text-muted);
             font-size: 0.8rem;
-            margin-top: 0.5rem;
-            line-height: 1.5;
+            margin-top: 0.75rem;
+            line-height: 1.6;
         }
 
         .github-stats {
@@ -120,15 +169,15 @@
         }
 
         .github-stat {
-            background: #f8fafc;
+            background: rgba(59, 130, 246, 0.1);
             padding: 0.75rem;
-            border-radius: var(--radius);
+            border-radius: var(--radius-md);
             text-align: center;
-            border: 1px solid var(--border);
+            border: 1px solid var(--glass-border);
         }
 
         .github-stat-value {
-            color: var(--primary);
+            color: var(--accent-blue);
             font-size: 1.25rem;
             font-weight: 700;
             font-family: var(--font-mono);
@@ -136,7 +185,7 @@
 
         .github-stat-label {
             color: var(--text-muted);
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
@@ -153,34 +202,36 @@
             justify-content: center;
             gap: 0.5rem;
             padding: 0.75rem 1rem;
-            border-radius: var(--radius);
+            border-radius: var(--radius-md);
             font-size: 0.85rem;
             font-weight: 600;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: var(--transition-normal);
         }
 
         .github-link-primary {
-            background: var(--primary);
-            color: var(--white);
+            background: var(--gradient-primary);
+            color: white;
         }
 
         .github-link-primary:hover {
-            opacity: 0.9;
-            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: var(--glow-blue);
+            color: white;
         }
 
         .github-link-secondary {
-            background: #f8fafc;
-            color: var(--dark);
-            border: 1px solid var(--border);
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--text-secondary);
+            border: 1px solid var(--glass-border);
         }
 
         .github-link-secondary:hover {
-            border-color: var(--primary);
-            color: var(--primary);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
         }
 
+        /* Repository Cards */
         .github-repos {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -188,18 +239,18 @@
         }
 
         .repo-card {
-            background: var(--white);
-            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
             padding: 1.25rem;
-            border: 1px solid var(--border);
-            transition: border-color 0.2s ease;
             text-decoration: none;
-            display: block;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            transition: var(--transition-normal);
         }
 
         .repo-card:hover {
-            border-color: var(--primary);
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--glow-blue);
         }
 
         .repo-header {
@@ -210,12 +261,12 @@
         }
 
         .repo-header i {
-            color: var(--primary);
+            color: var(--accent-blue);
             font-size: 1rem;
         }
 
         .repo-name {
-            color: var(--dark);
+            color: var(--text-primary);
             font-size: 0.95rem;
             font-weight: 600;
             font-family: var(--font-mono);
@@ -246,69 +297,39 @@
             font-size: 0.75rem;
         }
 
-        .repo-meta-item i {
-            font-size: 0.7rem;
-        }
-
         .repo-lang-dot {
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            display: inline-block;
         }
 
-        /* Gists Section Styles */
+        /* Gists Section */
         .gists-section {
-            padding: 50px 2rem;
-            background: var(--white);
-            border-radius: 16px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        }
-
-        .gists-container {
-            max-width: 100%;
-            margin: 0 auto;
-        }
-
-        .gists-header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-        }
-
-        .gists-header h2 {
-            color: var(--dark);
-            font-size: 2rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .gists-header h2 span {
-            color: var(--primary);
-        }
-
-        .gists-header p {
-            color: var(--text-muted);
-            font-size: 1rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(20px);
         }
 
         .gists-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 1.25rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
         }
 
         .gist-card {
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 1.5rem;
-            border: 1px solid var(--border);
-            transition: border-color 0.2s ease;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
             text-decoration: none;
-            display: block;
+            transition: var(--transition-normal);
         }
 
         .gist-card:hover {
-            border-color: var(--primary);
+            border-color: var(--accent-blue);
         }
 
         .gist-header {
@@ -321,12 +342,12 @@
         .gist-icon {
             width: 40px;
             height: 40px;
-            background: var(--primary-light);
-            border-radius: var(--radius);
+            background: rgba(59, 130, 246, 0.2);
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary);
+            color: var(--accent-blue);
             font-size: 1rem;
             flex-shrink: 0;
         }
@@ -337,8 +358,8 @@
         }
 
         .gist-filename {
-            color: var(--dark);
-            font-size: 0.95rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
             font-weight: 600;
             font-family: var(--font-mono);
             word-break: break-word;
@@ -347,8 +368,8 @@
         .gist-type {
             display: inline-block;
             padding: 0.15rem 0.5rem;
-            background: var(--primary-light);
-            color: var(--primary);
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
             font-size: 0.65rem;
             font-weight: 600;
             text-transform: uppercase;
@@ -383,17 +404,17 @@
         }
 
         .gist-meta-item i {
-            color: var(--primary);
+            color: var(--accent-blue);
             font-size: 0.7rem;
         }
 
         .gist-files-count {
-            background: var(--white);
+            background: rgba(0, 0, 0, 0.2);
             padding: 0.25rem 0.6rem;
             border-radius: 50px;
             font-size: 0.7rem;
             color: var(--text-muted);
-            border: 1px solid var(--border);
+            border: 1px solid var(--glass-border);
         }
 
         .gists-view-all {
@@ -401,88 +422,63 @@
             margin-top: 2rem;
         }
 
-        /* Medium Section Styles */
+        /* Medium Section */
         .medium-section {
-            padding: 50px 2rem;
-            background: #f8fafc;
-            border-radius: 16px;
-            margin-bottom: 1.5rem;
-        }
-
-        .medium-container {
-            max-width: 100%;
-            margin: 0 auto;
-        }
-
-        .medium-header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-        }
-
-        .medium-header h2 {
-            color: var(--dark);
-            font-size: 2rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .medium-header h2 span {
-            color: var(--primary);
-        }
-
-        .medium-header p {
-            color: var(--text-muted);
-            font-size: 1rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(20px);
         }
 
         .medium-content {
             display: grid;
-            grid-template-columns: 280px 1fr;
+            grid-template-columns: 260px 1fr;
             gap: 2rem;
             align-items: start;
         }
 
         .medium-sidebar {
-            background: var(--white);
-            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
             padding: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            border: 1px solid var(--border);
         }
 
         .medium-profile {
             text-align: center;
             margin-bottom: 1.5rem;
             padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .medium-avatar {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             margin: 0 auto 1rem;
-            border: 3px solid var(--primary);
-            overflow: hidden;
-            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            border: 3px solid var(--accent-blue);
+            background: var(--gradient-primary);
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .medium-avatar i {
-            font-size: 2.5rem;
-            color: var(--white);
+            font-size: 2rem;
+            color: white;
         }
 
         .medium-profile h3 {
-            color: var(--dark);
-            font-size: 1.15rem;
+            color: var(--text-primary);
+            font-size: 1rem;
             margin-bottom: 0.25rem;
         }
 
         .medium-profile .username {
-            color: var(--primary);
-            font-size: 0.85rem;
+            color: var(--accent-blue);
+            font-size: 0.8rem;
             font-family: var(--font-mono);
         }
 
@@ -501,22 +497,22 @@
         }
 
         .medium-stat {
-            background: var(--light);
+            background: rgba(59, 130, 246, 0.1);
             padding: 0.75rem;
-            border-radius: var(--radius);
+            border-radius: var(--radius-md);
             text-align: center;
         }
 
         .medium-stat-value {
-            color: var(--primary);
-            font-size: 1.15rem;
+            color: var(--accent-blue);
+            font-size: 1.1rem;
             font-weight: 700;
             font-family: var(--font-mono);
         }
 
         .medium-stat-label {
             color: var(--text-muted);
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
@@ -527,66 +523,30 @@
             gap: 0.75rem;
         }
 
-        .medium-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1rem;
-            border-radius: var(--radius);
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .medium-link-primary {
-            background: var(--primary);
-            color: var(--white);
-        }
-
-        .medium-link-primary:hover {
-            opacity: 0.9;
-            color: var(--white);
-        }
-
-        .medium-link-secondary {
-            background: var(--light);
-            color: var(--dark);
-            border: 1px solid var(--border);
-        }
-
-        .medium-link-secondary:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
         .medium-articles {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.25rem;
+            gap: 1rem;
         }
 
         .article-card {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            border: 1px solid var(--border);
-            transition: border-color 0.2s ease;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
             text-decoration: none;
-            display: block;
+            transition: var(--transition-normal);
         }
 
         .article-card:hover {
-            border-color: var(--primary);
+            border-color: var(--accent-blue);
         }
 
         .article-category {
             display: inline-block;
             padding: 0.25rem 0.6rem;
-            background: var(--primary-light);
-            color: var(--primary);
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
             font-size: 0.65rem;
             font-weight: 600;
             text-transform: uppercase;
@@ -596,8 +556,8 @@
         }
 
         .article-title {
-            color: var(--dark);
-            font-size: 1rem;
+            color: var(--text-primary);
+            font-size: 0.95rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
             line-height: 1.4;
@@ -633,23 +593,16 @@
         }
 
         .article-meta-item i {
-            color: var(--primary);
+            color: var(--accent-blue);
             font-size: 0.65rem;
         }
 
-        /* Loading State */
+        /* Loading Skeleton */
         .loading-skeleton {
-            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.1) 25%, rgba(59, 130, 246, 0.2) 50%, rgba(59, 130, 246, 0.1) 75%);
             background-size: 200% 100%;
             animation: shimmer 1.5s infinite;
-            border-radius: var(--radius);
-        }
-
-        .loading-skeleton-light {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: var(--radius);
+            border-radius: var(--radius-md);
         }
 
         @keyframes shimmer {
@@ -657,69 +610,42 @@
             100% { background-position: -200% 0; }
         }
 
-        .repo-card.loading .repo-name,
-        .repo-card.loading .repo-description {
-            background: rgba(255,255,255,0.1);
-            color: transparent;
-            border-radius: 4px;
-        }
-
         /* Responsive */
         @media (max-width: 1024px) {
-            .github-content {
-                grid-template-columns: 1fr;
-            }
-
-            .github-sidebar {
-                max-width: 400px;
-                margin: 0 auto;
-            }
-
-            .github-repos {
-                grid-template-columns: 1fr;
-            }
-
+            .github-content,
             .medium-content {
                 grid-template-columns: 1fr;
             }
 
+            .github-sidebar,
             .medium-sidebar {
-                max-width: 400px;
+                max-width: 350px;
                 margin: 0 auto;
             }
 
+            .github-repos,
             .medium-articles {
                 grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 768px) {
-            .github-section {
-                padding: 40px 1rem;
+            .opensource-hero {
+                padding: 100px 1rem 40px;
             }
 
-            .github-header h2 {
-                font-size: 1.5rem;
+            .opensource-hero h1 {
+                font-size: 1.75rem;
             }
 
-            .gists-section {
-                padding: 40px 1rem;
-            }
-
-            .gists-header h2 {
-                font-size: 1.5rem;
+            .github-section,
+            .gists-section,
+            .medium-section {
+                padding: 1.5rem;
             }
 
             .gists-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .medium-section {
-                padding: 40px 1rem;
-            }
-
-            .medium-header h2 {
-                font-size: 1.5rem;
             }
         }
     </style>
@@ -739,11 +665,10 @@
                 <li><a href="../projects/">Projects</a></li>
                 <li><a href="../conferences/">Conferences</a></li>
                 <li><a href="../publications/">Publications</a></li>
-                <div class="nav-social">
-                    <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                </div>
             </ul>
+            <div class="nav-auth">
+                <button class="btn-signin" onclick="showLoginModal()">Sign In</button>
+            </div>
             <button class="mobile-menu-btn" aria-label="Menu">
                 <span></span>
                 <span></span>
@@ -753,244 +678,187 @@
     </nav>
 
     <main class="main-content">
-    <!-- Page Header -->
-    <header class="page-header">
-        <h1>Open <span>Source</span></h1>
-        <p>GitHub repositories, automation tools, and technical articles on cloud infrastructure and DevOps.</p>
-    </header>
+        <!-- Hero Section -->
+        <section class="opensource-hero">
+            <h1>Open <span>Source</span></h1>
+            <p>GitHub repositories, automation tools, and technical articles on cloud infrastructure and DevOps.</p>
+        </section>
 
-    <!-- GitHub Section -->
-    <section class="github-section">
-        <div class="github-container">
-            <div class="github-header">
-                <h2>GitHub <span>Repositories</span></h2>
-                <p>Infrastructure as Code, DevOps tools, and cloud automation projects</p>
-            </div>
-
-            <div class="github-content">
-                <!-- Sidebar with Profile -->
-                <div class="github-sidebar">
-                    <div class="github-profile">
-                        <div class="github-avatar">
-                            <img id="github-avatar-img" src="https://avatars.githubusercontent.com/schundu007" alt="Sudhakar Chundu GitHub">
-                        </div>
-                        <h3 id="github-name">Sudhakar Chundu</h3>
-                        <p class="username">@schundu007</p>
-                        <p class="bio" id="github-bio"></p>
-                    </div>
-
-                    <div class="github-stats">
-                        <div class="github-stat">
-                            <div class="github-stat-value" id="repo-count">--</div>
-                            <div class="github-stat-label">Repositories</div>
-                        </div>
-                        <div class="github-stat">
-                            <div class="github-stat-value" id="followers-count">--</div>
-                            <div class="github-stat-label">Followers</div>
-                        </div>
-                        <div class="github-stat">
-                            <div class="github-stat-value" id="following-count">--</div>
-                            <div class="github-stat-label">Following</div>
-                        </div>
-                        <div class="github-stat">
-                            <div class="github-stat-value" id="gists-count">--</div>
-                            <div class="github-stat-label">Gists</div>
-                        </div>
-                    </div>
-
-                    <div class="github-links">
-                        <a href="https://github.com/schundu007" target="_blank" class="github-link github-link-primary">
-                            <i class="fab fa-github"></i>
-                            View Full Profile
-                        </a>
-                        <a href="https://github.com/schundu007?tab=repositories" target="_blank" class="github-link github-link-secondary">
-                            <i class="fas fa-folder-open"></i>
-                            All Repositories
-                        </a>
-                    </div>
+        <!-- Open Source Content -->
+        <div class="opensource-container">
+            <!-- GitHub Section -->
+            <section class="github-section">
+                <div class="section-header">
+                    <h2>GitHub <span>Repositories</span></h2>
+                    <p>Infrastructure as Code, DevOps tools, and cloud automation projects</p>
                 </div>
 
-                <!-- Repository Cards - Dynamically loaded -->
-                <div class="github-repos" id="github-repos">
+                <div class="github-content">
+                    <div class="github-sidebar">
+                        <div class="github-profile">
+                            <div class="github-avatar">
+                                <img id="github-avatar-img" src="https://avatars.githubusercontent.com/schundu007" alt="Sudhakar Chundu GitHub">
+                            </div>
+                            <h3 id="github-name">Sudhakar Chundu</h3>
+                            <p class="username">@schundu007</p>
+                            <p class="bio" id="github-bio"></p>
+                        </div>
+
+                        <div class="github-stats">
+                            <div class="github-stat">
+                                <div class="github-stat-value" id="repo-count">--</div>
+                                <div class="github-stat-label">Repositories</div>
+                            </div>
+                            <div class="github-stat">
+                                <div class="github-stat-value" id="followers-count">--</div>
+                                <div class="github-stat-label">Followers</div>
+                            </div>
+                            <div class="github-stat">
+                                <div class="github-stat-value" id="following-count">--</div>
+                                <div class="github-stat-label">Following</div>
+                            </div>
+                            <div class="github-stat">
+                                <div class="github-stat-value" id="gists-count">--</div>
+                                <div class="github-stat-label">Gists</div>
+                            </div>
+                        </div>
+
+                        <div class="github-links">
+                            <a href="https://github.com/schundu007" target="_blank" class="github-link github-link-primary">
+                                <i class="fab fa-github"></i>
+                                View Full Profile
+                            </a>
+                            <a href="https://github.com/schundu007?tab=repositories" target="_blank" class="github-link github-link-secondary">
+                                <i class="fas fa-folder-open"></i>
+                                All Repositories
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="github-repos" id="github-repos">
+                        <!-- Loading skeleton -->
+                        <div class="repo-card"><div class="repo-header"><span class="repo-name loading-skeleton" style="width:60%;height:20px;display:block;"></span></div><p class="repo-description loading-skeleton" style="height:40px;"></p></div>
+                        <div class="repo-card"><div class="repo-header"><span class="repo-name loading-skeleton" style="width:60%;height:20px;display:block;"></span></div><p class="repo-description loading-skeleton" style="height:40px;"></p></div>
+                        <div class="repo-card"><div class="repo-header"><span class="repo-name loading-skeleton" style="width:60%;height:20px;display:block;"></span></div><p class="repo-description loading-skeleton" style="height:40px;"></p></div>
+                        <div class="repo-card"><div class="repo-header"><span class="repo-name loading-skeleton" style="width:60%;height:20px;display:block;"></span></div><p class="repo-description loading-skeleton" style="height:40px;"></p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gists Section -->
+            <section class="gists-section">
+                <div class="section-header">
+                    <h2>GitHub <span>Gists</span></h2>
+                    <p>Code snippets, scripts, and quick solutions for common DevOps tasks</p>
+                </div>
+
+                <div class="gists-grid" id="github-gists">
                     <!-- Loading skeleton -->
-                    <div class="repo-card loading">
-                        <div class="repo-header"><span class="repo-name loading-skeleton" style="width:60%;height:20px;display:block;"></span></div>
-                        <p class="repo-description loading-skeleton" style="height:40px;"></p>
+                    <div class="gist-card"><div class="gist-header"><div class="gist-icon loading-skeleton" style="width:40px;height:40px;"></div><div class="gist-info"><span class="gist-filename loading-skeleton" style="width:70%;height:18px;display:block;"></span></div></div><p class="gist-description loading-skeleton" style="height:40px;"></p></div>
+                    <div class="gist-card"><div class="gist-header"><div class="gist-icon loading-skeleton" style="width:40px;height:40px;"></div><div class="gist-info"><span class="gist-filename loading-skeleton" style="width:70%;height:18px;display:block;"></span></div></div><p class="gist-description loading-skeleton" style="height:40px;"></p></div>
+                    <div class="gist-card"><div class="gist-header"><div class="gist-icon loading-skeleton" style="width:40px;height:40px;"></div><div class="gist-info"><span class="gist-filename loading-skeleton" style="width:70%;height:18px;display:block;"></span></div></div><p class="gist-description loading-skeleton" style="height:40px;"></p></div>
+                    <div class="gist-card"><div class="gist-header"><div class="gist-icon loading-skeleton" style="width:40px;height:40px;"></div><div class="gist-info"><span class="gist-filename loading-skeleton" style="width:70%;height:18px;display:block;"></span></div></div><p class="gist-description loading-skeleton" style="height:40px;"></p></div>
+                </div>
+
+                <div class="gists-view-all">
+                    <a href="https://gist.github.com/schundu007" target="_blank" class="btn btn-primary">
+                        <i class="fab fa-github"></i>
+                        View All Gists
+                    </a>
+                </div>
+            </section>
+
+            <!-- Medium Section -->
+            <section class="medium-section">
+                <div class="section-header">
+                    <h2>Technical <span>Articles</span></h2>
+                    <p>Sharing insights on cloud infrastructure, DevOps, and reliability engineering</p>
+                </div>
+
+                <div class="medium-content">
+                    <div class="medium-sidebar">
+                        <div class="medium-profile">
+                            <div class="medium-avatar">
+                                <i class="fab fa-medium-m"></i>
+                            </div>
+                            <h3>Sudhakar Chundu</h3>
+                            <p class="username">@sudhakarchundu</p>
+                            <p class="medium-bio">Staff DevOps Engineer sharing insights on SRE, GPU infrastructure, cloud security, and platform engineering.</p>
+                        </div>
+
+                        <div class="medium-stats">
+                            <div class="medium-stat">
+                                <div class="medium-stat-value" id="article-count">--</div>
+                                <div class="medium-stat-label">Articles</div>
+                            </div>
+                            <div class="medium-stat">
+                                <div class="medium-stat-value">18+</div>
+                                <div class="medium-stat-label">Years Exp</div>
+                            </div>
+                        </div>
+
+                        <div class="medium-links">
+                            <a href="https://medium.sudhakarchundu.org/" target="_blank" class="github-link github-link-primary">
+                                <i class="fab fa-medium-m"></i>
+                                Follow on Medium
+                            </a>
+                            <a href="https://medium.sudhakarchundu.org/" target="_blank" class="github-link github-link-secondary">
+                                <i class="fas fa-rss"></i>
+                                Subscribe to Updates
+                            </a>
+                        </div>
                     </div>
-                    <div class="repo-card loading">
-                        <div class="repo-header"><span class="repo-name loading-skeleton" style="width:60%;height:20px;display:block;"></span></div>
-                        <p class="repo-description loading-skeleton" style="height:40px;"></p>
-                    </div>
-                    <div class="repo-card loading">
-                        <div class="repo-header"><span class="repo-name loading-skeleton" style="width:60%;height:20px;display:block;"></span></div>
-                        <p class="repo-description loading-skeleton" style="height:40px;"></p>
-                    </div>
-                    <div class="repo-card loading">
-                        <div class="repo-header"><span class="repo-name loading-skeleton" style="width:60%;height:20px;display:block;"></span></div>
-                        <p class="repo-description loading-skeleton" style="height:40px;"></p>
+
+                    <div class="medium-articles" id="medium-articles">
+                        <!-- Loading skeleton -->
+                        <div class="article-card"><span class="article-category loading-skeleton" style="width:80px;height:20px;display:inline-block;"></span><h3 class="article-title loading-skeleton" style="height:24px;margin-top:0.75rem;"></h3><p class="article-excerpt loading-skeleton" style="height:60px;"></p></div>
+                        <div class="article-card"><span class="article-category loading-skeleton" style="width:80px;height:20px;display:inline-block;"></span><h3 class="article-title loading-skeleton" style="height:24px;margin-top:0.75rem;"></h3><p class="article-excerpt loading-skeleton" style="height:60px;"></p></div>
+                        <div class="article-card"><span class="article-category loading-skeleton" style="width:80px;height:20px;display:inline-block;"></span><h3 class="article-title loading-skeleton" style="height:24px;margin-top:0.75rem;"></h3><p class="article-excerpt loading-skeleton" style="height:60px;"></p></div>
+                        <div class="article-card"><span class="article-category loading-skeleton" style="width:80px;height:20px;display:inline-block;"></span><h3 class="article-title loading-skeleton" style="height:24px;margin-top:0.75rem;"></h3><p class="article-excerpt loading-skeleton" style="height:60px;"></p></div>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            <!-- Comments Section -->
+            <div id="comments-container"></div>
         </div>
-    </section>
-
-    <!-- GitHub Gists Section -->
-    <section class="gists-section">
-        <div class="gists-container">
-            <div class="gists-header">
-                <h2>GitHub <span>Gists</span></h2>
-                <p>Code snippets, scripts, and quick solutions for common DevOps and infrastructure tasks</p>
-            </div>
-
-            <div class="gists-grid" id="github-gists">
-                <!-- Loading skeleton -->
-                <div class="gist-card">
-                    <div class="gist-header">
-                        <div class="gist-icon loading-skeleton-light" style="width:40px;height:40px;"></div>
-                        <div class="gist-info">
-                            <span class="gist-filename loading-skeleton-light" style="width:70%;height:18px;display:block;"></span>
-                        </div>
-                    </div>
-                    <p class="gist-description loading-skeleton-light" style="height:40px;"></p>
-                </div>
-                <div class="gist-card">
-                    <div class="gist-header">
-                        <div class="gist-icon loading-skeleton-light" style="width:40px;height:40px;"></div>
-                        <div class="gist-info">
-                            <span class="gist-filename loading-skeleton-light" style="width:70%;height:18px;display:block;"></span>
-                        </div>
-                    </div>
-                    <p class="gist-description loading-skeleton-light" style="height:40px;"></p>
-                </div>
-                <div class="gist-card">
-                    <div class="gist-header">
-                        <div class="gist-icon loading-skeleton-light" style="width:40px;height:40px;"></div>
-                        <div class="gist-info">
-                            <span class="gist-filename loading-skeleton-light" style="width:70%;height:18px;display:block;"></span>
-                        </div>
-                    </div>
-                    <p class="gist-description loading-skeleton-light" style="height:40px;"></p>
-                </div>
-                <div class="gist-card">
-                    <div class="gist-header">
-                        <div class="gist-icon loading-skeleton-light" style="width:40px;height:40px;"></div>
-                        <div class="gist-info">
-                            <span class="gist-filename loading-skeleton-light" style="width:70%;height:18px;display:block;"></span>
-                        </div>
-                    </div>
-                    <p class="gist-description loading-skeleton-light" style="height:40px;"></p>
-                </div>
-            </div>
-
-            <div class="gists-view-all">
-                <a href="https://gist.github.com/schundu007" target="_blank" class="btn btn-primary">
-                    <i class="fab fa-github"></i>
-                    View All Gists
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Medium Section -->
-    <section class="medium-section">
-        <div class="medium-container">
-            <div class="medium-header">
-                <h2>Technical <span>Articles</span></h2>
-                <p>Sharing insights on cloud infrastructure, DevOps, and reliability engineering on Medium</p>
-            </div>
-
-            <div class="medium-content">
-                <!-- Sidebar with Profile -->
-                <div class="medium-sidebar">
-                    <div class="medium-profile">
-                        <div class="medium-avatar">
-                            <i class="fab fa-medium-m"></i>
-                        </div>
-                        <h3>Sudhakar Chundu</h3>
-                        <p class="username">@sudhakarchundu</p>
-                        <p class="medium-bio">Staff DevOps Engineer sharing insights on SRE, GPU infrastructure, cloud security, and platform engineering.</p>
-                    </div>
-
-                    <div class="medium-stats">
-                        <div class="medium-stat">
-                            <div class="medium-stat-value" id="article-count">--</div>
-                            <div class="medium-stat-label">Articles</div>
-                        </div>
-                        <div class="medium-stat">
-                            <div class="medium-stat-value">18+</div>
-                            <div class="medium-stat-label">Years Exp</div>
-                        </div>
-                    </div>
-
-                    <div class="medium-links">
-                        <a href="https://medium.sudhakarchundu.org/" target="_blank" class="medium-link medium-link-primary">
-                            <i class="fab fa-medium-m"></i>
-                            Follow on Medium
-                        </a>
-                        <a href="https://medium.sudhakarchundu.org/" target="_blank" class="medium-link medium-link-secondary">
-                            <i class="fas fa-rss"></i>
-                            Subscribe to Updates
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Article Cards - Dynamically loaded -->
-                <div class="medium-articles" id="medium-articles">
-                    <!-- Loading skeleton -->
-                    <div class="article-card">
-                        <span class="article-category loading-skeleton-light" style="width:80px;height:20px;display:inline-block;"></span>
-                        <h3 class="article-title loading-skeleton-light" style="height:24px;margin-top:0.75rem;"></h3>
-                        <p class="article-excerpt loading-skeleton-light" style="height:60px;"></p>
-                    </div>
-                    <div class="article-card">
-                        <span class="article-category loading-skeleton-light" style="width:80px;height:20px;display:inline-block;"></span>
-                        <h3 class="article-title loading-skeleton-light" style="height:24px;margin-top:0.75rem;"></h3>
-                        <p class="article-excerpt loading-skeleton-light" style="height:60px;"></p>
-                    </div>
-                    <div class="article-card">
-                        <span class="article-category loading-skeleton-light" style="width:80px;height:20px;display:inline-block;"></span>
-                        <h3 class="article-title loading-skeleton-light" style="height:24px;margin-top:0.75rem;"></h3>
-                        <p class="article-excerpt loading-skeleton-light" style="height:60px;"></p>
-                    </div>
-                    <div class="article-card">
-                        <span class="article-category loading-skeleton-light" style="width:80px;height:20px;display:inline-block;"></span>
-                        <h3 class="article-title loading-skeleton-light" style="height:24px;margin-top:0.75rem;"></h3>
-                        <p class="article-excerpt loading-skeleton-light" style="height:60px;"></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     </main>
 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <span class="footer-logo">Sudhakar Chundu</span>
+            <div class="footer-brand">
+                <span class="footer-logo">Sudhakar Chundu</span>
+                <p>Staff DevOps Engineer | SRE | GPU Infrastructure</p>
+            </div>
             <div class="footer-links">
                 <a href="../">Home</a>
+                <a href="../about/">About</a>
                 <a href="../resume/">Resume</a>
-                <a href="../conferences/">Conferences</a>
-                <a href="../publications/">Publications</a>
+                <a href="../contact/">Contact</a>
             </div>
             <div class="footer-social">
-                <a href="https://github.com/schundu007" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/schundu" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://medium.sudhakarchundu.org/" target="_blank"><i class="fab fa-medium"></i></a>
+                <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://medium.sudhakarchundu.org/" target="_blank" title="Medium"><i class="fab fa-medium"></i></a>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 2rem;">
+        <div class="footer-bottom">
             <p>&copy; 2025 Sudhakar Chundu. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Firebase Config and Auth -->
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/comments.js"></script>
 
     <script>
         // Configuration
         const GITHUB_USERNAME = 'schundu007';
         const MEDIUM_RSS_FEED = 'https://medium.com/feed/@sudhakarchundu';
 
-        // Static fallback data for when GitHub API rate limits
+        // Static fallback data
         const FALLBACK_REPOS = [
             { name: 'automation', description: 'Infrastructure automation scripts and tools for cloud environments', html_url: 'https://github.com/schundu007/automation', language: 'HCL', stargazers_count: 0, forks_count: 0, fork: false },
             { name: 'chundu', description: 'Personal official GitHub page and portfolio website', html_url: 'https://github.com/schundu007/chundu', language: 'HTML', stargazers_count: 0, forks_count: 0, fork: false },
@@ -1009,23 +877,12 @@
             { html_url: 'https://gist.github.com/schundu007', description: 'KubeRay operator configuration manifest for GPU clusters', files: { 'RayClusterGPU.yaml': { filename: 'RayClusterGPU.yaml', language: 'YAML' } }, created_at: '2024-01-01', comments: 0 }
         ];
 
-        // Language colors for GitHub
         const langColors = {
-            'JavaScript': '#f1e05a',
-            'TypeScript': '#3178c6',
-            'Python': '#3572A5',
-            'HTML': '#e34c26',
-            'CSS': '#563d7c',
-            'Shell': '#89e051',
-            'HCL': '#5c4ee5',
-            'Dockerfile': '#384d54',
-            'Go': '#00ADD8',
-            'Java': '#b07219',
-            'Terraform': '#5c4ee5',
-            'Markdown': '#083fa1'
+            'JavaScript': '#f1e05a', 'TypeScript': '#3178c6', 'Python': '#3572A5', 'HTML': '#e34c26',
+            'CSS': '#563d7c', 'Shell': '#89e051', 'HCL': '#5c4ee5', 'Dockerfile': '#384d54',
+            'Go': '#00ADD8', 'Java': '#b07219', 'Terraform': '#5c4ee5', 'Markdown': '#083fa1'
         };
 
-        // Render repos helper function
         function renderRepos(repos) {
             const reposContainer = document.getElementById('github-repos');
             reposContainer.innerHTML = repos.map(repo => `
@@ -1036,47 +893,25 @@
                     </div>
                     <p class="repo-description">${repo.description || 'No description available'}</p>
                     <div class="repo-meta">
-                        ${repo.language ? `
-                            <span class="repo-meta-item">
-                                <span class="repo-lang-dot" style="background: ${langColors[repo.language] || '#858585'}"></span>
-                                ${repo.language}
-                            </span>
-                        ` : ''}
-                        ${repo.stargazers_count > 0 ? `
-                            <span class="repo-meta-item">
-                                <i class="fas fa-star"></i>
-                                ${repo.stargazers_count}
-                            </span>
-                        ` : ''}
-                        ${repo.forks_count > 0 ? `
-                            <span class="repo-meta-item">
-                                <i class="fas fa-code-branch"></i>
-                                ${repo.forks_count}
-                            </span>
-                        ` : ''}
+                        ${repo.language ? `<span class="repo-meta-item"><span class="repo-lang-dot" style="background: ${langColors[repo.language] || '#858585'}"></span>${repo.language}</span>` : ''}
+                        ${repo.stargazers_count > 0 ? `<span class="repo-meta-item"><i class="fas fa-star"></i>${repo.stargazers_count}</span>` : ''}
+                        ${repo.forks_count > 0 ? `<span class="repo-meta-item"><i class="fas fa-code-branch"></i>${repo.forks_count}</span>` : ''}
                     </div>
                 </a>
             `).join('');
         }
 
-        // Render gists helper function
         function renderGists(gists) {
             const gistsContainer = document.getElementById('github-gists');
-
             if (gists.length === 0) {
-                gistsContainer.innerHTML = `
-                    <div class="gist-card">
-                        <div class="gist-header">
-                            <div class="gist-icon"><i class="fas fa-info-circle"></i></div>
-                            <div class="gist-info">
-                                <span class="gist-filename">No public gists yet</span>
-                            </div>
-                        </div>
-                        <p class="gist-description">Check back later for code snippets and quick solutions.</p>
-                    </div>
-                `;
+                gistsContainer.innerHTML = `<div class="gist-card"><div class="gist-header"><div class="gist-icon"><i class="fas fa-info-circle"></i></div><div class="gist-info"><span class="gist-filename">No public gists yet</span></div></div><p class="gist-description">Check back later for code snippets and quick solutions.</p></div>`;
                 return;
             }
+
+            const getIcon = (lang) => {
+                const icons = { 'Shell': 'fa-terminal', 'Bash': 'fa-terminal', 'Python': 'fa-python', 'JavaScript': 'fa-js', 'TypeScript': 'fa-js', 'YAML': 'fa-file-code', 'JSON': 'fa-file-code', 'Dockerfile': 'fa-docker', 'HCL': 'fa-file-code', 'Terraform': 'fa-file-code', 'Markdown': 'fa-file-alt' };
+                return icons[lang] || 'fa-code';
+            };
 
             gistsContainer.innerHTML = gists.map(gist => {
                 const files = Object.values(gist.files);
@@ -1084,71 +919,17 @@
                 const filename = firstFile ? firstFile.filename : 'Untitled';
                 const language = firstFile ? firstFile.language || 'Text' : 'Text';
                 const fileCount = files.length;
+                const formattedDate = new Date(gist.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-                const createdDate = new Date(gist.created_at);
-                const formattedDate = createdDate.toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric'
-                });
-
-                const getIcon = (lang) => {
-                    const icons = {
-                        'Shell': 'fa-terminal',
-                        'Bash': 'fa-terminal',
-                        'Python': 'fa-python',
-                        'JavaScript': 'fa-js',
-                        'TypeScript': 'fa-js',
-                        'YAML': 'fa-file-code',
-                        'JSON': 'fa-file-code',
-                        'Dockerfile': 'fa-docker',
-                        'HCL': 'fa-file-code',
-                        'Terraform': 'fa-file-code',
-                        'Markdown': 'fa-file-alt'
-                    };
-                    return icons[lang] || 'fa-code';
-                };
-
-                return `
-                    <a href="${gist.html_url}" target="_blank" class="gist-card">
-                        <div class="gist-header">
-                            <div class="gist-icon">
-                                <i class="fas ${getIcon(language)}"></i>
-                            </div>
-                            <div class="gist-info">
-                                <span class="gist-filename">${filename}</span>
-                                <span class="gist-type">${language}</span>
-                            </div>
-                        </div>
-                        <p class="gist-description">${gist.description || 'No description provided'}</p>
-                        <div class="gist-meta">
-                            <span class="gist-meta-item">
-                                <i class="fas fa-calendar"></i>
-                                ${formattedDate}
-                            </span>
-                            <span class="gist-files-count">
-                                <i class="fas fa-file"></i> ${fileCount} file${fileCount > 1 ? 's' : ''}
-                            </span>
-                            ${gist.comments > 0 ? `
-                                <span class="gist-meta-item">
-                                    <i class="fas fa-comment"></i>
-                                    ${gist.comments}
-                                </span>
-                            ` : ''}
-                        </div>
-                    </a>
-                `;
+                return `<a href="${gist.html_url}" target="_blank" class="gist-card"><div class="gist-header"><div class="gist-icon"><i class="fas ${getIcon(language)}"></i></div><div class="gist-info"><span class="gist-filename">${filename}</span><span class="gist-type">${language}</span></div></div><p class="gist-description">${gist.description || 'No description provided'}</p><div class="gist-meta"><span class="gist-meta-item"><i class="fas fa-calendar"></i>${formattedDate}</span><span class="gist-files-count"><i class="fas fa-file"></i> ${fileCount} file${fileCount > 1 ? 's' : ''}</span>${gist.comments > 0 ? `<span class="gist-meta-item"><i class="fas fa-comment"></i>${gist.comments}</span>` : ''}</div></a>`;
             }).join('');
         }
 
-        // Fetch GitHub Profile
         async function fetchGitHubProfile() {
             try {
                 const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
                 if (!response.ok) throw new Error('Failed to fetch profile');
                 const data = await response.json();
-
-                // Update profile
                 document.getElementById('github-avatar-img').src = data.avatar_url;
                 document.getElementById('github-name').textContent = data.name || GITHUB_USERNAME;
                 document.getElementById('github-bio').textContent = data.bio || '';
@@ -1161,7 +942,6 @@
             }
         }
 
-        // Fetch GitHub Repositories
         async function fetchGitHubRepos() {
             try {
                 const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=6`);
@@ -1169,14 +949,11 @@
                 const repos = await response.json();
                 renderRepos(repos);
             } catch (error) {
-                console.error('Error fetching GitHub repos:', error);
-                // Use fallback static data
                 console.log('Using fallback repository data');
                 renderRepos(FALLBACK_REPOS);
             }
         }
 
-        // Fetch GitHub Gists
         async function fetchGitHubGists() {
             try {
                 const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/gists?per_page=8`);
@@ -1184,21 +961,16 @@
                 const gists = await response.json();
                 renderGists(gists);
             } catch (error) {
-                console.error('Error fetching GitHub gists:', error);
-                // Use fallback static data
                 console.log('Using fallback gist data');
                 renderGists(FALLBACK_GISTS);
             }
         }
 
-        // Fetch Medium Articles
         async function fetchMediumArticles() {
             try {
-                // Using rss2json API to convert RSS to JSON
                 const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(MEDIUM_RSS_FEED)}`);
                 if (!response.ok) throw new Error('Failed to fetch Medium feed');
                 const data = await response.json();
-
                 if (data.status !== 'ok') throw new Error('Invalid feed response');
 
                 const articles = data.items.slice(0, 6);
@@ -1206,62 +978,18 @@
 
                 const articlesContainer = document.getElementById('medium-articles');
                 articlesContainer.innerHTML = articles.map(article => {
-                    // Extract first category or use default
-                    const category = article.categories && article.categories.length > 0
-                        ? article.categories[0]
-                        : 'Technology';
-
-                    // Strip HTML from description and limit length
+                    const category = article.categories && article.categories.length > 0 ? article.categories[0] : 'Technology';
                     const tempDiv = document.createElement('div');
                     tempDiv.innerHTML = article.description || '';
                     const excerpt = tempDiv.textContent.substring(0, 200) + '...';
-
-                    // Calculate read time (average 200 words per minute)
                     const wordCount = tempDiv.textContent.split(/\s+/).length;
                     const readTime = Math.max(1, Math.ceil(wordCount / 200));
+                    const formattedDate = new Date(article.pubDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-                    // Format date
-                    const pubDate = new Date(article.pubDate);
-                    const formattedDate = pubDate.toLocaleDateString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric'
-                    });
-
-                    return `
-                        <a href="${article.link}" target="_blank" class="article-card">
-                            <span class="article-category">${category}</span>
-                            <h3 class="article-title">${article.title}</h3>
-                            <p class="article-excerpt">${excerpt}</p>
-                            <div class="article-meta">
-                                <span class="article-meta-item">
-                                    <i class="fas fa-clock"></i>
-                                    ${readTime} min read
-                                </span>
-                                <span class="article-meta-item">
-                                    <i class="fas fa-calendar"></i>
-                                    ${formattedDate}
-                                </span>
-                            </div>
-                        </a>
-                    `;
+                    return `<a href="${article.link}" target="_blank" class="article-card"><span class="article-category">${category}</span><h3 class="article-title">${article.title}</h3><p class="article-excerpt">${excerpt}</p><div class="article-meta"><span class="article-meta-item"><i class="fas fa-clock"></i>${readTime} min read</span><span class="article-meta-item"><i class="fas fa-calendar"></i>${formattedDate}</span></div></a>`;
                 }).join('');
             } catch (error) {
-                console.error('Error fetching Medium articles:', error);
-                // Show fallback message
-                document.getElementById('medium-articles').innerHTML = `
-                    <div class="article-card">
-                        <span class="article-category">Notice</span>
-                        <h3 class="article-title">Visit Medium for Latest Articles</h3>
-                        <p class="article-excerpt">Articles are being loaded from Medium. Click the button in the sidebar to view all articles directly on Medium.</p>
-                        <div class="article-meta">
-                            <span class="article-meta-item">
-                                <i class="fab fa-medium"></i>
-                                @sudhakarchundu
-                            </span>
-                        </div>
-                    </div>
-                `;
+                document.getElementById('medium-articles').innerHTML = `<div class="article-card"><span class="article-category">Notice</span><h3 class="article-title">Visit Medium for Latest Articles</h3><p class="article-excerpt">Articles are being loaded from Medium. Click the button in the sidebar to view all articles directly on Medium.</p><div class="article-meta"><span class="article-meta-item"><i class="fab fa-medium"></i>@sudhakarchundu</span></div></div>`;
                 document.getElementById('article-count').textContent = '10+';
             }
         }
@@ -1275,7 +1003,6 @@
             navLinks.classList.toggle('active');
         });
 
-        // Close menu when clicking a link
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenuBtn.classList.remove('active');

@@ -24,79 +24,249 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
     <style>
         /* Resume Page Specific Styles */
-        .resume-page-header {
-            padding: 80px 2rem 30px;
-            background: #f1f5f9;
-            text-align: left;
-            color: var(--dark);
-            border-radius: 16px;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--border);
+        .resume-hero {
+            padding: 120px 2rem 60px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
         }
 
-        .resume-page-header .container {
+        .resume-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .resume-hero .container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
+            align-items: center;
             flex-wrap: wrap;
-            gap: 1.5rem;
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
         }
 
-        .resume-page-header h1 {
-            font-size: 1.75rem;
-            margin-bottom: 0.5rem;
-            color: var(--dark);
+        .resume-hero-content h1 {
+            font-size: 2.5rem;
             font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .resume-page-header h1 span {
-            color: var(--primary);
+        .resume-hero-content p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
         }
 
-        .resume-page-header p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .header-buttons {
+        .resume-actions {
             display: flex;
-            gap: 0.75rem;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
 
-        .btn-secondary {
-            background: var(--white);
-            color: var(--dark);
-            border: 1px solid var(--border);
+        .resume-actions .btn {
+            padding: 0.875rem 1.5rem;
+            font-size: 0.95rem;
         }
 
-        .btn-secondary:hover {
-            border-color: var(--primary);
-            color: var(--primary);
+        /* Document Viewer */
+        .document-viewer {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            margin: 2rem auto;
+            max-width: 1200px;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
         }
 
-        /* Resume Content */
-        .resume-section-wrapper {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 2.5rem;
+        .viewer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .viewer-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .viewer-tab {
+            padding: 0.6rem 1.25rem;
+            border: 1px solid var(--glass-border);
+            background: transparent;
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition-normal);
+            color: var(--text-secondary);
+        }
+
+        .viewer-tab:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .viewer-tab.active {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: transparent;
+        }
+
+        .viewer-close {
+            padding: 0.6rem 1.25rem;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            background: transparent;
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ef4444;
+            transition: var(--transition-normal);
+        }
+
+        .viewer-close:hover {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        .viewer-content {
+            height: 80vh;
+            min-height: 600px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .viewer-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .viewer-content iframe.loaded {
+            opacity: 1;
+        }
+
+        .viewer-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            color: var(--accent-blue);
+        }
+
+        .viewer-loading i {
+            font-size: 2.5rem;
+        }
+
+        .viewer-footer {
+            padding: 1rem 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        /* Auth Gate Overlay */
+        .auth-gate {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 15, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            z-index: 10;
+        }
+
+        .auth-gate i.lock-icon {
+            font-size: 4rem;
+            color: var(--accent-blue);
             margin-bottom: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            opacity: 0.8;
+        }
+
+        .auth-gate h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .auth-gate p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            max-width: 400px;
+        }
+
+        /* Resume Content Section */
+        .resume-content-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .resume-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(20px);
         }
 
         /* Resume Header */
         .resume-header {
             text-align: center;
             padding-bottom: 2rem;
-            border-bottom: 2px solid #f8fafc;
+            border-bottom: 1px solid var(--glass-border);
             margin-bottom: 2rem;
         }
 
         .resume-header h1 {
             font-size: 2rem;
-            margin-bottom: 0.75rem;
-            color: var(--dark);
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .resume-contact {
@@ -104,19 +274,20 @@
             justify-content: center;
             flex-wrap: wrap;
             gap: 1.5rem;
-            color: var(--text-muted);
+            color: var(--text-secondary);
             font-size: 0.9rem;
         }
 
         .resume-contact a {
-            color: var(--text-muted);
+            color: var(--text-secondary);
             display: flex;
             align-items: center;
             gap: 0.4rem;
+            transition: var(--transition-fast);
         }
 
         .resume-contact a:hover {
-            color: var(--primary);
+            color: var(--accent-blue);
         }
 
         /* Resume Sections */
@@ -129,30 +300,25 @@
         }
 
         .resume-section-title {
-            font-size: 1.1rem;
+            font-size: 1rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: var(--primary);
+            color: var(--accent-blue);
             margin-bottom: 1.25rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--accent-blue);
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .resume-section-title i {
-            font-size: 0.9rem;
-        }
-
-        /* Summary */
         .summary-text {
-            color: var(--text);
+            color: var(--text-secondary);
             line-height: 1.8;
             font-size: 0.95rem;
         }
 
-        /* Skills */
+        /* Skills Grid */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -160,24 +326,24 @@
         }
 
         .skill-category {
-            background: #f8fafc;
+            background: rgba(59, 130, 246, 0.1);
             padding: 1rem 1.25rem;
-            border-radius: 12px;
-            border-left: 3px solid var(--primary);
+            border-radius: var(--radius-md);
+            border-left: 3px solid var(--accent-blue);
         }
 
         .skill-category h4 {
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: var(--dark);
+            color: var(--text-primary);
             margin-bottom: 0.5rem;
             font-weight: 600;
         }
 
         .skill-category p {
             font-size: 0.85rem;
-            color: var(--text-muted);
+            color: var(--text-secondary);
             line-height: 1.6;
         }
 
@@ -185,7 +351,7 @@
         .experience-item {
             margin-bottom: 2rem;
             padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .experience-item:last-child {
@@ -205,12 +371,12 @@
 
         .experience-title h3 {
             font-size: 1.1rem;
-            color: var(--dark);
+            color: var(--text-primary);
             margin-bottom: 0.25rem;
         }
 
         .experience-title .company {
-            color: var(--primary);
+            color: var(--accent-blue);
             font-weight: 500;
             font-size: 0.95rem;
         }
@@ -232,7 +398,7 @@
             padding-left: 1.25rem;
             margin-bottom: 0.5rem;
             font-size: 0.9rem;
-            color: var(--text);
+            color: var(--text-secondary);
             line-height: 1.7;
         }
 
@@ -243,49 +409,40 @@
             top: 0.6rem;
             width: 6px;
             height: 6px;
-            background: var(--primary);
+            background: var(--accent-blue);
             border-radius: 50%;
         }
 
-        /* Education & Certifications */
-        .education-item {
-            margin-bottom: 1rem;
+        /* Sub-roles */
+        .sub-role {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(59, 130, 246, 0.05);
+            border-left: 3px solid var(--accent-blue);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
         }
 
-        .education-item h3 {
-            font-size: 1rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .education-item p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .certifications-list {
+        .sub-role-header {
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-top: 1rem;
-        }
-
-        .cert-badge {
-            background: #f8fafc;
-            color: var(--dark-soft);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 0.4rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
         }
 
-        .cert-badge i {
-            color: var(--primary);
+        .sub-role-header h4 {
+            font-size: 1rem;
+            color: var(--text-primary);
+            margin: 0;
         }
 
-        /* Key Metrics */
+        .sub-role-header span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Metrics Grid */
         .metrics-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -293,21 +450,23 @@
         }
 
         .metric-item {
-            background: #f8fafc;
+            background: rgba(59, 130, 246, 0.1);
             padding: 1.25rem;
-            border-radius: 12px;
+            border-radius: var(--radius-md);
             text-align: center;
-            border: 1px solid var(--border);
+            border: 1px solid var(--glass-border);
+            transition: var(--transition-normal);
         }
 
         .metric-item:hover {
-            border-color: var(--primary);
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
         }
 
         .metric-value {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--accent-blue);
             line-height: 1;
             margin-bottom: 0.35rem;
             font-family: var(--font-mono);
@@ -318,45 +477,39 @@
             color: var(--text-muted);
         }
 
-        /* LinkedIn Highlights Card */
+        /* LinkedIn Card */
         .linkedin-card {
-            background: #f1f5f9;
-            border-radius: 16px;
-            padding: 1.75rem;
-            margin-bottom: 2.5rem;
-            color: var(--dark);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid var(--border);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            margin-bottom: 2rem;
         }
 
         .linkedin-card-header {
             display: flex;
             align-items: center;
             gap: 1.25rem;
-            margin-bottom: 1.25rem;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 1.5rem;
         }
 
         .linkedin-card-photo {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            border: none;
-            object-fit: contain;
-            background: #f1f5f9;
+            border: 3px solid var(--accent-blue);
+            object-fit: cover;
         }
 
         .linkedin-card-info h3 {
             font-size: 1.25rem;
             margin-bottom: 0.25rem;
-            color: var(--dark);
+            color: var(--text-primary);
         }
 
         .linkedin-card-info .headline {
             font-size: 0.9rem;
-            color: var(--text-muted);
+            color: var(--text-secondary);
             margin-bottom: 0.5rem;
         }
 
@@ -372,23 +525,21 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 1rem;
-            margin-bottom: 1.25rem;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 1.5rem;
         }
 
         .linkedin-highlight {
-            background: var(--white);
+            background: var(--glass-bg);
             padding: 1rem;
-            border-radius: 10px;
+            border-radius: var(--radius-md);
             text-align: center;
-            border: 1px solid var(--border);
+            border: 1px solid var(--glass-border);
         }
 
         .linkedin-highlight .value {
             font-size: 1.35rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--accent-blue);
             line-height: 1;
             margin-bottom: 0.3rem;
         }
@@ -404,31 +555,27 @@
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
-            margin-bottom: 1.25rem;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 1.5rem;
         }
 
         .linkedin-skill {
-            background: var(--white);
-            color: var(--dark);
+            background: var(--glass-bg);
+            color: var(--text-secondary);
             padding: 0.4rem 0.85rem;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 500;
-            border: 1px solid var(--border);
+            border: 1px solid var(--glass-border);
         }
 
         .linkedin-card-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative;
-            z-index: 1;
         }
 
         .linkedin-tagline {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
             font-style: italic;
         }
@@ -444,202 +591,81 @@
             font-size: 0.85rem;
             font-weight: 600;
             text-decoration: none;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: var(--transition-normal);
         }
 
         .linkedin-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,119,181,0.3);
+            box-shadow: 0 4px 20px rgba(0, 119, 181, 0.4);
             color: white;
         }
 
-        @media (max-width: 768px) {
-            .linkedin-highlights {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .linkedin-card-footer {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
+        /* Certifications */
+        .certifications-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1rem;
         }
 
-        /* Print Styles */
-        @media print {
-            nav, .resume-page-header, footer, .linkedin-card {
-                display: none;
-            }
-            body {
-                background: white;
-            }
-            .resume-section-wrapper {
-                box-shadow: none;
-                padding: 0;
-            }
+        .cert-badge {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        .cert-badge i {
+            color: var(--accent-blue);
+        }
+
+        /* Education */
+        .education-item {
+            margin-bottom: 1rem;
+        }
+
+        .education-item h3 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-primary);
+        }
+
+        .education-item p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .resume-page-header {
-                padding: 80px 1rem 30px;
+            .resume-hero {
+                padding: 100px 1rem 40px;
             }
 
-            .header-buttons {
-                flex-direction: column;
-                width: 100%;
-                margin-top: 1rem;
-            }
-
-            .header-buttons .btn {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .resume-page-header .container {
+            .resume-hero .container {
                 flex-direction: column;
                 text-align: center;
             }
 
-            .resume-section-wrapper {
-                padding: 2rem 1.5rem;
+            .resume-actions {
+                width: 100%;
+                flex-direction: column;
             }
 
-            .resume-header h1 {
+            .resume-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .resume-hero-content h1 {
                 font-size: 1.75rem;
             }
 
-            .resume-contact {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .metrics-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .experience-header {
-                flex-direction: column;
-            }
-        }
-
-        /* Document Viewer Styles */
-        .document-viewer {
-            background: var(--white);
-            border-radius: 16px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            overflow: hidden;
-            border: 1px solid var(--border);
-        }
-
-        .viewer-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.5rem;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .viewer-tabs {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .viewer-tab {
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border);
-            background: white;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.2s;
-            color: var(--text-muted);
-        }
-
-        .viewer-tab:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .viewer-tab.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .viewer-close {
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border);
-            background: white;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #dc2626;
-            transition: all 0.2s;
-        }
-
-        .viewer-close:hover {
-            background: #dc2626;
-            color: white;
-            border-color: #dc2626;
-        }
-
-        .viewer-content {
-            height: 80vh;
-            min-height: 600px;
-        }
-
-        .viewer-content iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .viewer-footer {
-            padding: 1rem 1.5rem;
-            background: var(--light);
-            border-top: 1px solid var(--border);
-            text-align: center;
-        }
-
-        .viewer-footer .btn {
-            padding: 0.75rem 2rem;
-            font-size: 1rem;
-        }
-
-        .viewer-loading {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            color: var(--primary);
-            font-size: 1.1rem;
-        }
-
-        .viewer-loading i {
-            font-size: 2.5rem;
-        }
-
-        .viewer-content {
-            position: relative;
-        }
-
-        @media (max-width: 768px) {
             .viewer-header {
                 flex-direction: column;
                 gap: 1rem;
@@ -648,6 +674,46 @@
             .viewer-content {
                 height: 60vh;
                 min-height: 400px;
+            }
+
+            .skills-grid,
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .linkedin-highlights {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .linkedin-card-footer {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .resume-card {
+                padding: 1.5rem;
+            }
+
+            .resume-contact {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            nav, .resume-hero, footer, .linkedin-card, .document-viewer {
+                display: none;
+            }
+            body {
+                background: white;
+                color: black;
+            }
+            .resume-card {
+                box-shadow: none;
+                border: none;
+                background: white;
             }
         }
     </style>
@@ -667,11 +733,10 @@
                 <li><a href="../projects/">Projects</a></li>
                 <li><a href="../conferences/">Conferences</a></li>
                 <li><a href="../publications/">Publications</a></li>
-                <div class="nav-social">
-                    <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                </div>
             </ul>
+            <div class="nav-auth">
+                <button class="btn-signin" onclick="showLoginModal()">Sign In</button>
+            </div>
             <button class="mobile-menu-btn" aria-label="Menu">
                 <span></span>
                 <span></span>
@@ -681,159 +746,68 @@
     </nav>
 
     <main class="main-content">
-    <!-- Page Header -->
-    <header class="resume-page-header">
-        <div class="container">
-            <div>
-                <h1>Resume</h1>
-                <p>Staff DevOps Engineer | SRE + GPU Infrastructure + Cloud Security | 18+ Years Hands-On</p>
-            </div>
-            <div class="header-buttons">
-                <button id="view-resume-btn" class="btn btn-primary" onclick="viewDocument('resume')">
-                    <i class="fas fa-eye"></i>
-                    View Resume
-                </button>
-                <button id="view-cover-letter-btn" class="btn btn-secondary" onclick="viewDocument('cover-letter')" style="display: none;">
-                    <i class="fas fa-envelope-open-text"></i>
-                    View Cover Letter
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Document Viewer Section -->
-    <section id="document-viewer" class="document-viewer" style="display: none;">
-        <div class="viewer-header">
-            <div class="viewer-tabs">
-                <button id="tab-resume" class="viewer-tab active" onclick="viewDocument('resume')">
-                    <i class="fas fa-file-alt"></i> Resume
-                </button>
-                <button id="tab-cover-letter" class="viewer-tab" onclick="viewDocument('cover-letter')" style="display: none;">
-                    <i class="fas fa-envelope-open-text"></i> Cover Letter
-                </button>
-            </div>
-            <button class="viewer-close" onclick="closeViewer()">
-                <i class="fas fa-times"></i> Close
-            </button>
-        </div>
-        <div class="viewer-content">
-            <div id="viewer-loading" class="viewer-loading">
-                <i class="fas fa-spinner fa-spin"></i>
-                <span>Loading document...</span>
-            </div>
-            <iframe id="document-frame" src="" frameborder="0" onload="hideLoading()"></iframe>
-        </div>
-        <div class="viewer-footer">
-            <a id="viewer-download-btn" href="#" class="btn btn-primary" download>
-                <i class="fas fa-download"></i>
-                Download Document
-            </a>
-        </div>
-    </section>
-
-    <!-- Resume Content -->
-    <div class="resume-section-wrapper">
-            <!-- Resume Header -->
-            <header class="resume-header">
-                <h1>SUDHAKAR CHUNDU</h1>
-                <div class="resume-contact">
-                    <a href="https://maps.google.com/?q=San+Jose,+CA" target="_blank">
-                        <i class="fas fa-map-marker-alt"></i> San Jose, CA
-                    </a>
-                    <a href="tel:+15136660099">
-                        <i class="fas fa-phone"></i> (513) 666-0099
-                    </a>
-                    <a href="mailto:chundubabu@gmail.com">
-                        <i class="fas fa-envelope"></i> chundubabu@gmail.com
-                    </a>
-                    <a href="https://www.linkedin.com/in/schundu" target="_blank">
-                        <i class="fab fa-linkedin"></i> LinkedIn
-                    </a>
-                    <a href="https://github.com/schundu007" target="_blank">
-                        <i class="fab fa-github"></i> GitHub
-                    </a>
-                    <a href="https://www.sudhakarchundu.org/" target="_blank">
-                        <i class="fas fa-globe"></i> Portfolio
-                    </a>
+        <!-- Hero Section -->
+        <section class="resume-hero">
+            <div class="container">
+                <div class="resume-hero-content">
+                    <h1>Resume</h1>
+                    <p>Staff DevOps Engineer | SRE + GPU Infrastructure + Cloud Security | 18+ Years Hands-On</p>
                 </div>
-            </header>
-
-            <!-- Professional Summary -->
-            <section class="resume-section">
-                <h2 class="resume-section-title">
-                    <i class="fas fa-user"></i>
-                    Professional Summary
-                </h2>
-                <p class="summary-text">
-                    Staff DevOps Engineer with 18+ years of hands-on experience across SRE, GPU infrastructure, cloud security, and platform engineering at enterprise scale. Primary on-call owner for production systems. Expert in Kubernetes, Slurm GPU clusters, Terraform, and multi-cloud architecture (AWS, Azure, GCP). Proven track record maintaining 99.95% SLO, building 65+ GPU compute platforms, achieving SOC2/HIPAA/FedRAMP compliance, and delivering $8M+ in documented cost savings. I keep critical services running and secure. Active conference speaker at KubeCon, SREcon, and DevOps Days.
-                </p>
-            </section>
-
-            <!-- Key Metrics -->
-            <section class="resume-section">
-                <h2 class="resume-section-title">
-                    <i class="fas fa-chart-bar"></i>
-                    Key Achievements
-                </h2>
-                <div class="metrics-grid">
-                    <div class="metric-item">
-                        <div class="metric-value">$8M+</div>
-                        <div class="metric-label">Annual Savings | 73% Cost Reduction</div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-value">10M+</div>
-                        <div class="metric-label">Users Served | 15+ Regions</div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-value">99.95%</div>
-                        <div class="metric-label">SLO Maintained</div>
-                    </div>
+                <div class="resume-actions">
+                    <button id="view-resume-btn" class="btn btn-primary" onclick="viewDocument('resume')">
+                        <i class="fas fa-eye"></i>
+                        View Resume
+                    </button>
+                    <button id="view-cover-letter-btn" class="btn btn-secondary" onclick="viewDocument('cover-letter')" style="display: none;">
+                        <i class="fas fa-envelope-open-text"></i>
+                        View Cover Letter
+                    </button>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- Core Technical Skills -->
-            <section class="resume-section">
-                <h2 class="resume-section-title">
-                    <i class="fas fa-cogs"></i>
-                    Core Technical Skills
-                </h2>
-                <div class="skills-grid">
-                    <div class="skill-category">
-                        <h4>GPU/HPC Computing</h4>
-                        <p>Slurm, Slinky, NVIDIA BCM/DGX, vcluster, CUDA, TensorRT, A100/V100/T4 scheduling, Triton Inference Server, vLLM</p>
-                    </div>
-                    <div class="skill-category">
-                        <h4>AI/ML Infrastructure</h4>
-                        <p>PyTorch, Ray, Flyte, MLflow, Kubeflow, SageMaker, Azure ML, TorchServe, KServe, distributed training</p>
-                    </div>
-                    <div class="skill-category">
-                        <h4>Cloud Platforms</h4>
-                        <p>AWS (EKS, EC2, SageMaker, EMR), Azure (AKS, APIM, ML), OCI</p>
-                    </div>
-                    <div class="skill-category">
-                        <h4>Big Data & Streaming</h4>
-                        <p>Databricks, Apache Spark, Flink, Kafka, Hadoop/HDFS, Hive, Trino, Airflow, Delta Lake, Kinesis</p>
-                    </div>
-                    <div class="skill-category">
-                        <h4>Container Orchestration</h4>
-                        <p>Kubernetes (EKS/AKS), Docker, Helm, Istio Service Mesh, KEDA, ArgoCD, FluxCD</p>
-                    </div>
-                    <div class="skill-category">
-                        <h4>Infrastructure as Code</h4>
-                        <p>Terraform (5+ modules), Ansible, ARM/Bicep, CloudFormation, Packer, GitOps, policy-as-code (OPA, Checkov)</p>
-                    </div>
-                    <div class="skill-category">
-                        <h4>Security & Compliance</h4>
-                        <p>SOC2, HIPAA, FedRAMP, ISO 27001, HITRUST, DevSecOps (Snyk, SonarQube), Vault, ZTNA</p>
-                    </div>
-                    <div class="skill-category">
-                        <h4>SRE & Observability</h4>
-                        <p>SLI/SLO/SLA, error budgets, chaos engineering, Prometheus, Grafana, Datadog, OpenTelemetry, AIOps</p>
-                    </div>
+        <!-- Document Viewer Section -->
+        <section id="document-viewer" class="document-viewer" style="display: none;">
+            <div class="viewer-header">
+                <div class="viewer-tabs">
+                    <button id="tab-resume" class="viewer-tab active" onclick="viewDocument('resume')">
+                        <i class="fas fa-file-alt"></i> Resume
+                    </button>
+                    <button id="tab-cover-letter" class="viewer-tab" onclick="viewDocument('cover-letter')" style="display: none;">
+                        <i class="fas fa-envelope-open-text"></i> Cover Letter
+                    </button>
                 </div>
-            </section>
+                <button class="viewer-close" onclick="closeViewer()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+            <div class="viewer-content">
+                <div id="auth-gate" class="auth-gate" style="display: none;">
+                    <i class="fas fa-lock lock-icon"></i>
+                    <h3>Sign In Required</h3>
+                    <p>Please sign in to view and download the resume. This helps me track interest and follow up with recruiters.</p>
+                    <button class="btn btn-primary" onclick="showLoginModal('Sign in to view resume')">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Sign In to Continue
+                    </button>
+                </div>
+                <div id="viewer-loading" class="viewer-loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <span>Loading document...</span>
+                </div>
+                <iframe id="document-frame" src="" frameborder="0"></iframe>
+            </div>
+            <div class="viewer-footer">
+                <a id="viewer-download-btn" href="#" class="btn btn-primary" onclick="handleDownload(event)">
+                    <i class="fas fa-download"></i>
+                    Download Document
+                </a>
+            </div>
+        </section>
 
-            <!-- LinkedIn Profile Highlights -->
+        <!-- Resume Content -->
+        <div class="resume-content-wrapper">
+            <!-- LinkedIn Card -->
             <div class="linkedin-card">
                 <div class="linkedin-card-header">
                     <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu" class="linkedin-card-photo">
@@ -879,156 +853,257 @@
                 </div>
             </div>
 
-            <!-- Professional Experience -->
-            <section class="resume-section">
-                <h2 class="resume-section-title">
-                    <i class="fas fa-briefcase"></i>
-                    Professional Experience
-                </h2>
-
-                <div class="experience-item">
-                    <div class="experience-header">
-                        <div class="experience-title">
-                            <h3>Staff DevOps Engineer / SRE</h3>
-                            <span class="company">Trackonomy Systems | San Jose, CA</span>
-                        </div>
-                        <span class="experience-date">Oct 2023 – Present</span>
+            <div class="resume-card">
+                <!-- Resume Header -->
+                <header class="resume-header">
+                    <h1>SUDHAKAR CHUNDU</h1>
+                    <div class="resume-contact">
+                        <a href="https://maps.google.com/?q=San+Jose,+CA" target="_blank">
+                            <i class="fas fa-map-marker-alt"></i> San Jose, CA
+                        </a>
+                        <a href="tel:+15136660099">
+                            <i class="fas fa-phone"></i> (513) 666-0099
+                        </a>
+                        <a href="mailto:chundubabu@gmail.com">
+                            <i class="fas fa-envelope"></i> chundubabu@gmail.com
+                        </a>
+                        <a href="https://www.linkedin.com/in/schundu" target="_blank">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                        <a href="https://github.com/schundu007" target="_blank">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
                     </div>
-                    <ul class="experience-bullets">
-                        <li><strong>Platform Architecture:</strong> Designed and built K8s microservices platform from ground up; migrated 40+ workloads from VMs, VMSS, Azure WebApps, Function Apps, and datacenter Java applications to containerized architecture.</li>
-                        <li><strong>Production Reliability:</strong> Primary on-call for Kubernetes clusters and GPU compute infrastructure; maintained 99.95% SLO for 18 months serving 12+ enterprise clients.</li>
-                        <li><strong>DevSecOps & Compliance:</strong> Led SOC2 Type II, FedRAMP, and HIPAA certification; implemented Trivy, Falco, OPA, Gitleaks, and HashiCorp Vault for GenAI/LLM platform security.</li>
-                        <li><strong>Cloud FinOps:</strong> Reduced cloud costs 73% ($10M→$2.7M/year) through GPU utilization optimization, fair-share scheduling, reserved instance planning, and vendor consolidation.</li>
-                        <li><strong>Platform Engineering:</strong> Built CI/CD pipelines for 100+ applications using GitHub Actions, Docker, Terraform, and GitOps (ArgoCD, FluxCD); reduced deployment time 95% (days→15 minutes).</li>
-                        <li><strong>GPU Infrastructure:</strong> Built and operate 65+ GPU Slurm cluster for ML/AI workloads; NVIDIA scheduling, capacity planning, 99.97% GPU cluster availability.</li>
-                        <li><strong>Incident Response:</strong> Run incident command for P1/P2 outages; authored postmortems and drove systemic fixes to prevent recurrence.</li>
-                    </ul>
-                </div>
+                </header>
 
-                <div class="experience-item">
-                    <div class="experience-header">
-                        <div class="experience-title">
-                            <h3>Senior SRE / Cloud Architect — ML Infrastructure</h3>
-                            <span class="company">Wipro Technologies — OSDU Data Platform | Seattle, WA</span>
+                <!-- Professional Summary -->
+                <section class="resume-section">
+                    <h2 class="resume-section-title">
+                        <i class="fas fa-user"></i>
+                        Professional Summary
+                    </h2>
+                    <p class="summary-text">
+                        Staff DevOps Engineer with 18+ years of hands-on experience across SRE, GPU infrastructure, cloud security, and platform engineering at enterprise scale. Primary on-call owner for production systems. Expert in Kubernetes, Slurm GPU clusters, Terraform, and multi-cloud architecture (AWS, Azure, GCP). Proven track record maintaining 99.95% SLO, building 65+ GPU compute platforms, achieving SOC2/HIPAA/FedRAMP compliance, and delivering $8M+ in documented cost savings. Active conference speaker at KubeCon, SREcon, and DevOps Days.
+                    </p>
+                </section>
+
+                <!-- Key Metrics -->
+                <section class="resume-section">
+                    <h2 class="resume-section-title">
+                        <i class="fas fa-chart-bar"></i>
+                        Key Achievements
+                    </h2>
+                    <div class="metrics-grid">
+                        <div class="metric-item">
+                            <div class="metric-value">$8M+</div>
+                            <div class="metric-label">Annual Savings | 73% Cost Reduction</div>
                         </div>
-                        <span class="experience-date">Feb 2020 – Oct 2023</span>
-                    </div>
-                    <ul class="experience-bullets">
-                        <li><strong>Platform:</strong> Architected OSDU R3 data platform processing exabytes of seismic data on GPU-accelerated Kubernetes clusters (EKS/Fargate) with Docker, Spark, Kafka, and Hadoop/HDFS for ExxonMobil, Chevron, BP, Shell.</li>
-                        <li><strong>Infrastructure:</strong> Delivered GPU cluster management at scale with Kubernetes, Istio, and KEDA, ensuring 99.95% availability for ML inference workloads across multi-region deployments.</li>
-                        <li><strong>IaC & GitOps:</strong> Created 5+ Terraform modules (VPC, EKS, RDS, DynamoDB, S3, SageMaker, IAM); implemented GitOps (ArgoCD/FluxCD) with Jenkins pipelines; reduced deployment time 80%.</li>
-                        <li><strong>Security & Quality:</strong> Integrated Trivy, Kube-bench, and SonarQube into CI/CD; implemented OPA policies and Ansible automation for compliance enforcement.</li>
-                        <li><strong>Observability:</strong> Built observability stack with Prometheus/Grafana/ELK and GPU metrics; created automation in Go/Python reducing manual operations 85%; led 24x7 on-call rotations.</li>
-                    </ul>
-                </div>
-
-                <div class="experience-item">
-                    <div class="experience-header">
-                        <div class="experience-title">
-                            <h3>Multi-Cloud Architect / Senior Infrastructure Engineer</h3>
-                            <span class="company">Tata Consultancy Services | Multiple Locations</span>
+                        <div class="metric-item">
+                            <div class="metric-value">10M+</div>
+                            <div class="metric-label">Users Served | 15+ Regions</div>
                         </div>
-                        <span class="experience-date">May 2007 – Feb 2020</span>
+                        <div class="metric-item">
+                            <div class="metric-value">99.95%</div>
+                            <div class="metric-label">SLO Maintained</div>
+                        </div>
                     </div>
-                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Progressive 13-year career across Fortune 500 clients in healthcare, government, telecom, and financial services.</p>
+                </section>
 
-                    <!-- Sub-role 1: Cloud Architect -->
-                    <div style="margin-bottom: 1.5rem; padding: 1rem; background: var(--light); border-left: 3px solid var(--primary); border-radius: 0 var(--radius) var(--radius) 0;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <h4 style="font-size: 1rem; color: var(--dark); margin: 0;">Cloud Architect — Harvard Pilgrim Health Care</h4>
-                            <span style="font-size: 0.8rem; color: var(--text-muted);">Jun 2018 – Feb 2020</span>
+                <!-- Core Technical Skills -->
+                <section class="resume-section">
+                    <h2 class="resume-section-title">
+                        <i class="fas fa-cogs"></i>
+                        Core Technical Skills
+                    </h2>
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <h4>GPU/HPC Computing</h4>
+                            <p>Slurm, Slinky, NVIDIA BCM/DGX, vcluster, CUDA, TensorRT, A100/V100/T4 scheduling, Triton Inference Server, vLLM</p>
+                        </div>
+                        <div class="skill-category">
+                            <h4>AI/ML Infrastructure</h4>
+                            <p>PyTorch, Ray, Flyte, MLflow, Kubeflow, SageMaker, Azure ML, TorchServe, KServe, distributed training</p>
+                        </div>
+                        <div class="skill-category">
+                            <h4>Cloud Platforms</h4>
+                            <p>AWS (EKS, EC2, SageMaker, EMR), Azure (AKS, APIM, ML), OCI</p>
+                        </div>
+                        <div class="skill-category">
+                            <h4>Big Data & Streaming</h4>
+                            <p>Databricks, Apache Spark, Flink, Kafka, Hadoop/HDFS, Hive, Trino, Airflow, Delta Lake, Kinesis</p>
+                        </div>
+                        <div class="skill-category">
+                            <h4>Container Orchestration</h4>
+                            <p>Kubernetes (EKS/AKS), Docker, Helm, Istio Service Mesh, KEDA, ArgoCD, FluxCD</p>
+                        </div>
+                        <div class="skill-category">
+                            <h4>Infrastructure as Code</h4>
+                            <p>Terraform (5+ modules), Ansible, ARM/Bicep, CloudFormation, Packer, GitOps, policy-as-code (OPA, Checkov)</p>
+                        </div>
+                        <div class="skill-category">
+                            <h4>Security & Compliance</h4>
+                            <p>SOC2, HIPAA, FedRAMP, ISO 27001, HITRUST, DevSecOps (Snyk, SonarQube), Vault, ZTNA</p>
+                        </div>
+                        <div class="skill-category">
+                            <h4>SRE & Observability</h4>
+                            <p>SLI/SLO/SLA, error budgets, chaos engineering, Prometheus, Grafana, Datadog, OpenTelemetry, AIOps</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Professional Experience -->
+                <section class="resume-section">
+                    <h2 class="resume-section-title">
+                        <i class="fas fa-briefcase"></i>
+                        Professional Experience
+                    </h2>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-title">
+                                <h3>Staff DevOps Engineer / SRE</h3>
+                                <span class="company">Trackonomy Systems | San Jose, CA</span>
+                            </div>
+                            <span class="experience-date">Oct 2023 - Present</span>
                         </div>
                         <ul class="experience-bullets">
-                            <li>Led cloud modernization for HIPAA/HITRUST-regulated AI/ML applications to AWS; implemented GPU-enabled EKS clusters with NFS-backed persistent storage.</li>
-                            <li>Implemented Jenkins/Ansible CI/CD pipelines; DevSecOps (HashiCorp Vault, SonarQube, OWASP); managed $6M infrastructure budget.</li>
+                            <li><strong>Platform Architecture:</strong> Designed and built K8s microservices platform from ground up; migrated 40+ workloads from VMs, VMSS, Azure WebApps, Function Apps, and datacenter Java applications to containerized architecture.</li>
+                            <li><strong>Production Reliability:</strong> Primary on-call for Kubernetes clusters and GPU compute infrastructure; maintained 99.95% SLO for 18 months serving 12+ enterprise clients.</li>
+                            <li><strong>DevSecOps & Compliance:</strong> Led SOC2 Type II, FedRAMP, and HIPAA certification; implemented Trivy, Falco, OPA, Gitleaks, and HashiCorp Vault for GenAI/LLM platform security.</li>
+                            <li><strong>Cloud FinOps:</strong> Reduced cloud costs 73% ($10M to $2.7M/year) through GPU utilization optimization, fair-share scheduling, reserved instance planning, and vendor consolidation.</li>
+                            <li><strong>Platform Engineering:</strong> Built CI/CD pipelines for 100+ applications using GitHub Actions, Docker, Terraform, and GitOps (ArgoCD, FluxCD); reduced deployment time 95% (days to 15 minutes).</li>
+                            <li><strong>GPU Infrastructure:</strong> Built and operate 65+ GPU Slurm cluster for ML/AI workloads; NVIDIA scheduling, capacity planning, 99.97% GPU cluster availability.</li>
+                            <li><strong>Incident Response:</strong> Run incident command for P1/P2 outages; authored postmortems and drove systemic fixes to prevent recurrence.</li>
                         </ul>
                     </div>
 
-                    <!-- Sub-role 2: Cloud Senior Engineer -->
-                    <div style="margin-bottom: 1.5rem; padding: 1rem; background: var(--light); border-left: 3px solid var(--primary); border-radius: 0 var(--radius) var(--radius) 0;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <h4 style="font-size: 1rem; color: var(--dark); margin: 0;">Cloud Senior Engineer — CNA Insurance</h4>
-                            <span style="font-size: 0.8rem; color: var(--text-muted);">May 2015 – Jun 2018</span>
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-title">
+                                <h3>Senior SRE / Cloud Architect - ML Infrastructure</h3>
+                                <span class="company">Wipro Technologies - OSDU Data Platform | Seattle, WA</span>
+                            </div>
+                            <span class="experience-date">Feb 2020 - Oct 2023</span>
                         </div>
                         <ul class="experience-bullets">
-                            <li>Managed Kubernetes/Helm deployments on AWS; built reproducible K8s applications; automated provisioning with Ansible playbooks.</li>
-                            <li>Led cloud migrations to AWS, Azure, OpenStack; pioneered Docker/Kubernetes adoption (2013-2014); implemented CI/CD with Jenkins/Ansible.</li>
+                            <li><strong>Platform:</strong> Architected OSDU R3 data platform processing exabytes of seismic data on GPU-accelerated Kubernetes clusters (EKS/Fargate) with Docker, Spark, Kafka, and Hadoop/HDFS for ExxonMobil, Chevron, BP, Shell.</li>
+                            <li><strong>Infrastructure:</strong> Delivered GPU cluster management at scale with Kubernetes, Istio, and KEDA, ensuring 99.95% availability for ML inference workloads across multi-region deployments.</li>
+                            <li><strong>IaC & GitOps:</strong> Created 5+ Terraform modules (VPC, EKS, RDS, DynamoDB, S3, SageMaker, IAM); implemented GitOps (ArgoCD/FluxCD) with Jenkins pipelines; reduced deployment time 80%.</li>
+                            <li><strong>Security & Quality:</strong> Integrated Trivy, Kube-bench, and SonarQube into CI/CD; implemented OPA policies and Ansible automation for compliance enforcement.</li>
+                            <li><strong>Observability:</strong> Built observability stack with Prometheus/Grafana/ELK and GPU metrics; created automation in Go/Python reducing manual operations 85%; led 24x7 on-call rotations.</li>
                         </ul>
                     </div>
 
-                    <!-- Sub-role 3: Solutions Architect -->
-                    <div style="margin-bottom: 1.5rem; padding: 1rem; background: var(--light); border-left: 3px solid var(--primary); border-radius: 0 var(--radius) var(--radius) 0;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <h4 style="font-size: 1rem; color: var(--dark); margin: 0;">Solutions Architect — PwC</h4>
-                            <span style="font-size: 0.8rem; color: var(--text-muted);">Jan 2011 – Apr 2015</span>
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-title">
+                                <h3>Multi-Cloud Architect / Senior Infrastructure Engineer</h3>
+                                <span class="company">Tata Consultancy Services | Multiple Locations</span>
+                            </div>
+                            <span class="experience-date">May 2007 - Feb 2020</span>
                         </div>
-                        <ul class="experience-bullets">
-                            <li>Led infrastructure deployments for 20+ facility buildouts including branch offices, call centers, and data centers; managed $15M+ annual budgets.</li>
-                            <li>Integrated Chef/Jenkins deployment pipelines; migrated VMware VMs to AWS (EC2, S3, ELB).</li>
-                        </ul>
-                    </div>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Progressive 13-year career across Fortune 500 clients in healthcare, government, telecom, and financial services.</p>
 
-                    <!-- Sub-role 4: Middleware Engineer -->
-                    <div style="padding: 1rem; background: var(--light); border-left: 3px solid var(--primary); border-radius: 0 var(--radius) var(--radius) 0;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <h4 style="font-size: 1rem; color: var(--dark); margin: 0;">Middleware Engineer — Verizon, Owens Corning</h4>
-                            <span style="font-size: 0.8rem; color: var(--text-muted);">May 2007 – Jan 2011</span>
+                        <div class="sub-role">
+                            <div class="sub-role-header">
+                                <h4>Cloud Architect - Harvard Pilgrim Health Care</h4>
+                                <span>Jun 2018 - Feb 2020</span>
+                            </div>
+                            <ul class="experience-bullets">
+                                <li>Led cloud modernization for HIPAA/HITRUST-regulated AI/ML applications to AWS; implemented GPU-enabled EKS clusters with NFS-backed persistent storage.</li>
+                                <li>Implemented Jenkins/Ansible CI/CD pipelines; DevSecOps (HashiCorp Vault, SonarQube, OWASP); managed $6M infrastructure budget.</li>
+                            </ul>
                         </div>
-                        <ul class="experience-bullets">
-                            <li>Deep Linux/Unix administration with WebSphere/WebLogic middleware; JVM optimization, clustering, and HA configurations.</li>
-                            <li>Managed large-scale production systems on bare-metal serving millions of users; led capacity planning, performance testing, and 24x7 L3 operations.</li>
-                        </ul>
+
+                        <div class="sub-role">
+                            <div class="sub-role-header">
+                                <h4>Cloud Senior Engineer - CNA Insurance</h4>
+                                <span>May 2015 - Jun 2018</span>
+                            </div>
+                            <ul class="experience-bullets">
+                                <li>Managed Kubernetes/Helm deployments on AWS; built reproducible K8s applications; automated provisioning with Ansible playbooks.</li>
+                                <li>Led cloud migrations to AWS, Azure, OpenStack; pioneered Docker/Kubernetes adoption (2013-2014); implemented CI/CD with Jenkins/Ansible.</li>
+                            </ul>
+                        </div>
+
+                        <div class="sub-role">
+                            <div class="sub-role-header">
+                                <h4>Solutions Architect - PwC</h4>
+                                <span>Jan 2011 - Apr 2015</span>
+                            </div>
+                            <ul class="experience-bullets">
+                                <li>Led infrastructure deployments for 20+ facility buildouts including branch offices, call centers, and data centers; managed $15M+ annual budgets.</li>
+                                <li>Integrated Chef/Jenkins deployment pipelines; migrated VMware VMs to AWS (EC2, S3, ELB).</li>
+                            </ul>
+                        </div>
+
+                        <div class="sub-role">
+                            <div class="sub-role-header">
+                                <h4>Middleware Engineer - Verizon, Owens Corning</h4>
+                                <span>May 2007 - Jan 2011</span>
+                            </div>
+                            <ul class="experience-bullets">
+                                <li>Deep Linux/Unix administration with WebSphere/WebLogic middleware; JVM optimization, clustering, and HA configurations.</li>
+                                <li>Managed large-scale production systems on bare-metal serving millions of users; led capacity planning, performance testing, and 24x7 L3 operations.</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- Education & Certifications -->
-            <section class="resume-section">
-                <h2 class="resume-section-title">
-                    <i class="fas fa-graduation-cap"></i>
-                    Education & Certifications
-                </h2>
-                <div class="education-item">
-                    <h3>Bachelor of Engineering in Mechanical Engineering</h3>
-                    <p>Acharya Nagarjuna University</p>
-                </div>
-                <div class="certifications-list">
-                    <span class="cert-badge"><i class="fab fa-aws"></i> AWS Solutions Architect Professional</span>
-                    <span class="cert-badge"><i class="fab fa-microsoft"></i> Azure Solutions Architect Expert</span>
-                    <span class="cert-badge"><i class="fab fa-aws"></i> AWS ML Specialty</span>
-                    <span class="cert-badge"><i class="fab fa-microsoft"></i> Azure AI Engineer</span>
-                    <span class="cert-badge"><i class="fas fa-microchip"></i> NVIDIA DLI Infrastructure</span>
-                    <span class="cert-badge"><i class="fas fa-dharmachakra"></i> CKA (Kubernetes)</span>
-                    <span class="cert-badge"><i class="fas fa-cube"></i> HashiCorp Terraform</span>
-                    <span class="cert-badge"><i class="fas fa-database"></i> Databricks Certified</span>
-                    <span class="cert-badge"><i class="fas fa-project-diagram"></i> TOGAF 9</span>
-                    <span class="cert-badge"><i class="fas fa-book"></i> ITIL v4</span>
-                </div>
-            </section>
-    </div>
-
+                <!-- Education & Certifications -->
+                <section class="resume-section">
+                    <h2 class="resume-section-title">
+                        <i class="fas fa-graduation-cap"></i>
+                        Education & Certifications
+                    </h2>
+                    <div class="education-item">
+                        <h3>Bachelor of Engineering in Mechanical Engineering</h3>
+                        <p>Acharya Nagarjuna University</p>
+                    </div>
+                    <div class="certifications-list">
+                        <span class="cert-badge"><i class="fab fa-aws"></i> AWS Solutions Architect Professional</span>
+                        <span class="cert-badge"><i class="fab fa-microsoft"></i> Azure Solutions Architect Expert</span>
+                        <span class="cert-badge"><i class="fab fa-aws"></i> AWS ML Specialty</span>
+                        <span class="cert-badge"><i class="fab fa-microsoft"></i> Azure AI Engineer</span>
+                        <span class="cert-badge"><i class="fas fa-microchip"></i> NVIDIA DLI Infrastructure</span>
+                        <span class="cert-badge"><i class="fas fa-dharmachakra"></i> CKA (Kubernetes)</span>
+                        <span class="cert-badge"><i class="fas fa-cube"></i> HashiCorp Terraform</span>
+                        <span class="cert-badge"><i class="fas fa-database"></i> Databricks Certified</span>
+                        <span class="cert-badge"><i class="fas fa-project-diagram"></i> TOGAF 9</span>
+                        <span class="cert-badge"><i class="fas fa-book"></i> ITIL v4</span>
+                    </div>
+                </section>
+            </div>
+        </div>
     </main>
 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <span class="footer-logo">Sudhakar Chundu</span>
+            <div class="footer-brand">
+                <span class="footer-logo">Sudhakar Chundu</span>
+                <p>Staff DevOps Engineer | SRE | GPU Infrastructure</p>
+            </div>
             <div class="footer-links">
                 <a href="../">Home</a>
-                <a href="../conferences/">Conferences</a>
-                <a href="../publications/">Publications</a>
+                <a href="../about/">About</a>
+                <a href="../projects/">Projects</a>
                 <a href="../contact/">Contact</a>
             </div>
             <div class="footer-social">
-                <a href="https://github.com/schundu007" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/schundu" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://medium.sudhakarchundu.org/" target="_blank"><i class="fab fa-medium"></i></a>
+                <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://medium.sudhakarchundu.org/" target="_blank" title="Medium"><i class="fab fa-medium"></i></a>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 2rem;">
+        <div class="footer-bottom">
             <p>&copy; 2025 Sudhakar Chundu. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Firebase Config -->
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
 
     <script>
         // Mobile menu toggle
@@ -1040,7 +1115,6 @@
             navLinks.classList.toggle('active');
         });
 
-        // Close menu when clicking a link
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenuBtn.classList.remove('active');
@@ -1049,7 +1123,7 @@
         });
 
         // ========================================
-        // DOCUMENT VIEWER & MANAGER
+        // DOCUMENT VIEWER WITH AUTH GATING
         // ========================================
         const BASE_PATH = '../assets/resume/';
         const DEFAULT_RESUME = 'Sudhakar_Chundu_Resume.pdf';
@@ -1057,6 +1131,7 @@
 
         let activeResumePath = null;
         let activeCoverLetterPath = null;
+        let currentDocType = null;
 
         async function loadActiveDocuments() {
             const viewCoverLetterBtn = document.getElementById('view-cover-letter-btn');
@@ -1066,7 +1141,6 @@
                 const response = await fetch('../assets/resume/manifest.json');
                 const manifest = await response.json();
 
-                // Find active resume
                 const activeResume = manifest.resumes.find(r => r.active);
                 if (activeResume) {
                     activeResumePath = activeResume.file;
@@ -1074,7 +1148,6 @@
                     activeResumePath = DEFAULT_RESUME;
                 }
 
-                // Find active cover letter
                 const activeCoverLetter = manifest.coverLetters.find(c => c.active);
                 if (activeCoverLetter) {
                     activeCoverLetterPath = activeCoverLetter.file;
@@ -1092,14 +1165,17 @@
             }
         }
 
-        // View document in inline viewer
+        // View document with auth check
         function viewDocument(type) {
             const viewer = document.getElementById('document-viewer');
             const frame = document.getElementById('document-frame');
             const loading = document.getElementById('viewer-loading');
+            const authGate = document.getElementById('auth-gate');
             const downloadBtn = document.getElementById('viewer-download-btn');
             const tabResume = document.getElementById('tab-resume');
             const tabCoverLetter = document.getElementById('tab-cover-letter');
+
+            currentDocType = type;
 
             let filePath = '';
             let docLabel = '';
@@ -1117,12 +1193,35 @@
                 return;
             }
 
-            // Show loading indicator
+            // Show viewer
+            viewer.style.display = 'block';
+            viewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // Check authentication
+            const user = window.getCurrentUser ? window.getCurrentUser() : null;
+
+            if (!user) {
+                // Show auth gate
+                authGate.style.display = 'flex';
+                loading.style.display = 'none';
+                frame.style.display = 'none';
+                downloadBtn.style.pointerEvents = 'none';
+                downloadBtn.style.opacity = '0.5';
+                return;
+            }
+
+            // User is authenticated - show document
+            authGate.style.display = 'none';
+            frame.style.display = 'block';
             loading.style.display = 'flex';
-            frame.style.opacity = '0';
+            frame.classList.remove('loaded');
+            downloadBtn.style.pointerEvents = 'auto';
+            downloadBtn.style.opacity = '1';
 
             // Set download button
             downloadBtn.href = BASE_PATH + filePath;
+            downloadBtn.setAttribute('data-file', filePath);
+            downloadBtn.setAttribute('data-type', type);
             downloadBtn.innerHTML = '<i class="fas fa-download"></i> Download ' + docLabel;
 
             const fullUrl = SITE_URL + filePath;
@@ -1134,17 +1233,69 @@
                 frame.src = BASE_PATH + filePath;
             }
 
-            viewer.style.display = 'block';
-            viewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Log view to Firestore
+            logDocumentView(type, filePath);
+        }
+
+        // Log document view
+        async function logDocumentView(type, filePath) {
+            const user = window.getCurrentUser ? window.getCurrentUser() : null;
+            if (!user || typeof db === 'undefined') return;
+
+            try {
+                await db.collection('downloads').add({
+                    userId: user.uid,
+                    userEmail: user.email,
+                    userName: user.displayName || 'Anonymous',
+                    documentType: type,
+                    fileName: filePath,
+                    action: 'view',
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    page: 'resume'
+                });
+            } catch (error) {
+                console.error('Error logging view:', error);
+            }
+        }
+
+        // Handle download with logging
+        async function handleDownload(event) {
+            const user = window.getCurrentUser ? window.getCurrentUser() : null;
+
+            if (!user) {
+                event.preventDefault();
+                showLoginModal('Sign in to download resume');
+                return;
+            }
+
+            const btn = event.currentTarget;
+            const filePath = btn.getAttribute('data-file');
+            const type = btn.getAttribute('data-type');
+
+            // Log download
+            if (typeof db !== 'undefined') {
+                try {
+                    await db.collection('downloads').add({
+                        userId: user.uid,
+                        userEmail: user.email,
+                        userName: user.displayName || 'Anonymous',
+                        documentType: type,
+                        fileName: filePath,
+                        action: 'download',
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        page: 'resume'
+                    });
+                } catch (error) {
+                    console.error('Error logging download:', error);
+                }
+            }
         }
 
         // Hide loading when iframe loads
-        function hideLoading() {
-            const loading = document.getElementById('viewer-loading');
-            const frame = document.getElementById('document-frame');
-            loading.style.display = 'none';
-            frame.style.opacity = '1';
-        }
+        document.getElementById('document-frame').addEventListener('load', function() {
+            document.getElementById('viewer-loading').style.display = 'none';
+            this.classList.add('loaded');
+        });
 
         // Close the viewer
         function closeViewer() {
@@ -1153,8 +1304,17 @@
             const loading = document.getElementById('viewer-loading');
             viewer.style.display = 'none';
             frame.src = '';
+            frame.classList.remove('loaded');
             loading.style.display = 'flex';
         }
+
+        // Listen for auth state changes
+        window.addEventListener('authStateChanged', function(e) {
+            // If user just logged in and viewer is open, refresh the view
+            if (e.detail.user && currentDocType) {
+                viewDocument(currentDocType);
+            }
+        });
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {

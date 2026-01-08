@@ -21,213 +21,249 @@
     <link rel="stylesheet" href="../assets/css/style.css">
     <style>
         .about-intro {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 50px 2rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        }
-        .intro-container {
             display: grid;
-            grid-template-columns: 240px 1fr;
+            grid-template-columns: 280px 1fr;
             gap: 3rem;
             align-items: start;
         }
-        .profile-card {
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 1.5rem;
+
+        .profile-sidebar {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
             text-align: center;
-            border: 1px solid var(--border);
+            position: sticky;
+            top: 100px;
         }
-        .profile-image {
-            width: 100%;
-            aspect-ratio: 1;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 1rem;
+
+        .profile-image-large {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            padding: 4px;
+            background: var(--gradient-primary);
         }
-        .profile-image img {
+
+        .profile-image-large img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            object-position: center;
-            background: #f1f5f9;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--bg-secondary);
         }
-        .profile-card h3 {
-            font-size: 1.1rem;
+
+        .profile-sidebar h3 {
+            font-size: 1.25rem;
             margin-bottom: 0.25rem;
         }
-        .profile-card .title {
-            color: var(--primary);
-            font-size: 0.8rem;
+
+        .profile-sidebar .title {
+            color: var(--accent-blue);
+            font-size: 0.9rem;
             font-weight: 500;
             margin-bottom: 0.5rem;
         }
-        .profile-card .location {
+
+        .profile-sidebar .location {
             color: var(--text-muted);
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.35rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
-        .profile-tags {
+
+        .profile-tags-vertical {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.35rem;
-            justify-content: center;
-            margin-bottom: 1.25rem;
-        }
-        .profile-tag {
-            background: var(--white);
-            color: var(--text-muted);
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.65rem;
-            font-weight: 500;
-        }
-        .profile-cta {
-            display: flex;
-            flex-direction: column;
             gap: 0.5rem;
-        }
-        .profile-cta .btn {
-            width: 100%;
             justify-content: center;
-            font-size: 0.75rem;
-            padding: 0.5rem 1rem;
+            margin-bottom: 1.5rem;
         }
-        .intro-content h2 {
-            font-size: 1.5rem;
-            margin-bottom: 1.25rem;
-            line-height: 1.3;
-        }
-        .intro-content h2 span {
-            color: var(--primary);
-        }
-        .intro-content p {
+
+        .profile-tag {
+            padding: 0.35rem 0.75rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-full);
+            font-size: 0.7rem;
             color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-        .intro-content p.lead {
-            font-size: 1rem;
-            color: var(--text);
             font-weight: 500;
         }
 
-        .highlights-section {
-            background: #f1f5f9;
-            border-radius: 16px;
-            padding: 40px 2rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--border);
+        .profile-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
         }
+
+        .profile-actions .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .about-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+
+        .about-content h2 span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-content p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.9;
+            margin-bottom: 1.25rem;
+        }
+
+        .about-content p.lead {
+            font-size: 1.125rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Highlights */
         .highlights-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 1.5rem;
         }
+
         .highlight-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
             text-align: center;
+            transition: var(--transition-normal);
         }
-        .highlight-card .value {
-            font-size: 1.75rem;
+
+        .highlight-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-4px);
+        }
+
+        .highlight-value {
+            font-size: 2rem;
             font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.25rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: var(--font-mono);
         }
-        .highlight-card .label {
-            font-size: 0.7rem;
+
+        .highlight-label {
+            font-size: 0.75rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            margin-top: 0.5rem;
         }
 
-        .philosophy-section {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 50px 2rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        }
+        /* Philosophy */
         .philosophy-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1.25rem;
-            margin-top: 1.5rem;
         }
+
         .philosophy-card {
-            padding: 1.25rem;
-            background: #f8fafc;
-            border-radius: 12px;
-            border-left: 3px solid var(--primary);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            border-left: 3px solid var(--accent-blue);
+            transition: var(--transition-normal);
         }
+
+        .philosophy-card:hover {
+            border-color: var(--glass-border-hover);
+            transform: translateX(4px);
+        }
+
         .philosophy-card h4 {
-            font-size: 0.95rem;
+            font-size: 1rem;
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
+
         .philosophy-card h4 i {
-            color: var(--primary);
-            font-size: 0.85rem;
-        }
-        .philosophy-card p {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            line-height: 1.6;
+            color: var(--accent-blue);
         }
 
+        .philosophy-card p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.7;
+        }
+
+        /* CTA Section */
         .cta-section {
-            background: #f1f5f9;
-            border-radius: 16px;
-            padding: 50px 2rem;
             text-align: center;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--border);
+            padding: 4rem 2rem;
         }
-        .cta-content h2 {
-            color: var(--dark);
-            font-size: 1.5rem;
-            margin-bottom: 0.75rem;
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
         }
-        .cta-content h2 span {
-            color: var(--primary);
+
+        .cta-section h2 span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .cta-content p {
-            color: var(--text-muted);
-            margin-bottom: 1.25rem;
-            font-size: 0.9rem;
+
+        .cta-section p {
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto 2rem;
         }
+
         .cta-buttons {
             display: flex;
             justify-content: center;
-            gap: 0.75rem;
+            gap: 1rem;
             flex-wrap: wrap;
         }
 
-        @media (max-width: 768px) {
-            .intro-container {
+        @media (max-width: 900px) {
+            .about-intro {
                 grid-template-columns: 1fr;
-                gap: 2rem;
             }
-            .profile-card {
-                max-width: 260px;
+
+            .profile-sidebar {
+                max-width: 320px;
                 margin: 0 auto;
+                position: static;
             }
+
             .highlights-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
             }
+
             .philosophy-grid {
                 grid-template-columns: 1fr;
             }
-            .highlight-card .value {
+        }
+
+        @media (max-width: 480px) {
+            .highlights-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+
+            .highlight-value {
                 font-size: 1.5rem;
             }
         }
@@ -252,6 +288,9 @@
                     <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
                     <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
                 </div>
+                <div class="nav-auth">
+                    <button class="btn-signin" onclick="showLoginModal()">Sign In</button>
+                </div>
             </ul>
             <button class="mobile-menu-btn" aria-label="Menu">
                 <span></span>
@@ -262,147 +301,152 @@
     </nav>
 
     <main class="main-content">
-    <!-- Page Header -->
-    <header class="page-header">
-        <h1>About <span>Me</span></h1>
-        <p>Building and operating infrastructure at scale for global enterprises</p>
-    </header>
+        <!-- Page Header -->
+        <header class="page-header">
+            <h1>About <span>Me</span></h1>
+            <p>Building and operating infrastructure at scale for global enterprises</p>
+        </header>
 
-    <!-- Intro Section with Photo -->
-    <section class="about-intro">
-        <div class="intro-container">
-            <div class="profile-card">
-                <div class="profile-image">
-                    <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu">
+        <!-- Intro Section -->
+        <section class="section">
+            <div class="about-intro">
+                <div class="profile-sidebar">
+                    <div class="profile-image-large">
+                        <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu">
+                    </div>
+                    <h3>Sudhakar Chundu</h3>
+                    <p class="title">Staff DevOps Engineer / SRE</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> San Jose, California</p>
+                    <div class="profile-tags-vertical">
+                        <span class="profile-tag">SRE</span>
+                        <span class="profile-tag">GPU Infrastructure</span>
+                        <span class="profile-tag">Cloud Security</span>
+                        <span class="profile-tag">Kubernetes</span>
+                    </div>
+                    <div class="profile-actions">
+                        <a href="../resume/" class="btn btn-primary">
+                            <i class="fas fa-file-alt"></i> View Resume
+                        </a>
+                        <a href="https://www.linkedin.com/in/schundu" class="btn btn-outline" target="_blank">
+                            <i class="fab fa-linkedin"></i> Connect
+                        </a>
+                    </div>
                 </div>
-                <h3>Sudhakar Chundu</h3>
-                <p class="title">Staff DevOps Engineer / SRE</p>
-                <p class="location"><i class="fas fa-map-marker-alt"></i> San Jose, California</p>
-                <div class="profile-tags">
-                    <span class="profile-tag">SRE</span>
-                    <span class="profile-tag">GPU Infrastructure</span>
-                    <span class="profile-tag">Cloud Security</span>
-                    <span class="profile-tag">Kubernetes</span>
-                </div>
-                <div class="profile-cta">
-                    <a href="../resume/" class="btn btn-primary">
-                        <i class="fas fa-file-alt"></i> View Resume
-                    </a>
-                    <a href="https://www.linkedin.com/in/schundu" class="btn btn-outline" target="_blank">
-                        <i class="fab fa-linkedin"></i> Connect
-                    </a>
+                <div class="about-content">
+                    <h2>Building <span>Reliable Infrastructure</span> at Scale</h2>
+                    <p class="lead">
+                        I'm a Staff DevOps Engineer with 18+ years of hands-on experience across SRE, GPU infrastructure,
+                        cloud security, and platform engineering at enterprise scale.
+                    </p>
+                    <p>
+                        My career spans the full evolution of cloud computing — from bare-metal data centers to
+                        multi-cloud Kubernetes deployments to GPU-accelerated AI/ML platforms. I've led infrastructure
+                        initiatives at Fortune 500 companies including work with ExxonMobil, Chevron, BP, Shell,
+                        Harvard Pilgrim Health Care, CNA Insurance, PwC, and Verizon.
+                    </p>
+                    <p>
+                        Currently at Trackonomy Systems, I serve as Staff DevOps Engineer / SRE where I built and operate
+                        the company's GPU compute platform from the ground up — 65 GPUs with Slurm/Kubernetes delivering
+                        99.95% SLO for enterprise AI inference and training workloads.
+                    </p>
+                    <p>
+                        I'm passionate about solving complex infrastructure challenges: reducing cloud costs by 73%
+                        ($10M to $2.7M annually), achieving enterprise compliance (SOC2, HIPAA, FedRAMP, HITRUST),
+                        and building self-service platforms that accelerate developer velocity while maintaining
+                        security and governance.
+                    </p>
+                    <p>
+                        I'm a primary on-call owner for production systems, run incident command for P1/P2 outages,
+                        and have delivered $8M+ in documented cost savings through infrastructure optimization.
+                    </p>
                 </div>
             </div>
-            <div class="intro-content">
-                <h2>Building <span>Reliable Infrastructure</span> at Scale</h2>
-                <p class="lead">
-                    I'm a Staff DevOps Engineer with 18+ years of hands-on experience across SRE, GPU infrastructure,
-                    cloud security, and platform engineering at enterprise scale.
-                </p>
-                <p>
-                    My career spans the full evolution of cloud computing — from bare-metal data centers to
-                    multi-cloud Kubernetes deployments to GPU-accelerated AI/ML platforms. I've led infrastructure
-                    initiatives at Fortune 500 companies including work with ExxonMobil, Chevron, BP, Shell,
-                    Harvard Pilgrim Health Care, CNA Insurance, PwC, and Verizon.
-                </p>
-                <p>
-                    Currently at Trackonomy Systems, I serve as Staff DevOps Engineer / SRE where I built and operate
-                    the company's GPU compute platform from the ground up — 65 GPUs with Slurm/Kubernetes delivering
-                    99.95% SLO for enterprise AI inference and training workloads.
-                </p>
-                <p>
-                    I'm passionate about solving complex infrastructure challenges: reducing cloud costs by 73%
-                    ($10M to $2.7M annually), achieving enterprise compliance (SOC2, HIPAA, FedRAMP, HITRUST),
-                    and building self-service platforms that accelerate developer velocity while maintaining
-                    security and governance.
-                </p>
-                <p>
-                    I'm a primary on-call owner for production systems, run incident command for P1/P2 outages,
-                    and have delivered $8M+ in documented cost savings through infrastructure optimization.
-                </p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Highlights Section -->
-    <section class="highlights-section">
-        <div class="highlights-container">
-            <div class="highlights-grid">
-                <div class="highlight-card">
-                    <div class="value">18+</div>
-                    <div class="label">Years Hands-On</div>
-                </div>
-                <div class="highlight-card">
-                    <div class="value">99.95%</div>
-                    <div class="label">SLO Maintained</div>
-                </div>
-                <div class="highlight-card">
-                    <div class="value">65+</div>
-                    <div class="label">GPUs Managed</div>
-                </div>
-                <div class="highlight-card">
-                    <div class="value">$8M+</div>
-                    <div class="label">Cost Saved</div>
+        <!-- Highlights Section -->
+        <section class="section section-alt">
+            <div class="container">
+                <div class="highlights-grid">
+                    <div class="highlight-card">
+                        <div class="highlight-value">18+</div>
+                        <div class="highlight-label">Years Hands-On</div>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="highlight-value">99.95%</div>
+                        <div class="highlight-label">SLO Maintained</div>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="highlight-value">65+</div>
+                        <div class="highlight-label">GPUs Managed</div>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="highlight-value">$8M+</div>
+                        <div class="highlight-label">Cost Saved</div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Philosophy Section -->
-    <section class="philosophy-section">
-        <div class="philosophy-container">
-            <h2 style="text-align: center; margin-bottom: 0.5rem;">My <span style="color: var(--primary);">Approach</span></h2>
-            <p style="text-align: center; color: var(--text-muted); max-width: 600px; margin: 0 auto;">
-                Guiding principles that drive how I build and lead infrastructure teams
-            </p>
-            <div class="philosophy-grid">
-                <div class="philosophy-card">
-                    <h4><i class="fas fa-dollar-sign"></i> Cost-Conscious Architecture</h4>
-                    <p>Every architectural decision considers TCO. I've driven 73% cost reductions through right-sizing, spot instances, reserved capacity, and vendor consolidation without sacrificing reliability.</p>
+        <!-- Philosophy Section -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">My Approach</span>
+                    <h2>Engineering <span>Philosophy</span></h2>
+                    <p>Guiding principles that drive how I build and lead infrastructure teams</p>
                 </div>
-                <div class="philosophy-card">
-                    <h4><i class="fas fa-shield-alt"></i> Security as Foundation</h4>
-                    <p>Security isn't an afterthought — it's built into every layer. From zero-trust networking to DevSecOps pipelines, I ensure compliance with SOC2, HIPAA, FedRAMP, and HITRUST from day one.</p>
-                </div>
-                <div class="philosophy-card">
-                    <h4><i class="fas fa-rocket"></i> Developer Velocity</h4>
-                    <p>Great infrastructure is invisible to developers. I build self-service platforms with golden paths that accelerate delivery — reducing deployment times by 95% while maintaining governance.</p>
-                </div>
-                <div class="philosophy-card">
-                    <h4><i class="fas fa-chart-line"></i> Observability First</h4>
-                    <p>You can't improve what you can't measure. I implement comprehensive monitoring, tracing, and alerting that enables data-driven decisions and rapid incident response.</p>
-                </div>
-                <div class="philosophy-card">
-                    <h4><i class="fas fa-code-branch"></i> Infrastructure as Code</h4>
-                    <p>All infrastructure should be version-controlled, reviewed, and reproducible. I've created 5+ Terraform modules and established GitOps workflows that ensure consistency at scale.</p>
-                </div>
-                <div class="philosophy-card">
-                    <h4><i class="fas fa-users"></i> Team Empowerment</h4>
-                    <p>Technology is only as good as the team operating it. I focus on building high-performing teams through mentorship, clear ownership, and creating environments where engineers thrive.</p>
+                <div class="philosophy-grid">
+                    <div class="philosophy-card">
+                        <h4><i class="fas fa-dollar-sign"></i> Cost-Conscious Architecture</h4>
+                        <p>Every architectural decision considers TCO. I've driven 73% cost reductions through right-sizing, spot instances, reserved capacity, and vendor consolidation without sacrificing reliability.</p>
+                    </div>
+                    <div class="philosophy-card">
+                        <h4><i class="fas fa-shield-alt"></i> Security as Foundation</h4>
+                        <p>Security isn't an afterthought — it's built into every layer. From zero-trust networking to DevSecOps pipelines, I ensure compliance with SOC2, HIPAA, FedRAMP, and HITRUST from day one.</p>
+                    </div>
+                    <div class="philosophy-card">
+                        <h4><i class="fas fa-rocket"></i> Developer Velocity</h4>
+                        <p>Great infrastructure is invisible to developers. I build self-service platforms with golden paths that accelerate delivery — reducing deployment times by 95% while maintaining governance.</p>
+                    </div>
+                    <div class="philosophy-card">
+                        <h4><i class="fas fa-chart-line"></i> Observability First</h4>
+                        <p>You can't improve what you can't measure. I implement comprehensive monitoring, tracing, and alerting that enables data-driven decisions and rapid incident response.</p>
+                    </div>
+                    <div class="philosophy-card">
+                        <h4><i class="fas fa-code-branch"></i> Infrastructure as Code</h4>
+                        <p>All infrastructure should be version-controlled, reviewed, and reproducible. I've created 5+ Terraform modules and established GitOps workflows that ensure consistency at scale.</p>
+                    </div>
+                    <div class="philosophy-card">
+                        <h4><i class="fas fa-users"></i> Team Empowerment</h4>
+                        <p>Technology is only as good as the team operating it. I focus on building high-performing teams through mentorship, clear ownership, and creating environments where engineers thrive.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="cta-content">
+        <!-- CTA Section -->
+        <section class="section section-alt cta-section">
             <h2>Let's <span>Connect</span></h2>
             <p>
                 Currently exploring Staff DevOps Engineer and SRE roles at FAANG-level companies.
                 Open to both full-time positions and consulting engagements.
             </p>
             <div class="cta-buttons">
-                <a href="../resume/" class="btn btn-outline">
+                <a href="../resume/" class="btn btn-primary">
                     <i class="fas fa-file-alt"></i> View Resume
                 </a>
-                <a href="https://www.linkedin.com/in/schundu" class="btn btn-primary" target="_blank">
+                <a href="https://www.linkedin.com/in/schundu" class="btn btn-outline" target="_blank">
                     <i class="fab fa-linkedin"></i> Connect on LinkedIn
                 </a>
             </div>
-        </div>
-    </section>
+        </section>
 
+        <!-- Comments Section -->
+        <section class="section">
+            <div class="container">
+                <div id="comments-container"></div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -421,10 +465,16 @@
                 <a href="https://medium.sudhakarchundu.org/" target="_blank"><i class="fab fa-medium"></i></a>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 2rem;">
-            <p>&copy; 2025 Sudhakar Chundu. All rights reserved.</p>
-        </div>
+        <p>&copy; 2025 Sudhakar Chundu. All rights reserved.</p>
     </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/comments.js"></script>
 
     <script>
         // Mobile menu toggle
@@ -436,12 +486,16 @@
             navLinks.classList.toggle('active');
         });
 
-        // Close menu when clicking a link
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenuBtn.classList.remove('active');
                 navLinks.classList.remove('active');
             });
+        });
+
+        // Initialize comments
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => window.initComments('comments-container'), 500);
         });
     </script>
 </body>

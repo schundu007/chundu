@@ -19,6 +19,171 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <style>
+        .publications-hero {
+            padding: 120px 2rem 60px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            position: relative;
+        }
+
+        .publications-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .publications-hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .publications-hero h1 span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .publications-hero p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .publications-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .publications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .publication-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+            backdrop-filter: blur(20px);
+            transition: var(--transition-normal);
+        }
+
+        .publication-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-4px);
+            box-shadow: var(--glow-blue);
+        }
+
+        .publication-type {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+        }
+
+        .publication-card h3 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .publication-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .publication-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .publication-tag {
+            padding: 0.25rem 0.6rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .cta-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .cta-section h2 span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .publications-hero {
+                padding: 100px 1rem 40px;
+            }
+
+            .publications-hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .publications-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -35,11 +200,10 @@
                 <li><a href="../projects/">Projects</a></li>
                 <li><a href="../conferences/">Conferences</a></li>
                 <li><a href="./" class="active">Publications</a></li>
-                <div class="nav-social">
-                    <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                </div>
             </ul>
+            <div class="nav-auth">
+                <button class="btn-signin" onclick="showLoginModal()">Sign In</button>
+            </div>
             <button class="mobile-menu-btn" aria-label="Menu">
                 <span></span>
                 <span></span>
@@ -49,123 +213,129 @@
     </nav>
 
     <main class="main-content">
-    <!-- Page Header -->
-    <header class="page-header">
-        <h1>Technical <span>Publications</span></h1>
-        <p>Articles, blog posts, and technical documentation on cloud infrastructure, DevOps, and reliability engineering.</p>
-    </header>
+        <!-- Hero Section -->
+        <section class="publications-hero">
+            <h1>Technical <span>Publications</span></h1>
+            <p>Articles, blog posts, and technical documentation on cloud infrastructure, DevOps, and reliability engineering.</p>
+        </section>
 
-    <!-- Content -->
-    <section class="section">
-        <div class="container">
-            <div class="card-grid">
-                <div class="card">
-                    <span class="date">Technical Guide</span>
+        <!-- Publications Content -->
+        <div class="publications-container">
+            <div class="publications-grid">
+                <article class="publication-card">
+                    <span class="publication-type">Technical Guide</span>
                     <h3>Multi-Cloud Kubernetes Strategy</h3>
                     <p>A comprehensive guide to designing and implementing Kubernetes clusters across AWS and Azure with unified management.</p>
-                    <div class="tags">
-                        <span class="tag">Kubernetes</span>
-                        <span class="tag">Multi-Cloud</span>
-                        <span class="tag">Architecture</span>
+                    <div class="publication-tags">
+                        <span class="publication-tag">Kubernetes</span>
+                        <span class="publication-tag">Multi-Cloud</span>
+                        <span class="publication-tag">Architecture</span>
                     </div>
-                </div>
+                </article>
 
-                <div class="card">
-                    <span class="date">Best Practices</span>
+                <article class="publication-card">
+                    <span class="publication-type">Best Practices</span>
                     <h3>GPU Infrastructure for AI/ML</h3>
                     <p>Building and managing GPU clusters for machine learning workloads with optimal resource utilization and cost efficiency.</p>
-                    <div class="tags">
-                        <span class="tag">GPU</span>
-                        <span class="tag">ML Infrastructure</span>
-                        <span class="tag">Ray</span>
+                    <div class="publication-tags">
+                        <span class="publication-tag">GPU</span>
+                        <span class="publication-tag">ML Infrastructure</span>
+                        <span class="publication-tag">Ray</span>
                     </div>
-                </div>
+                </article>
 
-                <div class="card">
-                    <span class="date">Case Study</span>
+                <article class="publication-card">
+                    <span class="publication-type">Case Study</span>
                     <h3>Zero-Downtime Migration to Kubernetes</h3>
                     <p>Lessons learned from migrating legacy applications to Kubernetes while maintaining 99.97% uptime SLAs.</p>
-                    <div class="tags">
-                        <span class="tag">Migration</span>
-                        <span class="tag">Kubernetes</span>
-                        <span class="tag">SRE</span>
+                    <div class="publication-tags">
+                        <span class="publication-tag">Migration</span>
+                        <span class="publication-tag">Kubernetes</span>
+                        <span class="publication-tag">SRE</span>
                     </div>
-                </div>
+                </article>
 
-                <div class="card">
-                    <span class="date">Technical Article</span>
+                <article class="publication-card">
+                    <span class="publication-type">Technical Article</span>
                     <h3>Terraform Modules at Scale</h3>
                     <p>Designing reusable Terraform modules for enterprise infrastructure with versioning, testing, and documentation.</p>
-                    <div class="tags">
-                        <span class="tag">Terraform</span>
-                        <span class="tag">IaC</span>
-                        <span class="tag">Modules</span>
+                    <div class="publication-tags">
+                        <span class="publication-tag">Terraform</span>
+                        <span class="publication-tag">IaC</span>
+                        <span class="publication-tag">Modules</span>
                     </div>
-                </div>
+                </article>
 
-                <div class="card">
-                    <span class="date">Implementation Guide</span>
+                <article class="publication-card">
+                    <span class="publication-type">Implementation Guide</span>
                     <h3>GitOps with ArgoCD</h3>
                     <p>Step-by-step guide to implementing GitOps workflows for Kubernetes deployments using ArgoCD and Helm.</p>
-                    <div class="tags">
-                        <span class="tag">GitOps</span>
-                        <span class="tag">ArgoCD</span>
-                        <span class="tag">Helm</span>
+                    <div class="publication-tags">
+                        <span class="publication-tag">GitOps</span>
+                        <span class="publication-tag">ArgoCD</span>
+                        <span class="publication-tag">Helm</span>
                     </div>
-                </div>
+                </article>
 
-                <div class="card">
-                    <span class="date">Security Guide</span>
+                <article class="publication-card">
+                    <span class="publication-type">Security Guide</span>
                     <h3>Zero Trust for Cloud Infrastructure</h3>
                     <p>Implementing zero trust security model for cloud-native applications with service mesh and identity management.</p>
-                    <div class="tags">
-                        <span class="tag">Security</span>
-                        <span class="tag">Zero Trust</span>
-                        <span class="tag">Istio</span>
+                    <div class="publication-tags">
+                        <span class="publication-tag">Security</span>
+                        <span class="publication-tag">Zero Trust</span>
+                        <span class="publication-tag">Istio</span>
                     </div>
+                </article>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <h2>View Full <span>Resume</span></h2>
+                <p>See my complete experience, certifications, and technical skills in detail.</p>
+                <div class="cta-buttons">
+                    <a href="../resume/" class="btn btn-primary">
+                        <i class="fas fa-file-alt"></i> View Resume
+                    </a>
+                    <a href="https://www.linkedin.com/in/schundu" class="btn btn-secondary" target="_blank">
+                        <i class="fab fa-linkedin"></i> Connect on LinkedIn
+                    </a>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- CTA Section -->
-    <section style="padding: 50px 2rem; background: #f1f5f9; text-align: center; border-radius: 16px; margin-bottom: 1.5rem; border: 1px solid #e4e4e7;">
-        <h2 style="color: #111827; font-size: 1.5rem; margin-bottom: 0.75rem;">View Full <span style="color: var(--primary);">Resume</span></h2>
-        <p style="color: #52525b; margin-bottom: 1.25rem; font-size: 0.9rem;">
-            See my complete experience, certifications, and technical skills in detail.
-        </p>
-        <div style="display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
-            <a href="../resume/" class="btn btn-primary">
-                <i class="fas fa-file-alt"></i> View Resume
-            </a>
-            <a href="https://www.linkedin.com/in/schundu" class="btn btn-outline" target="_blank">
-                <i class="fab fa-linkedin"></i> Connect on LinkedIn
-            </a>
+            <!-- Comments Section -->
+            <div id="comments-container"></div>
         </div>
-    </section>
-
     </main>
 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <span class="footer-logo">Sudhakar Chundu</span>
+            <div class="footer-brand">
+                <span class="footer-logo">Sudhakar Chundu</span>
+                <p>Staff DevOps Engineer | SRE | GPU Infrastructure</p>
+            </div>
             <div class="footer-links">
                 <a href="../">Home</a>
+                <a href="../about/">About</a>
                 <a href="../resume/">Resume</a>
-                <a href="../conferences/">Conferences</a>
                 <a href="../contact/">Contact</a>
             </div>
             <div class="footer-social">
-                <a href="https://github.com/schundu007" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/schundu" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://medium.sudhakarchundu.org/" target="_blank"><i class="fab fa-medium"></i></a>
+                <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://medium.sudhakarchundu.org/" target="_blank" title="Medium"><i class="fab fa-medium"></i></a>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 2rem;">
+        <div class="footer-bottom">
             <p>&copy; 2025 Sudhakar Chundu. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Firebase Config and Auth -->
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/comments.js"></script>
 
     <script>
         // Mobile menu toggle
@@ -177,7 +347,6 @@
             navLinks.classList.toggle('active');
         });
 
-        // Close menu when clicking a link
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenuBtn.classList.remove('active');

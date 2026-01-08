@@ -19,67 +19,122 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
     <style>
-        /* Project Page Specific Styles */
-        .projects-container {
-            max-width: 100%;
-            margin: 0 auto;
+        /* Projects Page Styles */
+        .projects-hero {
+            padding: 120px 2rem 60px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            position: relative;
         }
 
+        .projects-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .projects-hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .projects-hero h1 span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .projects-hero p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .projects-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Project Card */
         .project-card {
-            background: var(--white);
-            border-radius: 16px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
             overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--border);
-            transition: border-color 0.2s ease;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(20px);
+            transition: var(--transition-normal);
         }
 
         .project-card:hover {
-            border-color: var(--primary);
+            border-color: var(--accent-blue);
+            box-shadow: var(--glow-blue);
         }
 
         .project-header {
-            background: #f1f5f9;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
             padding: 2rem;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .project-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: var(--white);
+            background: var(--glass-bg);
             padding: 0.4rem 0.85rem;
             border-radius: 50px;
             font-size: 0.7rem;
             font-weight: 600;
-            color: var(--dark);
+            color: var(--text-secondary);
             margin-bottom: 1rem;
-            border: 1px solid var(--border);
+            border: 1px solid var(--glass-border);
         }
 
         .project-badge i {
-            color: var(--primary);
+            color: var(--accent-blue);
         }
 
         .project-title {
-            color: var(--dark);
+            color: var(--text-primary);
             font-size: 1.75rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
-            letter-spacing: -0.02em;
         }
 
         .project-title span {
-            color: var(--primary);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .project-subtitle {
-            color: var(--text-muted);
+            color: var(--text-secondary);
             font-size: 0.95rem;
             max-width: 600px;
+            line-height: 1.7;
         }
 
         .project-meta {
@@ -98,7 +153,7 @@
         }
 
         .project-meta-item i {
-            color: var(--primary);
+            color: var(--accent-blue);
             font-size: 0.9rem;
         }
 
@@ -117,7 +172,7 @@
         .project-section-title {
             font-size: 1rem;
             font-weight: 600;
-            color: var(--dark);
+            color: var(--text-primary);
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
@@ -125,34 +180,35 @@
         }
 
         .project-section-title i {
-            color: var(--primary);
+            color: var(--accent-blue);
             font-size: 0.9rem;
         }
 
         .project-description {
-            color: var(--text-muted);
+            color: var(--text-secondary);
             font-size: 0.9rem;
             line-height: 1.8;
             margin-bottom: 1rem;
         }
 
+        /* Highlights Grid */
         .project-highlights {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 1rem;
         }
 
         .highlight-card {
-            background: #f8fafc;
-            border-radius: 12px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: var(--radius-md);
             padding: 1.25rem;
-            border-left: 3px solid var(--primary);
+            border-left: 3px solid var(--accent-blue);
         }
 
         .highlight-value {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--accent-blue);
             font-family: var(--font-mono);
             margin-bottom: 0.25rem;
         }
@@ -164,6 +220,7 @@
             letter-spacing: 0.05em;
         }
 
+        /* Tech Stack */
         .tech-stack {
             display: flex;
             flex-wrap: wrap;
@@ -175,12 +232,18 @@
             align-items: center;
             gap: 0.4rem;
             padding: 0.4rem 0.75rem;
-            background: #f8fafc;
-            border: 1px solid var(--border);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
             border-radius: 50px;
             font-size: 0.75rem;
             font-weight: 500;
-            color: var(--dark-soft);
+            color: var(--text-secondary);
+            transition: var(--transition-fast);
+        }
+
+        .tech-item:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
         }
 
         .tech-item img {
@@ -189,6 +252,7 @@
             object-fit: contain;
         }
 
+        /* Responsibility List */
         .responsibility-list {
             list-style: none;
             padding: 0;
@@ -199,7 +263,7 @@
             padding-left: 1.5rem;
             margin-bottom: 0.75rem;
             font-size: 0.9rem;
-            color: var(--text);
+            color: var(--text-secondary);
             line-height: 1.7;
         }
 
@@ -210,10 +274,15 @@
             top: 0.6rem;
             width: 6px;
             height: 6px;
-            background: var(--primary);
+            background: var(--accent-blue);
             border-radius: 50%;
         }
 
+        .responsibility-list li strong {
+            color: var(--text-primary);
+        }
+
+        /* Clients Grid */
         .clients-grid {
             display: flex;
             flex-wrap: wrap;
@@ -225,20 +294,52 @@
             align-items: center;
             gap: 0.4rem;
             padding: 0.5rem 1rem;
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
             font-size: 0.8rem;
             font-weight: 600;
-            color: var(--dark);
+            color: var(--text-secondary);
+            transition: var(--transition-fast);
+        }
+
+        .client-badge:hover {
+            border-color: var(--accent-blue);
         }
 
         .client-badge i {
-            color: var(--primary);
+            color: var(--accent-blue);
+        }
+
+        /* Architecture Image */
+        .architecture-diagram img {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--glass-border);
+        }
+
+        .architecture-caption {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .architecture-caption i {
+            color: var(--accent-blue);
+            margin-right: 0.5rem;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
+            .projects-hero {
+                padding: 100px 1rem 40px;
+            }
+
+            .projects-hero h1 {
+                font-size: 1.75rem;
+            }
+
             .project-header {
                 padding: 1.5rem;
             }
@@ -257,7 +358,7 @@
             }
 
             .project-highlights {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -277,11 +378,10 @@
                 <li><a href="./" class="active">Projects</a></li>
                 <li><a href="../conferences/">Conferences</a></li>
                 <li><a href="../publications/">Publications</a></li>
-                <div class="nav-social">
-                    <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                </div>
             </ul>
+            <div class="nav-auth">
+                <button class="btn-signin" onclick="showLoginModal()">Sign In</button>
+            </div>
             <button class="mobile-menu-btn" aria-label="Menu">
                 <span></span>
                 <span></span>
@@ -291,42 +391,38 @@
     </nav>
 
     <main class="main-content">
-    <!-- Page Header -->
-    <header class="page-header">
-        <h1>Major <span>Projects</span></h1>
-        <p>Enterprise-scale cloud infrastructure and AI/ML platform implementations that delivered measurable business impact.</p>
-    </header>
+        <!-- Hero Section -->
+        <section class="projects-hero">
+            <h1>Major <span>Projects</span></h1>
+            <p>Enterprise-scale cloud infrastructure and AI/ML platform implementations that delivered measurable business impact.</p>
+        </section>
 
-    <!-- Projects Content -->
-    <section class="section section-alt">
+        <!-- Projects Content -->
         <div class="projects-container">
-
             <!-- Trackonomy AI Platform -->
             <article class="project-card">
                 <div class="project-header">
-                    <div class="project-header-content">
-                        <div class="project-badge">
-                            <i class="fas fa-brain"></i>
-                            AI/ML & Healthcare
+                    <div class="project-badge">
+                        <i class="fas fa-brain"></i>
+                        AI/ML & Healthcare
+                    </div>
+                    <h2 class="project-title">Enterprise <span>AI/ML Platform</span></h2>
+                    <p class="project-subtitle">
+                        Built enterprise AI/ML platforms for healthcare, supply chain, airline, and government clients
+                        with 65-GPU multi-tenant infrastructure for LLM/GenAI workloads delivering $8M+ cost savings.
+                    </p>
+                    <div class="project-meta">
+                        <div class="project-meta-item">
+                            <i class="fas fa-building"></i>
+                            Trackonomy
                         </div>
-                        <h2 class="project-title">Enterprise <span>AI/ML Platform</span></h2>
-                        <p class="project-subtitle">
-                            Built enterprise AI/ML platforms for healthcare, supply chain, airline, and government clients
-                            with 65-GPU multi-tenant infrastructure for LLM/GenAI workloads delivering $8M+ cost savings.
-                        </p>
-                        <div class="project-meta">
-                            <div class="project-meta-item">
-                                <i class="fas fa-building"></i>
-                                Trackonomy
-                            </div>
-                            <div class="project-meta-item">
-                                <i class="fas fa-calendar"></i>
-                                Oct 2023 – Present
-                            </div>
-                            <div class="project-meta-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                San Jose, CA (Remote)
-                            </div>
+                        <div class="project-meta-item">
+                            <i class="fas fa-calendar"></i>
+                            Oct 2023 - Present
+                        </div>
+                        <div class="project-meta-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            San Jose, CA
                         </div>
                     </div>
                 </div>
@@ -350,22 +446,22 @@
                         </p>
                     </div>
 
-                    <!-- Architecture Diagram -->
+                    <!-- Architecture -->
                     <div class="project-section">
                         <h3 class="project-section-title">
                             <i class="fas fa-sitemap"></i>
                             Azure Platform Architecture
                         </h3>
                         <div class="architecture-diagram">
-                            <img src="../assets/images/trackonomy-azure-architecture.png" alt="Trackonomy Azure Platform Architecture" style="width: 100%; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); border: 1px solid var(--border);">
+                            <img src="../assets/images/trackonomy-azure-architecture.png" alt="Trackonomy Azure Platform Architecture">
                         </div>
-                        <p class="project-description" style="margin-top: 1rem; font-size: 0.85rem; text-align: center; color: var(--text-muted);">
-                            <i class="fas fa-diagram-project" style="color: var(--primary);"></i>
+                        <p class="architecture-caption">
+                            <i class="fas fa-diagram-project"></i>
                             Multi-tenant Azure Platform - AKS, Microservices, and Enterprise Security
                         </p>
                     </div>
 
-                    <!-- Azure Infrastructure Provisioning -->
+                    <!-- Infrastructure -->
                     <div class="project-section">
                         <h3 class="project-section-title">
                             <i class="fas fa-cloud"></i>
@@ -373,16 +469,15 @@
                         </h3>
                         <p class="project-description">
                             Designed and provisioned enterprise-grade Azure infrastructure using Infrastructure as Code (Terraform)
-                            with GitOps workflows (ArgoCD) for consistent, repeatable deployments across development, staging, and production environments.
+                            with GitOps workflows (ArgoCD) for consistent, repeatable deployments across environments.
                         </p>
                         <ul class="responsibility-list">
-                            <li><strong>AKS Cluster:</strong> Provisioned production-grade Azure Kubernetes Service with node auto-scaling, availability zones, Azure CNI networking, and Istio service mesh for traffic management and mTLS.</li>
-                            <li><strong>Network Architecture:</strong> Designed hub-spoke VNet topology with Azure Firewall, NSGs, private endpoints, and Azure WAF for defense-in-depth security posture.</li>
-                            <li><strong>Identity & Access:</strong> Implemented Azure AD integration with RBAC, Managed Identities for workload authentication, and Azure Key Vault for secrets management with automatic rotation.</li>
-                            <li><strong>Data Services:</strong> Provisioned Azure PostgreSQL Flexible Server, Cosmos DB (multi-region), Azure Service Bus, and Event Hubs with private link connectivity and geo-redundancy.</li>
-                            <li><strong>Observability Stack:</strong> Deployed Prometheus/Grafana on AKS with Datadog integration, Azure Monitor, and custom dashboards for GPU utilization and SLO tracking.</li>
-                            <li><strong>CI/CD Pipeline:</strong> GitHub Actions → ArgoCD GitOps workflow with Terraform state in Azure Storage, automated drift detection, and policy-as-code with Azure Policy.</li>
-                            <li><strong>External Integrations:</strong> Configured Power BI for analytics dashboards, Google API integrations, and secure API gateway with Azure API Management.</li>
+                            <li><strong>AKS Cluster:</strong> Provisioned production-grade Azure Kubernetes Service with node auto-scaling, availability zones, Azure CNI networking, and Istio service mesh.</li>
+                            <li><strong>Network Architecture:</strong> Designed hub-spoke VNet topology with Azure Firewall, NSGs, private endpoints, and Azure WAF for defense-in-depth security.</li>
+                            <li><strong>Identity & Access:</strong> Implemented Azure AD integration with RBAC, Managed Identities, and Azure Key Vault with automatic rotation.</li>
+                            <li><strong>Data Services:</strong> Provisioned Azure PostgreSQL Flexible Server, Cosmos DB (multi-region), Azure Service Bus, and Event Hubs with private link.</li>
+                            <li><strong>Observability Stack:</strong> Deployed Prometheus/Grafana on AKS with Datadog integration and custom GPU dashboards.</li>
+                            <li><strong>CI/CD Pipeline:</strong> GitHub Actions to ArgoCD GitOps with Terraform state in Azure Storage and policy-as-code.</li>
                         </ul>
                     </div>
 
@@ -395,27 +490,27 @@
                         <div class="project-highlights">
                             <div class="highlight-card">
                                 <div class="highlight-value">$8M+</div>
-                                <div class="highlight-label">Cost Savings Delivered</div>
-                            </div>
-                            <div class="highlight-card">
-                                <div class="highlight-value">73%</div>
-                                <div class="highlight-label">Cloud Cost Reduction</div>
-                            </div>
-                            <div class="highlight-card">
-                                <div class="highlight-value">65 GPU</div>
-                                <div class="highlight-label">Multi-Tenant Platform</div>
-                            </div>
-                            <div class="highlight-card">
-                                <div class="highlight-value">99.95%</div>
-                                <div class="highlight-label">SLO Maintained</div>
+                                <div class="highlight-label">Cost Savings</div>
                             </div>
                             <div class="highlight-card">
                                 <div class="highlight-value">73%</div>
                                 <div class="highlight-label">Cost Reduction</div>
                             </div>
                             <div class="highlight-card">
+                                <div class="highlight-value">65 GPU</div>
+                                <div class="highlight-label">Platform Scale</div>
+                            </div>
+                            <div class="highlight-card">
+                                <div class="highlight-value">99.95%</div>
+                                <div class="highlight-label">SLO Maintained</div>
+                            </div>
+                            <div class="highlight-card">
                                 <div class="highlight-value">4</div>
                                 <div class="highlight-label">Compliance Certs</div>
+                            </div>
+                            <div class="highlight-card">
+                                <div class="highlight-value">40+</div>
+                                <div class="highlight-label">Apps Migrated</div>
                             </div>
                         </div>
                     </div>
@@ -441,14 +536,12 @@
                             Key Responsibilities
                         </h3>
                         <ul class="responsibility-list">
-                            <li><strong>GPU Infrastructure:</strong> Architected 65-GPU multi-tenant platform using Slurm, Kubernetes, and NVIDIA Triton for LLM/GenAI workloads with optimized resource scheduling and cost allocation.</li>
-                            <li><strong>ML Pipelines:</strong> Built end-to-end ML pipelines with Apache Airflow, Apache Flink, MLflow, and Kubeflow for model training, versioning, and deployment automation.</li>
-                            <li><strong>Observability:</strong> Implemented comprehensive observability across 40+ microservices using Prometheus, Grafana, Datadog, and custom dashboards for GPU utilization monitoring.</li>
-                            <li><strong>Multi-Cloud Strategy:</strong> Designed and deployed infrastructure across Azure, AWS, and OCI with Terraform and GitOps for consistent, repeatable provisioning.</li>
-                            <li><strong>Application Migration:</strong> Led migration of 40+ workloads from VMs, VMSS, Azure WebApps, Function Apps, and datacenter Java applications to K8s with zero-downtime deployment strategies.</li>
-                            <li><strong>Security & Compliance:</strong> Achieved SOC2, HIPAA, and FedRAMP compliance via Vanta and Snyk integration with zero critical security findings.</li>
-                            <li><strong>Cost Optimization:</strong> Implemented FinOps practices delivering 73% cloud cost reduction and $8M+ savings through right-sizing, reserved instances, and spot instance strategies.</li>
-                            <li><strong>Team Leadership:</strong> Built infrastructure team from 0 to 6 engineers, establishing best practices, documentation, and on-call rotations.</li>
+                            <li><strong>GPU Infrastructure:</strong> Architected 65-GPU multi-tenant platform using Slurm, Kubernetes, and NVIDIA Triton for LLM/GenAI workloads.</li>
+                            <li><strong>ML Pipelines:</strong> Built end-to-end ML pipelines with Apache Airflow, Flink, MLflow, and Kubeflow.</li>
+                            <li><strong>Observability:</strong> Implemented comprehensive observability across 40+ microservices using Prometheus, Grafana, and Datadog.</li>
+                            <li><strong>Multi-Cloud Strategy:</strong> Designed infrastructure across Azure, AWS, and OCI with Terraform and GitOps.</li>
+                            <li><strong>Security & Compliance:</strong> Achieved SOC2, HIPAA, and FedRAMP compliance with zero critical findings.</li>
+                            <li><strong>Team Leadership:</strong> Built infrastructure team from 0 to 6 engineers with best practices and on-call rotations.</li>
                         </ul>
                     </div>
 
@@ -475,7 +568,6 @@
                             <span class="tech-item"><i class="fas fa-server" style="color:#76B900;"></i>Slurm</span>
                             <span class="tech-item"><img src="../assets/icons/python.svg" alt="Python">Python</span>
                             <span class="tech-item"><i class="fas fa-brain" style="color:#0194E2;"></i>MLflow</span>
-                            <span class="tech-item"><img src="../assets/icons/kubernetes.svg" alt="Kubeflow">Kubeflow</span>
                             <span class="tech-item"><img src="../assets/icons/snyk.svg" alt="Snyk">Snyk</span>
                             <span class="tech-item"><img src="../assets/icons/vault.svg" alt="Vault">Vault</span>
                         </div>
@@ -486,29 +578,27 @@
             <!-- OSDU Project -->
             <article class="project-card">
                 <div class="project-header">
-                    <div class="project-header-content">
-                        <div class="project-badge">
-                            <i class="fas fa-oil-well"></i>
-                            Energy & Oil/Gas Sector
+                    <div class="project-badge">
+                        <i class="fas fa-oil-well"></i>
+                        Energy & Oil/Gas
+                    </div>
+                    <h2 class="project-title">OSDU <span>Data Platform</span></h2>
+                    <p class="project-subtitle">
+                        Architected and deployed the Open Subsurface Data Universe (OSDU) R3 platform on AWS and Azure
+                        for major energy enterprises, enabling petabyte-scale seismic and subsurface data management.
+                    </p>
+                    <div class="project-meta">
+                        <div class="project-meta-item">
+                            <i class="fas fa-building"></i>
+                            Wipro
                         </div>
-                        <h2 class="project-title">OSDU <span>Data Platform</span></h2>
-                        <p class="project-subtitle">
-                            Architected and deployed the Open Subsurface Data Universe (OSDU) R3 platform on AWS and Azure
-                            for major energy enterprises, enabling petabyte-scale seismic and subsurface data management.
-                        </p>
-                        <div class="project-meta">
-                            <div class="project-meta-item">
-                                <i class="fas fa-building"></i>
-                                Wipro
-                            </div>
-                            <div class="project-meta-item">
-                                <i class="fas fa-calendar"></i>
-                                Feb 2020 – Jun 2023
-                            </div>
-                            <div class="project-meta-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                Remote (Global Clients)
-                            </div>
+                        <div class="project-meta-item">
+                            <i class="fas fa-calendar"></i>
+                            Feb 2020 - Jun 2023
+                        </div>
+                        <div class="project-meta-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Remote (Global)
                         </div>
                     </div>
                 </div>
@@ -524,67 +614,56 @@
                             The Open Subsurface Data Universe (OSDU) is an industry-standard data platform that enables
                             oil and gas companies to manage, integrate, and leverage subsurface and wells data at scale.
                             I led the cloud architecture and infrastructure implementation for OSDU R3 across multiple
-                            major energy clients, building GPU-accelerated data ingestion and ML training pipelines
-                            for petabyte-scale seismic data processing.
+                            major energy clients.
                         </p>
                         <p class="project-description">
-                            This project involved designing multi-tenant landing zones, implementing DevSecOps practices,
-                            and ensuring compliance with enterprise security standards across AWS and Azure environments.
+                            Built GPU-accelerated data ingestion and ML training pipelines for petabyte-scale seismic data
+                            processing, designed multi-tenant landing zones, and implemented DevSecOps practices for enterprise compliance.
                         </p>
                     </div>
 
-                    <!-- Architecture Diagram -->
+                    <!-- Architecture -->
                     <div class="project-section">
                         <h3 class="project-section-title">
                             <i class="fas fa-sitemap"></i>
                             Architecture Overview
                         </h3>
                         <div class="architecture-diagram">
-                            <img src="../assets/images/osdu-azure-architecture.png" alt="OSDU Azure Architecture Diagram" style="width: 100%; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); border: 1px solid var(--border);">
+                            <img src="../assets/images/osdu-azure-architecture.png" alt="OSDU Azure Architecture">
                         </div>
-                        <p class="project-description" style="margin-top: 1rem; font-size: 0.85rem; text-align: center; color: var(--text-muted);">
-                            <i class="fas fa-diagram-project" style="color: var(--primary);"></i>
+                        <p class="architecture-caption">
+                            <i class="fas fa-diagram-project"></i>
                             Multi-tenant OSDU R3 deployment with AKS, Event Hubs, and Cosmos DB
                         </p>
                     </div>
 
-                    <!-- AWS Infrastructure Provisioning -->
+                    <!-- AWS Infrastructure -->
                     <div class="project-section">
                         <h3 class="project-section-title">
                             <i class="fab fa-aws"></i>
-                            AWS Infrastructure Provisioning
+                            AWS Infrastructure
                         </h3>
-                        <p class="project-description">
-                            Provisioned OSDU R3 platform on AWS for ExxonMobil and Chevron with enterprise landing zones,
-                            GPU-accelerated compute for seismic processing, and petabyte-scale data lake architecture.
-                        </p>
                         <ul class="responsibility-list">
-                            <li><strong>Landing Zone:</strong> Deployed AWS Control Tower with multi-account strategy (workload, shared services, logging, security), SCPs, and AWS Organizations for governance at scale.</li>
-                            <li><strong>EKS Clusters:</strong> Provisioned production EKS clusters with Karpenter auto-scaling, GPU node groups (p4d/p3 instances) for seismic ML workloads, and Bottlerocket OS for security hardening.</li>
-                            <li><strong>Network Architecture:</strong> Designed Transit Gateway hub connecting VPCs across regions, AWS PrivateLink for service connectivity, and Direct Connect for on-premises integration.</li>
-                            <li><strong>Data Lake:</strong> Built petabyte-scale data lake on S3 with Lake Formation for governance, Glue for ETL, and Athena/Redshift Spectrum for analytics on seismic datasets.</li>
-                            <li><strong>Streaming Pipeline:</strong> Provisioned Amazon MSK (Kafka) and Kinesis for real-time seismic data ingestion at 10+ GB/s throughput with exactly-once delivery guarantees.</li>
-                            <li><strong>Security Controls:</strong> Implemented AWS IAM Identity Center (SSO), Secrets Manager with automatic rotation, GuardDuty, Security Hub, and CloudTrail for FedRAMP compliance.</li>
+                            <li><strong>Landing Zone:</strong> AWS Control Tower with multi-account strategy, SCPs, and AWS Organizations.</li>
+                            <li><strong>EKS Clusters:</strong> Production EKS with Karpenter, GPU node groups (p4d/p3), and Bottlerocket OS.</li>
+                            <li><strong>Data Lake:</strong> Petabyte-scale on S3 with Lake Formation, Glue ETL, and Athena analytics.</li>
+                            <li><strong>Streaming:</strong> Amazon MSK (Kafka) and Kinesis for 10+ GB/s seismic data ingestion.</li>
+                            <li><strong>Security:</strong> IAM Identity Center, Secrets Manager, GuardDuty, and Security Hub for FedRAMP.</li>
                         </ul>
                     </div>
 
-                    <!-- Azure Infrastructure Provisioning -->
+                    <!-- Azure Infrastructure -->
                     <div class="project-section">
                         <h3 class="project-section-title">
                             <i class="fab fa-microsoft"></i>
-                            Azure Infrastructure Provisioning
+                            Azure Infrastructure
                         </h3>
-                        <p class="project-description">
-                            Provisioned OSDU R3 platform on Azure for BP, Shell, and TotalEnergies with enterprise-scale landing zones,
-                            multi-tier architecture, and Azure-native services for data management and analytics.
-                        </p>
                         <ul class="responsibility-list">
-                            <li><strong>Landing Zone:</strong> Deployed Azure Enterprise-Scale landing zone with Management Groups hierarchy, Azure Policy initiatives, and subscription vending for multi-tenant isolation.</li>
-                            <li><strong>AKS Clusters:</strong> Provisioned AKS clusters across 3 tiers (Frontend, Platform, Data Services) with availability zones, Azure CNI overlay, and GPU node pools (NC/ND series) for ML training.</li>
-                            <li><strong>Network Architecture:</strong> Designed hub-spoke topology with Azure Virtual WAN, ExpressRoute for hybrid connectivity, and Azure Firewall Premium for IDPS and TLS inspection.</li>
-                            <li><strong>Data Services:</strong> Provisioned Cosmos DB (multi-region write), Azure Event Hubs (Kafka protocol), Azure Storage (ADLS Gen2) with hierarchical namespace for seismic data organization.</li>
-                            <li><strong>API Layer:</strong> Deployed Azure API Management with OAuth 2.0/OIDC, rate limiting, and developer portal for OSDU API consumption by partner applications.</li>
-                            <li><strong>CI/CD Automation:</strong> Built Azure DevOps pipelines with Terraform modules, environment promotion gates, and integration with Azure Policy for compliance-as-code.</li>
+                            <li><strong>Landing Zone:</strong> Enterprise-Scale with Management Groups and Azure Policy initiatives.</li>
+                            <li><strong>AKS Clusters:</strong> Multi-tier architecture with GPU node pools (NC/ND series) for ML training.</li>
+                            <li><strong>Data Services:</strong> Cosmos DB multi-region, Event Hubs (Kafka), and ADLS Gen2.</li>
+                            <li><strong>API Layer:</strong> Azure API Management with OAuth 2.0 and developer portal.</li>
+                            <li><strong>CI/CD:</strong> Azure DevOps pipelines with Terraform modules and compliance-as-code.</li>
                         </ul>
                     </div>
 
@@ -597,19 +676,19 @@
                         <div class="project-highlights">
                             <div class="highlight-card">
                                 <div class="highlight-value">5+</div>
-                                <div class="highlight-label">Global Energy Enterprises</div>
+                                <div class="highlight-label">Global Enterprises</div>
                             </div>
                             <div class="highlight-card">
                                 <div class="highlight-value">PB-Scale</div>
-                                <div class="highlight-label">Seismic Data Processing</div>
+                                <div class="highlight-label">Data Processing</div>
                             </div>
                             <div class="highlight-card">
                                 <div class="highlight-value">55%</div>
-                                <div class="highlight-label">Downtime Reduction (DR)</div>
+                                <div class="highlight-label">Downtime Reduction</div>
                             </div>
                             <div class="highlight-card">
                                 <div class="highlight-value">Multi-Cloud</div>
-                                <div class="highlight-label">AWS & Azure Deployment</div>
+                                <div class="highlight-label">AWS & Azure</div>
                             </div>
                         </div>
                     </div>
@@ -627,23 +706,6 @@
                             <span class="client-badge"><i class="fas fa-building"></i>Shell</span>
                             <span class="client-badge"><i class="fas fa-building"></i>TotalEnergies</span>
                         </div>
-                    </div>
-
-                    <!-- Responsibilities -->
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fas fa-tasks"></i>
-                            Key Responsibilities
-                        </h3>
-                        <ul class="responsibility-list">
-                            <li><strong>Platform Architecture:</strong> Designed and implemented OSDU R3 data platform on AWS and Azure, enabling seamless integration of subsurface, wells, and seismic data for exploration and production workflows.</li>
-                            <li><strong>GPU Infrastructure:</strong> Architected GPU-accelerated EKS/AKS clusters for large-scale seismic data processing and ML model training, optimizing compute costs while meeting performance SLAs.</li>
-                            <li><strong>Multi-Tenant Landing Zones:</strong> Provisioned secure AWS and Azure Landing Zones for 5+ global energy enterprises with isolated environments, network segmentation, and compliance controls.</li>
-                            <li><strong>CI/CD Automation:</strong> Built end-to-end deployment pipelines using GitHub Actions, Azure DevOps, Terraform, and Helm for consistent and repeatable infrastructure provisioning.</li>
-                            <li><strong>DevSecOps Implementation:</strong> Integrated security scanning with Snyk, SonarQube, and JFrog Xray into CI/CD pipelines. Managed secrets using AWS Secrets Manager and Azure Key Vault.</li>
-                            <li><strong>Disaster Recovery:</strong> Designed and implemented DR strategies reducing potential downtime by 55% with multi-region failover capabilities and automated recovery procedures.</li>
-                            <li><strong>Data Pipeline Optimization:</strong> Built high-throughput data ingestion pipelines handling petabyte-scale seismic data with Apache Kafka, Azure Event Hubs, and custom ETL workflows.</li>
-                        </ul>
                     </div>
 
                     <!-- Technology Stack -->
@@ -666,7 +728,7 @@
                             <span class="tech-item"><img src="../assets/icons/vault.svg" alt="Vault">Vault</span>
                             <span class="tech-item"><img src="../assets/icons/prometheus.svg" alt="Prometheus">Prometheus</span>
                             <span class="tech-item"><img src="../assets/icons/grafana.svg" alt="Grafana">Grafana</span>
-                            <span class="tech-item"><i class="fas fa-database" style="color:#E535AB;"></i>PostgreSQL</span>
+                            <span class="tech-item"><i class="fas fa-database" style="color:#336791;"></i>PostgreSQL</span>
                             <span class="tech-item"><i class="fas fa-stream" style="color:#231F20;"></i>Apache Kafka</span>
                             <span class="tech-item"><img src="../assets/icons/nvidia.svg" alt="NVIDIA">NVIDIA GPU</span>
                         </div>
@@ -674,31 +736,39 @@
                 </div>
             </article>
 
+            <!-- Comments Section -->
+            <div id="comments-container"></div>
         </div>
-    </section>
-
     </main>
 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <span class="footer-logo">Sudhakar Chundu</span>
+            <div class="footer-brand">
+                <span class="footer-logo">Sudhakar Chundu</span>
+                <p>Staff DevOps Engineer | SRE | GPU Infrastructure</p>
+            </div>
             <div class="footer-links">
                 <a href="../">Home</a>
+                <a href="../about/">About</a>
                 <a href="../resume/">Resume</a>
-                <a href="../conferences/">Conferences</a>
-                <a href="../publications/">Publications</a>
+                <a href="../contact/">Contact</a>
             </div>
             <div class="footer-social">
-                <a href="https://github.com/schundu007" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/schundu" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://medium.sudhakarchundu.org/" target="_blank"><i class="fab fa-medium"></i></a>
+                <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://medium.sudhakarchundu.org/" target="_blank" title="Medium"><i class="fab fa-medium"></i></a>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 2rem;">
+        <div class="footer-bottom">
             <p>&copy; 2025 Sudhakar Chundu. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Firebase Config and Auth -->
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/comments.js"></script>
 
     <script>
         // Mobile menu toggle
@@ -710,7 +780,6 @@
             navLinks.classList.toggle('active');
         });
 
-        // Close menu when clicking a link
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenuBtn.classList.remove('active');
