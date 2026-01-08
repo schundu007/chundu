@@ -11,13 +11,29 @@ const firebaseConfig = {
     appId: "YOUR_APP_ID"
 };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+// Check if Firebase is configured with real credentials
+const isFirebaseConfigured = firebaseConfig.apiKey &&
+    firebaseConfig.apiKey !== "YOUR_API_KEY" &&
+    !firebaseConfig.apiKey.includes("YOUR_");
 
-// Initialize services
-const auth = firebase.auth();
-const db = firebase.firestore();
+let auth = null;
+let db = null;
+
+if (isFirebaseConfigured && typeof firebase !== 'undefined') {
+    try {
+        // Initialize Firebase only if properly configured
+        firebase.initializeApp(firebaseConfig);
+        auth = firebase.auth();
+        db = firebase.firestore();
+        console.log('Firebase initialized successfully');
+    } catch (error) {
+        console.warn('Firebase initialization failed:', error.message);
+    }
+} else {
+    console.log('Firebase not configured - authentication features disabled');
+}
 
 // Export for use in other files
 window.firebaseAuth = auth;
 window.firebaseDb = db;
+window.isFirebaseConfigured = isFirebaseConfigured;

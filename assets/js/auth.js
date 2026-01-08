@@ -4,6 +4,32 @@
 (function() {
     'use strict';
 
+    // Check if Firebase is configured
+    if (!window.isFirebaseConfigured) {
+        console.log('Auth module: Firebase not configured, authentication disabled');
+        // Provide stub functions to prevent errors
+        window.showLoginModal = function() {
+            console.log('Authentication is not configured');
+        };
+        window.closeLoginModal = function() {};
+        window.signInWithGoogle = function() { console.log('Auth not configured'); };
+        window.signInWithFacebook = function() { console.log('Auth not configured'); };
+        window.signInWithGitHub = function() { console.log('Auth not configured'); };
+        window.signOutUser = function() {};
+        window.isAuthenticated = function() { return false; };
+        window.getCurrentUser = function() { return null; };
+        window.requireAuth = function() { return false; };
+        window.toggleUserDropdown = function() {};
+
+        // Hide sign-in buttons when Firebase is not configured
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.nav-auth').forEach(function(el) {
+                el.style.display = 'none';
+            });
+        });
+        return;
+    }
+
     // Auth providers
     const googleProvider = new firebase.auth.GoogleAuthProvider();
     const facebookProvider = new firebase.auth.FacebookAuthProvider();
