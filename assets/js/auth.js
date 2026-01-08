@@ -240,36 +240,61 @@
         }
     });
 
+    // Flag to prevent multiple sign-in attempts
+    let isSigningIn = false;
+
     // Sign in with Google
     window.signInWithGoogle = async function() {
+        if (isSigningIn) return;
+        isSigningIn = true;
         try {
             await auth.signInWithPopup(googleProvider);
             closeLoginModal();
         } catch (error) {
-            console.error('Google sign-in error:', error);
-            alert('Sign in failed: ' + error.message);
+            // Ignore cancelled popup errors
+            if (error.code !== 'auth/cancelled-popup-request' &&
+                error.code !== 'auth/popup-closed-by-user') {
+                console.error('Google sign-in error:', error);
+                alert('Sign in failed: ' + error.message);
+            }
+        } finally {
+            isSigningIn = false;
         }
     };
 
     // Sign in with Facebook
     window.signInWithFacebook = async function() {
+        if (isSigningIn) return;
+        isSigningIn = true;
         try {
             await auth.signInWithPopup(facebookProvider);
             closeLoginModal();
         } catch (error) {
-            console.error('Facebook sign-in error:', error);
-            alert('Sign in failed: ' + error.message);
+            if (error.code !== 'auth/cancelled-popup-request' &&
+                error.code !== 'auth/popup-closed-by-user') {
+                console.error('Facebook sign-in error:', error);
+                alert('Sign in failed: ' + error.message);
+            }
+        } finally {
+            isSigningIn = false;
         }
     };
 
     // Sign in with GitHub
     window.signInWithGitHub = async function() {
+        if (isSigningIn) return;
+        isSigningIn = true;
         try {
             await auth.signInWithPopup(githubProvider);
             closeLoginModal();
         } catch (error) {
-            console.error('GitHub sign-in error:', error);
-            alert('Sign in failed: ' + error.message);
+            if (error.code !== 'auth/cancelled-popup-request' &&
+                error.code !== 'auth/popup-closed-by-user') {
+                console.error('GitHub sign-in error:', error);
+                alert('Sign in failed: ' + error.message);
+            }
+        } finally {
+            isSigningIn = false;
         }
     };
 
