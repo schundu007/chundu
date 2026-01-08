@@ -30,10 +30,8 @@
         return;
     }
 
-    // Auth providers
+    // Auth provider - Google only
     const googleProvider = new firebase.auth.GoogleAuthProvider();
-    const facebookProvider = new firebase.auth.FacebookAuthProvider();
-    const githubProvider = new firebase.auth.GithubAuthProvider();
 
     // Current user state
     let currentUser = null;
@@ -51,14 +49,6 @@
                     <button class="social-login-btn google" onclick="signInWithGoogle()">
                         <i class="fab fa-google"></i>
                         Continue with Google
-                    </button>
-                    <button class="social-login-btn facebook" onclick="signInWithFacebook()">
-                        <i class="fab fa-facebook-f"></i>
-                        Continue with Facebook
-                    </button>
-                    <button class="social-login-btn github" onclick="signInWithGitHub()">
-                        <i class="fab fa-github"></i>
-                        Continue with GitHub
                     </button>
                 </div>
                 <p style="text-align: center; color: var(--text-muted); font-size: 0.75rem; margin-top: 1.5rem;">
@@ -262,41 +252,6 @@
         }
     };
 
-    // Sign in with Facebook
-    window.signInWithFacebook = async function() {
-        if (isSigningIn) return;
-        isSigningIn = true;
-        try {
-            await auth.signInWithPopup(facebookProvider);
-            closeLoginModal();
-        } catch (error) {
-            if (error.code !== 'auth/cancelled-popup-request' &&
-                error.code !== 'auth/popup-closed-by-user') {
-                console.error('Facebook sign-in error:', error);
-                alert('Sign in failed: ' + error.message);
-            }
-        } finally {
-            isSigningIn = false;
-        }
-    };
-
-    // Sign in with GitHub
-    window.signInWithGitHub = async function() {
-        if (isSigningIn) return;
-        isSigningIn = true;
-        try {
-            await auth.signInWithPopup(githubProvider);
-            closeLoginModal();
-        } catch (error) {
-            if (error.code !== 'auth/cancelled-popup-request' &&
-                error.code !== 'auth/popup-closed-by-user') {
-                console.error('GitHub sign-in error:', error);
-                alert('Sign in failed: ' + error.message);
-            }
-        } finally {
-            isSigningIn = false;
-        }
-    };
 
     // Sign out
     window.signOutUser = async function() {
