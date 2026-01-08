@@ -3,12 +3,13 @@
 // Firebase Console > Project Settings > Your Apps > Web App > Config
 
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyDnKjY9l5L8ph0Fd_Ec0IT1lh6wljMKo0Q",
+    authDomain: "authforportpolio.firebaseapp.com",
+    projectId: "authforportpolio",
+    storageBucket: "authforportpolio.firebasestorage.app",
+    messagingSenderId: "110343952224",
+    appId: "1:110343952224:web:151e4ae223c3dacfb67005",
+    measurementId: "G-KKJG33GF2X"
 };
 
 // Check if Firebase is configured with real credentials
