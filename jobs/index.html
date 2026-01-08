@@ -23,22 +23,55 @@
     <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <style>
+        /* Dark Theme Variables for Jobs Page */
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #111118;
+            --bg-tertiary: #18181f;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent-blue: #3b82f6;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-border-hover: rgba(255, 255, 255, 0.15);
+            --white: #ffffff;
+            --light: #18181f;
+            --light-alt: #1f1f28;
+            --dark: #ffffff;
+            --border: rgba(255, 255, 255, 0.1);
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: rgba(59, 130, 246, 0.2);
+            --radius: 8px;
+            --radius-lg: 12px;
+        }
+
+        body {
+            background: var(--bg-primary) !important;
+            color: var(--text-primary);
+        }
+
         /* Override shared CSS for full-width jobs page */
         .main-content {
             max-width: 100%;
             padding: 0;
-            background: var(--white);
+            background: var(--bg-primary);
         }
 
         .page-header {
             border-radius: 0;
             margin-bottom: 0;
+            background: var(--bg-secondary);
+            border: none;
         }
 
         footer {
             max-width: 100%;
             border-radius: 0;
             margin: 0;
+            background: var(--bg-secondary);
         }
 
         /* Fresh Jobs Ticker */
@@ -139,7 +172,7 @@
 
         .jobs-section {
             padding: 40px 1.5rem 60px;
-            background: var(--white);
+            background: var(--bg-primary);
         }
 
         .jobs-container {
@@ -202,11 +235,17 @@
         .search-box input {
             width: 100%;
             padding: 0.75rem 1rem 0.75rem 2.5rem;
-            border: 1px solid var(--border);
+            border: 1px solid var(--glass-border);
             border-radius: var(--radius);
             font-size: 0.9rem;
             font-family: var(--font-sans);
             transition: all 0.2s;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-muted);
         }
 
         .search-box input:focus {
@@ -225,13 +264,19 @@
 
         .filter-select {
             padding: 0.75rem 1rem;
-            border: 1px solid var(--border);
+            border: 1px solid var(--glass-border);
             border-radius: var(--radius);
             font-size: 0.85rem;
             font-family: var(--font-sans);
-            background: var(--white);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
             cursor: pointer;
             min-width: 150px;
+        }
+
+        .filter-select option {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
         }
 
         .filter-select:focus {
@@ -270,9 +315,9 @@
         /* Jobs Table */
         .jobs-table-wrapper {
             overflow-x: auto;
-            border: 1px solid var(--border);
+            border: 1px solid var(--glass-border);
             border-radius: var(--radius-lg);
-            background: var(--white);
+            background: var(--bg-secondary);
         }
 
         .jobs-table {
@@ -282,12 +327,12 @@
         }
 
         .jobs-table th {
-            background: var(--light);
+            background: var(--bg-tertiary);
             padding: 1rem;
             text-align: left;
             font-weight: 600;
-            color: var(--dark);
-            border-bottom: 2px solid var(--border);
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--glass-border);
             white-space: nowrap;
             position: sticky;
             top: 0;
@@ -310,12 +355,13 @@
 
         .jobs-table td {
             padding: 1rem;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--glass-border);
             vertical-align: top;
+            color: var(--text-secondary);
         }
 
         .jobs-table tr:hover {
-            background: var(--light);
+            background: var(--bg-tertiary);
         }
 
         .jobs-table tr:last-child td {
@@ -357,7 +403,7 @@
 
         .role-title {
             font-weight: 600;
-            color: var(--dark);
+            color: var(--text-primary);
             display: block;
             margin-bottom: 0.25rem;
         }
@@ -369,7 +415,7 @@
 
         .company-name {
             font-weight: 600;
-            color: var(--dark);
+            color: var(--text-primary);
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -380,7 +426,7 @@
             height: 24px;
             border-radius: 4px;
             object-fit: contain;
-            background: var(--light);
+            background: var(--bg-tertiary);
         }
 
         .location-text {
@@ -481,9 +527,9 @@
             justify-content: center;
             width: 32px;
             height: 32px;
-            background: var(--light);
+            background: var(--bg-tertiary);
             color: var(--primary);
-            border: 1px solid var(--border);
+            border: 1px solid var(--glass-border);
             border-radius: var(--radius);
             cursor: pointer;
             transition: all 0.2s;
@@ -506,9 +552,9 @@
             justify-content: center;
             width: 32px;
             height: 32px;
-            background: var(--light);
-            color: #16a34a;
-            border: 1px solid var(--border);
+            background: var(--bg-tertiary);
+            color: #4ade80;
+            border: 1px solid var(--glass-border);
             border-radius: var(--radius);
             cursor: pointer;
             transition: all 0.2s;
@@ -536,7 +582,7 @@
             display: inline-block;
             width: 24px;
             height: 24px;
-            border: 3px solid var(--border);
+            border: 3px solid var(--glass-border);
             border-top-color: var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
@@ -553,12 +599,12 @@
 
         .empty-state i {
             font-size: 3rem;
-            color: var(--border);
+            color: var(--glass-border);
             margin-bottom: 1rem;
         }
 
         .empty-state h3 {
-            color: var(--dark);
+            color: var(--text-primary);
             margin-bottom: 0.5rem;
         }
 
@@ -569,8 +615,9 @@
             align-items: center;
             margin-top: 1.5rem;
             padding: 1rem;
-            background: var(--light);
+            background: var(--bg-secondary);
             border-radius: var(--radius);
+            border: 1px solid var(--glass-border);
         }
 
         .pagination-info {
@@ -585,8 +632,9 @@
 
         .page-btn {
             padding: 0.5rem 1rem;
-            border: 1px solid var(--border);
-            background: var(--white);
+            border: 1px solid var(--glass-border);
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
             border-radius: var(--radius);
             font-size: 0.85rem;
             cursor: pointer;
@@ -619,10 +667,11 @@
 
         .company-tag {
             padding: 0.4rem 0.75rem;
-            background: var(--light);
-            border: 1px solid var(--border);
+            background: var(--bg-tertiary);
+            border: 1px solid var(--glass-border);
             border-radius: 50px;
             font-size: 0.75rem;
+            color: var(--text-secondary);
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
@@ -697,12 +746,12 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.5rem 1rem;
-            background: var(--white);
-            border: 1px solid var(--border);
+            background: var(--bg-tertiary);
+            border: 1px solid var(--glass-border);
             border-radius: 50px;
             font-size: 0.8rem;
             font-weight: 500;
-            color: var(--dark);
+            color: var(--text-secondary);
             text-decoration: none;
             transition: all 0.2s;
         }
@@ -711,7 +760,7 @@
             border-color: var(--primary);
             color: var(--primary);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
         }
 
         .company-link-logo {
@@ -725,8 +774,8 @@
         /* Document Manager Section */
         .doc-manager-section {
             padding: 30px 1.5rem;
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            border-bottom: 1px solid var(--border);
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .doc-manager-container {
@@ -752,7 +801,7 @@
         .doc-manager-title h3 {
             font-size: 1.1rem;
             margin: 0;
-            color: var(--dark);
+            color: var(--text-primary);
         }
 
         .upload-btn {
@@ -777,8 +826,8 @@
 
         /* GitHub Token Settings */
         .github-settings {
-            background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
-            border: 1px solid #fbbf24;
+            background: var(--bg-tertiary);
+            border: 1px solid rgba(251, 191, 36, 0.3);
             border-radius: 8px;
             padding: 1rem;
             margin-bottom: 1rem;
@@ -795,7 +844,7 @@
         .github-settings-header h4 {
             margin: 0;
             font-size: 0.9rem;
-            color: #92400e;
+            color: #fbbf24;
         }
 
         .github-settings-content {
@@ -809,11 +858,13 @@
         .github-settings input[type="password"] {
             width: 100%;
             padding: 0.5rem 0.75rem;
-            border: 1px solid #d97706;
+            border: 1px solid rgba(251, 191, 36, 0.4);
             border-radius: 6px;
             font-size: 0.85rem;
             margin-bottom: 0.5rem;
             box-sizing: border-box;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
         }
 
         .github-settings .btn-save-token {
@@ -833,7 +884,7 @@
 
         .github-settings p {
             font-size: 0.8rem;
-            color: #92400e;
+            color: #fbbf24;
             margin: 0 0 0.75rem 0;
             line-height: 1.4;
         }
@@ -846,13 +897,13 @@
         }
 
         .token-status.configured {
-            background: #dcfce7;
-            color: #166534;
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
         }
 
         .token-status.not-configured {
-            background: #fee2e2;
-            color: #991b1b;
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
         }
 
         .updating-indicator {
@@ -860,8 +911,8 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.5rem 1rem;
-            background: #dbeafe;
-            color: #1e40af;
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
             border-radius: 6px;
             font-size: 0.85rem;
         }
@@ -872,8 +923,8 @@
 
         /* Upload Section */
         .upload-section {
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-            border: 1px solid #22c55e;
+            background: var(--bg-tertiary);
+            border: 1px solid rgba(34, 197, 94, 0.3);
             border-radius: 8px;
             padding: 1rem;
             margin-bottom: 1rem;
@@ -889,7 +940,7 @@
         .upload-section-header h4 {
             margin: 0;
             font-size: 0.9rem;
-            color: #166534;
+            color: #4ade80;
         }
 
         .upload-section-content {
@@ -921,7 +972,7 @@
             display: block;
             font-size: 0.8rem;
             font-weight: 600;
-            color: #166534;
+            color: #4ade80;
             margin-bottom: 0.25rem;
         }
 
@@ -929,24 +980,28 @@
         .upload-form-group select {
             width: 100%;
             padding: 0.5rem 0.75rem;
-            border: 1px solid #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
             border-radius: 6px;
             font-size: 0.85rem;
             box-sizing: border-box;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
         }
 
         .upload-form-group input[type="file"] {
             width: 100%;
             padding: 0.4rem;
-            border: 2px dashed #22c55e;
+            border: 2px dashed rgba(34, 197, 94, 0.4);
             border-radius: 6px;
             font-size: 0.8rem;
-            background: white;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
             cursor: pointer;
         }
 
         .upload-form-group input[type="file"]:hover {
-            background: #f0fdf4;
+            background: var(--bg-tertiary);
+            border-color: #4ade80;
         }
 
         .btn-upload {
@@ -975,11 +1030,11 @@
         .upload-status {
             margin-top: 0.75rem;
             padding: 0.75rem;
-            background: white;
+            background: var(--bg-secondary);
             border-radius: 6px;
-            border: 1px solid #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
             font-size: 0.85rem;
-            color: #166534;
+            color: #4ade80;
             display: none;
         }
 
@@ -990,22 +1045,22 @@
         }
 
         .upload-status.error {
-            border-color: #ef4444;
-            color: #dc2626;
-            background: #fef2f2;
+            border-color: rgba(239, 68, 68, 0.4);
+            color: #f87171;
+            background: rgba(239, 68, 68, 0.1);
         }
 
         .upload-status.success {
-            border-color: #22c55e;
-            color: #166534;
-            background: #f0fdf4;
+            border-color: rgba(34, 197, 94, 0.4);
+            color: #4ade80;
+            background: rgba(34, 197, 94, 0.1);
         }
 
         /* Delete Button */
         .btn-delete {
-            background: #fee2e2;
-            color: #dc2626;
-            border: 1px solid #fecaca;
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
             padding: 0.4rem 0.6rem;
             border-radius: 6px;
             font-size: 0.75rem;
@@ -1020,9 +1075,9 @@
         }
 
         .btn-delete:disabled {
-            background: #f3f4f6;
-            color: #9ca3af;
-            border-color: #e5e7eb;
+            background: var(--bg-tertiary);
+            color: var(--text-muted);
+            border-color: var(--glass-border);
             cursor: not-allowed;
         }
 
@@ -1032,7 +1087,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1040,33 +1095,35 @@
         }
 
         .delete-confirm-dialog {
-            background: white;
+            background: var(--bg-secondary);
             padding: 1.5rem;
             border-radius: 12px;
             max-width: 400px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             text-align: center;
+            border: 1px solid var(--glass-border);
         }
 
         .delete-confirm-dialog h3 {
             margin: 0 0 0.5rem;
-            color: #dc2626;
+            color: #f87171;
         }
 
         .delete-confirm-dialog p {
             margin: 0 0 1rem;
-            color: #4b5563;
+            color: var(--text-secondary);
             font-size: 0.9rem;
         }
 
         .delete-confirm-dialog .filename {
-            background: #f3f4f6;
+            background: var(--bg-tertiary);
             padding: 0.5rem;
             border-radius: 6px;
             font-family: monospace;
             font-size: 0.85rem;
             margin-bottom: 1rem;
             word-break: break-all;
+            color: var(--text-primary);
         }
 
         .delete-confirm-buttons {
@@ -1085,12 +1142,12 @@
         }
 
         .btn-cancel {
-            background: #e5e7eb;
-            color: #374151;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
         }
 
         .btn-cancel:hover {
-            background: #d1d5db;
+            background: var(--glass-border);
         }
 
         .btn-confirm-delete {
@@ -1105,19 +1162,19 @@
 </head>
 <body>
     <!-- Password Protection Overlay -->
-    <div id="password-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); z-index: 99999; display: flex; align-items: center; justify-content: center;">
-        <div style="background: white; padding: 40px; border-radius: 12px; text-align: center; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
-            <i class="fas fa-lock" style="font-size: 48px; color: #2563eb; margin-bottom: 20px;"></i>
-            <h2 style="margin: 0 0 10px; color: #1a1a2e;">Private Page</h2>
-            <p style="color: #666; margin-bottom: 20px;">This page is restricted. Enter password to continue.</p>
+    <div id="password-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0a0a0f 0%, #111118 100%); z-index: 99999; display: flex; align-items: center; justify-content: center;">
+        <div style="background: #18181f; padding: 40px; border-radius: 12px; text-align: center; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);">
+            <i class="fas fa-lock" style="font-size: 48px; color: #3b82f6; margin-bottom: 20px;"></i>
+            <h2 style="margin: 0 0 10px; color: #ffffff;">Private Page</h2>
+            <p style="color: #a1a1aa; margin-bottom: 20px;">This page is restricted. Enter password to continue.</p>
             <input type="password" id="password-input" placeholder="Enter password"
-                   style="width: 100%; padding: 12px 16px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; margin-bottom: 15px; box-sizing: border-box;"
+                   style="width: 100%; padding: 12px 16px; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; font-size: 16px; margin-bottom: 15px; box-sizing: border-box; background: #111118; color: #ffffff;"
                    onkeypress="if(event.key==='Enter') checkPassword()">
             <button onclick="checkPassword()"
-                    style="width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: 600;">
+                    style="width: 100%; padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: 600;">
                 Unlock
             </button>
-            <p id="password-error" style="color: #ef4444; margin-top: 15px; display: none;">Incorrect password</p>
+            <p id="password-error" style="color: #f87171; margin-top: 15px; display: none;">Incorrect password</p>
         </div>
     </div>
 
