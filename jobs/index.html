@@ -480,6 +480,54 @@
             white-space: nowrap;
         }
 
+        .col-salary {
+            min-width: 100px;
+            white-space: nowrap;
+        }
+
+        .salary-text {
+            font-size: 0.75rem;
+            color: #22c55e;
+            font-weight: 600;
+        }
+
+        .salary-text.no-salary {
+            color: var(--text-muted);
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .col-worktype {
+            min-width: 70px;
+            white-space: nowrap;
+        }
+
+        .worktype-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .worktype-badge.remote {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+
+        .worktype-badge.hybrid {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+        }
+
+        .worktype-badge.onsite {
+            background: rgba(249, 115, 22, 0.15);
+            color: #f97316;
+        }
+
         .col-description {
             min-width: 200px;
             max-width: 300px;
@@ -2053,14 +2101,16 @@
                             <th class="col-company sortable" data-sort="company">Company <i class="fas fa-sort"></i></th>
                             <th class="col-location">Location</th>
                             <th class="col-distance sortable" data-sort="distance">Distance <i class="fas fa-sort"></i></th>
+                            <th class="col-worktype">Type</th>
                             <th class="col-date sortable" data-sort="date">Posted <i class="fas fa-sort"></i></th>
+                            <th class="col-salary sortable" data-sort="salary">Salary <i class="fas fa-sort"></i></th>
                             <th class="col-description">Description</th>
                             <th class="col-apply">Action</th>
                         </tr>
                     </thead>
                     <tbody id="jobs-tbody">
                         <tr class="loading-row">
-                            <td colspan="8">
+                            <td colspan="10">
                                 <span class="loading-spinner"></span>
                                 Loading jobs from company career portals...
                             </td>
@@ -2252,6 +2302,83 @@
             } catch (e) {
                 return 'View job details on company website';
             }
+        }
+
+        // Extract salary from job description
+        function extractSalary(text) {
+            if (!text) return null;
+
+            // Common salary patterns in job descriptions
+            const patterns = [
+                // $XXX,XXX - $XXX,XXX or $XXXK - $XXXK
+                /\$\s*([\d,]+)\s*[kK]?\s*[-–—to]+\s*\$?\s*([\d,]+)\s*[kK]?/gi,
+                // $XXX,XXX/year or $XXX,XXX per year
+                /\$\s*([\d,]+)\s*[kK]?\s*(?:\/|\s*per\s*)(?:year|yr|annual)/gi,
+                // $XXX - $XXX (USD/year context)
+                /(?:salary|compensation|pay|range)[:\s]*\$?\s*([\d,]+)\s*[kK]?\s*[-–—to]+\s*\$?\s*([\d,]+)\s*[kK]?/gi,
+                // XXXk - XXXk
+                /([\d]+)\s*[kK]\s*[-–—to]+\s*([\d]+)\s*[kK]/gi,
+                // Base salary: $XXX,XXX
+                /base\s*(?:salary)?[:\s]*\$\s*([\d,]+)\s*[kK]?/gi,
+            ];
+
+            for (const pattern of patterns) {
+                const match = pattern.exec(text);
+                if (match) {
+                    let low = match[1].replace(/,/g, '');
+                    let high = match[2] ? match[2].replace(/,/g, '') : null;
+
+                    // Convert to number
+                    low = parseInt(low);
+                    if (high) high = parseInt(high);
+
+                    // Handle K notation (e.g., 150K = 150000)
+                    if (low < 1000) low *= 1000;
+                    if (high && high < 1000) high *= 1000;
+
+                    // Validate reasonable salary range (50K - 1M)
+                    if (low >= 50000 && low <= 1000000) {
+                        if (high && high >= 50000 && high <= 1000000) {
+                            return { low, high, display: `$${Math.round(low/1000)}K - $${Math.round(high/1000)}K` };
+                        }
+                        return { low, high: null, display: `$${Math.round(low/1000)}K+` };
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        // Format salary for display
+        function formatSalary(salary) {
+            if (!salary) return '<span class="salary-text no-salary">—</span>';
+            return `<span class="salary-text">${salary.display}</span>`;
+        }
+
+        // Extract work type (Remote/Hybrid/Onsite) from location and description
+        function extractWorkType(location, description) {
+            const text = ((location || '') + ' ' + (description || '')).toLowerCase();
+
+            // Check for remote indicators
+            if (text.includes('remote') || text.includes('work from home') || text.includes('wfh')) {
+                if (text.includes('hybrid') || text.includes('flexible')) {
+                    return 'Hybrid';
+                }
+                return 'Remote';
+            }
+
+            // Check for hybrid
+            if (text.includes('hybrid') || text.includes('flexible location')) {
+                return 'Hybrid';
+            }
+
+            // Check for onsite indicators
+            if (text.includes('onsite') || text.includes('on-site') || text.includes('in-office') || text.includes('in office')) {
+                return 'Onsite';
+            }
+
+            // Default to Onsite if location is specified (most jobs without remote mention are onsite)
+            return 'Onsite';
         }
 
         // STRICT filter - only roles matching Sudhakar's 18+ years experience
@@ -3762,18 +3889,25 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 if (!response || !response.ok) return [];
                 const data = await response.json();
 
-                return (data.jobs || []).map(job => ({
-                    id: job.id,
-                    title: job.title || '',
-                    company: company.name,
-                    companyLogo: company.logo,
-                    location: job.location?.name || 'Remote',
-                    department: job.departments?.[0]?.name || '',
-                    description: stripHtml(job.content || ''),
-                    url: job.absolute_url || '',
-                    postedDate: new Date(job.updated_at || Date.now()),
-                    source: 'greenhouse'
-                }));
+                return (data.jobs || []).map(job => {
+                    const description = stripHtml(job.content || '');
+                    const rawContent = job.content || '';
+                    const location = job.location?.name || 'Remote';
+                    return {
+                        id: job.id,
+                        title: job.title || '',
+                        company: company.name,
+                        companyLogo: company.logo,
+                        location: location,
+                        department: job.departments?.[0]?.name || '',
+                        description: description,
+                        salary: extractSalary(rawContent),
+                        workType: extractWorkType(location, rawContent),
+                        url: job.absolute_url || '',
+                        postedDate: new Date(job.updated_at || Date.now()),
+                        source: 'greenhouse'
+                    };
+                });
             } catch (error) {
                 return [];
             }
@@ -3787,18 +3921,25 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 const jobs = await response.json();
                 if (!Array.isArray(jobs)) return [];
 
-                return jobs.map(job => ({
-                    id: job.id,
-                    title: job.text || '',
-                    company: company.name,
-                    companyLogo: company.logo,
-                    location: job.categories?.location || 'Remote',
-                    department: job.categories?.team || job.categories?.department || '',
-                    description: stripHtml(job.descriptionPlain || job.description || ''),
-                    url: job.hostedUrl || '',
-                    postedDate: new Date(job.createdAt || Date.now()),
-                    source: 'lever'
-                }));
+                return jobs.map(job => {
+                    const description = stripHtml(job.descriptionPlain || job.description || '');
+                    const rawContent = job.descriptionPlain || job.description || '';
+                    const location = job.categories?.location || 'Remote';
+                    return {
+                        id: job.id,
+                        title: job.text || '',
+                        company: company.name,
+                        companyLogo: company.logo,
+                        location: location,
+                        department: job.categories?.team || job.categories?.department || '',
+                        description: description,
+                        salary: extractSalary(rawContent),
+                        workType: extractWorkType(location, rawContent),
+                        url: job.hostedUrl || '',
+                        postedDate: new Date(job.createdAt || Date.now()),
+                        source: 'lever'
+                    };
+                });
             } catch (error) {
                 return [];
             }
@@ -3957,7 +4098,7 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             if (pageJobs.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="8">
+                        <td colspan="10">
                             <div class="empty-state">
                                 <i class="fas fa-search"></i>
                                 <h3>No jobs found</h3>
@@ -3998,8 +4139,14 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                         <td class="col-distance">
                             <span class="distance-badge priority-${getDistancePriority(job.location)}">${getDistanceLabel(getDistancePriority(job.location))}</span>
                         </td>
+                        <td class="col-worktype">
+                            <span class="worktype-badge ${(job.workType || 'onsite').toLowerCase()}">${job.workType || 'Onsite'}</span>
+                        </td>
                         <td class="col-date">
                             <span class="${dateClass}">${dateText}</span>
+                        </td>
+                        <td class="col-salary">
+                            ${formatSalary(job.salary)}
                         </td>
                         <td class="col-description">
                             <span class="description-text">${escapeHtml(generateJobSummary(job))}</span>
@@ -4309,6 +4456,12 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                         return b.postedDate - a.postedDate;
                     }
                     if (sortKey === 'date') return b.postedDate - a.postedDate;
+                    if (sortKey === 'salary') {
+                        // Sort by salary (highest first), jobs without salary go to end
+                        const salaryA = a.salary?.high || a.salary?.low || 0;
+                        const salaryB = b.salary?.high || b.salary?.low || 0;
+                        return salaryB - salaryA;
+                    }
                     if (sortKey === 'title') return a.title.localeCompare(b.title);
                     if (sortKey === 'company') return a.company.localeCompare(b.company);
                     return 0;
