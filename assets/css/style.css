@@ -1,16 +1,16 @@
 /* AI-Focused Portfolio Design System - Futuristic Theme */
 :root {
-    /* Default: Dark AI Theme Colors */
-    --bg-primary: #030712;
-    --bg-secondary: #0f172a;
-    --bg-tertiary: #1e293b;
-    --bg-card: rgba(15, 23, 42, 0.6);
-    --bg-card-hover: rgba(30, 41, 59, 0.8);
+    /* Default: Dark AI Theme Colors - Optimized for readability */
+    --bg-primary: #0a0f1a;
+    --bg-secondary: #111827;
+    --bg-tertiary: #1f2937;
+    --bg-card: rgba(17, 24, 39, 0.7);
+    --bg-card-hover: rgba(31, 41, 55, 0.85);
 
-    /* Text Colors */
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
+    /* Text Colors - Higher contrast for readability */
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
 
     /* AI Accent Colors - Electric & Futuristic */
     --accent-blue: #0ea5e9;
@@ -34,10 +34,10 @@
                      radial-gradient(at 80% 50%, rgba(244, 114, 182, 0.08) 0px, transparent 50%),
                      radial-gradient(at 0% 100%, rgba(129, 140, 248, 0.1) 0px, transparent 50%);
 
-    /* Glass Effects - Enhanced for AI look */
-    --glass-bg: rgba(15, 23, 42, 0.6);
-    --glass-border: rgba(148, 163, 184, 0.1);
-    --glass-border-hover: rgba(14, 165, 233, 0.3);
+    /* Glass Effects - Balanced for readability */
+    --glass-bg: rgba(17, 24, 39, 0.75);
+    --glass-border: rgba(148, 163, 184, 0.15);
+    --glass-border-hover: rgba(14, 165, 233, 0.4);
 
     /* Glow Effects - Stronger for AI emphasis */
     --glow-blue: 0 0 30px rgba(14, 165, 233, 0.4), 0 0 60px rgba(14, 165, 233, 0.2);
@@ -73,37 +73,49 @@
     --nav-bg: rgba(3, 7, 18, 0.85);
 }
 
-/* Light Theme - Clean AI */
+/* Light Theme - Clean AI with High Contrast */
 [data-theme="light"] {
     --bg-primary: #f8fafc;
     --bg-secondary: #ffffff;
     --bg-tertiary: #f1f5f9;
-    --bg-card: rgba(255, 255, 255, 0.8);
-    --bg-card-hover: rgba(255, 255, 255, 0.95);
+    --bg-card: rgba(255, 255, 255, 0.92);
+    --bg-card-hover: rgba(255, 255, 255, 0.98);
 
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --text-muted: #94a3b8;
+    /* Higher contrast text for light mode */
+    --text-primary: #0a0f1a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
 
-    --glass-bg: rgba(255, 255, 255, 0.8);
-    --glass-border: rgba(0, 0, 0, 0.08);
-    --glass-border-hover: rgba(14, 165, 233, 0.4);
+    /* Darker accent for light mode readability */
+    --accent-blue: #0284c7;
+    --accent-purple: #9333ea;
+    --accent-cyan: #0891b2;
 
-    --gradient-radial: radial-gradient(ellipse at center, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
-    --gradient-mesh: radial-gradient(at 40% 20%, rgba(14, 165, 233, 0.08) 0px, transparent 50%),
-                     radial-gradient(at 80% 0%, rgba(168, 85, 247, 0.06) 0px, transparent 50%),
-                     radial-gradient(at 0% 50%, rgba(34, 211, 238, 0.05) 0px, transparent 50%);
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --glass-border-hover: rgba(2, 132, 199, 0.5);
 
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.12);
+    --gradient-radial: radial-gradient(ellipse at center, rgba(14, 165, 233, 0.1) 0%, transparent 70%);
+    --gradient-mesh: radial-gradient(at 40% 20%, rgba(14, 165, 233, 0.12) 0px, transparent 50%),
+                     radial-gradient(at 80% 0%, rgba(168, 85, 247, 0.08) 0px, transparent 50%),
+                     radial-gradient(at 0% 50%, rgba(34, 211, 238, 0.06) 0px, transparent 50%);
 
-    --glow-blue: 0 0 30px rgba(14, 165, 233, 0.2);
-    --glow-purple: 0 0 30px rgba(168, 85, 247, 0.2);
-    --glow-ai: 0 0 20px rgba(129, 140, 248, 0.3);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
+    --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.15);
 
-    --nav-bg: rgba(255, 255, 255, 0.9);
+    --glow-blue: 0 0 30px rgba(2, 132, 199, 0.25);
+    --glow-purple: 0 0 30px rgba(147, 51, 234, 0.25);
+    --glow-ai: 0 0 20px rgba(99, 102, 241, 0.3);
+
+    --nav-bg: rgba(255, 255, 255, 0.95);
+}
+
+/* Light mode neural background - darker particles */
+[data-theme="light"] #neural-bg {
+    opacity: 0.5;
+    filter: brightness(0.7) saturate(1.2);
 }
 
 /* ===== AI ANIMATIONS ===== */
@@ -146,6 +158,25 @@
     0%, 100% { border-color: var(--accent-cyan); }
     33% { border-color: var(--accent-blue); }
     66% { border-color: var(--accent-purple); }
+}
+
+/* ===== NEURAL NETWORK BACKGROUND ===== */
+#neural-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+/* Reduce neural bg intensity on mobile */
+@media (max-width: 768px) {
+    #neural-bg {
+        opacity: 0.4;
+    }
 }
 
 /* Animation utility classes */
@@ -1631,6 +1662,48 @@ footer p {
     .btn {
         padding: 0.625rem 1.25rem;
         font-size: 0.8rem;
+    }
+}
+
+/* ===== MOBILE READABILITY IMPROVEMENTS (Dark Mode) ===== */
+@media (max-width: 768px) {
+    :root {
+        /* Lighter backgrounds for better mobile readability */
+        --bg-primary: #0f1419;
+        --bg-secondary: #1a2332;
+        --bg-tertiary: #243044;
+        --bg-card: rgba(26, 35, 50, 0.9);
+
+        /* Brighter text for mobile screens */
+        --text-primary: #ffffff;
+        --text-secondary: #e2e8f0;
+        --text-muted: #b8c5d6;
+
+        /* Stronger glass for readability */
+        --glass-bg: rgba(26, 35, 50, 0.92);
+        --glass-border: rgba(148, 163, 184, 0.2);
+    }
+
+    /* Light mode mobile overrides */
+    [data-theme="light"] {
+        --bg-card: rgba(255, 255, 255, 0.95);
+        --text-primary: #000000;
+        --text-secondary: #1e293b;
+        --text-muted: #475569;
+        --glass-bg: rgba(255, 255, 255, 0.95);
+        --glass-border: rgba(0, 0, 0, 0.12);
+    }
+
+    /* Reduce animation intensity on mobile for performance */
+    .gradient-text {
+        animation: none;
+        background-size: 100% 100%;
+    }
+
+    /* Better contrast for cards and sections */
+    .card, .project-card, .resume-card {
+        background: var(--bg-card);
+        backdrop-filter: none;
     }
 }
 

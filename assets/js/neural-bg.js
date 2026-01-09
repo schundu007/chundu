@@ -28,7 +28,10 @@ class NeuralNetwork {
     }
 
     createParticles() {
-        const numberOfParticles = Math.floor((this.canvas.width * this.canvas.height) / 15000);
+        // Fewer particles on mobile for performance and readability
+        const isMobile = window.innerWidth < 768;
+        const divisor = isMobile ? 25000 : 15000;
+        const numberOfParticles = Math.floor((this.canvas.width * this.canvas.height) / divisor);
         this.particles = [];
 
         for (let i = 0; i < numberOfParticles; i++) {
@@ -37,19 +40,33 @@ class NeuralNetwork {
                 y: Math.random() * this.canvas.height,
                 vx: (Math.random() - 0.5) * 0.5,
                 vy: (Math.random() - 0.5) * 0.5,
-                radius: Math.random() * 2 + 1,
+                radius: isMobile ? Math.random() * 1.5 + 0.5 : Math.random() * 2 + 1,
                 color: this.getRandomColor()
             });
         }
     }
 
     getRandomColor() {
+        // Lower opacity on mobile for better text readability
+        const isMobile = window.innerWidth < 768;
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+
+        // Adjust opacity based on device and theme
+        let opacity, opacityLow;
+        if (isMobile) {
+            opacity = isLight ? 0.6 : 0.5;
+            opacityLow = isLight ? 0.5 : 0.4;
+        } else {
+            opacity = isLight ? 0.9 : 0.8;
+            opacityLow = isLight ? 0.7 : 0.6;
+        }
+
         const colors = [
-            'rgba(14, 165, 233, 0.8)',  // cyan
-            'rgba(168, 85, 247, 0.8)',  // purple
-            'rgba(34, 211, 238, 0.8)',  // light cyan
-            'rgba(129, 140, 248, 0.8)', // indigo
-            'rgba(244, 114, 182, 0.6)'  // pink
+            `rgba(14, 165, 233, ${opacity})`,  // cyan
+            `rgba(168, 85, 247, ${opacity})`,  // purple
+            `rgba(34, 211, 238, ${opacity})`,  // light cyan
+            `rgba(129, 140, 248, ${opacity})`, // indigo
+            `rgba(244, 114, 182, ${opacityLow})`  // pink
         ];
         return colors[Math.floor(Math.random() * colors.length)];
     }
@@ -74,17 +91,22 @@ class NeuralNetwork {
     }
 
     drawConnections() {
+        const isMobile = window.innerWidth < 768;
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        const maxDistance = isMobile ? 100 : 120;
+        const maxOpacity = isMobile ? (isLight ? 0.4 : 0.3) : (isLight ? 0.6 : 0.5);
+
         for (let i = 0; i < this.particles.length; i++) {
             for (let j = i + 1; j < this.particles.length; j++) {
                 const dx = this.particles[i].x - this.particles[j].x;
                 const dy = this.particles[i].y - this.particles[j].y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
 
-                if (distance < 120) {
-                    const opacity = (1 - distance / 120) * 0.5;
+                if (distance < maxDistance) {
+                    const opacity = (1 - distance / maxDistance) * maxOpacity;
                     this.ctx.beginPath();
                     this.ctx.strokeStyle = `rgba(14, 165, 233, ${opacity})`;
-                    this.ctx.lineWidth = 0.5;
+                    this.ctx.lineWidth = isLight ? 0.8 : 0.5;
                     this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
                     this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
                     this.ctx.stroke();

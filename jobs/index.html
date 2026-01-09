@@ -16,7 +16,9 @@
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Theme JS (load early to prevent flash) -->
+    <script src="../assets/js/theme.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <!-- docx library for Word document generation -->
@@ -1161,6 +1163,9 @@
     </style>
 </head>
 <body>
+    <!-- Neural Network Background -->
+    <canvas id="neural-bg"></canvas>
+
     <!-- Password Protection Overlay -->
     <div id="password-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0a0a0f 0%, #111118 100%); z-index: 99999; display: flex; align-items: center; justify-content: center;">
         <div style="background: #18181f; padding: 40px; border-radius: 12px; text-align: center; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);">
@@ -1333,210 +1338,286 @@
             </h3>
             <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center;">
                 <!-- Microsoft -->
-                <a href="https://jobs.careers.microsoft.com/global/en/search?q=cloud%20architect&l=en_us&pg=1&pgSz=20&o=Recent" target="_blank" class="company-link-btn">
+                <a href="https://jobs.careers.microsoft.com/global/en/search?q=staff%20devops%20engineer&l=en_us&pg=1&pgSz=20&o=Recent" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/microsoft.png" alt="Microsoft" class="company-link-logo">
-                    MS - Cloud Architect
+                    MS - Staff DevOps
+                </a>
+                <a href="https://jobs.careers.microsoft.com/global/en/search?q=devops%20engineer&l=en_us&pg=1&pgSz=20&o=Recent" target="_blank" class="company-link-btn">
+                    <img src="../assets/images/logos/microsoft.png" alt="Microsoft" class="company-link-logo">
+                    MS - DevOps
                 </a>
                 <a href="https://jobs.careers.microsoft.com/global/en/search?q=site%20reliability%20engineer&l=en_us&pg=1&pgSz=20&o=Recent" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/microsoft.png" alt="Microsoft" class="company-link-logo">
                     MS - SRE
                 </a>
+                <a href="https://jobs.careers.microsoft.com/global/en/search?q=infrastructure%20engineer&l=en_us&pg=1&pgSz=20&o=Recent" target="_blank" class="company-link-btn">
+                    <img src="../assets/images/logos/microsoft.png" alt="Microsoft" class="company-link-logo">
+                    MS - Infra
+                </a>
                 <!-- Amazon/AWS -->
-                <a href="https://amazon.jobs/en/search?offset=0&result_limit=10&sort=recent&country%5B%5D=USA&base_query=cloud%20architect" target="_blank" class="company-link-btn">
+                <a href="https://amazon.jobs/en/search?offset=0&result_limit=10&sort=recent&country%5B%5D=USA&base_query=devops%20engineer" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/amazon.png" alt="AWS" class="company-link-logo">
-                    AWS - Cloud Architect
+                    AWS - DevOps
                 </a>
                 <a href="https://amazon.jobs/en/search?offset=0&result_limit=10&sort=recent&country%5B%5D=USA&base_query=site%20reliability%20engineer" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/amazon.png" alt="AWS" class="company-link-logo">
                     AWS - SRE
                 </a>
-                <!-- Google -->
-                <a href="https://www.google.com/about/careers/applications/jobs/results?location=United%20States&q=cloud%20architect" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/google.png" alt="Google" class="company-link-logo">
-                    Google - Cloud Architect
+                <a href="https://amazon.jobs/en/search?offset=0&result_limit=10&sort=recent&country%5B%5D=USA&base_query=infrastructure%20engineer" target="_blank" class="company-link-btn">
+                    <img src="../assets/images/logos/amazon.png" alt="AWS" class="company-link-logo">
+                    AWS - Infra
                 </a>
-                <a href="https://www.google.com/about/careers/applications/jobs/results?location=United%20States&q=site%20reliability%20engineer" target="_blank" class="company-link-btn">
+                <a href="https://amazon.jobs/en/search?offset=0&result_limit=10&sort=recent&country%5B%5D=USA&base_query=forward%20deployed%20engineer" target="_blank" class="company-link-btn">
+                    <img src="../assets/images/logos/amazon.png" alt="AWS" class="company-link-logo">
+                    AWS - Forward Deploy
+                </a>
+                <!-- Google -->
+                <a href="https://www.google.com/about/careers/applications/jobs/results/?q=devops%20engineer&location=United%20States" target="_blank" class="company-link-btn">
+                    <img src="../assets/images/logos/google.png" alt="Google" class="company-link-logo">
+                    Google - DevOps
+                </a>
+                <a href="https://www.google.com/about/careers/applications/jobs/results/?q=site%20reliability%20engineer&location=United%20States" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/google.png" alt="Google" class="company-link-logo">
                     Google - SRE
                 </a>
+                <a href="https://www.google.com/about/careers/applications/jobs/results/?q=infrastructure%20engineer&location=United%20States" target="_blank" class="company-link-btn">
+                    <img src="../assets/images/logos/google.png" alt="Google" class="company-link-logo">
+                    Google - Infra
+                </a>
                 <!-- NVIDIA -->
+                <a href="https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite?locationCountry=bc33aa3152ec42d4995f4791a106ed09&q=devops%20engineer" target="_blank" class="company-link-btn">
+                    <img src="../assets/images/logos/nvidia.png" alt="NVIDIA" class="company-link-logo">
+                    NVIDIA - DevOps
+                </a>
                 <a href="https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite?locationCountry=bc33aa3152ec42d4995f4791a106ed09&q=infrastructure%20engineer" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/nvidia.png" alt="NVIDIA" class="company-link-logo">
-                    NVIDIA - Infrastructure
+                    NVIDIA - Infra
                 </a>
-                <a href="https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite?locationCountry=bc33aa3152ec42d4995f4791a106ed09&q=site%20reliability%20engineer" target="_blank" class="company-link-btn">
+                <a href="https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite?locationCountry=bc33aa3152ec42d4995f4791a106ed09&q=ML%20infrastructure" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/nvidia.png" alt="NVIDIA" class="company-link-logo">
-                    NVIDIA - SRE
+                    NVIDIA - ML Infra
                 </a>
                 <!-- TikTok -->
-                <a href="https://lifeattiktok.com/search?keyword=infrastructure%20engineer&location_code_list=CT_243" target="_blank" class="company-link-btn" style="background: #000; color: #fff;">
+                <a href="https://careers.tiktok.com/position?keywords=devops%20engineer&category=&location=CT_243&project=&type=&job_hot_flag=&current=1&limit=10" target="_blank" class="company-link-btn" style="background: #000; color: #fff;">
                     <img src="../assets/images/logos/tiktok.png" alt="TikTok" class="company-link-logo">
-                    TikTok - Infrastructure
+                    TikTok - DevOps
                 </a>
-                <a href="https://lifeattiktok.com/search?keyword=site%20reliability%20engineer&location_code_list=CT_243" target="_blank" class="company-link-btn" style="background: #000; color: #fff;">
+                <a href="https://careers.tiktok.com/position?keywords=site%20reliability&category=&location=CT_243&project=&type=&job_hot_flag=&current=1&limit=10" target="_blank" class="company-link-btn" style="background: #000; color: #fff;">
                     <img src="../assets/images/logos/tiktok.png" alt="TikTok" class="company-link-logo">
                     TikTok - SRE
                 </a>
-                <a href="https://lifeattiktok.com/search?keyword=platform%20engineer&location_code_list=CT_243" target="_blank" class="company-link-btn" style="background: #000; color: #fff;">
+                <a href="https://careers.tiktok.com/position?keywords=infrastructure%20engineer&category=&location=CT_243&project=&type=&job_hot_flag=&current=1&limit=10" target="_blank" class="company-link-btn" style="background: #000; color: #fff;">
                     <img src="../assets/images/logos/tiktok.png" alt="TikTok" class="company-link-logo">
-                    TikTok - Platform
+                    TikTok - Infra
+                </a>
+                <a href="https://careers.tiktok.com/position?keywords=ML%20infrastructure&category=&location=CT_243&project=&type=&job_hot_flag=&current=1&limit=10" target="_blank" class="company-link-btn" style="background: #000; color: #fff;">
+                    <img src="../assets/images/logos/tiktok.png" alt="TikTok" class="company-link-logo">
+                    TikTok - ML Infra
                 </a>
                 <!-- ByteDance -->
-                <a href="https://jobs.bytedance.com/en/position?keywords=&category=&location=&project=&type=&job_hot_flag=&current=1&limit=10&functionCategory=6704215862603155720" target="_blank" class="company-link-btn">
+                <a href="https://jobs.bytedance.com/en/position?keywords=devops&category=&location=&project=&type=&job_hot_flag=&current=1&limit=10" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/bytedance.png" alt="ByteDance" class="company-link-logo">
-                    ByteDance - Engineering
+                    ByteDance - DevOps
                 </a>
-                <a href="https://jobs.bytedance.com/en/position?keywords=&category=&location=&project=&type=&job_hot_flag=&current=1&limit=10" target="_blank" class="company-link-btn">
+                <a href="https://jobs.bytedance.com/en/position?keywords=infrastructure%20engineer&category=&location=&project=&type=&job_hot_flag=&current=1&limit=10" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/bytedance.png" alt="ByteDance" class="company-link-logo">
-                    ByteDance - All Jobs
+                    ByteDance - Infra
+                </a>
+                <a href="https://jobs.bytedance.com/en/position?keywords=site%20reliability&category=&location=&project=&type=&job_hot_flag=&current=1&limit=10" target="_blank" class="company-link-btn">
+                    <img src="../assets/images/logos/bytedance.png" alt="ByteDance" class="company-link-logo">
+                    ByteDance - SRE
                 </a>
                 <!-- OpenAI -->
                 <a href="https://jobs.ashbyhq.com/openai?departmentId=4fdc3b37-1cd3-4e15-8bb4-52f24c63a16a" target="_blank" class="company-link-btn" style="background: #10a37f; color: #fff;">
                     <img src="../assets/images/logos/openai.png" alt="OpenAI" class="company-link-logo">
-                    OpenAI - Engineering
+                    OpenAI - Platform
                 </a>
                 <a href="https://jobs.ashbyhq.com/openai" target="_blank" class="company-link-btn" style="background: #10a37f; color: #fff;">
                     <img src="../assets/images/logos/openai.png" alt="OpenAI" class="company-link-logo">
                     OpenAI - All Jobs
                 </a>
-                <!-- AI Startups -->
+                <!-- AI/ML Companies -->
                 <a href="https://scale.com/careers#open-roles" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/scaleai.png" alt="Scale AI" class="company-link-logo">
-                    Scale AI
+                    Scale AI - Infra
                 </a>
                 <a href="https://www.amd.com/en/corporate/careers" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/amd.png" alt="AMD" class="company-link-logo">
-                    AMD
+                    AMD - DevOps
                 </a>
                 <a href="https://groq.com/careers/" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/groq.png" alt="Groq" class="company-link-logo">
-                    Groq
+                    Groq - ML Infra
                 </a>
                 <a href="https://cerebras.ai/careers/" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/cerebras.png" alt="Cerebras" class="company-link-logo">
-                    Cerebras
+                    Cerebras - Infra
                 </a>
                 <!-- Finance -->
-                <a href="https://www.capitalonecareers.com/search-jobs?k=cloud%20engineer&orgIds=1997" target="_blank" class="company-link-btn">
+                <a href="https://www.capitalonecareers.com/search-jobs?k=devops%20engineer" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/capitalone.png" alt="Capital One" class="company-link-logo">
-                    Capital One
+                    Capital One - DevOps
                 </a>
-                <a href="https://jpmc.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/requisitions?keyword=cloud%20architect" target="_blank" class="company-link-btn">
+                <a href="https://www.capitalonecareers.com/search-jobs?k=site%20reliability" target="_blank" class="company-link-btn">
+                    <img src="../assets/images/logos/capitalone.png" alt="Capital One" class="company-link-logo">
+                    Capital One - SRE
+                </a>
+                <a href="https://www.capitalonecareers.com/search-jobs?k=infrastructure%20engineer" target="_blank" class="company-link-btn">
+                    <img src="../assets/images/logos/capitalone.png" alt="Capital One" class="company-link-logo">
+                    Capital One - Infra
+                </a>
+                <a href="https://jpmorgan.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/requisitions?keyword=devops" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/jpmorgan.png" alt="JPMorgan" class="company-link-logo">
-                    JPMorgan - Cloud
+                    JPMorgan - DevOps
                 </a>
-                <a href="https://jpmc.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/requisitions?keyword=site%20reliability%20engineer" target="_blank" class="company-link-btn">
+                <a href="https://jpmorgan.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/requisitions?keyword=site%20reliability" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/jpmorgan.png" alt="JPMorgan" class="company-link-logo">
                     JPMorgan - SRE
                 </a>
-                <a href="https://careers.smartrecruiters.com/Visa?search=cloud%20engineer" target="_blank" class="company-link-btn">
+                <a href="https://usa.visa.com/careers/job-search.html?q=devops%20engineer" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/visa.png" alt="Visa" class="company-link-logo">
-                    Visa
+                    Visa - DevOps
+                </a>
+                <a href="https://usa.visa.com/careers/job-search.html?q=site%20reliability" target="_blank" class="company-link-btn">
+                    <img src="../assets/images/logos/visa.png" alt="Visa" class="company-link-logo">
+                    Visa - SRE
                 </a>
                 <!-- Retail -->
-                <a href="https://corporate.target.com/careers/corporate" target="_blank" class="company-link-btn">
+                <a href="https://jobs.target.com/search-jobs?k=devops%20engineer" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/target.png" alt="Target" class="company-link-logo">
-                    Target Tech
+                    Target - DevOps
                 </a>
-                <a href="https://walmart.wd5.myworkdayjobs.com/WalmartExternal?q=cloud%20architect" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/walmart.png" alt="Walmart" class="company-link-logo">
-                    Walmart - Cloud
+                <a href="https://jobs.target.com/search-jobs?k=infrastructure%20engineer" target="_blank" class="company-link-btn">
+                    <img src="../assets/images/logos/target.png" alt="Target" class="company-link-logo">
+                    Target - Infra
                 </a>
-                <a href="https://walmart.wd5.myworkdayjobs.com/WalmartExternal?q=platform%20engineer" target="_blank" class="company-link-btn">
+                <a href="https://careers.walmart.com/results?q=devops%20engineer&page=1&sort=date" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/walmart.png" alt="Walmart" class="company-link-logo">
-                    Walmart - Platform
+                    Walmart - DevOps
+                </a>
+                <a href="https://careers.walmart.com/results?q=site%20reliability&page=1&sort=date" target="_blank" class="company-link-btn">
+                    <img src="../assets/images/logos/walmart.png" alt="Walmart" class="company-link-logo">
+                    Walmart - SRE
                 </a>
                 <!-- Tech Giants -->
-                <a href="https://salesforce.wd12.myworkdayjobs.com/External_Career_Site" target="_blank" class="company-link-btn">
+                <a href="https://careers.salesforce.com/en/jobs/?search=devops%20engineer&country=United%20States" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/salesforce.png" alt="Salesforce" class="company-link-logo">
-                    Salesforce
+                    Salesforce - DevOps
                 </a>
-                <a href="https://www.metacareers.com/jobs?q=infrastructure%20engineer&locations[0]=United%20States" target="_blank" class="company-link-btn">
+                <a href="https://careers.salesforce.com/en/jobs/?search=site%20reliability&country=United%20States" target="_blank" class="company-link-btn">
+                    <img src="../assets/images/logos/salesforce.png" alt="Salesforce" class="company-link-logo">
+                    Salesforce - SRE
+                </a>
+                <a href="https://www.metacareers.com/jobs/?q=devops%20engineer&offices[0]=United%20States" target="_blank" class="company-link-btn">
+                    <img src="../assets/images/logos/meta.png" alt="Meta" class="company-link-logo">
+                    Meta - DevOps
+                </a>
+                <a href="https://www.metacareers.com/jobs/?q=infrastructure%20engineer&offices[0]=United%20States" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/meta.png" alt="Meta" class="company-link-logo">
                     Meta - Infra
                 </a>
-                <a href="https://www.metacareers.com/jobs?q=production%20engineer&locations[0]=United%20States" target="_blank" class="company-link-btn">
+                <a href="https://www.metacareers.com/jobs/?q=production%20engineer&offices[0]=United%20States" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/meta.png" alt="Meta" class="company-link-logo">
                     Meta - Prod Eng
                 </a>
-                <a href="https://jobs.apple.com/en-us/search?search=cloud%20engineer&sort=newest" target="_blank" class="company-link-btn">
+                <a href="https://jobs.apple.com/en-us/search?search=devops%20engineer&sort=newest" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/apple.png" alt="Apple" class="company-link-logo">
-                    Apple - Cloud
+                    Apple - DevOps
                 </a>
-                <a href="https://jobs.apple.com/en-us/search?search=site%20reliability%20engineer&sort=newest" target="_blank" class="company-link-btn">
+                <a href="https://jobs.apple.com/en-us/search?search=site%20reliability&sort=newest" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/apple.png" alt="Apple" class="company-link-logo">
                     Apple - SRE
                 </a>
+                <a href="https://jobs.apple.com/en-us/search?search=infrastructure%20engineer&sort=newest" target="_blank" class="company-link-btn">
+                    <img src="../assets/images/logos/apple.png" alt="Apple" class="company-link-logo">
+                    Apple - Infra
+                </a>
                 <!-- Enterprise -->
-                <a href="https://jobs.intuit.com/search-jobs?k=cloud%20engineer" target="_blank" class="company-link-btn">
+                <a href="https://jobs.intuit.com/search-jobs?k=devops%20engineer&l=United%20States" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/intuit.png" alt="Intuit" class="company-link-logo">
-                    Intuit
+                    Intuit - DevOps
                 </a>
-                <a href="https://kla.wd1.myworkdayjobs.com/Search?q=cloud%20engineer" target="_blank" class="company-link-btn">
+                <a href="https://jobs.intuit.com/search-jobs?k=site%20reliability&l=United%20States" target="_blank" class="company-link-btn">
+                    <img src="../assets/images/logos/intuit.png" alt="Intuit" class="company-link-logo">
+                    Intuit - SRE
+                </a>
+                <a href="https://jobs.intuit.com/search-jobs?k=infrastructure%20engineer&l=United%20States" target="_blank" class="company-link-btn">
+                    <img src="../assets/images/logos/intuit.png" alt="Intuit" class="company-link-logo">
+                    Intuit - Infra
+                </a>
+                <a href="https://kla.wd1.myworkdayjobs.com/Search?q=devops" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/kla.png" alt="KLA" class="company-link-logo">
-                    KLA
+                    KLA - DevOps
                 </a>
-                <a href="https://careers.oracle.com/jobs/#en/sites/jobsearch/requisitions?keyword=cloud%20architect" target="_blank" class="company-link-btn">
+                <a href="https://careers.oracle.com/jobs/#en/sites/jobsearch/requisitions?keyword=devops%20engineer&location=United%20States" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/oracle.png" alt="Oracle" class="company-link-logo">
-                    Oracle - Cloud
+                    Oracle - DevOps
                 </a>
-                <a href="https://careers.oracle.com/jobs/#en/sites/jobsearch/requisitions?keyword=site%20reliability%20engineer" target="_blank" class="company-link-btn">
+                <a href="https://careers.oracle.com/jobs/#en/sites/jobsearch/requisitions?keyword=site%20reliability&location=United%20States" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/oracle.png" alt="Oracle" class="company-link-logo">
                     Oracle - SRE
                 </a>
-                <a href="https://www.ibm.com/careers/search?field_keyword_08[0]=Cloud" target="_blank" class="company-link-btn">
+                <a href="https://www.ibm.com/careers/search?field_keyword_18[0]=DevOps" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/ibm.png" alt="IBM" class="company-link-logo">
-                    IBM - Cloud
+                    IBM - DevOps
                 </a>
-                <a href="https://jobs.cisco.com/jobs/SearchJobs/cloud%20architect?listFilterMode=1&21178--3=274" target="_blank" class="company-link-btn">
+                <a href="https://www.ibm.com/careers/search?field_keyword_18[0]=Site%20Reliability" target="_blank" class="company-link-btn">
+                    <img src="../assets/images/logos/ibm.png" alt="IBM" class="company-link-logo">
+                    IBM - SRE
+                </a>
+                <a href="https://jobs.cisco.com/jobs/SearchJobs/devops%20engineer?21178=%5B169482%5D&21178_format=6020" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/cisco.png" alt="Cisco" class="company-link-logo">
-                    Cisco - Cloud
+                    Cisco - DevOps
                 </a>
-                <a href="https://jobs.cisco.com/jobs/SearchJobs/SRE?listFilterMode=1&21178--3=274" target="_blank" class="company-link-btn">
+                <a href="https://jobs.cisco.com/jobs/SearchJobs/site%20reliability?21178=%5B169482%5D&21178_format=6020" target="_blank" class="company-link-btn">
                     <img src="../assets/images/logos/cisco.png" alt="Cisco" class="company-link-logo">
                     Cisco - SRE
                 </a>
                 <!-- LinkedIn & Adobe Careers -->
-                <a href="https://www.linkedin.com/jobs/linkedin-jobs?keywords=infrastructure&location=United%20States" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
+                <a href="https://careers.linkedin.com/jobs?keywords=devops&location=United%20States" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
                     <i class="fab fa-linkedin"></i>
-                    LinkedIn - Infra
+                    LinkedIn - DevOps
                 </a>
-                <a href="https://www.linkedin.com/jobs/linkedin-jobs?keywords=SRE&location=United%20States" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
+                <a href="https://careers.linkedin.com/jobs?keywords=site%20reliability&location=United%20States" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
                     <i class="fab fa-linkedin"></i>
                     LinkedIn - SRE
                 </a>
-                <a href="https://careers.adobe.com/us/en/search-results?keywords=cloud%20architect" target="_blank" class="company-link-btn" style="background: #ff0000; color: white;">
+                <a href="https://careers.adobe.com/us/en/search-results?keywords=devops%20engineer" target="_blank" class="company-link-btn" style="background: #ff0000; color: white;">
                     <i class="fab fa-adobe"></i>
-                    Adobe - Cloud
+                    Adobe - DevOps
                 </a>
-                <a href="https://careers.adobe.com/us/en/search-results?keywords=SRE" target="_blank" class="company-link-btn" style="background: #ff0000; color: white;">
+                <a href="https://careers.adobe.com/us/en/search-results?keywords=site%20reliability" target="_blank" class="company-link-btn" style="background: #ff0000; color: white;">
                     <i class="fab fa-adobe"></i>
                     Adobe - SRE
                 </a>
-                <a href="https://careers.adobe.com/us/en/search-results?keywords=platform%20engineer" target="_blank" class="company-link-btn" style="background: #ff0000; color: white;">
+                <a href="https://careers.adobe.com/us/en/search-results?keywords=infrastructure%20engineer" target="_blank" class="company-link-btn" style="background: #ff0000; color: white;">
                     <i class="fab fa-adobe"></i>
-                    Adobe - Platform
+                    Adobe - Infra
                 </a>
                 <!-- LinkedIn Job Search (Past 6 hours ONLY, $200K+, sorted by date - truly fresh posts) -->
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22cloud%20architect%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
+                <a href="https://www.linkedin.com/jobs/search/?keywords=%22Staff%20DevOps%20Engineer%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
                     <i class="fab fa-linkedin"></i>
-                    Cloud Architect (6h) $200K+
+                    Staff DevOps (6h) $200K+
                 </a>
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22platform%20engineer%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
+                <a href="https://www.linkedin.com/jobs/search/?keywords=%22DevOps%20Engineer%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
                     <i class="fab fa-linkedin"></i>
-                    Platform Eng (6h) $200K+
+                    DevOps Eng (6h) $200K+
                 </a>
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22site%20reliability%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
+                <a href="https://www.linkedin.com/jobs/search/?keywords=%22Infrastructure%20Engineer%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
+                    <i class="fab fa-linkedin"></i>
+                    Infra Eng (6h) $200K+
+                </a>
+                <a href="https://www.linkedin.com/jobs/search/?keywords=%22Site%20Reliability%20Engineer%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
                     <i class="fab fa-linkedin"></i>
                     SRE (6h) $200K+
                 </a>
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22ML%20infrastructure%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
+                <a href="https://www.linkedin.com/jobs/search/?keywords=%22Forward%20Deployed%20Engineer%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
                     <i class="fab fa-linkedin"></i>
-                    ML Infra (6h) $200K+
+                    FDE (6h) $200K+
                 </a>
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22DevOps%22%20senior&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
+                <a href="https://www.linkedin.com/jobs/search/?keywords=%22ML%20infrastructure%22%20OR%20%22AI%20infrastructure%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
                     <i class="fab fa-linkedin"></i>
-                    DevOps (6h) $200K+
+                    AI/ML Infra (6h) $200K+
                 </a>
             </div>
         </div>
@@ -4104,5 +4185,7 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
         // Initialize - load jobs
         fetchAllJobs();
     </script>
+    <!-- Neural Network Background -->
+    <script src="../assets/js/neural-bg.js"></script>
 </body>
 </html>
