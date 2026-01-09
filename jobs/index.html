@@ -3604,7 +3604,20 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
 
         // ============ COMPANY LIST ============
         const COMPANIES = [
-            // ===== AI/ML Companies =====
+            // ===== AI/ML Companies (Ashby) =====
+            { name: 'OpenAI', board: 'openai', type: 'ashby', logo: 'https://logo.clearbit.com/openai.com' },
+            { name: 'Ramp', board: 'ramp', type: 'ashby', logo: 'https://logo.clearbit.com/ramp.com' },
+            { name: 'Persona', board: 'persona', type: 'ashby', logo: 'https://logo.clearbit.com/withpersona.com' },
+            { name: 'Vanta', board: 'vanta', type: 'ashby', logo: 'https://logo.clearbit.com/vanta.com' },
+            { name: 'Retool', board: 'retool', type: 'ashby', logo: 'https://logo.clearbit.com/retool.com' },
+            { name: 'Linear', board: 'linear', type: 'ashby', logo: 'https://logo.clearbit.com/linear.app' },
+            { name: 'Vercel', board: 'vercel', type: 'ashby', logo: 'https://logo.clearbit.com/vercel.com' },
+            { name: 'Supabase', board: 'supabase', type: 'ashby', logo: 'https://logo.clearbit.com/supabase.com' },
+            { name: 'Resend', board: 'resend', type: 'ashby', logo: 'https://logo.clearbit.com/resend.com' },
+            { name: 'Webflow', board: 'webflow', type: 'ashby', logo: 'https://logo.clearbit.com/webflow.com' },
+            { name: 'Cal.com', board: 'calcom', type: 'ashby', logo: 'https://logo.clearbit.com/cal.com' },
+
+            // ===== AI/ML Companies (Greenhouse/Lever) =====
             { name: 'Anthropic', board: 'anthropic', type: 'greenhouse', logo: 'https://logo.clearbit.com/anthropic.com' },
             { name: 'Google DeepMind', board: 'deepmind', type: 'greenhouse', logo: 'https://logo.clearbit.com/deepmind.com' },
             { name: 'Cohere', board: 'cohere', type: 'lever', logo: 'https://logo.clearbit.com/cohere.com' },
@@ -4141,6 +4154,61 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             }
         }
 
+        // Fetch jobs from Ashby
+        async function fetchAshbyJobs(company) {
+            try {
+                const response = await fetchWithTimeout(`https://jobs.ashbyhq.com/api/non-user-graphql?op=ApiJobBoardWithTeams`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        operationName: 'ApiJobBoardWithTeams',
+                        variables: {
+                            organizationHostedJobsPageName: company.board
+                        },
+                        query: `query ApiJobBoardWithTeams($organizationHostedJobsPageName: String!) {
+                            jobBoard: jobBoardWithTeams(organizationHostedJobsPageName: $organizationHostedJobsPageName) {
+                                jobs {
+                                    id
+                                    title
+                                    locationName
+                                    teamName
+                                    employmentType
+                                    publishedDate
+                                    descriptionPlain
+                                }
+                            }
+                        }`
+                    })
+                });
+                if (!response || !response.ok) return [];
+                const data = await response.json();
+                const jobs = data?.data?.jobBoard?.jobs || [];
+
+                return jobs.map(job => {
+                    const description = job.descriptionPlain || '';
+                    const location = job.locationName || 'Remote';
+                    return {
+                        id: job.id,
+                        title: job.title || '',
+                        company: company.name,
+                        companyLogo: company.logo,
+                        location: location,
+                        department: job.teamName || '',
+                        description: description,
+                        salary: extractSalary(description),
+                        workType: extractWorkType(location, description),
+                        url: `https://jobs.ashbyhq.com/${company.board}/${job.id}`,
+                        postedDate: new Date(job.publishedDate || Date.now()),
+                        source: 'ashby'
+                    };
+                });
+            } catch (error) {
+                return [];
+            }
+        }
+
         // Filter jobs by date
         function filterByDate(jobs, days) {
             if (!days) return jobs;
@@ -4514,6 +4582,8 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                     const batchPromises = batch.map(company => {
                         if (company.type === 'greenhouse') {
                             return fetchGreenhouseJobs(company);
+                        } else if (company.type === 'ashby') {
+                            return fetchAshbyJobs(company);
                         } else {
                             return fetchLeverJobs(company);
                         }
