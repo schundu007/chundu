@@ -3460,6 +3460,30 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             saveAs(blob, `Cover_Letter_${job.company.replace(/[^a-zA-Z0-9]/g, '_')}_${job.title.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 30)}.docx`);
         }
 
+        // ============ USER'S SKILLS EXTRACTED FROM PROFILE ============
+        const MY_SKILLS = [
+            // GPU/HPC Computing
+            'slurm', 'nvidia', 'dgx', 'cuda', 'tensorrt', 'a100', 'v100', 't4', 'triton', 'vllm', 'gpu', 'hpc',
+            // AI/ML Infrastructure
+            'pytorch', 'ray', 'flyte', 'mlflow', 'kubeflow', 'sagemaker', 'azure ml', 'torchserve', 'kserve', 'distributed training', 'ml', 'ai',
+            // Cloud Platforms
+            'aws', 'eks', 'ec2', 'emr', 'azure', 'aks', 'oci', 'cloud',
+            // Container Orchestration
+            'kubernetes', 'k8s', 'docker', 'helm', 'istio', 'service mesh', 'keda', 'argocd', 'fluxcd', 'gitops',
+            // Infrastructure as Code
+            'terraform', 'ansible', 'arm', 'bicep', 'cloudformation', 'packer', 'opa', 'checkov', 'iac',
+            // Big Data & Streaming
+            'databricks', 'spark', 'apache spark', 'flink', 'kafka', 'hadoop', 'hdfs', 'hive', 'trino', 'airflow', 'delta lake',
+            // Security & Compliance
+            'soc2', 'hipaa', 'fedramp', 'iso 27001', 'hitrust', 'devsecops', 'snyk', 'sonarqube', 'vault', 'ztna', 'security',
+            // SRE & Observability
+            'sli', 'slo', 'sla', 'chaos engineering', 'prometheus', 'grafana', 'datadog', 'opentelemetry', 'observability', 'monitoring',
+            // Languages & Tools
+            'python', 'go', 'golang', 'bash', 'shell', 'java', 'jenkins', 'ci/cd', 'cicd',
+            // Additional from experience
+            'mysql', 'postgresql', 'redis', 'mongodb', 'rest api', 'microservices', 'linux', 'unix'
+        ];
+
         // ============ JOB DESCRIPTION PARSER ============
         function parseJobDescription(job) {
             const desc = (job.description || '');
@@ -3686,17 +3710,43 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 });
             }
 
+            // ===== SKILLS MATCH: Compare job requirements with my skills =====
+            const allJobTools = Object.values(foundTools).flat().filter(t => t.length > 0);
+            const matchedSkills = [];
+            const missingSkills = [];
+
+            allJobTools.forEach(tool => {
+                const toolLower = tool.toLowerCase();
+                // Check if I have this skill
+                const hasSkill = MY_SKILLS.some(mySkill =>
+                    toolLower.includes(mySkill) || mySkill.includes(toolLower)
+                );
+                if (hasSkill) {
+                    matchedSkills.push(tool);
+                } else {
+                    missingSkills.push(tool);
+                }
+            });
+
+            const skillsMatch = {
+                matched: matchedSkills,
+                missing: missingSkills,
+                matchPercent: allJobTools.length > 0 ? Math.round((matchedSkills.length / allJobTools.length) * 100) : 0,
+                total: allJobTools.length
+            };
+
             return {
                 tools: foundTools,
                 responsibilities: [...new Set(responsibilities)].slice(0, 8),
                 requirements: [...new Set(requirements)].slice(0, 6),
                 focusAreas: [...new Set(focusAreas)],
-                allFoundTools: Object.values(foundTools).flat().filter(t => t.length > 0),
+                allFoundTools: allJobTools,
                 payInfo,
                 workModel,
                 locationTags: [...new Set(locationTags)],
                 whatYouDo: [...new Set(whatYouDo)].slice(0, 8),
                 whatWeLookFor: [...new Set(whatWeLookFor)].slice(0, 8),
+                skillsMatch,
                 rawDescription: desc
             };
         }
@@ -3709,29 +3759,30 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
 
             let parts = [];
 
+            // Skills Match indicator
+            if (parsed.skillsMatch.total > 0) {
+                const pct = parsed.skillsMatch.matchPercent;
+                const color = pct >= 80 ? '#16a34a' : pct >= 60 ? '#f59e0b' : pct >= 40 ? '#f97316' : '#ef4444';
+                parts.push(`<span class="desc-match" style="color: ${color}; font-weight: 600;">Skills Match: ${pct}% (${parsed.skillsMatch.matched.length}/${parsed.skillsMatch.total})</span>`);
+            }
+
             // Focus areas
             if (focus.length > 0) {
                 parts.push(`<span class="desc-focus">Focus: ${focus.join(', ')}</span>`);
             }
 
-            // Tools (limited for summary)
+            // Tools - show matched in green, missing in red
             if (tools.length > 0) {
-                parts.push(`<span class="desc-tools">Tools: ${tools.map(t => t.toUpperCase()).join(', ')}</span>`);
+                const toolsDisplay = tools.map(t => {
+                    const isMatched = parsed.skillsMatch.matched.includes(t);
+                    return `<span style="color: ${isMatched ? '#16a34a' : '#ef4444'}">${t.toUpperCase()}</span>`;
+                }).join(', ');
+                parts.push(`<span class="desc-tools">Tools: ${toolsDisplay}</span>`);
             }
 
             // Location tags (remote indicator)
             if (parsed.locationTags.length > 0) {
                 parts.push(`<span class="desc-remote">${parsed.locationTags[0]}</span>`);
-            }
-
-            // If we have a first "What You'll Do" item, add a snippet
-            if (parsed.whatYouDo.length > 0) {
-                const snippet = parsed.whatYouDo[0].substring(0, 80);
-                parts.push(snippet + (parsed.whatYouDo[0].length > 80 ? '...' : ''));
-            } else if (parts.length === 0) {
-                // Fallback to raw description snippet
-                const desc = (job.description || 'View job for details').replace(/<[^>]*>/g, '');
-                parts.push(desc.substring(0, 120) + (desc.length > 120 ? '...' : ''));
             }
 
             return parts.join('<br>');
@@ -3968,8 +4019,40 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 </div>`;
             }
 
-            // Technologies
-            if (parsed.allFoundTools.length > 0) {
+            // Skills Match Section
+            if (parsed.skillsMatch.total > 0) {
+                const pct = parsed.skillsMatch.matchPercent;
+                const pctColor = pct >= 80 ? '#16a34a' : pct >= 60 ? '#f59e0b' : pct >= 40 ? '#f97316' : '#ef4444';
+                html += `<div class="jd-section">
+                    <h3><i class="fas fa-check-double"></i> Skills Match
+                        <span style="font-size: 0.9rem; color: ${pctColor}; font-weight: 700; margin-left: 0.5rem;">
+                            ${pct}% (${parsed.skillsMatch.matched.length}/${parsed.skillsMatch.total})
+                        </span>
+                    </h3>`;
+
+                // Matched skills (green)
+                if (parsed.skillsMatch.matched.length > 0) {
+                    html += `<div style="margin-bottom: 0.75rem;">
+                        <span style="color: #16a34a; font-weight: 600; font-size: 0.8rem;"><i class="fas fa-check"></i> You Have:</span>
+                        <div class="jd-tags" style="margin-top: 0.35rem;">
+                            ${parsed.skillsMatch.matched.map(t => `<span class="jd-tag" style="background: rgba(22, 163, 74, 0.15); color: #16a34a; border-color: rgba(22, 163, 74, 0.3);">${t.toUpperCase()}</span>`).join('')}
+                        </div>
+                    </div>`;
+                }
+
+                // Missing skills (red)
+                if (parsed.skillsMatch.missing.length > 0) {
+                    html += `<div>
+                        <span style="color: #ef4444; font-weight: 600; font-size: 0.8rem;"><i class="fas fa-times"></i> To Learn:</span>
+                        <div class="jd-tags" style="margin-top: 0.35rem;">
+                            ${parsed.skillsMatch.missing.map(t => `<span class="jd-tag" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239, 68, 68, 0.3);">${t.toUpperCase()}</span>`).join('')}
+                        </div>
+                    </div>`;
+                }
+
+                html += `</div>`;
+            } else if (parsed.allFoundTools.length > 0) {
+                // Fallback if no skills match calculation
                 html += `<div class="jd-section">
                     <h3><i class="fas fa-tools"></i> Technologies</h3>
                     <div class="jd-tags">
