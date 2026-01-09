@@ -771,6 +771,95 @@
             font-size: 0.85rem;
         }
 
+        .exclude-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: var(--bg-tertiary);
+            color: #ef4444;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .exclude-btn:hover {
+            background: #ef4444;
+            color: var(--white);
+            border-color: #ef4444;
+        }
+
+        .exclude-btn i {
+            font-size: 0.7rem;
+        }
+
+        .restore-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: var(--bg-tertiary);
+            color: #22c55e;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .restore-btn:hover {
+            background: #22c55e;
+            color: var(--white);
+            border-color: #22c55e;
+        }
+
+        .restore-btn i {
+            font-size: 0.7rem;
+        }
+
+        .excluded-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .excluded-toggle:hover {
+            border-color: var(--primary);
+        }
+
+        .excluded-toggle.active {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: #ef4444;
+            color: #ef4444;
+        }
+
+        .excluded-toggle .count {
+            background: var(--bg-tertiary);
+            padding: 0.1rem 0.4rem;
+            border-radius: 10px;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+
+        .excluded-toggle.active .count {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        .excluded-row {
+            opacity: 0.6;
+            background: rgba(239, 68, 68, 0.05) !important;
+        }
+
         /* Loading State */
         .loading-row td {
             padding: 2rem;
@@ -1848,6 +1937,11 @@
                 <button class="refresh-btn" id="refresh-btn">
                     <i class="fas fa-sync-alt"></i>
                     Refresh
+                </button>
+                <button class="excluded-toggle" id="excluded-toggle" title="Show/Hide excluded jobs">
+                    <i class="fas fa-eye-slash"></i>
+                    Hidden
+                    <span class="count" id="excluded-count">0</span>
                 </button>
             </div>
 
@@ -3415,6 +3509,70 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
         let currentPage = 1;
         const jobsPerPage = 25;
         let activeCompanyFilter = null;
+        let showExcludedJobs = false;
+
+        // ============ EXCLUDED JOBS MANAGEMENT ============
+
+        // Get excluded job IDs from localStorage
+        function getExcludedJobs() {
+            try {
+                return JSON.parse(localStorage.getItem('excluded_jobs') || '[]');
+            } catch (e) {
+                return [];
+            }
+        }
+
+        // Save excluded jobs to localStorage
+        function saveExcludedJobs(excludedIds) {
+            localStorage.setItem('excluded_jobs', JSON.stringify(excludedIds));
+            updateExcludedCount();
+        }
+
+        // Exclude a job
+        function excludeJob(jobId) {
+            const excluded = getExcludedJobs();
+            if (!excluded.includes(jobId)) {
+                excluded.push(jobId);
+                saveExcludedJobs(excluded);
+                applyFilters();
+            }
+        }
+
+        // Restore (un-exclude) a job
+        function restoreJob(jobId) {
+            const excluded = getExcludedJobs();
+            const index = excluded.indexOf(jobId);
+            if (index > -1) {
+                excluded.splice(index, 1);
+                saveExcludedJobs(excluded);
+                applyFilters();
+            }
+        }
+
+        // Check if a job is excluded
+        function isJobExcluded(jobId) {
+            return getExcludedJobs().includes(jobId);
+        }
+
+        // Update excluded count badge
+        function updateExcludedCount() {
+            const count = getExcludedJobs().length;
+            const countEl = document.getElementById('excluded-count');
+            if (countEl) {
+                countEl.textContent = count;
+            }
+        }
+
+        // Toggle show/hide excluded jobs
+        function toggleExcludedJobs() {
+            showExcludedJobs = !showExcludedJobs;
+            const toggle = document.getElementById('excluded-toggle');
+            if (toggle) {
+                toggle.classList.toggle('active', showExcludedJobs);
+                toggle.querySelector('i').className = showExcludedJobs ? 'fas fa-eye' : 'fas fa-eye-slash';
+            }
+            applyFilters();
+        }
 
         // ============ API FETCH FUNCTIONS ============
 
@@ -3651,9 +3809,10 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 const daysAgo = Math.floor((new Date() - job.postedDate) / (1000 * 60 * 60 * 24));
                 const dateClass = daysAgo <= 1 ? 'date-new' : 'date-text';
                 const dateText = daysAgo === 0 ? 'Today' : daysAgo === 1 ? 'Yesterday' : `${daysAgo} days ago`;
+                const isExcluded = isJobExcluded(String(job.id));
 
                 return `
-                    <tr>
+                    <tr class="${isExcluded ? 'excluded-row' : ''}">
                         <td class="col-role">
                             <span class="role-title">${escapeHtml(job.title)}</span>
                             ${job.department ? `<span class="role-dept">${escapeHtml(job.department)}</span>` : ''}
@@ -3691,6 +3850,15 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                                 <button class="resume-btn" onclick="downloadResume(jobsMap['${job.id}'])" title="Download Tailored Resume">
                                     <i class="fas fa-file-download"></i>
                                 </button>
+                                ${isExcluded ? `
+                                <button class="restore-btn" onclick="restoreJob('${job.id}')" title="Restore this job">
+                                    <i class="fas fa-undo"></i>
+                                </button>
+                                ` : `
+                                <button class="exclude-btn" onclick="excludeJob('${job.id}')" title="Hide this job">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                `}
                             </div>
                         </td>
                     </tr>
@@ -3772,6 +3940,16 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
 
             // Apply search
             filteredJobs = searchJobs(filteredJobs, searchQuery);
+
+            // Apply excluded jobs filter
+            const excludedIds = getExcludedJobs();
+            if (showExcludedJobs) {
+                // Show only excluded jobs
+                filteredJobs = filteredJobs.filter(job => excludedIds.includes(String(job.id)));
+            } else {
+                // Hide excluded jobs
+                filteredJobs = filteredJobs.filter(job => !excludedIds.includes(String(job.id)));
+            }
 
             // Sort by distance from San Jose (closest first), then by date (newest first)
             filteredJobs.sort((a, b) => {
@@ -3941,6 +4119,10 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
         document.getElementById('location-filter').addEventListener('change', applyFilters);
         document.getElementById('date-filter').addEventListener('change', applyFilters);
         document.getElementById('refresh-btn').addEventListener('click', fetchAllJobs);
+        document.getElementById('excluded-toggle').addEventListener('click', toggleExcludedJobs);
+
+        // Initialize excluded count on page load
+        updateExcludedCount();
 
         // Sortable columns
         document.querySelectorAll('.sortable').forEach(th => {
