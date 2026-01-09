@@ -915,40 +915,35 @@
             margin-left: 0.5rem;
         }
 
-        .applied-toggle {
+        .applied-link {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             padding: 0.5rem 0.75rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--glass-border);
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid #f59e0b;
             border-radius: var(--radius);
             font-size: 0.75rem;
-            color: var(--text-secondary);
-            cursor: pointer;
+            color: #f59e0b;
+            text-decoration: none;
             transition: all 0.2s;
         }
 
-        .applied-toggle:hover {
-            border-color: #f59e0b;
+        .applied-link:hover {
+            background: #f59e0b;
+            color: var(--white);
         }
 
-        .applied-toggle.active {
-            background: rgba(245, 158, 11, 0.1);
-            border-color: #f59e0b;
-            color: #f59e0b;
-        }
-
-        .applied-toggle .count {
-            background: var(--bg-tertiary);
+        .applied-link .count {
+            background: rgba(245, 158, 11, 0.2);
             padding: 0.1rem 0.4rem;
             border-radius: 10px;
             font-size: 0.65rem;
             font-weight: 600;
         }
 
-        .applied-toggle.active .count {
-            background: rgba(245, 158, 11, 0.2);
+        .applied-link:hover .count {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         /* Loading State */
@@ -2034,11 +2029,11 @@
                     Hidden
                     <span class="count" id="excluded-count">0</span>
                 </button>
-                <button class="applied-toggle" id="applied-toggle" title="Show jobs you applied to">
+                <a href="applied/" class="applied-link" title="View applied jobs">
                     <i class="fas fa-check-circle"></i>
                     Applied
                     <span class="count" id="applied-count">0</span>
-                </button>
+                </a>
             </div>
 
             <!-- Company Tags -->
@@ -3662,14 +3657,6 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
         // Toggle show/hide excluded jobs
         function toggleExcludedJobs() {
             showExcludedJobs = !showExcludedJobs;
-            // Turn off applied filter when showing excluded
-            if (showExcludedJobs) {
-                showAppliedJobs = false;
-                const appliedToggle = document.getElementById('applied-toggle');
-                if (appliedToggle) {
-                    appliedToggle.classList.remove('active');
-                }
-            }
             const toggle = document.getElementById('excluded-toggle');
             if (toggle) {
                 toggle.classList.toggle('active', showExcludedJobs);
@@ -3680,8 +3667,6 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
 
         // ============ APPLIED JOBS MANAGEMENT ============
 
-        let showAppliedJobs = false;
-
         // Get applied job IDs from localStorage
         function getAppliedJobs() {
             try {
@@ -3691,49 +3676,58 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             }
         }
 
+        // Get applied jobs data (with metadata)
+        function getAppliedJobsData() {
+            try {
+                return JSON.parse(localStorage.getItem('applied_jobs_data') || '{}');
+            } catch (e) {
+                return {};
+            }
+        }
+
         // Save applied jobs to localStorage
         function saveAppliedJobs(appliedIds) {
             localStorage.setItem('applied_jobs', JSON.stringify(appliedIds));
             updateAppliedCount();
         }
 
-        // Mark a job as applied
+        // Save applied jobs data
+        function saveAppliedJobsData(data) {
+            localStorage.setItem('applied_jobs_data', JSON.stringify(data));
+        }
+
+        // Mark a job as applied (moves it to applied page)
         function markAsApplied(jobId) {
-            const applied = getAppliedJobs();
-            if (!applied.includes(jobId)) {
-                applied.push(jobId);
-                saveAppliedJobs(applied);
-                renderJobs(); // Re-render to update button state
-            }
-        }
+            const job = jobsMap[jobId];
+            if (!job) return;
 
-        // Unmark a job as applied
-        function unmarkAsApplied(jobId) {
             const applied = getAppliedJobs();
-            const index = applied.indexOf(jobId);
-            if (index > -1) {
-                applied.splice(index, 1);
+            if (!applied.includes(String(jobId))) {
+                applied.push(String(jobId));
                 saveAppliedJobs(applied);
-                if (showAppliedJobs) {
-                    applyFilters(); // Re-filter if viewing applied jobs
-                } else {
-                    renderJobs(); // Just re-render
-                }
-            }
-        }
 
-        // Toggle applied status
-        function toggleApplied(jobId) {
-            if (isJobApplied(jobId)) {
-                unmarkAsApplied(jobId);
-            } else {
-                markAsApplied(jobId);
+                // Save job data for applied page
+                const appliedData = getAppliedJobsData();
+                appliedData[String(jobId)] = {
+                    id: job.id,
+                    title: job.title,
+                    company: job.company,
+                    companyLogo: job.companyLogo,
+                    location: job.location,
+                    department: job.department,
+                    url: job.url,
+                    appliedAt: new Date().toISOString()
+                };
+                saveAppliedJobsData(appliedData);
+
+                // Re-apply filters to remove from list
+                applyFilters();
             }
         }
 
         // Check if a job is applied
         function isJobApplied(jobId) {
-            return getAppliedJobs().includes(jobId);
+            return getAppliedJobs().includes(String(jobId));
         }
 
         // Update applied count badge
@@ -3743,25 +3737,6 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             if (countEl) {
                 countEl.textContent = count;
             }
-        }
-
-        // Toggle show/hide applied jobs
-        function toggleAppliedJobs() {
-            showAppliedJobs = !showAppliedJobs;
-            // Turn off excluded filter when showing applied
-            if (showAppliedJobs) {
-                showExcludedJobs = false;
-                const excludedToggle = document.getElementById('excluded-toggle');
-                if (excludedToggle) {
-                    excludedToggle.classList.remove('active');
-                    excludedToggle.querySelector('i').className = 'fas fa-eye-slash';
-                }
-            }
-            const toggle = document.getElementById('applied-toggle');
-            if (toggle) {
-                toggle.classList.toggle('active', showAppliedJobs);
-            }
-            applyFilters();
         }
 
         // ============ API FETCH FUNCTIONS ============
@@ -4000,14 +3975,11 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 const dateClass = daysAgo <= 1 ? 'date-new' : 'date-text';
                 const dateText = daysAgo === 0 ? 'Today' : daysAgo === 1 ? 'Yesterday' : `${daysAgo} days ago`;
                 const isExcluded = isJobExcluded(String(job.id));
-                const isApplied = isJobApplied(String(job.id));
-                const rowClass = isExcluded ? 'excluded-row' : (isApplied ? 'applied-row' : '');
 
                 return `
-                    <tr class="${rowClass}">
+                    <tr class="${isExcluded ? 'excluded-row' : ''}">
                         <td class="col-role">
                             <span class="role-title">${escapeHtml(job.title)}</span>
-                            ${isApplied ? '<span class="applied-badge"><i class="fas fa-check"></i> Applied</span>' : ''}
                             ${job.department ? `<span class="role-dept">${escapeHtml(job.department)}</span>` : ''}
                         </td>
                         <td class="col-company">
@@ -4037,7 +4009,7 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                                 <a href="${job.url}" target="_blank" class="apply-btn">
                                     Apply <i class="fas fa-external-link-alt"></i>
                                 </a>
-                                <button class="applied-btn ${isApplied ? 'is-applied' : ''}" onclick="toggleApplied('${job.id}')" title="${isApplied ? 'Mark as not applied' : 'Mark as applied'}">
+                                <button class="applied-btn" onclick="markAsApplied('${job.id}')" title="Mark as applied (moves to Applied page)">
                                     <i class="fas fa-check"></i>
                                 </button>
                                 <button class="cover-letter-btn" onclick="downloadCoverLetter(jobsMap['${job.id}'])" title="Download Cover Letter">
@@ -4147,12 +4119,9 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 filteredJobs = filteredJobs.filter(job => !excludedIds.includes(String(job.id)));
             }
 
-            // Apply applied jobs filter
+            // Hide applied jobs (they appear on the Applied page)
             const appliedIds = getAppliedJobs();
-            if (showAppliedJobs) {
-                // Show only applied jobs
-                filteredJobs = filteredJobs.filter(job => appliedIds.includes(String(job.id)));
-            }
+            filteredJobs = filteredJobs.filter(job => !appliedIds.includes(String(job.id)));
 
             // Sort by distance from San Jose (closest first), then by date (newest first)
             filteredJobs.sort((a, b) => {
@@ -4323,7 +4292,6 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
         document.getElementById('date-filter').addEventListener('change', applyFilters);
         document.getElementById('refresh-btn').addEventListener('click', fetchAllJobs);
         document.getElementById('excluded-toggle').addEventListener('click', toggleExcludedJobs);
-        document.getElementById('applied-toggle').addEventListener('click', toggleAppliedJobs);
 
         // Initialize counts on page load
         updateExcludedCount();

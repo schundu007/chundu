@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GGNQHMGCLH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-GGNQHMGCLH');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applied Jobs | Sudhakar Chundu</title>
+    <meta name="description" content="Track your job applications - Applied jobs tracker">
+    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="../../assets/js/theme.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #111118;
+            --bg-tertiary: #18181f;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --white: #ffffff;
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: rgba(59, 130, 246, 0.2);
+            --radius: 8px;
+            --radius-lg: 12px;
+            --applied-color: #f59e0b;
+        }
+
+        body {
+            background: var(--bg-primary) !important;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+        }
+
+        nav, #neural-bg, .page-header, footer {
+            display: none !important;
+        }
+
+        .main-content {
+            max-width: 100%;
+            padding: 0;
+            margin: 0;
+            background: var(--bg-primary);
+            min-height: 100vh;
+        }
+
+        .applied-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .applied-topbar-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .applied-topbar-title i {
+            color: var(--applied-color);
+        }
+
+        .applied-topbar-title span {
+            color: var(--applied-color);
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .back-link {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            text-decoration: none;
+            transition: color 0.2s;
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius);
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .applied-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        .applied-stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--glass-border);
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--applied-color);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .applied-table-wrapper {
+            overflow-x: auto;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            background: var(--bg-secondary);
+        }
+
+        .applied-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+
+        .applied-table th {
+            background: var(--bg-tertiary);
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--glass-border);
+            white-space: nowrap;
+        }
+
+        .applied-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--glass-border);
+            vertical-align: middle;
+            color: var(--text-secondary);
+        }
+
+        .applied-table tr:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .applied-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .role-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            display: block;
+            font-size: 0.85rem;
+        }
+
+        .role-dept {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .company-name {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .company-logo {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            object-fit: contain;
+        }
+
+        .location-text {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.75rem;
+        }
+
+        .location-text i {
+            color: var(--text-muted);
+            font-size: 0.65rem;
+        }
+
+        .applied-date {
+            font-size: 0.75rem;
+            color: var(--applied-color);
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .view-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.4rem 0.75rem;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius);
+            font-size: 0.7rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .view-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .remove-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--bg-tertiary);
+            color: #ef4444;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .remove-btn:hover {
+            background: #ef4444;
+            color: var(--white);
+            border-color: #ef4444;
+        }
+
+        .remove-btn i {
+            font-size: 0.7rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            margin-bottom: 1.5rem;
+        }
+
+        .empty-state a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .empty-state a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .applied-stats {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .applied-container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="main-content">
+        <!-- Top Bar -->
+        <div class="applied-topbar">
+            <div class="applied-topbar-title">
+                <i class="fas fa-check-circle"></i>
+                <span>Applied Jobs</span>
+            </div>
+            <div class="topbar-actions">
+                <a href="../" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Jobs
+                </a>
+            </div>
+        </div>
+
+        <div class="applied-container">
+            <!-- Stats -->
+            <div class="applied-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="total-applied">0</span>
+                    <span class="stat-label">Total Applied</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="companies-count">0</span>
+                    <span class="stat-label">Companies</span>
+                </div>
+            </div>
+
+            <!-- Applied Jobs Table -->
+            <div class="applied-table-wrapper">
+                <table class="applied-table">
+                    <thead>
+                        <tr>
+                            <th>Role</th>
+                            <th>Company</th>
+                            <th>Location</th>
+                            <th>Applied</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="applied-tbody">
+                        <tr>
+                            <td colspan="5">
+                                <div class="empty-state">
+                                    <i class="fas fa-briefcase"></i>
+                                    <h3>No applications yet</h3>
+                                    <p>Jobs you mark as applied will appear here</p>
+                                    <a href="../">Browse Jobs <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Get applied jobs from localStorage
+        function getAppliedJobs() {
+            try {
+                return JSON.parse(localStorage.getItem('applied_jobs') || '[]');
+            } catch (e) {
+                return [];
+            }
+        }
+
+        // Get applied jobs data (with metadata)
+        function getAppliedJobsData() {
+            try {
+                return JSON.parse(localStorage.getItem('applied_jobs_data') || '{}');
+            } catch (e) {
+                return {};
+            }
+        }
+
+        // Save applied jobs data
+        function saveAppliedJobsData(data) {
+            localStorage.setItem('applied_jobs_data', JSON.stringify(data));
+        }
+
+        // Remove job from applied list
+        function removeFromApplied(jobId) {
+            // Remove from applied_jobs array
+            let applied = getAppliedJobs();
+            const index = applied.indexOf(jobId);
+            if (index > -1) {
+                applied.splice(index, 1);
+                localStorage.setItem('applied_jobs', JSON.stringify(applied));
+            }
+
+            // Remove from applied_jobs_data
+            let data = getAppliedJobsData();
+            delete data[jobId];
+            saveAppliedJobsData(data);
+
+            // Re-render
+            renderAppliedJobs();
+        }
+
+        // Render applied jobs
+        function renderAppliedJobs() {
+            const tbody = document.getElementById('applied-tbody');
+            const appliedIds = getAppliedJobs();
+            const appliedData = getAppliedJobsData();
+
+            if (appliedIds.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5">
+                            <div class="empty-state">
+                                <i class="fas fa-briefcase"></i>
+                                <h3>No applications yet</h3>
+                                <p>Jobs you mark as applied will appear here</p>
+                                <a href="../">Browse Jobs <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                document.getElementById('total-applied').textContent = '0';
+                document.getElementById('companies-count').textContent = '0';
+                return;
+            }
+
+            // Build table rows from stored data
+            const companies = new Set();
+            let rows = '';
+
+            appliedIds.forEach(jobId => {
+                const job = appliedData[jobId];
+                if (job) {
+                    companies.add(job.company);
+                    const appliedDate = job.appliedAt ? new Date(job.appliedAt).toLocaleDateString() : 'N/A';
+
+                    rows += `
+                        <tr>
+                            <td>
+                                <span class="role-title">${escapeHtml(job.title)}</span>
+                                ${job.department ? `<span class="role-dept">${escapeHtml(job.department)}</span>` : ''}
+                            </td>
+                            <td>
+                                <span class="company-name">
+                                    <img src="${job.companyLogo}" alt="${job.company}" class="company-logo" onerror="this.style.display='none'">
+                                    ${escapeHtml(job.company)}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="location-text">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    ${escapeHtml(job.location || 'N/A')}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="applied-date">${appliedDate}</span>
+                            </td>
+                            <td>
+                                <div class="action-btns">
+                                    <a href="${job.url}" target="_blank" class="view-btn">
+                                        View <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                    <button class="remove-btn" onclick="removeFromApplied('${jobId}')" title="Remove from applied">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                } else {
+                    // Job data not found, show minimal info
+                    rows += `
+                        <tr>
+                            <td colspan="4">
+                                <span class="text-muted">Job #${jobId} (details not available)</span>
+                            </td>
+                            <td>
+                                <button class="remove-btn" onclick="removeFromApplied('${jobId}')" title="Remove from applied">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }
+            });
+
+            tbody.innerHTML = rows;
+            document.getElementById('total-applied').textContent = appliedIds.length;
+            document.getElementById('companies-count').textContent = companies.size;
+        }
+
+        // Escape HTML
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Initialize
+        renderAppliedJobs();
+    </script>
+</body>
+</html>
