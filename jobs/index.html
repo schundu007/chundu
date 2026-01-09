@@ -53,27 +53,100 @@
         body {
             background: var(--bg-primary) !important;
             color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Full Screen Jobs Page - Hide nav */
+        nav {
+            display: none !important;
+        }
+
+        /* Hide neural background for cleaner look */
+        #neural-bg {
+            display: none !important;
         }
 
         /* Override shared CSS for full-width jobs page */
         .main-content {
             max-width: 100%;
             padding: 0;
+            margin: 0;
             background: var(--bg-primary);
+            min-height: 100vh;
         }
 
         .page-header {
-            border-radius: 0;
-            margin-bottom: 0;
-            background: var(--bg-secondary);
-            border: none;
+            display: none !important;
         }
 
         footer {
-            max-width: 100%;
-            border-radius: 0;
-            margin: 0;
+            display: none !important;
+        }
+
+        /* Jobs section takes full viewport */
+        .jobs-section {
+            padding-top: 0 !important;
+            min-height: calc(100vh - 200px);
+        }
+
+        .jobs-container {
+            max-width: 100% !important;
+            padding: 1rem 1.5rem !important;
+        }
+
+        /* Hide Document Manager at bottom for full screen mode */
+        .doc-manager-section {
+            display: none !important;
+        }
+
+        /* Minimal Top Bar */
+        .jobs-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
             background: var(--bg-secondary);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .jobs-topbar-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .jobs-topbar-title span {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .jobs-topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .topbar-link {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: color 0.2s;
+        }
+
+        .topbar-link:hover {
+            color: var(--primary);
         }
 
         /* Fresh Jobs Ticker */
@@ -1319,6 +1392,25 @@
             </div>
         </div>
     </nav>
+
+    <!-- Minimal Top Bar for Full Screen Mode -->
+    <div class="jobs-topbar">
+        <div class="jobs-topbar-title">
+            <i class="fas fa-briefcase"></i>
+            Job <span>Listings</span>
+        </div>
+        <div class="jobs-topbar-actions">
+            <a href="../" class="topbar-link">
+                <i class="fas fa-home"></i> Portfolio
+            </a>
+            <a href="../resume/" class="topbar-link">
+                <i class="fas fa-file-alt"></i> Resume
+            </a>
+            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" style="background: none; border: none; cursor: pointer; color: var(--text-secondary); font-size: 1rem;">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </div>
 
     <!-- Fresh Jobs Ticker - Last 6 Hours -->
     <div class="fresh-jobs-ticker">
