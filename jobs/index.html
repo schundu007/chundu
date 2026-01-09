@@ -16,7 +16,7 @@
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <!-- Theme JS (load early to prevent flash) -->
     <script src="../assets/js/theme.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -529,8 +529,13 @@
         }
 
         .col-description {
-            min-width: 200px;
-            max-width: 300px;
+            min-width: 250px;
+            max-width: 400px;
+            cursor: pointer;
+        }
+
+        .col-description:hover {
+            background: rgba(59, 130, 246, 0.05);
         }
 
         .col-apply {
@@ -739,9 +744,191 @@
             line-height: 1.4;
             font-size: 0.7rem;
             display: -webkit-box;
-            -webkit-line-clamp: 2;
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            cursor: pointer;
+        }
+
+        .description-text:hover {
+            color: var(--accent-blue);
+        }
+
+        .desc-focus {
+            color: var(--accent-purple);
+            font-weight: 500;
+        }
+
+        .desc-tools {
+            color: var(--accent-cyan);
+            font-family: monospace;
+            font-size: 0.65rem;
+        }
+
+        .desc-pay {
+            color: #16a34a;
+            font-weight: 600;
+        }
+
+        .desc-remote {
+            color: #f59e0b;
+            font-size: 0.6rem;
+        }
+
+        /* Job Description Modal */
+        .jd-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .jd-modal-overlay.active {
+            display: flex;
+        }
+
+        .jd-modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 85vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .jd-modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .jd-modal-title h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-primary);
+        }
+
+        .jd-modal-title .company {
+            color: var(--accent-blue);
+            font-size: 0.9rem;
+        }
+
+        .jd-modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .jd-modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .jd-modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .jd-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .jd-section h3 {
+            font-size: 0.9rem;
+            color: var(--accent-purple);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .jd-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .jd-section li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .jd-section li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent-cyan);
+        }
+
+        .jd-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .jd-tag {
+            padding: 0.35rem 0.75rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            color: var(--accent-blue);
+            font-family: monospace;
+        }
+
+        .jd-pay-box {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .jd-pay-box .pay-range {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #16a34a;
+        }
+
+        .jd-pay-box .pay-detail {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .jd-full-desc {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .jd-modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
         }
 
         .apply-btn {
@@ -901,6 +1088,38 @@
 
         .excluded-toggle.active .count {
             background: rgba(239, 68, 68, 0.2);
+        }
+
+        .backup-controls {
+            display: flex;
+            gap: 0.25rem;
+            margin-left: 0.5rem;
+            padding-left: 0.5rem;
+            border-left: 1px solid var(--border);
+        }
+
+        .backup-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .backup-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .backup-btn i {
+            font-size: 0.8rem;
         }
 
         .excluded-row {
@@ -2116,6 +2335,15 @@
                     Applied
                     <span class="count" id="applied-count">0</span>
                 </a>
+                <div class="backup-controls">
+                    <button class="backup-btn" id="export-data-btn" title="Export applied & hidden jobs to file">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <button class="backup-btn" id="import-data-btn" title="Import applied & hidden jobs from file">
+                        <i class="fas fa-upload"></i>
+                    </button>
+                    <input type="file" id="import-file-input" accept=".json" style="display: none;">
+                </div>
             </div>
 
             <!-- Company Tags -->
@@ -2138,7 +2366,7 @@
                             <th class="col-worktype">Type</th>
                             <th class="col-date sortable" data-sort="date">Posted <i class="fas fa-sort"></i></th>
                             <th class="col-salary sortable" data-sort="salary">Salary <i class="fas fa-sort"></i></th>
-                            <th class="col-description">Description</th>
+                            <th class="col-description">Description <i class="fas fa-expand-alt" style="font-size: 0.65rem; opacity: 0.5; margin-left: 0.25rem;" title="Click rows to expand"></i></th>
                             <th class="col-apply">Action</th>
                         </tr>
                     </thead>
@@ -2244,6 +2472,34 @@
         </div>
     </section>
     </main>
+
+    <!-- Job Description Modal -->
+    <div class="jd-modal-overlay" id="jd-modal-overlay" onclick="closeJDModal(event)">
+        <div class="jd-modal" onclick="event.stopPropagation()">
+            <div class="jd-modal-header">
+                <div class="jd-modal-title">
+                    <h2 id="jd-modal-title">Job Title</h2>
+                    <p class="company" id="jd-modal-company">Company Name</p>
+                </div>
+                <button class="jd-modal-close" onclick="closeJDModal()">&times;</button>
+            </div>
+            <div class="jd-modal-body" id="jd-modal-body">
+                <!-- Content populated by JavaScript -->
+            </div>
+            <div class="jd-modal-footer">
+                <span id="jd-modal-source" style="color: var(--text-muted); font-size: 0.75rem; margin-right: auto;">Source: —</span>
+                <button class="btn btn-secondary" id="jd-modal-resume" title="Download tailored resume">
+                    <i class="fas fa-file-download"></i> Resume
+                </button>
+                <button class="btn btn-secondary" id="jd-modal-cover" title="Download cover letter">
+                    <i class="fas fa-file-alt"></i> Cover Letter
+                </button>
+                <a href="#" id="jd-modal-apply" class="btn btn-primary" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Apply Now
+                </a>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer style="padding: 1.5rem 2rem;">
@@ -3065,8 +3321,12 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
             const exp = USER_PROFILE.experience[0];
 
+            // Use cached full description if available for better tailoring
+            const fullDesc = fullDescriptionCache[job.id] || job.description || '';
+            const jobWithFullDesc = { ...job, description: fullDesc };
+
             // Parse the job description for tailoring
-            const parsedJD = parseJobDescription(job);
+            const parsedJD = parseJobDescription(jobWithFullDesc);
             const toolsFromJD = parsedJD.allFoundTools.slice(0, 6).map(t => t.toUpperCase()).join(', ');
             const focusAreas = parsedJD.focusAreas.join(', ');
 
@@ -3202,7 +3462,8 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
 
         // ============ JOB DESCRIPTION PARSER ============
         function parseJobDescription(job) {
-            const desc = (job.description || '').toLowerCase();
+            const desc = (job.description || '');
+            const descLower = desc.toLowerCase();
             const title = (job.title || '').toLowerCase();
 
             // Extract tools/technologies mentioned in JD
@@ -3222,7 +3483,7 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             const foundTools = {};
             Object.keys(allTools).forEach(category => {
                 foundTools[category] = allTools[category].filter(tool =>
-                    desc.includes(tool) || title.includes(tool)
+                    descLower.includes(tool) || title.includes(tool)
                 );
             });
 
@@ -3233,7 +3494,7 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 /(?:design|build|develop|implement|manage|lead|architect|maintain|deploy|automate|optimize|scale)[^.]{10,80}/gi
             ];
             respPatterns.forEach(pattern => {
-                const matches = desc.match(pattern);
+                const matches = descLower.match(pattern);
                 if (matches) {
                     matches.slice(0, 5).forEach(m => {
                         const clean = m.replace(/^(responsible for|will be|you will|responsibilities include)[:\s]+/i, '').trim();
@@ -3252,7 +3513,7 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 /(?:bachelor|master|phd|degree)[^.]+/gi
             ];
             reqPatterns.forEach(pattern => {
-                const matches = desc.match(pattern);
+                const matches = descLower.match(pattern);
                 if (matches) {
                     matches.slice(0, 3).forEach(m => {
                         if (m.length > 15 && m.length < 150) {
@@ -3264,49 +3525,422 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
 
             // Determine job focus areas
             const focusAreas = [];
-            if (foundTools.gpu.length > 0 || desc.includes('hpc') || desc.includes('high performance')) focusAreas.push('GPU/HPC');
-            if (foundTools.ml.length > 0 || desc.includes('machine learning') || desc.includes('ai ')) focusAreas.push('AI/ML');
-            if (title.includes('sre') || desc.includes('reliability') || desc.includes('incident')) focusAreas.push('SRE');
-            if (title.includes('platform') || desc.includes('platform engineering')) focusAreas.push('Platform Engineering');
-            if (title.includes('devops') || desc.includes('devops')) focusAreas.push('DevOps');
-            if (title.includes('architect') || desc.includes('architecture')) focusAreas.push('Architecture');
+            if (foundTools.gpu.length > 0 || descLower.includes('hpc') || descLower.includes('high performance')) focusAreas.push('GPU/HPC');
+            if (foundTools.ml.length > 0 || descLower.includes('machine learning') || descLower.includes('ai ')) focusAreas.push('AI/ML');
+            if (title.includes('sre') || descLower.includes('reliability') || descLower.includes('incident')) focusAreas.push('SRE');
+            if (title.includes('platform') || descLower.includes('platform engineering')) focusAreas.push('Platform Engineering');
+            if (title.includes('devops') || descLower.includes('devops')) focusAreas.push('DevOps');
+            if (title.includes('architect') || descLower.includes('architecture')) focusAreas.push('Architecture');
             if (foundTools.data.length > 0) focusAreas.push('Data Engineering');
             if (foundTools.security.length > 0) focusAreas.push('Security/Compliance');
+
+            // ===== ENHANCED: Extract pay information =====
+            const payInfo = {
+                basePay: null,
+                equityGrade: null,
+                basePayGrade: null,
+                ranges: []
+            };
+
+            // Extract salary ranges like "$260,000 - $310,000" or "$232K - $282K"
+            const salaryPatterns = [
+                /\$[\d,]+(?:k|K)?\s*[-–to]+\s*\$[\d,]+(?:k|K)?(?:\s*(?:per year|annually|\/year)?)?/gi,
+                /base pay[^:]*:\s*\$[\d,]+\s*[-–to]+\s*\$[\d,]+/gi,
+                /salary[^:]*:\s*\$[\d,]+\s*[-–to]+\s*\$[\d,]+/gi
+            ];
+            salaryPatterns.forEach(pattern => {
+                const matches = desc.match(pattern);
+                if (matches) {
+                    payInfo.ranges.push(...matches.map(m => m.trim()));
+                }
+            });
+
+            // Extract equity grade like "Equity Grade - 15"
+            const equityMatch = desc.match(/equity grade\s*[-–:]?\s*(\d+)/i);
+            if (equityMatch) {
+                payInfo.equityGrade = equityMatch[1];
+            }
+
+            // Extract base pay grade like "Base Pay Grade - R"
+            const baseGradeMatch = desc.match(/base pay grade\s*[-–:]?\s*([A-Z\d]+)/i);
+            if (baseGradeMatch) {
+                payInfo.basePayGrade = baseGradeMatch[1];
+            }
+
+            // ===== ENHANCED: Extract location/remote tags =====
+            const locationTags = [];
+            const tagPatterns = [
+                /#LI-Remote/gi,
+                /#LI-Hybrid/gi,
+                /#LI-Onsite/gi,
+                /Remote - US/gi,
+                /Remote - USA/gi,
+                /Location:\s*Remote/gi,
+                /fully remote/gi,
+                /100% remote/gi
+            ];
+            tagPatterns.forEach(pattern => {
+                const matches = desc.match(pattern);
+                if (matches) {
+                    locationTags.push(...matches.map(m => m.trim()));
+                }
+            });
+
+            // ===== ENHANCED: Extract "What You'll Do" section =====
+            const whatYouDo = [];
+            const doSectionMatch = desc.match(/(?:what you'?ll do|responsibilities|key responsibilities|your role|in this role)[:\s]*([\s\S]*?)(?=what we|requirements|qualifications|about you|who you are|$)/i);
+            if (doSectionMatch) {
+                const bullets = doSectionMatch[1].match(/[•\-\*]\s*([^\n•\-\*]+)/g);
+                if (bullets) {
+                    whatYouDo.push(...bullets.slice(0, 6).map(b => b.replace(/^[•\-\*]\s*/, '').trim()));
+                }
+            }
+
+            // ===== ENHANCED: Extract "What We Look For" section =====
+            const whatWeLookFor = [];
+            const lookForMatch = desc.match(/(?:what we look for|requirements|qualifications|about you|who you are|you have)[:\s]*([\s\S]*?)(?=what you|benefits|compensation|about|$)/i);
+            if (lookForMatch) {
+                const bullets = lookForMatch[1].match(/[•\-\*]\s*([^\n•\-\*]+)/g);
+                if (bullets) {
+                    whatWeLookFor.push(...bullets.slice(0, 6).map(b => b.replace(/^[•\-\*]\s*/, '').trim()));
+                }
+                // Also extract "X+ years" patterns
+                const yearsMatch = lookForMatch[1].match(/(\d+\+?\s*years?[^.•\n]+)/gi);
+                if (yearsMatch) {
+                    whatWeLookFor.push(...yearsMatch.slice(0, 3).map(m => m.trim()));
+                }
+            }
 
             return {
                 tools: foundTools,
                 responsibilities: [...new Set(responsibilities)].slice(0, 5),
                 requirements: [...new Set(requirements)].slice(0, 4),
                 focusAreas: [...new Set(focusAreas)],
-                allFoundTools: Object.values(foundTools).flat().filter(t => t.length > 0)
+                allFoundTools: Object.values(foundTools).flat().filter(t => t.length > 0),
+                payInfo,
+                locationTags: [...new Set(locationTags)],
+                whatYouDo: [...new Set(whatYouDo)].slice(0, 6),
+                whatWeLookFor: [...new Set(whatWeLookFor)].slice(0, 6),
+                rawDescription: desc
             };
         }
 
-        // Generate job summary from parsed JD
+        // Generate job summary from parsed JD - ENHANCED with rich details
         function generateJobSummary(job) {
             const parsed = parseJobDescription(job);
-            const tools = parsed.allFoundTools.slice(0, 8);
-            const focus = parsed.focusAreas.slice(0, 3);
+            const tools = parsed.allFoundTools.slice(0, 6);
+            const focus = parsed.focusAreas.slice(0, 2);
 
-            let summary = '';
+            let parts = [];
+
+            // Focus areas
             if (focus.length > 0) {
-                summary += `Focus: ${focus.join(', ')}. `;
+                parts.push(`<span class="desc-focus">Focus: ${focus.join(', ')}</span>`);
             }
+
+            // Tools (limited for summary)
             if (tools.length > 0) {
-                summary += `Tools: ${tools.map(t => t.toUpperCase()).join(', ')}`;
+                parts.push(`<span class="desc-tools">Tools: ${tools.map(t => t.toUpperCase()).join(', ')}</span>`);
             }
-            if (summary.length === 0) {
-                summary = job.description?.substring(0, 150) || 'View job for details';
+
+            // Location tags (remote indicator)
+            if (parsed.locationTags.length > 0) {
+                parts.push(`<span class="desc-remote">${parsed.locationTags[0]}</span>`);
             }
-            return summary.substring(0, 200);
+
+            // If we have a first "What You'll Do" item, add a snippet
+            if (parsed.whatYouDo.length > 0) {
+                const snippet = parsed.whatYouDo[0].substring(0, 80);
+                parts.push(snippet + (parsed.whatYouDo[0].length > 80 ? '...' : ''));
+            } else if (parts.length === 0) {
+                // Fallback to raw description snippet
+                const desc = (job.description || 'View job for details').replace(/<[^>]*>/g, '');
+                parts.push(desc.substring(0, 120) + (desc.length > 120 ? '...' : ''));
+            }
+
+            return parts.join('<br>');
         }
+
+        // ============ FETCH FULL JOB DESCRIPTION FROM ATS ============
+        // Cache for full descriptions
+        const fullDescriptionCache = {};
+
+        async function fetchFullJobDescription(job) {
+            // Return cached if available
+            if (fullDescriptionCache[job.id]) {
+                return fullDescriptionCache[job.id];
+            }
+
+            try {
+                let fullDescription = job.description || '';
+                const board = job.board;
+
+                if (job.source === 'greenhouse' && board) {
+                    // Greenhouse: Fetch individual job details with full content
+                    const response = await fetchWithTimeout(`https://boards-api.greenhouse.io/v1/boards/${board}/jobs/${job.id}`);
+                    if (response && response.ok) {
+                        const data = await response.json();
+                        // Greenhouse returns HTML content - preserve structure
+                        fullDescription = data.content || data.description || '';
+                        // Strip HTML but preserve newlines
+                        fullDescription = fullDescription
+                            .replace(/<br\s*\/?>/gi, '\n')
+                            .replace(/<\/p>/gi, '\n\n')
+                            .replace(/<\/li>/gi, '\n')
+                            .replace(/<li>/gi, '• ')
+                            .replace(/<\/h[1-6]>/gi, '\n')
+                            .replace(/<h[1-6][^>]*>/gi, '\n\n')
+                            .replace(/<[^>]*>/g, '')
+                            .replace(/&nbsp;/g, ' ')
+                            .replace(/&amp;/g, '&')
+                            .replace(/&lt;/g, '<')
+                            .replace(/&gt;/g, '>')
+                            .replace(/\n{3,}/g, '\n\n')
+                            .trim();
+                    }
+                } else if (job.source === 'lever' && board) {
+                    // Lever: Fetch individual posting with lists (What you'll do, Requirements, etc.)
+                    const response = await fetchWithTimeout(`https://api.lever.co/v0/postings/${board}/${job.id}`);
+                    if (response && response.ok) {
+                        const data = await response.json();
+                        // Build full description with all sections
+                        let desc = data.descriptionPlain || '';
+
+                        // Add additional info
+                        if (data.additional) {
+                            desc += '\n\n' + (data.additionalPlain || stripHtml(data.additional));
+                        }
+
+                        // Add lists (What You'll Do, Requirements, etc.) - THIS IS THE KEY DATA
+                        if (data.lists && data.lists.length > 0) {
+                            data.lists.forEach(list => {
+                                desc += `\n\n${list.text}:\n`;
+                                if (list.content) {
+                                    // Parse HTML list items
+                                    const items = list.content.match(/<li[^>]*>([\s\S]*?)<\/li>/gi);
+                                    if (items) {
+                                        items.forEach(item => {
+                                            const text = item.replace(/<[^>]*>/g, '').trim();
+                                            if (text) desc += `• ${text}\n`;
+                                        });
+                                    } else {
+                                        desc += list.content.replace(/<[^>]*>/g, '').trim();
+                                    }
+                                }
+                            });
+                        }
+
+                        // Add closing info
+                        if (data.closingPlain) {
+                            desc += '\n\n' + data.closingPlain;
+                        }
+
+                        fullDescription = desc.trim();
+                    }
+                } else if (job.source === 'ashby' && board) {
+                    // Ashby: Use GraphQL to fetch individual job with full details
+                    const response = await fetchWithTimeout(`https://jobs.ashbyhq.com/api/non-user-graphql?op=ApiJobPosting`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            operationName: 'ApiJobPosting',
+                            variables: { jobPostingId: job.id },
+                            query: `query ApiJobPosting($jobPostingId: String!) {
+                                jobPosting(id: $jobPostingId) {
+                                    id
+                                    title
+                                    descriptionPlain
+                                    descriptionHtml
+                                    locationName
+                                    teamName
+                                    compensationTierSummary
+                                    employmentType
+                                }
+                            }`
+                        })
+                    });
+                    if (response && response.ok) {
+                        const data = await response.json();
+                        const posting = data?.data?.jobPosting;
+                        if (posting) {
+                            // Prefer plain text, fallback to stripped HTML
+                            fullDescription = posting.descriptionPlain || '';
+                            if (!fullDescription && posting.descriptionHtml) {
+                                fullDescription = posting.descriptionHtml
+                                    .replace(/<br\s*\/?>/gi, '\n')
+                                    .replace(/<\/p>/gi, '\n\n')
+                                    .replace(/<\/li>/gi, '\n')
+                                    .replace(/<li>/gi, '• ')
+                                    .replace(/<[^>]*>/g, '')
+                                    .trim();
+                            }
+                            // Add compensation if available
+                            if (posting.compensationTierSummary) {
+                                fullDescription += `\n\nCompensation: ${posting.compensationTierSummary}`;
+                            }
+                            // Add employment type
+                            if (posting.employmentType) {
+                                fullDescription += `\nEmployment Type: ${posting.employmentType}`;
+                            }
+                        }
+                    }
+                }
+
+                // Cache the result
+                fullDescriptionCache[job.id] = fullDescription;
+                return fullDescription;
+            } catch (error) {
+                console.error('Error fetching full job description:', error);
+                return job.description || '';
+            }
+        }
+
+        // ============ JOB DESCRIPTION MODAL FUNCTIONS ============
+        async function showJDModal(jobId) {
+            const job = jobsMap[jobId];
+            if (!job) return;
+
+            const modal = document.getElementById('jd-modal-overlay');
+            const modalBody = document.getElementById('jd-modal-body');
+
+            // Set title, company, source
+            document.getElementById('jd-modal-title').textContent = job.title;
+            document.getElementById('jd-modal-company').textContent = `${job.company} • ${job.location}`;
+            document.getElementById('jd-modal-apply').href = job.url;
+
+            // Set source indicator
+            const sourceNames = { greenhouse: 'Greenhouse', lever: 'Lever', ashby: 'Ashby' };
+            document.getElementById('jd-modal-source').textContent = `Source: ${sourceNames[job.source] || job.source}`;
+
+            // Wire up resume and cover letter buttons
+            document.getElementById('jd-modal-resume').onclick = () => downloadResume(job);
+            document.getElementById('jd-modal-cover').onclick = () => downloadCoverLetter(job);
+
+            // Show modal with loading state
+            modalBody.innerHTML = `
+                <div style="text-align: center; padding: 3rem;">
+                    <span class="loading-spinner"></span>
+                    <p style="color: var(--text-muted); margin-top: 1rem;">Fetching full job description from ${job.source}...</p>
+                </div>
+            `;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // Fetch full description from the ATS
+            const fullDescription = await fetchFullJobDescription(job);
+
+            // Update job object with full description for parsing
+            const jobWithFullDesc = { ...job, description: fullDescription };
+            const parsed = parseJobDescription(jobWithFullDesc);
+
+            // Build modal body content
+            let html = '';
+
+            // Pay Information (if available)
+            if (parsed.payInfo.ranges.length > 0 || parsed.payInfo.equityGrade || parsed.payInfo.basePayGrade) {
+                html += `<div class="jd-section">
+                    <h3><i class="fas fa-dollar-sign"></i> Compensation</h3>
+                    <div class="jd-pay-box">`;
+                if (parsed.payInfo.ranges.length > 0) {
+                    html += `<div class="pay-range">${parsed.payInfo.ranges[0]}</div>`;
+                    if (parsed.payInfo.ranges.length > 1) {
+                        html += `<div class="pay-detail">Additional ranges: ${parsed.payInfo.ranges.slice(1).join(', ')}</div>`;
+                    }
+                }
+                if (parsed.payInfo.basePayGrade) {
+                    html += `<div class="pay-detail">Base Pay Grade: ${parsed.payInfo.basePayGrade}</div>`;
+                }
+                if (parsed.payInfo.equityGrade) {
+                    html += `<div class="pay-detail">Equity Grade: ${parsed.payInfo.equityGrade}</div>`;
+                }
+                html += `</div></div>`;
+            }
+
+            // Location Tags
+            if (parsed.locationTags.length > 0) {
+                html += `<div class="jd-section">
+                    <h3><i class="fas fa-map-marker-alt"></i> Location</h3>
+                    <div class="jd-tags">
+                        ${parsed.locationTags.map(t => `<span class="jd-tag">${t}</span>`).join('')}
+                    </div>
+                </div>`;
+            }
+
+            // Focus Areas
+            if (parsed.focusAreas.length > 0) {
+                html += `<div class="jd-section">
+                    <h3><i class="fas fa-bullseye"></i> Focus Areas</h3>
+                    <div class="jd-tags">
+                        ${parsed.focusAreas.map(f => `<span class="jd-tag">${f}</span>`).join('')}
+                    </div>
+                </div>`;
+            }
+
+            // Technologies
+            if (parsed.allFoundTools.length > 0) {
+                html += `<div class="jd-section">
+                    <h3><i class="fas fa-tools"></i> Technologies</h3>
+                    <div class="jd-tags">
+                        ${parsed.allFoundTools.map(t => `<span class="jd-tag">${t.toUpperCase()}</span>`).join('')}
+                    </div>
+                </div>`;
+            }
+
+            // What You'll Do
+            if (parsed.whatYouDo.length > 0) {
+                html += `<div class="jd-section">
+                    <h3><i class="fas fa-tasks"></i> What You'll Do</h3>
+                    <ul>
+                        ${parsed.whatYouDo.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+                    </ul>
+                </div>`;
+            }
+
+            // What We Look For
+            if (parsed.whatWeLookFor.length > 0) {
+                html += `<div class="jd-section">
+                    <h3><i class="fas fa-user-check"></i> What We Look For</h3>
+                    <ul>
+                        ${parsed.whatWeLookFor.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+                    </ul>
+                </div>`;
+            }
+
+            // Full Description (collapsible)
+            if (parsed.rawDescription && parsed.rawDescription.length > 100) {
+                const cleanDesc = parsed.rawDescription.replace(/<[^>]*>/g, '').trim();
+                html += `<div class="jd-section">
+                    <h3><i class="fas fa-file-alt"></i> Full Job Description</h3>
+                    <div class="jd-full-desc">${escapeHtml(cleanDesc)}</div>
+                </div>`;
+            }
+
+            // Update modal with parsed content
+            modalBody.innerHTML = html;
+        }
+
+        function closeJDModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            const modal = document.getElementById('jd-modal-overlay');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeJDModal();
+        });
 
         // Download resume as Word document - TAILORED TO EACH JOB
         async function downloadResume(job) {
             const { Document, Packer, Paragraph, TextRun, AlignmentType, BorderStyle, HeadingLevel, TableOfContents } = docx;
 
+            // Use cached full description if available for better tailoring
+            const fullDesc = fullDescriptionCache[job.id] || job.description || '';
+            const jobWithFullDesc = { ...job, description: fullDesc };
+
             // Parse the job description
-            const parsedJD = parseJobDescription(job);
+            const parsedJD = parseJobDescription(jobWithFullDesc);
             const jobTitle = job.title.toLowerCase();
             const jobDesc = (job.description || '').toLowerCase();
 
@@ -4075,14 +4709,109 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             }
         }
 
+        // ============ BACKUP/RESTORE FUNCTIONS ============
+
+        // Export all job tracking data to JSON file
+        function exportJobData() {
+            const data = {
+                version: 1,
+                exportDate: new Date().toISOString(),
+                applied_jobs: JSON.parse(localStorage.getItem('applied_jobs') || '[]'),
+                applied_jobs_data: JSON.parse(localStorage.getItem('applied_jobs_data') || '{}'),
+                excluded_jobs: JSON.parse(localStorage.getItem('excluded_jobs') || '[]')
+            };
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `job-tracker-backup-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            alert(`Backup exported!\n\nApplied: ${data.applied_jobs.length} jobs\nHidden: ${data.excluded_jobs.length} jobs`);
+        }
+
+        // Import job tracking data from JSON file
+        function importJobData(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+
+                    // Validate the data structure
+                    if (!data.applied_jobs && !data.excluded_jobs) {
+                        throw new Error('Invalid backup file format');
+                    }
+
+                    // Confirm before overwriting
+                    const currentApplied = getAppliedJobs().length;
+                    const currentExcluded = getExcludedJobs().length;
+                    const importApplied = (data.applied_jobs || []).length;
+                    const importExcluded = (data.excluded_jobs || []).length;
+
+                    const confirmMsg = `Import will restore:\n\n` +
+                        `Applied jobs: ${importApplied} (currently ${currentApplied})\n` +
+                        `Hidden jobs: ${importExcluded} (currently ${currentExcluded})\n\n` +
+                        `Choose merge strategy:\n` +
+                        `OK = Merge (keep existing + add new)\n` +
+                        `Cancel = Abort import`;
+
+                    if (!confirm(confirmMsg)) {
+                        return;
+                    }
+
+                    // Merge strategy: combine existing with imported (no duplicates)
+                    const existingApplied = getAppliedJobs();
+                    const existingExcluded = getExcludedJobs();
+                    const existingAppliedData = getAppliedJobsData();
+
+                    // Merge applied jobs
+                    const mergedApplied = [...new Set([...existingApplied, ...(data.applied_jobs || [])])];
+                    localStorage.setItem('applied_jobs', JSON.stringify(mergedApplied));
+
+                    // Merge applied jobs data
+                    const mergedAppliedData = { ...existingAppliedData, ...(data.applied_jobs_data || {}) };
+                    localStorage.setItem('applied_jobs_data', JSON.stringify(mergedAppliedData));
+
+                    // Merge excluded jobs
+                    const mergedExcluded = [...new Set([...existingExcluded, ...(data.excluded_jobs || [])])];
+                    localStorage.setItem('excluded_jobs', JSON.stringify(mergedExcluded));
+
+                    // Update UI
+                    updateAppliedCount();
+                    updateExcludedCount();
+                    applyFilters();
+
+                    alert(`Import successful!\n\nApplied jobs: ${mergedApplied.length}\nHidden jobs: ${mergedExcluded.length}\n\nBackup date: ${data.exportDate || 'Unknown'}`);
+                } catch (error) {
+                    alert('Error importing backup: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
         // ============ API FETCH FUNCTIONS ============
 
-        // Fetch with timeout helper
-        async function fetchWithTimeout(url, timeout = 8000) {
+        // Fetch with timeout helper - supports both GET and POST with options
+        async function fetchWithTimeout(url, optionsOrTimeout = 8000) {
             const controller = new AbortController();
+            let timeout = 8000;
+            let fetchOptions = { signal: controller.signal };
+
+            // Handle both old signature (url, timeout) and new signature (url, options)
+            if (typeof optionsOrTimeout === 'number') {
+                timeout = optionsOrTimeout;
+            } else if (typeof optionsOrTimeout === 'object') {
+                fetchOptions = { ...optionsOrTimeout, signal: controller.signal };
+                timeout = 8000;
+            }
+
             const id = setTimeout(() => controller.abort(), timeout);
             try {
-                const response = await fetch(url, { signal: controller.signal });
+                const response = await fetch(url, fetchOptions);
                 clearTimeout(id);
                 return response;
             } catch (e) {
@@ -4114,7 +4843,8 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                         workType: extractWorkType(location, rawContent),
                         url: job.absolute_url || '',
                         postedDate: new Date(job.updated_at || Date.now()),
-                        source: 'greenhouse'
+                        source: 'greenhouse',
+                        board: company.board  // Store board for detailed API calls
                     };
                 });
             } catch (error) {
@@ -4146,7 +4876,8 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                         workType: extractWorkType(location, rawContent),
                         url: job.hostedUrl || '',
                         postedDate: new Date(job.createdAt || Date.now()),
-                        source: 'lever'
+                        source: 'lever',
+                        board: company.board  // Store board for detailed API calls
                     };
                 });
             } catch (error) {
@@ -4201,7 +4932,8 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                         workType: extractWorkType(location, description),
                         url: `https://jobs.ashbyhq.com/${company.board}/${job.id}`,
                         postedDate: new Date(job.publishedDate || Date.now()),
-                        source: 'ashby'
+                        source: 'ashby',
+                        board: company.board  // Store board for detailed API calls
                     };
                 });
             } catch (error) {
@@ -4412,8 +5144,8 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                         <td class="col-salary">
                             ${formatSalary(job.salary)}
                         </td>
-                        <td class="col-description">
-                            <span class="description-text">${escapeHtml(generateJobSummary(job))}</span>
+                        <td class="col-description" onclick="showJDModal('${job.id}')" title="Click to view full job description">
+                            <span class="description-text">${generateJobSummary(job)}</span>
                         </td>
                         <td class="col-apply">
                             <div class="apply-actions">
@@ -4705,6 +5437,18 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
         document.getElementById('date-filter').addEventListener('change', applyFilters);
         document.getElementById('refresh-btn').addEventListener('click', fetchAllJobs);
         document.getElementById('excluded-toggle').addEventListener('click', toggleExcludedJobs);
+
+        // Backup/restore event listeners
+        document.getElementById('export-data-btn').addEventListener('click', exportJobData);
+        document.getElementById('import-data-btn').addEventListener('click', () => {
+            document.getElementById('import-file-input').click();
+        });
+        document.getElementById('import-file-input').addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                importJobData(e.target.files[0]);
+                e.target.value = ''; // Reset for next import
+            }
+        });
 
         // Initialize counts on page load
         updateExcludedCount();
