@@ -3466,18 +3466,19 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             const descLower = desc.toLowerCase();
             const title = (job.title || '').toLowerCase();
 
-            // Extract tools/technologies mentioned in JD
+            // Extract tools/technologies mentioned in JD - COMPREHENSIVE LIST
             const allTools = {
-                cloud: ['aws', 'azure', 'oracle cloud', 'oci', 'multi-cloud', 'hybrid cloud'],
-                containers: ['kubernetes', 'k8s', 'docker', 'helm', 'istio', 'envoy', 'eks', 'aks', 'gke', 'openshift', 'rancher'],
+                cloud: ['aws', 'azure', 'gcp', 'google cloud', 'oracle cloud', 'oci', 'multi-cloud', 'hybrid cloud'],
+                containers: ['kubernetes', 'k8s', 'docker', 'helm', 'istio', 'envoy', 'eks', 'aks', 'gke', 'openshift', 'rancher', 'containerd'],
                 iac: ['terraform', 'pulumi', 'cloudformation', 'arm templates', 'bicep', 'ansible', 'puppet', 'chef', 'saltstack'],
-                cicd: ['jenkins', 'github actions', 'gitlab ci', 'circleci', 'argocd', 'fluxcd', 'spinnaker', 'tekton'],
-                monitoring: ['prometheus', 'grafana', 'datadog', 'splunk', 'elk', 'elasticsearch', 'new relic', 'dynatrace', 'opentelemetry'],
+                cicd: ['jenkins', 'github actions', 'gitlab ci', 'circleci', 'argocd', 'fluxcd', 'spinnaker', 'tekton', 'bamboo'],
+                monitoring: ['prometheus', 'grafana', 'datadog', 'splunk', 'elk', 'elasticsearch', 'new relic', 'dynatrace', 'opentelemetry', 'pagerduty', 'opsgenie', 'victorops', 'kibana', 'klodfuse'],
                 gpu: ['gpu', 'cuda', 'nvidia', 'a100', 'v100', 'h100', 'dgx', 'slurm', 'hpc', 'tensorrt'],
                 ml: ['pytorch', 'tensorflow', 'mlflow', 'kubeflow', 'sagemaker', 'ray', 'mlops', 'model serving', 'inference'],
-                data: ['spark', 'kafka', 'hadoop', 'hdfs', 'flink', 'airflow', 'databricks', 'snowflake', 'redshift', 'bigquery'],
-                languages: ['python', 'go', 'golang', 'java', 'bash', 'shell', 'rust', 'typescript'],
-                security: ['vault', 'soc2', 'hipaa', 'fedramp', 'pci', 'iso 27001', 'devsecops', 'sast', 'dast', 'opa', 'trivy']
+                data: ['spark', 'kafka', 'hadoop', 'hdfs', 'flink', 'airflow', 'databricks', 'snowflake', 'redshift', 'bigquery', 'mysql', 'postgresql', 'postgres', 'mongodb', 'redis', 'cassandra', 'dynamodb'],
+                languages: ['python', 'go', 'golang', 'java', 'bash', 'shell', 'rust', 'typescript', 'javascript', 'c++', 'scala', 'ruby'],
+                security: ['vault', 'soc2', 'hipaa', 'fedramp', 'pci', 'iso 27001', 'devsecops', 'sast', 'dast', 'opa', 'trivy', 'saml', 'oauth', 'sso', 'ldap', 'okta'],
+                networking: ['tcp/ip', 'dns', 'load balancer', 'cdn', 'vpn', 'firewall', 'nginx', 'haproxy', 'packet capture', 'wireshark']
             };
 
             const foundTools = {};
@@ -3539,14 +3540,17 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 basePay: null,
                 equityGrade: null,
                 basePayGrade: null,
-                ranges: []
+                ranges: [],
+                bonus: null
             };
 
-            // Extract salary ranges like "$260,000 - $310,000" or "$232K - $282K"
+            // Extract salary ranges - handle various formats including en-dash (–), em-dash (—)
             const salaryPatterns = [
-                /\$[\d,]+(?:k|K)?\s*[-–to]+\s*\$[\d,]+(?:k|K)?(?:\s*(?:per year|annually|\/year)?)?/gi,
-                /base pay[^:]*:\s*\$[\d,]+\s*[-–to]+\s*\$[\d,]+/gi,
-                /salary[^:]*:\s*\$[\d,]+\s*[-–to]+\s*\$[\d,]+/gi
+                /\$[\d,]+(?:\.\d+)?(?:k|K)?\s*[-–—to]+\s*\$[\d,]+(?:\.\d+)?(?:k|K)?(?:\s*(?:per year|annually|\/year|USD)?)?/gi,
+                /base\s*(?:salary|pay)[^$]*\$[\d,]+\s*[-–—to]+\s*\$[\d,]+/gi,
+                /salary\s*(?:range)?[^$]*\$[\d,]+\s*[-–—to]+\s*\$[\d,]+/gi,
+                /compensation[^$]*\$[\d,]+\s*[-–—to]+\s*\$[\d,]+/gi,
+                /(?:USD|usd)\s*[\d,]+\s*[-–—to]+\s*[\d,]+/gi
             ];
             salaryPatterns.forEach(pattern => {
                 const matches = desc.match(pattern);
@@ -3555,16 +3559,33 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 }
             });
 
-            // Extract equity grade like "Equity Grade - 15"
+            // Extract equity/bonus info
             const equityMatch = desc.match(/equity grade\s*[-–:]?\s*(\d+)/i);
-            if (equityMatch) {
-                payInfo.equityGrade = equityMatch[1];
-            }
+            if (equityMatch) payInfo.equityGrade = equityMatch[1];
 
-            // Extract base pay grade like "Base Pay Grade - R"
             const baseGradeMatch = desc.match(/base pay grade\s*[-–:]?\s*([A-Z\d]+)/i);
-            if (baseGradeMatch) {
-                payInfo.basePayGrade = baseGradeMatch[1];
+            if (baseGradeMatch) payInfo.basePayGrade = baseGradeMatch[1];
+
+            const bonusMatch = desc.match(/(?:bonus|commission|equity)[^.]*(?:may apply|eligible|included)/i);
+            if (bonusMatch) payInfo.bonus = bonusMatch[0].trim();
+
+            // ===== ENHANCED: Extract work model (Hybrid/Remote/Onsite with details) =====
+            const workModel = {
+                type: null,
+                details: null
+            };
+
+            // Check for hybrid with days info
+            const hybridMatch = desc.match(/hybrid[^.]*(\d+)\s*days?(?:\s*(?:per|\/|a)\s*week)?/i);
+            if (hybridMatch) {
+                workModel.type = 'Hybrid';
+                workModel.details = `${hybridMatch[1]} days/week in office`;
+            } else if (/hybrid/i.test(descLower)) {
+                workModel.type = 'Hybrid';
+            } else if (/fully\s*remote|100%\s*remote|remote\s*(?:position|role|work)/i.test(descLower)) {
+                workModel.type = 'Remote';
+            } else if (/on-?site|in-?office|in-?person/i.test(descLower)) {
+                workModel.type = 'Onsite';
             }
 
             // ===== ENHANCED: Extract location/remote tags =====
@@ -3573,11 +3594,12 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 /#LI-Remote/gi,
                 /#LI-Hybrid/gi,
                 /#LI-Onsite/gi,
-                /Remote - US/gi,
-                /Remote - USA/gi,
+                /Remote\s*-\s*US/gi,
+                /Remote\s*-\s*USA/gi,
                 /Location:\s*Remote/gi,
                 /fully remote/gi,
-                /100% remote/gi
+                /100% remote/gi,
+                /hybrid.*\d+\s*days/gi
             ];
             tagPatterns.forEach(pattern => {
                 const matches = desc.match(pattern);
@@ -3586,41 +3608,95 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 }
             });
 
-            // ===== ENHANCED: Extract "What You'll Do" section =====
+            // Add work model to location tags if detected
+            if (workModel.type && workModel.details) {
+                locationTags.unshift(`${workModel.type}: ${workModel.details}`);
+            } else if (workModel.type) {
+                locationTags.unshift(workModel.type);
+            }
+
+            // ===== ENHANCED: Extract "What You'll Do" / Responsibilities section =====
             const whatYouDo = [];
-            const doSectionMatch = desc.match(/(?:what you'?ll do|responsibilities|key responsibilities|your role|in this role)[:\s]*([\s\S]*?)(?=what we|requirements|qualifications|about you|who you are|$)/i);
-            if (doSectionMatch) {
-                const bullets = doSectionMatch[1].match(/[•\-\*]\s*([^\n•\-\*]+)/g);
-                if (bullets) {
-                    whatYouDo.push(...bullets.slice(0, 6).map(b => b.replace(/^[•\-\*]\s*/, '').trim()));
+
+            // Try multiple section header patterns
+            const respHeaders = [
+                /(?:what you'?ll do|responsibilities|key responsibilities|your role|in this role|your impact)[:\s]*([\s\S]*?)(?=what we|requirements|qualifications|about you|who you are|preferred|minimum|$)/i,
+                /(?:core responsibilities|job responsibilities|duties)[:\s]*([\s\S]*?)(?=requirements|qualifications|skills|$)/i
+            ];
+
+            for (const pattern of respHeaders) {
+                const match = desc.match(pattern);
+                if (match && match[1]) {
+                    // Extract bullet points - handle various formats
+                    const section = match[1];
+                    // Look for list items (bullets, dashes, numbers)
+                    const bullets = section.match(/(?:^|\n)\s*[•\-\*\d\.]\s*([^\n]+)/gm);
+                    if (bullets && bullets.length > 0) {
+                        bullets.slice(0, 8).forEach(b => {
+                            const clean = b.replace(/^[\s•\-\*\d\.]+/, '').trim();
+                            if (clean.length > 15 && clean.length < 300) {
+                                whatYouDo.push(clean);
+                            }
+                        });
+                    }
+                    if (whatYouDo.length > 0) break;
                 }
             }
 
-            // ===== ENHANCED: Extract "What We Look For" section =====
+            // ===== ENHANCED: Extract "What We Look For" / Requirements section =====
             const whatWeLookFor = [];
-            const lookForMatch = desc.match(/(?:what we look for|requirements|qualifications|about you|who you are|you have)[:\s]*([\s\S]*?)(?=what you|benefits|compensation|about|$)/i);
-            if (lookForMatch) {
-                const bullets = lookForMatch[1].match(/[•\-\*]\s*([^\n•\-\*]+)/g);
-                if (bullets) {
-                    whatWeLookFor.push(...bullets.slice(0, 6).map(b => b.replace(/^[•\-\*]\s*/, '').trim()));
+
+            const reqHeaders = [
+                /(?:what we (?:look for|'re looking for)|requirements|required qualifications|minimum qualifications|about you|who you are|you have)[:\s]*([\s\S]*?)(?=preferred|nice to have|benefits|compensation|about |what you|$)/i,
+                /(?:qualifications|skills required|must have)[:\s]*([\s\S]*?)(?=preferred|nice|benefits|$)/i
+            ];
+
+            for (const pattern of reqHeaders) {
+                const match = desc.match(pattern);
+                if (match && match[1]) {
+                    const section = match[1];
+                    const bullets = section.match(/(?:^|\n)\s*[•\-\*\d\.]\s*([^\n]+)/gm);
+                    if (bullets && bullets.length > 0) {
+                        bullets.slice(0, 8).forEach(b => {
+                            const clean = b.replace(/^[\s•\-\*\d\.]+/, '').trim();
+                            if (clean.length > 10 && clean.length < 300) {
+                                whatWeLookFor.push(clean);
+                            }
+                        });
+                    }
+                    if (whatWeLookFor.length > 0) break;
                 }
-                // Also extract "X+ years" patterns
-                const yearsMatch = lookForMatch[1].match(/(\d+\+?\s*years?[^.•\n]+)/gi);
-                if (yearsMatch) {
-                    whatWeLookFor.push(...yearsMatch.slice(0, 3).map(m => m.trim()));
-                }
+            }
+
+            // Also extract "X+ years" experience requirements if not found above
+            if (whatWeLookFor.length === 0) {
+                const yearsPatterns = [
+                    /(\d+\+?\s*years?[^.\n]*(?:experience|working|in)[^.\n]*)/gi,
+                    /(?:proficiency|proficient|experience)\s+(?:in|with)\s+([^.\n]+)/gi
+                ];
+                yearsPatterns.forEach(pattern => {
+                    const matches = descLower.match(pattern);
+                    if (matches) {
+                        matches.slice(0, 5).forEach(m => {
+                            if (m.length > 15 && m.length < 200) {
+                                whatWeLookFor.push(m.trim());
+                            }
+                        });
+                    }
+                });
             }
 
             return {
                 tools: foundTools,
-                responsibilities: [...new Set(responsibilities)].slice(0, 5),
-                requirements: [...new Set(requirements)].slice(0, 4),
+                responsibilities: [...new Set(responsibilities)].slice(0, 8),
+                requirements: [...new Set(requirements)].slice(0, 6),
                 focusAreas: [...new Set(focusAreas)],
                 allFoundTools: Object.values(foundTools).flat().filter(t => t.length > 0),
                 payInfo,
+                workModel,
                 locationTags: [...new Set(locationTags)],
-                whatYouDo: [...new Set(whatYouDo)].slice(0, 6),
-                whatWeLookFor: [...new Set(whatWeLookFor)].slice(0, 6),
+                whatYouDo: [...new Set(whatYouDo)].slice(0, 8),
+                whatWeLookFor: [...new Set(whatWeLookFor)].slice(0, 8),
                 rawDescription: desc
             };
         }
@@ -3837,23 +3913,39 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             let html = '';
 
             // Pay Information (if available)
-            if (parsed.payInfo.ranges.length > 0 || parsed.payInfo.equityGrade || parsed.payInfo.basePayGrade) {
+            if (parsed.payInfo.ranges.length > 0 || parsed.payInfo.equityGrade || parsed.payInfo.basePayGrade || parsed.payInfo.bonus) {
                 html += `<div class="jd-section">
                     <h3><i class="fas fa-dollar-sign"></i> Compensation</h3>
                     <div class="jd-pay-box">`;
                 if (parsed.payInfo.ranges.length > 0) {
-                    html += `<div class="pay-range">${parsed.payInfo.ranges[0]}</div>`;
+                    html += `<div class="pay-range">${escapeHtml(parsed.payInfo.ranges[0])}</div>`;
                     if (parsed.payInfo.ranges.length > 1) {
-                        html += `<div class="pay-detail">Additional ranges: ${parsed.payInfo.ranges.slice(1).join(', ')}</div>`;
+                        html += `<div class="pay-detail">Additional ranges: ${escapeHtml(parsed.payInfo.ranges.slice(1).join(', '))}</div>`;
                     }
                 }
                 if (parsed.payInfo.basePayGrade) {
-                    html += `<div class="pay-detail">Base Pay Grade: ${parsed.payInfo.basePayGrade}</div>`;
+                    html += `<div class="pay-detail">Base Pay Grade: ${escapeHtml(parsed.payInfo.basePayGrade)}</div>`;
                 }
                 if (parsed.payInfo.equityGrade) {
-                    html += `<div class="pay-detail">Equity Grade: ${parsed.payInfo.equityGrade}</div>`;
+                    html += `<div class="pay-detail">Equity Grade: ${escapeHtml(parsed.payInfo.equityGrade)}</div>`;
+                }
+                if (parsed.payInfo.bonus) {
+                    html += `<div class="pay-detail" style="color: #f59e0b;">+ ${escapeHtml(parsed.payInfo.bonus)}</div>`;
                 }
                 html += `</div></div>`;
+            }
+
+            // Work Model (if detected)
+            if (parsed.workModel && parsed.workModel.type) {
+                const modelColor = parsed.workModel.type === 'Remote' ? '#16a34a' : parsed.workModel.type === 'Hybrid' ? '#f59e0b' : '#6366f1';
+                html += `<div class="jd-section">
+                    <h3><i class="fas fa-building"></i> Work Model</h3>
+                    <div class="jd-tags">
+                        <span class="jd-tag" style="background: ${modelColor}22; color: ${modelColor}; border-color: ${modelColor}44;">
+                            ${parsed.workModel.type}${parsed.workModel.details ? ': ' + parsed.workModel.details : ''}
+                        </span>
+                    </div>
+                </div>`;
             }
 
             // Location Tags
