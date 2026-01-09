@@ -93,12 +93,24 @@
 
         .jobs-container {
             max-width: 100% !important;
-            padding: 1rem 1.5rem !important;
+            padding: 0.5rem 1rem !important;
         }
 
-        /* Hide Document Manager at bottom for full screen mode */
+        /* Document Manager at bottom - FORCE VISIBLE */
         .doc-manager-section {
-            display: none !important;
+            display: block !important;
+            margin-top: 1rem;
+            position: relative !important;
+            z-index: 50 !important;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
+            border-top: 3px solid #3b82f6 !important;
+            padding: 1.5rem 1rem !important;
+            box-shadow: 0 -4px 20px rgba(59, 130, 246, 0.2) !important;
+        }
+
+        .doc-manager-section h3 {
+            font-size: 1rem !important;
+            color: #fff !important;
         }
 
         /* Minimal Top Bar */
@@ -106,7 +118,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.75rem 1.5rem;
+            padding: 0.4rem 1rem;
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--glass-border);
             position: sticky;
@@ -115,12 +127,12 @@
         }
 
         .jobs-topbar-title {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             color: var(--text-primary);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
 
         .jobs-topbar-title span {
@@ -149,14 +161,14 @@
             color: var(--primary);
         }
 
-        /* Fresh Jobs Ticker */
+        /* Fresh Jobs Ticker - Compact */
         .fresh-jobs-ticker {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             color: white;
-            padding: 12px 0;
+            padding: 6px 0;
             overflow: hidden;
             position: relative;
-            border-bottom: 2px solid var(--primary);
+            border-bottom: 1px solid var(--primary);
         }
 
         .ticker-label {
@@ -166,12 +178,12 @@
             bottom: 0;
             background: var(--primary);
             color: white;
-            padding: 12px 20px;
+            padding: 6px 12px;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             z-index: 10;
             box-shadow: 3px 0 10px rgba(0,0,0,0.3);
         }
@@ -186,13 +198,13 @@
         }
 
         .ticker-wrapper {
-            margin-left: 140px;
+            margin-left: 100px;
             overflow: hidden;
         }
 
         .ticker-content {
             display: flex;
-            animation: scroll 60s linear infinite;
+            animation: scroll 120s linear infinite;
             width: max-content;
         }
 
@@ -208,10 +220,10 @@
         .ticker-item {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 0 30px;
+            gap: 6px;
+            padding: 0 20px;
             white-space: nowrap;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             border-right: 1px solid rgba(255,255,255,0.2);
         }
 
@@ -230,10 +242,10 @@
 
         .ticker-item .time {
             color: #4ade80;
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             background: rgba(74, 222, 128, 0.15);
-            padding: 2px 8px;
-            border-radius: 10px;
+            padding: 1px 6px;
+            border-radius: 8px;
         }
 
         .ticker-item a {
@@ -246,7 +258,7 @@
         }
 
         .jobs-section {
-            padding: 40px 1.5rem 60px;
+            padding: 20px 1rem 30px;
             background: var(--bg-primary);
         }
 
@@ -259,13 +271,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.75rem;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 0.5rem;
         }
 
         .jobs-header h2 {
-            font-size: 1.5rem;
+            font-size: 1.1rem;
             margin: 0;
         }
 
@@ -275,15 +287,15 @@
 
         .jobs-stats {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
             align-items: center;
         }
 
         .jobs-stat {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-size: 0.85rem;
+            gap: 0.3rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
         }
 
@@ -292,27 +304,27 @@
             font-family: var(--font-mono);
         }
 
-        /* Filters */
+        /* Filters - Compact */
         .filters-bar {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
             flex-wrap: wrap;
             align-items: center;
         }
 
         .search-box {
             flex: 1;
-            min-width: 250px;
+            min-width: 180px;
             position: relative;
         }
 
         .search-box input {
             width: 100%;
-            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            padding: 0.5rem 0.75rem 0.5rem 2rem;
             border: 1px solid var(--glass-border);
             border-radius: var(--radius);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-family: var(--font-sans);
             transition: all 0.2s;
             background: var(--bg-secondary);
@@ -326,27 +338,28 @@
         .search-box input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--primary-light);
+            box-shadow: 0 0 0 2px var(--primary-light);
         }
 
         .search-box i {
             position: absolute;
-            left: 1rem;
+            left: 0.75rem;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
+            font-size: 0.8rem;
         }
 
         .filter-select {
-            padding: 0.75rem 1rem;
+            padding: 0.5rem 0.75rem;
             border: 1px solid var(--glass-border);
             border-radius: var(--radius);
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-family: var(--font-sans);
             background: var(--bg-secondary);
             color: var(--text-primary);
             cursor: pointer;
-            min-width: 150px;
+            min-width: 120px;
         }
 
         .filter-select option {
@@ -360,17 +373,17 @@
         }
 
         .refresh-btn {
-            padding: 0.75rem 1.25rem;
+            padding: 0.5rem 0.75rem;
             background: var(--primary);
             color: var(--white);
             border: none;
             border-radius: var(--radius);
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.3rem;
             transition: all 0.2s;
         }
 
@@ -387,25 +400,26 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Jobs Table */
+        /* Jobs Table - Compact */
         .jobs-table-wrapper {
             overflow-x: auto;
             border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius);
             background: var(--bg-secondary);
         }
 
         .jobs-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
         }
 
         .jobs-table th {
             background: var(--bg-tertiary);
-            padding: 1rem;
+            padding: 0.5rem 0.75rem;
             text-align: left;
             font-weight: 600;
+            font-size: 0.7rem;
             color: var(--text-primary);
             border-bottom: 1px solid var(--glass-border);
             white-space: nowrap;
@@ -423,15 +437,15 @@
         }
 
         .jobs-table th i {
-            margin-left: 0.5rem;
-            font-size: 0.7rem;
+            margin-left: 0.3rem;
+            font-size: 0.6rem;
             opacity: 0.5;
         }
 
         .jobs-table td {
-            padding: 1rem;
+            padding: 0.5rem 0.75rem;
             border-bottom: 1px solid var(--glass-border);
-            vertical-align: top;
+            vertical-align: middle;
             color: var(--text-secondary);
         }
 
@@ -443,36 +457,36 @@
             border-bottom: none;
         }
 
-        /* Column Styles */
+        /* Column Styles - Compact */
         .col-role {
-            min-width: 250px;
+            min-width: 180px;
         }
 
         .col-company {
-            min-width: 150px;
+            min-width: 100px;
         }
 
         .col-location {
-            min-width: 150px;
+            min-width: 100px;
         }
 
         .col-distance {
-            min-width: 130px;
+            min-width: 80px;
             white-space: nowrap;
         }
 
         .col-date {
-            min-width: 100px;
+            min-width: 70px;
             white-space: nowrap;
         }
 
         .col-description {
-            min-width: 300px;
-            max-width: 400px;
+            min-width: 200px;
+            max-width: 300px;
         }
 
         .col-apply {
-            min-width: 100px;
+            min-width: 70px;
             text-align: center;
         }
 
@@ -480,11 +494,12 @@
             font-weight: 600;
             color: var(--text-primary);
             display: block;
-            margin-bottom: 0.25rem;
+            font-size: 0.8rem;
+            line-height: 1.3;
         }
 
         .role-dept {
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
         }
 
@@ -493,13 +508,14 @@
             color: var(--text-primary);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.3rem;
+            font-size: 0.75rem;
         }
 
         .company-logo {
-            width: 24px;
-            height: 24px;
-            border-radius: 4px;
+            width: 18px;
+            height: 18px;
+            border-radius: 3px;
             object-fit: contain;
             background: var(--bg-tertiary);
         }
@@ -507,24 +523,25 @@
         .location-text {
             display: flex;
             align-items: center;
-            gap: 0.35rem;
+            gap: 0.25rem;
             color: var(--text-muted);
+            font-size: 0.7rem;
         }
 
         .location-text i {
-            font-size: 0.75rem;
+            font-size: 0.6rem;
             color: var(--primary);
         }
 
         .remote-badge {
             display: inline-block;
-            padding: 0.15rem 0.5rem;
+            padding: 0.1rem 0.4rem;
             background: rgba(34, 197, 94, 0.1);
             color: #16a34a;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             font-weight: 600;
             border-radius: 50px;
-            margin-left: 0.5rem;
+            margin-left: 0.3rem;
         }
 
         /* ATS Match Score Badges */
@@ -647,8 +664,8 @@
 
         .distance-badge {
             display: inline-block;
-            padding: 0.25rem 0.6rem;
-            font-size: 0.7rem;
+            padding: 0.15rem 0.4rem;
+            font-size: 0.6rem;
             font-weight: 600;
             border-radius: 50px;
             white-space: nowrap;
@@ -671,9 +688,10 @@
 
         .description-text {
             color: var(--text-muted);
-            line-height: 1.5;
+            line-height: 1.4;
+            font-size: 0.7rem;
             display: -webkit-box;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
@@ -681,13 +699,13 @@
         .apply-btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.35rem;
-            padding: 0.5rem 1rem;
+            gap: 0.25rem;
+            padding: 0.35rem 0.6rem;
             background: var(--primary);
             color: var(--white);
             text-decoration: none;
             border-radius: var(--radius);
-            font-size: 0.8rem;
+            font-size: 0.65rem;
             font-weight: 600;
             transition: all 0.2s;
             white-space: nowrap;
@@ -696,12 +714,11 @@
         .apply-btn:hover {
             background: var(--primary-dark);
             color: var(--white);
-            transform: translateY(-1px);
         }
 
         .apply-actions {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.3rem;
             align-items: center;
         }
 
@@ -709,8 +726,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 32px;
-            height: 32px;
+            width: 24px;
+            height: 24px;
             background: var(--bg-tertiary);
             color: var(--primary);
             border: 1px solid var(--glass-border);
@@ -723,19 +740,18 @@
             background: var(--primary);
             color: var(--white);
             border-color: var(--primary);
-            transform: translateY(-1px);
         }
 
         .cover-letter-btn i {
-            font-size: 0.85rem;
+            font-size: 0.7rem;
         }
 
         .resume-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 32px;
-            height: 32px;
+            width: 24px;
+            height: 24px;
             background: var(--bg-tertiary);
             color: #4ade80;
             border: 1px solid var(--glass-border);
@@ -1400,6 +1416,9 @@
             Job <span>Listings</span>
         </div>
         <div class="jobs-topbar-actions">
+            <a href="#document-manager" onclick="scrollToDocManager(); return false;" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 600; font-size: 0.8rem; display: flex; align-items: center; gap: 0.4rem; text-decoration: none; box-shadow: 0 2px 8px rgba(59,130,246,0.4);">
+                <i class="fas fa-folder-open"></i> DOCUMENTS
+            </a>
             <a href="../" class="topbar-link">
                 <i class="fas fa-home"></i> Portfolio
             </a>
@@ -1816,22 +1835,15 @@
                     <option value="seattle">Seattle / Washington</option>
                 </select>
                 <select class="filter-select" id="date-filter">
-                    <option value="">All Dates</option>
+                    <option value="" selected>All Dates</option>
                     <option value="0.125">Last 3 hours</option>
                     <option value="0.25">Last 6 hours</option>
                     <option value="0.5">Last 12 hours</option>
-                    <option value="1" selected>Last 24 hours</option>
+                    <option value="1">Last 24 hours</option>
                     <option value="3">Last 3 days</option>
                     <option value="7">Last 7 days</option>
                     <option value="14">Last 14 days</option>
                     <option value="30">Last 30 days</option>
-                </select>
-                <select class="filter-select" id="ats-filter" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(59, 130, 246, 0.1)); border-color: #16a34a;">
-                    <option value="0">All ATS Scores</option>
-                    <option value="75" selected>75%+ Match (Recommended)</option>
-                    <option value="85">85%+ Match (Excellent)</option>
-                    <option value="60">60%+ Match</option>
-                    <option value="40">40%+ Match</option>
                 </select>
                 <button class="refresh-btn" id="refresh-btn">
                     <i class="fas fa-sync-alt"></i>
@@ -1844,12 +1856,14 @@
                 <!-- Populated by JavaScript -->
             </div>
 
+            <!-- ATS Score Distribution - Hidden by default since ATS filter is off -->
+            <div class="ats-distribution" id="ats-distribution" style="display: none;"></div>
+
             <!-- Jobs Table -->
             <div class="jobs-table-wrapper">
                 <table class="jobs-table">
                     <thead>
                         <tr>
-                            <th class="col-ats sortable" data-sort="ats" title="ATS Match Score - How well this job matches your resume">ATS <i class="fas fa-sort"></i></th>
                             <th class="col-role sortable" data-sort="title">Role <i class="fas fa-sort"></i></th>
                             <th class="col-company sortable" data-sort="company">Company <i class="fas fa-sort"></i></th>
                             <th class="col-location">Location</th>
@@ -1883,7 +1897,7 @@
     </section>
 
     <!-- Document Manager Section (Bottom of Page) -->
-    <section class="doc-manager-section" style="padding: 30px 1.5rem; background: var(--bg-secondary); border-top: 1px solid var(--glass-border);">
+    <section id="document-manager" class="doc-manager-section">
         <div style="max-width: 1400px; margin: 0 auto;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
                 <div style="display: flex; align-items: center; gap: 0.75rem;">
@@ -1961,6 +1975,19 @@
         </div>
     </section>
     </main>
+
+    <!-- Document Manager Quick Access Button (Fixed) -->
+    <div id="doc-manager-fab" onclick="scrollToDocManager()" style="position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #3b82f6, #8b5cf6); border-radius: 30px; display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1rem; cursor: pointer; box-shadow: 0 4px 20px rgba(59, 130, 246, 0.5); z-index: 1000; transition: transform 0.2s; animation: pulse-fab 2s infinite;">
+        <i class="fas fa-folder-open" style="color: white; font-size: 1.1rem;"></i>
+        <span style="color: white; font-weight: 600; font-size: 0.85rem;">Documents</span>
+    </div>
+    <style>
+        @keyframes pulse-fab {
+            0%, 100% { box-shadow: 0 4px 20px rgba(59, 130, 246, 0.5); }
+            50% { box-shadow: 0 4px 30px rgba(59, 130, 246, 0.8); }
+        }
+        #doc-manager-fab:hover { transform: scale(1.05); }
+    </style>
 
     <!-- Footer -->
     <footer style="padding: 1.5rem 2rem;">
@@ -2045,114 +2072,56 @@
         // STRICT filter - only roles matching Sudhakar's 18+ years experience
         // Cloud AI Architect | Director Platform Engineering | Senior SRE
         function isRelevantJob(job) {
-            const title = job.title.toLowerCase();
+            const title = (job.title || '').toLowerCase();
 
-            // EXACT role patterns that match resume (Senior/Staff/Principal+ only)
-            const exactMatches = [
+            // INCLUSIVE patterns - if ANY of these match, the job is relevant
+            // Using simple string matching for reliability
+            const includeKeywords = [
+                // DevOps - CRITICAL
+                'devops', 'dev ops', 'dev-ops',
+                // SRE - CRITICAL
+                'sre', 'site reliability', 'reliability engineer',
+                // Platform
+                'platform engineer', 'platform architect',
+                // Infrastructure
+                'infrastructure', 'infra engineer',
+                // Cloud
+                'cloud engineer', 'cloud architect', 'cloud ops',
+                // Systems
+                'systems engineer', 'system engineer',
                 // Architect roles
-                /(staff|senior|principal|lead)?\s*cloud architect/i,
-                /(staff|senior|principal|lead)?\s*solutions architect/i,
-                /(staff|senior|principal|lead)?\s*platform architect/i,
-                /(staff|senior|principal|lead)?\s*infrastructure architect/i,
-                /(staff|senior|principal|lead)?\s*enterprise architect/i,
-                /(staff|senior|principal|lead)?\s*systems architect/i,
-                /(staff|senior|principal|lead)?\s*technical architect/i,
-
-                // DevOps (Senior/Staff+)
-                /(senior|staff|principal|lead)\s+devops/i,
-                /devops\s+(senior|staff|principal|lead|manager|director|architect)/i,
-                /(senior|staff|principal|lead)\s+dev\s*ops/i,
-
-                // SRE roles (Senior/Staff+)
-                /(senior|staff|principal|lead)\s+sre/i,
-                /sre\s+(senior|staff|principal|lead|manager|director)/i,
-                /(senior|staff|principal|lead)\s+site reliability/i,
-                /site reliability\s+(senior|staff|principal|lead|manager|director)/i,
-
-                // Platform Engineering (Senior/Staff+)
-                /(senior|staff|principal|lead)\s+platform engineer/i,
-                /platform engineer\s+(senior|staff|principal|lead)/i,
-                /platform\s+(manager|director|lead|head)/i,
-
-                // Infrastructure (Senior/Staff+)
-                /(senior|staff|principal|lead)\s+infrastructure/i,
-                /infrastructure\s+(senior|staff|principal|lead|manager|director)/i,
-
-                // Cloud Engineering (Senior/Staff+)
-                /(senior|staff|principal|lead)\s+cloud engineer/i,
-                /cloud engineer\s+(senior|staff|principal|lead)/i,
-
-                // AI/ML Infrastructure & MLOps
-                /ai\s*infrastructure/i,
-                /ml\s*infrastructure/i,
-                /ai.?ml\s*(devops|infrastructure|platform)/i,
-                /(senior|staff|principal|lead)?\s*mlops/i,
-                /mlops\s+(senior|staff|principal|lead|manager|engineer)/i,
-                /aiops/i,
-                /ml\s*platform/i,
-                /gpu\s*(infrastructure|platform|engineer|architect)/i,
-
-                // Director/VP/Head level (infrastructure/cloud focused)
-                /director.*(infrastructure|platform|cloud|sre|devops)/i,
-                /vp.*(infrastructure|platform|cloud|sre|devops)/i,
-                /head of.*(infrastructure|platform|cloud|sre|devops)/i,
-
-                // Engineering Manager (infrastructure focused)
-                /engineering manager.*(infrastructure|platform|cloud|sre|devops)/i,
+                'solutions architect', 'technical architect', 'enterprise architect',
+                // AI/ML Infra
+                'mlops', 'ml ops', 'aiops', 'ml infrastructure', 'ai infrastructure',
+                'gpu', 'ml platform', 'ai platform',
+                // Kubernetes
+                'kubernetes', 'k8s',
+                // Production
+                'production engineer',
             ];
 
-            const matchesExact = exactMatches.some(pattern => pattern.test(title));
-            if (!matchesExact) return false;
+            // Check if title contains any include keyword
+            const isIncluded = includeKeywords.some(keyword => title.includes(keyword));
+            if (!isIncluded) return false;
 
-            // STRICT exclusions
-            const strictExclusions = [
-                // Hardware/Mechanical
-                /mechanical/i, /hardware/i, /electrical/i, /firmware/i,
-                /sensor/i, /av\s/i, /autonomous vehicle/i, /robotics/i,
-                /embedded/i, /fpga/i, /asic/i, /chip/i,
-
-                // Product/Design
-                /product engineer/i, /product manager/i, /product owner/i,
-                /product design/i, /commercialization/i,
-                /ux/i, /ui engineer/i, /design engineer/i,
-
-                // Frontend/Backend/Full Stack
-                /frontend/i, /front-end/i, /backend/i, /back-end/i,
-                /full.?stack/i, /fullstack/i,
-
-                // Data Science/ML Research
-                /data scientist/i, /machine learning engineer/i,
-                /research scientist/i, /applied scientist/i,
-
-                // Generic Software (without infra context)
-                /software engineer(?!.*(infrastructure|platform|sre|cloud|devops))/i,
-
-                // Business/Non-technical
-                /sales/i, /marketing/i, /recruiter/i,
-                /customer/i, /account/i, /legal/i, /finance/i,
-
-                // Mobile
-                /mobile/i, /ios\s/i, /android/i,
-
-                // QA/Testing
-                /qa engineer/i, /test engineer/i, /quality/i,
-
-                // Entry-level / New Grad / Intern
-                /intern/i, /internship/i,
-                /fresher/i, /fresh graduate/i,
-                /new grad/i, /new graduate/i, /recent grad/i,
-                /associate(?!\s*(director|vp))/i,
-                /junior/i, /entry.?level/i,
-                /graduate\s*(program|engineer|role)/i,
-                /university\s*grad/i, /college\s*grad/i,
-                /early career/i, /early.?in.?career/i,
-
-                // Manufacturing/Operations
-                /manufacturing/i, /supply chain/i,
-                /operations(?!.*(sre|devops|platform|cloud))/i,
+            // EXCLUSION keywords - only exclude if these specific terms appear
+            const excludeKeywords = [
+                'intern', 'internship',
+                'junior', 'entry level', 'entry-level',
+                'new grad', 'new graduate', 'fresh grad',
+                'associate engineer',
+                'mechanical', 'electrical', 'hardware',
+                'embedded', 'firmware',
+                'frontend', 'front-end', 'front end',
+                'backend', 'back-end', 'back end',
+                'fullstack', 'full-stack', 'full stack',
+                'mobile engineer', 'ios engineer', 'android engineer',
+                'data scientist', 'research scientist',
+                'product manager', 'product owner',
+                'sales', 'marketing', 'recruiter',
             ];
 
-            const isExcluded = strictExclusions.some(pattern => pattern.test(title));
+            const isExcluded = excludeKeywords.some(keyword => title.includes(keyword));
             return !isExcluded;
         }
 
@@ -3555,8 +3524,15 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             const loc = location.toLowerCase();
             // Exclude non-US locations first
             if (NON_US_LOCATIONS.some(nonUS => loc.includes(nonUS))) return false;
-            // Include if matches US locations or contains Remote (assuming US remote)
-            if (loc.includes('remote') && !NON_US_LOCATIONS.some(nonUS => loc.includes(nonUS))) return true;
+            // Check for explicit US remote
+            if (loc.includes('remote')) {
+                // Accept if it mentions US/USA or has no country specified
+                if (loc.includes('us') || loc.includes('usa') || loc.includes('united states') || loc.includes('america')) return true;
+                // Reject if it says remote + any other region
+                if (loc.includes('global') || loc.includes('worldwide') || loc.includes('international') || loc.includes('emea') || loc.includes('apac')) return false;
+                // Accept generic "Remote" as US (most US companies)
+                return true;
+            }
             return US_LOCATIONS.some(usLoc => loc.includes(usLoc));
         }
 
@@ -3619,7 +3595,8 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
         // Render company tags
         function renderCompanyTags() {
             const companyCounts = {};
-            allJobs.forEach(job => {
+            // Only count US jobs
+            allJobs.filter(job => isUSLocation(job.location)).forEach(job => {
                 companyCounts[job.company] = (companyCounts[job.company] || 0) + 1;
             });
 
@@ -3675,35 +3652,8 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 const dateClass = daysAgo <= 1 ? 'date-new' : 'date-text';
                 const dateText = daysAgo === 0 ? 'Today' : daysAgo === 1 ? 'Yesterday' : `${daysAgo} days ago`;
 
-                // Calculate ATS score
-                const atsResult = calculateATSScore(job);
-                const atsScore = atsResult.score;
-                const atsBadgeClass = getATSBadgeClass(atsScore);
-                const atsLabel = getATSLabel(atsScore);
-                const topKeywords = atsResult.matchedKeywords.slice(0, 8);
-
                 return `
                     <tr>
-                        <td class="col-ats">
-                            <div class="ats-tooltip">
-                                <span class="ats-score-badge ${atsBadgeClass}">
-                                    <i class="fas fa-chart-line"></i>
-                                    ${atsScore}%
-                                </span>
-                                <div class="ats-tooltip-content">
-                                    <h4>${atsLabel} Match (${atsScore}%)</h4>
-                                    <div class="ats-breakdown">
-                                        <div>Titles: ${atsResult.breakdown.title} | Skills: ${atsResult.breakdown.skills}</div>
-                                        <div>Certs: ${atsResult.breakdown.certs} | Exp: ${atsResult.breakdown.experience}</div>
-                                    </div>
-                                    ${topKeywords.length > 0 ? `
-                                    <div class="ats-keywords">
-                                        ${topKeywords.map(k => `<span class="ats-keyword-tag">${k}</span>`).join('')}
-                                    </div>
-                                    ` : '<div class="ats-keywords">No matching keywords found</div>'}
-                                </div>
-                            </div>
-                        </td>
                         <td class="col-role">
                             <span class="role-title">${escapeHtml(job.title)}</span>
                             ${job.department ? `<span class="role-dept">${escapeHtml(job.department)}</span>` : ''}
@@ -3806,7 +3756,6 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             const searchQuery = document.getElementById('search-input').value;
             const locationFilter = document.getElementById('location-filter').value;
             const dateFilter = document.getElementById('date-filter').value;
-            const atsFilter = parseInt(document.getElementById('ats-filter').value) || 0;
 
             filteredJobs = [...allJobs];
 
@@ -3824,33 +3773,14 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             // Apply search
             filteredJobs = searchJobs(filteredJobs, searchQuery);
 
-            // Apply ATS score filter (THE KEY FEATURE!)
-            if (atsFilter > 0) {
-                filteredJobs = filteredJobs.filter(job => {
-                    const atsResult = calculateATSScore(job);
-                    job._atsScore = atsResult.score; // Cache the score
-                    return atsResult.score >= atsFilter;
-                });
-            } else {
-                // Still calculate and cache ATS scores for sorting
-                filteredJobs.forEach(job => {
-                    job._atsScore = calculateATSScore(job).score;
-                });
-            }
-
-            // Sort by ATS score (highest first), then distance, then by date
+            // Sort by distance from San Jose (closest first), then by date (newest first)
             filteredJobs.sort((a, b) => {
-                // First by ATS score (highest first)
-                const atsA = a._atsScore || 0;
-                const atsB = b._atsScore || 0;
-                if (atsB !== atsA) return atsB - atsA;
-
-                // Then by distance from San Jose (closest first)
+                // First by distance from San Jose (closest first)
                 const distA = getDistancePriority(a.location);
                 const distB = getDistancePriority(b.location);
                 if (distA !== distB) return distA - distB;
 
-                // Finally by date (newest first)
+                // Then by date (newest first)
                 return b.postedDate - a.postedDate;
             });
 
@@ -3905,10 +3835,44 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                     }
                 }
 
-                allJobs = allResults
+                // Get all raw jobs first
+                const rawJobs = allResults
                     .filter(r => r.status === 'fulfilled')
                     .flatMap(r => r.value || [])
-                    .filter(job => job && isRelevantJob(job));
+                    .filter(job => job);
+
+                // Debug: Log raw job titles to understand what's being filtered
+                console.log(`📥 Total raw jobs fetched: ${rawJobs.length}`);
+
+                // Filter to relevant jobs
+                allJobs = rawJobs.filter(job => isRelevantJob(job));
+
+                // Log filtering stats
+                const filteredOut = rawJobs.length - allJobs.length;
+                console.log(`✅ Relevant jobs kept: ${allJobs.length}`);
+                console.log(`❌ Jobs filtered out: ${filteredOut}`);
+
+                // Show sample of job titles that matched and didn't match
+                const matchedTitles = allJobs.slice(0, 10).map(j => j.title);
+                const rejectedTitles = rawJobs.filter(j => !isRelevantJob(j)).slice(0, 20).map(j => j.title);
+
+                console.log('🎯 Sample matched titles:', matchedTitles);
+                console.log('🚫 Sample rejected titles:', rejectedTitles);
+
+                // Count by category
+                const devopsJobs = allJobs.filter(j => /devops|dev\s*ops/i.test(j.title));
+                const sreJobs = allJobs.filter(j => /\bsre\b|site reliability|reliability engineer/i.test(j.title));
+                const platformJobs = allJobs.filter(j => /platform engineer/i.test(j.title));
+                const cloudJobs = allJobs.filter(j => /cloud|architect/i.test(j.title));
+                const mlJobs = allJobs.filter(j => /mlops|ml\s*infra|ai\s*infra|gpu/i.test(j.title));
+
+                console.log('📊 Job breakdown by category:', {
+                    'DevOps': devopsJobs.length,
+                    'SRE': sreJobs.length,
+                    'Platform': platformJobs.length,
+                    'Cloud/Architect': cloudJobs.length,
+                    'ML/AI Infra': mlJobs.length
+                });
 
             } catch (e) {
                 console.error('Error fetching jobs:', e);
@@ -3924,7 +3888,7 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             applyFilters();
         }
 
-        // Update the scrolling ticker with jobs from last 6 hours
+        // Update the scrolling ticker with jobs from last 6 hours (US only)
         function updateFreshJobsTicker() {
             const ticker = document.getElementById('freshJobsTicker');
             if (!ticker || allJobs.length === 0) {
@@ -3932,9 +3896,10 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 return;
             }
 
-            // Filter to only jobs posted in the last 6 hours
+            // Filter to only US jobs posted in the last 6 hours
             const sixHoursAgo = new Date(Date.now() - 6 * 60 * 60 * 1000);
             const freshJobs = [...allJobs]
+                .filter(job => isUSLocation(job.location)) // US only!
                 .filter(job => job.postedDate >= sixHoursAgo)
                 .sort((a, b) => b.postedDate - a.postedDate);
 
@@ -3975,7 +3940,6 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
         document.getElementById('search-input').addEventListener('input', debounce(applyFilters, 300));
         document.getElementById('location-filter').addEventListener('change', applyFilters);
         document.getElementById('date-filter').addEventListener('change', applyFilters);
-        document.getElementById('ats-filter').addEventListener('change', applyFilters);
         document.getElementById('refresh-btn').addEventListener('click', fetchAllJobs);
 
         // Sortable columns
@@ -3983,12 +3947,6 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             th.addEventListener('click', () => {
                 const sortKey = th.dataset.sort;
                 filteredJobs.sort((a, b) => {
-                    if (sortKey === 'ats') {
-                        // Sort by ATS score (highest first)
-                        const atsA = a._atsScore || calculateATSScore(a).score;
-                        const atsB = b._atsScore || calculateATSScore(b).score;
-                        return atsB - atsA;
-                    }
                     if (sortKey === 'distance') {
                         const distA = getDistancePriority(a.location);
                         const distB = getDistancePriority(b.location);
@@ -4650,6 +4608,16 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 alert('Active cover letter updated locally. To auto-sync, configure your GitHub token in settings above.');
             } else {
                 alert('Active cover letter updated locally. GitHub sync failed: ' + result.message);
+            }
+        }
+
+        // Scroll to Document Manager
+        function scrollToDocManager() {
+            const docManager = document.getElementById('document-manager');
+            if (docManager) {
+                docManager.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                console.error('Document Manager section not found!');
             }
         }
 
