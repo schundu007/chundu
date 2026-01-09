@@ -25,7 +25,7 @@
     <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <style>
-        /* Dark Theme Variables for Jobs Page */
+        /* Dark Theme Variables (Default) */
         :root {
             --bg-primary: #0a0a0f;
             --bg-secondary: #111118;
@@ -35,6 +35,8 @@
             --text-secondary: #a1a1aa;
             --text-muted: #71717a;
             --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #06b6d4;
             --glass-bg: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.08);
             --glass-border-hover: rgba(255, 255, 255, 0.15);
@@ -48,6 +50,125 @@
             --primary-light: rgba(59, 130, 246, 0.2);
             --radius: 8px;
             --radius-lg: 12px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Light Theme Variables */
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f1f5f9;
+            --bg-card: rgba(0, 0, 0, 0.02);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --accent-blue: #2563eb;
+            --accent-purple: #7c3aed;
+            --accent-cyan: #0891b2;
+            --glass-bg: rgba(0, 0, 0, 0.02);
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --glass-border-hover: rgba(0, 0, 0, 0.15);
+            --white: #ffffff;
+            --light: #f1f5f9;
+            --light-alt: #e2e8f0;
+            --dark: #0f172a;
+            --border: rgba(0, 0, 0, 0.1);
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: rgba(37, 99, 235, 0.15);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Light theme specific overrides */
+        [data-theme="light"] .jobs-topbar {
+            background: #ffffff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="light"] .jobs-table-wrapper {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="light"] .jobs-table th {
+            background: #f1f5f9;
+        }
+
+        [data-theme="light"] .jobs-table tr:hover {
+            background: rgba(59, 130, 246, 0.04);
+        }
+
+        [data-theme="light"] .company-tag {
+            background: #f1f5f9;
+            border-color: #e2e8f0;
+        }
+
+        [data-theme="light"] .company-tag:hover {
+            background: #e2e8f0;
+        }
+
+        [data-theme="light"] .jd-modal {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        [data-theme="light"] .jd-modal-overlay {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        [data-theme="light"] .pagination {
+            background: #ffffff;
+        }
+
+        [data-theme="light"] .search-box input,
+        [data-theme="light"] .filter-select {
+            background: #ffffff;
+            border-color: #e2e8f0;
+        }
+
+        [data-theme="light"] .ticker-bar {
+            background: linear-gradient(90deg, #1e3a5f, #1e40af);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: rotate(15deg);
+        }
+
+        .theme-toggle i {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle .fa-sun {
+            display: none;
+        }
+
+        .theme-toggle .fa-moon {
+            display: block;
+        }
+
+        [data-theme="light"] .theme-toggle .fa-sun {
+            display: block;
+        }
+
+        [data-theme="light"] .theme-toggle .fa-moon {
+            display: none;
         }
 
         body {
@@ -2512,6 +2633,40 @@
     </footer>
 
     <script>
+        // ============ THEME TOGGLE ============
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('jobsTheme', newTheme);
+
+            // Update toggle button icon
+            const toggle = document.querySelector('.theme-toggle');
+            if (toggle) {
+                toggle.innerHTML = newTheme === 'dark'
+                    ? '<i class="fas fa-moon"></i>'
+                    : '<i class="fas fa-sun"></i>';
+            }
+        }
+
+        // Initialize theme from localStorage
+        (function() {
+            const savedTheme = localStorage.getItem('jobsTheme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+
+            // Set correct icon on load
+            document.addEventListener('DOMContentLoaded', function() {
+                const toggle = document.querySelector('.theme-toggle');
+                if (toggle) {
+                    toggle.innerHTML = savedTheme === 'dark'
+                        ? '<i class="fas fa-moon"></i>'
+                        : '<i class="fas fa-sun"></i>';
+                }
+            });
+        })();
+
         // ============ SLIDE-OUT PANEL FUNCTIONS ============
         function toggleSlideoutPanel() {
             const panel = document.getElementById('slideout-panel');
