@@ -2382,55 +2382,80 @@
         }
 
         // STRICT filter - only roles matching Sudhakar's 18+ years experience
-        // Cloud AI Architect | Director Platform Engineering | Senior SRE
+        // Cloud AI Architect | Director Platform Engineering | Senior SRE | DevOps
         function isRelevantJob(job) {
             const title = (job.title || '').toLowerCase();
+            const description = (job.description || '').toLowerCase();
+            const combined = title + ' ' + description;
 
-            // INCLUSIVE patterns - if ANY of these match, the job is relevant
-            // Using simple string matching for reliability
-            const includeKeywords = [
-                // DevOps - CRITICAL
+            // PRIMARY ROLES - Strong match in title (must have one of these)
+            const primaryKeywords = [
+                // DevOps - CRITICAL (your core expertise)
                 'devops', 'dev ops', 'dev-ops',
                 // SRE - CRITICAL
                 'sre', 'site reliability', 'reliability engineer',
-                // Platform
-                'platform engineer', 'platform architect',
+                // Platform Engineering
+                'platform engineer', 'platform architect', 'platform team',
                 // Infrastructure
-                'infrastructure', 'infra engineer',
-                // Cloud
-                'cloud engineer', 'cloud architect', 'cloud ops',
-                // Systems
-                'systems engineer', 'system engineer',
-                // Architect roles
-                'solutions architect', 'technical architect', 'enterprise architect',
-                // AI/ML Infra
+                'infrastructure engineer', 'infra engineer', 'infrastructure architect',
+                // Cloud - specific roles
+                'cloud engineer', 'cloud architect', 'cloud platform', 'cloud infrastructure',
+                // Production/Operations
+                'production engineer', 'operations engineer',
+                // AI/ML Infrastructure (not ML Engineer)
                 'mlops', 'ml ops', 'aiops', 'ml infrastructure', 'ai infrastructure',
-                'gpu', 'ml platform', 'ai platform',
-                // Kubernetes
-                'kubernetes', 'k8s',
-                // Production
-                'production engineer',
+                'ml platform', 'ai platform', 'gpu infrastructure', 'gpu cluster',
+                // Kubernetes specific
+                'kubernetes engineer', 'k8s engineer',
             ];
 
-            // Check if title contains any include keyword
-            const isIncluded = includeKeywords.some(keyword => title.includes(keyword));
-            if (!isIncluded) return false;
+            // Check if title contains primary keyword
+            const hasPrimaryMatch = primaryKeywords.some(keyword => title.includes(keyword));
 
-            // EXCLUSION keywords - only exclude if these specific terms appear
+            // SECONDARY - Architect roles need additional validation
+            const architectKeywords = ['solutions architect', 'technical architect', 'enterprise architect', 'cloud architect'];
+            const isArchitectRole = architectKeywords.some(keyword => title.includes(keyword));
+
+            // For architect roles, verify it's infrastructure-focused (not sales/pre-sales)
+            if (isArchitectRole && !hasPrimaryMatch) {
+                const infraIndicators = ['aws', 'gcp', 'azure', 'kubernetes', 'terraform', 'infrastructure',
+                    'devops', 'ci/cd', 'automation', 'cloud native', 'containers', 'microservices'];
+                const hasInfraFocus = infraIndicators.some(ind => combined.includes(ind));
+
+                // Exclude sales/pre-sales architect roles
+                const salesIndicators = ['pre-sales', 'presales', 'customer facing', 'client facing',
+                    'customer success', 'business development', 'quota', 'revenue'];
+                const isSalesRole = salesIndicators.some(ind => combined.includes(ind));
+
+                if (!hasInfraFocus || isSalesRole) return false;
+            }
+
+            if (!hasPrimaryMatch && !isArchitectRole) return false;
+
+            // EXCLUSION keywords - reject if these appear in title
             const excludeKeywords = [
-                'intern', 'internship',
-                'junior', 'entry level', 'entry-level',
-                'new grad', 'new graduate', 'fresh grad',
-                'associate engineer',
-                'mechanical', 'electrical', 'hardware',
-                'embedded', 'firmware',
-                'frontend', 'front-end', 'front end',
+                // Junior roles
+                'intern', 'internship', 'junior', 'entry level', 'entry-level',
+                'new grad', 'new graduate', 'fresh grad', 'associate engineer', 'i,', ' i ', 'engineer i',
+                // Non-infra engineering
+                'mechanical', 'electrical', 'hardware', 'embedded', 'firmware',
+                'frontend', 'front-end', 'front end', 'ui engineer', 'ux engineer',
                 'backend', 'back-end', 'back end',
                 'fullstack', 'full-stack', 'full stack',
                 'mobile engineer', 'ios engineer', 'android engineer',
-                'data scientist', 'research scientist',
-                'product manager', 'product owner',
-                'sales', 'marketing', 'recruiter',
+                // Data/ML (not infra)
+                'data scientist', 'research scientist', 'machine learning engineer', 'ml engineer',
+                'data engineer', 'data analyst', 'analytics engineer',
+                // Non-technical
+                'product manager', 'product owner', 'program manager',
+                'sales', 'marketing', 'recruiter', 'hr ', 'human resources',
+                'account executive', 'account manager', 'customer success',
+                // Security (separate domain)
+                'security engineer', 'security analyst', 'appsec', 'infosec',
+                // QA/Testing
+                'qa engineer', 'test engineer', 'sdet', 'quality assurance',
+                // Support
+                'support engineer', 'technical support', 'help desk',
             ];
 
             const isExcluded = excludeKeywords.some(keyword => title.includes(keyword));
