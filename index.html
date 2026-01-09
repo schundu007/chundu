@@ -35,6 +35,9 @@
     <!-- Styles -->
     <link rel="stylesheet" href="assets/css/style.css">
 
+    <!-- Theme JS (load early to prevent flash) -->
+    <script src="assets/js/theme.js"></script>
+
     <style>
         /* Hero Section */
         .hero {
@@ -563,6 +566,10 @@
                     <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
                     <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
                 </div>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
                 <div class="nav-auth">
                     <button class="btn-signin" onclick="showLoginModal()">Sign In</button>
                 </div>

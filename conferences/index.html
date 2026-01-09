@@ -25,6 +25,9 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
+    <!-- Theme JS (load early to prevent flash) -->
+    <script src="../assets/js/theme.js"></script>
+
     <style>
         .conferences-hero {
             padding: 120px 2rem 60px;
@@ -45,7 +48,7 @@
         }
 
         .conferences-hero h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 700;
             margin-bottom: 1rem;
             position: relative;
@@ -61,7 +64,7 @@
 
         .conferences-hero p {
             color: var(--text-secondary);
-            font-size: 1.1rem;
+            font-size: 1rem;
             max-width: 600px;
             margin: 0 auto;
             position: relative;
@@ -69,150 +72,9 @@
         }
 
         .conferences-container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 3rem 2rem;
-        }
-
-        .conferences-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        /* Featured cards with images - horizontal layout */
-        .conference-card.featured {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-xl);
-            overflow: hidden;
-            backdrop-filter: blur(20px);
-            transition: var(--transition-normal);
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            align-items: stretch;
-        }
-
-        .conference-card.featured:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-2px);
-            box-shadow: var(--glow-blue);
-        }
-
-        .conference-card.featured .conference-image-wrapper {
-            position: relative;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 200px;
-        }
-
-        .conference-card.featured .conference-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-        }
-
-        .conference-card.featured .conference-content {
-            padding: 1.75rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        /* Standard cards without images - grid layout */
-        .conferences-compact-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        .conference-card.compact {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-xl);
-            overflow: hidden;
-            backdrop-filter: blur(20px);
-            transition: var(--transition-normal);
-            display: flex;
-            align-items: flex-start;
-            gap: 1.25rem;
-            padding: 1.5rem;
-        }
-
-        .conference-card.compact:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-2px);
-            box-shadow: var(--glow-blue);
-        }
-
-        .conference-card.compact .conference-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
-            border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .conference-card.compact .conference-icon i {
-            font-size: 1.5rem;
-            color: var(--accent-blue);
-        }
-
-        .conference-card.compact .conference-content {
-            flex: 1;
-            padding: 0;
-        }
-
-        .conference-content {
-            padding: 1.5rem;
-        }
-
-        .conference-venue {
-            display: inline-block;
-            padding: 0.3rem 0.85rem;
-            background: rgba(59, 130, 246, 0.2);
-            color: var(--accent-blue);
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-radius: 50px;
-            margin-bottom: 1rem;
-        }
-
-        .conference-card h3 {
-            color: var(--text-primary);
-            font-size: 1.1rem;
-            margin-bottom: 0.75rem;
-            line-height: 1.4;
-        }
-
-        .conference-card p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.7;
-            margin-bottom: 1rem;
-        }
-
-        .conference-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .conference-tag {
-            padding: 0.3rem 0.7rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
         }
 
         .cta-section {
@@ -248,20 +110,6 @@
             flex-wrap: wrap;
         }
 
-        @media (max-width: 900px) {
-            .conference-card.featured {
-                grid-template-columns: 1fr;
-            }
-
-            .conference-card.featured .conference-image-wrapper {
-                min-height: 180px;
-            }
-
-            .conferences-compact-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
         @media (max-width: 768px) {
             .conferences-hero {
                 padding: 100px 1rem 40px;
@@ -269,15 +117,6 @@
 
             .conferences-hero h1 {
                 font-size: 1.75rem;
-            }
-
-            .conference-card.compact {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .conference-card.compact .conference-tags {
-                justify-content: center;
             }
         }
     </style>
@@ -301,6 +140,10 @@
                     <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
                     <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
                 </div>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
                 <div class="nav-auth">
                     <button class="btn-signin" onclick="showLoginModal()">Sign In</button>
                 </div>
@@ -322,109 +165,133 @@
 
         <!-- Conferences Content -->
         <div class="conferences-container">
-            <div class="conferences-grid">
-                <!-- Featured: KubeCon -->
-                <article class="conference-card featured">
-                    <div class="conference-image-wrapper">
-                        <img src="../assets/images/MLW.jpeg" alt="KubeCon + CloudNativeCon" class="conference-image">
-                    </div>
-                    <div class="conference-content">
-                        <span class="conference-venue">KubeCon + CloudNativeCon</span>
-                        <h3>Scaling GPU Clusters for ML Workloads</h3>
-                        <p>Best practices for managing large-scale GPU infrastructure on Kubernetes for distributed machine learning training.</p>
-                        <div class="conference-tags">
-                            <span class="conference-tag">Kubernetes</span>
-                            <span class="conference-tag">GPU</span>
-                            <span class="conference-tag">ML Infrastructure</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Compact cards row -->
-                <div class="conferences-compact-grid">
-                    <article class="conference-card compact">
-                        <div class="conference-icon">
-                            <i class="fas fa-server"></i>
-                        </div>
-                        <div class="conference-content">
-                            <span class="conference-venue">SREcon</span>
-                            <h3>Achieving 99.99% Uptime at Scale</h3>
-                            <p>Strategies and lessons learned from maintaining high availability across multi-cloud infrastructure serving millions of users.</p>
-                            <div class="conference-tags">
-                                <span class="conference-tag">SRE</span>
-                                <span class="conference-tag">High Availability</span>
-                                <span class="conference-tag">Multi-Cloud</span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="conference-card compact">
-                        <div class="conference-icon">
-                            <i class="fas fa-cubes"></i>
-                        </div>
-                        <div class="conference-content">
-                            <span class="conference-venue">HashiConf</span>
-                            <h3>Terraform at Enterprise Scale</h3>
-                            <p>Managing infrastructure as code across multiple cloud providers with Terraform modules, workspaces, and automation.</p>
-                            <div class="conference-tags">
-                                <span class="conference-tag">Terraform</span>
-                                <span class="conference-tag">IaC</span>
-                                <span class="conference-tag">Enterprise</span>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-
-                <!-- Featured: DevOps Days -->
-                <article class="conference-card featured">
-                    <div class="conference-image-wrapper">
-                        <img src="../assets/images/DevOpsDays.jpeg" alt="DevOps Days" class="conference-image">
-                    </div>
-                    <div class="conference-content">
-                        <span class="conference-venue">DevOps Days</span>
-                        <h3>GitOps for Multi-Cluster Kubernetes</h3>
-                        <p>Implementing GitOps workflows with ArgoCD for managing deployments across multiple Kubernetes clusters.</p>
-                        <div class="conference-tags">
-                            <span class="conference-tag">GitOps</span>
-                            <span class="conference-tag">ArgoCD</span>
-                            <span class="conference-tag">CI/CD</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Featured: Cloud Summit -->
-                <article class="conference-card featured">
-                    <div class="conference-image-wrapper">
-                        <img src="../assets/images/CS.jpeg" alt="Cloud Summit" class="conference-image">
-                    </div>
-                    <div class="conference-content">
-                        <span class="conference-venue">Cloud Summit</span>
-                        <h3>Cost Optimization: $8M Savings Journey</h3>
-                        <p>Real-world strategies for reducing cloud infrastructure costs while maintaining performance and reliability.</p>
-                        <div class="conference-tags">
-                            <span class="conference-tag">FinOps</span>
-                            <span class="conference-tag">Cost Optimization</span>
-                            <span class="conference-tag">Cloud</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Featured: Platform Engineering Summit -->
-                <article class="conference-card featured">
-                    <div class="conference-image-wrapper">
-                        <img src="../assets/images/PES.jpeg" alt="Platform Engineering Summit" class="conference-image">
-                    </div>
-                    <div class="conference-content">
-                        <span class="conference-venue">Platform Engineering Summit</span>
-                        <h3>Building Internal Developer Platforms</h3>
-                        <p>Creating self-service platforms that accelerate developer productivity while maintaining governance and security.</p>
-                        <div class="conference-tags">
-                            <span class="conference-tag">Platform Engineering</span>
-                            <span class="conference-tag">Developer Experience</span>
-                            <span class="conference-tag">Self-Service</span>
-                        </div>
-                    </div>
-                </article>
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 60px;"></th>
+                            <th>Conference</th>
+                            <th>Talk Title</th>
+                            <th>Topics</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="../assets/images/MLW.jpeg" alt="KubeCon" class="table-image">
+                            </td>
+                            <td>
+                                <span class="table-badge"><i class="fas fa-microphone-alt"></i> KubeCon</span>
+                            </td>
+                            <td>
+                                <div class="table-title">Scaling GPU Clusters for ML Workloads</div>
+                                <div class="table-subtitle">Best practices for managing large-scale GPU infrastructure on Kubernetes</div>
+                            </td>
+                            <td>
+                                <div class="table-tags">
+                                    <span class="table-tag">Kubernetes</span>
+                                    <span class="table-tag">GPU</span>
+                                    <span class="table-tag">ML</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="table-icon"><i class="fas fa-server"></i></div>
+                            </td>
+                            <td>
+                                <span class="table-badge"><i class="fas fa-microphone-alt"></i> SREcon</span>
+                            </td>
+                            <td>
+                                <div class="table-title">Achieving 99.99% Uptime at Scale</div>
+                                <div class="table-subtitle">Maintaining high availability across multi-cloud infrastructure</div>
+                            </td>
+                            <td>
+                                <div class="table-tags">
+                                    <span class="table-tag">SRE</span>
+                                    <span class="table-tag">HA</span>
+                                    <span class="table-tag">Multi-Cloud</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="table-icon"><i class="fas fa-cubes"></i></div>
+                            </td>
+                            <td>
+                                <span class="table-badge"><i class="fas fa-microphone-alt"></i> HashiConf</span>
+                            </td>
+                            <td>
+                                <div class="table-title">Terraform at Enterprise Scale</div>
+                                <div class="table-subtitle">Managing IaC across multiple cloud providers with modules and automation</div>
+                            </td>
+                            <td>
+                                <div class="table-tags">
+                                    <span class="table-tag">Terraform</span>
+                                    <span class="table-tag">IaC</span>
+                                    <span class="table-tag">Enterprise</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="../assets/images/DevOpsDays.jpeg" alt="DevOps Days" class="table-image">
+                            </td>
+                            <td>
+                                <span class="table-badge"><i class="fas fa-microphone-alt"></i> DevOps Days</span>
+                            </td>
+                            <td>
+                                <div class="table-title">GitOps for Multi-Cluster Kubernetes</div>
+                                <div class="table-subtitle">Implementing GitOps workflows with ArgoCD for multi-cluster deployments</div>
+                            </td>
+                            <td>
+                                <div class="table-tags">
+                                    <span class="table-tag">GitOps</span>
+                                    <span class="table-tag">ArgoCD</span>
+                                    <span class="table-tag">CI/CD</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="../assets/images/CS.jpeg" alt="Cloud Summit" class="table-image">
+                            </td>
+                            <td>
+                                <span class="table-badge"><i class="fas fa-microphone-alt"></i> Cloud Summit</span>
+                            </td>
+                            <td>
+                                <div class="table-title">Cost Optimization: $8M Savings Journey</div>
+                                <div class="table-subtitle">Real-world strategies for reducing cloud costs while maintaining reliability</div>
+                            </td>
+                            <td>
+                                <div class="table-tags">
+                                    <span class="table-tag">FinOps</span>
+                                    <span class="table-tag">Cost</span>
+                                    <span class="table-tag">Cloud</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="../assets/images/PES.jpeg" alt="Platform Engineering Summit" class="table-image">
+                            </td>
+                            <td>
+                                <span class="table-badge"><i class="fas fa-microphone-alt"></i> Platform Eng</span>
+                            </td>
+                            <td>
+                                <div class="table-title">Building Internal Developer Platforms</div>
+                                <div class="table-subtitle">Creating self-service platforms for developer productivity</div>
+                            </td>
+                            <td>
+                                <div class="table-tags">
+                                    <span class="table-tag">Platform</span>
+                                    <span class="table-tag">DevEx</span>
+                                    <span class="table-tag">IDP</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <!-- CTA Section -->

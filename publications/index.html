@@ -25,6 +25,9 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
+    <!-- Theme JS (load early to prevent flash) -->
+    <script src="../assets/js/theme.js"></script>
+
     <style>
         .publications-hero {
             padding: 120px 2rem 60px;
@@ -45,7 +48,7 @@
         }
 
         .publications-hero h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 700;
             margin-bottom: 1rem;
             position: relative;
@@ -61,7 +64,7 @@
 
         .publications-hero p {
             color: var(--text-secondary);
-            font-size: 1.1rem;
+            font-size: 1rem;
             max-width: 600px;
             margin: 0 auto;
             position: relative;
@@ -69,72 +72,9 @@
         }
 
         .publications-container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 3rem 2rem;
-        }
-
-        .publications-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .publication-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-xl);
-            padding: 1.5rem;
-            backdrop-filter: blur(20px);
-            transition: var(--transition-normal);
-        }
-
-        .publication-card:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-4px);
-            box-shadow: var(--glow-blue);
-        }
-
-        .publication-type {
-            display: inline-block;
-            padding: 0.3rem 0.85rem;
-            background: rgba(59, 130, 246, 0.2);
-            color: var(--accent-blue);
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-radius: 50px;
-            margin-bottom: 1rem;
-        }
-
-        .publication-card h3 {
-            color: var(--text-primary);
-            font-size: 1.1rem;
-            margin-bottom: 0.75rem;
-            line-height: 1.4;
-        }
-
-        .publication-card p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.7;
-            margin-bottom: 1rem;
-        }
-
-        .publication-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .publication-tag {
-            padding: 0.3rem 0.7rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
         }
 
         .cta-section {
@@ -178,10 +118,6 @@
             .publications-hero h1 {
                 font-size: 1.75rem;
             }
-
-            .publications-grid {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
@@ -204,6 +140,10 @@
                     <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
                     <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
                 </div>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
                 <div class="nav-auth">
                     <button class="btn-signin" onclick="showLoginModal()">Sign In</button>
                 </div>
@@ -225,72 +165,114 @@
 
         <!-- Publications Content -->
         <div class="publications-container">
-            <div class="publications-grid">
-                <article class="publication-card">
-                    <span class="publication-type">Technical Guide</span>
-                    <h3>Multi-Cloud Kubernetes Strategy</h3>
-                    <p>A comprehensive guide to designing and implementing Kubernetes clusters across AWS and Azure with unified management.</p>
-                    <div class="publication-tags">
-                        <span class="publication-tag">Kubernetes</span>
-                        <span class="publication-tag">Multi-Cloud</span>
-                        <span class="publication-tag">Architecture</span>
-                    </div>
-                </article>
-
-                <article class="publication-card">
-                    <span class="publication-type">Best Practices</span>
-                    <h3>GPU Infrastructure for AI/ML</h3>
-                    <p>Building and managing GPU clusters for machine learning workloads with optimal resource utilization and cost efficiency.</p>
-                    <div class="publication-tags">
-                        <span class="publication-tag">GPU</span>
-                        <span class="publication-tag">ML Infrastructure</span>
-                        <span class="publication-tag">Ray</span>
-                    </div>
-                </article>
-
-                <article class="publication-card">
-                    <span class="publication-type">Case Study</span>
-                    <h3>Zero-Downtime Migration to Kubernetes</h3>
-                    <p>Lessons learned from migrating legacy applications to Kubernetes while maintaining 99.99% uptime SLAs.</p>
-                    <div class="publication-tags">
-                        <span class="publication-tag">Migration</span>
-                        <span class="publication-tag">Kubernetes</span>
-                        <span class="publication-tag">SRE</span>
-                    </div>
-                </article>
-
-                <article class="publication-card">
-                    <span class="publication-type">Technical Article</span>
-                    <h3>Terraform Modules at Scale</h3>
-                    <p>Designing reusable Terraform modules for enterprise infrastructure with versioning, testing, and documentation.</p>
-                    <div class="publication-tags">
-                        <span class="publication-tag">Terraform</span>
-                        <span class="publication-tag">IaC</span>
-                        <span class="publication-tag">Modules</span>
-                    </div>
-                </article>
-
-                <article class="publication-card">
-                    <span class="publication-type">Implementation Guide</span>
-                    <h3>GitOps with ArgoCD</h3>
-                    <p>Step-by-step guide to implementing GitOps workflows for Kubernetes deployments using ArgoCD and Helm.</p>
-                    <div class="publication-tags">
-                        <span class="publication-tag">GitOps</span>
-                        <span class="publication-tag">ArgoCD</span>
-                        <span class="publication-tag">Helm</span>
-                    </div>
-                </article>
-
-                <article class="publication-card">
-                    <span class="publication-type">Security Guide</span>
-                    <h3>Zero Trust for Cloud Infrastructure</h3>
-                    <p>Implementing zero trust security model for cloud-native applications with service mesh and identity management.</p>
-                    <div class="publication-tags">
-                        <span class="publication-tag">Security</span>
-                        <span class="publication-tag">Zero Trust</span>
-                        <span class="publication-tag">Istio</span>
-                    </div>
-                </article>
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Title</th>
+                            <th>Topics</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span class="table-badge"><i class="fas fa-book"></i> Guide</span>
+                            </td>
+                            <td>
+                                <div class="table-title">Multi-Cloud Kubernetes Strategy</div>
+                                <div class="table-subtitle">Designing and implementing K8s clusters across AWS and Azure with unified management</div>
+                            </td>
+                            <td>
+                                <div class="table-tags">
+                                    <span class="table-tag">Kubernetes</span>
+                                    <span class="table-tag">Multi-Cloud</span>
+                                    <span class="table-tag">Architecture</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="table-badge"><i class="fas fa-star"></i> Best Practice</span>
+                            </td>
+                            <td>
+                                <div class="table-title">GPU Infrastructure for AI/ML</div>
+                                <div class="table-subtitle">Building GPU clusters for ML workloads with optimal resource utilization</div>
+                            </td>
+                            <td>
+                                <div class="table-tags">
+                                    <span class="table-tag">GPU</span>
+                                    <span class="table-tag">ML</span>
+                                    <span class="table-tag">Ray</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="table-badge"><i class="fas fa-chart-line"></i> Case Study</span>
+                            </td>
+                            <td>
+                                <div class="table-title">Zero-Downtime Migration to Kubernetes</div>
+                                <div class="table-subtitle">Lessons from migrating legacy apps while maintaining 99.99% uptime SLAs</div>
+                            </td>
+                            <td>
+                                <div class="table-tags">
+                                    <span class="table-tag">Migration</span>
+                                    <span class="table-tag">Kubernetes</span>
+                                    <span class="table-tag">SRE</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="table-badge"><i class="fas fa-file-alt"></i> Article</span>
+                            </td>
+                            <td>
+                                <div class="table-title">Terraform Modules at Scale</div>
+                                <div class="table-subtitle">Designing reusable Terraform modules with versioning, testing, and documentation</div>
+                            </td>
+                            <td>
+                                <div class="table-tags">
+                                    <span class="table-tag">Terraform</span>
+                                    <span class="table-tag">IaC</span>
+                                    <span class="table-tag">Modules</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="table-badge"><i class="fas fa-cogs"></i> Implementation</span>
+                            </td>
+                            <td>
+                                <div class="table-title">GitOps with ArgoCD</div>
+                                <div class="table-subtitle">Step-by-step guide to GitOps workflows for Kubernetes deployments</div>
+                            </td>
+                            <td>
+                                <div class="table-tags">
+                                    <span class="table-tag">GitOps</span>
+                                    <span class="table-tag">ArgoCD</span>
+                                    <span class="table-tag">Helm</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="table-badge"><i class="fas fa-shield-alt"></i> Security</span>
+                            </td>
+                            <td>
+                                <div class="table-title">Zero Trust for Cloud Infrastructure</div>
+                                <div class="table-subtitle">Implementing zero trust security with service mesh and identity management</div>
+                            </td>
+                            <td>
+                                <div class="table-tags">
+                                    <span class="table-tag">Security</span>
+                                    <span class="table-tag">Zero Trust</span>
+                                    <span class="table-tag">Istio</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <!-- CTA Section -->
