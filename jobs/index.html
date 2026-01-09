@@ -882,25 +882,126 @@
             flex-shrink: 0;
         }
 
-        /* Document Manager Section */
-        .doc-manager-section {
-            padding: 30px 1.5rem;
+        /* Document Manager Floating Panel */
+        .doc-manager-tab {
+            position: fixed;
+            top: 100px;
+            right: 0;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px 0 0 8px;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: -4px 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        .doc-manager-tab:hover {
+            right: 5px;
+            box-shadow: -6px 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .doc-manager-tab i {
+            writing-mode: horizontal-tb;
+        }
+
+        .doc-manager-panel {
+            position: fixed;
+            top: 0;
+            right: -450px;
+            width: 450px;
+            height: 100vh;
             background: var(--bg-secondary);
-            border-bottom: 1px solid var(--glass-border);
+            border-left: 1px solid var(--glass-border);
+            z-index: 1001;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            box-shadow: -5px 0 25px rgba(0,0,0,0.3);
         }
 
-        .doc-manager-container {
-            max-width: 1400px;
-            margin: 0 auto;
+        .doc-manager-panel.open {
+            right: 0;
         }
 
-        .doc-manager-header {
+        .doc-manager-panel-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
+            padding: 1.25rem 1.5rem;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .doc-manager-panel-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .doc-manager-close {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .doc-manager-close:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        .doc-manager-panel-content {
+            padding: 1.5rem;
+        }
+
+        .doc-manager-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .doc-manager-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 500px) {
+            .doc-manager-panel {
+                width: 100%;
+                right: -100%;
+            }
+            .doc-manager-tab {
+                padding: 10px 12px;
+                font-size: 0.75rem;
+            }
         }
 
         .doc-manager-title {
@@ -1359,19 +1460,31 @@
         <p>Live US job openings from top tech companies - Cloud Architect, Platform Engineering, DevOps & SRE roles. Priority: Bay Area, Texas, Florida, North Carolina.</p>
     </header>
 
-    <!-- Document Manager Section -->
-    <section class="doc-manager-section">
-        <div class="doc-manager-container">
-            <div class="doc-manager-header">
-                <div class="doc-manager-title">
-                    <i class="fas fa-folder-open" style="color: var(--primary); font-size: 1.25rem;"></i>
-                    <h3>Document Manager</h3>
-                </div>
-                <a href="https://github.com/schundu007/chundu/tree/main/assets/resume" target="_blank" class="upload-btn" style="text-decoration: none;">
-                    <i class="fab fa-github"></i>
-                    Manage Files on GitHub
-                </a>
-            </div>
+    <!-- Document Manager Floating Tab -->
+    <div class="doc-manager-tab" onclick="toggleDocManager()">
+        <i class="fas fa-folder-open"></i>
+        Documents
+    </div>
+
+    <!-- Document Manager Overlay -->
+    <div class="doc-manager-overlay" id="doc-manager-overlay" onclick="toggleDocManager()"></div>
+
+    <!-- Document Manager Slide-out Panel -->
+    <div class="doc-manager-panel" id="doc-manager-panel">
+        <div class="doc-manager-panel-header">
+            <h3>
+                <i class="fas fa-folder-open" style="color: var(--primary);"></i>
+                Document Manager
+            </h3>
+            <button class="doc-manager-close" onclick="toggleDocManager()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="doc-manager-panel-content">
+            <a href="https://github.com/schundu007/chundu/tree/main/assets/resume" target="_blank" class="upload-btn" style="text-decoration: none; width: 100%; justify-content: center; margin-bottom: 1rem;">
+                <i class="fab fa-github"></i>
+                Manage Files on GitHub
+            </a>
 
             <!-- GitHub Token Settings -->
             <div class="github-settings">
@@ -1432,11 +1545,11 @@
                 </div>
             </div>
 
-            <div id="doc-manager-content" style="background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid var(--border);">
+            <div id="doc-manager-content" style="background: var(--bg-tertiary); border-radius: 12px; padding: 1rem; border: 1px solid var(--border); margin-top: 1rem;">
                 <p style="color: var(--text-muted); text-align: center;">Loading documents...</p>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Featured Companies (No Public API) -->
     <section style="padding: 30px 1.5rem; background: var(--light);">
@@ -1823,8 +1936,11 @@
                 </select>
                 <select class="filter-select" id="date-filter">
                     <option value="">All Dates</option>
-                    <option value="1">Last 24 hours</option>
-                    <option value="3" selected>Last 3 days</option>
+                    <option value="0.125">Last 3 hours</option>
+                    <option value="0.25">Last 6 hours</option>
+                    <option value="0.5">Last 12 hours</option>
+                    <option value="1" selected>Last 24 hours</option>
+                    <option value="3">Last 3 days</option>
                     <option value="7">Last 7 days</option>
                     <option value="14">Last 14 days</option>
                     <option value="30">Last 30 days</option>
@@ -3439,8 +3555,10 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
         // Filter jobs by date
         function filterByDate(jobs, days) {
             if (!days) return jobs;
+            const daysNum = parseFloat(days);
             const cutoffDate = new Date();
-            cutoffDate.setDate(cutoffDate.getDate() - parseInt(days));
+            // Handle fractional days (hours) - e.g., 0.125 = 3 hours, 0.25 = 6 hours, 0.5 = 12 hours
+            cutoffDate.setTime(cutoffDate.getTime() - (daysNum * 24 * 60 * 60 * 1000));
             return jobs.filter(job => job.postedDate >= cutoffDate);
         }
 
@@ -3989,6 +4107,15 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 statusEl.className = 'token-status not-configured';
                 if (inputEl) inputEl.placeholder = 'ghp_xxxxxxxxxxxxxxxxxxxx';
             }
+        }
+
+        // Document Manager Panel Toggle
+        function toggleDocManager() {
+            const panel = document.getElementById('doc-manager-panel');
+            const overlay = document.getElementById('doc-manager-overlay');
+            panel.classList.toggle('open');
+            overlay.classList.toggle('open');
+            document.body.style.overflow = panel.classList.contains('open') ? 'hidden' : '';
         }
 
         function toggleGithubSettings() {
