@@ -454,6 +454,115 @@
             margin-left: 0.5rem;
         }
 
+        /* ATS Match Score Badges */
+        .ats-score-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.3rem 0.6rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: help;
+        }
+
+        .ats-score-badge i {
+            font-size: 0.65rem;
+        }
+
+        .ats-excellent {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
+            color: #16a34a;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .ats-good {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.1));
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .ats-fair {
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.2), rgba(234, 179, 8, 0.1));
+            color: #ca8a04;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+        }
+
+        .ats-low {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(249, 115, 22, 0.1));
+            color: #ea580c;
+            border: 1px solid rgba(249, 115, 22, 0.3);
+        }
+
+        .ats-poor {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1));
+            color: #dc2626;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .ats-tooltip {
+            position: relative;
+        }
+
+        .ats-tooltip .ats-tooltip-content {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-tertiary);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 0.75rem;
+            min-width: 200px;
+            max-width: 280px;
+            z-index: 1000;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            margin-bottom: 8px;
+        }
+
+        .ats-tooltip:hover .ats-tooltip-content {
+            display: block;
+        }
+
+        .ats-tooltip-content h4 {
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .ats-tooltip-content .ats-breakdown {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .ats-tooltip-content .ats-keywords {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+        }
+
+        .ats-tooltip-content .ats-keyword-tag {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            padding: 0.1rem 0.4rem;
+            border-radius: 3px;
+        }
+
+        .col-ats {
+            width: 90px;
+            text-align: center;
+        }
+
+        /* ATS Filter Highlight */
+        .ats-filter-active {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(59, 130, 246, 0.1)) !important;
+            border-color: #16a34a !important;
+        }
+
         .date-text {
             color: var(--text-muted);
         }
@@ -1719,6 +1828,13 @@
                     <option value="14">Last 14 days</option>
                     <option value="30">Last 30 days</option>
                 </select>
+                <select class="filter-select" id="ats-filter" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(59, 130, 246, 0.1)); border-color: #16a34a;">
+                    <option value="0">All ATS Scores</option>
+                    <option value="75" selected>75%+ Match (Recommended)</option>
+                    <option value="85">85%+ Match (Excellent)</option>
+                    <option value="60">60%+ Match</option>
+                    <option value="40">40%+ Match</option>
+                </select>
                 <button class="refresh-btn" id="refresh-btn">
                     <i class="fas fa-sync-alt"></i>
                     Refresh
@@ -1735,6 +1851,7 @@
                 <table class="jobs-table">
                     <thead>
                         <tr>
+                            <th class="col-ats sortable" data-sort="ats" title="ATS Match Score - How well this job matches your resume">ATS <i class="fas fa-sort"></i></th>
                             <th class="col-role sortable" data-sort="title">Role <i class="fas fa-sort"></i></th>
                             <th class="col-company sortable" data-sort="company">Company <i class="fas fa-sort"></i></th>
                             <th class="col-location">Location</th>
@@ -1746,7 +1863,7 @@
                     </thead>
                     <tbody id="jobs-tbody">
                         <tr class="loading-row">
-                            <td colspan="7">
+                            <td colspan="8">
                                 <span class="loading-spinner"></span>
                                 Loading jobs from company career portals...
                             </td>
@@ -2137,6 +2254,158 @@
                 school: 'Acharya Nagarjuna University'
             }
         };
+
+        // ============ ATS MATCHING SYSTEM ============
+        // Extract keywords from USER_PROFILE for ATS matching
+        const ATS_KEYWORDS = {
+            // Core role titles (high weight)
+            titles: [
+                'devops', 'sre', 'site reliability', 'platform engineer', 'infrastructure engineer',
+                'cloud architect', 'cloud engineer', 'staff engineer', 'senior engineer', 'principal',
+                'ml infrastructure', 'ai infrastructure', 'data engineer', 'systems engineer'
+            ],
+            // Technical skills from resume (medium-high weight)
+            skills: [
+                // GPU/HPC
+                'gpu', 'cuda', 'nvidia', 'a100', 'v100', 'h100', 'dgx', 'slurm', 'hpc', 'tensorrt', 'vllm', 'triton',
+                // AI/ML
+                'pytorch', 'tensorflow', 'ray', 'mlflow', 'kubeflow', 'sagemaker', 'azure ml', 'kserve', 'torchserve',
+                'machine learning', 'ml ops', 'mlops', 'ai/ml', 'distributed training', 'model serving', 'inference',
+                // Cloud Platforms
+                'aws', 'azure', 'oci', 'oracle cloud', 'multi-cloud', 'hybrid cloud', 'eks', 'aks', 'gke',
+                'ec2', 'sagemaker', 'emr', 'lambda', 'fargate',
+                // Containers & Orchestration
+                'kubernetes', 'k8s', 'docker', 'helm', 'istio', 'service mesh', 'keda', 'argocd', 'fluxcd',
+                'openshift', 'rancher', 'container', 'microservices',
+                // Infrastructure as Code
+                'terraform', 'ansible', 'cloudformation', 'arm templates', 'bicep', 'pulumi', 'packer',
+                'gitops', 'opa', 'checkov', 'infrastructure as code', 'iac',
+                // Big Data & Streaming
+                'databricks', 'spark', 'apache spark', 'flink', 'kafka', 'hadoop', 'hdfs', 'hive', 'trino',
+                'airflow', 'delta lake', 'data pipeline', 'etl',
+                // Security & Compliance
+                'soc2', 'hipaa', 'fedramp', 'iso 27001', 'hitrust', 'devsecops', 'snyk', 'sonarqube',
+                'vault', 'hashicorp vault', 'zero trust', 'security', 'compliance',
+                // Observability
+                'prometheus', 'grafana', 'datadog', 'splunk', 'elk', 'elasticsearch', 'opentelemetry',
+                'monitoring', 'observability', 'logging', 'alerting', 'sli', 'slo', 'sla',
+                // CI/CD
+                'jenkins', 'github actions', 'gitlab ci', 'circleci', 'ci/cd', 'cicd', 'pipeline',
+                'continuous integration', 'continuous deployment',
+                // Languages
+                'python', 'go', 'golang', 'bash', 'shell', 'java', 'typescript',
+                // Databases
+                'postgresql', 'mysql', 'mongodb', 'redis', 'dynamodb', 'rds', 'database'
+            ],
+            // Certifications (bonus weight)
+            certifications: [
+                'aws solutions architect', 'azure solutions architect', 'aws certified', 'azure certified',
+                'cka', 'ckad', 'cks', 'kubernetes certified', 'terraform certified', 'hashicorp certified',
+                'databricks certified', 'togaf', 'itil'
+            ],
+            // Experience indicators (context weight)
+            experience: [
+                'migration', 'modernization', 'cost reduction', 'cost optimization', 'finops',
+                'incident response', 'on-call', 'reliability', 'uptime', 'availability',
+                'scalability', 'performance', 'optimization', 'automation',
+                'team lead', 'leadership', 'mentor', 'architect'
+            ]
+        };
+
+        // Flatten all keywords for quick lookup
+        const ALL_ATS_KEYWORDS = [
+            ...ATS_KEYWORDS.titles,
+            ...ATS_KEYWORDS.skills,
+            ...ATS_KEYWORDS.certifications,
+            ...ATS_KEYWORDS.experience
+        ];
+
+        // Calculate ATS match score for a job
+        function calculateATSScore(job) {
+            const titleLower = (job.title || '').toLowerCase();
+            const descLower = (job.description || '').toLowerCase();
+            const deptLower = (job.department || '').toLowerCase();
+            const fullText = `${titleLower} ${descLower} ${deptLower}`;
+
+            let matchedKeywords = new Set();
+            let titleMatches = 0;
+            let skillMatches = 0;
+            let certMatches = 0;
+            let expMatches = 0;
+
+            // Check title matches (highest weight)
+            ATS_KEYWORDS.titles.forEach(keyword => {
+                if (fullText.includes(keyword)) {
+                    matchedKeywords.add(keyword);
+                    titleMatches++;
+                }
+            });
+
+            // Check skill matches
+            ATS_KEYWORDS.skills.forEach(keyword => {
+                if (fullText.includes(keyword)) {
+                    matchedKeywords.add(keyword);
+                    skillMatches++;
+                }
+            });
+
+            // Check certification matches
+            ATS_KEYWORDS.certifications.forEach(keyword => {
+                if (fullText.includes(keyword)) {
+                    matchedKeywords.add(keyword);
+                    certMatches++;
+                }
+            });
+
+            // Check experience matches
+            ATS_KEYWORDS.experience.forEach(keyword => {
+                if (fullText.includes(keyword)) {
+                    matchedKeywords.add(keyword);
+                    expMatches++;
+                }
+            });
+
+            // Calculate weighted score
+            // Weights: titles=30%, skills=50%, certs=10%, experience=10%
+            const titleScore = Math.min((titleMatches / 3) * 30, 30); // Max 30 points from 3+ title matches
+            const skillScore = Math.min((skillMatches / 10) * 50, 50); // Max 50 points from 10+ skill matches
+            const certScore = Math.min((certMatches / 2) * 10, 10); // Max 10 points from 2+ cert matches
+            const expScore = Math.min((expMatches / 3) * 10, 10); // Max 10 points from 3+ exp matches
+
+            const totalScore = Math.round(titleScore + skillScore + certScore + expScore);
+
+            return {
+                score: Math.min(totalScore, 100), // Cap at 100
+                matchedKeywords: Array.from(matchedKeywords),
+                breakdown: {
+                    title: titleMatches,
+                    skills: skillMatches,
+                    certs: certMatches,
+                    experience: expMatches
+                }
+            };
+        }
+
+        // Get ATS score badge color
+        function getATSBadgeClass(score) {
+            if (score >= 85) return 'ats-excellent';
+            if (score >= 75) return 'ats-good';
+            if (score >= 60) return 'ats-fair';
+            if (score >= 40) return 'ats-low';
+            return 'ats-poor';
+        }
+
+        // Get ATS score label
+        function getATSLabel(score) {
+            if (score >= 85) return 'Excellent';
+            if (score >= 75) return 'Good';
+            if (score >= 60) return 'Fair';
+            if (score >= 40) return 'Low';
+            return 'Poor';
+        }
+
+        // Minimum ATS score filter (default 0 = show all)
+        let minATSScore = 0;
 
         // ============ COVER LETTER GENERATOR ============
         function generateCoverLetter(job) {
@@ -3304,11 +3573,11 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             if (pageJobs.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="7">
+                        <td colspan="8">
                             <div class="empty-state">
                                 <i class="fas fa-search"></i>
                                 <h3>No jobs found</h3>
-                                <p>Try adjusting your search or filters</p>
+                                <p>Try adjusting your search or filters (including ATS match threshold)</p>
                             </div>
                         </td>
                     </tr>
@@ -3322,8 +3591,35 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 const dateClass = daysAgo <= 1 ? 'date-new' : 'date-text';
                 const dateText = daysAgo === 0 ? 'Today' : daysAgo === 1 ? 'Yesterday' : `${daysAgo} days ago`;
 
+                // Calculate ATS score
+                const atsResult = calculateATSScore(job);
+                const atsScore = atsResult.score;
+                const atsBadgeClass = getATSBadgeClass(atsScore);
+                const atsLabel = getATSLabel(atsScore);
+                const topKeywords = atsResult.matchedKeywords.slice(0, 8);
+
                 return `
                     <tr>
+                        <td class="col-ats">
+                            <div class="ats-tooltip">
+                                <span class="ats-score-badge ${atsBadgeClass}">
+                                    <i class="fas fa-chart-line"></i>
+                                    ${atsScore}%
+                                </span>
+                                <div class="ats-tooltip-content">
+                                    <h4>${atsLabel} Match (${atsScore}%)</h4>
+                                    <div class="ats-breakdown">
+                                        <div>Titles: ${atsResult.breakdown.title} | Skills: ${atsResult.breakdown.skills}</div>
+                                        <div>Certs: ${atsResult.breakdown.certs} | Exp: ${atsResult.breakdown.experience}</div>
+                                    </div>
+                                    ${topKeywords.length > 0 ? `
+                                    <div class="ats-keywords">
+                                        ${topKeywords.map(k => `<span class="ats-keyword-tag">${k}</span>`).join('')}
+                                    </div>
+                                    ` : '<div class="ats-keywords">No matching keywords found</div>'}
+                                </div>
+                            </div>
+                        </td>
                         <td class="col-role">
                             <span class="role-title">${escapeHtml(job.title)}</span>
                             ${job.department ? `<span class="role-dept">${escapeHtml(job.department)}</span>` : ''}
@@ -3426,6 +3722,7 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             const searchQuery = document.getElementById('search-input').value;
             const locationFilter = document.getElementById('location-filter').value;
             const dateFilter = document.getElementById('date-filter').value;
+            const atsFilter = parseInt(document.getElementById('ats-filter').value) || 0;
 
             filteredJobs = [...allJobs];
 
@@ -3443,12 +3740,34 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             // Apply search
             filteredJobs = searchJobs(filteredJobs, searchQuery);
 
-            // Sort by distance from San Jose (closest first), then by date
+            // Apply ATS score filter (THE KEY FEATURE!)
+            if (atsFilter > 0) {
+                filteredJobs = filteredJobs.filter(job => {
+                    const atsResult = calculateATSScore(job);
+                    job._atsScore = atsResult.score; // Cache the score
+                    return atsResult.score >= atsFilter;
+                });
+            } else {
+                // Still calculate and cache ATS scores for sorting
+                filteredJobs.forEach(job => {
+                    job._atsScore = calculateATSScore(job).score;
+                });
+            }
+
+            // Sort by ATS score (highest first), then distance, then by date
             filteredJobs.sort((a, b) => {
+                // First by ATS score (highest first)
+                const atsA = a._atsScore || 0;
+                const atsB = b._atsScore || 0;
+                if (atsB !== atsA) return atsB - atsA;
+
+                // Then by distance from San Jose (closest first)
                 const distA = getDistancePriority(a.location);
                 const distB = getDistancePriority(b.location);
                 if (distA !== distB) return distA - distB;
-                return b.postedDate - a.postedDate; // Tiebreaker: newest first
+
+                // Finally by date (newest first)
+                return b.postedDate - a.postedDate;
             });
 
             currentPage = 1;
@@ -3572,6 +3891,7 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
         document.getElementById('search-input').addEventListener('input', debounce(applyFilters, 300));
         document.getElementById('location-filter').addEventListener('change', applyFilters);
         document.getElementById('date-filter').addEventListener('change', applyFilters);
+        document.getElementById('ats-filter').addEventListener('change', applyFilters);
         document.getElementById('refresh-btn').addEventListener('click', fetchAllJobs);
 
         // Sortable columns
@@ -3579,6 +3899,12 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             th.addEventListener('click', () => {
                 const sortKey = th.dataset.sort;
                 filteredJobs.sort((a, b) => {
+                    if (sortKey === 'ats') {
+                        // Sort by ATS score (highest first)
+                        const atsA = a._atsScore || calculateATSScore(a).score;
+                        const atsB = b._atsScore || calculateATSScore(b).score;
+                        return atsB - atsA;
+                    }
                     if (sortKey === 'distance') {
                         const distA = getDistancePriority(a.location);
                         const distB = getDistancePriority(b.location);
