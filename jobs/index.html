@@ -2274,36 +2274,53 @@
             const container = document.getElementById('panel-doc-list');
             if (!container) return;
 
-            // Reuse existing document data if available
-            if (typeof renderPanelDocuments === 'function') {
-                renderPanelDocuments();
-            } else {
-                // Fetch documents from manifest
-                fetch('../assets/resume/manifest.json')
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.documents && data.documents.length > 0) {
-                            let html = '<div style="display: flex; flex-direction: column; gap: 0.5rem;">';
-                            data.documents.forEach(doc => {
-                                const isActive = doc.active ? '<span style="color: #22c55e; font-size: 0.65rem; margin-left: 0.5rem;"><i class="fas fa-check-circle"></i> Active</span>' : '';
-                                html += `
-                                    <a href="../assets/resume/${doc.filename}" target="_blank" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 6px; text-decoration: none; color: var(--text-secondary); font-size: 0.75rem; border: 1px solid var(--glass-border);">
-                                        <i class="fas fa-file-pdf" style="color: #ef4444;"></i>
-                                        <span style="flex: 1;">${doc.name}</span>
-                                        ${isActive}
-                                    </a>
-                                `;
-                            });
-                            html += '</div>';
-                            container.innerHTML = html;
-                        } else {
-                            container.innerHTML = '<p style="color: var(--text-muted); text-align: center; font-size: 0.8rem;">No documents found</p>';
-                        }
-                    })
-                    .catch(() => {
-                        container.innerHTML = '<p style="color: var(--text-muted); text-align: center; font-size: 0.8rem;">Could not load documents</p>';
-                    });
-            }
+            // Fetch documents from manifest
+            fetch('../assets/resume/manifest.json')
+                .then(res => res.json())
+                .then(data => {
+                    let html = '<div style="display: flex; flex-direction: column; gap: 0.5rem;">';
+
+                    // Resumes section
+                    if (data.resumes && data.resumes.length > 0) {
+                        html += '<div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 0.25rem;">Resumes</div>';
+                        data.resumes.forEach(doc => {
+                            const isActive = doc.active ? '<span style="color: #22c55e; font-size: 0.65rem; margin-left: auto;"><i class="fas fa-check-circle"></i></span>' : '';
+                            html += `
+                                <a href="../assets/resume/${doc.file}" target="_blank" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 6px; text-decoration: none; color: var(--text-secondary); font-size: 0.75rem; border: 1px solid var(--glass-border);">
+                                    <i class="fas fa-file-alt" style="color: #3b82f6;"></i>
+                                    <span style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${doc.name}</span>
+                                    ${isActive}
+                                </a>
+                            `;
+                        });
+                    }
+
+                    // Cover Letters section
+                    if (data.coverLetters && data.coverLetters.length > 0) {
+                        html += '<div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-top: 0.75rem; margin-bottom: 0.25rem;">Cover Letters</div>';
+                        data.coverLetters.forEach(doc => {
+                            const isActive = doc.active ? '<span style="color: #22c55e; font-size: 0.65rem; margin-left: auto;"><i class="fas fa-check-circle"></i></span>' : '';
+                            html += `
+                                <a href="../assets/resume/${doc.file}" target="_blank" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 6px; text-decoration: none; color: var(--text-secondary); font-size: 0.75rem; border: 1px solid var(--glass-border);">
+                                    <i class="fas fa-envelope" style="color: #8b5cf6;"></i>
+                                    <span style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${doc.name}</span>
+                                    ${isActive}
+                                </a>
+                            `;
+                        });
+                    }
+
+                    html += '</div>';
+
+                    if ((!data.resumes || data.resumes.length === 0) && (!data.coverLetters || data.coverLetters.length === 0)) {
+                        container.innerHTML = '<p style="color: var(--text-muted); text-align: center; font-size: 0.8rem;">No documents found</p>';
+                    } else {
+                        container.innerHTML = html;
+                    }
+                })
+                .catch(() => {
+                    container.innerHTML = '<p style="color: var(--text-muted); text-align: center; font-size: 0.8rem;">Could not load documents</p>';
+                });
         }
 
         // ============ UTILITY FUNCTIONS (MUST BE FIRST) ============
