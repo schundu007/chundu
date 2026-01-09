@@ -24,10 +24,10 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts - AI-optimized typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -39,65 +39,116 @@
     <script src="assets/js/theme.js"></script>
 
     <style>
-        /* Hero Section */
+        /* Neural Network Background Canvas */
+        #neural-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* AI Hero Section */
         .hero {
-            padding: 120px 2rem 80px;
+            padding: 140px 2rem 100px;
             position: relative;
             overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
 
         .hero::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 70%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
-            animation: rotateBg 30s linear infinite;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-mesh);
             pointer-events: none;
         }
 
-        @keyframes rotateBg {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to top, var(--bg-primary), transparent);
+            pointer-events: none;
         }
 
         .hero-container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1fr 320px;
+            grid-template-columns: 1fr 340px;
             gap: 4rem;
             align-items: center;
             position: relative;
             z-index: 1;
         }
 
-        .hero-content h1 {
-            font-size: 2.75rem;
-            line-height: 1.15;
+        /* AI Badge */
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
             margin-bottom: 1.5rem;
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        .ai-badge i {
+            font-size: 0.9rem;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
         }
 
         .hero-content h1 .gradient-text {
             display: block;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradient-shift 5s ease infinite;
         }
 
         .hero-subtitle {
-            font-size: 1rem;
+            font-size: 1.05rem;
             color: var(--text-secondary);
-            line-height: 1.75;
+            line-height: 1.8;
             margin-bottom: 2rem;
-            max-width: 580px;
+            max-width: 600px;
+        }
+
+        .hero-subtitle strong {
+            color: var(--accent-cyan);
+            font-weight: 600;
         }
 
         .hero-stats {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 1.25rem;
-            margin-bottom: 2rem;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
         }
 
         .hero-stat {
@@ -107,28 +158,29 @@
             padding: 1.25rem 1rem;
             text-align: center;
             transition: var(--transition-normal);
+            backdrop-filter: blur(10px);
         }
 
         .hero-stat:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-2px);
-            box-shadow: var(--glow-blue);
+            border-color: var(--accent-cyan);
+            transform: translateY(-4px);
+            box-shadow: var(--glow-cyan);
         }
 
         .hero-stat-value {
             font-size: 1.75rem;
             font-weight: 700;
-            background: var(--gradient-primary);
+            background: var(--gradient-neural);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-family: var(--font-mono);
         }
 
         .hero-stat-label {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-secondary);
             text-transform: uppercase;
-            letter-spacing: 0.03em;
+            letter-spacing: 0.05em;
             margin-top: 0.35rem;
             font-weight: 500;
         }
@@ -139,7 +191,20 @@
             flex-wrap: wrap;
         }
 
-        /* Profile Card */
+        .cta-buttons .btn-primary {
+            background: var(--gradient-primary);
+            background-size: 200% 200%;
+            animation: gradient-shift 5s ease infinite;
+            border: none;
+            box-shadow: var(--glow-blue);
+        }
+
+        .cta-buttons .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow-purple);
+        }
+
+        /* Profile Card - AI Style */
         .profile-card {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
@@ -148,6 +213,13 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(20px);
+            transition: var(--transition-normal);
+        }
+
+        .profile-card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: var(--glow-cyan);
         }
 
         .profile-card::before {
@@ -156,20 +228,21 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 80px;
-            background: var(--gradient-primary);
-            opacity: 0.1;
+            height: 100px;
+            background: var(--gradient-neural);
+            opacity: 0.15;
         }
 
         .profile-image {
-            width: 120px;
-            height: 120px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
-            margin: 0 auto 1rem;
+            margin: 0 auto 1.25rem;
             padding: 4px;
             background: var(--gradient-primary);
             position: relative;
             z-index: 1;
+            animation: pulse-glow 3s ease-in-out infinite;
         }
 
         .profile-image img {
@@ -177,6 +250,7 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
+            object-position: center top;
             border: 3px solid var(--bg-secondary);
         }
 
@@ -548,6 +622,9 @@
     </style>
 </head>
 <body>
+    <!-- Neural Network Background -->
+    <canvas id="neural-bg"></canvas>
+
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
@@ -587,9 +664,13 @@
         <section class="hero">
             <div class="hero-container">
                 <div class="hero-content">
+                    <div class="ai-badge">
+                        <i class="fas fa-robot"></i>
+                        <span>AI Infrastructure Expert</span>
+                    </div>
                     <h1>
-                        Staff DevOps Engineer
-                        <span class="gradient-text">& Site Reliability</span>
+                        Building the Future of
+                        <span class="gradient-text">AI Infrastructure</span>
                     </h1>
                     <p class="hero-subtitle">
                         Senior DevOps/SRE leader with 18+ years of progressive experience (13+ cloud engineering, 5 years
@@ -1034,5 +1115,8 @@
 
         revealElements.forEach(el => revealObserver.observe(el));
     </script>
+
+    <!-- Neural Network Animation -->
+    <script src="assets/js/neural-bg.js"></script>
 </body>
 </html>
