@@ -1561,6 +1561,269 @@
         .btn-confirm-delete:hover {
             background: #b91c1c;
         }
+
+        /* ============ SLIDE-OUT PANEL ============ */
+        .slideout-panel {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 400px;
+            height: 100vh;
+            background: var(--bg-secondary);
+            border-left: 1px solid var(--glass-border);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            box-shadow: -4px 0 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .slideout-panel.open {
+            right: 0;
+        }
+
+        .slideout-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .slideout-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .slideout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .slideout-header h3 {
+            font-size: 1rem;
+            margin: 0;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .slideout-header h3 i {
+            color: var(--primary);
+        }
+
+        .slideout-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0.25rem;
+            transition: color 0.2s;
+        }
+
+        .slideout-close:hover {
+            color: var(--text-primary);
+        }
+
+        .slideout-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .slideout-tab {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .slideout-tab:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+        }
+
+        .slideout-tab.active {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .slideout-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem 1.25rem;
+        }
+
+        .slideout-section {
+            display: none;
+        }
+
+        .slideout-section.active {
+            display: block;
+        }
+
+        /* Quick Links in Panel */
+        .panel-quick-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .panel-link-group {
+            margin-bottom: 1rem;
+        }
+
+        .panel-link-group-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.25rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .panel-link-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.4rem;
+        }
+
+        .panel-link {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.6rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--glass-border);
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .panel-link:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .panel-link img {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            object-fit: contain;
+        }
+
+        /* Documents in Panel */
+        .panel-docs {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .panel-github-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--glass-border);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .panel-github-link:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .panel-github-link i {
+            font-size: 1rem;
+        }
+
+        .panel-doc-list {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 0.75rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        /* Toggle Button (Right Side) */
+        .slideout-toggle {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border: none;
+            padding: 1rem 0.5rem;
+            border-radius: 8px 0 0 8px;
+            cursor: pointer;
+            z-index: 998;
+            box-shadow: -2px 0 15px rgba(59, 130, 246, 0.4);
+            transition: all 0.2s;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        .slideout-toggle:hover {
+            padding-right: 0.75rem;
+            box-shadow: -4px 0 20px rgba(59, 130, 246, 0.6);
+        }
+
+        .slideout-toggle span {
+            color: white;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .slideout-toggle i {
+            font-size: 0.9rem;
+        }
+
+        .slideout-toggle.hidden {
+            display: none;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 480px) {
+            .slideout-panel {
+                width: 100%;
+                right: -100%;
+            }
+            .panel-link-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1639,9 +1902,6 @@
             Job <span>Listings</span>
         </div>
         <div class="jobs-topbar-actions">
-            <a href="#document-manager" onclick="scrollToDocManager(); return false;" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 600; font-size: 0.8rem; display: flex; align-items: center; gap: 0.4rem; text-decoration: none; box-shadow: 0 2px 8px rgba(59,130,246,0.4);">
-                <i class="fas fa-folder-open"></i> DOCUMENTS
-            </a>
             <a href="../" class="topbar-link">
                 <i class="fas fa-home"></i> Portfolio
             </a>
@@ -1666,358 +1926,120 @@
         </div>
     </div>
 
+    <!-- Slide-out Panel Toggle Button -->
+    <button class="slideout-toggle" onclick="toggleSlideoutPanel()">
+        <span><i class="fas fa-folder-open"></i> Resources</span>
+    </button>
+
+    <!-- Slide-out Panel Overlay -->
+    <div class="slideout-overlay" id="slideout-overlay" onclick="toggleSlideoutPanel()"></div>
+
+    <!-- Slide-out Panel -->
+    <div class="slideout-panel" id="slideout-panel">
+        <div class="slideout-header">
+            <h3><i class="fas fa-briefcase"></i> Resources</h3>
+            <button class="slideout-close" onclick="toggleSlideoutPanel()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="slideout-tabs">
+            <button class="slideout-tab active" onclick="switchTab('quick-links')">
+                <i class="fas fa-link"></i> Quick Links
+            </button>
+            <button class="slideout-tab" onclick="switchTab('documents')">
+                <i class="fas fa-file-alt"></i> Documents
+            </button>
+        </div>
+        <div class="slideout-content">
+            <!-- Quick Links Section -->
+            <div class="slideout-section active" id="section-quick-links">
+                <div class="panel-quick-links">
+                    <!-- LinkedIn Recent Jobs -->
+                    <div class="panel-link-group">
+                        <div class="panel-link-group-title">LinkedIn - Recent Jobs</div>
+                        <div class="panel-link-grid">
+                            <a href="https://www.linkedin.com/jobs/search/?keywords=%22Staff%20DevOps%20Engineer%22&location=United%20States&f_TPR=r10800&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="panel-link"><i class="fab fa-linkedin" style="color: #0077b5;"></i> Staff DevOps (3h)</a>
+                            <a href="https://www.linkedin.com/jobs/search/?keywords=%22DevOps%20Engineer%22&location=United%20States&f_TPR=r10800&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="panel-link"><i class="fab fa-linkedin" style="color: #0077b5;"></i> DevOps (3h)</a>
+                            <a href="https://www.linkedin.com/jobs/search/?keywords=%22Site%20Reliability%20Engineer%22&location=United%20States&f_TPR=r10800&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="panel-link"><i class="fab fa-linkedin" style="color: #0077b5;"></i> SRE (3h)</a>
+                            <a href="https://www.linkedin.com/jobs/search/?keywords=%22Infrastructure%20Engineer%22&location=United%20States&f_TPR=r10800&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="panel-link"><i class="fab fa-linkedin" style="color: #0077b5;"></i> Infra Eng (3h)</a>
+                            <a href="https://www.linkedin.com/jobs/search/?keywords=%22ML%20infrastructure%22%20OR%20%22AI%20infrastructure%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="panel-link"><i class="fab fa-linkedin" style="color: #0077b5;"></i> AI/ML Infra (6h)</a>
+                            <a href="https://www.linkedin.com/jobs/search/?keywords=%22Forward%20Deployed%20Engineer%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="panel-link"><i class="fab fa-linkedin" style="color: #0077b5;"></i> FDE (6h)</a>
+                        </div>
+                    </div>
+                    <!-- Big Tech -->
+                    <div class="panel-link-group">
+                        <div class="panel-link-group-title">Big Tech</div>
+                        <div class="panel-link-grid">
+                            <a href="https://jobs.careers.microsoft.com/global/en/search?q=devops%20engineer&l=en_us&pg=1&pgSz=20&o=Recent" target="_blank" class="panel-link"><img src="../assets/images/logos/microsoft.png" alt="MS"> Microsoft</a>
+                            <a href="https://amazon.jobs/en/search?offset=0&result_limit=10&sort=recent&country%5B%5D=USA&base_query=devops%20engineer" target="_blank" class="panel-link"><img src="../assets/images/logos/amazon.png" alt="AWS"> Amazon/AWS</a>
+                            <a href="https://www.google.com/about/careers/applications/jobs/results/?q=devops%20engineer&location=United%20States" target="_blank" class="panel-link"><img src="../assets/images/logos/google.png" alt="Google"> Google</a>
+                            <a href="https://www.metacareers.com/jobs/?q=devops%20engineer&offices[0]=United%20States" target="_blank" class="panel-link"><img src="../assets/images/logos/meta.png" alt="Meta"> Meta</a>
+                            <a href="https://jobs.apple.com/en-us/search?search=devops%20engineer&sort=newest" target="_blank" class="panel-link"><img src="../assets/images/logos/apple.png" alt="Apple"> Apple</a>
+                            <a href="https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite?locationCountry=bc33aa3152ec42d4995f4791a106ed09&q=devops%20engineer" target="_blank" class="panel-link"><img src="../assets/images/logos/nvidia.png" alt="NVIDIA"> NVIDIA</a>
+                        </div>
+                    </div>
+                    <!-- AI Companies -->
+                    <div class="panel-link-group">
+                        <div class="panel-link-group-title">AI Companies</div>
+                        <div class="panel-link-grid">
+                            <a href="https://jobs.ashbyhq.com/openai" target="_blank" class="panel-link"><img src="../assets/images/logos/openai.png" alt="OpenAI"> OpenAI</a>
+                            <a href="https://scale.com/careers#open-roles" target="_blank" class="panel-link"><img src="../assets/images/logos/scaleai.png" alt="Scale AI"> Scale AI</a>
+                            <a href="https://cerebras.ai/careers/" target="_blank" class="panel-link"><img src="../assets/images/logos/cerebras.png" alt="Cerebras"> Cerebras</a>
+                            <a href="https://groq.com/careers/" target="_blank" class="panel-link"><img src="../assets/images/logos/groq.png" alt="Groq"> Groq</a>
+                        </div>
+                    </div>
+                    <!-- Social/Consumer -->
+                    <div class="panel-link-group">
+                        <div class="panel-link-group-title">Social/Consumer</div>
+                        <div class="panel-link-grid">
+                            <a href="https://careers.tiktok.com/position?keywords=devops%20engineer&category=&location=CT_243&project=&type=&job_hot_flag=&current=1&limit=10" target="_blank" class="panel-link"><img src="../assets/images/logos/tiktok.png" alt="TikTok"> TikTok</a>
+                            <a href="https://jobs.bytedance.com/en/position?keywords=devops&category=&location=&project=&type=&job_hot_flag=&current=1&limit=10" target="_blank" class="panel-link"><img src="../assets/images/logos/bytedance.png" alt="ByteDance"> ByteDance</a>
+                            <a href="https://careers.salesforce.com/en/jobs/?search=devops%20engineer&country=United%20States" target="_blank" class="panel-link"><img src="../assets/images/logos/salesforce.png" alt="Salesforce"> Salesforce</a>
+                            <a href="https://careers.adobe.com/us/en/search-results?keywords=devops%20engineer" target="_blank" class="panel-link"><i class="fab fa-adobe" style="color: #ff0000;"></i> Adobe</a>
+                        </div>
+                    </div>
+                    <!-- Finance -->
+                    <div class="panel-link-group">
+                        <div class="panel-link-group-title">Finance</div>
+                        <div class="panel-link-grid">
+                            <a href="https://www.capitalonecareers.com/search-jobs?k=devops%20engineer" target="_blank" class="panel-link"><img src="../assets/images/logos/capitalone.png" alt="CapitalOne"> Capital One</a>
+                            <a href="https://jpmorgan.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/requisitions?keyword=devops" target="_blank" class="panel-link"><img src="../assets/images/logos/jpmorgan.png" alt="JPMorgan"> JPMorgan</a>
+                            <a href="https://usa.visa.com/careers/job-search.html?q=devops%20engineer" target="_blank" class="panel-link"><img src="../assets/images/logos/visa.png" alt="Visa"> Visa</a>
+                        </div>
+                    </div>
+                    <!-- Enterprise -->
+                    <div class="panel-link-group">
+                        <div class="panel-link-group-title">Enterprise</div>
+                        <div class="panel-link-grid">
+                            <a href="https://jobs.intuit.com/search-jobs?k=devops%20engineer&l=United%20States" target="_blank" class="panel-link"><img src="../assets/images/logos/intuit.png" alt="Intuit"> Intuit</a>
+                            <a href="https://careers.oracle.com/jobs/#en/sites/jobsearch/requisitions?keyword=devops%20engineer&location=United%20States" target="_blank" class="panel-link"><img src="../assets/images/logos/oracle.png" alt="Oracle"> Oracle</a>
+                            <a href="https://www.ibm.com/careers/search?field_keyword_18[0]=DevOps" target="_blank" class="panel-link"><img src="../assets/images/logos/ibm.png" alt="IBM"> IBM</a>
+                            <a href="https://jobs.cisco.com/jobs/SearchJobs/devops%20engineer?21178=%5B169482%5D&21178_format=6020" target="_blank" class="panel-link"><img src="../assets/images/logos/cisco.png" alt="Cisco"> Cisco</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Documents Section -->
+            <div class="slideout-section" id="section-documents">
+                <div class="panel-docs">
+                    <a href="https://github.com/schundu007/chundu/tree/main/assets/resume" target="_blank" class="panel-github-link">
+                        <i class="fab fa-github"></i> Manage Files on GitHub
+                    </a>
+                    <div class="panel-doc-list" id="panel-doc-list">
+                        <p style="color: var(--text-muted); text-align: center; font-size: 0.8rem;">Loading documents...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <main class="main-content">
     <!-- Page Header -->
     <header class="page-header">
         <h1>Job <span>Listings</span></h1>
     </header>
 
-    <!-- Featured Companies - Collapsible -->
-    <section style="padding: 20px 1.5rem; background: var(--bg-tertiary); border-bottom: 1px solid var(--glass-border);">
-        <div style="max-width: 1400px; margin: 0 auto;">
-            <div onclick="toggleFeaturedCompanies()" style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer; user-select: none;">
-                <i class="fas fa-building" style="color: var(--primary);"></i>
-                <h3 style="font-size: 1rem; margin: 0; color: var(--text-primary);">Quick Links</h3>
-                <i id="featured-chevron" class="fas fa-chevron-down" style="color: var(--text-muted); font-size: 0.8rem; transition: transform 0.2s;"></i>
-                <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: auto;">Click to expand</span>
-            </div>
-            <div id="featured-companies-content" style="display: none; margin-top: 1rem;">
-                <!-- Microsoft -->
-                <a href="https://jobs.careers.microsoft.com/global/en/search?q=staff%20devops%20engineer&l=en_us&pg=1&pgSz=20&o=Recent" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/microsoft.png" alt="Microsoft" class="company-link-logo">
-                    MS - Staff DevOps
-                </a>
-                <a href="https://jobs.careers.microsoft.com/global/en/search?q=devops%20engineer&l=en_us&pg=1&pgSz=20&o=Recent" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/microsoft.png" alt="Microsoft" class="company-link-logo">
-                    MS - DevOps
-                </a>
-                <a href="https://jobs.careers.microsoft.com/global/en/search?q=site%20reliability%20engineer&l=en_us&pg=1&pgSz=20&o=Recent" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/microsoft.png" alt="Microsoft" class="company-link-logo">
-                    MS - SRE
-                </a>
-                <a href="https://jobs.careers.microsoft.com/global/en/search?q=infrastructure%20engineer&l=en_us&pg=1&pgSz=20&o=Recent" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/microsoft.png" alt="Microsoft" class="company-link-logo">
-                    MS - Infra
-                </a>
-                <!-- Amazon/AWS -->
-                <a href="https://amazon.jobs/en/search?offset=0&result_limit=10&sort=recent&country%5B%5D=USA&base_query=devops%20engineer" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/amazon.png" alt="AWS" class="company-link-logo">
-                    AWS - DevOps
-                </a>
-                <a href="https://amazon.jobs/en/search?offset=0&result_limit=10&sort=recent&country%5B%5D=USA&base_query=site%20reliability%20engineer" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/amazon.png" alt="AWS" class="company-link-logo">
-                    AWS - SRE
-                </a>
-                <a href="https://amazon.jobs/en/search?offset=0&result_limit=10&sort=recent&country%5B%5D=USA&base_query=infrastructure%20engineer" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/amazon.png" alt="AWS" class="company-link-logo">
-                    AWS - Infra
-                </a>
-                <a href="https://amazon.jobs/en/search?offset=0&result_limit=10&sort=recent&country%5B%5D=USA&base_query=forward%20deployed%20engineer" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/amazon.png" alt="AWS" class="company-link-logo">
-                    AWS - Forward Deploy
-                </a>
-                <!-- Google -->
-                <a href="https://www.google.com/about/careers/applications/jobs/results/?q=devops%20engineer&location=United%20States" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/google.png" alt="Google" class="company-link-logo">
-                    Google - DevOps
-                </a>
-                <a href="https://www.google.com/about/careers/applications/jobs/results/?q=site%20reliability%20engineer&location=United%20States" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/google.png" alt="Google" class="company-link-logo">
-                    Google - SRE
-                </a>
-                <a href="https://www.google.com/about/careers/applications/jobs/results/?q=infrastructure%20engineer&location=United%20States" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/google.png" alt="Google" class="company-link-logo">
-                    Google - Infra
-                </a>
-                <!-- NVIDIA -->
-                <a href="https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite?locationCountry=bc33aa3152ec42d4995f4791a106ed09&q=devops%20engineer" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/nvidia.png" alt="NVIDIA" class="company-link-logo">
-                    NVIDIA - DevOps
-                </a>
-                <a href="https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite?locationCountry=bc33aa3152ec42d4995f4791a106ed09&q=infrastructure%20engineer" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/nvidia.png" alt="NVIDIA" class="company-link-logo">
-                    NVIDIA - Infra
-                </a>
-                <a href="https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite?locationCountry=bc33aa3152ec42d4995f4791a106ed09&q=ML%20infrastructure" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/nvidia.png" alt="NVIDIA" class="company-link-logo">
-                    NVIDIA - ML Infra
-                </a>
-                <!-- TikTok -->
-                <a href="https://careers.tiktok.com/position?keywords=devops%20engineer&category=&location=CT_243&project=&type=&job_hot_flag=&current=1&limit=10" target="_blank" class="company-link-btn" style="background: #000; color: #fff;">
-                    <img src="../assets/images/logos/tiktok.png" alt="TikTok" class="company-link-logo">
-                    TikTok - DevOps
-                </a>
-                <a href="https://careers.tiktok.com/position?keywords=site%20reliability&category=&location=CT_243&project=&type=&job_hot_flag=&current=1&limit=10" target="_blank" class="company-link-btn" style="background: #000; color: #fff;">
-                    <img src="../assets/images/logos/tiktok.png" alt="TikTok" class="company-link-logo">
-                    TikTok - SRE
-                </a>
-                <a href="https://careers.tiktok.com/position?keywords=infrastructure%20engineer&category=&location=CT_243&project=&type=&job_hot_flag=&current=1&limit=10" target="_blank" class="company-link-btn" style="background: #000; color: #fff;">
-                    <img src="../assets/images/logos/tiktok.png" alt="TikTok" class="company-link-logo">
-                    TikTok - Infra
-                </a>
-                <a href="https://careers.tiktok.com/position?keywords=ML%20infrastructure&category=&location=CT_243&project=&type=&job_hot_flag=&current=1&limit=10" target="_blank" class="company-link-btn" style="background: #000; color: #fff;">
-                    <img src="../assets/images/logos/tiktok.png" alt="TikTok" class="company-link-logo">
-                    TikTok - ML Infra
-                </a>
-                <!-- ByteDance -->
-                <a href="https://jobs.bytedance.com/en/position?keywords=devops&category=&location=&project=&type=&job_hot_flag=&current=1&limit=10" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/bytedance.png" alt="ByteDance" class="company-link-logo">
-                    ByteDance - DevOps
-                </a>
-                <a href="https://jobs.bytedance.com/en/position?keywords=infrastructure%20engineer&category=&location=&project=&type=&job_hot_flag=&current=1&limit=10" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/bytedance.png" alt="ByteDance" class="company-link-logo">
-                    ByteDance - Infra
-                </a>
-                <a href="https://jobs.bytedance.com/en/position?keywords=site%20reliability&category=&location=&project=&type=&job_hot_flag=&current=1&limit=10" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/bytedance.png" alt="ByteDance" class="company-link-logo">
-                    ByteDance - SRE
-                </a>
-                <!-- OpenAI -->
-                <a href="https://jobs.ashbyhq.com/openai?departmentId=4fdc3b37-1cd3-4e15-8bb4-52f24c63a16a" target="_blank" class="company-link-btn" style="background: #10a37f; color: #fff;">
-                    <img src="../assets/images/logos/openai.png" alt="OpenAI" class="company-link-logo">
-                    OpenAI - Platform
-                </a>
-                <a href="https://jobs.ashbyhq.com/openai" target="_blank" class="company-link-btn" style="background: #10a37f; color: #fff;">
-                    <img src="../assets/images/logos/openai.png" alt="OpenAI" class="company-link-logo">
-                    OpenAI - All Jobs
-                </a>
-                <!-- AI/ML Companies -->
-                <a href="https://scale.com/careers#open-roles" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/scaleai.png" alt="Scale AI" class="company-link-logo">
-                    Scale AI - Infra
-                </a>
-                <a href="https://www.amd.com/en/corporate/careers" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/amd.png" alt="AMD" class="company-link-logo">
-                    AMD - DevOps
-                </a>
-                <a href="https://groq.com/careers/" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/groq.png" alt="Groq" class="company-link-logo">
-                    Groq - ML Infra
-                </a>
-                <a href="https://cerebras.ai/careers/" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/cerebras.png" alt="Cerebras" class="company-link-logo">
-                    Cerebras - Infra
-                </a>
-                <!-- Finance -->
-                <a href="https://www.capitalonecareers.com/search-jobs?k=devops%20engineer" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/capitalone.png" alt="Capital One" class="company-link-logo">
-                    Capital One - DevOps
-                </a>
-                <a href="https://www.capitalonecareers.com/search-jobs?k=site%20reliability" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/capitalone.png" alt="Capital One" class="company-link-logo">
-                    Capital One - SRE
-                </a>
-                <a href="https://www.capitalonecareers.com/search-jobs?k=infrastructure%20engineer" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/capitalone.png" alt="Capital One" class="company-link-logo">
-                    Capital One - Infra
-                </a>
-                <a href="https://jpmorgan.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/requisitions?keyword=devops" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/jpmorgan.png" alt="JPMorgan" class="company-link-logo">
-                    JPMorgan - DevOps
-                </a>
-                <a href="https://jpmorgan.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/requisitions?keyword=site%20reliability" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/jpmorgan.png" alt="JPMorgan" class="company-link-logo">
-                    JPMorgan - SRE
-                </a>
-                <a href="https://usa.visa.com/careers/job-search.html?q=devops%20engineer" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/visa.png" alt="Visa" class="company-link-logo">
-                    Visa - DevOps
-                </a>
-                <a href="https://usa.visa.com/careers/job-search.html?q=site%20reliability" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/visa.png" alt="Visa" class="company-link-logo">
-                    Visa - SRE
-                </a>
-                <!-- Retail -->
-                <a href="https://jobs.target.com/search-jobs?k=devops%20engineer" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/target.png" alt="Target" class="company-link-logo">
-                    Target - DevOps
-                </a>
-                <a href="https://jobs.target.com/search-jobs?k=infrastructure%20engineer" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/target.png" alt="Target" class="company-link-logo">
-                    Target - Infra
-                </a>
-                <a href="https://careers.walmart.com/results?q=devops%20engineer&page=1&sort=date" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/walmart.png" alt="Walmart" class="company-link-logo">
-                    Walmart - DevOps
-                </a>
-                <a href="https://careers.walmart.com/results?q=site%20reliability&page=1&sort=date" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/walmart.png" alt="Walmart" class="company-link-logo">
-                    Walmart - SRE
-                </a>
-                <!-- Tech Giants -->
-                <a href="https://careers.salesforce.com/en/jobs/?search=devops%20engineer&country=United%20States" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/salesforce.png" alt="Salesforce" class="company-link-logo">
-                    Salesforce - DevOps
-                </a>
-                <a href="https://careers.salesforce.com/en/jobs/?search=site%20reliability&country=United%20States" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/salesforce.png" alt="Salesforce" class="company-link-logo">
-                    Salesforce - SRE
-                </a>
-                <a href="https://www.metacareers.com/jobs/?q=devops%20engineer&offices[0]=United%20States" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/meta.png" alt="Meta" class="company-link-logo">
-                    Meta - DevOps
-                </a>
-                <a href="https://www.metacareers.com/jobs/?q=infrastructure%20engineer&offices[0]=United%20States" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/meta.png" alt="Meta" class="company-link-logo">
-                    Meta - Infra
-                </a>
-                <a href="https://www.metacareers.com/jobs/?q=production%20engineer&offices[0]=United%20States" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/meta.png" alt="Meta" class="company-link-logo">
-                    Meta - Prod Eng
-                </a>
-                <a href="https://jobs.apple.com/en-us/search?search=devops%20engineer&sort=newest" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/apple.png" alt="Apple" class="company-link-logo">
-                    Apple - DevOps
-                </a>
-                <a href="https://jobs.apple.com/en-us/search?search=site%20reliability&sort=newest" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/apple.png" alt="Apple" class="company-link-logo">
-                    Apple - SRE
-                </a>
-                <a href="https://jobs.apple.com/en-us/search?search=infrastructure%20engineer&sort=newest" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/apple.png" alt="Apple" class="company-link-logo">
-                    Apple - Infra
-                </a>
-                <!-- Enterprise -->
-                <a href="https://jobs.intuit.com/search-jobs?k=devops%20engineer&l=United%20States" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/intuit.png" alt="Intuit" class="company-link-logo">
-                    Intuit - DevOps
-                </a>
-                <a href="https://jobs.intuit.com/search-jobs?k=site%20reliability&l=United%20States" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/intuit.png" alt="Intuit" class="company-link-logo">
-                    Intuit - SRE
-                </a>
-                <a href="https://jobs.intuit.com/search-jobs?k=infrastructure%20engineer&l=United%20States" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/intuit.png" alt="Intuit" class="company-link-logo">
-                    Intuit - Infra
-                </a>
-                <a href="https://kla.wd1.myworkdayjobs.com/Search?q=devops" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/kla.png" alt="KLA" class="company-link-logo">
-                    KLA - DevOps
-                </a>
-                <a href="https://careers.oracle.com/jobs/#en/sites/jobsearch/requisitions?keyword=devops%20engineer&location=United%20States" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/oracle.png" alt="Oracle" class="company-link-logo">
-                    Oracle - DevOps
-                </a>
-                <a href="https://careers.oracle.com/jobs/#en/sites/jobsearch/requisitions?keyword=site%20reliability&location=United%20States" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/oracle.png" alt="Oracle" class="company-link-logo">
-                    Oracle - SRE
-                </a>
-                <a href="https://www.ibm.com/careers/search?field_keyword_18[0]=DevOps" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/ibm.png" alt="IBM" class="company-link-logo">
-                    IBM - DevOps
-                </a>
-                <a href="https://www.ibm.com/careers/search?field_keyword_18[0]=Site%20Reliability" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/ibm.png" alt="IBM" class="company-link-logo">
-                    IBM - SRE
-                </a>
-                <a href="https://jobs.cisco.com/jobs/SearchJobs/devops%20engineer?21178=%5B169482%5D&21178_format=6020" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/cisco.png" alt="Cisco" class="company-link-logo">
-                    Cisco - DevOps
-                </a>
-                <a href="https://jobs.cisco.com/jobs/SearchJobs/site%20reliability?21178=%5B169482%5D&21178_format=6020" target="_blank" class="company-link-btn">
-                    <img src="../assets/images/logos/cisco.png" alt="Cisco" class="company-link-logo">
-                    Cisco - SRE
-                </a>
-                <!-- LinkedIn & Adobe Careers -->
-                <a href="https://careers.linkedin.com/jobs?keywords=devops&location=United%20States" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    LinkedIn - DevOps
-                </a>
-                <a href="https://careers.linkedin.com/jobs?keywords=site%20reliability&location=United%20States" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    LinkedIn - SRE
-                </a>
-                <a href="https://careers.adobe.com/us/en/search-results?keywords=devops%20engineer" target="_blank" class="company-link-btn" style="background: #ff0000; color: white;">
-                    <i class="fab fa-adobe"></i>
-                    Adobe - DevOps
-                </a>
-                <a href="https://careers.adobe.com/us/en/search-results?keywords=site%20reliability" target="_blank" class="company-link-btn" style="background: #ff0000; color: white;">
-                    <i class="fab fa-adobe"></i>
-                    Adobe - SRE
-                </a>
-                <a href="https://careers.adobe.com/us/en/search-results?keywords=infrastructure%20engineer" target="_blank" class="company-link-btn" style="background: #ff0000; color: white;">
-                    <i class="fab fa-adobe"></i>
-                    Adobe - Infra
-                </a>
-                <!-- LinkedIn Job Search - Last 3 Hours ($200K+, sorted by date) -->
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22Staff%20DevOps%20Engineer%22&location=United%20States&f_TPR=r10800&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0e76a8; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    Staff DevOps (3h)
-                </a>
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22DevOps%20Engineer%22&location=United%20States&f_TPR=r10800&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0e76a8; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    DevOps Eng (3h)
-                </a>
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22Infrastructure%20Engineer%22&location=United%20States&f_TPR=r10800&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0e76a8; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    Infra Eng (3h)
-                </a>
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22Site%20Reliability%20Engineer%22&location=United%20States&f_TPR=r10800&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0e76a8; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    SRE (3h)
-                </a>
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22Forward%20Deployed%20Engineer%22&location=United%20States&f_TPR=r10800&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0e76a8; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    FDE (3h)
-                </a>
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22ML%20infrastructure%22%20OR%20%22AI%20infrastructure%22&location=United%20States&f_TPR=r10800&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0e76a8; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    AI/ML Infra (3h)
-                </a>
-                <!-- LinkedIn Job Search - Last 6 Hours ($200K+, sorted by date) -->
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22Staff%20DevOps%20Engineer%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    Staff DevOps (6h)
-                </a>
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22DevOps%20Engineer%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    DevOps Eng (6h)
-                </a>
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22Infrastructure%20Engineer%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    Infra Eng (6h)
-                </a>
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22Site%20Reliability%20Engineer%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    SRE (6h)
-                </a>
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22Forward%20Deployed%20Engineer%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    FDE (6h)
-                </a>
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22ML%20infrastructure%22%20OR%20%22AI%20infrastructure%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #0077b5; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    AI/ML Infra (6h)
-                </a>
-                <!-- LinkedIn Job Search - Last 12 Hours ($200K+, sorted by date) -->
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22Staff%20DevOps%20Engineer%22&location=United%20States&f_TPR=r43200&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #005582; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    Staff DevOps (12h)
-                </a>
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22DevOps%20Engineer%22&location=United%20States&f_TPR=r43200&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #005582; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    DevOps Eng (12h)
-                </a>
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22Infrastructure%20Engineer%22&location=United%20States&f_TPR=r43200&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #005582; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    Infra Eng (12h)
-                </a>
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22Site%20Reliability%20Engineer%22&location=United%20States&f_TPR=r43200&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #005582; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    SRE (12h)
-                </a>
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22Forward%20Deployed%20Engineer%22&location=United%20States&f_TPR=r43200&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #005582; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    FDE (12h)
-                </a>
-                <a href="https://www.linkedin.com/jobs/search/?keywords=%22ML%20infrastructure%22%20OR%20%22AI%20infrastructure%22&location=United%20States&f_TPR=r43200&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="company-link-btn" style="background: #005582; color: white;">
-                    <i class="fab fa-linkedin"></i>
-                    AI/ML Infra (12h)
-                </a>
-            </div>
-        </div>
-    </section>
-
+    <!-- Quick Links and Documents moved to slide-out panel -->
     <!-- Jobs Section -->
     <section class="jobs-section">
         <div class="jobs-container">
@@ -2131,8 +2153,8 @@
         </div>
     </section>
 
-    <!-- Document Manager Section (Bottom of Page) -->
-    <section id="document-manager" class="doc-manager-section">
+    <!-- Document Manager Section - Hidden (moved to slide-out panel) -->
+    <section id="document-manager" class="doc-manager-section" style="display: none !important;">
         <div style="max-width: 1400px; margin: 0 auto;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
                 <div style="display: flex; align-items: center; gap: 0.75rem;">
@@ -2211,19 +2233,6 @@
     </section>
     </main>
 
-    <!-- Document Manager Quick Access Button (Fixed) -->
-    <div id="doc-manager-fab" onclick="scrollToDocManager()" style="position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #3b82f6, #8b5cf6); border-radius: 30px; display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1rem; cursor: pointer; box-shadow: 0 4px 20px rgba(59, 130, 246, 0.5); z-index: 1000; transition: transform 0.2s; animation: pulse-fab 2s infinite;">
-        <i class="fas fa-folder-open" style="color: white; font-size: 1.1rem;"></i>
-        <span style="color: white; font-weight: 600; font-size: 0.85rem;">Documents</span>
-    </div>
-    <style>
-        @keyframes pulse-fab {
-            0%, 100% { box-shadow: 0 4px 20px rgba(59, 130, 246, 0.5); }
-            50% { box-shadow: 0 4px 30px rgba(59, 130, 246, 0.8); }
-        }
-        #doc-manager-fab:hover { transform: scale(1.05); }
-    </style>
-
     <!-- Footer -->
     <footer style="padding: 1.5rem 2rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
@@ -2235,6 +2244,68 @@
     </footer>
 
     <script>
+        // ============ SLIDE-OUT PANEL FUNCTIONS ============
+        function toggleSlideoutPanel() {
+            const panel = document.getElementById('slideout-panel');
+            const overlay = document.getElementById('slideout-overlay');
+            const toggle = document.querySelector('.slideout-toggle');
+
+            panel.classList.toggle('open');
+            overlay.classList.toggle('open');
+            toggle.classList.toggle('hidden');
+        }
+
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.slideout-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.closest('.slideout-tab').classList.add('active');
+
+            // Update sections
+            document.querySelectorAll('.slideout-section').forEach(section => section.classList.remove('active'));
+            document.getElementById('section-' + tabName).classList.add('active');
+
+            // Load documents if Documents tab is selected
+            if (tabName === 'documents') {
+                loadPanelDocuments();
+            }
+        }
+
+        function loadPanelDocuments() {
+            const container = document.getElementById('panel-doc-list');
+            if (!container) return;
+
+            // Reuse existing document data if available
+            if (typeof renderPanelDocuments === 'function') {
+                renderPanelDocuments();
+            } else {
+                // Fetch documents from manifest
+                fetch('../assets/resume/manifest.json')
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.documents && data.documents.length > 0) {
+                            let html = '<div style="display: flex; flex-direction: column; gap: 0.5rem;">';
+                            data.documents.forEach(doc => {
+                                const isActive = doc.active ? '<span style="color: #22c55e; font-size: 0.65rem; margin-left: 0.5rem;"><i class="fas fa-check-circle"></i> Active</span>' : '';
+                                html += `
+                                    <a href="../assets/resume/${doc.filename}" target="_blank" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 6px; text-decoration: none; color: var(--text-secondary); font-size: 0.75rem; border: 1px solid var(--glass-border);">
+                                        <i class="fas fa-file-pdf" style="color: #ef4444;"></i>
+                                        <span style="flex: 1;">${doc.name}</span>
+                                        ${isActive}
+                                    </a>
+                                `;
+                            });
+                            html += '</div>';
+                            container.innerHTML = html;
+                        } else {
+                            container.innerHTML = '<p style="color: var(--text-muted); text-align: center; font-size: 0.8rem;">No documents found</p>';
+                        }
+                    })
+                    .catch(() => {
+                        container.innerHTML = '<p style="color: var(--text-muted); text-align: center; font-size: 0.8rem;">Could not load documents</p>';
+                    });
+            }
+        }
+
         // ============ UTILITY FUNCTIONS (MUST BE FIRST) ============
 
         // Extract job description (not company overview)
