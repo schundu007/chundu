@@ -1983,9 +1983,21 @@
                         <div class="panel-link-group-title">AI Companies</div>
                         <div class="panel-link-grid">
                             <a href="https://jobs.ashbyhq.com/openai" target="_blank" class="panel-link"><img src="../assets/images/logos/openai.png" alt="OpenAI"> OpenAI</a>
+                            <a href="https://boards.greenhouse.io/anthropic" target="_blank" class="panel-link"><i class="fas fa-robot" style="color: #d97706;"></i> Anthropic</a>
+                            <a href="https://boards.greenhouse.io/xai" target="_blank" class="panel-link"><i class="fas fa-bolt" style="color: #1d9bf0;"></i> xAI</a>
+                            <a href="https://boards.greenhouse.io/characterai" target="_blank" class="panel-link"><i class="fas fa-comments" style="color: #8b5cf6;"></i> Character.AI</a>
+                        </div>
+                    </div>
+                    <!-- AI Infrastructure -->
+                    <div class="panel-link-group">
+                        <div class="panel-link-group-title">AI Infrastructure</div>
+                        <div class="panel-link-grid">
+                            <a href="https://boards.greenhouse.io/coreweave" target="_blank" class="panel-link"><i class="fas fa-server" style="color: #22c55e;"></i> CoreWeave</a>
+                            <a href="https://boards.greenhouse.io/crusoe" target="_blank" class="panel-link"><i class="fas fa-cloud" style="color: #3b82f6;"></i> Crusoe</a>
+                            <a href="https://jobs.lever.co/lambdalabs" target="_blank" class="panel-link"><i class="fas fa-microchip" style="color: #8b5cf6;"></i> Lambda</a>
+                            <a href="https://boards.greenhouse.io/togetherai" target="_blank" class="panel-link"><i class="fas fa-cubes" style="color: #f59e0b;"></i> Together AI</a>
+                            <a href="https://boards.greenhouse.io/baseten" target="_blank" class="panel-link"><i class="fas fa-layer-group" style="color: #ef4444;"></i> Baseten</a>
                             <a href="https://scale.com/careers#open-roles" target="_blank" class="panel-link"><img src="../assets/images/logos/scaleai.png" alt="Scale AI"> Scale AI</a>
-                            <a href="https://cerebras.ai/careers/" target="_blank" class="panel-link"><img src="../assets/images/logos/cerebras.png" alt="Cerebras"> Cerebras</a>
-                            <a href="https://groq.com/careers/" target="_blank" class="panel-link"><img src="../assets/images/logos/groq.png" alt="Groq"> Groq</a>
                         </div>
                     </div>
                     <!-- Social/Consumer -->
@@ -2481,21 +2493,29 @@
                 // DevOps - CRITICAL (your core expertise)
                 'devops', 'dev ops', 'dev-ops',
                 // SRE - CRITICAL
-                'sre', 'site reliability', 'reliability engineer',
+                'sre', 'site reliability', 'reliability engineer', 'software engineer, reliability',
+                // Founding/Head roles
+                'founding sre', 'founding devops', 'founding infrastructure', 'founding engineer, cloud',
+                'head of platform', 'head of infrastructure', 'head of devops', 'head of ai platform', 'head of ml',
                 // Platform Engineering
-                'platform engineer', 'platform architect',
+                'platform engineer', 'platform architect', 'lead platform', 'staff platform',
                 // Infrastructure - various patterns (Stripe uses "Staff Infrastructure Engineer")
                 'infrastructure engineer', 'infra engineer', 'infrastructure architect',
                 'developer infrastructure', 'stream infrastructure', 'core infrastructure',
+                'member of technical staff, infrastructure', 'mts, infrastructure',
                 // Cloud - specific roles
                 'cloud engineer', 'cloud architect', 'cloud platform', 'cloud infrastructure',
+                'ai cloud', 'cloud compute', 'cloud infra',
                 // Production/Operations
-                'production engineer', 'operations engineer',
+                'production engineer', 'operations engineer', 'data center operations',
                 // AI/ML Infrastructure (not ML Engineer)
                 'mlops', 'ml ops', 'aiops', 'ml infrastructure', 'ai infrastructure',
                 'ml platform', 'ai platform', 'gpu infrastructure', 'gpu cluster',
+                'ai training platform', 'ai cloud infra', 'ml cloud',
+                // HPC / Supercomputing
+                'hpc', 'high performance computing', 'supercomputing', 'cluster engineer',
                 // Kubernetes specific
-                'kubernetes engineer', 'k8s engineer',
+                'kubernetes engineer', 'k8s engineer', 'kubernetes platform',
                 // Developer Productivity / Build Systems (infra adjacent)
                 'developer productivity', 'build engineer', 'release engineer',
             ];
@@ -3742,6 +3762,24 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             { name: 'Jasper AI', board: 'jasper', type: 'greenhouse', logo: 'https://logo.clearbit.com/jasper.ai' },
             { name: 'Writer', board: 'writer', type: 'greenhouse', logo: 'https://logo.clearbit.com/writer.com' },
             { name: 'Glean', board: 'glaboratories', type: 'greenhouse', logo: 'https://logo.clearbit.com/glean.com' },
+            { name: 'Character.AI', board: 'characterai', type: 'greenhouse', logo: 'https://logo.clearbit.com/character.ai' },
+            { name: 'Anthropic', board: 'anthropic', type: 'greenhouse', logo: 'https://logo.clearbit.com/anthropic.com' },
+            { name: 'Together AI', board: 'togetherai', type: 'greenhouse', logo: 'https://logo.clearbit.com/together.ai' },
+            { name: 'Lightning AI', board: 'gridai', type: 'greenhouse', logo: 'https://logo.clearbit.com/lightning.ai' },
+            { name: 'Baseten', board: 'baseten', type: 'greenhouse', logo: 'https://logo.clearbit.com/baseten.co' },
+            { name: 'Labelbox', board: 'labelbox', type: 'greenhouse', logo: 'https://logo.clearbit.com/labelbox.com' },
+            { name: 'Weights & Biases', board: 'wandb', type: 'greenhouse', logo: 'https://logo.clearbit.com/wandb.com' },
+            { name: 'Abnormal Security', board: 'abnormalsecurity', type: 'greenhouse', logo: 'https://logo.clearbit.com/abnormalsecurity.com' },
+            { name: 'Sigma Computing', board: 'sigmacomputing', type: 'greenhouse', logo: 'https://logo.clearbit.com/sigmacomputing.com' },
+            { name: 'Descript', board: 'descript', type: 'greenhouse', logo: 'https://logo.clearbit.com/descript.com' },
+            { name: 'Postman', board: 'postman', type: 'greenhouse', logo: 'https://logo.clearbit.com/postman.com' },
+            { name: 'Decagon', board: 'decagon', type: 'greenhouse', logo: 'https://logo.clearbit.com/decagon.ai' },
+            { name: 'Magic AI', board: 'magic', type: 'lever', logo: 'https://logo.clearbit.com/magic.dev' },
+            { name: 'Genmo', board: 'genmo', type: 'greenhouse', logo: 'https://logo.clearbit.com/genmo.ai' },
+
+            // ===== AI Healthcare =====
+            { name: 'Abridge', board: 'abridge', type: 'greenhouse', logo: 'https://logo.clearbit.com/abridge.com' },
+            { name: 'Spring Health', board: 'springhealth66', type: 'greenhouse', logo: 'https://logo.clearbit.com/springhealth.com' },
 
             // ===== Enterprise Software =====
             { name: 'SAP', board: 'sap', type: 'greenhouse', logo: 'https://logo.clearbit.com/sap.com' },
