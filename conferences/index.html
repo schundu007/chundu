@@ -75,33 +75,98 @@
         }
 
         .conferences-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 1.5rem;
         }
 
-        .conference-card {
+        /* Featured cards with images - horizontal layout */
+        .conference-card.featured {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius-xl);
             overflow: hidden;
             backdrop-filter: blur(20px);
             transition: var(--transition-normal);
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            align-items: stretch;
         }
 
-        .conference-card:hover {
+        .conference-card.featured:hover {
             border-color: var(--accent-blue);
-            transform: translateY(-4px);
+            transform: translateY(-2px);
             box-shadow: var(--glow-blue);
         }
 
-        .conference-image {
+        .conference-card.featured .conference-image-wrapper {
+            position: relative;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+        }
+
+        .conference-card.featured .conference-image {
             width: 100%;
-            height: 180px;
-            object-fit: contain;
+            height: 100%;
+            object-fit: cover;
             object-position: center;
-            background: rgba(0, 0, 0, 0.3);
-            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .conference-card.featured .conference-content {
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Standard cards without images - grid layout */
+        .conferences-compact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .conference-card.compact {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            transition: var(--transition-normal);
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            padding: 1.5rem;
+        }
+
+        .conference-card.compact:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--glow-blue);
+        }
+
+        .conference-card.compact .conference-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .conference-card.compact .conference-icon i {
+            font-size: 1.5rem;
+            color: var(--accent-blue);
+        }
+
+        .conference-card.compact .conference-content {
+            flex: 1;
+            padding: 0;
         }
 
         .conference-content {
@@ -183,6 +248,20 @@
             flex-wrap: wrap;
         }
 
+        @media (max-width: 900px) {
+            .conference-card.featured {
+                grid-template-columns: 1fr;
+            }
+
+            .conference-card.featured .conference-image-wrapper {
+                min-height: 180px;
+            }
+
+            .conferences-compact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
             .conferences-hero {
                 padding: 100px 1rem 40px;
@@ -192,8 +271,13 @@
                 font-size: 1.75rem;
             }
 
-            .conferences-grid {
-                grid-template-columns: 1fr;
+            .conference-card.compact {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .conference-card.compact .conference-tags {
+                justify-content: center;
             }
         }
     </style>
@@ -239,8 +323,11 @@
         <!-- Conferences Content -->
         <div class="conferences-container">
             <div class="conferences-grid">
-                <article class="conference-card">
-                    <img src="../assets/images/MLW.jpeg" alt="KubeCon + CloudNativeCon" class="conference-image">
+                <!-- Featured: KubeCon -->
+                <article class="conference-card featured">
+                    <div class="conference-image-wrapper">
+                        <img src="../assets/images/MLW.jpeg" alt="KubeCon + CloudNativeCon" class="conference-image">
+                    </div>
                     <div class="conference-content">
                         <span class="conference-venue">KubeCon + CloudNativeCon</span>
                         <h3>Scaling GPU Clusters for ML Workloads</h3>
@@ -253,34 +340,46 @@
                     </div>
                 </article>
 
-                <article class="conference-card">
-                    <div class="conference-content">
-                        <span class="conference-venue">SREcon</span>
-                        <h3>Achieving 99.99% Uptime at Scale</h3>
-                        <p>Strategies and lessons learned from maintaining high availability across multi-cloud infrastructure serving millions of users.</p>
-                        <div class="conference-tags">
-                            <span class="conference-tag">SRE</span>
-                            <span class="conference-tag">High Availability</span>
-                            <span class="conference-tag">Multi-Cloud</span>
+                <!-- Compact cards row -->
+                <div class="conferences-compact-grid">
+                    <article class="conference-card compact">
+                        <div class="conference-icon">
+                            <i class="fas fa-server"></i>
                         </div>
-                    </div>
-                </article>
-
-                <article class="conference-card">
-                    <div class="conference-content">
-                        <span class="conference-venue">HashiConf</span>
-                        <h3>Terraform at Enterprise Scale</h3>
-                        <p>Managing infrastructure as code across multiple cloud providers with Terraform modules, workspaces, and automation.</p>
-                        <div class="conference-tags">
-                            <span class="conference-tag">Terraform</span>
-                            <span class="conference-tag">IaC</span>
-                            <span class="conference-tag">Enterprise</span>
+                        <div class="conference-content">
+                            <span class="conference-venue">SREcon</span>
+                            <h3>Achieving 99.99% Uptime at Scale</h3>
+                            <p>Strategies and lessons learned from maintaining high availability across multi-cloud infrastructure serving millions of users.</p>
+                            <div class="conference-tags">
+                                <span class="conference-tag">SRE</span>
+                                <span class="conference-tag">High Availability</span>
+                                <span class="conference-tag">Multi-Cloud</span>
+                            </div>
                         </div>
-                    </div>
-                </article>
+                    </article>
 
-                <article class="conference-card">
-                    <img src="../assets/images/DevOpsDays.jpeg" alt="DevOps Days" class="conference-image">
+                    <article class="conference-card compact">
+                        <div class="conference-icon">
+                            <i class="fas fa-cubes"></i>
+                        </div>
+                        <div class="conference-content">
+                            <span class="conference-venue">HashiConf</span>
+                            <h3>Terraform at Enterprise Scale</h3>
+                            <p>Managing infrastructure as code across multiple cloud providers with Terraform modules, workspaces, and automation.</p>
+                            <div class="conference-tags">
+                                <span class="conference-tag">Terraform</span>
+                                <span class="conference-tag">IaC</span>
+                                <span class="conference-tag">Enterprise</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Featured: DevOps Days -->
+                <article class="conference-card featured">
+                    <div class="conference-image-wrapper">
+                        <img src="../assets/images/DevOpsDays.jpeg" alt="DevOps Days" class="conference-image">
+                    </div>
                     <div class="conference-content">
                         <span class="conference-venue">DevOps Days</span>
                         <h3>GitOps for Multi-Cluster Kubernetes</h3>
@@ -293,8 +392,11 @@
                     </div>
                 </article>
 
-                <article class="conference-card">
-                    <img src="../assets/images/CS.jpeg" alt="Cloud Summit" class="conference-image">
+                <!-- Featured: Cloud Summit -->
+                <article class="conference-card featured">
+                    <div class="conference-image-wrapper">
+                        <img src="../assets/images/CS.jpeg" alt="Cloud Summit" class="conference-image">
+                    </div>
                     <div class="conference-content">
                         <span class="conference-venue">Cloud Summit</span>
                         <h3>Cost Optimization: $8M Savings Journey</h3>
@@ -307,8 +409,11 @@
                     </div>
                 </article>
 
-                <article class="conference-card">
-                    <img src="../assets/images/PES.jpeg" alt="Platform Engineering Summit" class="conference-image">
+                <!-- Featured: Platform Engineering Summit -->
+                <article class="conference-card featured">
+                    <div class="conference-image-wrapper">
+                        <img src="../assets/images/PES.jpeg" alt="Platform Engineering Summit" class="conference-image">
+                    </div>
                     <div class="conference-content">
                         <span class="conference-venue">Platform Engineering Summit</span>
                         <h3>Building Internal Developer Platforms</h3>
