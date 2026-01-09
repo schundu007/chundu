@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sudhakar Chundu | Staff DevOps Engineer & SRE</title>
-    <meta name="description" content="Senior DevOps/SRE leader with 18+ years architecting large-scale production environments serving 3M+ users with 99.97% uptime. Expert in Kubernetes, GPU clusters, AIOps, microservices, multi-cloud (AWS, Azure, OCI), and CI/CD platforms.">
+    <meta name="description" content="Senior DevOps/SRE leader with 18+ years (13+ cloud engineering, 5 Linux/Middleware) architecting large-scale production environments serving 3M+ users with 99.99% uptime. Expert in Kubernetes, GPU clusters, AIOps, microservices, multi-cloud (AWS, Azure, OCI), and CI/CD platforms.">
     <meta name="keywords" content="Staff DevOps Engineer, SRE, Site Reliability, GPU Infrastructure, Cloud Security, DevSecOps, Kubernetes, Terraform, CI/CD, AWS, Azure, NVIDIA, Slurm, On-Call">
     <meta name="author" content="Sudhakar Chundu">
 
@@ -583,14 +583,15 @@
                         <span class="gradient-text">& Site Reliability</span>
                     </h1>
                     <p class="hero-subtitle">
-                        Senior DevOps/SRE leader with 18+ years of progressive experience architecting and operating
-                        large-scale production environments serving 3M+ users with 99.97% uptime. Primary on-call owner
-                        for GPU clusters (65+ NVIDIA A100/H100) and multi-cloud infrastructure (AWS, Azure, OCI).
-                        Passionate problem-solver specializing in AIOps frameworks, microservices architecture, and
-                        distributed systems scalability. Expert in Kubernetes, Terraform, GitOps (ArgoCD, Flux),
-                        CI/CD pipelines (Jenkins, GitHub Actions), and observability stacks (Prometheus, Grafana, ELK).
-                        I lead incident command, author postmortems, and define meaningful SLOs. Adept cross-cultural
-                        collaborator leading distributed teams across time zones. Speaker at KubeCon, SREcon, and DevOps Days.
+                        Senior DevOps/SRE leader with 18+ years of progressive experience (13+ cloud engineering, 5 years
+                        Linux/Middleware administration) architecting and operating large-scale production environments
+                        serving 3M+ users with 99.99% uptime. Primary on-call owner for GPU clusters (65+ NVIDIA A100/H100)
+                        and multi-cloud infrastructure (AWS, Azure, OCI). Passionate problem-solver specializing in
+                        system design, chaos engineering, AIOps frameworks, microservices architecture, and distributed
+                        systems scalability. Expert in Kubernetes, Terraform, GitOps (ArgoCD, Flux), CI/CD pipelines
+                        (Jenkins, GitHub Actions), and observability stacks (Prometheus, Grafana, ELK). I lead incident
+                        command, author postmortems, and define meaningful SLOs. Adept cross-cultural collaborator leading
+                        distributed teams across time zones. Speaker at KubeCon, SREcon, and DevOps Days.
                     </p>
                     <div class="hero-stats">
                         <div class="hero-stat">
@@ -598,7 +599,7 @@
                             <div class="hero-stat-label">Years Hands-On</div>
                         </div>
                         <div class="hero-stat">
-                            <div class="hero-stat-value"><span class="counter" data-target="99.95">0</span>%</div>
+                            <div class="hero-stat-value"><span class="counter" data-target="99.99">0</span>%</div>
                             <div class="hero-stat-label">SLO Maintained</div>
                         </div>
                         <div class="hero-stat">
@@ -780,7 +781,7 @@
                         </div>
                         <ul class="experience-bullets">
                             <li>Designed K8s microservices platform from ground up; migrated 40+ workloads to containerized architecture</li>
-                            <li>Primary on-call for GPU compute infrastructure; maintained 99.95% SLO serving 12+ enterprise clients</li>
+                            <li>Primary on-call for GPU compute infrastructure; maintained 99.99% SLO serving 12+ enterprise clients</li>
                             <li>Led SOC2 Type II, FedRAMP, and HIPAA certification with DevSecOps tooling (Trivy, Falco, OPA, Vault)</li>
                             <li>Reduced cloud costs 73% ($10M to $2.7M/year) through GPU optimization and FinOps practices</li>
                         </ul>
@@ -801,7 +802,7 @@
                         </div>
                         <ul class="experience-bullets">
                             <li>Architected OSDU R3 data platform processing exabytes of seismic data on GPU-accelerated K8s clusters</li>
-                            <li>Delivered GPU cluster management with Kubernetes, Istio, and KEDA; 99.95% availability for ML inference</li>
+                            <li>Delivered GPU cluster management with Kubernetes, Istio, and KEDA; 99.99% availability for ML inference</li>
                             <li>Created 5+ Terraform modules; implemented GitOps (ArgoCD/FluxCD) reducing deployment time 80%</li>
                             <li>Built observability stack with Prometheus/Grafana/ELK; automation reducing manual ops 85%</li>
                         </ul>
@@ -848,7 +849,7 @@
                     <div class="skill-card">
                         <div class="skill-icon"><i class="fas fa-heartbeat"></i></div>
                         <h3>Production Reliability</h3>
-                        <p>SLOs aren't just metrics, they're promises to users. I design for 99.95%+ availability with graceful degradation and proactive alerting.</p>
+                        <p>SLOs aren't just metrics, they're promises to users. I design for 99.99%+ availability with graceful degradation and proactive alerting.</p>
                         <div class="tech-tags">
                             <span class="tech-tag">SLOs</span>
                             <span class="tech-tag">Error Budgets</span>
@@ -980,7 +981,7 @@
                     const easeOut = 1 - Math.pow(1 - progress, 3);
                     const current = target * easeOut;
 
-                    if (target === 99.95) {
+                    if (target === 99.99) {
                         counter.textContent = current.toFixed(2);
                     } else {
                         counter.textContent = Math.floor(current);
