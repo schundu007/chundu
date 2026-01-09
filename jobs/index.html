@@ -1813,6 +1813,7 @@
                 <select class="filter-select" id="location-filter">
                     <option value="us" selected>All US Locations</option>
                     <option value="remote">Remote (US)</option>
+                    <option value="sanjose">San Jose / Milpitas / Santa Clara</option>
                     <option value="bayarea">SF Bay Area / California</option>
                     <option value="texas">Texas</option>
                     <option value="florida">Florida</option>
@@ -3491,6 +3492,11 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             return usJobs.filter(job => {
                 const loc = job.location.toLowerCase();
                 if (location === 'remote') return loc.includes('remote');
+                if (location === 'sanjose') {
+                    return loc.includes('san jose') || loc.includes('milpitas') || loc.includes('santa clara') ||
+                           loc.includes('sunnyvale') || loc.includes('cupertino') || loc.includes('fremont') ||
+                           loc.includes('mountain view') || loc.includes('palo alto');
+                }
                 if (location === 'bayarea') {
                     return loc.includes('san francisco') || loc.includes('san jose') || loc.includes('milpitas') ||
                            loc.includes('sunnyvale') || loc.includes('mountain view') || loc.includes('palo alto') ||
