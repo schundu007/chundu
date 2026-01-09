@@ -2395,9 +2395,10 @@
                 // SRE - CRITICAL
                 'sre', 'site reliability', 'reliability engineer',
                 // Platform Engineering
-                'platform engineer', 'platform architect', 'platform team',
-                // Infrastructure
+                'platform engineer', 'platform architect',
+                // Infrastructure - various patterns (Stripe uses "Staff Infrastructure Engineer")
                 'infrastructure engineer', 'infra engineer', 'infrastructure architect',
+                'developer infrastructure', 'stream infrastructure', 'core infrastructure',
                 // Cloud - specific roles
                 'cloud engineer', 'cloud architect', 'cloud platform', 'cloud infrastructure',
                 // Production/Operations
@@ -2407,7 +2408,13 @@
                 'ml platform', 'ai platform', 'gpu infrastructure', 'gpu cluster',
                 // Kubernetes specific
                 'kubernetes engineer', 'k8s engineer',
+                // Developer Productivity / Build Systems (infra adjacent)
+                'developer productivity', 'build engineer', 'release engineer',
             ];
+
+            // STAFF-LEVEL INFRASTRUCTURE CHECK - for titles like "Staff Infrastructure Engineer, Privy"
+            const isStaffInfra = (title.includes('staff') || title.includes('senior') || title.includes('principal')) &&
+                                 title.includes('infrastructure') && title.includes('engineer');
 
             // Check if title contains primary keyword
             const hasPrimaryMatch = primaryKeywords.some(keyword => title.includes(keyword));
@@ -2430,7 +2437,7 @@
                 if (!hasInfraFocus || isSalesRole) return false;
             }
 
-            if (!hasPrimaryMatch && !isArchitectRole) return false;
+            if (!hasPrimaryMatch && !isArchitectRole && !isStaffInfra) return false;
 
             // EXCLUSION keywords - reject if these appear in title
             const excludeKeywords = [
