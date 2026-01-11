@@ -2758,7 +2758,7 @@
                 <div class="panel-settings">
                     <div class="settings-group">
                         <div class="settings-group-title">
-                            <i class="fas fa-robot" style="color: #8b5cf6;"></i> Claude AI Settings
+                            <i class="fas fa-robot" style="color: #8b5cf6;"></i> AI Assistant Settings
                         </div>
                         <p class="settings-description">Enter your Anthropic API key to enable AI-powered job analysis, skills matching, cover letter and resume generation.</p>
                         <div class="settings-field">
@@ -2774,8 +2774,8 @@
                         <div class="settings-field">
                             <label for="claude-model">Model</label>
                             <select id="claude-model">
-                                <option value="claude-opus-4-20250514">Claude Opus 4 (Best quality)</option>
-                                <option value="claude-sonnet-4-20250514">Claude Sonnet 4 (Faster, cheaper)</option>
+                                <option value="claude-opus-4-20250514">Opus 4 (Best quality)</option>
+                                <option value="claude-sonnet-4-20250514">Sonnet 4 (Faster, cheaper)</option>
                             </select>
                         </div>
                         <div class="settings-actions">
@@ -3250,26 +3250,39 @@
                 // Annual Salary: $XXX,XXX - $XXX,XXX USD (Anthropic style)
                 /annual\s*salary[:\s]*\$\s*([\d,]+)\s*[-–—]\s*\$\s*([\d,]+)/gi,
                 // Base Pay Range / Base Salary Range: $XXX,XXX - $XXX,XXX (Zscaler style)
-                /base\s*(?:pay|salary)\s*range[:\s]*\$\s*([\d,]+)\s*[-–—]\s*\$\s*([\d,]+)/gi,
+                /base\s*(?:pay|salary)\s*(?:range)?[:\s]*\$\s*([\d,]+)\s*[-–—]\s*\$\s*([\d,]+)/gi,
+                // Compensation: $XXX,XXX - $XXX,XXX or Compensation range:
+                /compensation(?:\s*range)?[:\s]*\$\s*([\d,]+)\s*[-–—to]+\s*\$\s*([\d,]+)/gi,
+                // Expected compensation: $XXX,XXX - $XXX,XXX
+                /expected\s*(?:salary|compensation)[:\s]*\$\s*([\d,]+)\s*[-–—to]+\s*\$\s*([\d,]+)/gi,
                 // "is $XXX,XXX to $XXX,XXX" or "is: $XXX,XXX–$XXX,XXX" (Scale AI / Discord style)
                 /is[:\s]*\$\s*([\d,]+)\s*(?:to|[-–—])\s*\$\s*([\d,]+)/gi,
                 // $XXX,XXX to $XXX,XXX + equity (Discord style)
                 /\$\s*([\d,]+)\s+to\s+\$\s*([\d,]+)/gi,
+                // USD $XXX,XXX - $XXX,XXX or USD XXX,XXX - XXX,XXX
+                /USD\s*\$?\s*([\d,]+)\s*[-–—to]+\s*\$?\s*([\d,]+)/gi,
                 // $XXX,XXX - $XXX,XXX USD
                 /\$\s*([\d,]+)\s*[-–—]\s*\$\s*([\d,]+)\s*(?:USD|usd)?/gi,
                 // $XXX,XXX - $XXX,XXX or $XXXK - $XXXK
                 /\$\s*([\d,]+)\s*[kK]?\s*[-–—]+\s*\$?\s*([\d,]+)\s*[kK]?/gi,
-                // $XXX,XXX/year or $XXX,XXX per year
-                /\$\s*([\d,]+)\s*[kK]?\s*(?:\/|\s*per\s*)(?:year|yr|annual)/gi,
+                // $XXX,XXX/year or $XXX,XXX per year or $XXX,XXX annually
+                /\$\s*([\d,]+)\s*[kK]?\s*(?:\/|\s*per\s*)(?:year|yr|annual|annum)/gi,
                 // salary/compensation/pay context with range
                 /(?:salary|compensation|pay|range)[:\s]*\$?\s*([\d,]+)\s*[kK]?\s*[-–—to]+\s*\$?\s*([\d,]+)\s*[kK]?/gi,
                 // XXXk - XXXk or XXXk to XXXk
                 /([\d]+)\s*[kK]\s*(?:[-–—]|to)\s*([\d]+)\s*[kK]/gi,
-                // Base salary: $XXX,XXX - $XXX,XXX
-                /base\s*(?:salary)?[:\s]*\$\s*([\d,]+)(?:\s*[-–—]\s*\$\s*([\d,]+))?/gi,
+                // Range: XXX,XXX - XXX,XXX (numeric without $)
+                /(?:range|salary)[:\s]*([\d,]+)\s*[-–—to]+\s*([\d,]+)(?:\s*(?:per|\/)\s*(?:year|annum))?/gi,
+                // $XXXK-$XXXK or $XXXk-$XXXk (compact format)
+                /\$([\d]+)[kK]\s*[-–—]\s*\$([\d]+)[kK]/gi,
+                // Pay: $XXX,XXX - $XXX,XXX
+                /pay[:\s]*\$\s*([\d,]+)\s*[-–—to]+\s*\$\s*([\d,]+)/gi,
+                // Tier: $XXX,XXX - $XXX,XXX (Ashby style)
+                /tier[^$]*\$\s*([\d,]+)\s*[-–—to]+\s*\$\s*([\d,]+)/gi,
             ];
 
             for (const pattern of patterns) {
+                pattern.lastIndex = 0; // Reset regex state
                 const match = pattern.exec(text);
                 if (match) {
                     let low = match[1].replace(/,/g, '');
@@ -5270,7 +5283,7 @@ ${jobData.description}
             const job = jobsMap[jobId];
             if (!job) return;
 
-            showClaudeModal('Analyzing Job Description...', '<div class="loading-spinner"></div><p>Claude is analyzing the job requirements...</p>');
+            showClaudeModal('Analyzing Job Description...', '<div class="loading-spinner"></div><p>Analyzing job requirements...</p>');
 
             try {
                 const result = await callClaudeAPI('analyze', {
@@ -5290,7 +5303,7 @@ ${jobData.description}
             const job = jobsMap[jobId];
             if (!job) return;
 
-            showClaudeModal('Matching Your Skills...', '<div class="loading-spinner"></div><p>Claude is comparing your profile to the job requirements...</p>');
+            showClaudeModal('Matching Your Skills...', '<div class="loading-spinner"></div><p>Comparing your profile to job requirements...</p>');
 
             try {
                 const result = await callClaudeAPI('match', {
@@ -5310,7 +5323,7 @@ ${jobData.description}
             const job = jobsMap[jobId];
             if (!job) return;
 
-            showClaudeModal('Generating Cover Letter...', '<div class="loading-spinner"></div><p>Claude is crafting a tailored cover letter...</p>');
+            showClaudeModal('Generating Cover Letter...', '<div class="loading-spinner"></div><p>Crafting a tailored cover letter...</p>');
 
             try {
                 const result = await callClaudeAPI('cover_letter', {
@@ -5343,7 +5356,7 @@ ${jobData.description}
             const job = jobsMap[jobId];
             if (!job) return;
 
-            showClaudeModal('Generating Tailored Resume...', '<div class="loading-spinner"></div><p>Claude is creating an ATS-optimized resume for this role...</p>');
+            showClaudeModal('Generating Tailored Resume...', '<div class="loading-spinner"></div><p>Creating an ATS-optimized resume for this role...</p>');
 
             try {
                 const result = await callClaudeAPI('resume', {
@@ -6051,10 +6064,36 @@ ${jobData.description}
                     .replace(/\n{3,}/g, '\n\n')
                     .trim();
 
+                // Try to extract salary from structured fields first
+                let salary = null;
+
+                // Greenhouse pay_input_ranges (if available)
+                if (data.pay_input_ranges && data.pay_input_ranges.length > 0) {
+                    const range = data.pay_input_ranges[0];
+                    if (range.min_cents && range.max_cents) {
+                        const low = Math.round(range.min_cents / 100);
+                        const high = Math.round(range.max_cents / 100);
+                        if (low >= 50000 && high <= 1000000) {
+                            salary = { low, high, display: `$${Math.round(low/1000)}K - $${Math.round(high/1000)}K` };
+                        }
+                    }
+                }
+
+                // Check metadata for salary info
+                if (!salary && data.metadata) {
+                    const metaStr = JSON.stringify(data.metadata);
+                    salary = extractSalary(metaStr);
+                }
+
+                // Fall back to content extraction
+                if (!salary) {
+                    salary = extractSalary(rawContent);
+                }
+
                 return {
                     ...job,
                     description: description,
-                    salary: extractSalary(rawContent),
+                    salary: salary,
                     workType: extractWorkType(job.location, rawContent)
                 };
             } catch (error) {
@@ -6127,12 +6166,42 @@ ${jobData.description}
                     });
                 }
 
+                // Try to extract salary from Lever structured fields first
+                let salary = null;
+
+                // Lever salaryRange or salaryDescription fields
+                if (data.salaryRange) {
+                    const range = data.salaryRange;
+                    if (range.min && range.max) {
+                        const low = parseInt(range.min);
+                        const high = parseInt(range.max);
+                        if (low >= 50000 && high <= 1000000) {
+                            salary = { low, high, display: `$${Math.round(low/1000)}K - $${Math.round(high/1000)}K` };
+                        }
+                    }
+                }
+
+                // Check salaryDescription text
+                if (!salary && data.salaryDescription) {
+                    salary = extractSalary(data.salaryDescription);
+                }
+
+                // Check categories for compensation info
+                if (!salary && data.categories) {
+                    const catStr = JSON.stringify(data.categories);
+                    salary = extractSalary(catStr);
+                }
+
+                // Fall back to content extraction
                 const rawContent = fullDesc + ' ' + (data.description || '');
+                if (!salary) {
+                    salary = extractSalary(rawContent);
+                }
 
                 return {
                     ...job,
                     description: fullDesc.trim(),
-                    salary: extractSalary(rawContent),
+                    salary: salary,
                     workType: extractWorkType(job.location, rawContent)
                 };
             } catch (error) {
@@ -6461,7 +6530,7 @@ ${jobData.description}
                                 `}
                             </div>
                             <div class="ai-actions">
-                                <button class="ai-btn analyze" onclick="analyzeWithClaude('${job.id}')" title="Analyze JD with Claude">
+                                <button class="ai-btn analyze" onclick="analyzeWithClaude('${job.id}')" title="Analyze job description">
                                     <i class="fas fa-brain"></i> Analyze
                                 </button>
                                 <button class="ai-btn match" onclick="matchSkillsWithClaude('${job.id}')" title="Match your skills">
