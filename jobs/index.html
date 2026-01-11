@@ -2932,10 +2932,8 @@
                 // Production/Operations (GitLab uses "Scalability & Operations")
                 'production engineer', 'operations engineer', 'data center operations',
                 'scalability', 'tenant scale',
-                // AI/ML Infrastructure (not ML Engineer)
-                'mlops', 'ml ops', 'aiops', 'ml infrastructure', 'ai infrastructure',
-                'ml platform', 'ai platform', 'gpu infrastructure', 'gpu cluster',
-                'ai training platform', 'ai cloud infra', 'ml cloud',
+                // MLOps/AIOps (DevOps for ML - this is OK)
+                'mlops', 'ml ops', 'aiops',
                 // HPC / Supercomputing
                 'hpc', 'high performance computing', 'supercomputing', 'cluster engineer',
                 // Kubernetes specific
@@ -2984,9 +2982,16 @@
                 'backend', 'back-end', 'back end',
                 'fullstack', 'full-stack', 'full stack',
                 'mobile engineer', 'ios engineer', 'android engineer',
+                // AI/ML Infrastructure (NOT DevOps/SRE - separate domain)
+                'ml infrastructure', 'ai infrastructure', 'ml infra', 'ai infra',
+                'pre-training', 'pretraining', 'pre training',
+                'research engineer', 'research infrastructure',
+                'training infrastructure', 'inference infrastructure',
+                'safeguards', 'alignment', 'model infrastructure',
                 // Data/ML (not infra)
                 'data scientist', 'research scientist', 'machine learning engineer', 'ml engineer',
-                'data engineer', 'data analyst', 'analytics engineer',
+                'data engineer', 'data analyst', 'analytics engineer', 'data platform',
+                'data infrastructure', 'database infrastructure',
                 // Non-technical
                 'product manager', 'product owner', 'program manager',
                 'sales', 'marketing', 'recruiter', 'hr ', 'human resources',
@@ -2997,6 +3002,8 @@
                 'qa engineer', 'test engineer', 'sdet', 'quality assurance',
                 // Support
                 'support engineer', 'technical support', 'help desk',
+                // Maps/Autonomy (not infra)
+                'maps infrastructure', 'autonomy',
             ];
 
             const isExcluded = excludeKeywords.some(keyword => title.includes(keyword));
@@ -3921,38 +3928,49 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             };
         }
 
-        // Generate job summary from parsed JD - ENHANCED with rich details
+        // Generate job summary from parsed JD - ENHANCED with actual job content
         function generateJobSummary(job) {
             const parsed = parseJobDescription(job);
-            const tools = parsed.allFoundTools.slice(0, 6);
+            const tools = parsed.allFoundTools.slice(0, 4);
             const focus = parsed.focusAreas.slice(0, 2);
 
             let parts = [];
 
-            // Skills Match indicator
+            // Extract actual job description text (first 150 chars of meaningful content)
+            const rawDesc = (job.description || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+            if (rawDesc.length > 20) {
+                // Find the first meaningful sentence
+                const sentences = rawDesc.split(/[.!?]+/);
+                let summary = '';
+                for (const s of sentences) {
+                    const trimmed = s.trim();
+                    // Skip short or boilerplate sentences
+                    if (trimmed.length > 30 && !trimmed.toLowerCase().includes('about us') &&
+                        !trimmed.toLowerCase().includes('who we are') && !trimmed.toLowerCase().includes('equal opportunity')) {
+                        summary = trimmed.substring(0, 150);
+                        if (trimmed.length > 150) summary += '...';
+                        break;
+                    }
+                }
+                if (summary) {
+                    parts.push(`<span class="desc-summary" style="color: var(--text-secondary); font-size: 0.75rem; line-height: 1.3;">${summary}</span>`);
+                }
+            }
+
+            // Skills Match indicator (compact)
             if (parsed.skillsMatch.total > 0) {
                 const pct = parsed.skillsMatch.matchPercent;
                 const color = pct >= 80 ? '#16a34a' : pct >= 60 ? '#f59e0b' : pct >= 40 ? '#f97316' : '#ef4444';
-                parts.push(`<span class="desc-match" style="color: ${color}; font-weight: 600;">Skills Match: ${pct}% (${parsed.skillsMatch.matched.length}/${parsed.skillsMatch.total})</span>`);
+                parts.push(`<span class="desc-match" style="color: ${color}; font-weight: 600; font-size: 0.7rem;">Match: ${pct}%</span>`);
             }
 
-            // Focus areas
-            if (focus.length > 0) {
-                parts.push(`<span class="desc-focus">Focus: ${focus.join(', ')}</span>`);
-            }
-
-            // Tools - show matched in green, missing in red
+            // Tools (compact, top 4)
             if (tools.length > 0) {
                 const toolsDisplay = tools.map(t => {
                     const isMatched = parsed.skillsMatch.matched.includes(t);
-                    return `<span style="color: ${isMatched ? '#16a34a' : '#ef4444'}">${t.toUpperCase()}</span>`;
-                }).join(', ');
-                parts.push(`<span class="desc-tools">Tools: ${toolsDisplay}</span>`);
-            }
-
-            // Location tags (remote indicator)
-            if (parsed.locationTags.length > 0) {
-                parts.push(`<span class="desc-remote">${parsed.locationTags[0]}</span>`);
+                    return `<span style="color: ${isMatched ? '#16a34a' : '#ef4444'}; font-size: 0.65rem;">${t.toUpperCase()}</span>`;
+                }).join(' · ');
+                parts.push(`<span class="desc-tools">${toolsDisplay}</span>`);
             }
 
             return parts.join('<br>');
