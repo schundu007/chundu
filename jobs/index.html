@@ -2481,13 +2481,13 @@
                     <thead>
                         <tr>
                             <th class="col-role sortable" data-sort="title">Role <i class="fas fa-sort"></i></th>
+                            <th class="col-description">Description <i class="fas fa-expand-alt" style="font-size: 0.65rem; opacity: 0.5; margin-left: 0.25rem;" title="Click rows to expand"></i></th>
+                            <th class="col-date sortable" data-sort="date">Posted <i class="fas fa-sort"></i></th>
+                            <th class="col-salary sortable" data-sort="salary">Salary <i class="fas fa-sort"></i></th>
                             <th class="col-company sortable" data-sort="company">Company <i class="fas fa-sort"></i></th>
                             <th class="col-location">Location</th>
                             <th class="col-distance sortable" data-sort="distance">Distance <i class="fas fa-sort"></i></th>
                             <th class="col-worktype">Type</th>
-                            <th class="col-date sortable" data-sort="date">Posted <i class="fas fa-sort"></i></th>
-                            <th class="col-salary sortable" data-sort="salary">Salary <i class="fas fa-sort"></i></th>
-                            <th class="col-description">Description <i class="fas fa-expand-alt" style="font-size: 0.65rem; opacity: 0.5; margin-left: 0.25rem;" title="Click rows to expand"></i></th>
                             <th class="col-apply">Action</th>
                         </tr>
                     </thead>
@@ -5449,6 +5449,15 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                             <span class="role-title">${escapeHtml(job.title)}</span>
                             ${job.department ? `<span class="role-dept">${escapeHtml(job.department)}</span>` : ''}
                         </td>
+                        <td class="col-description" onclick="showJDModal('${job.id}')" title="Click to view full job description">
+                            <span class="description-text">${generateJobSummary(job)}</span>
+                        </td>
+                        <td class="col-date">
+                            <span class="${dateClass}">${dateText}</span>
+                        </td>
+                        <td class="col-salary">
+                            ${formatSalary(job.salary)}
+                        </td>
                         <td class="col-company">
                             <span class="company-name">
                                 <img src="${job.companyLogo}" alt="${job.company}" class="company-logo" onerror="this.style.display='none'">
@@ -5467,15 +5476,6 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                         </td>
                         <td class="col-worktype">
                             <span class="worktype-badge ${(job.workType || 'onsite').toLowerCase()}">${job.workType || 'Onsite'}</span>
-                        </td>
-                        <td class="col-date">
-                            <span class="${dateClass}">${dateText}</span>
-                        </td>
-                        <td class="col-salary">
-                            ${formatSalary(job.salary)}
-                        </td>
-                        <td class="col-description" onclick="showJDModal('${job.id}')" title="Click to view full job description">
-                            <span class="description-text">${generateJobSummary(job)}</span>
                         </td>
                         <td class="col-apply">
                             <div class="apply-actions">
