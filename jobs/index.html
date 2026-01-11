@@ -5229,23 +5229,41 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
 
         // Build prompts for different actions
         function buildPrompt(action, jobData) {
+            // Build user profile from actual USER_PROFILE data
+            const experienceText = USER_PROFILE.experience.map(exp => {
+                const bullets = exp.bullets.map(b => `  • ${b}`).join('\n');
+                return `${exp.title} | ${exp.company} | ${exp.location} | ${exp.dates}\n${bullets}`;
+            }).join('\n\n');
+
+            const skillsText = Object.entries(USER_PROFILE.skills).map(([cat, skills]) => `${cat}: ${skills}`).join('\n');
+
             const userProfile = `
-Name: Sudhakar Chundu
-Title: Staff DevOps/SRE Engineer | Cloud Infrastructure Architect
-Experience: 18+ years
-Location: San Jose, CA
+Name: ${USER_PROFILE.name}
+Title: ${USER_PROFILE.title}
+Experience: ${USER_PROFILE.yearsExperience} years
+Location: ${USER_PROFILE.location}
+Email: ${USER_PROFILE.email}
+Phone: ${USER_PROFILE.phone}
+LinkedIn: ${USER_PROFILE.linkedin}
+GitHub: ${USER_PROFILE.github}
 
-Core Skills: Kubernetes, Docker, Terraform, Ansible, AWS, Azure, GCP, Jenkins, GitLab CI, GitHub Actions,
-Prometheus, Grafana, Datadog, Splunk, Python, Go, Bash, PostgreSQL, Redis, MongoDB, Vault, ArgoCD, Helm, Istio
+PROFESSIONAL SUMMARY:
+${USER_PROFILE.summary}
 
-Key Achievements:
-- Led platform engineering team managing 40+ microservices with 99.95% SLO
-- Reduced deployment failures by 68% through GitOps and progressive delivery
-- Built GPU cluster orchestration for AI/ML training workloads (1000+ GPUs)
-- Decreased MTTR from 45min to 12min through automated incident response
-- Migrated legacy infrastructure to Kubernetes, reducing costs by 40%
+KEY METRICS:
+${USER_PROFILE.keyMetrics.map(m => `• ${m.value} - ${m.label}`).join('\n')}
 
-Certifications: AWS Solutions Architect Professional, CKA, GCP Professional Cloud Architect, Terraform Associate
+TECHNICAL SKILLS:
+${skillsText}
+
+PROFESSIONAL EXPERIENCE:
+${experienceText}
+
+CERTIFICATIONS:
+${USER_PROFILE.certifications.join(', ')}
+
+EDUCATION:
+${USER_PROFILE.education.degree} - ${USER_PROFILE.education.school}
 `;
 
             const jobInfo = `
@@ -5338,12 +5356,18 @@ ${jobData.description}
                         ${marked.parse(result)}
                         <div class="claude-actions">
                             <button onclick="copyToClipboard(this.closest('.claude-result').querySelector('.cover-letter-text')?.textContent || '${escapeHtml(result)}')" class="claude-btn">
-                                <i class="fas fa-copy"></i> Copy
+                                <i class="fas fa-copy"></i> Copy Text
                             </button>
                             <button onclick="downloadText('cover-letter-${job.company.toLowerCase().replace(/\s+/g, '-')}.txt', '${escapeHtml(result)}')" class="claude-btn">
-                                <i class="fas fa-download"></i> Download
+                                <i class="fas fa-file-alt"></i> Download TXT
+                            </button>
+                            <button onclick="downloadCoverLetter(jobsMap['${job.id}'])" class="claude-btn" style="background: linear-gradient(135deg, #2563eb, #7c3aed);">
+                                <i class="fas fa-file-word"></i> Download DOCX
                             </button>
                         </div>
+                        <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted);">
+                            <i class="fas fa-info-circle"></i> DOCX uses your actual profile data for professional formatting.
+                        </p>
                     </div>
                     <div class="cover-letter-text" style="display:none;">${escapeHtml(result)}</div>
                 `);
@@ -5371,12 +5395,18 @@ ${jobData.description}
                         <pre class="resume-text">${escapeHtml(result)}</pre>
                         <div class="claude-actions">
                             <button onclick="copyToClipboard(document.querySelector('.resume-text').textContent)" class="claude-btn">
-                                <i class="fas fa-copy"></i> Copy
+                                <i class="fas fa-copy"></i> Copy Text
                             </button>
                             <button onclick="downloadText('resume-${job.company.toLowerCase().replace(/\s+/g, '-')}.txt', document.querySelector('.resume-text').textContent)" class="claude-btn">
-                                <i class="fas fa-download"></i> Download
+                                <i class="fas fa-file-alt"></i> Download TXT
+                            </button>
+                            <button onclick="downloadResume(jobsMap['${job.id}'])" class="claude-btn" style="background: linear-gradient(135deg, #2563eb, #7c3aed);">
+                                <i class="fas fa-file-word"></i> Download DOCX
                             </button>
                         </div>
+                        <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted);">
+                            <i class="fas fa-info-circle"></i> DOCX uses your actual resume data, tailored to this job's requirements.
+                        </p>
                     </div>
                 `);
             } catch (error) {
