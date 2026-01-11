@@ -2821,6 +2821,10 @@
 
             // Common salary patterns in job descriptions
             const patterns = [
+                // Annual Salary: $XXX,XXX - $XXX,XXX USD (Anthropic style)
+                /annual\s*salary[:\s]*\$\s*([\d,]+)\s*[-–—]\s*\$\s*([\d,]+)/gi,
+                // $XXX,XXX - $XXX,XXX USD
+                /\$\s*([\d,]+)\s*[-–—]\s*\$\s*([\d,]+)\s*(?:USD|usd)?/gi,
                 // $XXX,XXX - $XXX,XXX or $XXXK - $XXXK
                 /\$\s*([\d,]+)\s*[kK]?\s*[-–—to]+\s*\$?\s*([\d,]+)\s*[kK]?/gi,
                 // $XXX,XXX/year or $XXX,XXX per year
