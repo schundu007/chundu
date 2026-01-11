@@ -2902,111 +2902,161 @@
             return 'Onsite';
         }
 
-        // STRICT filter - only roles matching Sudhakar's 18+ years experience
-        // Cloud AI Architect | Director Platform Engineering | Senior SRE | DevOps
+        // PRECISE filter for DevOps/SRE/Cloud/Platform/Infrastructure roles
+        // Target: Staff/Senior/Principal level DevOps, SRE, Platform, Cloud, Infrastructure
+        // Required: Terraform, Kubernetes, Ansible, AWS, Azure, GCP experience
         function isRelevantJob(job) {
             const title = (job.title || '').toLowerCase();
-            const description = (job.description || '').toLowerCase();
-            const combined = title + ' ' + description;
+            const desc = (job.description || '').toLowerCase();
 
-            // PRIMARY ROLES - Strong match in title (must have one of these)
-            const primaryKeywords = [
-                // DevOps - CRITICAL (your core expertise)
-                'devops', 'dev ops', 'dev-ops',
-                // SRE - CRITICAL (GitLab uses "Database Reliability", "Environment Automation")
-                'sre', 'site reliability', 'reliability engineer', 'software engineer, reliability',
-                'database reliability', 'database operations', 'environment automation',
-                // Founding/Head roles
-                'founding sre', 'founding devops', 'founding infrastructure', 'founding engineer, cloud',
-                'head of platform', 'head of infrastructure', 'head of devops', 'head of ai platform', 'head of ml',
-                // Platform Engineering (GitLab uses "Infrastructure Platforms")
-                'platform engineer', 'platform architect', 'lead platform', 'staff platform',
-                'infrastructure platform', 'infrastructure platforms',
-                // Infrastructure - various patterns (Stripe uses "Staff Infrastructure Engineer")
-                'infrastructure engineer', 'infra engineer', 'infrastructure architect',
-                'developer infrastructure', 'stream infrastructure', 'core infrastructure',
-                'member of technical staff, infrastructure', 'mts, infrastructure',
-                // Cloud - specific roles
-                'cloud engineer', 'cloud architect', 'cloud platform', 'cloud infrastructure',
-                'ai cloud', 'cloud compute', 'cloud infra',
-                // Production/Operations (GitLab uses "Scalability & Operations")
-                'production engineer', 'operations engineer', 'data center operations',
-                'scalability', 'tenant scale',
-                // MLOps/AIOps (DevOps for ML - this is OK)
-                'mlops', 'ml ops', 'aiops',
-                // HPC / Supercomputing
-                'hpc', 'high performance computing', 'supercomputing', 'cluster engineer',
+            // ===== PRIORITY 1: Exact role matches (Senior/Staff level) =====
+            const exactRolePatterns = [
+                // DevOps roles with seniority
+                /\b(staff|senior|principal|lead|head)\s*(of\s*)?(devops|dev[\s-]?ops)/i,
+                /devops\s*(architect|engineer|lead)/i,
+
+                // SRE roles with seniority
+                /\b(staff|senior|principal|lead)\s*sre\b/i,
+                /\b(staff|senior|principal|lead)\s*site\s*reliability/i,
+                /site\s*reliability\s*(architect|engineer|lead)/i,
+
+                // Platform Engineering with seniority
+                /\b(staff|senior|principal|lead)\s*platform\s*engineer/i,
+                /platform\s*(architect|engineering\s*lead)/i,
+
+                // Cloud roles with seniority
+                /\b(staff|senior|principal|lead)\s*cloud\s*(engineer|architect)/i,
+                /cloud\s*architect/i,
+                /cloud\s*platform\s*engineer/i,
+
+                // Infrastructure roles with seniority (excluding ML/AI/Data)
+                /\b(staff|senior|principal|lead)\s*infrastructure\s*(engineer|architect)/i,
+                /infrastructure\s*architect/i,
+                /solutions\s*architect/i,
+
                 // Kubernetes specific
-                'kubernetes engineer', 'k8s engineer', 'kubernetes platform',
-                // Developer Productivity / Build Systems (infra adjacent)
-                'developer productivity', 'build engineer', 'release engineer',
-                // Delivery / Deploy (GitLab Delivery)
-                'gitlab delivery', 'delivery engineer',
+                /\b(staff|senior|principal|lead)\s*kubernetes\s*engineer/i,
+                /kubernetes\s*(architect|platform)/i,
+                /k8s\s*engineer/i,
             ];
 
-            // STAFF-LEVEL INFRASTRUCTURE CHECK - for titles like "Staff Infrastructure Engineer, Privy"
-            const isStaffInfra = (title.includes('staff') || title.includes('senior') || title.includes('principal')) &&
-                                 title.includes('infrastructure') && title.includes('engineer');
+            // ===== PRIORITY 2: General role patterns =====
+            const generalRolePatterns = [
+                /\bdevops\b/i,
+                /\bdev[\s-]?ops\b/i,
+                /\bsre\b/i,
+                /site\s*reliability/i,
+                /reliability\s*engineer/i,
+                /platform\s*engineer/i,
+                /cloud\s*engineer/i,
+                /production\s*engineer/i,
+                /operations\s*engineer/i,
+                /build\s*engineer/i,
+                /release\s*engineer/i,
+                /developer\s*productivity/i,
+                /\bmlops\b/i,
+                /\baiops\b/i,
+            ];
 
-            // Check if title contains primary keyword
-            const hasPrimaryMatch = primaryKeywords.some(keyword => title.includes(keyword));
+            // ===== PRIORITY 3: Infrastructure Engineer with tool requirements =====
+            const isInfraEngineer = /infrastructure\s*engineer/i.test(title) &&
+                                    !/\b(ml|ai|data|machine\s*learning|research|training|inference|database)\b/i.test(title);
 
-            // SECONDARY - Architect roles need additional validation
-            const architectKeywords = ['solutions architect', 'technical architect', 'enterprise architect', 'cloud architect'];
-            const isArchitectRole = architectKeywords.some(keyword => title.includes(keyword));
+            // Check matches
+            const hasExactMatch = exactRolePatterns.some(p => p.test(title));
+            const hasGeneralMatch = generalRolePatterns.some(p => p.test(title));
 
-            // For architect roles, verify it's infrastructure-focused (not sales/pre-sales)
-            if (isArchitectRole && !hasPrimaryMatch) {
-                const infraIndicators = ['aws', 'gcp', 'azure', 'kubernetes', 'terraform', 'infrastructure',
-                    'devops', 'ci/cd', 'automation', 'cloud native', 'containers', 'microservices'];
-                const hasInfraFocus = infraIndicators.some(ind => combined.includes(ind));
+            // Infrastructure engineer needs tool validation in description
+            const hasRelevantTools = /\b(terraform|kubernetes|k8s|ansible|aws|azure|gcp|docker|helm|argocd|jenkins|gitlab[\s-]?ci|github\s*actions)\b/i.test(desc);
 
-                // Exclude sales/pre-sales architect roles
-                const salesIndicators = ['pre-sales', 'presales', 'customer facing', 'client facing',
-                    'customer success', 'business development', 'quota', 'revenue'];
-                const isSalesRole = salesIndicators.some(ind => combined.includes(ind));
+            // STAFF/SENIOR Infrastructure roles
+            const isStaffInfra = /\b(staff|senior|principal|lead)\b/i.test(title) &&
+                                 /infrastructure/i.test(title) &&
+                                 !/\b(ml|ai|data|machine\s*learning|research|training)\b/i.test(title);
 
-                if (!hasInfraFocus || isSalesRole) return false;
-            }
+            // Must match at least one pattern
+            if (!hasExactMatch && !hasGeneralMatch && !isInfraEngineer && !isStaffInfra) return false;
 
-            if (!hasPrimaryMatch && !isArchitectRole && !isStaffInfra) return false;
+            // For generic "Infrastructure Engineer" without seniority, require relevant tools
+            if (isInfraEngineer && !hasExactMatch && !isStaffInfra && !hasRelevantTools) return false;
 
-            // EXCLUSION keywords - reject if these appear in title
-            const excludeKeywords = [
-                // Junior roles
-                'intern', 'internship', 'junior', 'entry level', 'entry-level',
-                'new grad', 'new graduate', 'fresh grad', 'associate engineer', 'i,', ' i ', 'engineer i',
-                // Non-infra engineering
-                'mechanical', 'electrical', 'hardware', 'embedded', 'firmware',
-                'frontend', 'front-end', 'front end', 'ui engineer', 'ux engineer',
-                'backend', 'back-end', 'back end',
-                'fullstack', 'full-stack', 'full stack',
-                'mobile engineer', 'ios engineer', 'android engineer',
-                // AI/ML Infrastructure (NOT DevOps/SRE - separate domain)
-                'ml infrastructure', 'ai infrastructure', 'ml infra', 'ai infra',
-                'pre-training', 'pretraining', 'pre training',
-                'research engineer', 'research infrastructure',
-                'training infrastructure', 'inference infrastructure',
-                'safeguards', 'alignment', 'model infrastructure',
-                // Data/ML (not infra)
-                'data scientist', 'research scientist', 'machine learning engineer', 'ml engineer',
-                'data engineer', 'data analyst', 'analytics engineer', 'data platform',
-                'data infrastructure', 'database infrastructure',
-                // Non-technical
-                'product manager', 'product owner', 'program manager',
-                'sales', 'marketing', 'recruiter', 'hr ', 'human resources',
-                'account executive', 'account manager', 'customer success',
+            // ===== EXCLUSION patterns - reject if these appear in title =====
+            const excludePatterns = [
+                // Junior/Entry roles
+                /\bintern\b/i,
+                /\bjunior\b/i,
+                /entry[\s-]?level/i,
+                /new\s*grad/i,
+                /\bassociate\b.*engineer/i,
+                /engineer\s*[i1]\b/i,
+
+                // AI/ML Infrastructure (NOT pure DevOps/SRE)
+                /\bml\s*infrastructure/i,
+                /\bai\s*infrastructure/i,
+                /\bml\s*infra\b/i,
+                /\bai\s*infra\b/i,
+                /pre[\s-]?training/i,
+                /research\s*engineer/i,
+                /research\s*infrastructure/i,
+                /training\s*infrastructure/i,
+                /inference\s*infrastructure/i,
+                /model\s*infrastructure/i,
+                /\bsafeguards\b/i,
+                /\balignment\b/i,
+
+                // Data Engineering (separate domain)
+                /\bdata\s*engineer/i,
+                /\bdata\s*scientist/i,
+                /\bdata\s*platform/i,
+                /\bdata\s*infrastructure/i,
+                /\bdatabase\s*infrastructure/i,
+                /\banalytics\s*engineer/i,
+
+                // ML/AI Engineering (not infra)
+                /machine\s*learning\s*engineer/i,
+                /\bml\s*engineer\b/i,
+
+                // Non-infra roles
+                /\bfrontend\b/i,
+                /\bfront[\s-]?end\b/i,
+                /\bbackend\b/i,
+                /\bback[\s-]?end\b/i,
+                /\bfullstack\b/i,
+                /\bfull[\s-]?stack\b/i,
+                /\bmobile\s*engineer/i,
+                /\bios\s*engineer/i,
+                /\bandroid\s*engineer/i,
+                /\bui\s*engineer/i,
+                /\bux\s*engineer/i,
+
                 // Security (separate domain)
-                'security engineer', 'security analyst', 'appsec', 'infosec',
+                /\bsecurity\s*engineer/i,
+                /\bappsec\b/i,
+                /\binfosec\b/i,
+
                 // QA/Testing
-                'qa engineer', 'test engineer', 'sdet', 'quality assurance',
+                /\bqa\s*engineer/i,
+                /\btest\s*engineer/i,
+                /\bsdet\b/i,
+
                 // Support
-                'support engineer', 'technical support', 'help desk',
-                // Maps/Autonomy (not infra)
-                'maps infrastructure', 'autonomy',
+                /\bsupport\s*engineer/i,
+                /technical\s*support/i,
+
+                // Non-technical
+                /\bproduct\s*manager/i,
+                /\bprogram\s*manager/i,
+                /\bsales\b/i,
+                /\bmarketing\b/i,
+                /\brecruiter\b/i,
+
+                // Other non-matching
+                /\bmaps\s*infrastructure/i,
+                /\bautonomy\b/i,
+                /\bapi\s*infrastructure/i,
             ];
 
-            const isExcluded = excludeKeywords.some(keyword => title.includes(keyword));
+            const isExcluded = excludePatterns.some(pattern => pattern.test(title));
             return !isExcluded;
         }
 
@@ -5183,16 +5233,14 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             }
         }
 
-        // Fetch jobs from Greenhouse
+        // Fetch jobs from Greenhouse (listing only - minimal data)
         async function fetchGreenhouseJobs(company) {
             try {
-                const response = await fetchWithTimeout(`https://boards-api.greenhouse.io/v1/boards/${company.board}/jobs?content=true`);
+                const response = await fetchWithTimeout(`https://boards-api.greenhouse.io/v1/boards/${company.board}/jobs`);
                 if (!response || !response.ok) return [];
                 const data = await response.json();
 
                 return (data.jobs || []).map(job => {
-                    const description = stripHtml(job.content || '');
-                    const rawContent = job.content || '';
                     const location = job.location?.name || 'Remote';
                     return {
                         id: job.id,
@@ -5201,13 +5249,13 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                         companyLogo: company.logo,
                         location: location,
                         department: job.departments?.[0]?.name || '',
-                        description: description,
-                        salary: extractSalary(rawContent),
-                        workType: extractWorkType(location, rawContent),
+                        description: '',  // Will be fetched individually
+                        salary: null,     // Will be fetched individually
+                        workType: 'Onsite',
                         url: job.absolute_url || '',
                         postedDate: new Date(job.updated_at || Date.now()),
                         source: 'greenhouse',
-                        board: company.board  // Store board for detailed API calls
+                        board: company.board
                     };
                 });
             } catch (error) {
@@ -5215,7 +5263,40 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             }
         }
 
-        // Fetch jobs from Lever
+        // Fetch FULL job details from Greenhouse individual endpoint
+        async function fetchGreenhouseJobDetails(job) {
+            try {
+                const response = await fetchWithTimeout(
+                    `https://boards-api.greenhouse.io/v1/boards/${job.board}/jobs/${job.id}`,
+                    5000
+                );
+                if (!response || !response.ok) return job;
+                const data = await response.json();
+
+                const rawContent = data.content || '';
+                const description = rawContent
+                    .replace(/<br\s*\/?>/gi, '\n')
+                    .replace(/<\/p>/gi, '\n\n')
+                    .replace(/<\/li>/gi, '\n')
+                    .replace(/<li>/gi, '• ')
+                    .replace(/<[^>]*>/g, '')
+                    .replace(/&nbsp;/g, ' ')
+                    .replace(/&amp;/g, '&')
+                    .replace(/\n{3,}/g, '\n\n')
+                    .trim();
+
+                return {
+                    ...job,
+                    description: description,
+                    salary: extractSalary(rawContent),
+                    workType: extractWorkType(job.location, rawContent)
+                };
+            } catch (error) {
+                return job;
+            }
+        }
+
+        // Fetch jobs from Lever (listing only)
         async function fetchLeverJobs(company) {
             try {
                 const response = await fetchWithTimeout(`https://api.lever.co/v0/postings/${company.board}?mode=json`);
@@ -5224,8 +5305,6 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 if (!Array.isArray(jobs)) return [];
 
                 return jobs.map(job => {
-                    const description = stripHtml(job.descriptionPlain || job.description || '');
-                    const rawContent = job.descriptionPlain || job.description || '';
                     const location = job.categories?.location || 'Remote';
                     return {
                         id: job.id,
@@ -5234,13 +5313,13 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                         companyLogo: company.logo,
                         location: location,
                         department: job.categories?.team || job.categories?.department || '',
-                        description: description,
-                        salary: extractSalary(rawContent),
-                        workType: extractWorkType(location, rawContent),
+                        description: '',  // Will be fetched individually
+                        salary: null,     // Will be fetched individually
+                        workType: 'Onsite',
                         url: job.hostedUrl || '',
                         postedDate: new Date(job.createdAt || Date.now()),
                         source: 'lever',
-                        board: company.board  // Store board for detailed API calls
+                        board: company.board
                     };
                 });
             } catch (error) {
@@ -5248,30 +5327,65 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             }
         }
 
-        // Fetch jobs from Ashby
+        // Fetch FULL job details from Lever individual endpoint
+        async function fetchLeverJobDetails(job) {
+            try {
+                const response = await fetchWithTimeout(
+                    `https://api.lever.co/v0/postings/${job.board}/${job.id}`,
+                    5000
+                );
+                if (!response || !response.ok) return job;
+                const data = await response.json();
+
+                // Build full description with all sections
+                let fullDesc = data.descriptionPlain || '';
+
+                // Add additional info
+                if (data.additionalPlain) {
+                    fullDesc += '\n\n' + data.additionalPlain;
+                }
+
+                // Add lists (What You'll Do, Requirements, etc.)
+                if (data.lists && data.lists.length > 0) {
+                    data.lists.forEach(list => {
+                        fullDesc += `\n\n${list.text}:\n`;
+                        if (list.content) {
+                            const items = list.content.match(/<li[^>]*>([\s\S]*?)<\/li>/gi);
+                            if (items) {
+                                items.forEach(item => {
+                                    const text = item.replace(/<[^>]*>/g, '').trim();
+                                    fullDesc += `• ${text}\n`;
+                                });
+                            }
+                        }
+                    });
+                }
+
+                const rawContent = fullDesc + ' ' + (data.description || '');
+
+                return {
+                    ...job,
+                    description: fullDesc.trim(),
+                    salary: extractSalary(rawContent),
+                    workType: extractWorkType(job.location, rawContent)
+                };
+            } catch (error) {
+                return job;
+            }
+        }
+
+        // Fetch jobs from Ashby (listing only)
         async function fetchAshbyJobs(company) {
             try {
                 const response = await fetchWithTimeout(`https://jobs.ashbyhq.com/api/non-user-graphql?op=ApiJobBoardWithTeams`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         operationName: 'ApiJobBoardWithTeams',
-                        variables: {
-                            organizationHostedJobsPageName: company.board
-                        },
+                        variables: { organizationHostedJobsPageName: company.board },
                         query: `query ApiJobBoardWithTeams($organizationHostedJobsPageName: String!) {
                             jobBoard: jobBoardWithTeams(organizationHostedJobsPageName: $organizationHostedJobsPageName) {
-                                jobs {
-                                    id
-                                    title
-                                    locationName
-                                    teamName
-                                    employmentType
-                                    publishedDate
-                                    descriptionPlain
-                                }
+                                jobs { id title locationName teamName publishedDate }
                             }
                         }`
                     })
@@ -5280,28 +5394,80 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 const data = await response.json();
                 const jobs = data?.data?.jobBoard?.jobs || [];
 
-                return jobs.map(job => {
-                    const description = job.descriptionPlain || '';
-                    const location = job.locationName || 'Remote';
-                    return {
-                        id: job.id,
-                        title: job.title || '',
-                        company: company.name,
-                        companyLogo: company.logo,
-                        location: location,
-                        department: job.teamName || '',
-                        description: description,
-                        salary: extractSalary(description),
-                        workType: extractWorkType(location, description),
-                        url: `https://jobs.ashbyhq.com/${company.board}/${job.id}`,
-                        postedDate: new Date(job.publishedDate || Date.now()),
-                        source: 'ashby',
-                        board: company.board  // Store board for detailed API calls
-                    };
-                });
+                return jobs.map(job => ({
+                    id: job.id,
+                    title: job.title || '',
+                    company: company.name,
+                    companyLogo: company.logo,
+                    location: job.locationName || 'Remote',
+                    department: job.teamName || '',
+                    description: '',  // Will be fetched individually
+                    salary: null,
+                    workType: 'Onsite',
+                    url: `https://jobs.ashbyhq.com/${company.board}/${job.id}`,
+                    postedDate: new Date(job.publishedDate || Date.now()),
+                    source: 'ashby',
+                    board: company.board
+                }));
             } catch (error) {
                 return [];
             }
+        }
+
+        // Fetch FULL job details from Ashby individual endpoint
+        async function fetchAshbyJobDetails(job) {
+            try {
+                const response = await fetchWithTimeout(`https://jobs.ashbyhq.com/api/non-user-graphql?op=ApiJobPosting`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        operationName: 'ApiJobPosting',
+                        variables: {
+                            organizationHostedJobsPageName: job.board,
+                            jobPostingId: job.id
+                        },
+                        query: `query ApiJobPosting($organizationHostedJobsPageName: String!, $jobPostingId: String!) {
+                            jobPosting(organizationHostedJobsPageName: $organizationHostedJobsPageName, jobPostingId: $jobPostingId) {
+                                title descriptionHtml descriptionPlain compensationTierSummary
+                                locationName isRemote secondaryLocations { locationName }
+                            }
+                        }`
+                    })
+                }, 5000);
+                if (!response || !response.ok) return job;
+                const data = await response.json();
+                const posting = data?.data?.jobPosting;
+                if (!posting) return job;
+
+                const rawContent = posting.descriptionPlain || '';
+                const compensation = posting.compensationTierSummary || '';
+
+                // Determine work type
+                let workType = 'Onsite';
+                if (posting.isRemote) workType = 'Remote';
+                else if (rawContent.toLowerCase().includes('hybrid')) workType = 'Hybrid';
+
+                return {
+                    ...job,
+                    description: rawContent,
+                    salary: extractSalary(rawContent + ' ' + compensation) || extractSalary(compensation),
+                    workType: workType
+                };
+            } catch (error) {
+                return job;
+            }
+        }
+
+        // Fetch individual job details based on source
+        async function fetchJobDetails(job) {
+            if (job.source === 'greenhouse') {
+                return fetchGreenhouseJobDetails(job);
+            } else if (job.source === 'lever') {
+                return fetchLeverJobDetails(job);
+            } else if (job.source === 'ashby') {
+                return fetchAshbyJobDetails(job);
+            }
+            return job;
         }
 
         // Filter jobs by date
@@ -5702,35 +5868,60 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 // Debug: Log raw job titles to understand what's being filtered
                 console.log(`📥 Total raw jobs fetched: ${rawJobs.length}`);
 
-                // Filter to relevant jobs
-                allJobs = rawJobs.filter(job => isRelevantJob(job));
+                // Filter to relevant jobs first (based on title)
+                let relevantJobs = rawJobs.filter(job => isRelevantJob(job));
 
-                // Log filtering stats
-                const filteredOut = rawJobs.length - allJobs.length;
-                console.log(`✅ Relevant jobs kept: ${allJobs.length}`);
-                console.log(`❌ Jobs filtered out: ${filteredOut}`);
+                console.log(`📥 Total raw jobs: ${rawJobs.length}`);
+                console.log(`🎯 Relevant by title: ${relevantJobs.length}`);
 
-                // Show sample of job titles that matched and didn't match
-                const matchedTitles = allJobs.slice(0, 10).map(j => j.title);
-                const rejectedTitles = rawJobs.filter(j => !isRelevantJob(j)).slice(0, 20).map(j => j.title);
+                // Now fetch FULL job details for each relevant job
+                tbody.innerHTML = `
+                    <tr class="loading-row">
+                        <td colspan="7">
+                            <span class="loading-spinner"></span>
+                            Fetching full job details for ${relevantJobs.length} positions...
+                        </td>
+                    </tr>
+                `;
 
-                console.log('🎯 Sample matched titles:', matchedTitles);
-                console.log('🚫 Sample rejected titles:', rejectedTitles);
+                // Batch fetch individual job details (10 at a time to avoid rate limiting)
+                const detailBatchSize = 10;
+                const jobsWithDetails = [];
 
-                // Count by category
-                const devopsJobs = allJobs.filter(j => /devops|dev\s*ops/i.test(j.title));
-                const sreJobs = allJobs.filter(j => /\bsre\b|site reliability|reliability engineer/i.test(j.title));
-                const platformJobs = allJobs.filter(j => /platform engineer/i.test(j.title));
-                const cloudJobs = allJobs.filter(j => /cloud|architect/i.test(j.title));
-                const mlJobs = allJobs.filter(j => /mlops|ml\s*infra|ai\s*infra|gpu/i.test(j.title));
+                for (let i = 0; i < relevantJobs.length; i += detailBatchSize) {
+                    const batch = relevantJobs.slice(i, i + detailBatchSize);
+                    const detailPromises = batch.map(job => fetchJobDetails(job));
+                    const detailedBatch = await Promise.allSettled(detailPromises);
 
-                console.log('📊 Job breakdown by category:', {
-                    'DevOps': devopsJobs.length,
-                    'SRE': sreJobs.length,
-                    'Platform': platformJobs.length,
-                    'Cloud/Architect': cloudJobs.length,
-                    'ML/AI Infra': mlJobs.length
-                });
+                    detailedBatch.forEach(result => {
+                        if (result.status === 'fulfilled' && result.value) {
+                            jobsWithDetails.push(result.value);
+                        }
+                    });
+
+                    // Update progress
+                    const progress = Math.min(i + detailBatchSize, relevantJobs.length);
+                    tbody.innerHTML = `
+                        <tr class="loading-row">
+                            <td colspan="7">
+                                <span class="loading-spinner"></span>
+                                Fetching job details: ${progress}/${relevantJobs.length} complete...
+                            </td>
+                        </tr>
+                    `;
+
+                    // Small delay between batches
+                    if (i + detailBatchSize < relevantJobs.length) {
+                        await new Promise(r => setTimeout(r, 200));
+                    }
+                }
+
+                allJobs = jobsWithDetails;
+                console.log(`✅ Jobs with full details: ${allJobs.length}`);
+
+                // Log salary extraction stats
+                const withSalary = allJobs.filter(j => j.salary);
+                console.log(`💰 Jobs with salary: ${withSalary.length}/${allJobs.length}`);
 
             } catch (e) {
                 console.error('Error fetching jobs:', e);
