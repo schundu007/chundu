@@ -4404,36 +4404,36 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             };
         }
 
+        // Strip ALL HTML tags and decode entities
+        function stripAllHtml(html) {
+            if (!html) return '';
+            return html
+                .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')  // Remove scripts
+                .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')    // Remove styles
+                .replace(/<br\s*\/?>/gi, ' ')
+                .replace(/<\/p>/gi, ' ')
+                .replace(/<\/div>/gi, ' ')
+                .replace(/<\/li>/gi, ' ')
+                .replace(/<[^>]+>/g, '')  // Remove all HTML tags
+                .replace(/&nbsp;/g, ' ')
+                .replace(/&amp;/g, '&')
+                .replace(/&lt;/g, '<')
+                .replace(/&gt;/g, '>')
+                .replace(/&quot;/g, '"')
+                .replace(/&#39;/g, "'")
+                .replace(/&[a-z]+;/gi, ' ')  // Remove other HTML entities
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
         // Generate job summary from parsed JD - ENHANCED with actual job content
         function generateJobSummary(job) {
             const parsed = parseJobDescription(job);
             const tools = parsed.allFoundTools.slice(0, 4);
-            const focus = parsed.focusAreas.slice(0, 2);
 
             let parts = [];
 
-            // Extract actual job description text (first 150 chars of meaningful content)
-            const rawDesc = (job.description || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-            if (rawDesc.length > 20) {
-                // Find the first meaningful sentence
-                const sentences = rawDesc.split(/[.!?]+/);
-                let summary = '';
-                for (const s of sentences) {
-                    const trimmed = s.trim();
-                    // Skip short or boilerplate sentences
-                    if (trimmed.length > 30 && !trimmed.toLowerCase().includes('about us') &&
-                        !trimmed.toLowerCase().includes('who we are') && !trimmed.toLowerCase().includes('equal opportunity')) {
-                        summary = trimmed.substring(0, 150);
-                        if (trimmed.length > 150) summary += '...';
-                        break;
-                    }
-                }
-                if (summary) {
-                    parts.push(`<span class="desc-summary" style="color: var(--text-secondary); font-size: 0.75rem; line-height: 1.3;">${summary}</span>`);
-                }
-            }
-
-            // Skills Match indicator (compact)
+            // Skills Match indicator (compact) - show first
             if (parsed.skillsMatch.total > 0) {
                 const pct = parsed.skillsMatch.matchPercent;
                 const color = pct >= 80 ? '#16a34a' : pct >= 60 ? '#f59e0b' : pct >= 40 ? '#f97316' : '#ef4444';
