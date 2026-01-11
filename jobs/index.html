@@ -370,6 +370,175 @@
         .ai-btn.cover { background: linear-gradient(135deg, #f59e0b, #d97706); }
         .ai-btn.resume { background: linear-gradient(135deg, #ec4899, #db2777); }
 
+        /* ============ SETTINGS PANEL ============ */
+        .panel-settings {
+            padding: 1rem;
+        }
+
+        .settings-group {
+            background: var(--bg-primary);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .settings-group-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .settings-description {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .settings-field {
+            margin-bottom: 1rem;
+        }
+
+        .settings-field label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .settings-field input,
+        .settings-field select {
+            width: 100%;
+            padding: 0.6rem 0.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .settings-field input:focus,
+        .settings-field select:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .settings-field small {
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .settings-field small a {
+            color: #6366f1;
+        }
+
+        .api-key-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .api-key-input-wrapper input {
+            padding-right: 2.5rem;
+        }
+
+        .toggle-visibility {
+            position: absolute;
+            right: 0.5rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .toggle-visibility:hover {
+            color: var(--text-primary);
+        }
+
+        .settings-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .settings-btn {
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s;
+        }
+
+        .settings-btn.save {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+
+        .settings-btn.test {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .settings-btn.export {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+        }
+
+        .settings-btn.import {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+
+        .settings-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .settings-status {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            display: none;
+        }
+
+        .settings-status.success {
+            display: block;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+        }
+
+        .settings-status.error {
+            display: block;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+
+        .settings-status.info {
+            display: block;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: #6366f1;
+        }
+
         body {
             background: var(--bg-primary) !important;
             color: var(--text-primary);
@@ -2488,6 +2657,9 @@
             <button class="slideout-tab" onclick="switchTab('documents')">
                 <i class="fas fa-file-alt"></i> Documents
             </button>
+            <button class="slideout-tab" onclick="switchTab('settings')">
+                <i class="fas fa-cog"></i> Settings
+            </button>
         </div>
         <div class="slideout-content">
             <!-- Quick Links Section -->
@@ -2578,6 +2750,57 @@
                     </a>
                     <div class="panel-doc-list" id="panel-doc-list">
                         <p style="color: var(--text-muted); text-align: center; font-size: 0.8rem;">Loading documents...</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Settings Section -->
+            <div class="slideout-section" id="section-settings">
+                <div class="panel-settings">
+                    <div class="settings-group">
+                        <div class="settings-group-title">
+                            <i class="fas fa-robot" style="color: #8b5cf6;"></i> Claude AI Settings
+                        </div>
+                        <p class="settings-description">Enter your Anthropic API key to enable AI-powered job analysis, skills matching, cover letter and resume generation.</p>
+                        <div class="settings-field">
+                            <label for="anthropic-api-key">Anthropic API Key</label>
+                            <div class="api-key-input-wrapper">
+                                <input type="password" id="anthropic-api-key" placeholder="sk-ant-api03-..." autocomplete="off">
+                                <button class="toggle-visibility" onclick="toggleApiKeyVisibility()" title="Show/Hide">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <small>Get your key at <a href="https://console.anthropic.com/" target="_blank">console.anthropic.com</a></small>
+                        </div>
+                        <div class="settings-field">
+                            <label for="claude-model">Model</label>
+                            <select id="claude-model">
+                                <option value="claude-opus-4-20250514">Claude Opus 4 (Best quality)</option>
+                                <option value="claude-sonnet-4-20250514">Claude Sonnet 4 (Faster, cheaper)</option>
+                            </select>
+                        </div>
+                        <div class="settings-actions">
+                            <button class="settings-btn save" onclick="saveClaudeSettings()">
+                                <i class="fas fa-save"></i> Save Settings
+                            </button>
+                            <button class="settings-btn test" onclick="testClaudeConnection()">
+                                <i class="fas fa-plug"></i> Test Connection
+                            </button>
+                        </div>
+                        <div id="claude-status" class="settings-status"></div>
+                    </div>
+                    <div class="settings-group">
+                        <div class="settings-group-title">
+                            <i class="fas fa-database" style="color: #3b82f6;"></i> Data Management
+                        </div>
+                        <div class="settings-actions">
+                            <button class="settings-btn export" onclick="exportJobData()">
+                                <i class="fas fa-download"></i> Export Data
+                            </button>
+                            <button class="settings-btn import" onclick="document.getElementById('import-file').click()">
+                                <i class="fas fa-upload"></i> Import Data
+                            </button>
+                            <input type="file" id="import-file" accept=".json" style="display:none" onchange="importJobData(this.files[0])">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2862,6 +3085,10 @@
                     toggle.innerHTML = savedTheme === 'dark'
                         ? '<i class="fas fa-moon"></i>'
                         : '<i class="fas fa-sun"></i>';
+                }
+                // Load Claude AI settings
+                if (typeof loadClaudeSettings === 'function') {
+                    loadClaudeSettings();
                 }
             });
         })();
@@ -4849,32 +5076,193 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
         let jobsMap = {};
 
         // ============ CLAUDE AI INTEGRATION ============
-        // UPDATE THIS URL after deploying your Cloudflare Worker
-        const CLAUDE_WORKER_URL = 'https://claude-job-assistant.chundu.workers.dev';
+        // Uses Anthropic API directly with key from localStorage
 
-        // Call Claude API via Cloudflare Worker
-        async function callClaudeAPI(action, jobData) {
+        // Get Claude settings from localStorage
+        function getClaudeSettings() {
+            return {
+                apiKey: localStorage.getItem('anthropicApiKey') || '',
+                model: localStorage.getItem('claudeModel') || 'claude-opus-4-20250514'
+            };
+        }
+
+        // Save Claude settings
+        function saveClaudeSettings() {
+            const apiKey = document.getElementById('anthropic-api-key').value.trim();
+            const model = document.getElementById('claude-model').value;
+            const status = document.getElementById('claude-status');
+
+            if (!apiKey) {
+                status.className = 'settings-status error';
+                status.textContent = 'Please enter an API key';
+                return;
+            }
+
+            localStorage.setItem('anthropicApiKey', apiKey);
+            localStorage.setItem('claudeModel', model);
+
+            status.className = 'settings-status success';
+            status.textContent = '✓ Settings saved successfully!';
+
+            setTimeout(() => { status.className = 'settings-status'; }, 3000);
+        }
+
+        // Load settings on page load
+        function loadClaudeSettings() {
+            const settings = getClaudeSettings();
+            const apiKeyInput = document.getElementById('anthropic-api-key');
+            const modelSelect = document.getElementById('claude-model');
+
+            if (apiKeyInput && settings.apiKey) {
+                apiKeyInput.value = settings.apiKey;
+            }
+            if (modelSelect && settings.model) {
+                modelSelect.value = settings.model;
+            }
+        }
+
+        // Toggle API key visibility
+        function toggleApiKeyVisibility() {
+            const input = document.getElementById('anthropic-api-key');
+            const icon = document.querySelector('.toggle-visibility i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        }
+
+        // Test Claude connection
+        async function testClaudeConnection() {
+            const status = document.getElementById('claude-status');
+            const settings = getClaudeSettings();
+
+            if (!settings.apiKey) {
+                status.className = 'settings-status error';
+                status.textContent = 'Please enter and save an API key first';
+                return;
+            }
+
+            status.className = 'settings-status info';
+            status.textContent = '⏳ Testing connection...';
+
             try {
-                const response = await fetch(CLAUDE_WORKER_URL, {
+                const response = await fetch('https://api.anthropic.com/v1/messages', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ action, jobData })
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': settings.apiKey,
+                        'anthropic-version': '2023-06-01',
+                        'anthropic-dangerous-direct-browser-access': 'true'
+                    },
+                    body: JSON.stringify({
+                        model: settings.model,
+                        max_tokens: 50,
+                        messages: [{ role: 'user', content: 'Say "Connection successful!" in exactly those words.' }]
+                    })
                 });
 
                 if (!response.ok) {
-                    throw new Error(`API error: ${response.status}`);
+                    const error = await response.json();
+                    throw new Error(error.error?.message || `HTTP ${response.status}`);
                 }
 
                 const data = await response.json();
-                if (!data.success) {
-                    throw new Error(data.error || 'Unknown error');
-                }
-
-                return data.result;
+                status.className = 'settings-status success';
+                status.textContent = `✓ Connected! Model: ${settings.model}`;
             } catch (error) {
-                console.error('Claude API error:', error);
-                throw error;
+                status.className = 'settings-status error';
+                status.textContent = `✗ Connection failed: ${error.message}`;
             }
+        }
+
+        // Call Claude API directly
+        async function callClaudeAPI(action, jobData) {
+            const settings = getClaudeSettings();
+
+            if (!settings.apiKey) {
+                throw new Error('API key not configured. Go to Settings tab to add your Anthropic API key.');
+            }
+
+            const prompts = buildPrompt(action, jobData);
+
+            const response = await fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': settings.apiKey,
+                    'anthropic-version': '2023-06-01',
+                    'anthropic-dangerous-direct-browser-access': 'true'
+                },
+                body: JSON.stringify({
+                    model: settings.model,
+                    max_tokens: 4096,
+                    system: prompts.system,
+                    messages: [{ role: 'user', content: prompts.user }]
+                })
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.error?.message || `API error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.content[0].text;
+        }
+
+        // Build prompts for different actions
+        function buildPrompt(action, jobData) {
+            const userProfile = `
+Name: Sudhakar Chundu
+Title: Staff DevOps/SRE Engineer | Cloud Infrastructure Architect
+Experience: 18+ years
+Location: San Jose, CA
+
+Core Skills: Kubernetes, Docker, Terraform, Ansible, AWS, Azure, GCP, Jenkins, GitLab CI, GitHub Actions,
+Prometheus, Grafana, Datadog, Splunk, Python, Go, Bash, PostgreSQL, Redis, MongoDB, Vault, ArgoCD, Helm, Istio
+
+Key Achievements:
+- Led platform engineering team managing 40+ microservices with 99.95% SLO
+- Reduced deployment failures by 68% through GitOps and progressive delivery
+- Built GPU cluster orchestration for AI/ML training workloads (1000+ GPUs)
+- Decreased MTTR from 45min to 12min through automated incident response
+- Migrated legacy infrastructure to Kubernetes, reducing costs by 40%
+
+Certifications: AWS Solutions Architect Professional, CKA, GCP Professional Cloud Architect, Terraform Associate
+`;
+
+            const jobInfo = `
+Job Title: ${jobData.title}
+Company: ${jobData.company}
+Location: ${jobData.location}
+
+Job Description:
+${jobData.description}
+`;
+
+            const prompts = {
+                analyze: {
+                    system: 'You are an expert job description analyzer. Extract and summarize key information concisely.',
+                    user: `Analyze this job description:\n${jobInfo}\n\nProvide:\n1. **Role Summary** (2-3 sentences)\n2. **Key Responsibilities** (top 5 bullets)\n3. **Must-Have Requirements**\n4. **Nice-to-Have Requirements**\n5. **Technical Stack**\n6. **Salary Analysis** (if mentioned)\n7. **Red Flags** (if any)\n\nFormat in clean markdown.`
+                },
+                match: {
+                    system: 'You are an expert career advisor. Honestly evaluate candidate-job fit with specific examples.',
+                    user: `Compare this candidate against the job:\n\n**CANDIDATE:**\n${userProfile}\n\n**JOB:**\n${jobInfo}\n\nProvide:\n1. **Overall Match Score:** X/100\n2. **Strong Matches** (skills that align)\n3. **Gaps to Address** (missing skills)\n4. **Talking Points** (how to position in interview)\n5. **Recommendation** (Apply Now / Apply with Prep / Skip)\n\nBe honest and specific.`
+                },
+                cover_letter: {
+                    system: 'You are an expert cover letter writer. Write compelling, authentic letters under 400 words.',
+                    user: `Write a tailored cover letter:\n\n**CANDIDATE:**\n${userProfile}\n\n**JOB:**\n${jobInfo}\n\nRequirements:\n- Under 400 words\n- Open with company-specific hook\n- Highlight 2-3 relevant achievements with metrics\n- Show understanding of role challenges\n- Confident close with call to action\n- No clichés or buzzwords`
+                },
+                resume: {
+                    system: 'You are an expert resume writer. Create ATS-optimized resumes with strong metrics.',
+                    user: `Create a tailored 1-page resume:\n\n**CANDIDATE:**\n${userProfile}\n\n**TARGET JOB:**\n${jobInfo}\n\nRequirements:\n- Reorder skills to match JD priorities\n- Rewrite bullets to match job requirements\n- Include keywords from JD for ATS\n- Use metrics and achievements\n- Professional summary tailored to this role\n\nFormat as clean, copy-pasteable text.`
+                }
+            };
+
+            return prompts[action];
         }
 
         // Analyze job description with Claude
