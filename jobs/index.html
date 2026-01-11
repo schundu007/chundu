@@ -2823,18 +2823,24 @@
             const patterns = [
                 // Annual Salary: $XXX,XXX - $XXX,XXX USD (Anthropic style)
                 /annual\s*salary[:\s]*\$\s*([\d,]+)\s*[-–—]\s*\$\s*([\d,]+)/gi,
+                // Base Pay Range / Base Salary Range: $XXX,XXX - $XXX,XXX (Zscaler style)
+                /base\s*(?:pay|salary)\s*range[:\s]*\$\s*([\d,]+)\s*[-–—]\s*\$\s*([\d,]+)/gi,
+                // "is $XXX,XXX to $XXX,XXX" or "is: $XXX,XXX–$XXX,XXX" (Scale AI / Discord style)
+                /is[:\s]*\$\s*([\d,]+)\s*(?:to|[-–—])\s*\$\s*([\d,]+)/gi,
+                // $XXX,XXX to $XXX,XXX + equity (Discord style)
+                /\$\s*([\d,]+)\s+to\s+\$\s*([\d,]+)/gi,
                 // $XXX,XXX - $XXX,XXX USD
                 /\$\s*([\d,]+)\s*[-–—]\s*\$\s*([\d,]+)\s*(?:USD|usd)?/gi,
                 // $XXX,XXX - $XXX,XXX or $XXXK - $XXXK
-                /\$\s*([\d,]+)\s*[kK]?\s*[-–—to]+\s*\$?\s*([\d,]+)\s*[kK]?/gi,
+                /\$\s*([\d,]+)\s*[kK]?\s*[-–—]+\s*\$?\s*([\d,]+)\s*[kK]?/gi,
                 // $XXX,XXX/year or $XXX,XXX per year
                 /\$\s*([\d,]+)\s*[kK]?\s*(?:\/|\s*per\s*)(?:year|yr|annual)/gi,
-                // $XXX - $XXX (USD/year context)
+                // salary/compensation/pay context with range
                 /(?:salary|compensation|pay|range)[:\s]*\$?\s*([\d,]+)\s*[kK]?\s*[-–—to]+\s*\$?\s*([\d,]+)\s*[kK]?/gi,
-                // XXXk - XXXk
-                /([\d]+)\s*[kK]\s*[-–—to]+\s*([\d]+)\s*[kK]/gi,
-                // Base salary: $XXX,XXX
-                /base\s*(?:salary)?[:\s]*\$\s*([\d,]+)\s*[kK]?/gi,
+                // XXXk - XXXk or XXXk to XXXk
+                /([\d]+)\s*[kK]\s*(?:[-–—]|to)\s*([\d]+)\s*[kK]/gi,
+                // Base salary: $XXX,XXX - $XXX,XXX
+                /base\s*(?:salary)?[:\s]*\$\s*([\d,]+)(?:\s*[-–—]\s*\$\s*([\d,]+))?/gi,
             ];
 
             for (const pattern of patterns) {
