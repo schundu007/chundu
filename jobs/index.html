@@ -3055,6 +3055,168 @@
     </footer>
 
     <script>
+        // ============ API CLIENT ============
+        const API_BASE = 'http://localhost:8001/api';
+        let useAPI = true; // Toggle for API vs localStorage fallback
+
+        const JobsAPI = {
+            // Check if API is available
+            async checkHealth() {
+                try {
+                    const response = await fetch(`${API_BASE}/health`, { method: 'GET', timeout: 2000 });
+                    return response.ok;
+                } catch (e) {
+                    console.warn('API not available, using localStorage fallback');
+                    return false;
+                }
+            },
+
+            // Applications
+            async getApplications() {
+                const response = await fetch(`${API_BASE}/applications`);
+                if (!response.ok) throw new Error('Failed to fetch applications');
+                return response.json();
+            },
+
+            async markApplied(jobId, jobData) {
+                const response = await fetch(`${API_BASE}/applications`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ job_id: jobId, job_data: jobData })
+                });
+                if (!response.ok) throw new Error('Failed to mark as applied');
+                return response.json();
+            },
+
+            async removeApplication(applicationId) {
+                const response = await fetch(`${API_BASE}/applications/${applicationId}`, { method: 'DELETE' });
+                if (!response.ok) throw new Error('Failed to remove application');
+                return response.json();
+            },
+
+            // Excluded jobs
+            async getExcluded() {
+                const response = await fetch(`${API_BASE}/applications/excluded`);
+                if (!response.ok) throw new Error('Failed to fetch excluded');
+                return response.json();
+            },
+
+            async excludeJob(jobId, jobData) {
+                const response = await fetch(`${API_BASE}/applications/excluded`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ job_id: jobId, job_data: jobData })
+                });
+                if (!response.ok) throw new Error('Failed to exclude job');
+                return response.json();
+            },
+
+            async restoreExcluded(excludedId) {
+                const response = await fetch(`${API_BASE}/applications/excluded/${excludedId}`, { method: 'DELETE' });
+                if (!response.ok) throw new Error('Failed to restore job');
+                return response.json();
+            },
+
+            // Documents
+            async generateCoverLetter(jobId) {
+                const response = await fetch(`${API_BASE}/documents/cover-letter`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ job_id: jobId })
+                });
+                if (!response.ok) throw new Error('Failed to generate cover letter');
+                return response.json();
+            },
+
+            async generateResume(jobId) {
+                const response = await fetch(`${API_BASE}/documents/resume`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ job_id: jobId })
+                });
+                if (!response.ok) throw new Error('Failed to generate resume');
+                return response.json();
+            },
+
+            async getDocuments(jobId) {
+                const response = await fetch(`${API_BASE}/documents/${jobId}`);
+                if (!response.ok) throw new Error('Failed to fetch documents');
+                return response.json();
+            },
+
+            // Settings
+            async getSettings() {
+                const response = await fetch(`${API_BASE}/settings`);
+                if (!response.ok) throw new Error('Failed to fetch settings');
+                return response.json();
+            },
+
+            async updateSettings(settings) {
+                const response = await fetch(`${API_BASE}/settings`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(settings)
+                });
+                if (!response.ok) throw new Error('Failed to update settings');
+                return response.json();
+            },
+
+            // Migration
+            async importLocalStorage(data) {
+                const response = await fetch(`${API_BASE}/migration/import`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if (!response.ok) throw new Error('Failed to import data');
+                return response.json();
+            },
+
+            // Jobs
+            async createJob(jobData) {
+                const response = await fetch(`${API_BASE}/jobs`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(jobData)
+                });
+                if (!response.ok) throw new Error('Failed to create job');
+                return response.json();
+            }
+        };
+
+        // Check API availability on load
+        (async function() {
+            useAPI = await JobsAPI.checkHealth();
+            console.log('API available:', useAPI);
+
+            // Prompt for migration if localStorage has data and API is available
+            if (useAPI) {
+                const localApplied = localStorage.getItem('applied_jobs');
+                const localExcluded = localStorage.getItem('excluded_jobs');
+                if (localApplied || localExcluded) {
+                    setTimeout(async () => {
+                        if (confirm('Migrate your saved job data to the database? This will sync your applied and excluded jobs.')) {
+                            try {
+                                await JobsAPI.importLocalStorage({
+                                    applied_jobs: JSON.parse(localApplied || '[]'),
+                                    applied_jobs_data: JSON.parse(localStorage.getItem('applied_jobs_data') || '{}'),
+                                    excluded_jobs: JSON.parse(localExcluded || '[]')
+                                });
+                                localStorage.removeItem('applied_jobs');
+                                localStorage.removeItem('applied_jobs_data');
+                                localStorage.removeItem('excluded_jobs');
+                                alert('Migration complete! Your data is now stored in the database.');
+                                location.reload();
+                            } catch (e) {
+                                console.error('Migration failed:', e);
+                                alert('Migration failed. Continuing with localStorage.');
+                            }
+                        }
+                    }, 1000);
+                }
+            }
+        })();
+
         // ============ THEME TOGGLE ============
         function toggleTheme() {
             const html = document.documentElement;
