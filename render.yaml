@@ -1,0 +1,24 @@
+# Render Blueprint - https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: job-search-api
+    runtime: python
+    buildCommand: cd api && pip install -r requirements.txt
+    startCommand: cd api && uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: job-search-db
+          property: connectionString
+      - key: ALLOWED_ORIGINS
+        value: https://www.sudhakarchundu.org,http://localhost:8000
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+    healthCheckPath: /api/health
+
+databases:
+  - name: job-search-db
+    plan: free
+    databaseName: job_search
