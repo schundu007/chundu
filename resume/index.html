@@ -878,7 +878,7 @@
                     <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu" class="linkedin-card-photo">
                     <div class="linkedin-card-info">
                         <h3>Sudhakar Chundu</h3>
-                        <div class="headline">Staff DevOps Engineer | SRE | GPU Infrastructure | Cloud Security</div>
+                        <div class="headline">Staff DevOps Engineer | SRE | GPU Infrastructure | Performance Engineering</div>
                         <div class="location"><i class="fas fa-map-marker-alt"></i> San Francisco Bay Area</div>
                     </div>
                 </div>
@@ -903,12 +903,12 @@
                 <div class="linkedin-skills">
                     <span class="linkedin-skill">Kubernetes</span>
                     <span class="linkedin-skill">GPU/Slurm</span>
+                    <span class="linkedin-skill">Performance Engineering</span>
                     <span class="linkedin-skill">Terraform</span>
                     <span class="linkedin-skill">ArgoCD/Flux</span>
-                    <span class="linkedin-skill">Istio</span>
-                    <span class="linkedin-skill">Karpenter/KEDA</span>
+                    <span class="linkedin-skill">nvidia-smi/dcgm</span>
                     <span class="linkedin-skill">AWS/Azure</span>
-                    <span class="linkedin-skill">Python/Go</span>
+                    <span class="linkedin-skill">perf/strace</span>
                 </div>
                 <div class="linkedin-card-footer">
                     <span class="linkedin-tagline">"I keep critical services running and secure"</span>
@@ -964,12 +964,26 @@
                             <div class="metric-label">Annual Savings | 73% Cost Reduction</div>
                         </div>
                         <div class="metric-item">
-                            <div class="metric-value">10M+</div>
-                            <div class="metric-label">Users Served | 15+ Regions</div>
+                            <div class="metric-value">99.97%</div>
+                            <div class="metric-label">Uptime ML Training/Inference</div>
                         </div>
                         <div class="metric-item">
-                            <div class="metric-value">99.99%</div>
-                            <div class="metric-label">SLO Maintained</div>
+                            <div class="metric-value">45%→78%</div>
+                            <div class="metric-label">GPU Utilization Improved</div>
+                        </div>
+                    </div>
+                    <div class="metrics-grid" style="margin-top: 1rem;">
+                        <div class="metric-item">
+                            <div class="metric-value">60%</div>
+                            <div class="metric-label">Job Queue Wait Time Reduced</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">40%</div>
+                            <div class="metric-label">p99 Latency Reduction</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">10M+</div>
+                            <div class="metric-label">Users Served | 15+ Regions</div>
                         </div>
                     </div>
                 </section>
@@ -1020,6 +1034,10 @@
                                 <tr>
                                     <td class="category-label">SRE & Observability</td>
                                     <td>SLI/SLO/SLA, error budgets, chaos engineering, Prometheus, Grafana, Datadog, OpenTelemetry, AIOps</td>
+                                </tr>
+                                <tr>
+                                    <td class="category-label">Systems Performance</td>
+                                    <td>GPU profiling (nvidia-smi, dcgm-exporter, nvtop), Linux performance (perf, strace, ftrace), kernel tuning, p99 latency optimization, capacity planning</td>
                                 </tr>
                             </tbody>
                         </table>
