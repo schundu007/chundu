@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GGNQHMGCLH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-GGNQHMGCLH');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Sudhakar Chundu</title>
+    <meta name="description" content="Technical blog by Sudhakar Chundu covering DevOps, SRE, Kubernetes, GPU Infrastructure, Platform Engineering, and Cloud Architecture.">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- Theme JS (load early to prevent flash) -->
+    <script src="../assets/js/theme.js"></script>
+    <style>
+        /* Blog Page Specific Styles */
+
+        /* Category Filter */
+        .blog-filters {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.25rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-full);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            font-family: var(--font-sans);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .filter-btn.active {
+            background: var(--gradient-primary);
+            border-color: transparent;
+            color: white;
+        }
+
+        /* Featured Post */
+        .featured-post {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            margin-bottom: 3rem;
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-post::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+        }
+
+        .featured-post:hover {
+            border-color: var(--glass-border-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .featured-image {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            aspect-ratio: 16/10;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-normal);
+        }
+
+        .featured-post:hover .featured-image img {
+            transform: scale(1.05);
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.4rem 0.85rem;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+            z-index: 1;
+        }
+
+        .featured-content {
+            padding: 1rem 0;
+        }
+
+        .featured-content .post-category {
+            display: inline-block;
+            padding: 0.35rem 0.85rem;
+            background: rgba(14, 165, 233, 0.15);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .featured-content h2 {
+            font-size: 1.75rem;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        .featured-content h2 a {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .featured-content h2 a:hover {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .featured-content .post-excerpt {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .post-author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .post-author img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--glass-border);
+        }
+
+        .post-author-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-author-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .post-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .post-stats {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .post-stats span {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .post-stats i {
+            font-size: 0.9rem;
+            color: var(--accent-blue);
+        }
+
+        /* Blog Grid */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.75rem;
+        }
+
+        /* Blog Card */
+        .blog-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: var(--transition-normal);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            border-color: var(--glass-border-hover);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .blog-card-image {
+            position: relative;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+        }
+
+        .blog-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-normal);
+        }
+
+        .blog-card:hover .blog-card-image img {
+            transform: scale(1.08);
+        }
+
+        .blog-card-image .post-category {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            padding: 0.3rem 0.7rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: var(--radius-full);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .blog-card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .blog-card-content h3 {
+            font-size: 1.1rem;
+            line-height: 1.4;
+            margin-bottom: 0.75rem;
+        }
+
+        .blog-card-content h3 a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .blog-card-content h3 a:hover {
+            color: var(--accent-blue);
+        }
+
+        .blog-card-content .post-excerpt {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+            flex: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .blog-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .blog-card-footer .post-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .blog-card-footer .reading-time {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.8rem;
+            color: var(--accent-blue);
+            font-weight: 500;
+        }
+
+        /* Tags */
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-tag {
+            padding: 0.25rem 0.65rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            transition: var(--transition-fast);
+        }
+
+        .post-tag:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: 3rem;
+            text-align: center;
+            margin-top: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+        }
+
+        .newsletter-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .newsletter-section h3 span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .newsletter-section p {
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.75rem;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.875rem 1.25rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-family: var(--font-sans);
+            transition: var(--transition-fast);
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+
+        .newsletter-form input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .newsletter-form button {
+            padding: 0.875rem 1.5rem;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: var(--radius-md);
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            white-space: nowrap;
+        }
+
+        .newsletter-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow-blue);
+        }
+
+        /* Medium CTA */
+        .medium-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%);
+            border-radius: var(--radius-lg);
+        }
+
+        .medium-cta p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .medium-cta .btn {
+            background: #000;
+            color: #fff;
+            border: none;
+        }
+
+        .medium-cta .btn:hover {
+            background: #1a1a1a;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .featured-post {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .blog-filters {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.4rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Neural Network Background -->
+    <canvas id="neural-bg"></canvas>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="../" class="logo">
+                <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu" class="logo-icon">
+                Sudhakar Chundu
+            </a>
+            <ul class="nav-links">
+                <li><a href="../about/">About</a></li>
+                <li><a href="../resume/">Resume</a></li>
+                <li><a href="./" class="active">Blog</a></li>
+                <li><a href="../projects/">Achievements</a></li>
+                <li><a href="../opensource/">Open Source</a></li>
+                <div class="nav-social">
+                    <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
+                <div class="nav-auth">
+                    <button class="btn-signin" onclick="showLoginModal()">Sign In</button>
+                </div>
+            </ul>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <!-- Page Header -->
+        <header class="page-header">
+            <h1>Technical <span>Blog</span></h1>
+            <p>Insights on DevOps, SRE, Platform Engineering, and Cloud Infrastructure</p>
+        </header>
+
+        <!-- Blog Content -->
+        <section class="section">
+            <div class="container">
+                <!-- Category Filters -->
+                <div class="blog-filters">
+                    <button class="filter-btn active" data-filter="all">All Posts</button>
+                    <button class="filter-btn" data-filter="kubernetes">Kubernetes</button>
+                    <button class="filter-btn" data-filter="devops">DevOps</button>
+                    <button class="filter-btn" data-filter="sre">SRE</button>
+                    <button class="filter-btn" data-filter="gpu">GPU/ML Infra</button>
+                    <button class="filter-btn" data-filter="finops">FinOps</button>
+                </div>
+
+                <!-- Featured Post -->
+                <article class="featured-post" data-category="gpu">
+                    <div class="featured-image">
+                        <span class="featured-badge"><i class="fas fa-star"></i> Featured</span>
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80" alt="GPU Infrastructure at Scale">
+                    </div>
+                    <div class="featured-content">
+                        <span class="post-category">GPU Infrastructure</span>
+                        <h2><a href="https://medium.sudhakarchundu.org/" target="_blank">Building a 65-GPU ML Platform with 99.97% Uptime: Lessons from the Trenches</a></h2>
+                        <p class="post-excerpt">
+                            A deep dive into architecting and operating GPU infrastructure for production ML workloads.
+                            Covering Slurm integration, Kubernetes orchestration, monitoring with DCGM, and the operational
+                            practices that helped us achieve enterprise-grade reliability.
+                        </p>
+                        <div class="post-meta">
+                            <div class="post-author">
+                                <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu">
+                                <div class="post-author-info">
+                                    <span class="post-author-name">Sudhakar Chundu</span>
+                                    <span class="post-date">January 10, 2025</span>
+                                </div>
+                            </div>
+                            <div class="post-stats">
+                                <span><i class="fas fa-clock"></i> 12 min read</span>
+                                <span><i class="fas fa-eye"></i> 2.4K views</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Grid -->
+                <div class="blog-grid">
+                    <!-- Blog Card 1 -->
+                    <article class="blog-card" data-category="finops">
+                        <div class="blog-card-image">
+                            <span class="post-category">FinOps</span>
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80" alt="Cost Optimization">
+                        </div>
+                        <div class="blog-card-content">
+                            <div class="post-tags">
+                                <span class="post-tag">AWS</span>
+                                <span class="post-tag">Cost</span>
+                                <span class="post-tag">Automation</span>
+                            </div>
+                            <h3><a href="https://medium.sudhakarchundu.org/" target="_blank">How We Cut Cloud Costs by 73%: Building a Custom FinOps Platform</a></h3>
+                            <p class="post-excerpt">
+                                From $10M to $2.7M annually. A practical guide to building real-time cost visibility
+                                dashboards, automated rightsizing, and implementing a FinOps culture.
+                            </p>
+                            <div class="blog-card-footer">
+                                <span class="post-date">Dec 28, 2024</span>
+                                <span class="reading-time"><i class="fas fa-clock"></i> 8 min</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Blog Card 2 -->
+                    <article class="blog-card" data-category="kubernetes">
+                        <div class="blog-card-image">
+                            <span class="post-category">Kubernetes</span>
+                            <img src="https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=600&q=80" alt="Kubernetes">
+                        </div>
+                        <div class="blog-card-content">
+                            <div class="post-tags">
+                                <span class="post-tag">K8s</span>
+                                <span class="post-tag">GitOps</span>
+                                <span class="post-tag">ArgoCD</span>
+                            </div>
+                            <h3><a href="https://medium.sudhakarchundu.org/" target="_blank">GitOps at Scale: ArgoCD Patterns for Multi-Cluster Deployments</a></h3>
+                            <p class="post-excerpt">
+                                Patterns and anti-patterns from managing 50+ Kubernetes clusters with ArgoCD.
+                                App of Apps, ApplicationSets, and progressive delivery strategies.
+                            </p>
+                            <div class="blog-card-footer">
+                                <span class="post-date">Dec 15, 2024</span>
+                                <span class="reading-time"><i class="fas fa-clock"></i> 10 min</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Blog Card 3 -->
+                    <article class="blog-card" data-category="sre">
+                        <div class="blog-card-image">
+                            <span class="post-category">SRE</span>
+                            <img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=600&q=80" alt="Observability">
+                        </div>
+                        <div class="blog-card-content">
+                            <div class="post-tags">
+                                <span class="post-tag">Prometheus</span>
+                                <span class="post-tag">Grafana</span>
+                                <span class="post-tag">SLOs</span>
+                            </div>
+                            <h3><a href="https://medium.sudhakarchundu.org/" target="_blank">Meaningful SLOs: From Vanity Metrics to User-Centric Reliability</a></h3>
+                            <p class="post-excerpt">
+                                Stop measuring uptime. Start measuring user experience. How to define, implement,
+                                and operationalize SLOs that actually matter for your users.
+                            </p>
+                            <div class="blog-card-footer">
+                                <span class="post-date">Dec 5, 2024</span>
+                                <span class="reading-time"><i class="fas fa-clock"></i> 7 min</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Blog Card 4 -->
+                    <article class="blog-card" data-category="devops">
+                        <div class="blog-card-image">
+                            <span class="post-category">DevOps</span>
+                            <img src="https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=600&q=80" alt="CI/CD Pipeline">
+                        </div>
+                        <div class="blog-card-content">
+                            <div class="post-tags">
+                                <span class="post-tag">CI/CD</span>
+                                <span class="post-tag">Security</span>
+                                <span class="post-tag">Pipeline</span>
+                            </div>
+                            <h3><a href="https://medium.sudhakarchundu.org/" target="_blank">DevSecOps Pipeline Architecture: Shift-Left Security at Scale</a></h3>
+                            <p class="post-excerpt">
+                                Building security into CI/CD pipelines without killing developer velocity.
+                                SAST, DAST, container scanning, and secrets management done right.
+                            </p>
+                            <div class="blog-card-footer">
+                                <span class="post-date">Nov 22, 2024</span>
+                                <span class="reading-time"><i class="fas fa-clock"></i> 9 min</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Blog Card 5 -->
+                    <article class="blog-card" data-category="gpu">
+                        <div class="blog-card-image">
+                            <span class="post-category">GPU/ML</span>
+                            <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80" alt="GPU Optimization">
+                        </div>
+                        <div class="blog-card-content">
+                            <div class="post-tags">
+                                <span class="post-tag">NVIDIA</span>
+                                <span class="post-tag">CUDA</span>
+                                <span class="post-tag">Profiling</span>
+                            </div>
+                            <h3><a href="https://medium.sudhakarchundu.org/" target="_blank">GPU Utilization: From 45% to 78% with Systematic Profiling</a></h3>
+                            <p class="post-excerpt">
+                                Using nvidia-smi, dcgm-exporter, and custom tooling to identify and fix
+                                GPU utilization bottlenecks in production ML training workloads.
+                            </p>
+                            <div class="blog-card-footer">
+                                <span class="post-date">Nov 10, 2024</span>
+                                <span class="reading-time"><i class="fas fa-clock"></i> 11 min</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Blog Card 6 -->
+                    <article class="blog-card" data-category="sre">
+                        <div class="blog-card-image">
+                            <span class="post-category">SRE</span>
+                            <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&q=80" alt="Incident Response">
+                        </div>
+                        <div class="blog-card-content">
+                            <div class="post-tags">
+                                <span class="post-tag">Incidents</span>
+                                <span class="post-tag">Postmortem</span>
+                                <span class="post-tag">On-Call</span>
+                            </div>
+                            <h3><a href="https://medium.sudhakarchundu.org/" target="_blank">Running Incident Command: Lessons from P1 Outages</a></h3>
+                            <p class="post-excerpt">
+                                What I learned from leading incident response for critical production systems.
+                                Communication patterns, escalation paths, and blameless postmortems.
+                            </p>
+                            <div class="blog-card-footer">
+                                <span class="post-date">Oct 28, 2024</span>
+                                <span class="reading-time"><i class="fas fa-clock"></i> 6 min</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Blog Card 7 -->
+                    <article class="blog-card" data-category="kubernetes">
+                        <div class="blog-card-image">
+                            <span class="post-category">Kubernetes</span>
+                            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80" alt="Autoscaling">
+                        </div>
+                        <div class="blog-card-content">
+                            <div class="post-tags">
+                                <span class="post-tag">Karpenter</span>
+                                <span class="post-tag">KEDA</span>
+                                <span class="post-tag">HPA</span>
+                            </div>
+                            <h3><a href="https://medium.sudhakarchundu.org/" target="_blank">Advanced Kubernetes Autoscaling with Karpenter and KEDA</a></h3>
+                            <p class="post-excerpt">
+                                Moving beyond basic HPA. Event-driven scaling, node provisioning optimization,
+                                and cost-aware scheduling for production workloads.
+                            </p>
+                            <div class="blog-card-footer">
+                                <span class="post-date">Oct 15, 2024</span>
+                                <span class="reading-time"><i class="fas fa-clock"></i> 8 min</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Blog Card 8 -->
+                    <article class="blog-card" data-category="devops">
+                        <div class="blog-card-image">
+                            <span class="post-category">DevOps</span>
+                            <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&q=80" alt="Terraform">
+                        </div>
+                        <div class="blog-card-content">
+                            <div class="post-tags">
+                                <span class="post-tag">Terraform</span>
+                                <span class="post-tag">IaC</span>
+                                <span class="post-tag">Modules</span>
+                            </div>
+                            <h3><a href="https://medium.sudhakarchundu.org/" target="_blank">Building Reusable Terraform Modules: Patterns That Scale</a></h3>
+                            <p class="post-excerpt">
+                                Lessons from building 5+ production Terraform modules. Versioning strategies,
+                                testing approaches, and composability patterns.
+                            </p>
+                            <div class="blog-card-footer">
+                                <span class="post-date">Oct 1, 2024</span>
+                                <span class="reading-time"><i class="fas fa-clock"></i> 7 min</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Blog Card 9 -->
+                    <article class="blog-card" data-category="sre">
+                        <div class="blog-card-image">
+                            <span class="post-category">SRE</span>
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80" alt="Performance">
+                        </div>
+                        <div class="blog-card-content">
+                            <div class="post-tags">
+                                <span class="post-tag">perf</span>
+                                <span class="post-tag">strace</span>
+                                <span class="post-tag">Linux</span>
+                            </div>
+                            <h3><a href="https://medium.sudhakarchundu.org/" target="_blank">Linux Systems Performance: A Practitioner's Guide</a></h3>
+                            <p class="post-excerpt">
+                                Deep-dive into systems performance analysis. Using perf, strace, and kernel
+                                tuning to diagnose and fix production performance issues.
+                            </p>
+                            <div class="blog-card-footer">
+                                <span class="post-date">Sep 18, 2024</span>
+                                <span class="reading-time"><i class="fas fa-clock"></i> 14 min</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Newsletter Section -->
+                <div class="newsletter-section">
+                    <h3>Stay <span>Updated</span></h3>
+                    <p>Get notified when I publish new articles on DevOps, SRE, and cloud infrastructure.</p>
+                    <div class="medium-cta">
+                        <p>All posts are also published on</p>
+                        <a href="https://medium.sudhakarchundu.org/" target="_blank" class="btn">
+                            <i class="fab fa-medium"></i> Follow on Medium
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <span class="footer-logo">Sudhakar Chundu</span>
+            <div class="footer-links">
+                <a href="../">Home</a>
+                <a href="../resume/">Resume</a>
+                <a href="../projects/">Achievements</a>
+                <a href="../contact/">Contact</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/schundu007" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/schundu" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://medium.sudhakarchundu.org/" target="_blank"><i class="fab fa-medium"></i></a>
+            </div>
+        </div>
+        <p>&copy; 2025 Sudhakar Chundu. All rights reserved.</p>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Category Filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const blogCards = document.querySelectorAll('.blog-card');
+        const featuredPost = document.querySelector('.featured-post');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active button
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.dataset.filter;
+
+                // Filter cards
+                blogCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.style.display = 'flex';
+                        card.style.animation = 'fadeInUp 0.4s ease forwards';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Filter featured post
+                if (featuredPost) {
+                    if (filter === 'all' || featuredPost.dataset.category === filter) {
+                        featuredPost.style.display = 'grid';
+                        featuredPost.style.animation = 'fadeInUp 0.4s ease forwards';
+                    } else {
+                        featuredPost.style.display = 'none';
+                    }
+                }
+            });
+        });
+    </script>
+    <!-- Neural Network Background -->
+    <script src="../assets/js/neural-bg.js"></script>
+</body>
+</html>
