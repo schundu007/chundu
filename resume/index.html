@@ -1070,35 +1070,72 @@
                         <div class="experience-header">
                             <div class="experience-title">
                                 <h3>Staff DevOps Engineer / SRE</h3>
-                                <span class="company">Trackonomy Systems | San Jose, CA</span>
+                                <span class="company">Trackonomy Systems Inc | San Jose, CA</span>
                             </div>
-                            <span class="experience-date">Oct 2023 - Present</span>
+                            <span class="experience-date">Oct 2023 - Jan 2026</span>
                         </div>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Led infrastructure engineering team (6 members) serving 12+ enterprise clients across Pharma, Airlines, Government, Manufacturing, Healthcare, and IoT sectors globally across 8 countries.</p>
                         <ul class="experience-bullets">
-                            <li><strong>Platform Architecture:</strong> Designed and built K8s microservices platform from ground up; migrated 40+ workloads from VMs, VMSS, Azure WebApps, Function Apps, and datacenter Java applications to containerized architecture.</li>
-                            <li><strong>Production Reliability:</strong> Primary on-call for Kubernetes clusters and GPU compute infrastructure; maintained 99.99% SLO for 18 months serving 12+ enterprise clients.</li>
-                            <li><strong>DevSecOps & Compliance:</strong> Led SOC2 Type II, FedRAMP, and HIPAA certification; implemented Trivy, Falco, OPA, Gitleaks, and HashiCorp Vault for GenAI/LLM platform security.</li>
-                            <li><strong>Cloud FinOps:</strong> Reduced cloud costs 73% ($10M to $2.7M/year) through GPU utilization optimization, fair-share scheduling, reserved instance planning, and vendor consolidation.</li>
-                            <li><strong>Platform Engineering:</strong> Built CI/CD pipelines for 100+ applications using GitHub Actions, Docker, Terraform, and GitOps (ArgoCD, FluxCD); reduced deployment time 95% (days to 15 minutes).</li>
-                            <li><strong>GPU Infrastructure:</strong> Built and operate 65+ GPU Slurm cluster for ML/AI workloads; NVIDIA scheduling, capacity planning, 99.99% GPU cluster availability.</li>
-                            <li><strong>Incident Response:</strong> Run incident command for P1/P2 outages; authored postmortems and drove systemic fixes to prevent recurrence.</li>
+                            <li><strong>Platform Architecture:</strong> Designed and built K8s microservices platform from ground up; migrated 40+ workloads from VMs, VMSS, Azure WebApps, Function Apps, and datacenter Java applications to containerized architecture. Redesigned multi-cloud architecture (AWS, Azure, GCP, OCI) reducing Azure resources from 8.7K to 1.1K (87% reduction).</li>
+                            <li><strong>GPU Infrastructure:</strong> Designed, deployed, and operated Slurm-based GPU compute platform - 65 GPUs across 8 nodes using Slurm, Slinky (Slurm-on-Kubernetes), and NVIDIA BCM; achieved 99.97% uptime for ML training and inference workloads.</li>
+                            <li><strong>Performance Engineering:</strong> Improved GPU utilization from 45% to 78%; optimized Slurm scheduling with fair-share algorithms reducing queue wait times 60%; resolved critical Databricks compute latency issue through systematic flame graph + strace + Wireshark profiling.</li>
+                            <li><strong>Cloud FinOps:</strong> Reduced cloud costs 73% ($10M to $2.7M/year) through GPU optimization, fair-share scheduling, reserved instance planning, and vendor consolidation - delivering $8M+ annual savings.</li>
+                            <li><strong>SRE & Incident Management:</strong> Led SRE L3 operations - root cause analysis, incident management, blameless postmortems, SLI/SLO definition, error budget tracking, 24x7 on-call rotations (&lt;15min response); reduced MTTR 60%. Implemented AIOps for predictive monitoring and anomaly detection.</li>
+                            <li><strong>DevSecOps & Compliance:</strong> Led SOC2 Type II, ISO 27001, HIPAA, FedRAMP, HITRUST compliance; implemented Trivy, Falco, OPA, Gitleaks, and HashiCorp Vault for GenAI/LLM platform security; achieved zero critical findings.</li>
+                            <li><strong>CI/CD & GitOps:</strong> Built CI/CD pipelines for 100+ applications using GitOps (ArgoCD, FluxCD), GitHub Actions, Jenkins; enabled 50+ daily zero-downtime deployments with blue-green/canary strategies; reduced deployment time 95% (days to 15 minutes).</li>
+                            <li><strong>Observability:</strong> Unified 5 monitoring platforms into Datadog; built Prometheus/Grafana/OpenTelemetry observability stack with custom GPU exporters, distributed tracing, and intelligent alerting.</li>
+                            <li><strong>Data Infrastructure:</strong> Built production real-time data processing with Apache Kafka and Apache Flink for stream processing with exactly-once semantics. Implemented Databricks platform (Jobs, Compute, Unity Catalog) with MLflow and Delta Lake.</li>
                         </ul>
                     </div>
 
                     <div class="experience-item">
                         <div class="experience-header">
                             <div class="experience-title">
-                                <h3>Senior SRE / Cloud Architect - ML Infrastructure</h3>
-                                <span class="company">Wipro Technologies - OSDU Data Platform | Seattle, WA</span>
+                                <h3>Senior SRE / Cloud Architect - OSDU Data Platform</h3>
+                                <span class="company">Wipro Technologies | Seattle, WA & Redmond, WA</span>
                             </div>
                             <span class="experience-date">Feb 2020 - Oct 2023</span>
                         </div>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Multi-tenant enterprise data platform for ExxonMobil, Chevron, BP, Shell.</p>
+
+                        <div class="sub-role">
+                            <div class="sub-role-header">
+                                <h4>SRE Lead - AWS (Contract via Tecra Systems through Wipro)</h4>
+                                <span>Mar 2022 - Oct 2023</span>
+                            </div>
+                            <ul class="experience-bullets">
+                                <li><strong>Platform:</strong> Architected OSDU data platform processing exabytes of seismic data on GPU-accelerated Kubernetes clusters (EKS/Fargate) with Spark, Kafka, and Hadoop/HDFS.</li>
+                                <li><strong>Infrastructure:</strong> Delivered GPU cluster management at scale with Kubernetes, Istio, and KEDA, ensuring 99.95% availability for ML inference workloads across multi-region deployments.</li>
+                                <li><strong>IaC & GitOps:</strong> Created 5+ reusable Terraform modules (VPC, EKS, RDS, DynamoDB, S3, IAM) following AWS Well-Architected Framework; implemented GitOps (ArgoCD/FluxCD) with KEDA autoscaling; reduced deployment time 80%.</li>
+                                <li><strong>Observability:</strong> Built observability stack with Prometheus/Grafana/ELK and GPU metrics; created automation in Go/Python reducing manual operations 85%; designed DR with RPO &lt;1hr, RTO &lt;4hrs; led 24x7 on-call rotations.</li>
+                            </ul>
+                        </div>
+
+                        <div class="sub-role">
+                            <div class="sub-role-header">
+                                <h4>Cloud Infrastructure Engineer - Microsoft Azure (Full-Time with Wipro)</h4>
+                                <span>Feb 2020 - Mar 2022</span>
+                            </div>
+                            <ul class="experience-bullets">
+                                <li>Engineered scalable AI infrastructure using Azure ML, AKS with GPU node pools, and ExpressRoute for hybrid connectivity to on-premise GPU clusters.</li>
+                                <li>Deployed 15+ microservices on AKS with Istio service mesh; built Azure DevOps pipelines with Terraform/Bicep IaC; achieved 99.9% availability.</li>
+                                <li>Delivered compliance-as-code achieving SOC 2, HIPAA, ISO 27001 certifications across multi-tenant environments.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-title">
+                                <h3>Cloud Architect - Healthcare Infrastructure</h3>
+                                <span class="company">NTT Data Services | Hyderabad, India</span>
+                            </div>
+                            <span class="experience-date">Aug 2018 - Feb 2020</span>
+                        </div>
                         <ul class="experience-bullets">
-                            <li><strong>Platform:</strong> Architected OSDU R3 data platform processing exabytes of seismic data on GPU-accelerated Kubernetes clusters (EKS/Fargate) with Docker, Spark, Kafka, and Hadoop/HDFS for ExxonMobil, Chevron, BP, Shell.</li>
-                            <li><strong>Infrastructure:</strong> Delivered GPU cluster management at scale with Kubernetes, Istio, and KEDA, ensuring 99.99% availability for ML inference workloads across multi-region deployments.</li>
-                            <li><strong>IaC & GitOps:</strong> Created 5+ Terraform modules (VPC, EKS, RDS, DynamoDB, S3, SageMaker, IAM); implemented GitOps (ArgoCD/FluxCD) with Jenkins pipelines; reduced deployment time 80%.</li>
-                            <li><strong>Security & Quality:</strong> Integrated Trivy, Kube-bench, and SonarQube into CI/CD; implemented OPA policies and Ansible automation for compliance enforcement.</li>
-                            <li><strong>Observability:</strong> Built observability stack with Prometheus/Grafana/ELK and GPU metrics; created automation in Go/Python reducing manual operations 85%; led 24x7 on-call rotations.</li>
+                            <li><strong>Cloud Migration:</strong> Led cloud modernization for HIPAA/HITRUST-regulated AI/ML applications to AWS; implemented GPU-enabled EKS clusters with NFS-backed persistent storage.</li>
+                            <li><strong>Security & Compliance:</strong> Designed compliant ML pipeline with end-to-end encryption, audit logging, and secure model serving; managed $6M infrastructure budget.</li>
+                            <li><strong>DevOps:</strong> Implemented Jenkins/Ansible CI/CD pipelines; DevSecOps (HashiCorp Vault, SonarQube, OWASP); designed DR with business continuity planning.</li>
                         </ul>
                     </div>
 
@@ -1108,20 +1145,9 @@
                                 <h3>Multi-Cloud Architect / Senior Infrastructure Engineer</h3>
                                 <span class="company">Tata Consultancy Services | Multiple Locations</span>
                             </div>
-                            <span class="experience-date">May 2007 - Feb 2020</span>
+                            <span class="experience-date">May 2007 - Jun 2018</span>
                         </div>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Progressive 13-year career across Fortune 500 clients in healthcare, government, telecom, and financial services.</p>
-
-                        <div class="sub-role">
-                            <div class="sub-role-header">
-                                <h4>Cloud Architect - Harvard Pilgrim Health Care</h4>
-                                <span>Jun 2018 - Feb 2020</span>
-                            </div>
-                            <ul class="experience-bullets">
-                                <li>Led cloud modernization for HIPAA/HITRUST-regulated AI/ML applications to AWS; implemented GPU-enabled EKS clusters with NFS-backed persistent storage.</li>
-                                <li>Implemented Jenkins/Ansible CI/CD pipelines; DevSecOps (HashiCorp Vault, SonarQube, OWASP); managed $6M infrastructure budget.</li>
-                            </ul>
-                        </div>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Progressive 11-year career across Fortune 500 clients in financial services, government, telecom, and manufacturing.</p>
 
                         <div class="sub-role">
                             <div class="sub-role-header">
@@ -1140,7 +1166,7 @@
                                 <span>Jan 2011 - Apr 2015</span>
                             </div>
                             <ul class="experience-bullets">
-                                <li>Led infrastructure deployments for 20+ facility buildouts including branch offices, call centers, and data centers; managed $15M+ annual budgets.</li>
+                                <li>Led infrastructure deployments for 12+ facility buildouts including branch offices, call centers, and data centers; managed $15M+ annual budgets.</li>
                                 <li>Integrated Chef/Jenkins deployment pipelines; migrated VMware VMs to AWS (EC2, S3, ELB).</li>
                             </ul>
                         </div>
@@ -1171,12 +1197,13 @@
                     <div class="certifications-list">
                         <span class="cert-badge"><i class="fab fa-aws"></i> AWS Solutions Architect Professional</span>
                         <span class="cert-badge"><i class="fab fa-microsoft"></i> Azure Solutions Architect Expert</span>
+                        <span class="cert-badge"><i class="fab fa-google"></i> Google Cloud Professional Cloud Architect</span>
                         <span class="cert-badge"><i class="fab fa-aws"></i> AWS ML Specialty</span>
                         <span class="cert-badge"><i class="fab fa-microsoft"></i> Azure AI Engineer</span>
                         <span class="cert-badge"><i class="fas fa-microchip"></i> NVIDIA DLI Infrastructure</span>
                         <span class="cert-badge"><i class="fas fa-dharmachakra"></i> CKA (Kubernetes)</span>
                         <span class="cert-badge"><i class="fas fa-cube"></i> HashiCorp Terraform</span>
-                        <span class="cert-badge"><i class="fas fa-database"></i> Databricks Certified</span>
+                        <span class="cert-badge"><i class="fas fa-database"></i> Databricks Certified Data Engineer</span>
                         <span class="cert-badge"><i class="fas fa-project-diagram"></i> TOGAF 9</span>
                         <span class="cert-badge"><i class="fas fa-book"></i> ITIL v4</span>
                     </div>
