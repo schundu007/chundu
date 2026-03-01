@@ -309,7 +309,7 @@ a:hover {
 
 /* Main Content Container */
 .main-content {
-    max-width: 1200px;
+    max-width: 1560px;
     margin: 0 auto;
     padding: 0 2rem;
     min-height: calc(100vh - 80px);
@@ -330,7 +330,7 @@ nav {
 }
 
 .nav-container {
-    max-width: 1200px;
+    max-width: 1560px;
     margin: 0 auto;
     padding: 0 2rem;
     display: flex;
@@ -573,7 +573,7 @@ nav {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1560px;
     margin: 0 auto;
 }
 
