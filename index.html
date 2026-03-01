@@ -39,7 +39,7 @@
     <script src="assets/js/theme.js"></script>
 
     <style>
-        /* Neural Network Background Canvas */
+        /* Ambient Background Canvas */
         #neural-bg {
             position: fixed;
             top: 0;
@@ -83,7 +83,7 @@
         }
 
         .hero-container {
-            max-width: 80%;
+            max-width: 1200px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 340px;
@@ -99,14 +99,13 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.5rem 1rem;
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%);
-            border: 1px solid rgba(14, 165, 233, 0.3);
+            background: rgba(224, 255, 79, 0.1);
+            border: none;
             border-radius: var(--radius-full);
             font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--accent-cyan);
+            font-weight: 700;
+            color: #E0FF4F;
             margin-bottom: 1.5rem;
-            animation: pulse-glow 3s ease-in-out infinite;
         }
 
         .ai-badge i {
@@ -123,25 +122,22 @@
 
         .hero-content h1 .gradient-text {
             display: block;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            background-size: 200% 200%;
-            animation: gradient-shift 5s ease infinite;
+            color: var(--accent-highlight);
         }
 
         .hero-subtitle {
             font-size: 1.05rem;
-            color: var(--text-secondary);
+            color: var(--text-primary);
             line-height: 1.8;
             margin-bottom: 2rem;
             max-width: 600px;
+            opacity: 0.9;
         }
 
         .hero-subtitle strong {
-            color: var(--accent-cyan);
+            color: var(--accent-highlight);
             font-weight: 600;
+            opacity: 1;
         }
 
         .hero-stats {
@@ -152,27 +148,24 @@
         }
 
         .hero-stat {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
+            background: var(--bg-card);
+            border: none;
             border-radius: var(--radius-lg);
             padding: 1.25rem 1rem;
             text-align: center;
             transition: var(--transition-normal);
-            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
         }
 
         .hero-stat:hover {
-            border-color: var(--accent-cyan);
             transform: translateY(-4px);
-            box-shadow: var(--glow-cyan);
+            box-shadow: var(--shadow-lg);
         }
 
         .hero-stat-value {
             font-size: 1.75rem;
             font-weight: 700;
-            background: var(--gradient-neural);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--accent-highlight);
             font-family: var(--font-mono);
         }
 
@@ -192,34 +185,33 @@
         }
 
         .cta-buttons .btn-primary {
-            background: var(--gradient-primary);
-            background-size: 200% 200%;
-            animation: gradient-shift 5s ease infinite;
+            background: #E0FF4F;
+            color: #09090b;
             border: none;
-            box-shadow: var(--glow-blue);
+            font-weight: 700;
         }
 
         .cta-buttons .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: var(--glow-purple);
+            background: #d4f038;
+            box-shadow: 0 4px 16px rgba(224, 255, 79, 0.3);
         }
 
-        /* Profile Card - AI Style */
+        /* Profile Card */
         .profile-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
+            background: var(--bg-card);
+            border: none;
             border-radius: var(--radius-xl);
             padding: 2rem;
             text-align: center;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-lg);
             transition: var(--transition-normal);
         }
 
         .profile-card:hover {
-            border-color: var(--accent-cyan);
-            box-shadow: var(--glow-cyan);
+            box-shadow: var(--shadow-xl);
         }
 
         .profile-card::before {
@@ -229,8 +221,8 @@
             left: 0;
             right: 0;
             height: 100px;
-            background: var(--gradient-neural);
-            opacity: 0.15;
+            background: #E0FF4F;
+            opacity: 0.06;
         }
 
         .profile-image {
@@ -238,11 +230,10 @@
             height: 130px;
             border-radius: 50%;
             margin: 0 auto 1.25rem;
-            padding: 4px;
-            background: var(--gradient-primary);
+            padding: 3px;
+            background: #E0FF4F;
             position: relative;
             z-index: 1;
-            animation: pulse-glow 3s ease-in-out infinite;
         }
 
         .profile-image img {
@@ -278,19 +269,18 @@
 
         .profile-tag {
             padding: 0.4rem 0.85rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
+            background: rgba(224, 255, 79, 0.08);
+            border: none;
             border-radius: var(--radius-full);
             font-size: 0.8rem;
-            color: var(--accent-blue);
+            color: #E0FF4F;
             font-weight: 500;
             transition: var(--transition-fast);
             text-decoration: none;
         }
 
         .profile-tag:hover {
-            background: rgba(59, 130, 246, 0.1);
-            border-color: var(--accent-blue);
+            background: rgba(224, 255, 79, 0.15);
         }
 
         /* Testimonials */
@@ -324,15 +314,16 @@
         .testimonial-card {
             flex-shrink: 0;
             width: 360px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
+            background: var(--bg-card);
+            border: none;
             border-radius: var(--radius-lg);
             padding: 1.5rem;
             transition: var(--transition-normal);
+            box-shadow: var(--shadow-md);
         }
 
         .testimonial-card:hover {
-            border-color: var(--glass-border-hover);
+            box-shadow: var(--shadow-lg);
         }
 
         .testimonial-quote {
@@ -352,12 +343,12 @@
         .testimonial-avatar {
             width: 44px;
             height: 44px;
-            background: var(--gradient-primary);
+            background: #E0FF4F;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-primary);
+            color: #09090b;
             font-weight: 700;
             font-size: 0.9rem;
         }
@@ -374,7 +365,7 @@
         }
 
         .testimonial-company {
-            color: var(--accent-blue) !important;
+            color: #E0FF4F !important;
         }
 
         .linkedin-badge {
@@ -406,34 +397,27 @@
         }
 
         .experience-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
+            background: var(--bg-card);
+            border: none;
             border-radius: var(--radius-lg);
             padding: 1.75rem;
             transition: var(--transition-normal);
             position: relative;
             overflow: hidden;
+            box-shadow: var(--shadow-md);
         }
 
         .experience-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--gradient-primary);
-            opacity: 0;
-            transition: var(--transition-normal);
+            display: none;
         }
 
         .experience-card:hover {
-            border-color: var(--glass-border-hover);
             transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
         }
 
         .experience-card:hover::before {
-            opacity: 1;
+            display: none;
         }
 
         .experience-header {
@@ -449,17 +433,17 @@
         }
 
         .experience-card .company {
-            color: var(--accent-blue);
+            color: #E0FF4F;
             font-size: 0.9rem;
             font-weight: 500;
         }
 
         .experience-date {
             font-size: 0.75rem;
-            color: var(--accent-blue);
+            color: #E0FF4F;
             font-family: var(--font-mono);
             padding: 0.25rem 0.75rem;
-            background: var(--glass-bg);
+            background: rgba(224, 255, 79, 0.08);
             border-radius: var(--radius-full);
             white-space: nowrap;
         }
@@ -486,7 +470,7 @@
             top: 0.6em;
             width: 6px;
             height: 6px;
-            background: var(--accent-blue);
+            background: #E0FF4F;
             border-radius: 50%;
         }
 
@@ -498,11 +482,11 @@
 
         .client-tag {
             padding: 0.35rem 0.85rem;
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.2);
+            background: rgba(224, 255, 79, 0.08);
+            border: none;
             border-radius: var(--radius-full);
             font-size: 0.75rem;
-            color: var(--accent-blue);
+            color: #E0FF4F;
             font-weight: 500;
         }
 
@@ -514,29 +498,30 @@
         }
 
         .skill-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
+            background: var(--bg-card);
+            border: none;
             border-radius: var(--radius-lg);
             padding: 1.5rem;
             transition: var(--transition-normal);
+            box-shadow: var(--shadow-md);
         }
 
         .skill-card:hover {
-            border-color: var(--accent-blue);
             transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
         }
 
         .skill-icon {
             width: 48px;
             height: 48px;
-            background: var(--gradient-primary);
+            background: #E0FF4F;
             border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 1rem;
             font-size: 1.25rem;
-            color: white;
+            color: #09090b;
         }
 
         .skill-card h3 {
@@ -559,8 +544,8 @@
 
         .tech-tag {
             padding: 0.3rem 0.7rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
+            background: var(--bg-tertiary);
+            border: none;
             border-radius: var(--radius-sm);
             font-size: 0.75rem;
             color: var(--text-secondary);

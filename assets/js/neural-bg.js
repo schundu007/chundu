@@ -1,236 +1,206 @@
-// Neural Network Background Animation with Mixed Shapes
-class NeuralNetwork {
+// Professional Ambient Background — smooth gradient orbs + subtle grid
+class AmbientBackground {
     constructor(canvasId) {
         this.canvas = document.getElementById(canvasId);
         if (!this.canvas) return;
 
         this.ctx = this.canvas.getContext('2d');
-        this.particles = [];
-        this.mouse = { x: null, y: null, radius: 180 };
-        this.animationId = null;
-        this.shapes = ['circle', 'triangle', 'circle', 'diamond', 'circle']; // More circles, fewer others
+        this.orbs = [];
+        this.mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+        this.time = 0;
+        this.dpr = Math.min(window.devicePixelRatio || 1, 2);
 
         this.init();
         this.animate();
 
         window.addEventListener('resize', () => this.resize());
-        window.addEventListener('mousemove', (e) => this.handleMouse(e));
+        window.addEventListener('mousemove', (e) => {
+            this.mouse.targetX = e.clientX;
+            this.mouse.targetY = e.clientY;
+        });
     }
 
     init() {
         this.resize();
-        this.createParticles();
+        this.createOrbs();
     }
 
     resize() {
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
+        this.canvas.width = window.innerWidth * this.dpr;
+        this.canvas.height = window.innerHeight * this.dpr;
+        this.canvas.style.width = window.innerWidth + 'px';
+        this.canvas.style.height = window.innerHeight + 'px';
+        this.ctx.scale(this.dpr, this.dpr);
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
     }
 
-    createParticles() {
-        // Fewer particles - more spread out
-        const isMobile = window.innerWidth < 768;
-        const divisor = isMobile ? 40000 : 25000; // Reduced density
-        const numberOfParticles = Math.floor((this.canvas.width * this.canvas.height) / divisor);
-        this.particles = [];
-
-        for (let i = 0; i < numberOfParticles; i++) {
-            const shape = this.shapes[Math.floor(Math.random() * this.shapes.length)];
-            this.particles.push({
-                x: Math.random() * this.canvas.width,
-                y: Math.random() * this.canvas.height,
-                vx: (Math.random() - 0.5) * 0.4,
-                vy: (Math.random() - 0.5) * 0.4,
-                size: isMobile ? Math.random() * 4 + 2 : Math.random() * 6 + 3,
-                color: this.getRandomColor(),
-                shape: shape,
-                rotation: Math.random() * Math.PI * 2,
-                rotationSpeed: (Math.random() - 0.5) * 0.02,
-                pulsePhase: Math.random() * Math.PI * 2,
-                elasticity: 0.85 + Math.random() * 0.1
-            });
-        }
+    isLight() {
+        return document.documentElement.getAttribute('data-theme') === 'light';
     }
 
-    getRandomColor() {
+    createOrbs() {
         const isMobile = window.innerWidth < 768;
-        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        this.orbs = [];
 
-        let opacity = isMobile ? (isLight ? 0.5 : 0.4) : (isLight ? 0.7 : 0.6);
-
-        const colors = [
-            `rgba(14, 165, 233, ${opacity})`,   // cyan
-            `rgba(168, 85, 247, ${opacity})`,   // purple
-            `rgba(34, 211, 238, ${opacity})`,   // light cyan
-            `rgba(129, 140, 248, ${opacity})`,  // indigo
-            `rgba(244, 114, 182, ${opacity * 0.8})`, // pink
-            `rgba(52, 211, 153, ${opacity})`,   // emerald
+        // Large soft gradient orbs — lime/green tones (Nebius-inspired)
+        const orbConfigs = isMobile ? [
+            { x: 0.25, y: 0.2, r: 220, color: [180, 220, 50], speed: 0.0003 },
+            { x: 0.75, y: 0.6, r: 180, color: [120, 180, 40], speed: 0.0004 },
+            { x: 0.5, y: 0.85, r: 200, color: [160, 200, 60], speed: 0.00035 },
+        ] : [
+            { x: 0.2, y: 0.15, r: 400, color: [180, 220, 50], speed: 0.0002, phase: 0 },
+            { x: 0.8, y: 0.2, r: 350, color: [140, 200, 40], speed: 0.00025, phase: 1.5 },
+            { x: 0.15, y: 0.7, r: 320, color: [160, 210, 55], speed: 0.00022, phase: 3 },
+            { x: 0.75, y: 0.75, r: 380, color: [120, 180, 60], speed: 0.00018, phase: 4.5 },
+            { x: 0.5, y: 0.45, r: 300, color: [200, 230, 70], speed: 0.0003, phase: 2.2 },
         ];
-        return colors[Math.floor(Math.random() * colors.length)];
-    }
 
-    handleMouse(e) {
-        this.mouse.x = e.clientX;
-        this.mouse.y = e.clientY;
-    }
-
-    drawCircle(particle, size) {
-        this.ctx.beginPath();
-        this.ctx.arc(particle.x, particle.y, size, 0, Math.PI * 2);
-        this.ctx.fill();
-    }
-
-    drawTriangle(particle, size) {
-        this.ctx.save();
-        this.ctx.translate(particle.x, particle.y);
-        this.ctx.rotate(particle.rotation);
-        this.ctx.beginPath();
-        this.ctx.moveTo(0, -size);
-        this.ctx.lineTo(size * 0.866, size * 0.5);
-        this.ctx.lineTo(-size * 0.866, size * 0.5);
-        this.ctx.closePath();
-        this.ctx.fill();
-        this.ctx.restore();
-    }
-
-    drawDiamond(particle, size) {
-        this.ctx.save();
-        this.ctx.translate(particle.x, particle.y);
-        this.ctx.rotate(particle.rotation);
-        this.ctx.beginPath();
-        this.ctx.moveTo(0, -size);
-        this.ctx.lineTo(size * 0.7, 0);
-        this.ctx.lineTo(0, size);
-        this.ctx.lineTo(-size * 0.7, 0);
-        this.ctx.closePath();
-        this.ctx.fill();
-        this.ctx.restore();
-    }
-
-    drawParticles() {
-        const time = Date.now() * 0.001;
-
-        this.particles.forEach(particle => {
-            // Pulsing size effect
-            const pulse = 1 + Math.sin(time * 2 + particle.pulsePhase) * 0.15;
-            const size = particle.size * pulse;
-
-            this.ctx.fillStyle = particle.color;
-            this.ctx.shadowBlur = 8;
-            this.ctx.shadowColor = particle.color;
-
-            switch (particle.shape) {
-                case 'circle':
-                    this.drawCircle(particle, size);
-                    break;
-                case 'triangle':
-                    this.drawTriangle(particle, size);
-                    break;
-                case 'diamond':
-                    this.drawDiamond(particle, size);
-                    break;
-            }
+        orbConfigs.forEach(cfg => {
+            this.orbs.push({
+                baseX: cfg.x * this.width,
+                baseY: cfg.y * this.height,
+                x: cfg.x * this.width,
+                y: cfg.y * this.height,
+                radius: cfg.r,
+                color: cfg.color,
+                speed: cfg.speed,
+                phase: cfg.phase || Math.random() * Math.PI * 2,
+                driftX: 30 + Math.random() * 50,
+                driftY: 20 + Math.random() * 40,
+            });
         });
-        this.ctx.shadowBlur = 0;
     }
 
-    drawConnections() {
-        const isMobile = window.innerWidth < 768;
-        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-        const maxDistance = isMobile ? 120 : 150;
-        const maxOpacity = isMobile ? (isLight ? 0.3 : 0.2) : (isLight ? 0.4 : 0.3);
+    drawGrid() {
+        const light = this.isLight();
+        const opacity = light ? 0.035 : 0.04;
+        const gridSize = 80;
 
-        for (let i = 0; i < this.particles.length; i++) {
-            for (let j = i + 1; j < this.particles.length; j++) {
-                const dx = this.particles[i].x - this.particles[j].x;
-                const dy = this.particles[i].y - this.particles[j].y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
+        this.ctx.strokeStyle = light
+            ? `rgba(148, 163, 184, ${opacity})`
+            : `rgba(148, 163, 184, ${opacity})`;
+        this.ctx.lineWidth = 0.5;
 
-                if (distance < maxDistance) {
-                    const opacity = (1 - distance / maxDistance) * maxOpacity;
-                    this.ctx.beginPath();
-                    this.ctx.strokeStyle = `rgba(14, 165, 233, ${opacity})`;
-                    this.ctx.lineWidth = isLight ? 0.6 : 0.4;
-                    this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
-                    this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
-                    this.ctx.stroke();
-                }
+        // Horizontal lines
+        for (let y = 0; y < this.height; y += gridSize) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(0, y);
+            this.ctx.lineTo(this.width, y);
+            this.ctx.stroke();
+        }
+
+        // Vertical lines
+        for (let x = 0; x < this.width; x += gridSize) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(x, 0);
+            this.ctx.lineTo(x, this.height);
+            this.ctx.stroke();
+        }
+
+        // Subtle dot at intersections
+        const dotOpacity = light ? 0.05 : 0.06;
+        this.ctx.fillStyle = light
+            ? `rgba(100, 116, 139, ${dotOpacity})`
+            : `rgba(148, 163, 184, ${dotOpacity})`;
+        for (let x = 0; x < this.width; x += gridSize) {
+            for (let y = 0; y < this.height; y += gridSize) {
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, 1, 0, Math.PI * 2);
+                this.ctx.fill();
             }
         }
     }
 
-    updateParticles() {
-        this.particles.forEach(particle => {
-            // Mouse interaction with elastic bounce
-            if (this.mouse.x && this.mouse.y) {
-                const dx = particle.x - this.mouse.x;
-                const dy = particle.y - this.mouse.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
+    drawOrbs() {
+        const light = this.isLight();
+        const baseOpacity = light ? 0.05 : 0.12;
 
-                if (distance < this.mouse.radius) {
-                    const force = (this.mouse.radius - distance) / this.mouse.radius;
-                    // Elastic push away from mouse
-                    particle.vx += (dx / distance) * force * 0.03;
-                    particle.vy += (dy / distance) * force * 0.03;
-                }
+        this.orbs.forEach(orb => {
+            // Slow organic drift using sine waves
+            orb.x = orb.baseX + Math.sin(this.time * orb.speed * 1000 + orb.phase) * orb.driftX;
+            orb.y = orb.baseY + Math.cos(this.time * orb.speed * 800 + orb.phase * 1.3) * orb.driftY;
+
+            // Subtle mouse parallax — orbs gently shift away from cursor
+            const dx = this.mouse.x - orb.x;
+            const dy = this.mouse.y - orb.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const maxDist = 600;
+            if (dist < maxDist) {
+                const force = (1 - dist / maxDist) * 20;
+                orb.x -= (dx / dist) * force;
+                orb.y -= (dy / dist) * force;
             }
 
-            // Update position
-            particle.x += particle.vx;
-            particle.y += particle.vy;
+            // Pulsing radius
+            const pulse = 1 + Math.sin(this.time * 0.8 + orb.phase) * 0.08;
+            const r = orb.radius * pulse;
 
-            // Update rotation for triangles and diamonds
-            particle.rotation += particle.rotationSpeed;
+            // Radial gradient for soft glow
+            const gradient = this.ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, r);
+            const [cr, cg, cb] = orb.color;
+            gradient.addColorStop(0, `rgba(${cr}, ${cg}, ${cb}, ${baseOpacity * 1.2})`);
+            gradient.addColorStop(0.4, `rgba(${cr}, ${cg}, ${cb}, ${baseOpacity * 0.6})`);
+            gradient.addColorStop(1, `rgba(${cr}, ${cg}, ${cb}, 0)`);
 
-            // Elastic friction (bouncy feel)
-            particle.vx *= particle.elasticity;
-            particle.vy *= particle.elasticity;
-
-            // Soft return to slower speed
-            if (Math.abs(particle.vx) < 0.1) particle.vx += (Math.random() - 0.5) * 0.02;
-            if (Math.abs(particle.vy) < 0.1) particle.vy += (Math.random() - 0.5) * 0.02;
-
-            // Elastic boundary bounce
-            if (particle.x < 0) {
-                particle.x = 0;
-                particle.vx *= -particle.elasticity;
-            } else if (particle.x > this.canvas.width) {
-                particle.x = this.canvas.width;
-                particle.vx *= -particle.elasticity;
-            }
-
-            if (particle.y < 0) {
-                particle.y = 0;
-                particle.vy *= -particle.elasticity;
-            } else if (particle.y > this.canvas.height) {
-                particle.y = this.canvas.height;
-                particle.vy *= -particle.elasticity;
-            }
+            this.ctx.fillStyle = gradient;
+            this.ctx.beginPath();
+            this.ctx.arc(orb.x, orb.y, r, 0, Math.PI * 2);
+            this.ctx.fill();
         });
+    }
+
+    drawTopHighlight() {
+        // Subtle bright streak across the top — gives depth
+        const light = this.isLight();
+        const gradient = this.ctx.createLinearGradient(0, 0, this.width, 0);
+        const opacity = light ? 0.04 : 0.06;
+        gradient.addColorStop(0, `rgba(180, 220, 50, 0)`);
+        gradient.addColorStop(0.3, `rgba(180, 220, 50, ${opacity})`);
+        gradient.addColorStop(0.5, `rgba(224, 255, 79, ${opacity * 1.2})`);
+        gradient.addColorStop(0.7, `rgba(160, 200, 60, ${opacity})`);
+        gradient.addColorStop(1, `rgba(160, 200, 60, 0)`);
+
+        this.ctx.fillStyle = gradient;
+        this.ctx.fillRect(0, 0, this.width, 2);
+
+        // Soft glow under the line
+        const glowGrad = this.ctx.createLinearGradient(0, 0, 0, 120);
+        glowGrad.addColorStop(0, `rgba(224, 255, 79, ${opacity * 0.6})`);
+        glowGrad.addColorStop(1, 'rgba(224, 255, 79, 0)');
+        this.ctx.fillStyle = glowGrad;
+        this.ctx.fillRect(0, 0, this.width, 120);
     }
 
     animate() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.time += 0.016; // ~60fps time step
 
-        this.drawConnections();
-        this.drawParticles();
-        this.updateParticles();
+        // Smooth mouse interpolation
+        this.mouse.x += (this.mouse.targetX - this.mouse.x) * 0.05;
+        this.mouse.y += (this.mouse.targetY - this.mouse.y) * 0.05;
 
-        this.animationId = requestAnimationFrame(() => this.animate());
+        // Reset canvas
+        this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+        this.ctx.clearRect(0, 0, this.width, this.height);
+
+        // Render layers
+        this.drawGrid();
+        this.drawOrbs();
+        this.drawTopHighlight();
+
+        requestAnimationFrame(() => this.animate());
     }
 
     destroy() {
-        if (this.animationId) {
-            cancelAnimationFrame(this.animationId);
-        }
+        // Can be called to stop animation if needed
     }
 }
 
 // Initialize on DOM load
 document.addEventListener('DOMContentLoaded', () => {
-    const neuralCanvas = document.getElementById('neural-bg');
-    if (neuralCanvas) {
-        new NeuralNetwork('neural-bg');
+    const canvas = document.getElementById('neural-bg');
+    if (canvas) {
+        new AmbientBackground('neural-bg');
     }
 });
 

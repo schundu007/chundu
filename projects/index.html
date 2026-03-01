@@ -32,7 +32,7 @@
         .projects-hero {
             padding: 120px 2rem 60px;
             text-align: center;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(224, 255, 79, 0.1) 0%, rgba(224, 255, 79, 0.1) 100%);
             position: relative;
         }
 
@@ -43,8 +43,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 30% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+            background: radial-gradient(circle at 30% 50%, rgba(224, 255, 79, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(224, 255, 79, 0.15) 0%, transparent 50%);
             pointer-events: none;
         }
 
@@ -80,8 +80,8 @@
 
         /* Project Card */
         .project-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
+            background: var(--bg-card);
+            border: none;
             border-radius: var(--radius-xl);
             overflow: hidden;
             margin-bottom: 2rem;
@@ -95,7 +95,7 @@
         }
 
         .project-header {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+            background: linear-gradient(135deg, rgba(224, 255, 79, 0.15) 0%, rgba(224, 255, 79, 0.15) 100%);
             padding: 2rem;
             border-bottom: 1px solid var(--glass-border);
         }
@@ -104,14 +104,14 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: var(--glass-bg);
+            background: var(--bg-card);
             padding: 0.4rem 0.85rem;
             border-radius: 50px;
             font-size: 0.7rem;
             font-weight: 600;
             color: var(--text-secondary);
             margin-bottom: 1rem;
-            border: 1px solid var(--glass-border);
+            border: none;
         }
 
         .project-badge i {
@@ -201,7 +201,7 @@
         }
 
         .highlight-card {
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(224, 255, 79, 0.1);
             border-radius: var(--radius-md);
             padding: 1.25rem;
             border-left: 3px solid var(--accent-blue);
@@ -234,8 +234,8 @@
             align-items: center;
             gap: 0.4rem;
             padding: 0.4rem 0.75rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
+            background: var(--bg-card);
+            border: none;
             border-radius: 50px;
             font-size: 0.75rem;
             font-weight: 500;
@@ -296,8 +296,8 @@
             align-items: center;
             gap: 0.4rem;
             padding: 0.5rem 1rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
+            background: var(--bg-card);
+            border: none;
             border-radius: var(--radius-md);
             font-size: 0.8rem;
             font-weight: 600;
@@ -317,7 +317,7 @@
         .architecture-diagram img {
             width: 100%;
             border-radius: var(--radius-lg);
-            border: 1px solid var(--glass-border);
+            border: none;
         }
 
         .architecture-caption {
