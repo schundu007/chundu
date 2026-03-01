@@ -4,7 +4,7 @@
 
     // Get saved theme or default to dark
     function getTheme() {
-        return localStorage.getItem(THEME_KEY) || 'dark';
+        return localStorage.getItem(THEME_KEY) || 'light';
     }
 
     // Save theme preference
