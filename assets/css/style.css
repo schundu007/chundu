@@ -71,16 +71,16 @@
     --nav-bg: rgba(9, 9, 11, 0.9);
 }
 
-/* Light Theme */
+/* Light Theme - Warm Ivory */
 [data-theme="light"] {
-    --bg-primary: #ffffff;
-    --bg-secondary: #fafafa;
-    --bg-tertiary: #f4f4f5;
-    --bg-card: #ffffff;
-    --bg-card-hover: #fafafa;
+    --bg-primary: #FEFDFB;
+    --bg-secondary: #F9F8F4;
+    --bg-tertiary: #F3F2EC;
+    --bg-card: #FFFFFF;
+    --bg-card-hover: #F9F8F4;
 
-    --text-primary: #09090b;
-    --text-secondary: #3f3f46;
+    --text-primary: #1a1a1a;
+    --text-secondary: #4a4a4a;
     --text-muted: #71717a;
 
     /* Darker lime for light backgrounds */
@@ -93,8 +93,9 @@
 
     --gradient-primary: linear-gradient(135deg, #84cc16 0%, #65a30d 100%);
     --gradient-neural: linear-gradient(135deg, #84cc16 0%, #65a30d 100%);
+    --gradient-dark: linear-gradient(180deg, #FEFDFB 0%, #F9F8F4 100%);
 
-    --glass-bg: #ffffff;
+    --glass-bg: #FFFFFF;
     --glass-border: transparent;
     --glass-border-hover: rgba(132, 204, 22, 0.4);
 
@@ -110,7 +111,35 @@
     --glow-purple: 0 0 15px rgba(132, 204, 22, 0.15);
     --glow-ai: 0 0 12px rgba(101, 163, 13, 0.2);
 
-    --nav-bg: rgba(255, 255, 255, 0.95);
+    --nav-bg: rgba(254, 253, 251, 0.95);
+}
+
+/* Light theme overrides for hardcoded lime elements */
+[data-theme="light"] .section-label {
+    background: rgba(101, 163, 13, 0.1);
+    color: #4d7c0f;
+}
+
+[data-theme="light"] .nav-auth .btn-signin {
+    background: #84cc16;
+    color: #fff;
+}
+
+[data-theme="light"] .btn-primary {
+    background: #84cc16;
+    color: #fff;
+}
+
+[data-theme="light"] .btn-primary:hover {
+    background: #65a30d;
+}
+
+/* Light mode card borders for definition on ivory */
+[data-theme="light"] .card,
+[data-theme="light"] .experience-card,
+[data-theme="light"] .skill-card,
+[data-theme="light"] .project-card {
+    border: 1px solid #e8e7e2;
 }
 
 /* Light mode ambient background */
@@ -309,9 +338,10 @@ a:hover {
 
 /* Main Content Container */
 .main-content {
-    max-width: 1560px;
+    width: 80%;
+    max-width: 1920px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0;
     min-height: calc(100vh - 80px);
 }
 
@@ -330,9 +360,10 @@ nav {
 }
 
 .nav-container {
-    max-width: 1560px;
+    width: 80%;
+    max-width: 1920px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -573,7 +604,8 @@ nav {
 }
 
 .container {
-    max-width: 1560px;
+    width: 80%;
+    max-width: 1920px;
     margin: 0 auto;
 }
 
