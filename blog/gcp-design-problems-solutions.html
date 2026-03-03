@@ -31,9 +31,12 @@
     font-family: 'Instrument Sans', sans-serif;
     font-size: 16px;
     line-height: 1.75;
-    padding: 2rem;
-    max-width: 1100px;
-    margin: 0 auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   .header {
@@ -321,7 +324,7 @@
   font-size: 0.75rem;
 }
 body {
-  padding-top: 4rem;
+  padding-top: 50px;
 }
 
 /* Light Mode Styles */
@@ -399,6 +402,147 @@ body {
 [data-theme="light"] li {
   color: #334155;
 }
+
+/* Fixed Sidebar Navigation */
+.sidebar {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  width: 280px;
+  height: calc(100vh - 50px);
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 1rem 0;
+  z-index: 999;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+.sidebar-header {
+  padding: 0.5rem 1rem 1rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-header h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem;
+  color: #fff;
+  margin: 0;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.sidebar-part {
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-part-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--accent);
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(74,158,255,0.05);
+  border-left: 2px solid var(--accent);
+}
+
+.sidebar-part-title:hover {
+  background: rgba(74,158,255,0.1);
+}
+
+.sidebar-questions {
+  padding-left: 0;
+}
+
+.sidebar-questions a {
+  display: block;
+  padding: 0.4rem 1rem 0.4rem 1.25rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  border-left: 2px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.sidebar-questions a:hover {
+  color: var(--accent);
+  background: rgba(74,158,255,0.05);
+  border-left-color: var(--accent);
+}
+
+.sidebar-questions a.active {
+  color: var(--accent);
+  background: rgba(74,158,255,0.1);
+  border-left-color: var(--accent);
+}
+
+.sidebar-q-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  color: var(--accent);
+  margin-right: 0.25rem;
+}
+
+/* Main content with sidebar */
+.main-content {
+  margin-left: 280px;
+  max-width: 1100px;
+  padding: 2rem;
+}
+
+/* Hide sidebar on mobile */
+@media (max-width: 1200px) {
+  .sidebar {
+    display: none;
+  }
+  .main-content {
+    margin-left: 0;
+  }
+}
+
+/* Light mode sidebar */
+[data-theme="light"] .sidebar {
+  background: #ffffff;
+  border-right-color: #e2e8f0;
+}
+
+[data-theme="light"] .sidebar-header h3 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .sidebar-part-title {
+  background: rgba(37,99,235,0.05);
+  border-left-color: var(--accent);
+}
+
+[data-theme="light"] .sidebar-questions a:hover {
+  background: rgba(37,99,235,0.05);
+}
+
+[data-theme="light"] .sidebar-questions a.active {
+  background: rgba(37,99,235,0.1);
+}
 </style>
 </head>
 <body>
@@ -422,6 +566,94 @@ if (savedTheme) {
   document.documentElement.setAttribute('data-theme', savedTheme);
 }
 </script>
+
+<!-- SIDEBAR NAVIGATION -->
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <h3>Questions Navigation</h3>
+  </div>
+
+  <div class="sidebar-part">
+    <div class="sidebar-part-title"><a href="#part1" style="color:inherit;text-decoration:none;">Part 1: Infrastructure Design</a></div>
+    <div class="sidebar-questions">
+      <a href="#q1-1"><span class="sidebar-q-num">Q1</span> E-commerce Cart Design</a>
+      <a href="#q1-2"><span class="sidebar-q-num">Q2</span> GPU Migration Approach</a>
+      <a href="#q1-3"><span class="sidebar-q-num">Q3</span> Global vs Non-Global</a>
+      <a href="#q1-4"><span class="sidebar-q-num">Q4</span> GKE for ML Training</a>
+      <a href="#q1-5"><span class="sidebar-q-num">Q5</span> TPU/GPU for 70B LLM</a>
+      <a href="#q1-6"><span class="sidebar-q-num">Q6</span> DR for ML Pipeline</a>
+      <a href="#q1-7"><span class="sidebar-q-num">Q7</span> Multi-Cloud Architecture</a>
+      <a href="#q1-8"><span class="sidebar-q-num">Q8</span> Hybrid Cloud Solution</a>
+    </div>
+  </div>
+
+  <div class="sidebar-part">
+    <div class="sidebar-part-title"><a href="#part2" style="color:inherit;text-decoration:none;">Part 2: TPU/GPU Specific</a></div>
+    <div class="sidebar-questions">
+      <a href="#q2-1"><span class="sidebar-q-num">Q1</span> TPU Versions Comparison</a>
+      <a href="#q2-2"><span class="sidebar-q-num">Q2</span> PyTorch to TPU Migration</a>
+      <a href="#q2-3"><span class="sidebar-q-num">Q3</span> TPU Pod Topology</a>
+      <a href="#q2-4"><span class="sidebar-q-num">Q4</span> GPU vs TPU Tradeoffs</a>
+      <a href="#q2-5"><span class="sidebar-q-num">Q5</span> TPU Provisioning in GKE</a>
+      <a href="#q2-6"><span class="sidebar-q-num">Q6</span> Inference Cost Optimization</a>
+      <a href="#q2-7"><span class="sidebar-q-num">Q7</span> AI Hypercomputer</a>
+      <a href="#q2-8"><span class="sidebar-q-num">Q8</span> Dynamic Workload Scheduler</a>
+      <a href="#q2-9"><span class="sidebar-q-num">Q9</span> TPU Troubleshooting</a>
+      <a href="#q2-10"><span class="sidebar-q-num">Q10</span> Pathways Multi-Slice</a>
+    </div>
+  </div>
+
+  <div class="sidebar-part">
+    <div class="sidebar-part-title"><a href="#part3" style="color:inherit;text-decoration:none;">Part 3: GKE & Kubernetes</a></div>
+    <div class="sidebar-questions">
+      <a href="#q3-1"><span class="sidebar-q-num">Q1</span> Virtualization vs Containers</a>
+      <a href="#q3-2"><span class="sidebar-q-num">Q2</span> Rolling Updates & Rollbacks</a>
+      <a href="#q3-3"><span class="sidebar-q-num">Q3</span> Blue/Green Deployment</a>
+      <a href="#q3-4"><span class="sidebar-q-num">Q4</span> GPU/TPU Autoscaling</a>
+      <a href="#q3-5"><span class="sidebar-q-num">Q5</span> Workload Identity</a>
+      <a href="#q3-6"><span class="sidebar-q-num">Q6</span> Observability & Monitoring</a>
+      <a href="#q3-7"><span class="sidebar-q-num">Q7</span> GKE Standard vs Autopilot</a>
+      <a href="#q3-8"><span class="sidebar-q-num">Q8</span> Kueue Job Scheduling</a>
+    </div>
+  </div>
+
+  <div class="sidebar-part">
+    <div class="sidebar-part-title"><a href="#part4" style="color:inherit;text-decoration:none;">Part 4: Networking & Security</a></div>
+    <div class="sidebar-questions">
+      <a href="#q4-1"><span class="sidebar-q-num">Q1</span> VPC Network Design</a>
+      <a href="#q4-2"><span class="sidebar-q-num">Q2</span> VPC Service Controls</a>
+      <a href="#q4-3"><span class="sidebar-q-num">Q3</span> Shared VPC vs Peering</a>
+      <a href="#q4-4"><span class="sidebar-q-num">Q4</span> GPUDirect-TCPX</a>
+      <a href="#q4-5"><span class="sidebar-q-num">Q5</span> IAM & Least Privilege</a>
+      <a href="#q4-6"><span class="sidebar-q-num">Q6</span> Hybrid Security</a>
+    </div>
+  </div>
+
+  <div class="sidebar-part">
+    <div class="sidebar-part-title"><a href="#part5" style="color:inherit;text-decoration:none;">Part 5: IaC & CI/CD</a></div>
+    <div class="sidebar-questions">
+      <a href="#q5-1"><span class="sidebar-q-num">Q1</span> Terraform Experience</a>
+      <a href="#q5-2"><span class="sidebar-q-num">Q2</span> Terraform + GKE GPU</a>
+      <a href="#q5-3"><span class="sidebar-q-num">Q3</span> CI/CD Pipeline</a>
+      <a href="#q5-4"><span class="sidebar-q-num">Q4</span> Terraform State Mgmt</a>
+      <a href="#q5-5"><span class="sidebar-q-num">Q5</span> GitOps with ArgoCD</a>
+    </div>
+  </div>
+
+  <div class="sidebar-part">
+    <div class="sidebar-part-title"><a href="#part6" style="color:inherit;text-decoration:none;">Part 6: Consulting Scenarios</a></div>
+    <div class="sidebar-questions">
+      <a href="#q6-1"><span class="sidebar-q-num">Q1</span> GCP Sales Pitch</a>
+      <a href="#q6-2"><span class="sidebar-q-num">Q2</span> Budget Optimization</a>
+      <a href="#q6-3"><span class="sidebar-q-num">Q3</span> Migration Experience</a>
+      <a href="#q6-4"><span class="sidebar-q-num">Q4</span> Fault-Tolerant Training</a>
+      <a href="#q6-5"><span class="sidebar-q-num">Q5</span> TPU vs GPU Explained</a>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
 
 <!-- TITLE -->
 <div class="title-page">
@@ -454,7 +686,7 @@ if (savedTheme) {
 <!-- ============================================================ -->
 <!-- QUESTION 1 -->
 <!-- ============================================================ -->
-<div class="question-block" data-number="Q1 — SYSTEM DESIGN">
+<div class="question-block" id="q1-1" data-number="Q1 — SYSTEM DESIGN">
 <div class="q-meta">
 <span class="tag tag-hard">Hard</span>
 <span class="tag tag-cat">System Design</span>
@@ -534,7 +766,7 @@ graph TB
 <!-- ============================================================ -->
 <!-- QUESTION 2 -->
 <!-- ============================================================ -->
-<div class="question-block" data-number="Q2 — MIGRATION">
+<div class="question-block" id="q1-2" data-number="Q2 — MIGRATION">
 <div class="q-meta">
 <span class="tag tag-hard">Hard</span>
 <span class="tag tag-cat">Migration</span>
@@ -603,7 +835,7 @@ graph TB
 <!-- ============================================================ -->
 <!-- QUESTION 3 -->
 <!-- ============================================================ -->
-<div class="question-block" data-number="Q3 — ARCHITECTURE">
+<div class="question-block" id="q1-3" data-number="Q3 — ARCHITECTURE">
 <div class="q-meta">
 <span class="tag tag-medium">Medium</span>
 <span class="tag tag-cat">Architecture</span>
@@ -663,7 +895,7 @@ graph TB
 <!-- ============================================================ -->
 <!-- QUESTION 4 -->
 <!-- ============================================================ -->
-<div class="question-block" data-number="Q4 — GKE + ML">
+<div class="question-block" id="q1-4" data-number="Q4 — GKE + ML">
 <div class="q-meta">
 <span class="tag tag-hard">Hard</span>
 <span class="tag tag-cat">GKE + ML</span>
@@ -744,7 +976,7 @@ graph TB
 <!-- ============================================================ -->
 <!-- QUESTION 5 -->
 <!-- ============================================================ -->
-<div class="question-block" data-number="Q5 — TPU/GPU DESIGN">
+<div class="question-block" id="q1-5" data-number="Q5 — TPU/GPU DESIGN">
 <div class="q-meta">
 <span class="tag tag-hard">Hard</span>
 <span class="tag tag-cat">TPU/GPU Design</span>
@@ -802,7 +1034,7 @@ graph TB
 <!-- ============================================================ -->
 <!-- QUESTION 6 -->
 <!-- ============================================================ -->
-<div class="question-block" data-number="Q6 — DR PLANNING">
+<div class="question-block" id="q1-6" data-number="Q6 — DR PLANNING">
 <div class="q-meta">
 <span class="tag tag-medium">Medium</span>
 <span class="tag tag-cat">DR Planning</span>
@@ -856,7 +1088,7 @@ graph TB
 <!-- ============================================================ -->
 <!-- QUESTION 7 -->
 <!-- ============================================================ -->
-<div class="question-block" data-number="Q7 — MULTI-CLOUD">
+<div class="question-block" id="q1-7" data-number="Q7 — MULTI-CLOUD">
 <div class="q-meta">
 <span class="tag tag-hard">Hard</span>
 <span class="tag tag-cat">Multi-Cloud</span>
@@ -927,7 +1159,7 @@ graph TB
 <!-- ============================================================ -->
 <!-- QUESTION 8 -->
 <!-- ============================================================ -->
-<div class="question-block" data-number="Q8 — HYBRID CLOUD">
+<div class="question-block" id="q1-8" data-number="Q8 — HYBRID CLOUD">
 <div class="q-meta">
 <span class="tag tag-medium">Medium</span>
 <span class="tag tag-cat">Hybrid Cloud</span>
@@ -1023,7 +1255,7 @@ graph TB
 <p class="subtitle">Critical for Google Cloud Infrastructure Engineer Role — 10 Questions • Prepared for Sudhakar Chundu</p>
 </div>
 <!-- Q1 -->
-<div class="question-block" data-number="Q1 — TPU KNOWLEDGE">
+<div class="question-block" id="q2-1" data-number="Q1 — TPU KNOWLEDGE">
 <div class="q-meta">
 <span class="tag tag-hard">Hard</span>
 <span class="tag tag-cat">TPU Knowledge</span>
@@ -1051,7 +1283,7 @@ graph TB
 <div class="interview-tip">Interview Tip: The key differentiator to emphasize is that TPU generations are NOT just "faster versions of the same thing." Each has a distinct design philosophy: v5e for cost efficiency, Trillium for performance/$ training, Ironwood for inference at unprecedented scale. Show you understand the memory-bandwidth-compute tradeoffs, not just raw specs.</div>
 </div>
 <!-- Q2 -->
-<div class="question-block" data-number="Q2 — FRAMEWORK MIGRATION">
+<div class="question-block" id="q2-2" data-number="Q2 — FRAMEWORK MIGRATION">
 <div class="q-meta">
 <span class="tag tag-hard">Hard</span>
 <span class="tag tag-cat">Framework Migration</span>
@@ -1111,7 +1343,7 @@ graph TB
 </div>
 </div>
 <!-- Q3 -->
-<div class="question-block" data-number="Q3 — TPU ARCHITECTURE">
+<div class="question-block" id="q2-3" data-number="Q3 — TPU ARCHITECTURE">
 <div class="q-meta">
 <span class="tag tag-hard">Hard</span>
 <span class="tag tag-cat">TPU Architecture</span>
@@ -1176,7 +1408,7 @@ graph TB
 </table>
 </div>
 <!-- Q4 -->
-<div class="question-block" data-number="Q4 — GPU VS TPU">
+<div class="question-block" id="q2-4" data-number="Q4 — GPU VS TPU">
 <div class="q-meta">
 <span class="tag tag-hard">Hard</span>
 <span class="tag tag-cat">GPU vs TPU</span>
@@ -1205,7 +1437,7 @@ graph TB
 </div>
 </div>
 <!-- Q5 -->
-<div class="question-block" data-number="Q5 — TPU PROVISIONING">
+<div class="question-block" id="q2-5" data-number="Q5 — TPU PROVISIONING">
 <div class="q-meta">
 <span class="tag tag-medium">Medium</span>
 <span class="tag tag-cat">TPU Provisioning</span>
@@ -1295,7 +1527,7 @@ gcloud container node-pools create tpu-flex-pool \
 </div>
 </div>
 <!-- Q6 -->
-<div class="question-block" data-number="Q6 — COST OPTIMIZATION">
+<div class="question-block" id="q2-6" data-number="Q6 — COST OPTIMIZATION">
 <div class="q-meta">
 <span class="tag tag-medium">Medium</span>
 <span class="tag tag-cat">Cost Optimization</span>
@@ -1321,7 +1553,7 @@ gcloud container node-pools create tpu-flex-pool \
 </div>
 </div>
 <!-- Q7 -->
-<div class="question-block" data-number="Q7 — AI HYPERCOMPUTER">
+<div class="question-block" id="q2-7" data-number="Q7 — AI HYPERCOMPUTER">
 <div class="q-meta">
 <span class="tag tag-medium">Medium</span>
 <span class="tag tag-cat">AI Hypercomputer</span>
@@ -1385,7 +1617,7 @@ graph TB
 <div class="interview-tip">Interview Tip: The key point to convey is that AI Hypercomputer is Google's answer to the question "how do you make 10,000 TPUs behave like one supercomputer?" It's not about individual chip specs — it's about system-level integration. Emphasize the Jupiter network fabric (which eliminates inter-node bottlenecks) and the software stack (Pathways + XLA) that abstracts away distributed complexity.</div>
 </div>
 <!-- Q8 -->
-<div class="question-block" data-number="Q8 — SCHEDULING">
+<div class="question-block" id="q2-8" data-number="Q8 — SCHEDULING">
 <div class="q-meta">
 <span class="tag tag-medium">Medium</span>
 <span class="tag tag-cat">Scheduling</span>
@@ -1403,7 +1635,7 @@ graph TB
 </ul>
 </div>
 <!-- Q9 -->
-<div class="question-block" data-number="Q9 — TROUBLESHOOTING">
+<div class="question-block" id="q2-9" data-number="Q9 — TROUBLESHOOTING">
 <div class="q-meta">
 <span class="tag tag-medium">Medium</span>
 <span class="tag tag-cat">Troubleshooting</span>
@@ -1450,7 +1682,7 @@ graph TB
 <p><strong>6. DWS/Queued Provisioning:</strong> If the node pool uses <code>--enable-queued-provisioning</code>, nodes are provisioned on-demand. Check: <code>kubectl get provisioningrequests</code>. The ProvisioningRequest may be in "Provisioning" state waiting for TPU capacity to become available — this is expected behavior for Flex-start.</p>
 </div>
 <!-- Q10 -->
-<div class="question-block" data-number="Q10 — PATHWAYS">
+<div class="question-block" id="q2-10" data-number="Q10 — PATHWAYS">
 <div class="q-meta">
 <span class="tag tag-hard">Hard</span>
 <span class="tag tag-cat">Pathways</span>
@@ -1546,7 +1778,7 @@ spec:
 <p class="subtitle">Heavily Tested Category — 8 Questions • Prepared for Sudhakar Chundu</p>
 </div>
 <!-- GKE Q1 -->
-<div class="question-block" data-number="Q1 — FUNDAMENTALS">
+<div class="question-block" id="q3-1" data-number="Q1 — FUNDAMENTALS">
 <div class="q-meta"><span class="tag tag-easy">Easy</span><span class="tag tag-cat">Fundamentals</span></div>
 <div class="question-text">Explain the difference between virtualization and containerization. (Real Glassdoor question)</div>
 <h3>Answer</h3>
@@ -1565,7 +1797,7 @@ spec:
 <p><strong>GKE combines both:</strong> GKE nodes are VMs (Compute Engine instances) that run containers. For enhanced security, <strong>GKE Sandbox (gVisor)</strong> adds an additional kernel-level isolation layer — each pod gets its own application kernel, providing VM-like isolation with container-like density. This is particularly important for multi-tenant ML platforms where different teams' training jobs share GPU nodes.</p>
 </div>
 <!-- GKE Q2 -->
-<div class="question-block" data-number="Q2 — DEPLOYMENTS">
+<div class="question-block" id="q3-2" data-number="Q2 — DEPLOYMENTS">
 <div class="q-meta"><span class="tag tag-medium">Medium</span><span class="tag tag-cat">Deployments</span></div>
 <div class="question-text">How do you handle rolling updates and rollbacks for applications running on GKE?</div>
 <h3>Rolling Updates</h3>
@@ -1594,7 +1826,7 @@ kubectl rollout status deployment/my-app</div>
 <p><strong>Best Practices for ML Workloads:</strong> Use <code>PodDisruptionBudgets</code> to ensure minimum availability during updates. For GPU inference services, set <code>maxSurge: 1</code> and <code>maxUnavailable: 0</code> to ensure every GPU pod is replaced before the old one terminates (GPU nodes are expensive — don't waste capacity). Always include liveness and readiness probes that verify the model is actually loaded and serving, not just that the container is running.</p>
 </div>
 <!-- GKE Q3 -->
-<div class="question-block" data-number="Q3 — DEPLOYMENT STRATEGY">
+<div class="question-block" id="q3-3" data-number="Q3 — DEPLOYMENT STRATEGY">
 <div class="q-meta"><span class="tag tag-hard">Hard</span><span class="tag tag-cat">Deployment Strategy</span></div>
 <div class="question-text">Implement a blue/green deployment strategy for a microservices application on GKE with minimal downtime and seamless rollback.</div>
 <h3>Blue/Green Architecture</h3>
@@ -1687,7 +1919,7 @@ spec:
 </div>
 </div>
 <!-- GKE Q4 -->
-<div class="question-block" data-number="Q4 — AUTOSCALING">
+<div class="question-block" id="q3-4" data-number="Q4 — AUTOSCALING">
 <div class="q-meta"><span class="tag tag-medium">Medium</span><span class="tag tag-cat">Autoscaling</span></div>
 <div class="question-text">How do you configure autoscaling for GPU/TPU workloads in GKE? Explain HPA, VPA, Cluster Autoscaler, and Node Auto-Provisioning.</div>
 <h3>Autoscaling Stack</h3>
@@ -1718,7 +1950,7 @@ graph TB
 </div>
 </div>
 <!-- GKE Q5 -->
-<div class="question-block" data-number="Q5 — SECURITY">
+<div class="question-block" id="q3-5" data-number="Q5 — SECURITY">
 <div class="q-meta"><span class="tag tag-medium">Medium</span><span class="tag tag-cat">Security</span></div>
 <div class="question-text">What is Workload Identity in GKE and why is it preferred over service account keys?</div>
 <h3>Answer</h3>
@@ -1765,7 +1997,7 @@ kubectl annotate serviceaccount ml-training-ksa -n ml-ns \
   iam.gke.io/gcp-service-account=ml-training-gsa@PROJECT_ID.iam.gserviceaccount.com</div>
 </div>
 <!-- GKE Q6 -->
-<div class="question-block" data-number="Q6 — OBSERVABILITY">
+<div class="question-block" id="q3-6" data-number="Q6 — OBSERVABILITY">
 <div class="q-meta"><span class="tag tag-medium">Medium</span><span class="tag tag-cat">Observability</span></div>
 <div class="question-text">How do you monitor and troubleshoot performance issues in a GKE cluster running GPU training jobs?</div>
 <h3>Observability Stack</h3>
@@ -1809,7 +2041,7 @@ graph TB
 <p>1. <strong>Slow training?</strong> Check GPU util → if low, profile data pipeline (is CPU/IO the bottleneck?). If GPU util is high but throughput is low, check inter-node communication (NCCL AllReduce latency). 2. <strong>Job crashing?</strong> Check pod events (<code>kubectl describe pod</code>), GPU ECC errors, and OOM kills. 3. <strong>Loss diverging?</strong> Check gradient norms and learning rate. Not an infra issue but often blamed on infra.</p>
 </div>
 <!-- GKE Q7 -->
-<div class="question-block" data-number="Q7 — GKE MODES">
+<div class="question-block" id="q3-7" data-number="Q7 — GKE MODES">
 <div class="q-meta"><span class="tag tag-easy">Easy</span><span class="tag tag-cat">GKE Modes</span></div>
 <div class="question-text">Explain the difference between GKE Standard and GKE Autopilot. Which would you recommend for ML workloads and why?</div>
 <h3>Comparison</h3>
@@ -1830,7 +2062,7 @@ graph TB
 <p><strong>Hybrid approach (common in production):</strong> GKE Standard cluster for training with GPU/TPU node pools + CPU platform node pools. Separate GKE Autopilot cluster for inference serving. This gives you full control where you need it and operational simplicity where you don't.</p>
 </div>
 <!-- GKE Q8 -->
-<div class="question-block" data-number="Q8 — JOB SCHEDULING">
+<div class="question-block" id="q3-8" data-number="Q8 — JOB SCHEDULING">
 <div class="q-meta"><span class="tag tag-hard">Hard</span><span class="tag tag-cat">Job Scheduling</span></div>
 <div class="question-text">How would you configure Kueue for job scheduling and priority queuing in a multi-tenant GKE cluster with GPUs?</div>
 <h3>Kueue Architecture</h3>
@@ -1964,7 +2196,7 @@ spec:
 <p class="subtitle">6 Questions — Key for Infrastructure Engineers</p>
 </div>
 <!-- NET Q1 -->
-<div class="question-block" data-number="Q1 — VPC DESIGN">
+<div class="question-block" id="q4-1" data-number="Q1 — VPC DESIGN">
 <div class="q-meta"><span class="tag tag-medium">Medium</span><span class="tag tag-cat">VPC Design</span></div>
 <div class="question-text">How do you design a network architecture on GCP to ensure secure communication between resources? (Real question)</div>
 <h3>Network Architecture</h3>
@@ -2010,7 +2242,7 @@ graph TB
 <p><strong>4. Access management:</strong> <strong>Identity-Aware Proxy (IAP)</strong> for SSH access to private instances — no bastion hosts needed. IAP verifies the user's identity and provides a TCP tunnel over the internal network.</p>
 </div>
 <!-- NET Q2 -->
-<div class="question-block" data-number="Q2 — SECURITY PERIMETER">
+<div class="question-block" id="q4-2" data-number="Q2 — SECURITY PERIMETER">
 <div class="q-meta"><span class="tag tag-medium">Medium</span><span class="tag tag-cat">Security Perimeter</span></div>
 <div class="question-text">What is VPC Service Controls and how does it enhance security for ML workloads accessing BigQuery and Cloud Storage?</div>
 <h3>Answer</h3>
@@ -2020,7 +2252,7 @@ graph TB
 <p><strong>Dry-run mode:</strong> Always test in dry-run first — VPC-SC can break legitimate workflows if configured too tightly. Monitor violations in Cloud Audit Logs before enforcing.</p>
 </div>
 <!-- NET Q3 -->
-<div class="question-block" data-number="Q3 — NETWORKING">
+<div class="question-block" id="q4-3" data-number="Q3 — NETWORKING">
 <div class="q-meta"><span class="tag tag-medium">Medium</span><span class="tag tag-cat">Networking</span></div>
 <div class="question-text">Explain Shared VPC vs VPC Peering. When would you use each in a multi-project ML platform setup?</div>
 <table>
@@ -2036,7 +2268,7 @@ graph TB
 <p><strong>Use VPC Peering for:</strong> Connecting to a partner organization's VPC, connecting to a third-party managed service (some SaaS products use peering), or when you genuinely need network isolation between environments (e.g., production VPC peered with a monitoring VPC from a different org). Remember: peering is NOT transitive, so hub-and-spoke topologies don't work — use Shared VPC or a Network Connectivity Center hub instead.</p>
 </div>
 <!-- NET Q4 -->
-<div class="question-block" data-number="Q4 — GPU NETWORKING">
+<div class="question-block" id="q4-4" data-number="Q4 — GPU NETWORKING">
 <div class="q-meta"><span class="tag tag-hard">Hard</span><span class="tag tag-cat">GPU Networking</span></div>
 <div class="question-text">How does GPUDirect-TCPX improve network performance for A3 GPU instances? What about gVNIC?</div>
 <h3>Answer</h3>
@@ -2046,7 +2278,7 @@ graph TB
 <p><strong>Configuration:</strong> On A3 instances, gVNIC and GPUDirect-TCPX are configured automatically when using Google's Deep Learning VM images or DLVM container images. For custom images, install the <code>gve</code> driver and <code>gpu-rdma</code> packages. Set NCCL environment variables: <code>NCCL_NET=gIB</code>, <code>NCCL_GPUDIRECTTCPX_FORCE_ACK=0</code>.</p>
 </div>
 <!-- NET Q5 -->
-<div class="question-block" data-number="Q5 — IAM">
+<div class="question-block" id="q4-5" data-number="Q5 — IAM">
 <div class="q-meta"><span class="tag tag-easy">Easy</span><span class="tag tag-cat">IAM</span></div>
 <div class="question-text">Explain Cloud IAM roles and permissions. How do you grant least privilege access to a service account running ML training?</div>
 <h3>IAM Hierarchy</h3>
@@ -2083,7 +2315,7 @@ gcloud projects add-iam-policy-binding PROJECT_ID \
 <p><strong>Best Practices:</strong> Use <strong>IAM Conditions</strong> to restrict access to specific resources (e.g., only the training data bucket). Use <strong>Workload Identity</strong> (not JSON keys) to bind this SA to GKE pods. Enable <strong>IAM Recommender</strong> to identify over-provisioned permissions. Use <strong>Organization Policy constraints</strong> to prevent granting basic roles.</p>
 </div>
 <!-- NET Q6 -->
-<div class="question-block" data-number="Q6 — HYBRID SECURITY">
+<div class="question-block" id="q4-6" data-number="Q6 — HYBRID SECURITY">
 <div class="q-meta"><span class="tag tag-hard">Hard</span><span class="tag tag-cat">Hybrid Security</span></div>
 <div class="question-text">How would you secure a hybrid cloud environment connecting on-prem GPU clusters to GCP, focusing on identity management and network security?</div>
 <h3>Security Architecture</h3>
@@ -2141,7 +2373,7 @@ graph TB
 <p class="subtitle">5 Questions — Core DevOps Competency • Prepared for Sudhakar Chundu</p>
 </div>
 <!-- IAC Q1 -->
-<div class="question-block" data-number="Q1 — TERRAFORM">
+<div class="question-block" id="q5-1" data-number="Q1 — TERRAFORM">
 <div class="q-meta"><span class="tag tag-medium">Medium</span><span class="tag tag-cat">Terraform</span></div>
 <div class="question-text">Describe your experience with Terraform in GCP, focusing on modularity, reusability, and version control. (Real question)</div>
 <h3>Module Architecture</h3>
@@ -2179,7 +2411,7 @@ graph TB
 </div>
 </div>
 <!-- IAC Q2 -->
-<div class="question-block" data-number="Q2 — TERRAFORM + GKE">
+<div class="question-block" id="q5-2" data-number="Q2 — TERRAFORM + GKE">
 <div class="q-meta"><span class="tag tag-medium">Medium</span><span class="tag tag-cat">Terraform + GKE</span></div>
 <div class="question-text">Write a Terraform configuration to provision a GKE cluster with a GPU node pool using A3 Mega instances.</div>
 <div class="code-block">terraform {
@@ -2299,7 +2531,7 @@ variable "max_gpu_nodes" { default = 4 }</div>
 </div>
 </div>
 <!-- IAC Q3 -->
-<div class="question-block" data-number="Q3 — CI/CD">
+<div class="question-block" id="q5-3" data-number="Q3 — CI/CD">
 <div class="q-meta"><span class="tag tag-medium">Medium</span><span class="tag tag-cat">CI/CD</span></div>
 <div class="question-text">How would you set up a CI/CD pipeline for ML infrastructure using Cloud Build, ensuring security best practices?</div>
 <h3>Pipeline Architecture</h3>
@@ -2363,7 +2595,7 @@ options:
 <p><strong>5. Workload Identity Federation for GitHub:</strong> If using GitHub as source, authenticate Cloud Build trigger via OIDC — no JSON service account keys exported to GitHub.</p>
 </div>
 <!-- IAC Q4 -->
-<div class="question-block" data-number="Q4 — TERRAFORM STATE">
+<div class="question-block" id="q5-4" data-number="Q4 — TERRAFORM STATE">
 <div class="q-meta"><span class="tag tag-easy">Easy</span><span class="tag tag-cat">Terraform State</span></div>
 <div class="question-text">Explain how you manage Terraform state in a team environment. What backend would you use on GCP?</div>
 <h3>Answer</h3>
@@ -2392,7 +2624,7 @@ options:
 </ul>
 </div>
 <!-- IAC Q5 -->
-<div class="question-block" data-number="Q5 — GITOPS">
+<div class="question-block" id="q5-5" data-number="Q5 — GITOPS">
 <div class="q-meta"><span class="tag tag-medium">Medium</span><span class="tag tag-cat">GitOps</span></div>
 <div class="question-text">How do you implement GitOps for GKE cluster configuration using Config Sync or ArgoCD?</div>
 <h3>GitOps Architecture</h3>
@@ -2463,7 +2695,7 @@ spec:
 <p class="subtitle">5 Questions — Soft Skills + Technical Sales • Prepared for Sudhakar Chundu</p>
 </div>
 <!-- CONSULT Q1 -->
-<div class="question-block" data-number="Q1 — SALES ENGINEERING">
+<div class="question-block" id="q6-1" data-number="Q1 — SALES ENGINEERING">
 <div class="q-meta"><span class="tag tag-medium">Medium</span><span class="tag tag-cat">Sales Engineering</span></div>
 <div class="question-text">A customer is choosing between AWS, Azure, and GCP for their ML infrastructure. Make the case for GCP, specifically focusing on TPU advantages.</div>
 <h3>The GCP Pitch (5 Pillars)</h3>
@@ -2475,7 +2707,7 @@ spec:
 <div class="interview-tip">Interview Tip: Don't trash AWS/Azure — acknowledge their strengths (CUDA ecosystem, enterprise relationships). Position GCP as the best choice specifically for AI/ML at scale. The differentiator is TPUs + integrated system (AI Hypercomputer), not general-purpose cloud features.</div>
 </div>
 <!-- CONSULT Q2 -->
-<div class="question-block" data-number="Q2 — COST OPTIMIZATION">
+<div class="question-block" id="q6-2" data-number="Q2 — COST OPTIMIZATION">
 <div class="q-meta"><span class="tag tag-hard">Hard</span><span class="tag tag-cat">Cost Optimization</span></div>
 <div class="question-text">A customer has a budget of $500K/month for ML training. Design a cost-optimized infrastructure plan using Committed Use Discounts, Spot VMs, and Flex-start.</div>
 <h3>Budget Allocation</h3>
@@ -2502,7 +2734,7 @@ graph TB
 <p><strong>Monitoring and Optimization:</strong> Use Cloud Billing reports and Recommender API to track CUD utilization (target greater than 85%). If CUD utilization drops below 70%, the commitment is too large — renegotiate or redistribute. Use DCGM metrics to ensure GPU/TPU utilization exceeds 80% during active training. Idle accelerators are burning budget.</p>
 </div>
 <!-- CONSULT Q3 -->
-<div class="question-block" data-number="Q3 — EXPERIENCE">
+<div class="question-block" id="q6-3" data-number="Q3 — EXPERIENCE">
 <div class="q-meta"><span class="tag tag-medium">Medium</span><span class="tag tag-cat">Experience</span></div>
 <div class="question-text">Tell me about a time you migrated a complex application to the cloud. What challenges did you face? (Real question)</div>
 <h3>STAR Framework Answer (Customize with Your Experience)</h3>
@@ -2520,7 +2752,7 @@ graph TB
 <div class="interview-tip">Interview Tip: Use YOUR specific experience. Reference your OSDU project, Trackonomy Systems, or Wipro work. Google wants to hear real challenges — identity federation issues, data gravity problems, team resistance to change. Don't just describe what went right; describe what was hard and how you solved it.</div>
 </div>
 <!-- CONSULT Q4 -->
-<div class="question-block" data-number="Q4 — TROUBLESHOOTING">
+<div class="question-block" id="q6-4" data-number="Q4 — TROUBLESHOOTING">
 <div class="q-meta"><span class="tag tag-hard">Hard</span><span class="tag tag-cat">Troubleshooting</span></div>
 <div class="question-text">A customer's ML training job keeps failing due to GPU preemption on Spot VMs. How would you design a fault-tolerant training pipeline with checkpointing?</div>
 <h3>Fault-Tolerant Pipeline</h3>
@@ -2574,7 +2806,7 @@ signal.signal(signal.SIGTERM, handle_preemption)</div>
 <p><strong>5. Checkpoint Hygiene:</strong> Keep only the latest + last 3 checkpoints (delete older ones via GCS lifecycle rules). Each checkpoint should store a manifest file with step number, model config hash, and data loader state so resume is deterministic.</p>
 </div>
 <!-- CONSULT Q5 -->
-<div class="question-block" data-number="Q5 — COMMUNICATION">
+<div class="question-block" id="q6-5" data-number="Q5 — COMMUNICATION">
 <div class="q-meta"><span class="tag tag-easy">Easy</span><span class="tag tag-cat">Communication</span></div>
 <div class="question-text">How would you explain the difference between TPUs and GPUs to a non-technical CTO making infrastructure decisions?</div>
 <h3>The Analogy</h3>
@@ -2604,6 +2836,40 @@ signal.signal(signal.SIGTERM, handle_preemption)</div>
 <div style="text-align:center; padding:3rem 0; border-top:1px solid var(--border); margin-top:3rem;">
   <a href="#toc" style="color:var(--accent); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:0.85rem;">&#8593; Back to Table of Contents</a>
 </div>
+
+</div><!-- End main-content -->
+
+<script>
+// Scrollspy for sidebar navigation
+document.addEventListener('DOMContentLoaded', function() {
+  const questions = document.querySelectorAll('.question-block[id]');
+  const navLinks = document.querySelectorAll('.sidebar-questions a');
+
+  function updateActiveLink() {
+    let current = '';
+    const scrollPos = window.scrollY + 100;
+
+    questions.forEach(question => {
+      const top = question.offsetTop;
+      if (scrollPos >= top) {
+        current = question.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+        // Scroll the sidebar to show the active link
+        link.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveLink);
+  updateActiveLink();
+});
+</script>
 
 <script>
   mermaid.initialize({
