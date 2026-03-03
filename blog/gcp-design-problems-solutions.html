@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GGNQHMGCLH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-GGNQHMGCLH');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCP Design Problems and Solutions: 42 Scenarios with Architecture Diagrams | Sudhakar Chundu</title>
+    <meta name="description" content="42 comprehensive GCP cloud infrastructure design problems and solutions covering TPUs, GPUs, GKE, Kubernetes, Terraform, networking, and real-world scenarios with detailed architecture diagrams.">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Instrument+Sans:wght@400;600;700&family=Fraunces:opsz,wght@9..144,700&family=Sora:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="../assets/js/theme.js"></script>
+    <style>
+        :root {
+            --bg: #0c0f14;
+            --surface: #151922;
+            --surface2: #1c2230;
+            --border: #2a3142;
+            --accent: #4a9eff;
+            --accent2: #36d399;
+            --accent3: #f59e0b;
+            --text: #e2e8f0;
+            --text-muted: #8b95a8;
+            --danger: #f87171;
+            --purple: #a78bfa;
+        }
+
+        .article-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .article-header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .article-header .part-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-header h1 {
+            font-family: 'Fraunces', serif;
+            font-size: 2.5rem;
+            color: var(--text-primary, #fff);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .article-header .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .article-meta i {
+            color: var(--accent);
+        }
+
+        /* Part Headers */
+        .part-header {
+            background: var(--glass-bg, rgba(255,255,255,0.03));
+            border: 1px solid var(--glass-border, var(--border));
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 3rem 0 2rem;
+            text-align: center;
+        }
+
+        .part-header .part-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .part-header h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.75rem;
+            color: var(--text-primary, #fff);
+            margin-bottom: 0.5rem;
+        }
+
+        .part-header .part-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Question Blocks */
+        .question-block {
+            background: var(--glass-bg, rgba(255,255,255,0.03));
+            border: 1px solid var(--glass-border, var(--border));
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .question-block::before {
+            content: attr(data-number);
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--accent);
+            color: #000;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+        }
+
+        .q-meta {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tag-hard { background: rgba(248,113,113,0.15); color: var(--danger); border: 1px solid rgba(248,113,113,0.3); }
+        .tag-medium { background: rgba(245,158,11,0.15); color: var(--accent3); border: 1px solid rgba(245,158,11,0.3); }
+        .tag-easy { background: rgba(54,211,153,0.15); color: var(--accent2); border: 1px solid rgba(54,211,153,0.3); }
+        .tag-cat { background: rgba(74,158,255,0.1); color: var(--accent); border: 1px solid rgba(74,158,255,0.25); }
+
+        .question-text {
+            font-family: 'Fraunces', serif;
+            font-size: 1.25rem;
+            color: var(--text-primary, #fff);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .question-block h3 {
+            font-size: 1rem;
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            margin: 1.5rem 0 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .question-block h3:first-of-type { margin-top: 0; }
+        .question-block p { margin-bottom: 0.75rem; color: var(--text-secondary, var(--text)); }
+
+        /* Diagram Wrapper */
+        .diagram-wrapper {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.25rem 0;
+            overflow-x: auto;
+        }
+
+        .diagram-wrapper .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Key Points */
+        .key-points {
+            background: rgba(74,158,255,0.06);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .key-points p { margin-bottom: 0.4rem; }
+        .key-points p:last-child { margin-bottom: 0; }
+
+        /* Interview Tips */
+        .interview-tip {
+            background: rgba(167,139,250,0.08);
+            border-left: 3px solid var(--purple);
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+            font-style: italic;
+            color: #c4b5fd;
+        }
+
+        /* Warning Box */
+        .warn-box {
+            background: rgba(245,158,11,0.08);
+            border-left: 3px solid var(--accent3);
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            color: #c9d1d9;
+            white-space: pre-wrap;
+        }
+
+        /* Tables */
+        .question-block table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+        }
+
+        .question-block th {
+            background: var(--surface2);
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.75rem 0.75rem;
+            text-align: left;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .question-block td {
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .question-block tr:hover {
+            background: rgba(74,158,255,0.03);
+        }
+
+        /* Lists */
+        .question-block ul {
+            padding-left: 1.25rem;
+            margin: 0.5rem 0 1rem;
+        }
+
+        .question-block li {
+            margin-bottom: 0.4rem;
+            color: var(--text);
+        }
+
+        .question-block li::marker { color: var(--accent); }
+
+        strong { color: var(--text-primary, #fff); font-weight: 600; }
+
+        /* TOC */
+        .toc {
+            background: var(--glass-bg, rgba(255,255,255,0.03));
+            border: 1px solid var(--glass-border, var(--border));
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .toc h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .toc-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .toc-item:hover {
+            border-color: var(--accent);
+            background: rgba(74,158,255,0.05);
+        }
+
+        .toc-item .part-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--accent);
+            background: rgba(74,158,255,0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .toc-item .part-title {
+            font-weight: 500;
+        }
+
+        .toc-item .q-count {
+            margin-left: auto;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Back to top */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 48px;
+            height: 48px;
+            background: var(--accent);
+            border: none;
+            border-radius: 50%;
+            color: #000;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 20px rgba(74,158,255,0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-container { padding: 1rem; }
+            .article-header h1 { font-size: 1.75rem; }
+            .question-block { padding: 1.5rem; }
+            .question-text { font-size: 1.1rem; }
+            .code-block { font-size: 0.7rem; padding: 1rem; }
+            .question-block table { font-size: 0.75rem; }
+            .question-block th, .question-block td { padding: 0.4rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Neural Network Background -->
+    <canvas id="neural-bg"></canvas>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="../" class="logo">
+                <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu" class="logo-icon">
+                Sudhakar Chundu
+            </a>
+            <ul class="nav-links">
+                <li><a href="../about/">About</a></li>
+                <li><a href="../resume/">Resume</a></li>
+                <li><a href="./" class="active">Blog</a></li>
+                <li><a href="../projects/">Achievements</a></li>
+                <li><a href="../opensource/">Open Source</a></li>
+                <div class="nav-social">
+                    <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
+            </ul>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <article class="article-container">
+            <!-- Article Header -->
+            <header class="article-header">
+                <div class="part-label">Cloud Architecture Deep Dive</div>
+                <h1>GCP Design Problems and Solutions</h1>
+                <p class="subtitle">42 comprehensive cloud infrastructure design scenarios covering Infrastructure Architecture, TPUs/GPUs, GKE, Kubernetes, Networking, Security, Terraform, CI/CD, and Real-World Consulting Cases with detailed architecture diagrams.</p>
+                <div class="article-meta">
+                    <span><i class="fas fa-user"></i> Sudhakar Chundu</span>
+                    <span><i class="fas fa-calendar"></i> March 2026</span>
+                    <span><i class="fas fa-clock"></i> 45 min read</span>
+                    <span><i class="fas fa-layer-group"></i> 6 Parts</span>
+                </div>
+            </header>
+
+            <!-- Table of Contents -->
+            <nav class="toc">
+                <h3>Table of Contents</h3>
+                <div class="toc-grid">
+                    <a href="#part1" class="toc-item">
+                        <span class="part-num">01</span>
+                        <span class="part-title">Infrastructure Design & Architecture</span>
+                        <span class="q-count">8 Qs</span>
+                    </a>
+                    <a href="#part2" class="toc-item">
+                        <span class="part-num">02</span>
+                        <span class="part-title">TPU/GPU Specific Questions</span>
+                        <span class="q-count">10 Qs</span>
+                    </a>
+                    <a href="#part3" class="toc-item">
+                        <span class="part-num">03</span>
+                        <span class="part-title">GKE & Kubernetes</span>
+                        <span class="q-count">8 Qs</span>
+                    </a>
+                    <a href="#part4" class="toc-item">
+                        <span class="part-num">04</span>
+                        <span class="part-title">Networking & Security</span>
+                        <span class="q-count">6 Qs</span>
+                    </a>
+                    <a href="#part5" class="toc-item">
+                        <span class="part-num">05</span>
+                        <span class="part-title">Infrastructure as Code & CI/CD</span>
+                        <span class="q-count">5 Qs</span>
+                    </a>
+                    <a href="#part6" class="toc-item">
+                        <span class="part-num">06</span>
+                        <span class="part-title">Consulting & Customer Scenarios</span>
+                        <span class="q-count">5 Qs</span>
+                    </a>
+                </div>
+            </nav>
+
+            <!-- ============================================================ -->
+            <!-- PART 1: INFRASTRUCTURE DESIGN -->
+            <!-- ============================================================ -->
+            <section id="part1">
+                <div class="part-header">
+                    <div class="part-number">Part 1 of 6</div>
+                    <h2>Infrastructure Design & Architecture</h2>
+                    <p class="part-desc">Most Heavily Tested Category &bull; 8 Questions</p>
+                </div>
+
+                <!-- Q1 -->
+                <div class="question-block" data-number="Q1 - SYSTEM DESIGN">
+                    <div class="q-meta">
+                        <span class="tag tag-hard">Hard</span>
+                        <span class="tag tag-cat">System Design</span>
+                    </div>
+                    <div class="question-text">Design the infrastructure for an e-commerce shopping cart that handles 4 million concurrent users during prime time on GCP.</div>
+
+                    <h3>Approach Framework</h3>
+                    <p>At 4M concurrent users, we're looking at approximately <strong>200K-400K requests/second</strong> at peak. The shopping cart is a write-heavy, session-critical service - any data loss means revenue loss. The design must prioritize low-latency reads/writes, horizontal scalability, and strong consistency for the cart state.</p>
+
+                    <h3>Architecture Diagram</h3>
+                    <div class="diagram-wrapper">
+                        <div class="mermaid">
+graph TB
+    subgraph "Edge Layer"
+        Users["4M Concurrent Users"]
+        CDN["Cloud CDN<br/>Static Assets + Cache"]
+        ARMOR["Cloud Armor<br/>DDoS + WAF + Rate Limit"]
+    end
+
+    subgraph "Global Load Balancing"
+        GLB["Global External HTTPS LB<br/>Anycast IP / SSL Termination"]
+    end
+
+    subgraph "Region: us-central1"
+        direction TB
+        subgraph "GKE Autopilot Cluster"
+            FE1["Frontend Service<br/>React SSR Pods<br/>HPA: 50-500"]
+            CART1["Cart Service<br/>gRPC Pods<br/>HPA: 100-1000"]
+            ORDER1["Order Service<br/>gRPC Pods<br/>HPA: 50-300"]
+        end
+        REDIS1["Memorystore Redis Cluster<br/>Cart Session State<br/>30 shards / 100GB"]
+        SPANNER1["Cloud Spanner<br/>Multi-Region<br/>Orders + Inventory"]
+        PUBSUB1["Pub/Sub<br/>Event Bus"]
+    end
+
+    Users --> CDN --> ARMOR --> GLB
+    GLB --> FE1
+    FE1 --> CART1
+    CART1 --> REDIS1
+    CART1 --> PUBSUB1
+    ORDER1 --> SPANNER1
+                        </div>
+                    </div>
+
+                    <h3>Key Design Decisions</h3>
+                    <p><strong>1. Cart State in Memorystore Redis Cluster:</strong> Shopping carts are ephemeral, high-throughput, and latency-sensitive. A 30-shard Redis Cluster delivers sub-millisecond reads/writes with 100K+ ops/sec per shard.</p>
+                    <p><strong>2. Cloud Spanner for Orders and Inventory:</strong> Spanner provides externally consistent, globally distributed SQL with automatic sharding. For inventory, Spanner's TrueTime-based transactions prevent overselling.</p>
+                    <p><strong>3. GKE Autopilot with Aggressive HPA:</strong> HPA configured on custom metrics (requests-per-second from Cloud Monitoring) rather than CPU alone.</p>
+
+                    <div class="key-points">
+                        <p><strong>Capacity Math:</strong> 4M concurrent users x ~1 request every 10 sec = 400K RPS peak. Cart Service: 1000 pods x 400 RPS each = 400K RPS capacity. Redis: 30 shards x 15K writes/sec = 450K write ops/sec.</p>
+                    </div>
+
+                    <div class="interview-tip">Pro Tip: Always start with back-of-envelope math. Interviewers want to see you quantify the problem before drawing boxes.</div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question-block" data-number="Q2 - MIGRATION">
+                    <div class="q-meta">
+                        <span class="tag tag-hard">Hard</span>
+                        <span class="tag tag-cat">Migration</span>
+                    </div>
+                    <div class="question-text">A customer is migrating from on-prem NVIDIA A100 GPU clusters to GCP for ML training. Walk through your migration approach.</div>
+
+                    <h3>Migration Phases</h3>
+                    <div class="diagram-wrapper">
+                        <div class="mermaid">
+graph LR
+    subgraph "Phase 1: Assess"
+        A1["Inventory GPU Workloads"]
+        A2["Benchmark On-Prem"]
+        A3["Cost Modeling"]
+    end
+
+    subgraph "Phase 2: Foundation"
+        B1["VPC + Interconnect"]
+        B2["IAM + Security"]
+        B3["IaC Setup"]
+    end
+
+    subgraph "Phase 3: Pilot"
+        C1["GKE + GPU Node Pool"]
+        C2["Containerize Jobs"]
+        C3["Run Benchmarks"]
+    end
+
+    subgraph "Phase 4: Scale"
+        D1["Migrate Pipelines"]
+        D2["Checkpointing"]
+        D3["Cost Optimization"]
+    end
+
+    A1 --> A2 --> A3
+    A3 --> B1 --> B2 --> B3
+    B3 --> C1 --> C2 --> C3
+    C3 --> D1 --> D2 --> D3
+                        </div>
+                    </div>
+
+                    <h3>Phase Details</h3>
+                    <p><strong>Phase 1 - Assessment:</strong> Catalog CUDA versions, frameworks, multi-node communication patterns. Map A100 40GB vs 80GB usage to GCP machine types (a2-highgpu vs a2-ultragpu).</p>
+                    <p><strong>Phase 2 - Foundation:</strong> Shared VPC with Dedicated Interconnect. VPC Service Controls around BigQuery and GCS. Terraform modules for reproducible GPU cluster provisioning.</p>
+                    <p><strong>Phase 3 - Pilot:</strong> GKE cluster with A2 GPU node pool. NVIDIA GPU Operator for driver management. Deep Learning Container Images.</p>
+                    <p><strong>Phase 4 - Scale:</strong> Kueue for multi-tenant scheduling. Dynamic Workload Scheduler for cost optimization. Consider A3 Mega (H100) or TPU v6e for better performance.</p>
+
+                    <div class="key-points">
+                        <p><strong>Data Transfer:</strong> Less than 10TB: gsutil parallel uploads. 10-100TB: Storage Transfer Service. Greater than 100TB: Transfer Appliance.</p>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question-block" data-number="Q3 - ARCHITECTURE">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">Architecture</span>
+                    </div>
+                    <div class="question-text">How would you design infrastructure for a global company vs a non-global company on GCP? What changes?</div>
+
+                    <h3>Key Differences</h3>
+                    <table>
+                        <tr><th>Component</th><th>Non-Global (Single Region)</th><th>Global (Multi-Region)</th></tr>
+                        <tr><td><strong>Load Balancing</strong></td><td>Regional External LB</td><td>Global HTTPS LB + Anycast IP + Cloud CDN</td></tr>
+                        <tr><td><strong>Compute</strong></td><td>Single GKE cluster, multi-zone</td><td>Multiple GKE clusters + Multi-Cluster Ingress</td></tr>
+                        <tr><td><strong>Database</strong></td><td>Cloud SQL HA (regional)</td><td>Cloud Spanner multi-region</td></tr>
+                        <tr><td><strong>Storage</strong></td><td>Regional GCS bucket</td><td>Multi-Region/Dual-Region with turbo replication</td></tr>
+                        <tr><td><strong>DNS</strong></td><td>Standard A records</td><td>Cloud DNS geolocation routing</td></tr>
+                        <tr><td><strong>Cost</strong></td><td>Baseline</td><td>~3x for Spanner, cross-region egress charges</td></tr>
+                    </table>
+
+                    <div class="key-points">
+                        <p><strong>Decision Framework:</strong> Users within 100ms of single region - stay regional. Need less than 200ms globally - go multi-region. Need less than 50ms everywhere - deploy 3+ regions with Spanner.</p>
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="question-block" data-number="Q4 - GKE + ML">
+                    <div class="q-meta">
+                        <span class="tag tag-hard">Hard</span>
+                        <span class="tag tag-cat">GKE + ML</span>
+                    </div>
+                    <div class="question-text">Design a highly available and scalable architecture using GKE for deploying and managing containerized ML training workloads.</div>
+
+                    <h3>Architecture</h3>
+                    <div class="diagram-wrapper">
+                        <div class="mermaid">
+graph TB
+    subgraph "GKE ML Platform"
+        subgraph "Node Pools"
+            CPU["CPU Pool<br/>e2-standard-16"]
+            GPU["GPU Training Pool<br/>a3-megagpu-8g (H100)"]
+            INF["GPU Inference Pool<br/>g2-standard-48 (L4)"]
+            TPU["TPU Pool<br/>v6e Slice"]
+        end
+
+        KUEUE["Kueue<br/>Job Scheduling"]
+        DWS["Dynamic Workload Scheduler"]
+    end
+
+    subgraph "Storage"
+        GCS["GCS - Data + Checkpoints"]
+        LUSTRE["Managed Lustre<br/>High-throughput I/O"]
+    end
+
+    subgraph "Observability"
+        DCGM["DCGM Exporter"]
+        MON["Cloud Monitoring"]
+    end
+
+    KUEUE --> GPU
+    KUEUE --> TPU
+    DWS --> GPU
+    GPU --> GCS
+    GPU --> LUSTRE
+    GPU --> MON
+                        </div>
+                    </div>
+
+                    <h3>Design Decisions</h3>
+                    <p><strong>1. Separate Node Pools:</strong> Training (GPU/TPU), inference (L4), and platform services (CPU) each get dedicated pools with taints and tolerations.</p>
+                    <p><strong>2. Kueue for Scheduling:</strong> ClusterQueue with ResourceFlavors for GPU types. Priority classes: production > research > dev.</p>
+                    <p><strong>3. Autoscaling:</strong> Cluster Autoscaler + HPA + Node Auto-Provisioning. Scale GPU pool to zero when idle.</p>
+                    <p><strong>4. Checkpointing:</strong> GCS FUSE CSI Driver for transparent GCS access. Cloud Managed Lustre for high-throughput data loading.</p>
+                </div>
+
+                <!-- Q5 -->
+                <div class="question-block" data-number="Q5 - TPU/GPU DESIGN">
+                    <div class="q-meta">
+                        <span class="tag tag-hard">Hard</span>
+                        <span class="tag tag-cat">TPU/GPU Design</span>
+                    </div>
+                    <div class="question-text">A customer needs to run training on a 70B parameter LLM. How would you architect the TPU/GPU infrastructure on GCP?</div>
+
+                    <h3>Sizing Analysis</h3>
+                    <p>A 70B parameter model in BF16 requires approximately <strong>140GB memory for weights</strong>. With optimizer states, gradients, and activations: <strong>560-700GB total</strong>. This requires <strong>model parallelism</strong> across multiple devices.</p>
+
+                    <h3>Options</h3>
+                    <table>
+                        <tr><th>Option</th><th>Configuration</th><th>Use Case</th></tr>
+                        <tr><td><strong>GPU Path (A3 Mega)</strong></td><td>4x a3-megagpu-8g = 32x H100 = 2,560GB HBM3</td><td>PyTorch teams, CUDA dependencies</td></tr>
+                        <tr><td><strong>TPU Path (v6e)</strong></td><td>256-chip pod = 8,192GB HBM3</td><td>JAX teams, best perf/$</td></tr>
+                    </table>
+
+                    <p><strong>Parallelism Strategy:</strong> Tensor Parallelism (TP=8) within node + Pipeline Parallelism (PP=4) across nodes for GPUs. FSDP across all chips for TPUs.</p>
+
+                    <div class="key-points">
+                        <p><strong>Cost (monthly, 24/7):</strong> 4x A3 Mega on-demand: ~$254K. With 3yr CUD: ~$160K. 256-chip TPU v6e on-demand: ~$140K. TPU with CUD: ~$80K.</p>
+                    </div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="question-block" data-number="Q6 - DR PLANNING">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">DR Planning</span>
+                    </div>
+                    <div class="question-text">Design a disaster recovery plan for a critical ML pipeline running on Compute Engine with GPU accelerators. What are your RTO and RPO targets?</div>
+
+                    <h3>RTO/RPO by Component</h3>
+                    <table>
+                        <tr><th>Component</th><th>RPO</th><th>RTO</th><th>Strategy</th></tr>
+                        <tr><td>Training Data (GCS)</td><td>~0</td><td>Minutes</td><td>Dual-Region bucket with turbo replication</td></tr>
+                        <tr><td>Checkpoints</td><td>10-30 min</td><td>30-60 min</td><td>Checkpoint every 100 steps to dual-region GCS</td></tr>
+                        <tr><td>Metadata (Cloud SQL)</td><td>Seconds</td><td>5-10 min</td><td>Async replication + promote read replica</td></tr>
+                        <tr><td>Model Artifacts</td><td>~0</td><td>0</td><td>Multi-region Artifact Registry</td></tr>
+                    </table>
+
+                    <p><strong>Overall:</strong> RTO: 1-2 hours (GPU provisioning). RPO: 10-30 minutes (checkpoint frequency).</p>
+
+                    <div class="interview-tip">Pro Tip: ML training is resumable via checkpointing - you don't need expensive hot standbys. Quantify the tradeoff: "We accept 30 minutes lost training vs paying for idle DR GPUs."</div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="question-block" data-number="Q7 - MULTI-CLOUD">
+                    <div class="q-meta">
+                        <span class="tag tag-hard">Hard</span>
+                        <span class="tag tag-cat">Multi-Cloud</span>
+                    </div>
+                    <div class="question-text">How would you set up a secure multi-cloud architecture where training happens on GCP TPUs but inference runs on another cloud?</div>
+
+                    <h3>Key Design Points</h3>
+                    <p><strong>1. Model Export:</strong> Train in JAX on TPUs, export to ONNX or SavedModel for framework-agnostic inference.</p>
+                    <p><strong>2. Connectivity:</strong> HA VPN for control plane. Storage Transfer Service for large model transfers (GCS to S3).</p>
+                    <p><strong>3. Identity (Zero Trust):</strong> Workload Identity Federation with OIDC. No long-lived credentials cross cloud boundaries.</p>
+                    <p><strong>4. Model Sync Pipeline:</strong> Training completes -> validated -> Vertex AI Model Registry -> export to ONNX -> copy to S3 -> canary deployment -> full rollout.</p>
+
+                    <div class="key-points">
+                        <p><strong>Security:</strong> Encrypt in transit (TLS 1.3). CMEK in both clouds. VPC Service Controls on GCP. Network policies in both clusters.</p>
+                    </div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="question-block" data-number="Q8 - HYBRID CLOUD">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">Hybrid Cloud</span>
+                    </div>
+                    <div class="question-text">Your company has on-premises infrastructure and wants a hybrid cloud solution. Design the integration using GCP, ensuring seamless data synchronization.</div>
+
+                    <h3>Key Components</h3>
+                    <p><strong>Network:</strong> Dedicated Interconnect (2x 10Gbps, redundant) with Cloud Router BGP. Cloud DNS peering zones for bidirectional resolution.</p>
+                    <p><strong>Data Sync:</strong> Datastream for CDC from Oracle/MySQL to BigQuery. Storage Transfer Service for NFS to GCS. Pub/Sub for event-driven sync.</p>
+                    <p><strong>Identity:</strong> Workforce Identity Federation (AD/SAML to GCP IAM). Workload Identity Federation for on-prem K8s.</p>
+                    <p><strong>Security:</strong> VPC Service Controls perimeter. Cloud KMS with External Key Manager (keys stay on-prem).</p>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- PART 2: TPU/GPU -->
+            <!-- ============================================================ -->
+            <section id="part2">
+                <div class="part-header">
+                    <div class="part-number">Part 2 of 6</div>
+                    <h2>TPU/GPU Specific Questions</h2>
+                    <p class="part-desc">Critical for GCP Infrastructure Role &bull; 10 Questions</p>
+                </div>
+
+                <!-- Q1 -->
+                <div class="question-block" data-number="Q1 - TPU KNOWLEDGE">
+                    <div class="q-meta">
+                        <span class="tag tag-hard">Hard</span>
+                        <span class="tag tag-cat">TPU Knowledge</span>
+                    </div>
+                    <div class="question-text">Explain the differences between TPU v5e, Trillium (v6e), and Ironwood (v7). When would you recommend each?</div>
+
+                    <h3>Comparison</h3>
+                    <table>
+                        <tr><th>Spec</th><th>TPU v5e</th><th>Trillium (v6e)</th><th>Ironwood (v7)</th></tr>
+                        <tr><td>HBM Capacity</td><td>16 GB HBM2e</td><td>32 GB HBM3</td><td>192 GB HBM3e</td></tr>
+                        <tr><td>HBM Bandwidth</td><td>~819 GB/s</td><td>~1,640 GB/s</td><td>7.2 TB/s</td></tr>
+                        <tr><td>Max Pod Size</td><td>256 chips</td><td>256 chips</td><td>9,216 chips</td></tr>
+                        <tr><td>Pricing</td><td>~$1.20/chip-hr</td><td>~$0.39-$1.375/chip-hr</td><td>Not yet public</td></tr>
+                        <tr><td>Best For</td><td>Cost-efficient inference</td><td>Large training, high perf/$</td><td>Frontier models, massive inference</td></tr>
+                    </table>
+
+                    <p><strong>v5e:</strong> Cost-sensitive inference, models up to 7B. <strong>Trillium (v6e):</strong> Training 7B-70B models, 1.8x better perf/$ than H100. <strong>Ironwood (v7):</strong> 100B+ models, 192GB per chip eliminates sharding for many models.</p>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question-block" data-number="Q2 - FRAMEWORK MIGRATION">
+                    <div class="q-meta">
+                        <span class="tag tag-hard">Hard</span>
+                        <span class="tag tag-cat">Framework Migration</span>
+                    </div>
+                    <div class="question-text">A customer is using PyTorch with CUDA dependencies. Can they use TPUs? What migration path would you recommend?</div>
+
+                    <h3>Migration Paths</h3>
+                    <p><strong>Path A - PyTorch/XLA (Low CUDA dependency):</strong> Install torch_xla, replace .cuda() with xm.xla_device(). Most standard ops work. Best for standard PyTorch models.</p>
+                    <p><strong>Path B - JAX Rewrite (Heavy CUDA):</strong> Rewrite in JAX/Flax using MaxText as reference. Use Pallas for custom kernels. Best performance.</p>
+                    <p><strong>Path C - vLLM-TPU (Inference only):</strong> vLLM now supports TPU backend. No code changes for supported models.</p>
+
+                    <div class="warn-box">
+                        <p><strong>Won't work on TPUs:</strong> cuDNN-specific ops, custom CUDA C++ extensions, NCCL (use ICI instead), TensorRT quantization (use AQT).</p>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question-block" data-number="Q3 - TPU ARCHITECTURE">
+                    <div class="q-meta">
+                        <span class="tag tag-hard">Hard</span>
+                        <span class="tag tag-cat">TPU Architecture</span>
+                    </div>
+                    <div class="question-text">Explain TPU pod topology and how it affects model parallelism. What is the difference between single-host and multi-host TPU slices?</div>
+
+                    <h3>Topology</h3>
+                    <p><strong>Single-Host:</strong> All chips attached to one VM (1x1, 2x2, 2x4). Simplest to program. Best for inference and small training.</p>
+                    <p><strong>Multi-Host:</strong> Chips span multiple VMs (4x4 and above). ICI connects across VM boundaries. Each VM runs SPMD. Best for large-scale training.</p>
+
+                    <h3>Parallelism by Topology</h3>
+                    <table>
+                        <tr><th>Topology</th><th>Chips</th><th>Parallelism</th><th>Use Case</th></tr>
+                        <tr><td>2x2</td><td>4</td><td>FSDP across 4</td><td>Fine-tuning 7B</td></tr>
+                        <tr><td>2x4</td><td>8</td><td>TP=4, FSDP=2</td><td>Training 13B</td></tr>
+                        <tr><td>4x8</td><td>32</td><td>TP=4, FSDP=8</td><td>Training 70B</td></tr>
+                        <tr><td>16x16</td><td>256</td><td>TP=4, FSDP=64</td><td>Training 200B+</td></tr>
+                    </table>
+                </div>
+
+                <!-- Q4 -->
+                <div class="question-block" data-number="Q4 - GPU VS TPU">
+                    <div class="q-meta">
+                        <span class="tag tag-hard">Hard</span>
+                        <span class="tag tag-cat">GPU vs TPU</span>
+                    </div>
+                    <div class="question-text">Compare A3 Mega (H100), A3 Ultra (H200), and TPU v6e for large-scale training. What are the cost and performance tradeoffs?</div>
+
+                    <table>
+                        <tr><th>Spec</th><th>A3 Mega (8x H100)</th><th>A3 Ultra (8x H200)</th><th>TPU v6e (256 pods)</th></tr>
+                        <tr><td>Memory/accel</td><td>80 GB HBM3</td><td>141 GB HBM3e</td><td>32 GB HBM3</td></tr>
+                        <tr><td>Cost/hr (approx)</td><td>~$88/node</td><td>~$106/node</td><td>~$307/pod</td></tr>
+                        <tr><td>Framework</td><td>PyTorch, JAX, TF</td><td>PyTorch, JAX, TF</td><td>JAX (primary), PyTorch/XLA</td></tr>
+                    </table>
+
+                    <div class="key-points">
+                        <p><strong>Decision:</strong> Small team + PyTorch -> A3 Mega. Memory-bound -> A3 Ultra. Scale-out + cost-sensitive + JAX -> TPU v6e.</p>
+                    </div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="question-block" data-number="Q5 - TPU PROVISIONING">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">TPU Provisioning</span>
+                    </div>
+                    <div class="question-text">How do you provision TPU node pools in GKE? Explain Flex-start, Spot VMs, and reserved capacity options.</div>
+
+                    <h3>Options</h3>
+                    <p><strong>On-Demand:</strong> Highest cost, highest availability. Use for production serving.</p>
+                    <p><strong>Spot VMs:</strong> 60-91% discount, can be preempted. Requires checkpointing.</p>
+                    <p><strong>Reserved (CUD):</strong> 1-3 year commitment, up to 57% off. Guaranteed capacity.</p>
+                    <p><strong>Flex-start (DWS):</strong> Queue request, provisioned when available. Better than on-demand pricing.</p>
+                    <p><strong>Calendar Mode (DWS):</strong> Book capacity for specific time window (up to 90 days).</p>
+
+                    <div class="code-block"># Create TPU v6e node pool
+gcloud container node-pools create tpu-pool \
+  --cluster=ml-cluster \
+  --machine-type=ct6e-standard-4t \
+  --tpu-topology=2x4 \
+  --num-nodes=2 \
+  --enable-autoscaling \
+  --min-nodes=0 --max-nodes=2</div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="question-block" data-number="Q6 - COST OPTIMIZATION">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">Cost Optimization</span>
+                    </div>
+                    <div class="question-text">A customer is running inference on NVIDIA GPUs and wants to reduce costs. Would you recommend migrating to TPUs?</div>
+
+                    <p><strong>Recommend migration IF:</strong></p>
+                    <ul>
+                        <li>High-throughput, steady-state inference (not bursty)</li>
+                        <li>Transformer-based models (LLMs, ViTs, diffusion)</li>
+                        <li>Large batch sizes (TPUs lose efficiency at small batches)</li>
+                        <li>Scale justifies effort (100+ GPUs worth)</li>
+                    </ul>
+
+                    <p><strong>Real-world results:</strong> Midjourney: $2.1M -> $700K/month (65% reduction). Character.AI: 3.8x cost improvement.</p>
+
+                    <div class="warn-box">
+                        <p><strong>Don't migrate if:</strong> Heavy custom CUDA kernels, extremely latency-sensitive (less than 10ms), small scale (less than 10 GPUs), or zero JAX experience.</p>
+                    </div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="question-block" data-number="Q7 - AI HYPERCOMPUTER">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">AI Hypercomputer</span>
+                    </div>
+                    <div class="question-text">What is Google AI Hypercomputer? How does it integrate TPUs, GPUs, storage, and networking?</div>
+
+                    <p><strong>AI Hypercomputer</strong> is NOT a product - it's a validated, integrated architecture that Google uses internally for Gemini training.</p>
+
+                    <h3>Four Layers</h3>
+                    <p><strong>1. Hardware:</strong> TPUs (v5e, Trillium, Ironwood) + GPUs (A100, H100, H200). Jupiter network (1.6Tbps/node). GCS + Managed Lustre + Hyperdisk ML.</p>
+                    <p><strong>2. Software:</strong> JAX + XLA compiler. PyTorch/XLA. MaxText, vLLM-TPU, Pathways runtime.</p>
+                    <p><strong>3. Orchestration:</strong> GKE + Kueue + JobSet + XPK.</p>
+                    <p><strong>4. Consumption:</strong> DWS (Flex-start, Calendar), CUDs, Spot VMs.</p>
+                </div>
+
+                <!-- Q8-10 abbreviated for length -->
+                <div class="question-block" data-number="Q8 - SCHEDULING">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">Scheduling</span>
+                    </div>
+                    <div class="question-text">Explain how Dynamic Workload Scheduler works for GPU/TPU workloads in GKE.</div>
+                    <p><strong>Flex-start:</strong> Submit capacity request -> DWS queues -> provisions when available. Gang provisioning ensures all accelerators come up together.</p>
+                    <p><strong>Calendar Mode:</strong> Book capacity for specific time window (hours to 90 days). Guaranteed at scheduled time without CUD commitment.</p>
+                </div>
+
+                <div class="question-block" data-number="Q9 - TROUBLESHOOTING">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">Troubleshooting</span>
+                    </div>
+                    <div class="question-text">How do you troubleshoot a TPU training job stuck in Pending state?</div>
+                    <p><strong>Debug steps:</strong> 1. kubectl describe pod (check events). 2. Verify TPU quota. 3. Check node pool/autoscaler. 4. Validate topology match in nodeSelector. 5. Check Kueue ClusterQueue quotas. 6. Check DWS ProvisioningRequest status.</p>
+                </div>
+
+                <div class="question-block" data-number="Q10 - PATHWAYS">
+                    <div class="q-meta">
+                        <span class="tag tag-hard">Hard</span>
+                        <span class="tag tag-cat">Pathways</span>
+                    </div>
+                    <div class="question-text">What is Pathways and how does it enable multi-slice TPU training with a single JAX client?</div>
+                    <p><strong>Pathways</strong> is a distributed runtime that lets a single JAX process orchestrate computation across multiple TPU slices (thousands of chips). Key components: IFRT Proxy Client/Server, Resource Manager, Pathways Workers. Supports automatic fault recovery from preemptions.</p>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- PART 3: GKE & KUBERNETES -->
+            <!-- ============================================================ -->
+            <section id="part3">
+                <div class="part-header">
+                    <div class="part-number">Part 3 of 6</div>
+                    <h2>GKE & Kubernetes</h2>
+                    <p class="part-desc">Heavily Tested Category &bull; 8 Questions</p>
+                </div>
+
+                <div class="question-block" data-number="Q1 - FUNDAMENTALS">
+                    <div class="q-meta">
+                        <span class="tag tag-easy">Easy</span>
+                        <span class="tag tag-cat">Fundamentals</span>
+                    </div>
+                    <div class="question-text">Explain the difference between virtualization and containerization.</div>
+                    <table>
+                        <tr><th>Aspect</th><th>Virtualization (VMs)</th><th>Containerization</th></tr>
+                        <tr><td>Isolation</td><td>Hardware-level (hypervisor)</td><td>Process-level (namespaces/cgroups)</td></tr>
+                        <tr><td>OS</td><td>Full guest OS per VM</td><td>Shared host kernel</td></tr>
+                        <tr><td>Size</td><td>GBs</td><td>MBs</td></tr>
+                        <tr><td>Boot</td><td>Minutes</td><td>Seconds</td></tr>
+                        <tr><td>GCP Service</td><td>Compute Engine</td><td>GKE, Cloud Run</td></tr>
+                    </table>
+                </div>
+
+                <div class="question-block" data-number="Q2 - DEPLOYMENTS">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">Deployments</span>
+                    </div>
+                    <div class="question-text">How do you handle rolling updates and rollbacks in GKE?</div>
+                    <div class="code-block">spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  minReadySeconds: 30
+
+# Rollback commands
+kubectl rollout undo deployment/my-app
+kubectl rollout undo deployment/my-app --to-revision=3</div>
+                </div>
+
+                <div class="question-block" data-number="Q3 - BLUE/GREEN">
+                    <div class="q-meta">
+                        <span class="tag tag-hard">Hard</span>
+                        <span class="tag tag-cat">Deployment Strategy</span>
+                    </div>
+                    <div class="question-text">Implement a blue/green deployment strategy for a microservices application on GKE.</div>
+                    <p>Deploy Green alongside Blue with different version labels. Service selector points to Blue. Cutover: update Service selector to Green. Rollback: switch back to Blue. Advanced: use GKE Gateway API with HTTPRoute traffic splitting for canary.</p>
+                </div>
+
+                <div class="question-block" data-number="Q4 - AUTOSCALING">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">Autoscaling</span>
+                    </div>
+                    <div class="question-text">How do you configure autoscaling for GPU/TPU workloads in GKE?</div>
+                    <p><strong>HPA:</strong> Use custom metrics (GPU utilization, queue depth) not CPU. <strong>VPA:</strong> Right-size CPU/memory (not GPU requests). <strong>Cluster Autoscaler:</strong> Set min-nodes=0 for GPU pools. <strong>NAP:</strong> Auto-create GPU pools for pending pods.</p>
+                    <div class="warn-box"><p>Don't use HPA and VPA on same metric. Training job scaling via Kueue, not HPA.</p></div>
+                </div>
+
+                <div class="question-block" data-number="Q5 - WORKLOAD IDENTITY">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">Security</span>
+                    </div>
+                    <div class="question-text">What is Workload Identity in GKE and why is it preferred over service account keys?</div>
+                    <p>Workload Identity creates trust between Kubernetes ServiceAccount (KSA) and GCP IAM Service Account (GSA). Pods impersonate GSA without credentials stored in cluster.</p>
+                    <p><strong>Why preferred:</strong> No key files (short-lived tokens). Least privilege per pod. Auditability. No Secret sprawl.</p>
+                </div>
+
+                <div class="question-block" data-number="Q6 - OBSERVABILITY">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">Observability</span>
+                    </div>
+                    <div class="question-text">How do you monitor and troubleshoot GPU training jobs in GKE?</div>
+                    <p><strong>Key metrics:</strong> GPU Utilization (DCGM) > 80%. GPU Memory at 90% alert. Training throughput (samples/sec). ECC errors (failing GPU).</p>
+                    <p><strong>Tools:</strong> DCGM Exporter DaemonSet + Cloud Monitoring + Cloud Logging to BigQuery.</p>
+                </div>
+
+                <div class="question-block" data-number="Q7 - GKE MODES">
+                    <div class="q-meta">
+                        <span class="tag tag-easy">Easy</span>
+                        <span class="tag tag-cat">GKE Modes</span>
+                    </div>
+                    <div class="question-text">GKE Standard vs GKE Autopilot - which for ML workloads?</div>
+                    <p><strong>Standard:</strong> ML training (precise GPU control, DaemonSets, custom machine types, node SSH).</p>
+                    <p><strong>Autopilot:</strong> ML inference, platform services (simpler ops, pay per pod, hardened security).</p>
+                </div>
+
+                <div class="question-block" data-number="Q8 - KUEUE">
+                    <div class="q-meta">
+                        <span class="tag tag-hard">Hard</span>
+                        <span class="tag tag-cat">Job Scheduling</span>
+                    </div>
+                    <div class="question-text">Configure Kueue for multi-tenant GKE cluster with GPUs.</div>
+                    <p><strong>Components:</strong> ResourceFlavors (h100, l4) -> ClusterQueue (quotas, preemption) -> LocalQueues (per team) -> WorkloadPriorityClasses (prod > research > dev).</p>
+                    <p><strong>Key behaviors:</strong> Atomic admission (gang scheduling). BestEffortFIFO. Cohort borrowing. LowerPriority preemption.</p>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- PART 4: NETWORKING & SECURITY -->
+            <!-- ============================================================ -->
+            <section id="part4">
+                <div class="part-header">
+                    <div class="part-number">Part 4 of 6</div>
+                    <h2>Networking & Security</h2>
+                    <p class="part-desc">Key for Infrastructure Engineers &bull; 6 Questions</p>
+                </div>
+
+                <div class="question-block" data-number="Q1 - VPC DESIGN">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">VPC Design</span>
+                    </div>
+                    <div class="question-text">How do you design a network architecture on GCP for secure communication?</div>
+                    <p><strong>1. Shared VPC:</strong> Centralize in host project. Service projects share subnets.</p>
+                    <p><strong>2. Private clusters:</strong> No public IPs. Private Service Connect for APIs. Cloud NAT for outbound.</p>
+                    <p><strong>3. Defense in depth:</strong> Hierarchical firewall -> VPC firewall -> Network Policies -> VPC Service Controls.</p>
+                    <p><strong>4. Access:</strong> Identity-Aware Proxy for SSH (no bastion).</p>
+                </div>
+
+                <div class="question-block" data-number="Q2 - VPC-SC">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">Security Perimeter</span>
+                    </div>
+                    <div class="question-text">What is VPC Service Controls and how does it enhance ML security?</div>
+                    <p>VPC-SC creates security perimeter restricting data movement. Even with valid credentials, attackers can't exfiltrate to external buckets. Perimeter includes BigQuery, GCS, Vertex AI. Use ingress/egress rules for exceptions. Always test in dry-run first.</p>
+                </div>
+
+                <div class="question-block" data-number="Q3 - NETWORKING">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">Networking</span>
+                    </div>
+                    <div class="question-text">Shared VPC vs VPC Peering - when to use each?</div>
+                    <p><strong>Shared VPC:</strong> Same org, centralized control. Recommended for multi-team ML platforms.</p>
+                    <p><strong>VPC Peering:</strong> Cross-org, third-party connections. NOT transitive (A-B, B-C ≠ A-C).</p>
+                </div>
+
+                <div class="question-block" data-number="Q4 - GPU NETWORKING">
+                    <div class="q-meta">
+                        <span class="tag tag-hard">Hard</span>
+                        <span class="tag tag-cat">GPU Networking</span>
+                    </div>
+                    <div class="question-text">How does GPUDirect-TCPX improve A3 GPU instance performance?</div>
+                    <p>GPUDirect-TCPX bypasses CPU in data path: GPU -> NIC -> Network -> NIC -> GPU. A3 Mega: 8x 200Gbps NICs = 1.6 Tbps total. gVNIC is prerequisite (high-perf virtual NIC, up to 200Gbps, Jumbo Frames). Critical for NCCL AllReduce in multi-node training.</p>
+                </div>
+
+                <div class="question-block" data-number="Q5 - IAM">
+                    <div class="q-meta">
+                        <span class="tag tag-easy">Easy</span>
+                        <span class="tag tag-cat">IAM</span>
+                    </div>
+                    <div class="question-text">How do you grant least privilege access to ML training service account?</div>
+                    <p><strong>Grant only:</strong> storage.objectViewer (training data), storage.objectCreator (model artifacts), bigquery.dataViewer (features), monitoring.metricWriter (logs).</p>
+                    <p><strong>Never grant:</strong> roles/editor, roles/owner, roles/storage.admin.</p>
+                    <p>Use IAM Conditions for resource-specific access. Workload Identity instead of JSON keys.</p>
+                </div>
+
+                <div class="question-block" data-number="Q6 - HYBRID SECURITY">
+                    <div class="q-meta">
+                        <span class="tag tag-hard">Hard</span>
+                        <span class="tag tag-cat">Hybrid Security</span>
+                    </div>
+                    <div class="question-text">How would you secure a hybrid cloud connecting on-prem GPU clusters to GCP?</div>
+                    <p><strong>Identity:</strong> Workforce Identity Federation (AD -> GCP IAM). Workload Identity Federation (on-prem K8s -> GCP APIs). No static credentials.</p>
+                    <p><strong>Network:</strong> Dedicated Interconnect + MACsec. Private Service Connect for API access.</p>
+                    <p><strong>Data:</strong> Cloud KMS + External Key Manager (keys in on-prem HSM). VPC Service Controls.</p>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- PART 5: IAC & CI/CD -->
+            <!-- ============================================================ -->
+            <section id="part5">
+                <div class="part-header">
+                    <div class="part-number">Part 5 of 6</div>
+                    <h2>Infrastructure as Code & CI/CD</h2>
+                    <p class="part-desc">Core DevOps Competency &bull; 5 Questions</p>
+                </div>
+
+                <div class="question-block" data-number="Q1 - TERRAFORM">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">Terraform</span>
+                    </div>
+                    <div class="question-text">Describe your experience with Terraform in GCP focusing on modularity and reusability.</div>
+                    <p><strong>Modularity:</strong> modules/environments pattern. Each module = single concern (VPC, GKE, GPU pool).</p>
+                    <p><strong>Reusability:</strong> Git-versioned modules with tags. Environments pin versions.</p>
+                    <p><strong>Version Control:</strong> Feature branches, PR reviews with plan output, terraform fmt + tflint + checkov in pre-commit.</p>
+                </div>
+
+                <div class="question-block" data-number="Q2 - TERRAFORM GKE">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">Terraform + GKE</span>
+                    </div>
+                    <div class="question-text">Write Terraform for GKE cluster with A3 Mega GPU node pool.</div>
+                    <div class="code-block">resource "google_container_node_pool" "gpu_a3_pool" {
+  name       = "tf-mlplatform-gpu-a3mega"
+  cluster    = google_container_cluster.ml_cluster.id
+
+  node_config {
+    machine_type = "a3-megagpu-8g"
+    gvnic { enabled = true }  # Required for GPUDirect-TCPX
+    taint {
+      key    = "nvidia.com/gpu"
+      value  = "present"
+      effect = "NO_SCHEDULE"
+    }
+  }
+  placement_policy { type = "COMPACT" }  # Co-locate for NVLink
+}</div>
+                </div>
+
+                <div class="question-block" data-number="Q3 - CI/CD">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">CI/CD</span>
+                    </div>
+                    <div class="question-text">Set up CI/CD pipeline for ML infrastructure using Cloud Build with security best practices.</div>
+                    <p><strong>CI (PR):</strong> terraform fmt -> tflint -> checkov security scan -> terraform plan.</p>
+                    <p><strong>CD (Merge):</strong> apply dev -> smoke tests -> manual approval -> apply prod.</p>
+                    <p><strong>Security:</strong> Private Worker Pool (inside VPC). Dedicated Build SA (least-privilege). Secret Manager for sensitive vars. Workload Identity Federation for GitHub.</p>
+                </div>
+
+                <div class="question-block" data-number="Q4 - STATE">
+                    <div class="q-meta">
+                        <span class="tag tag-easy">Easy</span>
+                        <span class="tag tag-cat">Terraform State</span>
+                    </div>
+                    <div class="question-text">How do you manage Terraform state in a team environment?</div>
+                    <p><strong>Backend:</strong> GCS with versioning, CMEK encryption, uniform bucket-level access.</p>
+                    <p><strong>Practices:</strong> State isolation per environment (prefix). Automatic locking. CI/CD-only applies. Read-only for developers.</p>
+                </div>
+
+                <div class="question-block" data-number="Q5 - GITOPS">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">GitOps</span>
+                    </div>
+                    <div class="question-text">How do you implement GitOps for GKE using Config Sync or ArgoCD?</div>
+                    <p><strong>Config Sync (GCP-native):</strong> Part of GKE Enterprise. Auto-sync from Git. Drift detection.</p>
+                    <p><strong>ArgoCD:</strong> Web UI, App-of-Apps pattern, multi-cluster support.</p>
+                    <p><strong>GitOps:</strong> Namespaces, RBAC, NetworkPolicies, Kueue queues. <strong>NOT GitOps:</strong> Training job submissions, secrets, node pool sizing.</p>
+                </div>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- PART 6: CONSULTING -->
+            <!-- ============================================================ -->
+            <section id="part6">
+                <div class="part-header">
+                    <div class="part-number">Part 6 of 6</div>
+                    <h2>Consulting & Customer Scenarios</h2>
+                    <p class="part-desc">Soft Skills + Technical Sales &bull; 5 Questions</p>
+                </div>
+
+                <div class="question-block" data-number="Q1 - SALES ENGINEERING">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">Sales Engineering</span>
+                    </div>
+                    <div class="question-text">A customer is choosing between AWS, Azure, and GCP for ML infrastructure. Make the case for GCP.</div>
+                    <p><strong>1. TPU - Purpose-Built AI Silicon:</strong> Only cloud with custom AI accelerators. 1.8x better perf/$ than H100s.</p>
+                    <p><strong>2. AI Hypercomputer:</strong> Same infra that trains Gemini. Jupiter network, Pathways orchestration.</p>
+                    <p><strong>3. Open Ecosystem:</strong> JAX, XLA, MaxText, vLLM-TPU. No lock-in.</p>
+                    <p><strong>4. Cost:</strong> TPU v6e at $0.39/chip-hr vs $3-5+/hr for H100. 2-3x more compute per dollar.</p>
+                </div>
+
+                <div class="question-block" data-number="Q2 - COST OPTIMIZATION">
+                    <div class="q-meta">
+                        <span class="tag tag-hard">Hard</span>
+                        <span class="tag tag-cat">Cost Optimization</span>
+                    </div>
+                    <div class="question-text">A customer has $500K/month for ML training. Design a cost-optimized infrastructure plan.</div>
+                    <table>
+                        <tr><th>Tier</th><th>Budget</th><th>Strategy</th><th>Effective Compute</th></tr>
+                        <tr><td>CUD (Baseline)</td><td>$250K (50%)</td><td>3-year CUD = 57% discount</td><td>~$583K worth</td></tr>
+                        <tr><td>Flex-start (Burst)</td><td>$125K (25%)</td><td>DWS flexible start</td><td>~20% savings</td></tr>
+                        <tr><td>Spot (Opportunistic)</td><td>$75K (15%)</td><td>60-91% discount, checkpoint required</td><td>~$375K worth</td></tr>
+                        <tr><td>Platform</td><td>$50K (10%)</td><td>GKE, GCS, Monitoring, Lustre</td><td>-</td></tr>
+                    </table>
+                    <p><strong>Total effective:</strong> ~$1M-$1.1M of compute from $500K budget (2x multiplier).</p>
+                </div>
+
+                <div class="question-block" data-number="Q3 - EXPERIENCE">
+                    <div class="q-meta">
+                        <span class="tag tag-medium">Medium</span>
+                        <span class="tag tag-cat">Experience</span>
+                    </div>
+                    <div class="question-text">Tell me about a time you migrated a complex application to the cloud.</div>
+                    <p>Use STAR framework: Situation (legacy platform, 30+ services). Task (architect migration with zero downtime). Action (strangler fig pattern, IaC, CDC for databases, identity federation challenge). Result (40% cost reduction, daily deployments, 99.95% availability).</p>
+                    <div class="interview-tip">Share real challenges - identity federation issues, data gravity problems. Not just what went right.</div>
+                </div>
+
+                <div class="question-block" data-number="Q4 - TROUBLESHOOTING">
+                    <div class="q-meta">
+                        <span class="tag tag-hard">Hard</span>
+                        <span class="tag tag-cat">Troubleshooting</span>
+                    </div>
+                    <div class="question-text">Customer's ML training keeps failing due to GPU preemption on Spot VMs. Design a fault-tolerant pipeline.</div>
+                    <p><strong>1. Periodic checkpointing:</strong> Save every N steps to GCS. Async writes.</p>
+                    <p><strong>2. SIGTERM handler:</strong> Emergency checkpoint in 25-second grace period.</p>
+                    <p><strong>3. Auto-resume via Kueue:</strong> restartPolicy: OnFailure, --resume-from-checkpoint.</p>
+                    <p><strong>4. Fallback:</strong> If preemption rate too high, switch to On-Demand.</p>
+                </div>
+
+                <div class="question-block" data-number="Q5 - COMMUNICATION">
+                    <div class="q-meta">
+                        <span class="tag tag-easy">Easy</span>
+                        <span class="tag tag-cat">Communication</span>
+                    </div>
+                    <div class="question-text">How would you explain TPUs vs GPUs to a non-technical CTO?</div>
+                    <p>"<strong>GPUs are Swiss Army knives</strong> - versatile, work with everything. <strong>TPUs are power tools</strong> - purpose-built for AI, more efficient for that specific job."</p>
+                    <p><strong>Business framing:</strong> Cost (2-4x better cost-per-query). Ecosystem (PyTorch works, JAX ideal). Scale (TPUs + Jupiter network = system advantage). Availability (TPU = GCP only; GPU = anywhere).</p>
+                    <p><strong>Recommendation:</strong> "Start with a small TPU pilot for your largest inference workload. Benchmark cost-per-query. The data will make the decision obvious."</p>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <div class="part-header" style="margin-top: 4rem;">
+                <h2>Build Better Cloud Infrastructure</h2>
+                <p class="part-desc">42 Design Scenarios &bull; 6 Parts &bull; Comprehensive GCP Cloud Architecture Coverage</p>
+            </div>
+
+        </article>
+    </main>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <span class="footer-logo">Sudhakar Chundu</span>
+            <div class="footer-links">
+                <a href="../">Home</a>
+                <a href="../resume/">Resume</a>
+                <a href="../projects/">Achievements</a>
+                <a href="../contact/">Contact</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/schundu007" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/schundu" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://medium.sudhakarchundu.org/" target="_blank"><i class="fab fa-medium"></i></a>
+            </div>
+        </div>
+        <p>&copy; 2026 Sudhakar Chundu. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#1e3a5f',
+                primaryTextColor: '#e2e8f0',
+                primaryBorderColor: '#4a9eff',
+                lineColor: '#4a9eff',
+                secondaryColor: '#1c2230',
+                tertiaryColor: '#151922',
+                nodeTextColor: '#e2e8f0',
+                fontSize: '13px',
+            },
+            flowchart: {
+                curve: 'basis',
+                padding: 15,
+                nodeSpacing: 40,
+                rankSpacing: 50,
+                useMaxWidth: true,
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenuBtn.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+        }
+
+        // Back to top button
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // Smooth scroll for TOC links
+        document.querySelectorAll('.toc-item').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+    <script src="../assets/js/neural-bg.js"></script>
+</body>
+</html>

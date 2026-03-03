@@ -558,6 +558,7 @@
                 <!-- Category Filters -->
                 <div class="blog-filters">
                     <button class="filter-btn active" data-filter="all">All Posts</button>
+                    <button class="filter-btn" data-filter="gcp">GCP</button>
                     <button class="filter-btn" data-filter="kubernetes">Kubernetes</button>
                     <button class="filter-btn" data-filter="devops">DevOps</button>
                     <button class="filter-btn" data-filter="sre">SRE</button>
@@ -566,30 +567,30 @@
                 </div>
 
                 <!-- Featured Post -->
-                <article class="featured-post" data-category="gpu">
+                <article class="featured-post" data-category="gcp">
                     <div class="featured-image">
                         <span class="featured-badge"><i class="fas fa-star"></i> Featured</span>
-                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80" alt="GPU Infrastructure at Scale">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80" alt="GCP Cloud Infrastructure Design">
                     </div>
                     <div class="featured-content">
-                        <span class="post-category">GPU Infrastructure</span>
-                        <h2><a href="https://medium.sudhakarchundu.org/" target="_blank">Building a 65-GPU ML Platform with 99.97% Uptime: Lessons from the Trenches</a></h2>
+                        <span class="post-category">GCP Architecture</span>
+                        <h2><a href="gcp-design-problems-solutions.html">GCP Design Problems and Solutions: 42 Scenarios with Architecture Diagrams</a></h2>
                         <p class="post-excerpt">
-                            A deep dive into architecting and operating GPU infrastructure for production ML workloads.
-                            Covering Slurm integration, Kubernetes orchestration, monitoring with DCGM, and the operational
-                            practices that helped us achieve enterprise-grade reliability.
+                            A comprehensive deep dive into GCP cloud infrastructure design covering TPUs, GPUs, GKE,
+                            Kubernetes autoscaling, networking, security, Terraform, CI/CD pipelines, and real-world
+                            consulting scenarios with detailed Mermaid architecture diagrams.
                         </p>
                         <div class="post-meta">
                             <div class="post-author">
                                 <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu">
                                 <div class="post-author-info">
                                     <span class="post-author-name">Sudhakar Chundu</span>
-                                    <span class="post-date">February 15, 2026</span>
+<span class="post-date">March 3, 2026</span>
                                 </div>
                             </div>
                             <div class="post-stats">
-                                <span><i class="fas fa-clock"></i> 12 min read</span>
-                                <span><i class="fas fa-eye"></i> 2.4K views</span>
+                                <span><i class="fas fa-clock"></i> 45 min read</span>
+                                <span><i class="fas fa-layer-group"></i> 6 Parts</span>
                             </div>
                         </div>
                     </div>
@@ -597,6 +598,30 @@
 
                 <!-- Blog Grid -->
                 <div class="blog-grid">
+                    <!-- Blog Card - GPU Platform -->
+                    <article class="blog-card" data-category="gpu">
+                        <div class="blog-card-image">
+                            <span class="post-category">GPU/ML</span>
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&q=80" alt="GPU Infrastructure">
+                        </div>
+                        <div class="blog-card-content">
+                            <div class="post-tags">
+                                <span class="post-tag">GPU</span>
+                                <span class="post-tag">Slurm</span>
+                                <span class="post-tag">DCGM</span>
+                            </div>
+                            <h3><a href="https://medium.sudhakarchundu.org/" target="_blank">Building a 65-GPU ML Platform with 99.97% Uptime</a></h3>
+                            <p class="post-excerpt">
+                                Deep dive into architecting GPU infrastructure for production ML workloads.
+                                Covering Slurm integration, Kubernetes orchestration, and monitoring with DCGM.
+                            </p>
+                            <div class="blog-card-footer">
+                                <span class="post-date">Jan 10, 2025</span>
+                                <span class="reading-time"><i class="fas fa-clock"></i> 12 min</span>
+                            </div>
+                        </div>
+                    </article>
+
                     <!-- Blog Card 1 -->
                     <article class="blog-card" data-category="finops">
                         <div class="blog-card-image">
