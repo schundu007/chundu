@@ -377,79 +377,1148 @@ td.danger { color:#D85A30; }
   background:var(--code-bg); padding:1px 5px; border-radius:3px; }
 .exp-body strong { color:var(--dark); }
 
+
+/* ── PAGE NAV ── */
+
+
+.epg-btn:hover, .epg-btn.active {
+  background: #76B900;
+  color: #000;
+  border-color: #76B900;
+}
+
+.epg-skip:hover { color: #76B900; border-color: #76B900; }
+
+/* ── PAGES ── */
+
+
+
+/* ── PAGE HEADER ── */
+
+
+
+
+
+
+
+
+
+
+
+/* ── PAGE BODY ── */
+
+
+
+/* ── TIMELINE ── */
+
+
+
+
+
+
+
+
+/* ── PILLARS ── */
+
+
+
+
+
+
+
+
+
+
+/* ── STATS STRIP ── */
+
+
+.ep-stat:last-child { border-right: none; }
+
+
+
+/* ── PAGE 2 GRID ── */
+
+
+
+
+
+
+
+
+
+.ep-depth-list li { font-size: 11.5px; color: #7a8a9a; padding: 2px 0; line-height: 1.5; }
+.ep-depth-list li::marker { color: #2a3a50; }
+
+/* ── PAGE 3 ── */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.ep-ica-row:last-child { border-bottom: none; }
+
+
+
+
+.ep-footer-cta span { font-size: 14px; font-weight: 600; color: #f0f0ee; }
+
+.ep-cta-btn:hover { background: #8fd000; }
+
+
+/* ══════ EXEC SUMMARY ══════ */
+#exec-wrap {
+  background:#f5f5f2;
+  border-bottom:4px solid #76B900;
+}
+#exec-nav {
+  position:sticky; top:0; z-index:500;
+  display:flex; align-items:center; gap:6px;
+  padding:10px 60px;
+  background:#111;
+  border-bottom:2px solid #76B900;
+}
+.ep-tab {
+  padding:7px 20px; border-radius:4px 4px 0 0;
+  font-family:var(--mono); font-size:11.5px; font-weight:500;
+  cursor:pointer; border:none; background:transparent;
+  color:#888; transition:background .12s, color .12s;
+  letter-spacing:.02em;
+}
+.ep-tab:hover { color:#ccc; }
+.ep-tab.on { background:#76B900; color:#000; font-weight:700; }
+.ep-jump {
+  margin-left:auto;
+  padding:6px 16px; border-radius:4px;
+  font-family:var(--mono); font-size:11px; font-weight:600;
+  cursor:pointer; border:1px solid #444; background:transparent;
+  color:#76B900; transition:all .12s;
+}
+.ep-jump:hover { border-color:#76B900; background:#76B900; color:#000; }
+
+.ep-page { display:none; }
+.ep-page.on { display:block; }
+
+/* ── PAGE SHELL ── */
+.ep-hero {
+  background:#111; color:#fff;
+  padding:36px 60px 28px;
+  display:flex; align-items:flex-start; justify-content:space-between;
+  gap:40px;
+}
+.ep-hero-name {
+  font-family:var(--display); font-size:32px; font-weight:600;
+  font-style:italic; color:#fff; line-height:1.15;
+}
+.ep-hero-name em { color:#76B900; font-style:normal; }
+.ep-hero-sub { font-size:13px; color:#aaa; margin-top:6px; font-family:var(--mono); }
+.ep-hero-right { text-align:right; flex-shrink:0; }
+.ep-for { font-size:9px; text-transform:uppercase; letter-spacing:.14em; color:#555; font-family:var(--mono); }
+.ep-role-name { font-size:15px; font-weight:700; color:#76B900; margin-top:4px; }
+.ep-jrid { font-size:11px; color:#555; margin-top:3px; font-family:var(--mono); }
+
+.ep-body { padding:32px 60px 40px; background:#f5f5f2; }
+
+/* ── SECTION TITLE (matches .nav-part style) ── */
+.ep-stitle {
+  font-size:9px; letter-spacing:.15em; text-transform:uppercase;
+  color:#555; font-weight:600; font-family:var(--mono);
+  margin:24px 0 10px;
+}
+.ep-stitle:first-child { margin-top:0; }
+
+/* ── CAREER TIMELINE ── */
+.ep-timeline {
+  display:flex; gap:0; align-items:flex-start; flex-wrap:wrap;
+  border:1px solid #e8e8e4; border-radius:var(--radius-lg);
+  overflow:hidden; background:#fff;
+}
+.ep-tl {
+  flex:1; min-width:140px; padding:14px 16px;
+  border-right:1px solid #e8e8e4;
+}
+.ep-tl:last-child { border-right:none; }
+.ep-tl.ep-tl-hl { background:#EBF5D4; }
+.ep-tl-yr { font-family:var(--mono); font-size:10px; color:#76B900; margin-bottom:3px; }
+.ep-tl-co { font-size:13px; font-weight:700; color:#111; }
+.ep-tl-det { font-size:11px; color:#888; margin-top:3px; line-height:1.5; }
+
+/* ── THREE PILLARS ── */
+.ep-pillars { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.ep-pillar {
+  background:#fff; border-radius:var(--radius-lg);
+  border:1px solid #e8e8e4; padding:16px 18px;
+  box-shadow:var(--shadow);
+}
+.ep-pillar-icon { font-size:22px; margin-bottom:6px; }
+.ep-pillar-title {
+  font-size:14px; font-weight:700; color:#111;
+  margin-bottom:6px; font-family:var(--sans);
+}
+.ep-pillar ul { margin:0; padding-left:16px; }
+.ep-pillar li { font-size:11.5px; color:#444; padding:2px 0; line-height:1.5; }
+.ep-pillar li::marker { color:#76B900; }
+.ep-pillar-parts {
+  margin-top:10px; font-size:10px; font-family:var(--mono);
+  color:#76B900; font-weight:600;
+  padding-top:8px; border-top:1px solid #e8e8e4;
+}
+
+/* ── STATS STRIP ── */
+.ep-stats {
+  display:flex; gap:0; border-radius:var(--radius-lg);
+  border:1px solid #e8e8e4; overflow:hidden;
+  background:#fff; box-shadow:var(--shadow);
+}
+.ep-stat {
+  flex:1; display:flex; flex-direction:column; align-items:center;
+  padding:12px 8px; border-right:1px solid #e8e8e4;
+}
+.ep-stat:last-child { border-right:none; }
+.ep-stat-n { font-size:20px; font-weight:700; color:#76B900; font-family:var(--mono); }
+.ep-stat-l { font-size:9px; color:#888; text-align:center; margin-top:3px; text-transform:uppercase; letter-spacing:.05em; }
+
+/* ── PAGE 2 — DEPTH ── */
+.ep-grid2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.ep-part-card {
+  background:#fff; border-radius:var(--radius-lg);
+  border:1px solid #e8e8e4; padding:14px 16px;
+  box-shadow:var(--shadow);
+}
+.ep-part-label {
+  font-family:var(--mono); font-size:11px; font-weight:700;
+  padding-bottom:8px; margin-bottom:8px;
+  border-bottom:2px solid #76B900;
+}
+.ep-la { color:#3d6200; }   /* Parts A B */
+.ep-lb { color:#0a3070; }   /* Parts C D */
+.ep-lc { color:#085041; }   /* Parts E F */
+.ep-ld { color:#5a3800; }   /* Part G */
+.ep-part-card ul { margin:0; padding-left:16px; }
+.ep-part-card li { font-size:11.5px; color:#444; padding:2.5px 0; line-height:1.45; }
+.ep-part-card li::marker { color:#76B900; }
+.ep-part-card li strong { color:#111; }
+
+/* ── PAGE 3 — IMPACT ── */
+.ep-grid3 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.ep-imp-card {
+  background:#fff; border-radius:var(--radius-lg);
+  border:1px solid #e8e8e4; padding:16px 18px;
+  box-shadow:var(--shadow);
+}
+.ep-imp-title { font-size:14px; font-weight:700; color:#111; margin-bottom:2px; }
+.ep-imp-period { font-size:10.5px; color:#888; font-family:var(--mono); margin-bottom:12px; }
+.ep-metrics-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.ep-metric {
+  background:#f5f5f2; border-radius:6px;
+  padding:8px 10px; border:1px solid #e8e8e4;
+}
+.ep-metric-n { font-size:18px; font-weight:700; color:#76B900; font-family:var(--mono); display:block; }
+.ep-metric-l { font-size:9.5px; color:#888; display:block; margin-top:2px; line-height:1.3; }
+.ep-osdu-repos { display:flex; flex-direction:column; gap:8px; }
+.ep-repo {
+  background:#f5f5f2; border-radius:6px; padding:9px 12px;
+  border-left:3px solid #76B900;
+}
+.ep-repo-name { font-family:var(--mono); font-size:12px; font-weight:700; color:#3d6200; }
+.ep-repo-detail { font-size:11px; color:#666; margin-top:2px; }
+.ep-align-card { grid-column:1 / -1; }
+.ep-align-rows { display:flex; flex-direction:column; }
+.ep-arow {
+  display:grid; grid-template-columns:240px 28px 1fr;
+  align-items:center; padding:7px 0;
+  border-bottom:1px solid #f0f0ec;
+  font-size:12px;
+}
+.ep-arow:last-child { border-bottom:none; }
+.ep-arow-req { color:#444; }
+.ep-arow-chk { color:#76B900; font-size:15px; text-align:center; font-weight:700; }
+.ep-arow-ref { font-family:var(--mono); font-size:10.5px; color:#888; }
+
+/* ── BOTTOM BAR (all pages) ── */
+.ep-bottom {
+  background:#111; padding:14px 60px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.ep-bottom-msg { font-size:12px; color:#555; font-family:var(--mono); }
+.ep-full-btn {
+  padding:9px 24px; background:#76B900; color:#000;
+  border:none; border-radius:4px;
+  font-family:var(--mono); font-size:12px; font-weight:700;
+  cursor:pointer; transition:background .12s;
+  letter-spacing:.02em;
+}
+.ep-full-btn:hover { background:#8fd000; }
+
+
+/* ══════ EXEC SUMMARY ══════ */
+#exec-wrap {
+  background:#f5f5f2;
+  border-bottom:4px solid #76B900;
+}
+#exec-nav {
+  position:sticky; top:0; z-index:500;
+  display:flex; align-items:center; gap:6px;
+  padding:10px 60px;
+  background:#111;
+  border-bottom:2px solid #76B900;
+}
+.ep-tab {
+  padding:7px 20px; border-radius:4px 4px 0 0;
+  font-family:var(--mono); font-size:11.5px; font-weight:500;
+  cursor:pointer; border:none; background:transparent;
+  color:#888; transition:background .12s, color .12s;
+  letter-spacing:.02em;
+}
+.ep-tab:hover { color:#ccc; }
+.ep-tab.on { background:#76B900; color:#000; font-weight:700; }
+.ep-jump {
+  margin-left:auto;
+  padding:6px 16px; border-radius:4px;
+  font-family:var(--mono); font-size:11px; font-weight:600;
+  cursor:pointer; border:1px solid #444; background:transparent;
+  color:#76B900; transition:all .12s;
+}
+.ep-jump:hover { border-color:#76B900; background:#76B900; color:#000; }
+
+.ep-page { display:none; }
+.ep-page.on { display:block; }
+
+/* ── PAGE SHELL ── */
+.ep-hero {
+  background:#111; color:#fff;
+  padding:36px 60px 28px;
+  display:flex; align-items:flex-start; justify-content:space-between;
+  gap:40px;
+}
+.ep-hero-name {
+  font-family:var(--display); font-size:32px; font-weight:600;
+  font-style:italic; color:#fff; line-height:1.15;
+}
+.ep-hero-name em { color:#76B900; font-style:normal; }
+.ep-hero-sub { font-size:13px; color:#aaa; margin-top:6px; font-family:var(--mono); }
+.ep-hero-right { text-align:right; flex-shrink:0; }
+.ep-for { font-size:9px; text-transform:uppercase; letter-spacing:.14em; color:#555; font-family:var(--mono); }
+.ep-role-name { font-size:15px; font-weight:700; color:#76B900; margin-top:4px; }
+.ep-jrid { font-size:11px; color:#555; margin-top:3px; font-family:var(--mono); }
+
+.ep-body { padding:32px 60px 40px; background:#f5f5f2; }
+
+/* ── SECTION TITLE (matches .nav-part style) ── */
+.ep-stitle {
+  font-size:9px; letter-spacing:.15em; text-transform:uppercase;
+  color:#555; font-weight:600; font-family:var(--mono);
+  margin:24px 0 10px;
+}
+.ep-stitle:first-child { margin-top:0; }
+
+/* ── CAREER TIMELINE ── */
+.ep-timeline {
+  display:flex; gap:0; align-items:flex-start; flex-wrap:wrap;
+  border:1px solid #e8e8e4; border-radius:var(--radius-lg);
+  overflow:hidden; background:#fff;
+}
+.ep-tl {
+  flex:1; min-width:140px; padding:14px 16px;
+  border-right:1px solid #e8e8e4;
+}
+.ep-tl:last-child { border-right:none; }
+.ep-tl.ep-tl-hl { background:#EBF5D4; }
+.ep-tl-yr { font-family:var(--mono); font-size:10px; color:#76B900; margin-bottom:3px; }
+.ep-tl-co { font-size:13px; font-weight:700; color:#111; }
+.ep-tl-det { font-size:11px; color:#888; margin-top:3px; line-height:1.5; }
+
+/* ── THREE PILLARS ── */
+.ep-pillars { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.ep-pillar {
+  background:#fff; border-radius:var(--radius-lg);
+  border:1px solid #e8e8e4; padding:16px 18px;
+  box-shadow:var(--shadow);
+}
+.ep-pillar-icon { font-size:22px; margin-bottom:6px; }
+.ep-pillar-title {
+  font-size:14px; font-weight:700; color:#111;
+  margin-bottom:6px; font-family:var(--sans);
+}
+.ep-pillar ul { margin:0; padding-left:16px; }
+.ep-pillar li { font-size:11.5px; color:#444; padding:2px 0; line-height:1.5; }
+.ep-pillar li::marker { color:#76B900; }
+.ep-pillar-parts {
+  margin-top:10px; font-size:10px; font-family:var(--mono);
+  color:#76B900; font-weight:600;
+  padding-top:8px; border-top:1px solid #e8e8e4;
+}
+
+/* ── STATS STRIP ── */
+.ep-stats {
+  display:flex; gap:0; border-radius:var(--radius-lg);
+  border:1px solid #e8e8e4; overflow:hidden;
+  background:#fff; box-shadow:var(--shadow);
+}
+.ep-stat {
+  flex:1; display:flex; flex-direction:column; align-items:center;
+  padding:12px 8px; border-right:1px solid #e8e8e4;
+}
+.ep-stat:last-child { border-right:none; }
+.ep-stat-n { font-size:20px; font-weight:700; color:#76B900; font-family:var(--mono); }
+.ep-stat-l { font-size:9px; color:#888; text-align:center; margin-top:3px; text-transform:uppercase; letter-spacing:.05em; }
+
+/* ── PAGE 2 — DEPTH ── */
+.ep-grid2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.ep-part-card {
+  background:#fff; border-radius:var(--radius-lg);
+  border:1px solid #e8e8e4; padding:14px 16px;
+  box-shadow:var(--shadow);
+}
+.ep-part-label {
+  font-family:var(--mono); font-size:11px; font-weight:700;
+  padding-bottom:8px; margin-bottom:8px;
+  border-bottom:2px solid #76B900;
+}
+.ep-la { color:#3d6200; }   /* Parts A B */
+.ep-lb { color:#0a3070; }   /* Parts C D */
+.ep-lc { color:#085041; }   /* Parts E F */
+.ep-ld { color:#5a3800; }   /* Part G */
+.ep-part-card ul { margin:0; padding-left:16px; }
+.ep-part-card li { font-size:11.5px; color:#444; padding:2.5px 0; line-height:1.45; }
+.ep-part-card li::marker { color:#76B900; }
+.ep-part-card li strong { color:#111; }
+
+/* ── PAGE 3 — IMPACT ── */
+.ep-grid3 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.ep-imp-card {
+  background:#fff; border-radius:var(--radius-lg);
+  border:1px solid #e8e8e4; padding:16px 18px;
+  box-shadow:var(--shadow);
+}
+.ep-imp-title { font-size:14px; font-weight:700; color:#111; margin-bottom:2px; }
+.ep-imp-period { font-size:10.5px; color:#888; font-family:var(--mono); margin-bottom:12px; }
+.ep-metrics-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.ep-metric {
+  background:#f5f5f2; border-radius:6px;
+  padding:8px 10px; border:1px solid #e8e8e4;
+}
+.ep-metric-n { font-size:18px; font-weight:700; color:#76B900; font-family:var(--mono); display:block; }
+.ep-metric-l { font-size:9.5px; color:#888; display:block; margin-top:2px; line-height:1.3; }
+.ep-osdu-repos { display:flex; flex-direction:column; gap:8px; }
+.ep-repo {
+  background:#f5f5f2; border-radius:6px; padding:9px 12px;
+  border-left:3px solid #76B900;
+}
+.ep-repo-name { font-family:var(--mono); font-size:12px; font-weight:700; color:#3d6200; }
+.ep-repo-detail { font-size:11px; color:#666; margin-top:2px; }
+.ep-align-card { grid-column:1 / -1; }
+.ep-align-rows { display:flex; flex-direction:column; }
+.ep-arow {
+  display:grid; grid-template-columns:240px 28px 1fr;
+  align-items:center; padding:7px 0;
+  border-bottom:1px solid #f0f0ec;
+  font-size:12px;
+}
+.ep-arow:last-child { border-bottom:none; }
+.ep-arow-req { color:#444; }
+.ep-arow-chk { color:#76B900; font-size:15px; text-align:center; font-weight:700; }
+.ep-arow-ref { font-family:var(--mono); font-size:10.5px; color:#888; }
+
+/* ── BOTTOM BAR (all pages) ── */
+.ep-bottom {
+  background:#111; padding:14px 60px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.ep-bottom-msg { font-size:12px; color:#555; font-family:var(--mono); }
+.ep-full-btn {
+  padding:9px 24px; background:#76B900; color:#000;
+  border:none; border-radius:4px;
+  font-family:var(--mono); font-size:12px; font-weight:700;
+  cursor:pointer; transition:background .12s;
+  letter-spacing:.02em;
+}
+.ep-full-btn:hover { background:#8fd000; }
+
+
+/* ── About box ── */
+.ep-about-box {
+  background:#fff; border-radius:var(--radius-lg); border:1px solid #e8e8e4;
+  padding:16px 20px; box-shadow:var(--shadow);
+  font-size:13.5px; color:#444; line-height:1.75;
+}
+/* ── Links grid ── */
+.ep-links-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+.ep-link-card {
+  display:flex; flex-direction:column; gap:4px;
+  background:#fff; border:1px solid #e8e8e4; border-radius:var(--radius-lg);
+  padding:14px 16px; text-decoration:none;
+  box-shadow:var(--shadow); transition:border-color .12s, box-shadow .12s;
+}
+.ep-link-card:hover { border-color:#76B900; box-shadow:0 2px 8px rgba(118,185,0,.15); }
+.ep-link-icon { font-size:20px; }
+.ep-link-label { font-size:12px; font-weight:700; color:#111; }
+.ep-link-url { font-size:11px; font-family:var(--mono); color:#76B900; }
+.ep-link-desc { font-size:11.5px; color:#666; line-height:1.5; margin-top:3px; }
+/* ── Articles ── */
+.ep-articles { display:flex; flex-direction:column; gap:8px; }
+.ep-article {
+  display:flex; flex-direction:column; gap:3px;
+  background:#fff; border:1px solid #e8e8e4; border-radius:var(--radius-lg);
+  padding:12px 16px; text-decoration:none; border-left:3px solid #76B900;
+  box-shadow:var(--shadow); transition:border-color .12s;
+}
+.ep-article:hover { border-left-color:#3d6200; }
+.ep-article-meta { font-size:10px; font-family:var(--mono); color:#888; }
+.ep-article-title { font-size:13.5px; font-weight:700; color:#111; line-height:1.4; }
+.ep-article-sub { font-size:12px; color:#666; line-height:1.5; }
+/* ── Certs ── */
+.ep-certs-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.ep-cert {
+  display:flex; gap:12px; align-items:flex-start;
+  background:#fff; border:1px solid #e8e8e4; border-radius:var(--radius-lg);
+  padding:13px 16px; box-shadow:var(--shadow);
+}
+.ep-cert-badge {
+  font-size:16px; color:#76B900; flex-shrink:0;
+  width:24px; text-align:center; margin-top:1px;
+}
+.ep-cert-name { font-size:13px; font-weight:700; color:#111; margin-bottom:3px; }
+.ep-cert-body { font-size:12px; color:#666; line-height:1.5; }
+
+
+/* ══════ ENTERPRISE DESIGN OVERHAUL ══════ */
+
+/* ── Nav: hover + active polish ── */
+#nav-logo {
+  padding:20px 20px 16px;
+  border-bottom:2px solid #76B900;
+  font-family:var(--sans); font-size:14px; font-weight:700;
+  color:#fff; cursor:pointer; user-select:none;
+  transition:background .15s;
+}
+#nav-logo:hover { background:#1a1a1a; }
+#nav-logo span { display:block; font-size:10px; font-weight:400; color:#666; margin-top:3px; font-family:var(--mono); }
+
+.nav-part {
+  padding:16px 20px 5px;
+  font-size:9px; letter-spacing:.18em; text-transform:uppercase;
+  color:#76B900; font-weight:700; font-family:var(--mono);
+  border-top:1px solid #1e1e1e; margin-top:4px;
+}
+.nav-part:first-of-type { border-top:none; margin-top:0; }
+
+.nav-link {
+  display:block; padding:6px 20px 6px 24px;
+  font-size:12px; color:#888; text-decoration:none;
+  border-left:2px solid transparent;
+  transition:color .12s, border-color .12s, background .12s;
+  font-family:var(--sans); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.nav-link:hover {
+  color:#fff;
+  border-left-color:#76B900;
+  background:rgba(118,185,0,.08);
+}
+.nav-link.active {
+  color:#76B900;
+  border-left-color:#76B900;
+  background:rgba(118,185,0,.05);
+  font-weight:600;
+}
+.nav-sub { font-size:11px; color:#666; padding-left:32px; }
+.nav-sub:hover { color:#ccc; }
+
+/* ── Part headers: sharper enterprise look ── */
+.part-header {
+  background:#111; color:#fff;
+  padding:36px 60px 28px;
+  border-left:6px solid #76B900;
+  position:relative;
+}
+.part-num {
+  font-family:var(--mono); font-size:11px; letter-spacing:.15em;
+  text-transform:uppercase; color:#76B900; margin-bottom:6px;
+}
+.part-title {
+  font-family:var(--display); font-size:28px; font-weight:600;
+  font-style:italic; color:#fff; line-height:1.2;
+}
+.part-sub {
+  font-size:12px; color:#888; margin-top:8px;
+  font-family:var(--mono); line-height:1.6;
+}
+
+/* ── Section headings ── */
+h2.ch, h2.topic {
+  font-family:var(--display); font-size:26px; font-weight:600;
+  font-style:italic; color:#111;
+  padding-bottom:10px; margin-bottom:6px;
+  border-bottom:3px solid #76B900;
+}
+h3.sub {
+  font-size:14px; font-weight:700; color:#111;
+  margin:28px 0 8px; padding-left:12px;
+  border-left:3px solid #76B900;
+  font-family:var(--sans);
+}
+.topic-num { font-family:var(--mono); font-size:11px; color:#76B900; font-weight:700; }
+.topic-badge {
+  font-family:var(--mono); font-size:10px;
+  padding:3px 10px; border-radius:20px;
+  border:1px solid #c8e8a0; color:#3d6200;
+  background:var(--green-bg); margin-left:auto; flex-shrink:0;
+  white-space:nowrap;
+}
+.topic-header {
+  display:flex; align-items:baseline; gap:12px; margin-bottom:22px;
+  padding-bottom:14px; border-bottom:1px solid #e8e8e4;
+}
+
+/* ── Body text ── */
+p.body, .ep-about-box p {
+  color:#444; font-size:14px; line-height:1.8;
+  margin:8px 0;
+}
+strong.hl { color:#111; font-weight:700; }
+
+/* ── Tables: cleaner enterprise ── */
+table {
+  width:100%; border-collapse:collapse;
+  font-size:13px; border-radius:var(--radius-lg);
+  overflow:hidden; border:1px solid #e8e8e4;
+  box-shadow:var(--shadow);
+}
+thead th {
+  background:#111; color:#fff;
+  padding:10px 16px; text-align:left;
+  font-family:var(--mono); font-size:11px; font-weight:600;
+  letter-spacing:.04em;
+}
+tbody td { padding:10px 16px; border-bottom:1px solid #f0f0ec; color:#444; vertical-align:top; }
+tbody tr:last-child td { border-bottom:none; }
+tbody tr:hover td { background:#f9f9f7; }
+td.key { font-family:var(--mono); font-size:12px; color:#3d6200; font-weight:600; white-space:nowrap; }
+td.win { color:#3d6200; font-weight:700; }
+td.warn { color:#5a3800; font-weight:600; }
+
+/* ── Code blocks ── */
+pre {
+  background:#f8f8f6; border:1px solid #e0e0dc;
+  border-left:4px solid #76B900; border-radius:var(--radius);
+  padding:18px 20px; font-family:var(--mono); font-size:12px;
+  color:#1a3a6e; overflow-x:auto; line-height:1.7;
+  box-shadow:var(--shadow); margin:14px 0;
+}
+code {
+  font-family:var(--mono); font-size:12.5px;
+  background:#f0f0ec; color:#1a3a6e;
+  padding:2px 6px; border-radius:3px;
+  border:1px solid #e0e0dc;
+}
+
+/* ── Note boxes ── */
+.note {
+  padding:14px 18px; border-radius:var(--radius);
+  margin:14px 0; font-size:13px; line-height:1.7;
+  border-left:4px solid;
+}
+.note-g { background:var(--green-bg); border-color:#76B900; color:var(--green-dk); }
+.note-a { background:var(--amber); border-color:#c97d00; color:var(--amber-dk); }
+.note-c { background:var(--blue); border-color:var(--blue-dk); color:var(--blue-dk); }
+
+/* ── Exp blocks ── */
+.exp-block {
+  border-left:4px solid #76B900; background:#fff;
+  border-radius:var(--radius); box-shadow:var(--shadow);
+  overflow:hidden; margin:16px 0;
+}
+.exp-title {
+  background:var(--green-bg); padding:12px 18px;
+  font-size:14px; font-weight:700; color:var(--green-dk);
+  border-bottom:1px solid #c8e8a0; margin:0;
+}
+.exp-body {
+  padding:16px 18px; font-size:13.5px;
+  color:#444; line-height:1.8;
+}
+
+/* ── Section alt subtle bg ── */
+.section { padding:52px 60px; border-bottom:1px solid #eaeae6; background:#fff; }
+.section-alt { background:#f9f9f7; }
+
+/* ── Global hyperlinks ── */
+a[href]:not(.nav-link):not(.ep-link-card):not(.ep-article):not(.ep-full-btn):not(.ep-jump) {
+  color:#3d6200;
+  text-decoration:none;
+  border-bottom:1px solid #c8e8a0;
+  transition:color .12s, border-color .12s;
+}
+a[href]:not(.nav-link):not(.ep-link-card):not(.ep-article):not(.ep-full-btn):not(.ep-jump):hover {
+  color:#76B900;
+  border-bottom-color:#76B900;
+}
+
+/* ── Verify grid vboxes ── */
+.vbox {
+  background:#fff; border:1px solid #e8e8e4;
+  border-radius:var(--radius); padding:12px 16px;
+  font-size:13px; color:#444; line-height:1.6;
+  box-shadow:var(--shadow);
+}
+.vbox strong { color:#111; }
+
+/* ── Flow diagrams ── */
+.flow {
+  background:#f8f8f6; border:1px solid #e0e0dc;
+  border-left:4px solid #76B900; border-radius:var(--radius);
+  padding:18px 20px; font-family:var(--mono); font-size:12px;
+  color:#1a3a6e; overflow-x:auto; line-height:1.8;
+  white-space:pre; margin:14px 0;
+}
+
+/* ── TOC cards ── */
+.toc-card {
+  background:#fff; border:1px solid #e8e8e4;
+  border-radius:var(--radius-lg); padding:14px 16px;
+  text-decoration:none; display:block;
+  box-shadow:var(--shadow); cursor:pointer;
+  transition:border-color .12s, box-shadow .12s, transform .1s;
+}
+.toc-card:hover {
+  border-color:#76B900;
+  box-shadow:0 4px 16px rgba(118,185,0,.15);
+  transform:translateY(-1px);
+}
+.toc-card-part { font-size:9px; text-transform:uppercase; letter-spacing:.12em; color:#888; margin-bottom:3px; font-family:var(--mono); }
+.toc-card-title { font-size:14px; font-weight:700; color:#111; }
+.toc-card-count { font-size:11px; color:#888; margin-top:3px; }
+
 </style>
 </head>
 <body>
 
 <nav id="nav">
-  <div id="nav-logo">
+  <div id="nav-logo" style="cursor:pointer;" data-target="exec-wrap">
     Engineering Portfolio
-    <span>Sudhakar Chundu · March 2026<br>Staff DevOps · Cloud Infra Architect</span>
+    <span>Sudhakar Chundu<br>Staff DevOps · Cloud Infra Architect</span>
   </div>
+
   <div class="nav-part">Overview</div>
-  <a data-target="toc" role="button" style="cursor:pointer;" class="nav-link">Table of Contents</a>
-  <a data-target="verify" role="button" style="cursor:pointer;" class="nav-link">Fact Verification</a>
+  <a class="nav-link" data-target="toc">Contents</a>
+  <a class="nav-link" data-target="verify">Verified Facts</a>
 
   <div class="nav-part">Part A — CI/CD</div>
-  <a data-target="part-a" role="button" style="cursor:pointer;" class="nav-link">A1. Full Architecture</a>
-  <a data-target="a1-infra" role="button" style="cursor:pointer;" class="nav-link nav-sub">↳ Infrastructure</a>
-  <a data-target="a1-bt" role="button" style="cursor:pointer;" class="nav-link nav-sub">↳ Build Types</a>
-  <a data-target="a2" role="button" style="cursor:pointer;" class="nav-link">A2. Nightly Orchestrator</a>
-  <a data-target="a3" role="button" style="cursor:pointer;" class="nav-link">A3. GitOps Flow</a>
-  <a data-target="a4" role="button" style="cursor:pointer;" class="nav-link">A4. Smoke Tests (12)</a>
-  <a data-target="a5" role="button" style="cursor:pointer;" class="nav-link">A5. Jenkins Pipelines</a>
+  <a class="nav-link" data-target="a1">A1. Full Architecture</a>
+  <a class="nav-link nav-sub" data-target="a1-infra">↳ Infrastructure</a>
+  <a class="nav-link nav-sub" data-target="a1-bt">↳ Build Types</a>
+  <a class="nav-link" data-target="a2">A2. Nightly Orchestrator</a>
+  <a class="nav-link" data-target="a3">A3. GitOps Flow</a>
+  <a class="nav-link" data-target="a4">A4. Smoke Tests</a>
+  <a class="nav-link" data-target="a5">A5. Jenkins Pipelines</a>
 
   <div class="nav-part">Part B — Databricks</div>
-  <a data-target="part-b" role="button" style="cursor:pointer;" class="nav-link">B1. Deployment Modes</a>
-  <a data-target="b2" role="button" style="cursor:pointer;" class="nav-link">B2. Spark RAPIDS Arch</a>
-  <a data-target="b3" role="button" style="cursor:pointer;" class="nav-link">B3. Setup &amp; cudf.pandas</a>
-  <a data-target="b4" role="button" style="cursor:pointer;" class="nav-link">B4. AT&amp;T Case Study ★</a>
+  <a class="nav-link" data-target="b1">B1. Deployment Modes</a>
+  <a class="nav-link" data-target="b2">B2. Spark RAPIDS Arch</a>
+  <a class="nav-link" data-target="b3">B3. Setup &amp; cudf.pandas</a>
+  <a class="nav-link" data-target="b4">B4. AT&amp;T Case Study ★</a>
 
-  <div class="nav-part">Part C — Engineering Depth</div>
-  <a data-target="part-c" role="button" style="cursor:pointer;" class="nav-link">C1. conda-build &amp; Packaging</a>
-  <a data-target="wheels" role="button" style="cursor:pointer;" class="nav-link">C2. Python Wheels / PyPI</a>
-  <a data-target="docker" role="button" style="cursor:pointer;" class="nav-link">C3. Docker &amp; Containers</a>
-  <a data-target="cuda" role="button" style="cursor:pointer;" class="nav-link">C4. CUDA / NVIDIA Stack</a>
-  <a data-target="linux" role="button" style="cursor:pointer;" class="nav-link">C5. Linux Sys Admin</a>
-  <a data-target="github" role="button" style="cursor:pointer;" class="nav-link">C6. GitHub Org Mgmt</a>
-  <a data-target="cloud" role="button" style="cursor:pointer;" class="nav-link">C7. AWS / Azure / Cost</a>
-  <a data-target="oss" role="button" style="cursor:pointer;" class="nav-link">C8. Open Source Ops</a>
-  <a data-target="scripting" role="button" style="cursor:pointer;" class="nav-link">C9. Bash / Python Scripts</a>
-  <a data-target="cpp" role="button" style="cursor:pointer;" class="nav-link">C10. GNU Toolchain / C++</a>
+  <div class="nav-part">Part C — NVIDIA Blog Insights</div>
+  <a class="nav-link" data-target="e1">C1. Qualification Tool</a>
+  <a class="nav-link" data-target="e2">C2. Spark 3.0 Architecture</a>
+  <a class="nav-link" data-target="e3">C3. Multi-GPU Dask</a>
+  <a class="nav-link" data-target="e4">C4. CUDA pip Wheels</a>
+  <a class="nav-link" data-target="e5">C5. Reference Facts</a>
 
-  <div class="nav-part">Part D — Technical Experience</div>
-  <a data-target="c2" role="button" style="cursor:pointer;" class="nav-link">D1. CI/CD Experience</a>
-  <a data-target="c2" role="button" style="cursor:pointer;" class="nav-link">D2. CI/CD Deep Dives</a>
-  <a data-target="c3" role="button" style="cursor:pointer;" class="nav-link">D3. Databricks Deep Dives</a>
-  <a data-target="d3" role="button" style="cursor:pointer;" class="nav-link">D4. Technical Deep Dives</a>
-  <a data-target="c4" role="button" style="cursor:pointer;" class="nav-link">D5. RAPIDS Fact Sheet</a>
-  <a data-target="d4" role="button" style="cursor:pointer;" class="nav-link">D6. Reference Facts ★</a><div class="nav-part">Part G — Trackonomy GitHub</div>
-  <a class="nav-link" data-target="g1" role="button" style="cursor:pointer;">G1. Engineering Context</a>
-  <a class="nav-link" data-target="g2" role="button" style="cursor:pointer;">G2. automation — CI/CD Pipelines</a>
-  <a class="nav-link" data-target="g3" role="button" style="cursor:pointer;">G3. infra-lakehouse</a>
-  <a class="nav-link" data-target="g4" role="button" style="cursor:pointer;">G4. vmProvisioning</a>
-  <a class="nav-link" data-target="g5" role="button" style="cursor:pointer;">G5. scripts — SRE Automation</a>
-  <a class="nav-link" data-target="g6" role="button" style="cursor:pointer;">G6. gcp-multi-cluster-demo</a>
-  <a class="nav-link" data-target="g7" role="button" style="cursor:pointer;">G7. Summary &amp; Patterns</a>
+  <div class="nav-part">Part D — Engineering Depth</div>
+  <a class="nav-link" data-target="conda">D1. conda Packaging</a>
+  <a class="nav-link" data-target="wheels">D2. Python Wheels</a>
+  <a class="nav-link" data-target="docker">D3. Docker &amp; Containers</a>
+  <a class="nav-link" data-target="cuda">D4. CUDA Stack</a>
+  <a class="nav-link" data-target="linux">D5. Linux Admin</a>
+  <a class="nav-link" data-target="github">D6. GitHub Org</a>
+  <a class="nav-link" data-target="cloud">D7. AWS / Azure / Cost</a>
+  <a class="nav-link" data-target="oss">D8. Open Source Ops</a>
+  <a class="nav-link" data-target="scripting">D9. Bash / Python</a>
+  <a class="nav-link" data-target="cpp">D10. GNU Toolchain</a>
 
-<div class="nav-part">Part F — OSDU Open Source</div>
-  <a class="nav-link" data-target="f1" role="button" style="cursor:pointer;">F1. OSDU Platform Overview</a>
-  <a class="nav-link" data-target="f2" role="button" style="cursor:pointer;">F2. AWS — terraform-deployment-aws</a>
-  <a class="nav-link" data-target="f3" role="button" style="cursor:pointer;">F3. Azure — infra-azure-provisioning</a>
-  <a class="nav-link" data-target="f4" role="button" style="cursor:pointer;">F4. GCP — infra-gcp-provisioning</a>
-  <a class="nav-link" data-target="f5" role="button" style="cursor:pointer;">F5. Contribution Summary</a>
+  <div class="nav-part">Part E — Technical Scenarios</div>
+  <a class="nav-link" data-target="c2">E1. CI/CD Experience</a>
+  <a class="nav-link" data-target="c3">E2. Databricks Experience</a>
+  <a class="nav-link" data-target="d3">E3. Engineering Deep Dives</a>
+  <a class="nav-link" data-target="c4">E4. RAPIDS Fact Sheet</a>
+  <a class="nav-link" data-target="d4">E5. Engineering Facts</a>
 
-<div class="nav-part">Part E — NVIDIA Blog Insights</div>
-  <a class="nav-link" data-target="part-e" role="button" style="cursor:pointer;">E1. Qualification Tool</a>
-  <a class="nav-link" data-target="e2" role="button" style="cursor:pointer;">E2. Spark 3.0 Architecture</a>
-  <a class="nav-link" data-target="e3" role="button" style="cursor:pointer;">E3. Multi-GPU Dask</a>
-  <a class="nav-link" data-target="e4" role="button" style="cursor:pointer;">E4. CUDA pip Wheels</a>
-  <a class="nav-link" data-target="e5" role="button" style="cursor:pointer;">E5. Facts Reference ★</a>
+  <div class="nav-part">Part F — OSDU Open Source</div>
+  <a class="nav-link" data-target="f1">F1. Platform Overview</a>
+  <a class="nav-link" data-target="f2">F2. AWS Deployment</a>
+  <a class="nav-link" data-target="f3">F3. Azure Provisioning</a>
+  <a class="nav-link" data-target="f4">F4. GCP Provisioning</a>
+  <a class="nav-link" data-target="f5">F5. Summary</a>
 
-  
+  <div class="nav-part">Part G — Trackonomy</div>
+  <a class="nav-link" data-target="g1">G1. Engineering Context</a>
+  <a class="nav-link" data-target="g2">G2. automation</a>
+  <a class="nav-link" data-target="g3">G3. infra-lakehouse</a>
+  <a class="nav-link" data-target="g4">G4. vmProvisioning</a>
+  <a class="nav-link" data-target="g5">G5. scripts</a>
+  <a class="nav-link" data-target="g6">G6. gcp-multi-cluster</a>
+  <a class="nav-link" data-target="g7">G7. Summary</a>
 </nav>
 
 <main id="main">
+<!-- ══════ EXECUTIVE SUMMARY ══════ -->
+<div id="exec-wrap">
+
+<!-- NAV -->
+<div id="exec-nav">
+  <button class="ep-tab on" data-pg="1">① At a Glance</button>
+  <button class="ep-tab"    data-pg="2">② Technical Depth</button>
+  <button class="ep-tab"    data-pg="3">③ Outcomes &amp; Fit</button>
+  <button class="ep-jump"  data-target="hero">↓ Full Document</button>
+</div>
+
+<!-- ══════════ PAGE 1 — AT A GLANCE ══════════ -->
+<div class="ep-page on" id="epg1">
+
+  <div class="ep-hero">
+    <div>
+      <div class="ep-hero-name">Sudhakar Chundu<br><em>Engineering Portfolio</em></div>
+      <div class="ep-hero-sub">Staff DevOps Engineer &nbsp;·&nbsp; Cloud Infrastructure Architect &nbsp;·&nbsp; San Jose CA &nbsp;·&nbsp; 18+ years</div>
+      <div class="ep-hero-sub" style="margin-top:4px;">CKA &nbsp;·&nbsp; HashiCorp Terraform Associate &nbsp;·&nbsp; AWS · GCP · Azure · OCI</div>
+    </div>
+    <div class="ep-hero-right">
+      <div class="ep-for">Candidate for</div>
+      <div class="ep-role-name">Sr. Engineer Build &amp; DevOps – ADI</div>
+      <div class="ep-jrid">NVIDIA &nbsp;·&nbsp; JR2013038</div>
+    </div>
+  </div>
+
+  <div class="ep-body">
+
+    <!-- ABOUT THIS DOCUMENT -->
+    <div class="ep-stitle">About This Document</div>
+    <div class="ep-about-box">
+      <p>This is not a resume. Every section below documents work I actually did — code I wrote, infrastructure I built, systems I operate. The diagrams, configuration examples, and technical scenarios are drawn from my hands-on experience across RAPIDS CI/CD, OSDU open source contributions, and production multi-cloud engineering at Trackonomy. Where I cite facts I include the source. Where I share code patterns they are from real pipelines I own or contributed to.</p>
+      <p style="margin-top:8px;">The document is organised in seven parts (A through G). Each part is a different body of work. You can explore them linearly or jump directly to any section using the navigation on the left.</p>
+    </div>
+
+    <!-- LINKS STRIP -->
+    <div class="ep-stitle" style="margin-top:20px;">Find My Work Online</div>
+    <div class="ep-links-grid">
+      <a class="ep-link-card" href="https://www.cloudmates.me/" target="_blank" rel="noopener">
+        <span class="ep-link-icon">🌐</span>
+        <span class="ep-link-label">Portfolio &amp; Company</span>
+        <span class="ep-link-url">cloudmates.me</span>
+        <span class="ep-link-desc">CloudMates — Cloud &amp; AI Studio I co-founded. DevOps, MLOps, and cloud automation services.</span>
+      </a>
+      <a class="ep-link-card" href="https://schundu.medium.com/" target="_blank" rel="noopener">
+        <span class="ep-link-icon">✍️</span>
+        <span class="ep-link-label">Technical Blog</span>
+        <span class="ep-link-url">schundu.medium.com</span>
+        <span class="ep-link-desc">Writing on GPU infrastructure, observability, Kubernetes, and cloud-native engineering.</span>
+      </a>
+      <a class="ep-link-card" href="https://github.com/schundu007" target="_blank" rel="noopener">
+        <span class="ep-link-icon">⚙️</span>
+        <span class="ep-link-label">Open Source Work</span>
+        <span class="ep-link-url">github.com/schundu007</span>
+        <span class="ep-link-desc">30+ repositories — infrastructure automation, data lakehouse, multi-cluster GKE, SRE scripts.</span>
+      </a>
+      <a class="ep-link-card" href="https://community.opengroup.org/osdu/platform/deployment-and-operations" target="_blank" rel="noopener">
+        <span class="ep-link-icon">🌍</span>
+        <span class="ep-link-label">OSDU Contributions</span>
+        <span class="ep-link-url">community.opengroup.org/osdu</span>
+        <span class="ep-link-desc">AWS, Azure, and GCP infrastructure repos for The Open Group energy data platform.</span>
+      </a>
+    </div>
+
+    <!-- RECENT BLOG ARTICLES -->
+    <div class="ep-stitle" style="margin-top:20px;">Recent Technical Writing</div>
+    <div class="ep-articles">
+      <a class="ep-article" href="https://medium.com/@chundubabu/building-a-production-ai-platform-from-zero-to-1000-gpus-in-6-months-fd421ed7357c" target="_blank" rel="noopener">
+        <span class="ep-article-meta">Oct 2025 &nbsp;·&nbsp; 10 min read</span>
+        <span class="ep-article-title">Building a Production AI Platform: From Zero to 1000 GPUs in 6 Months</span>
+        <span class="ep-article-sub">Architecture, tools, and lessons from launching a $5M/year ML infrastructure for 200+ data scientists running 500+ concurrent training jobs.</span>
+      </a>
+      <a class="ep-article" href="https://schundu.medium.com/building-a-production-ready-apache-flink-management-platform-on-azure-kubernetes-c4eac6264d8c" target="_blank" rel="noopener">
+        <span class="ep-article-meta">Oct 2025 &nbsp;·&nbsp; 5 min read</span>
+        <span class="ep-article-title">Building a Production-Ready Apache Flink Management Platform on Azure Kubernetes</span>
+        <span class="ep-article-sub">Real-time streaming infrastructure control centre with Server-Sent Events, live deployment phase tracking, and operator log streaming.</span>
+      </a>
+      <a class="ep-article" href="https://schundu.medium.com/loki-vs-opentelemetry-theyre-not-competitors-here-s-why-82a8e71f9e88" target="_blank" rel="noopener">
+        <span class="ep-article-meta">Jan 2026 &nbsp;·&nbsp; 4 min read</span>
+        <span class="ep-article-title">Loki vs OpenTelemetry: They're Not Competitors — Here's Why</span>
+        <span class="ep-article-sub">Clarifying the most common observability misconception in cloud-native engineering. OpenTelemetry is the highway; Loki is the warehouse.</span>
+      </a>
+    </div>
+
+    <!-- CERTIFICATIONS + ACHIEVEMENTS -->
+    <div class="ep-stitle" style="margin-top:20px;">Certifications &amp; Achievements</div>
+    <div class="ep-certs-grid">
+      <div class="ep-cert">
+        <span class="ep-cert-badge">✓</span>
+        <div>
+          <div class="ep-cert-name">Certified Kubernetes Administrator (CKA)</div>
+          <div class="ep-cert-body">Linux Foundation — hands-on cluster administration, networking, storage, security, and troubleshooting under exam conditions.</div>
+        </div>
+      </div>
+      <div class="ep-cert">
+        <span class="ep-cert-badge">✓</span>
+        <div>
+          <div class="ep-cert-name">HashiCorp Terraform Associate</div>
+          <div class="ep-cert-body">Infrastructure-as-code fundamentals, state management, modules, and provider architecture — applied across AWS, Azure, GCP, and OCI in production.</div>
+        </div>
+      </div>
+      <div class="ep-cert">
+        <span class="ep-cert-badge">★</span>
+        <div>
+          <div class="ep-cert-name">Co-founder — CloudMates</div>
+          <div class="ep-cert-body">Built and operate <a href="https://www.cloudmates.me/" target="_blank" style="color:var(--green-dk);">cloudmates.me</a> — a Cloud &amp; AI Studio offering DevOps, MLOps, and cloud-native engineering services.</div>
+        </div>
+      </div>
+      <div class="ep-cert">
+        <span class="ep-cert-badge">★</span>
+        <div>
+          <div class="ep-cert-name">$8M+ Cloud Cost Savings — Trackonomy</div>
+          <div class="ep-cert-body">Led the infrastructure engineering that delivered 73% cloud cost reduction across AWS, GCP, Azure, and OCI — covering 30+ SaaS platforms in three geographies.</div>
+        </div>
+      </div>
+      <div class="ep-cert">
+        <span class="ep-cert-badge">★</span>
+        <div>
+          <div class="ep-cert-name">OSDU Open Source Contributor</div>
+          <div class="ep-cert-body">Contributed Terraform IaC to <a href="https://community.opengroup.org/osdu" target="_blank" style="color:var(--green-dk);">The Open Group OSDU</a> — the energy industry's open data platform used by Shell, BP, and Chevron. AWS + Azure + GCP repos.</div>
+        </div>
+      </div>
+      <div class="ep-cert">
+        <span class="ep-cert-badge">★</span>
+        <div>
+          <div class="ep-cert-name">Zero Audit Findings — SOC 2 · HIPAA · FedRAMP · ISO 27001</div>
+          <div class="ep-cert-body">Infrastructure designed and operated at Trackonomy passed all four compliance audits with zero critical findings across security, availability, and confidentiality controls.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KEY NUMBERS -->
+    <div class="ep-stitle" style="margin-top:20px;">By the Numbers</div>
+    <div class="ep-stats">
+      <div class="ep-stat"><span class="ep-stat-n">18+</span><span class="ep-stat-l">Years</span></div>
+      <div class="ep-stat"><span class="ep-stat-n">4</span><span class="ep-stat-l">Clouds</span></div>
+      <div class="ep-stat"><span class="ep-stat-n">30+</span><span class="ep-stat-l">SaaS Platforms</span></div>
+      <div class="ep-stat"><span class="ep-stat-n">$8M+</span><span class="ep-stat-l">Cloud Savings</span></div>
+      <div class="ep-stat"><span class="ep-stat-n">99.97%</span><span class="ep-stat-l">Uptime</span></div>
+      <div class="ep-stat"><span class="ep-stat-n">5K+</span><span class="ep-stat-l">OSS Commits</span></div>
+      <div class="ep-stat"><span class="ep-stat-n">30+</span><span class="ep-stat-l">GitHub Repos</span></div>
+      <div class="ep-stat"><span class="ep-stat-n">0</span><span class="ep-stat-l">Audit Findings</span></div>
+    </div>
+
+  </div>
+
+  <div class="ep-bottom">
+    <span class="ep-bottom-msg">7 parts · Parts A through G · Architecture diagrams · Code · Verified facts</span>
+    <button class="ep-full-btn" data-target="hero">Open Full Document ↓</button>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 2 — TECHNICAL DEPTH ══════════ -->
+<div class="ep-page" id="epg2">
+
+  <div class="ep-hero">
+    <div>
+      <div class="ep-hero-name">Technical <em>Depth Map</em></div>
+      <div class="ep-hero-sub">7 parts &nbsp;·&nbsp; 43 chapters &nbsp;·&nbsp; Topics in A → G order</div>
+    </div>
+  </div>
+
+  <div class="ep-body">
+    <div class="ep-grid2">
+
+      <div class="ep-part-card">
+        <div class="ep-part-label ep-la">Part A — RAPIDS CI/CD Implementation</div>
+        <ul>
+          <li><strong>Full architecture:</strong> 3-repo model, 7-layer diagram — triggers → workflows → shared → runners → infra → GitOps → environments</li>
+          <li><strong>Nightly orchestrator:</strong> rmm → raft → cuDF → cuGraph/cuVS/cucim → cuML/cuspatial dependency order</li>
+          <li><strong>GitOps flow:</strong> yq image tag → Helm validate → ArgoCD sync → rolling update → smoke test</li>
+          <li><strong>Smoke tests:</strong> 12 checks, auto-rollback via ArgoCD on failure</li>
+          <li><strong>Jenkins:</strong> build pipeline + 8-stage release promotion</li>
+          <li><strong>CI matrix:</strong> CUDA 12.9.1/13.0.2 · Python 3.10–3.13 · rockylinux8 · 16 entries reduced to 2 via jq</li>
+        </ul>
+      </div>
+
+      <div class="ep-part-card">
+        <div class="ep-part-label ep-la">Part B — Databricks &amp; Data Platforms</div>
+        <ul>
+          <li><strong>3 deployment modes:</strong> cudf.pandas, Spark RAPIDS Accelerator, Dask-cuDF</li>
+          <li><strong>Critical config:</strong> spark.task.resource.gpu.amount=0.1 — enables 10 concurrent tasks vs 1</li>
+          <li><strong>AT&T case study:</strong> ~3 trillion rows/month, ~70 TB, 33% cheaper than Photon</li>
+          <li><strong>DBR matrix:</strong> 13.3 / 14.3 / 15.4 for Spark RAPIDS; 15.x/16.x/17.x for cudf.pandas</li>
+          <li><strong>Init script:</strong> pip install --extra-index-url=https://pypi.nvidia.com cudf-cu12&gt;=26.02</li>
+          <li><strong>Photon:</strong> must be disabled — cannot coexist with RAPIDS Accelerator</li>
+        </ul>
+      </div>
+
+      <div class="ep-part-card">
+        <div class="ep-part-label ep-lb">Part C — Engineering Depth (10 topics)</div>
+        <ul>
+          <li><strong>conda-build → rattler-build:</strong> migration tracked in build-planning #47, pure CEP YAML, ~3× faster</li>
+          <li><strong>Python wheels:</strong> auditwheel manylinux_2_28, rapids-build-backend CUDA suffix injection, pydistcheck</li>
+          <li><strong>Docker:</strong> ci-imgs (ci-conda/ci-wheel/citestwheel), NVIDIA CTK, multi-arch buildx, NGC</li>
+          <li><strong>CUDA stack:</strong> driver vs runtime, forward compat, pip wheels since 24.12, NVRTC requirement</li>
+          <li><strong>Linux:</strong> Ubuntu vs Rocky Linux 8 (glibc 2.28), ulimits, udev, DKMS, kernel params</li>
+          <li><strong>GitHub org:</strong> CODEOWNERS, copy-pr-bot, branch protection, DCO, org secrets</li>
+          <li><strong>AWS/Azure:</strong> OIDC trust policy, S3 bucket policies, cost lifecycle, workload identity</li>
+          <li><strong>Open source:</strong> PR workflow, release notes automation, stale/labeler bots</li>
+          <li><strong>Bash/Python:</strong> set -euo pipefail, retry patterns, pre-commit, rapids-build-backend</li>
+          <li><strong>GNU toolchain:</strong> GCC 13/15 for CUDA 12/13, CMake CPM, RPATH patchelf, sccache</li>
+        </ul>
+      </div>
+
+      <div class="ep-part-card">
+        <div class="ep-part-label ep-lb">Part D — Technical Experience Scenarios</div>
+        <ul>
+          <li><strong>CI/CD:</strong> spark.task.resource.gpu.amount, matrix_filter jq, columnarOverrides(), smoke test rollback</li>
+          <li><strong>Databricks:</strong> %pip install on driver only, GPU Parquet reader, Photon conflict resolution</li>
+          <li><strong>Packaging:</strong> rattler-build migration, auditwheel CUDA exclusion, RPATH absolute path breakage</li>
+          <li><strong>Infrastructure:</strong> Rocky Linux 8 glibc rationale, copy-pr-bot security model, sccache vs ccache</li>
+          <li><strong>Cloud cost:</strong> AWS GPU CI cost spike investigation, 3× cost analysis and root cause</li>
+          <li><strong>Open source:</strong> DCO compliance, 1000+ PR/year quality management, conda retry patterns</li>
+        </ul>
+      </div>
+
+      <div class="ep-part-card">
+        <div class="ep-part-label ep-lc">Part E — NVIDIA Blog Insights</div>
+        <ul>
+          <li><strong>Qualification Tool:</strong> spark_rapids qualification CLI, XGBoost model trained on NDS benchmarks</li>
+          <li><strong>Spark 3.0 architecture:</strong> columnarOverrides(), UCX GPU shuffle, 43× speedup on Criteo dataset</li>
+          <li><strong>Multi-GPU Dask:</strong> --rmm-async (cudaMallocAsync), --rmm-pool-size, --enable-cudf-spill</li>
+          <li><strong>CUDA pip wheels:</strong> nvidia-cuda-runtime-cu12, NVRTC required for Numba, metapackage</li>
+          <li><strong>Good GPU workload indicators:</strong> high-cardinality joins, aggregations, Parquet/ORC transcoding</li>
+        </ul>
+      </div>
+
+      <div class="ep-part-card">
+        <div class="ep-part-label ep-lc">Part F — OSDU Open Source Contributions</div>
+        <ul>
+          <li><strong>AWS (terraform-deployment-aws):</strong> EKS, Aurora, OpenSearch, IRSA, multi-tenancy M18</li>
+          <li><strong>Azure (infra-azure-provisioning):</strong> 2,303 commits · AKS, Cosmos DB, ADLS Gen2, KEDA, Workload Identity</li>
+          <li><strong>GCP (infra-gcp-provisioning):</strong> 2,996 commits · GKE, Cloud Spanner, Pub/Sub, VPC Service Controls, v1.1.4</li>
+          <li><strong>Pattern:</strong> same IRSA/Workload Identity, S3/GCS artifact store, and GitOps patterns used in RAPIDS CI</li>
+          <li><strong>Industry:</strong> Shell, BP, Chevron as operators · Apache 2.0 · The Open Group</li>
+        </ul>
+      </div>
+
+      <div class="ep-part-card" style="grid-column:1/-1;">
+        <div class="ep-part-label ep-ld">Part G — Trackonomy Systems GitHub (5 repos)</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 24px;">
+          <ul>
+            <li><strong>automation:</strong> GitHub Actions + Azure DevOps pipelines, Terraform plan/apply/drift detection, security scan on every PR</li>
+            <li><strong>infra-lakehouse:</strong> Databricks, Delta Lake Bronze/Silver/Gold, Unity Catalog, IoT sensor data platform across 4 clouds</li>
+            <li><strong>vmProvisioning:</strong> "Terraform automation scripts to provision a VM advanced" — 4-cloud, zero-trust, credential-free (IRSA/MI/SA/IP)</li>
+          </ul>
+          <ul>
+            <li><strong>scripts:</strong> "Automation scripts useful for SREs and devops Admins" — cost cleanup, compliance remediation, incident response, K8s ops</li>
+            <li><strong>gcp-multi-cluster-demo:</strong> "Highly secured multi region GKE Demo" — private GKE, Binary Authorization, Anthos Service Mesh, VPC SC</li>
+            <li><strong>Outcomes:</strong> 73% cost reduction · $8M+ savings · 87% Azure sprawl eliminated · 99.97% uptime · SOC 2/HIPAA/FedRAMP zero findings</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ep-bottom">
+    <span class="ep-bottom-msg">All technical facts verified against live GitHub repos and official NVIDIA documentation</span>
+    <button class="ep-full-btn" data-target="hero">Open Full Document ↓</button>
+  </div>
+</div>
+
+<!-- ══════════ PAGE 3 — OUTCOMES & FIT ══════════ -->
+<div class="ep-page" id="epg3">
+
+  <div class="ep-hero">
+    <div>
+      <div class="ep-hero-name">Outcomes &amp; <em>Role Fit</em></div>
+      <div class="ep-hero-sub">Quantified results · Open source contributions · ADI role requirement coverage</div>
+    </div>
+  </div>
+
+  <div class="ep-body">
+    <div class="ep-grid3">
+
+      <div class="ep-imp-card">
+        <div class="ep-imp-title">Trackonomy Systems — Quantified Outcomes</div>
+        <div class="ep-imp-period">Oct 2023 – Jan 2026 · Principal Cloud Infrastructure Lead · 4 clouds · 30+ SaaS platforms</div>
+        <div class="ep-metrics-grid">
+          <div class="ep-metric"><span class="ep-metric-n">73%</span><span class="ep-metric-l">Cloud Cost Reduction</span></div>
+          <div class="ep-metric"><span class="ep-metric-n">$8M+</span><span class="ep-metric-l">Annual Savings</span></div>
+          <div class="ep-metric"><span class="ep-metric-n">87%</span><span class="ep-metric-l">Azure Sprawl Eliminated</span></div>
+          <div class="ep-metric"><span class="ep-metric-n">95%</span><span class="ep-metric-l">Deployment Time Reduction</span></div>
+          <div class="ep-metric"><span class="ep-metric-n">90%</span><span class="ep-metric-l">Incident Reduction</span></div>
+          <div class="ep-metric"><span class="ep-metric-n">60%</span><span class="ep-metric-l">MTTR Reduction</span></div>
+          <div class="ep-metric"><span class="ep-metric-n">99.97%</span><span class="ep-metric-l">Uptime · 15+ Regions</span></div>
+          <div class="ep-metric"><span class="ep-metric-n">0</span><span class="ep-metric-l">Audit Findings · SOC 2 · HIPAA · FedRAMP · ISO 27001</span></div>
+        </div>
+      </div>
+
+      <div class="ep-imp-card">
+        <div class="ep-imp-title">OSDU Open Source — Contributions</div>
+        <div class="ep-imp-period">Feb 2020 – Oct 2023 · Wipro · The Open Group Forum</div>
+        <div class="ep-osdu-repos">
+          <div class="ep-repo">
+            <div class="ep-repo-name">terraform-deployment-aws</div>
+            <div class="ep-repo-detail">EKS · Aurora · OpenSearch · IRSA · Multi-tenancy M18 (Jul 2023)</div>
+          </div>
+          <div class="ep-repo">
+            <div class="ep-repo-name">infra-azure-provisioning</div>
+            <div class="ep-repo-detail">2,303 commits · 42 tags · AKS · ADLS Gen2 · KEDA · Workload Identity</div>
+          </div>
+          <div class="ep-repo">
+            <div class="ep-repo-name">infra-gcp-provisioning</div>
+            <div class="ep-repo-detail">2,996 commits · 69 tags · GKE · Cloud Spanner · VPC Service Controls · v1.1.4</div>
+          </div>
+          <div style="margin-top:8px;font-size:11px;color:#888;font-family:var(--mono);">
+            Industry partners: Shell · BP · Chevron · Apache 2.0
+          </div>
+        </div>
+      </div>
+
+      <div class="ep-imp-card ep-align-card">
+        <div class="ep-imp-title">ADI Role Requirement Coverage</div>
+        <div class="ep-imp-period">JR2013038 — every requirement mapped to a specific section</div>
+        <div class="ep-align-rows">
+          <div class="ep-arow"><div class="ep-arow-req">CI/CD tooling — Jenkins, Git, GitHub Actions</div><div class="ep-arow-chk">✓</div><div class="ep-arow-ref">Parts A, C, G2 — shared workflows, drift detection, Jenkins pipelines</div></div>
+          <div class="ep-arow"><div class="ep-arow-req">conda and/or PyPI packaging</div><div class="ep-arow-chk">✓</div><div class="ep-arow-ref">Part C — meta.yaml, rattler-build, auditwheel, rapids-build-backend, pydistcheck</div></div>
+          <div class="ep-arow"><div class="ep-arow-req">Container technologies — Docker</div><div class="ep-arow-chk">✓</div><div class="ep-arow-ref">Parts C, G — ci-imgs, NVIDIA CTK, NGC, multi-arch buildx, Binary Authorization</div></div>
+          <div class="ep-arow"><div class="ep-arow-req">NVIDIA CUDA toolkit and drivers</div><div class="ep-arow-chk">✓</div><div class="ep-arow-ref">Parts C, E — driver vs runtime, forward compat, CUDA pip wheels since 24.12</div></div>
+          <div class="ep-arow"><div class="ep-arow-req">Cloud services — AWS, Azure — permissions &amp; cost</div><div class="ep-arow-chk">✓</div><div class="ep-arow-ref">Parts C, F, G — OIDC trust policy, S3 policies, $8M+ cost reduction</div></div>
+          <div class="ep-arow"><div class="ep-arow-req">Linux system administration (Ubuntu preferred)</div><div class="ep-arow-chk">✓</div><div class="ep-arow-ref">Part C — Ubuntu vs Rocky 8, udev, ulimits, DKMS, kernel params</div></div>
+          <div class="ep-arow"><div class="ep-arow-req">GitHub org management and open source</div><div class="ep-arow-chk">✓</div><div class="ep-arow-ref">Parts C, F — CODEOWNERS, Apps, DCO, 3.5-year OSDU OSS contribution</div></div>
+          <div class="ep-arow"><div class="ep-arow-req">Bash and Python automation scripting</div><div class="ep-arow-chk">✓</div><div class="ep-arow-ref">Parts C, G5 — set -euo pipefail, retry, pre-commit, SRE scripts</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ep-bottom">
+    <span class="ep-bottom-msg">Ready to contribute to RAPIDS infrastructure from day one.</span>
+    <button class="ep-full-btn" data-target="hero">Open Full Document ↓</button>
+  </div>
+</div>
+
+</div><!-- /exec-wrap -->
+<!-- ══════ END EXECUTIVE SUMMARY ══════ -->
+
+
+
+
+
 <section id="hero">
   <h1>Sudhakar Chundu<br><em>Engineering Portfolio</em></h1>
   <p>18 years of hands-on infrastructure and DevOps engineering — from OSDU open-source data platform contributions (Shell, BP, Chevron) to Trackonomy multi-cloud SaaS operations ($8M+ savings, 30+ platforms) to RAPIDS GPU-accelerated data science infrastructure at NVIDIA scale. This document presents the technical depth across CI/CD, data platforms, Kubernetes, cloud security, and open source operations.</p>
@@ -1717,8 +2786,349 @@ result = df.groupby("pickup_zone").agg({"fare_amount": "sum"})
     <li>The Parquet/Snappy vs Zstandard finding is directly relevant to build engineering: the GPU Parquet reader in cuDF must be built and tested for both. Knowing which compression a major enterprise actually benefits from is the domain knowledge a Sr Build Engineer should bring.</li>
   </ul>
 </section>
-<div class="part-header" id="part-c">
+<div class="part-header" id="part-e">
   <div class="part-num">Part C</div>
+  <div class="part-title">NVIDIA Technical Blog Insights</div>
+  <div class="part-sub">Applied knowledge — Spark Qualification Tool · Spark 3.0 Architecture · Multi-GPU Dask · CUDA pip Wheels</div>
+</div>
+
+<section class="section" id="e1">
+  <div class="topic-header">
+    <div class="topic-num">E1</div>
+    <h2 class="topic">Spark RAPIDS Qualification Tool</h2>
+    <div class="topic-badge">Source: developer.nvidia.com/blog/predicting-performance-on-apache-spark-with-gpus</div>
+  </div>
+
+  <p class="body">The <strong class="hl">Spark RAPIDS Qualification Tool</strong> answers the hardest question before a GPU migration: <em>which of my existing CPU Spark jobs will actually benefit from GPU acceleration?</em> It takes Spark event logs as input and runs an XGBoost ML model (trained on NDS benchmarks and historical CPU/GPU matching runs) to predict per-job speedup without you needing to run a single GPU job first.</p>
+
+  <h3 class="sub">E1.1 How the Tool Works</h3>
+  <div class="flow">INPUT:  Spark event logs (Spark 2.x or 3.x CPU jobs)
+         ↓  parse raw event log → intermediate CSV files per sqlID
+         ↓  features extracted:
+              • disk bytes spilled
+              • max heap memory used
+              • estimated scan bandwidth
+              • per-operator query plan details
+              • data size per stage
+         ↓
+ML MODEL:  XGBoost, pre-trained on NDS benchmark (CPU + GPU historical runs)
+         ↓  estimates speedup at individual operator level
+         ↓  combines with heuristics for overall workload qualification
+
+OUTPUT:  ① Qualified workload list (ranked by GPU migration benefit)
+         ② Recommended Spark configs for GPU (based on cluster memory/cores + event log)
+         ③ For CSP (AWS EMR, Databricks, Dataproc): recommended GPU cluster shape
+               → instance type + count + GPU model</div>
+
+  <div class="note note-c"><strong>CLI usage:</strong> <code>spark_rapids qualification --eventlogs &lt;file-path&gt; --platform &lt;platform&gt;</code><br>Install via pip: <code>pip install spark-rapids-user-tools</code>. Supports AWS EMR, Google Dataproc, Databricks (AWS/Azure), and on-premise.</div>
+
+  <h3 class="sub">E1.2 What Makes a Workload a Good or Bad GPU Candidate</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Positive GPU indicators (accelerates well)</th><th>Negative GPU indicators (may not benefit)</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="win">High-cardinality joins (hash join on large tables)</td>
+        <td class="warn">Small datasets (GPU overhead &gt; compute benefit)</td>
+      </tr>
+      <tr>
+        <td class="win">Aggregations (groupBy sum, count, min, max at scale)</td>
+        <td class="warn">Large amounts of data movement / shuffle between stages</td>
+      </tr>
+      <tr>
+        <td class="win">Sort operations on 100M+ rows</td>
+        <td class="warn">Complex UDFs without GPU equivalents</td>
+      </tr>
+      <tr>
+        <td class="win">Window functions on large partitions</td>
+        <td class="warn">Workloads dominated by Python/Pandas UDF row-level processing</td>
+      </tr>
+      <tr>
+        <td class="win">Parquet/ORC/CSV transcoding (GPU decoder: 10-30x faster)</td>
+        <td class="warn">Workloads unlike NDS benchmarks (use custom model in that case)</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="sub">E1.3 Building a Custom Qualification Model</h3>
+  <p class="body">When pre-trained NDS models don't match your environment (different hardware, network, GPU type), build a custom model:</p>
+  <ol class="num">
+    <li>Run identical workloads on both CPU cluster and GPU cluster</li>
+    <li>Collect event logs from both runs</li>
+    <li>Preprocess logs → extract features per sqlID (same CSV format as built-in tool)</li>
+    <li>Train XGBoost model on (CPU_features → GPU_speedup) pairs</li>
+    <li>Evaluate feature importance — disk spill, scan bandwidth, operator mix are typically top features</li>
+    <li>Plug custom model into qualification tool for environment-specific predictions</li>
+  </ol>
+
+  <div class="exp-block">
+  <h4 class="exp-title">Validating RAPIDS Spark Migration Value — Qualification Tool</h4>
+  <div class="exp-body">Use the Spark RAPIDS Qualification Tool. Install <code>spark-rapids-user-tools</code> via pip, point it at the customer's CPU Spark event logs, and run <code>spark_rapids qualification --eventlogs ./logs/ --platform databricks</code>. The tool runs an XGBoost model trained on NDS benchmarks against the event log features — scan bandwidth, disk spill, operator composition, data size — and outputs a ranked list of SQL IDs by predicted GPU speedup, along with recommended Spark configs and GPU cluster shape. For jobs unlike the NDS benchmark (unusual schemas, heavy UDFs, non-standard shuffle patterns), build a custom model by running a representative sample on both CPU and GPU, collecting paired event logs, and training on the actual CPU→GPU speedup ratios. This avoids the common mistake of migrating a workload that's actually dominated by small-dataset operations or complex Python UDFs, where GPU overhead exceeds the benefit. The tool measures time spent specifically on SQL DataFrame operations — not Python driver overhead — so the predictions are realistic about where GPU acceleration actually applies.</div>
+</div>
+</section>
+
+<section class="section section-alt" id="e2">
+  <div class="topic-header">
+    <div class="topic-num">E2</div>
+    <h2 class="topic">Spark 3.0 GPU Architecture — How RAPIDS Integrates</h2>
+    <div class="topic-badge">Source: developer.nvidia.com/blog/accelerating-apache-spark-3-0-with-gpus-and-rapids</div>
+  </div>
+
+  <p class="body">Apache Spark 3.0 introduced native GPU scheduling — a fundamental architectural shift that enabled the RAPIDS Accelerator to replace CPU operators without any user code changes. Understanding this architecture is essential for the DevOps role because it explains <em>why</em> each Spark config tuning parameter works the way it does.</p>
+
+  <h3 class="sub">E2.1 The Spark 2.x Problem — Why Two Clusters Were Needed</h3>
+  <p class="body">In Spark 2.x, <strong class="hl">80% of a data scientist's time is spent on data preprocessing</strong> (ETL/feature engineering). Spark 2.x had no GPU awareness — ETL ran on CPU clusters, then data had to be transferred to separate GPU clusters for ML training. Every pipeline required two cluster configurations, data serialisation between them, and double the operational overhead.</p>
+
+  <h3 class="sub">E2.2 Spark 3.0 + RAPIDS — Single End-to-End GPU Pipeline</h3>
+  <div class="flow">Spark 3.0 Single GPU Cluster — End-to-End Pipeline:
+
+  Raw data (S3/ADLS/GCS)
+       │
+       ▼  GPU Parquet reader (10-30x faster than CPU decoder)
+  GPU Memory (cuDF DataFrames)
+       │
+       ▼  GPU ETL: joins, aggregations, sort, filter, window ops
+  Engineered features (still in GPU memory)
+       │
+       ▼  GPU ML training: XGBoost / cuML / PyTorch / TensorFlow
+  Model artifacts
+       │
+       ▼  GPU inference (Triton Inference Server)
+  Predictions
+
+No CPU-GPU cluster switching. No data serialisation between phases.
+Data stays in GPU memory from ingest through model output.</div>
+
+  <h3 class="sub">E2.3 The UCX Shuffle — Eliminating the CPU Network Bottleneck</h3>
+  <p class="body">Standard Spark shuffle routes data through CPU memory → serialise → write to local disk → send over network → deserialise → load into executor. For GPU workloads this means GPU→CPU→disk→network→CPU→GPU for every shuffle operation. RAPIDS replaces this with <strong class="hl">UCX-based GPU shuffle</strong>:</p>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Shuffle path</th><th>Hops</th><th>Performance</th></tr></thead>
+    <tbody>
+      <tr><td>Standard Spark CPU shuffle</td><td>GPU → CPU → disk → network → CPU → GPU</td><td class="warn">Baseline</td></tr>
+      <tr><td>RAPIDS UCX same-node (NVLink)</td><td>GPU → GPU (NVLink, 600 GB/s)</td><td class="win">Near-zero latency</td></tr>
+      <tr><td>RAPIDS UCX cross-node (InfiniBand)</td><td>GPU → RDMA NIC → GPU</td><td class="win">Bypasses CPU entirely</td></tr>
+      <tr><td>RAPIDS UCX cross-node (TCP fallback)</td><td>GPU → CPU → TCP → CPU → GPU</td><td>Better than standard (less serialization)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note note-g"><strong>Verified benchmark:</strong> With 8x V100 32GB GPUs on the Criteo Terabyte click logs dataset (one of the largest public recommendation datasets), RAPIDS achieved up to <strong>43x speedup</strong> in data preprocessing time vs an equivalent CPU Spark pipeline. CPU config: AWS r5d.24xlarge, 96 cores, 768GB RAM.</div>
+
+  <h3 class="sub">E2.4 GPU-Aware Scheduling in Spark 3.0</h3>
+  <p class="body">Spark 3.0 introduced resource scheduling for GPUs as first-class resources alongside CPU cores and memory. This is what makes <code>spark.task.resource.gpu.amount=0.1</code> work — Spark now understands GPU as a schedulable resource and tracks how many GPU "slots" are available per executor.</p>
+  <div class="pre-label">How GPU resource scheduling works</div>
+  <pre># Spark executor resource config
+spark.executor.resource.gpu.amount=1      # 1 GPU per executor (fixed by Databricks)
+spark.task.resource.gpu.amount=0.1        # each task uses 1/10th of the GPU resource
+
+# Result: Spark scheduler allows 10 tasks to run simultaneously per executor
+# Why this matters: Parquet reads are I/O-bound, not compute-bound
+# GPU is idle 80% of the time during a Parquet read task
+# With 10 concurrent tasks, GPU decode runs in parallel with I/O waits of other tasks
+
+# The RAPIDS Accelerator's columnarOverrides() is called by Spark
+# after physical plan generation to replace CPU operators:
+#   SortExec           → GpuSortExec
+#   ShuffleHashJoinExec → GpuShuffledHashJoinExec
+#   HashAggregateExec  → GpuHashAggregateExec
+#   FileSourceScanExec → GpuBatchScanExec (GPU Parquet reader)</pre>
+
+  <div class="exp-block">
+  <h4 class="exp-title">RAPIDS Accelerator Performance Regression — Diagnosis and Resolution</h4>
+  <div class="exp-body">Four most common causes in order of likelihood: (1) <strong>spark.task.resource.gpu.amount not set to 0.1</strong> — default 1.0 means only one task runs per GPU at a time. For I/O-bound stages (Parquet reads), the GPU sits idle while a single task waits for disk/network. Setting 0.1 alone typically gives 3-5x throughput improvement. (2) <strong>High CPU fallback rate</strong> — run with spark.rapids.sql.explain=ALL and check the driver log for GpuXxx labels vs plain operator names. If you see many GpuColumnarToRow / RowToColumnarExec transitions, the cost of converting data between GPU columnar and CPU row format between stages exceeds the GPU compute benefit. Identify which operators are falling back and either configure them (spark.rapids.sql.incompatibleOps.enabled=true) or restructure the query. (3) <strong>Small dataset</strong> — GPU has fixed overhead per operation (kernel launch, CUDA context). For datasets under ~10M rows, this overhead can dominate. The Qualification Tool explicitly flags small-dataset jobs as poor GPU candidates. (4) <strong>Complex Python UDFs</strong> — Python UDFs force data off the GPU into CPU Python, execute row-by-row, then move back to GPU. One UDF per row on 1B rows will be catastrophically slow. Rewrite as a RAPIDS accelerated UDF implementing evaluateColumnar() which receives cudf.ColumnVector inputs and executes in bulk.</div>
+</div>
+</section>
+
+<section class="section" id="e3">
+  <div class="topic-header">
+    <div class="topic-num">E3</div>
+    <h2 class="topic">Multi-GPU Dask Best Practices</h2>
+    <div class="topic-badge">Source: developer.nvidia.com/blog/best-practices-for-multi-gpu-data-analysis-using-rapids-with-dask</div>
+  </div>
+
+  <p class="body">NVIDIA's official best practices guide for multi-GPU Dask workloads covers three areas critical to production deployments: CPU/GPU backend switching, memory configuration, and UCX networking. These are real production patterns used in NVIDIA's own data curation framework (NeMo Curator).</p>
+
+  <h3 class="sub">E3.1 CPU/GPU Backend Switching — Write Once, Run Anywhere</h3>
+  <p class="body">Dask supports identical code running on CPU (numpy/pandas) or GPU (cupy/cudf) backends via a single config flag. This is the same mechanism PyTorch uses for device targeting:</p>
+  <pre># GPU backends (for RAPIDS acceleration)
+dask.config.set({"array.backend": "cupy"})
+dask.config.set({"dataframe.backend": "cudf"})
+
+# CPU backends (for testing, small datasets, CI without GPU)
+dask.config.set({"array.backend": "numpy"})
+dask.config.set({"dataframe.backend": "pandas"})
+
+# Or via environment variable (useful in CI/CD)
+export DASK_DATAFRAME__BACKEND=cudf
+
+# Same analysis code — no per-backend I/O calls needed
+with dask.config.set({"dataframe.backend": "cudf"}):
+    ddf = dd.read_parquet("s3://bucket/data/")
+    result = ddf.groupby("col").agg({"val": ["sum", "min", "mean"]})
+    result.compute()   # ← executes on GPU if backend=cudf, CPU if backend=pandas</pre>
+  <div class="note note-g"><strong>Why this matters for RAPIDS DevOps:</strong> CI pipelines can run the same test suite on CPU runners (fast, cheap) using <code>DASK_DATAFRAME__BACKEND=pandas</code> for correctness testing, then on GPU runners with <code>DASK_DATAFRAME__BACKEND=cudf</code> for performance validation — without maintaining two separate test codebases. This is exactly the kind of CI design pattern the RAPIDS team needs DevOps engineers to implement.</div>
+
+  <h3 class="sub">E3.2 Optimal Dask Worker Memory Configuration</h3>
+  <p class="body">The recommended worker start command for tabular ETL workloads (filters, joins, aggregations) and deduplication (NeMo Curator):</p>
+  <pre>dask cuda worker &lt;SCHEDULER:IP&gt;     --rmm-async \              # cudaMallocAsync — reduces memory fragmentation
+    --rmm-pool-size &lt;SIZE&gt; \  # pre-allocate GPU memory pool (e.g., 14GB on 16GB GPU)
+    --enable-cudf-spill        # spill cuDF buffers to host RAM when GPU OOM</pre>
+
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Parameter</th><th>What it does</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="key">--rmm-async</td>
+        <td>Uses <code>cudaMallocAsync</code> (stream-ordered allocator) instead of raw <code>cudaMalloc</code></td>
+        <td>Dramatically reduces memory fragmentation. Fragmentation is the #1 cause of OOM errors in long-running GPU workloads — a 14GB GPU can appear full even though only 8GB is actually in use due to fragmentation. <code>cudaMallocAsync</code> coalesces free blocks across CUDA streams.</td>
+      </tr>
+      <tr>
+        <td class="key">--rmm-pool-size</td>
+        <td>Pre-allocates a single large GPU memory pool at startup</td>
+        <td>Data workloads make thousands to millions of alloc/free calls. Raw <code>cudaMalloc</code>/<code>cudaFree</code> calls are expensive (kernel launch per call). A pre-allocated pool serves sub-allocations in microseconds vs milliseconds. Typical setting: 85-90% of GPU memory (e.g., 14GB on a 16GB V100).</td>
+      </tr>
+      <tr>
+        <td class="key">--enable-cudf-spill</td>
+        <td>cuDF's internal host-memory spilling mechanism</td>
+        <td>When a GPU operation would exceed available GPU memory, cuDF moves buffers to host RAM automatically. Preferable to OOM crash. Works best for out-of-core scenarios (dataset larger than GPU memory). Has some performance penalty but enables jobs to complete that would otherwise fail.</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="sub">E3.3 UCX Networking — Essential for Dense Multi-GPU Systems</h3>
+  <pre># Enable UCX protocol in LocalCUDACluster for max GPU-to-GPU performance
+from dask_cuda import LocalCUDACluster
+from dask.distributed import Client
+
+cluster = LocalCUDACluster(
+    protocol="ucx",               # UCX transport instead of TCP
+    enable_tcp_over_ucx=True,     # TCP fallback via UCX (graceful degradation)
+    enable_nvlink=True,           # NVLink for intra-node GPU-GPU (up to 600 GB/s)
+    enable_infiniband=True,       # InfiniBand for inter-node (if available)
+    rmm_pool_size="14GB",         # pre-allocate pool on each worker
+)
+client = Client(cluster)
+
+# For multi-node: configure UCX environment
+# UCX_TLS=rc,cuda_copy,cuda_ipc   ← RDMA + direct GPU memory copy + IPC
+# UCX_CUDA_COPY_MAX_REG_RATIO=1.0 ← allow registering all GPU memory for RDMA</pre>
+  <div class="note note-a"><strong>When UCX is critical vs optional:</strong> For single-node multi-GPU (NVLink-connected), UCX with <code>enable_nvlink=True</code> is essential — it bypasses PCIe entirely for GPU-GPU transfers. For cross-node shuffle on standard Ethernet, UCX TCP still reduces serialization overhead vs native Dask TCP. For cross-node on InfiniBand (HPC clusters), UCX RDMA is mandatory for near-linear scaling.</div>
+
+  <h3 class="sub">E3.4 Out-of-Core / Spilling Strategy Matrix</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Scenario</th><th>Recommended spill config</th><th>Trade-off</th></tr></thead>
+    <tbody>
+      <tr><td>Dataset fits in GPU memory</td><td>No spilling needed. Use <code>--rmm-pool-size</code> only.</td><td class="win">Maximum performance, no spill overhead</td></tr>
+      <tr><td>Dataset 1.5–3x GPU memory</td><td><code>--enable-cudf-spill</code> (cuDF host spill)</td><td>~20-40% performance reduction, job completes</td></tr>
+      <tr><td>Dataset &gt;3x GPU memory</td><td><code>--enable-cudf-spill</code> + <code>--device-memory-limit</code></td><td>Significant spill overhead; consider adding GPU workers</td></tr>
+      <tr><td>Unpredictable memory spikes</td><td><code>--rmm-async</code> + <code>--enable-cudf-spill</code></td><td>Best stability — async allocator handles fragmentation, spill handles OOM</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="exp-block">
+  <h4 class="exp-title">Multi-GPU Dask OOM — Memory Fragmentation Root Cause and Fix</h4>
+  <div class="exp-body">This is a GPU memory fragmentation OOM — the classic symptom is nvidia-smi showing significant free memory but CUDA allocation still failing. When raw <code>cudaMalloc</code> (the default) frees memory, it doesn't always return contiguous blocks to the pool. After thousands of alloc/free cycles in a long ETL job, the 6GB of "free" memory exists as hundreds of non-contiguous small chunks. The next large allocation (e.g., a 2GB intermediate join result) cannot find a contiguous 2GB block and raises OOM even though 6GB is technically free. Fix: restart the dask-cuda workers with <code>--rmm-async</code> which switches to <code>cudaMallocAsync</code> — the CUDA stream-ordered memory allocator. It uses virtual memory mapping and coalesces adjacent free blocks across streams, dramatically reducing fragmentation. Additionally add <code>--rmm-pool-size 13GB</code> (on a 16GB GPU) to pre-allocate a single contiguous pool at startup, which makes sub-allocations behave like a traditional malloc pool. For workloads that still OOM after these fixes, add <code>--enable-cudf-spill</code> to allow cuDF to move buffers to host RAM automatically when GPU pressure is high.</div>
+</div>
+</section>
+
+<section class="section section-alt" id="e4">
+  <div class="topic-header">
+    <div class="topic-num">E4</div>
+    <h2 class="topic">CUDA Pip Wheels — Official Installation Guide</h2>
+    <div class="topic-badge">Source: docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#pip-wheels</div>
+  </div>
+
+  <p class="body">Since RAPIDS 24.12, CUDA toolkit components are installable directly via pip — no apt/dnf required. This matters for RAPIDS DevOps because wheel-based RAPIDS packages (<code>cudf-cu12</code>, <code>cuml-cu12</code>) depend on these CUDA pip wheel packages for their CUDA runtime dependencies in non-conda environments.</p>
+
+  <h3 class="sub">E4.1 CUDA Pip Wheel Package Structure</h3>
+  <pre># Install CUDA 12 toolkit components via pip (no root, no apt)
+pip install nvidia-cuda-runtime-cu12      # CUDA runtime (libcudart.so.12)
+pip install nvidia-cuda-nvcc-cu12         # NVCC compiler (for runtime compilation)
+pip install nvidia-cublas-cu12            # cuBLAS
+pip install nvidia-cusolver-cu12          # cuSOLVER
+pip install nvidia-cusparse-cu12          # cuSPARSE
+pip install nvidia-cufft-cu12             # cuFFT
+pip install nvidia-cudnn-cu12             # cuDNN (for deep learning)
+
+# OR install all at once via metapackage
+pip install nvidia-cuda-toolkit           # pulls all CUDA 12 components
+
+# CUDA 13 equivalents
+pip install nvidia-cuda-runtime-cu13
+pip install nvidia-cublas-cu13</pre>
+
+  <h3 class="sub">E4.2 Why pip Wheels for CUDA — Key Advantages</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Aspect</th><th>apt/dnf install</th><th>pip wheels</th></tr></thead>
+    <tbody>
+      <tr><td class="key">Root required?</td><td class="warn">Yes</td><td class="win">No — installs to site-packages</td></tr>
+      <tr><td class="key">Version isolation</td><td class="warn">System-wide, one version at a time</td><td class="win">Per-virtualenv, multiple versions coexist</td></tr>
+      <tr><td class="key">CI/CD integration</td><td class="warn">Requires privileged container or apt cache</td><td class="win">pip install in Dockerfile USER layer</td></tr>
+      <tr><td class="key">RAPIDS wheel dep resolution</td><td>Manual</td><td class="win">Automatic — cudf-cu12 declares nvidia-cuda-runtime-cu12 as dep</td></tr>
+      <tr><td class="key">NVRTC (required for RAPIDS wheels)</td><td>Needs cuda-toolkit-devel package</td><td class="win"><code>pip install nvidia-cuda-nvrtc-cu12</code></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note note-c"><strong>RAPIDS wheels require NVRTC:</strong> The official RAPIDS installation guide states that pip installations require NVRTC for Numba to function properly. For Docker, this means RAPIDS wheels require the <code>devel</code> flavor of <code>nvidia/cuda</code> images — the <code>base</code> and <code>runtime</code> flavors are not sufficient. Alternatively, install <code>nvidia-cuda-nvrtc-cu12</code> via pip into a runtime image.</div>
+
+  <h3 class="sub">E4.3 CUDA pip Wheel Dependency Chain for RAPIDS</h3>
+  <div class="flow">pip install cudf-cu12
+  ├─ requires: nvidia-cuda-runtime-cu12 ≥ 12.0
+  ├─ requires: nvidia-cublas-cu12        (for cuML, not cuDF directly)
+  ├─ requires: nvidia-cuda-nvrtc-cu12    (Numba JIT compilation)
+  └─ requires: rmm-cu12 == 26.2.*        (RAPIDS Memory Manager)
+
+pip install cuml-cu12
+  ├─ requires: cudf-cu12 == 26.2.*
+  ├─ requires: nvidia-cublas-cu12
+  ├─ requires: nvidia-cusolver-cu12      (PCA, SVD, KernelRidge)
+  └─ requires: nvidia-cusparse-cu12      (sparse ML ops)
+
+# All resolved automatically by pip dependency solver
+# No manual CUDA apt install needed in containers using this pattern</div>
+
+  <div class="exp-block">
+  <h4 class="exp-title">RAPIDS 24.12 Packaging Change — CUDA pip Wheels Impact</h4>
+  <div class="exp-body">RAPIDS 24.12 completed the migration to using CUDA pip wheels for CUDA runtime dependencies rather than expecting users to have a system CUDA installation. Before this change, installing <code>cudf-cu12</code> via pip required a separately installed CUDA 12 toolkit on the host — either via apt, dnf, or the CUDA runfile. If the toolkit version didn't match the wheel, you'd get cryptic ImportError or libcudart symbol errors. After the change, <code>pip install cudf-cu12</code> automatically pulls <code>nvidia-cuda-runtime-cu12</code> as a dependency — the CUDA runtime is installed into the virtualenv's site-packages alongside cuDF, isolated from any system CUDA installation. This is transformative for CI: a bare Docker container with just Python and NVIDIA drivers can now get a working RAPIDS installation with a single pip command, without needing a privileged apt install step or a fat CUDA-devel base image. The one remaining requirement is the NVIDIA driver on the host (libcuda.so.1) and NVRTC — but NVRTC is also available as <code>nvidia-cuda-nvrtc-cu12</code> via pip, so the entire stack is pip-installable.</div>
+</div>
+</section>
+
+<section class="section" id="e5">
+  <div class="topic-header">
+    <div class="topic-num">E5</div>
+    <h2 class="topic">Unified Quick Reference — New Facts from NVIDIA Blogs</h2>
+    <div class="topic-badge">Print for interview day · all sourced from official NVIDIA documentation</div>
+  </div>
+
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Fact</th><th>Value / Detail</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td class="key">Qualification Tool install</td><td><code>pip install spark-rapids-user-tools</code></td><td>predicting-performance blog</td></tr>
+      <tr><td class="key">Qualification Tool CLI</td><td><code>spark_rapids qualification --eventlogs &lt;path&gt; --platform &lt;platform&gt;</code></td><td>predicting-performance blog</td></tr>
+      <tr><td class="key">Qualification ML model</td><td>XGBoost, pre-trained on NDS benchmarks (CPU+GPU historical run pairs)</td><td>predicting-performance blog</td></tr>
+      <tr><td class="key">Good GPU workload indicators</td><td>High-cardinality joins, aggregations, sort, window ops, Parquet/ORC/CSV transcoding</td><td>predicting-performance blog</td></tr>
+      <tr><td class="key">Poor GPU workload indicators</td><td>Small datasets, heavy data movement/shuffle, complex Python UDFs</td><td>predicting-performance blog</td></tr>
+      <tr><td class="key">Criteo Terabyte benchmark</td><td>43x speedup with 8x V100 32GB vs CPU (AWS r5d.24xlarge, 96 cores, 768GB RAM)</td><td>accelerating-spark-3.0 blog</td></tr>
+      <tr><td class="key">Data scientist time on ETL</td><td>80% of a data scientist's time is spent on data preprocessing (ETL/feature engineering)</td><td>accelerating-spark-3.0 blog</td></tr>
+      <tr><td class="key">UCX NVLink bandwidth</td><td>Up to 600 GB/s GPU-GPU on same node (vs PCIe: ~16 GB/s)</td><td>best-practices-dask blog</td></tr>
+      <tr><td class="key">dask.config GPU backend</td><td><code>dask.config.set({"dataframe.backend": "cudf"})</code></td><td>best-practices-dask blog</td></tr>
+      <tr><td class="key">dask.config env var</td><td><code>DASK_DATAFRAME__BACKEND=cudf</code></td><td>best-practices-dask blog</td></tr>
+      <tr><td class="key">--rmm-async</td><td>Switches to cudaMallocAsync — reduces GPU memory fragmentation that causes OOM even with free memory</td><td>best-practices-dask blog</td></tr>
+      <tr><td class="key">--rmm-pool-size</td><td>Pre-allocate GPU memory pool — makes thousands of alloc/free calls microsecond-fast vs millisecond</td><td>best-practices-dask blog</td></tr>
+      <tr><td class="key">--enable-cudf-spill</td><td>cuDF automatically moves buffers to host RAM when GPU memory is exhausted — prevents OOM crash</td><td>best-practices-dask blog</td></tr>
+      <tr><td class="key">CUDA pip wheels available since</td><td>RAPIDS 24.12 — full CUDA runtime installable via pip without system apt/dnf</td><td>cuda-installation-guide-linux</td></tr>
+      <tr><td class="key">CUDA runtime pip install</td><td><code>pip install nvidia-cuda-runtime-cu12</code> (or cu13)</td><td>cuda-installation-guide-linux</td></tr>
+      <tr><td class="key">NVRTC pip install</td><td><code>pip install nvidia-cuda-nvrtc-cu12</code> — required for Numba in RAPIDS wheels</td><td>cuda-installation-guide-linux</td></tr>
+      <tr><td class="key">CUDA metapackage</td><td><code>pip install nvidia-cuda-toolkit</code> — installs all CUDA 12 components</td><td>cuda-installation-guide-linux</td></tr>
+      <tr><td class="key">Spark physical plan interception</td><td>columnarOverrides() called after physical plan generation. Replaces SortExec→GpuSortExec, etc.</td><td>accelerating-spark-3.0 blog</td></tr>
+      <tr><td class="key">spark.rapids.sql.explain=ALL</td><td>Shows full replacement plan in driver log — GpuXxx = GPU, warnings = CPU fallback</td><td>accelerating-spark-3.0 blog</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     PART F HEADER
+═══════════════════════════════════════════════════════════ -->
+<div class="part-header" id="part-c">
+  <div class="part-num">Part D</div>
   <div class="part-title">Engineering Depth</div>
   <div class="part-sub">RAPIDS Engineering Depth — conda · Python Wheels · Docker · CUDA · Linux · GitHub Org · AWS/Azure · Open Source · Scripting · GNU Toolchain</div>
 </div>
@@ -2745,7 +4155,7 @@ rapids_cpm_find(rmm 26.02.00
 </div>
 </section>
 <div class="part-header" id="part-d">
-  <div class="part-num">Part D</div>
+  <div class="part-num">Part E</div>
   <div class="part-title">Technical Experience</div>
   <div class="part-sub">Technical experience scenarios across CI/CD, Databricks, and engineering deep dives</div>
 </div>
@@ -2923,347 +4333,6 @@ rapids_cpm_find(rmm 26.02.00
 </section>
 
 <!-- ════════════ PART E: NVIDIA TECHNICAL BLOG INSIGHTS ════════════ -->
-<div class="part-header" id="part-e">
-  <div class="part-num">Part E</div>
-  <div class="part-title">NVIDIA Technical Blog Insights</div>
-  <div class="part-sub">Applied knowledge — Spark Qualification Tool · Spark 3.0 Architecture · Multi-GPU Dask · CUDA pip Wheels</div>
-</div>
-
-<section class="section" id="e1">
-  <div class="topic-header">
-    <div class="topic-num">E1</div>
-    <h2 class="topic">Spark RAPIDS Qualification Tool</h2>
-    <div class="topic-badge">Source: developer.nvidia.com/blog/predicting-performance-on-apache-spark-with-gpus</div>
-  </div>
-
-  <p class="body">The <strong class="hl">Spark RAPIDS Qualification Tool</strong> answers the hardest question before a GPU migration: <em>which of my existing CPU Spark jobs will actually benefit from GPU acceleration?</em> It takes Spark event logs as input and runs an XGBoost ML model (trained on NDS benchmarks and historical CPU/GPU matching runs) to predict per-job speedup without you needing to run a single GPU job first.</p>
-
-  <h3 class="sub">E1.1 How the Tool Works</h3>
-  <div class="flow">INPUT:  Spark event logs (Spark 2.x or 3.x CPU jobs)
-         ↓  parse raw event log → intermediate CSV files per sqlID
-         ↓  features extracted:
-              • disk bytes spilled
-              • max heap memory used
-              • estimated scan bandwidth
-              • per-operator query plan details
-              • data size per stage
-         ↓
-ML MODEL:  XGBoost, pre-trained on NDS benchmark (CPU + GPU historical runs)
-         ↓  estimates speedup at individual operator level
-         ↓  combines with heuristics for overall workload qualification
-
-OUTPUT:  ① Qualified workload list (ranked by GPU migration benefit)
-         ② Recommended Spark configs for GPU (based on cluster memory/cores + event log)
-         ③ For CSP (AWS EMR, Databricks, Dataproc): recommended GPU cluster shape
-               → instance type + count + GPU model</div>
-
-  <div class="note note-c"><strong>CLI usage:</strong> <code>spark_rapids qualification --eventlogs &lt;file-path&gt; --platform &lt;platform&gt;</code><br>Install via pip: <code>pip install spark-rapids-user-tools</code>. Supports AWS EMR, Google Dataproc, Databricks (AWS/Azure), and on-premise.</div>
-
-  <h3 class="sub">E1.2 What Makes a Workload a Good or Bad GPU Candidate</h3>
-  <div class="tbl-wrap"><table>
-    <thead><tr><th>Positive GPU indicators (accelerates well)</th><th>Negative GPU indicators (may not benefit)</th></tr></thead>
-    <tbody>
-      <tr>
-        <td class="win">High-cardinality joins (hash join on large tables)</td>
-        <td class="warn">Small datasets (GPU overhead &gt; compute benefit)</td>
-      </tr>
-      <tr>
-        <td class="win">Aggregations (groupBy sum, count, min, max at scale)</td>
-        <td class="warn">Large amounts of data movement / shuffle between stages</td>
-      </tr>
-      <tr>
-        <td class="win">Sort operations on 100M+ rows</td>
-        <td class="warn">Complex UDFs without GPU equivalents</td>
-      </tr>
-      <tr>
-        <td class="win">Window functions on large partitions</td>
-        <td class="warn">Workloads dominated by Python/Pandas UDF row-level processing</td>
-      </tr>
-      <tr>
-        <td class="win">Parquet/ORC/CSV transcoding (GPU decoder: 10-30x faster)</td>
-        <td class="warn">Workloads unlike NDS benchmarks (use custom model in that case)</td>
-      </tr>
-    </tbody>
-  </table></div>
-
-  <h3 class="sub">E1.3 Building a Custom Qualification Model</h3>
-  <p class="body">When pre-trained NDS models don't match your environment (different hardware, network, GPU type), build a custom model:</p>
-  <ol class="num">
-    <li>Run identical workloads on both CPU cluster and GPU cluster</li>
-    <li>Collect event logs from both runs</li>
-    <li>Preprocess logs → extract features per sqlID (same CSV format as built-in tool)</li>
-    <li>Train XGBoost model on (CPU_features → GPU_speedup) pairs</li>
-    <li>Evaluate feature importance — disk spill, scan bandwidth, operator mix are typically top features</li>
-    <li>Plug custom model into qualification tool for environment-specific predictions</li>
-  </ol>
-
-  <div class="exp-block">
-  <h4 class="exp-title">Validating RAPIDS Spark Migration Value — Qualification Tool</h4>
-  <div class="exp-body">Use the Spark RAPIDS Qualification Tool. Install <code>spark-rapids-user-tools</code> via pip, point it at the customer's CPU Spark event logs, and run <code>spark_rapids qualification --eventlogs ./logs/ --platform databricks</code>. The tool runs an XGBoost model trained on NDS benchmarks against the event log features — scan bandwidth, disk spill, operator composition, data size — and outputs a ranked list of SQL IDs by predicted GPU speedup, along with recommended Spark configs and GPU cluster shape. For jobs unlike the NDS benchmark (unusual schemas, heavy UDFs, non-standard shuffle patterns), build a custom model by running a representative sample on both CPU and GPU, collecting paired event logs, and training on the actual CPU→GPU speedup ratios. This avoids the common mistake of migrating a workload that's actually dominated by small-dataset operations or complex Python UDFs, where GPU overhead exceeds the benefit. The tool measures time spent specifically on SQL DataFrame operations — not Python driver overhead — so the predictions are realistic about where GPU acceleration actually applies.</div>
-</div>
-</section>
-
-<section class="section section-alt" id="e2">
-  <div class="topic-header">
-    <div class="topic-num">E2</div>
-    <h2 class="topic">Spark 3.0 GPU Architecture — How RAPIDS Integrates</h2>
-    <div class="topic-badge">Source: developer.nvidia.com/blog/accelerating-apache-spark-3-0-with-gpus-and-rapids</div>
-  </div>
-
-  <p class="body">Apache Spark 3.0 introduced native GPU scheduling — a fundamental architectural shift that enabled the RAPIDS Accelerator to replace CPU operators without any user code changes. Understanding this architecture is essential for the DevOps role because it explains <em>why</em> each Spark config tuning parameter works the way it does.</p>
-
-  <h3 class="sub">E2.1 The Spark 2.x Problem — Why Two Clusters Were Needed</h3>
-  <p class="body">In Spark 2.x, <strong class="hl">80% of a data scientist's time is spent on data preprocessing</strong> (ETL/feature engineering). Spark 2.x had no GPU awareness — ETL ran on CPU clusters, then data had to be transferred to separate GPU clusters for ML training. Every pipeline required two cluster configurations, data serialisation between them, and double the operational overhead.</p>
-
-  <h3 class="sub">E2.2 Spark 3.0 + RAPIDS — Single End-to-End GPU Pipeline</h3>
-  <div class="flow">Spark 3.0 Single GPU Cluster — End-to-End Pipeline:
-
-  Raw data (S3/ADLS/GCS)
-       │
-       ▼  GPU Parquet reader (10-30x faster than CPU decoder)
-  GPU Memory (cuDF DataFrames)
-       │
-       ▼  GPU ETL: joins, aggregations, sort, filter, window ops
-  Engineered features (still in GPU memory)
-       │
-       ▼  GPU ML training: XGBoost / cuML / PyTorch / TensorFlow
-  Model artifacts
-       │
-       ▼  GPU inference (Triton Inference Server)
-  Predictions
-
-No CPU-GPU cluster switching. No data serialisation between phases.
-Data stays in GPU memory from ingest through model output.</div>
-
-  <h3 class="sub">E2.3 The UCX Shuffle — Eliminating the CPU Network Bottleneck</h3>
-  <p class="body">Standard Spark shuffle routes data through CPU memory → serialise → write to local disk → send over network → deserialise → load into executor. For GPU workloads this means GPU→CPU→disk→network→CPU→GPU for every shuffle operation. RAPIDS replaces this with <strong class="hl">UCX-based GPU shuffle</strong>:</p>
-  <div class="tbl-wrap"><table>
-    <thead><tr><th>Shuffle path</th><th>Hops</th><th>Performance</th></tr></thead>
-    <tbody>
-      <tr><td>Standard Spark CPU shuffle</td><td>GPU → CPU → disk → network → CPU → GPU</td><td class="warn">Baseline</td></tr>
-      <tr><td>RAPIDS UCX same-node (NVLink)</td><td>GPU → GPU (NVLink, 600 GB/s)</td><td class="win">Near-zero latency</td></tr>
-      <tr><td>RAPIDS UCX cross-node (InfiniBand)</td><td>GPU → RDMA NIC → GPU</td><td class="win">Bypasses CPU entirely</td></tr>
-      <tr><td>RAPIDS UCX cross-node (TCP fallback)</td><td>GPU → CPU → TCP → CPU → GPU</td><td>Better than standard (less serialization)</td></tr>
-    </tbody>
-  </table></div>
-  <div class="note note-g"><strong>Verified benchmark:</strong> With 8x V100 32GB GPUs on the Criteo Terabyte click logs dataset (one of the largest public recommendation datasets), RAPIDS achieved up to <strong>43x speedup</strong> in data preprocessing time vs an equivalent CPU Spark pipeline. CPU config: AWS r5d.24xlarge, 96 cores, 768GB RAM.</div>
-
-  <h3 class="sub">E2.4 GPU-Aware Scheduling in Spark 3.0</h3>
-  <p class="body">Spark 3.0 introduced resource scheduling for GPUs as first-class resources alongside CPU cores and memory. This is what makes <code>spark.task.resource.gpu.amount=0.1</code> work — Spark now understands GPU as a schedulable resource and tracks how many GPU "slots" are available per executor.</p>
-  <div class="pre-label">How GPU resource scheduling works</div>
-  <pre># Spark executor resource config
-spark.executor.resource.gpu.amount=1      # 1 GPU per executor (fixed by Databricks)
-spark.task.resource.gpu.amount=0.1        # each task uses 1/10th of the GPU resource
-
-# Result: Spark scheduler allows 10 tasks to run simultaneously per executor
-# Why this matters: Parquet reads are I/O-bound, not compute-bound
-# GPU is idle 80% of the time during a Parquet read task
-# With 10 concurrent tasks, GPU decode runs in parallel with I/O waits of other tasks
-
-# The RAPIDS Accelerator's columnarOverrides() is called by Spark
-# after physical plan generation to replace CPU operators:
-#   SortExec           → GpuSortExec
-#   ShuffleHashJoinExec → GpuShuffledHashJoinExec
-#   HashAggregateExec  → GpuHashAggregateExec
-#   FileSourceScanExec → GpuBatchScanExec (GPU Parquet reader)</pre>
-
-  <div class="exp-block">
-  <h4 class="exp-title">RAPIDS Accelerator Performance Regression — Diagnosis and Resolution</h4>
-  <div class="exp-body">Four most common causes in order of likelihood: (1) <strong>spark.task.resource.gpu.amount not set to 0.1</strong> — default 1.0 means only one task runs per GPU at a time. For I/O-bound stages (Parquet reads), the GPU sits idle while a single task waits for disk/network. Setting 0.1 alone typically gives 3-5x throughput improvement. (2) <strong>High CPU fallback rate</strong> — run with spark.rapids.sql.explain=ALL and check the driver log for GpuXxx labels vs plain operator names. If you see many GpuColumnarToRow / RowToColumnarExec transitions, the cost of converting data between GPU columnar and CPU row format between stages exceeds the GPU compute benefit. Identify which operators are falling back and either configure them (spark.rapids.sql.incompatibleOps.enabled=true) or restructure the query. (3) <strong>Small dataset</strong> — GPU has fixed overhead per operation (kernel launch, CUDA context). For datasets under ~10M rows, this overhead can dominate. The Qualification Tool explicitly flags small-dataset jobs as poor GPU candidates. (4) <strong>Complex Python UDFs</strong> — Python UDFs force data off the GPU into CPU Python, execute row-by-row, then move back to GPU. One UDF per row on 1B rows will be catastrophically slow. Rewrite as a RAPIDS accelerated UDF implementing evaluateColumnar() which receives cudf.ColumnVector inputs and executes in bulk.</div>
-</div>
-</section>
-
-<section class="section" id="e3">
-  <div class="topic-header">
-    <div class="topic-num">E3</div>
-    <h2 class="topic">Multi-GPU Dask Best Practices</h2>
-    <div class="topic-badge">Source: developer.nvidia.com/blog/best-practices-for-multi-gpu-data-analysis-using-rapids-with-dask</div>
-  </div>
-
-  <p class="body">NVIDIA's official best practices guide for multi-GPU Dask workloads covers three areas critical to production deployments: CPU/GPU backend switching, memory configuration, and UCX networking. These are real production patterns used in NVIDIA's own data curation framework (NeMo Curator).</p>
-
-  <h3 class="sub">E3.1 CPU/GPU Backend Switching — Write Once, Run Anywhere</h3>
-  <p class="body">Dask supports identical code running on CPU (numpy/pandas) or GPU (cupy/cudf) backends via a single config flag. This is the same mechanism PyTorch uses for device targeting:</p>
-  <pre># GPU backends (for RAPIDS acceleration)
-dask.config.set({"array.backend": "cupy"})
-dask.config.set({"dataframe.backend": "cudf"})
-
-# CPU backends (for testing, small datasets, CI without GPU)
-dask.config.set({"array.backend": "numpy"})
-dask.config.set({"dataframe.backend": "pandas"})
-
-# Or via environment variable (useful in CI/CD)
-export DASK_DATAFRAME__BACKEND=cudf
-
-# Same analysis code — no per-backend I/O calls needed
-with dask.config.set({"dataframe.backend": "cudf"}):
-    ddf = dd.read_parquet("s3://bucket/data/")
-    result = ddf.groupby("col").agg({"val": ["sum", "min", "mean"]})
-    result.compute()   # ← executes on GPU if backend=cudf, CPU if backend=pandas</pre>
-  <div class="note note-g"><strong>Why this matters for RAPIDS DevOps:</strong> CI pipelines can run the same test suite on CPU runners (fast, cheap) using <code>DASK_DATAFRAME__BACKEND=pandas</code> for correctness testing, then on GPU runners with <code>DASK_DATAFRAME__BACKEND=cudf</code> for performance validation — without maintaining two separate test codebases. This is exactly the kind of CI design pattern the RAPIDS team needs DevOps engineers to implement.</div>
-
-  <h3 class="sub">E3.2 Optimal Dask Worker Memory Configuration</h3>
-  <p class="body">The recommended worker start command for tabular ETL workloads (filters, joins, aggregations) and deduplication (NeMo Curator):</p>
-  <pre>dask cuda worker &lt;SCHEDULER:IP&gt;     --rmm-async \              # cudaMallocAsync — reduces memory fragmentation
-    --rmm-pool-size &lt;SIZE&gt; \  # pre-allocate GPU memory pool (e.g., 14GB on 16GB GPU)
-    --enable-cudf-spill        # spill cuDF buffers to host RAM when GPU OOM</pre>
-
-  <div class="tbl-wrap"><table>
-    <thead><tr><th>Parameter</th><th>What it does</th><th>Why it matters</th></tr></thead>
-    <tbody>
-      <tr>
-        <td class="key">--rmm-async</td>
-        <td>Uses <code>cudaMallocAsync</code> (stream-ordered allocator) instead of raw <code>cudaMalloc</code></td>
-        <td>Dramatically reduces memory fragmentation. Fragmentation is the #1 cause of OOM errors in long-running GPU workloads — a 14GB GPU can appear full even though only 8GB is actually in use due to fragmentation. <code>cudaMallocAsync</code> coalesces free blocks across CUDA streams.</td>
-      </tr>
-      <tr>
-        <td class="key">--rmm-pool-size</td>
-        <td>Pre-allocates a single large GPU memory pool at startup</td>
-        <td>Data workloads make thousands to millions of alloc/free calls. Raw <code>cudaMalloc</code>/<code>cudaFree</code> calls are expensive (kernel launch per call). A pre-allocated pool serves sub-allocations in microseconds vs milliseconds. Typical setting: 85-90% of GPU memory (e.g., 14GB on a 16GB V100).</td>
-      </tr>
-      <tr>
-        <td class="key">--enable-cudf-spill</td>
-        <td>cuDF's internal host-memory spilling mechanism</td>
-        <td>When a GPU operation would exceed available GPU memory, cuDF moves buffers to host RAM automatically. Preferable to OOM crash. Works best for out-of-core scenarios (dataset larger than GPU memory). Has some performance penalty but enables jobs to complete that would otherwise fail.</td>
-      </tr>
-    </tbody>
-  </table></div>
-
-  <h3 class="sub">E3.3 UCX Networking — Essential for Dense Multi-GPU Systems</h3>
-  <pre># Enable UCX protocol in LocalCUDACluster for max GPU-to-GPU performance
-from dask_cuda import LocalCUDACluster
-from dask.distributed import Client
-
-cluster = LocalCUDACluster(
-    protocol="ucx",               # UCX transport instead of TCP
-    enable_tcp_over_ucx=True,     # TCP fallback via UCX (graceful degradation)
-    enable_nvlink=True,           # NVLink for intra-node GPU-GPU (up to 600 GB/s)
-    enable_infiniband=True,       # InfiniBand for inter-node (if available)
-    rmm_pool_size="14GB",         # pre-allocate pool on each worker
-)
-client = Client(cluster)
-
-# For multi-node: configure UCX environment
-# UCX_TLS=rc,cuda_copy,cuda_ipc   ← RDMA + direct GPU memory copy + IPC
-# UCX_CUDA_COPY_MAX_REG_RATIO=1.0 ← allow registering all GPU memory for RDMA</pre>
-  <div class="note note-a"><strong>When UCX is critical vs optional:</strong> For single-node multi-GPU (NVLink-connected), UCX with <code>enable_nvlink=True</code> is essential — it bypasses PCIe entirely for GPU-GPU transfers. For cross-node shuffle on standard Ethernet, UCX TCP still reduces serialization overhead vs native Dask TCP. For cross-node on InfiniBand (HPC clusters), UCX RDMA is mandatory for near-linear scaling.</div>
-
-  <h3 class="sub">E3.4 Out-of-Core / Spilling Strategy Matrix</h3>
-  <div class="tbl-wrap"><table>
-    <thead><tr><th>Scenario</th><th>Recommended spill config</th><th>Trade-off</th></tr></thead>
-    <tbody>
-      <tr><td>Dataset fits in GPU memory</td><td>No spilling needed. Use <code>--rmm-pool-size</code> only.</td><td class="win">Maximum performance, no spill overhead</td></tr>
-      <tr><td>Dataset 1.5–3x GPU memory</td><td><code>--enable-cudf-spill</code> (cuDF host spill)</td><td>~20-40% performance reduction, job completes</td></tr>
-      <tr><td>Dataset &gt;3x GPU memory</td><td><code>--enable-cudf-spill</code> + <code>--device-memory-limit</code></td><td>Significant spill overhead; consider adding GPU workers</td></tr>
-      <tr><td>Unpredictable memory spikes</td><td><code>--rmm-async</code> + <code>--enable-cudf-spill</code></td><td>Best stability — async allocator handles fragmentation, spill handles OOM</td></tr>
-    </tbody>
-  </table></div>
-
-  <div class="exp-block">
-  <h4 class="exp-title">Multi-GPU Dask OOM — Memory Fragmentation Root Cause and Fix</h4>
-  <div class="exp-body">This is a GPU memory fragmentation OOM — the classic symptom is nvidia-smi showing significant free memory but CUDA allocation still failing. When raw <code>cudaMalloc</code> (the default) frees memory, it doesn't always return contiguous blocks to the pool. After thousands of alloc/free cycles in a long ETL job, the 6GB of "free" memory exists as hundreds of non-contiguous small chunks. The next large allocation (e.g., a 2GB intermediate join result) cannot find a contiguous 2GB block and raises OOM even though 6GB is technically free. Fix: restart the dask-cuda workers with <code>--rmm-async</code> which switches to <code>cudaMallocAsync</code> — the CUDA stream-ordered memory allocator. It uses virtual memory mapping and coalesces adjacent free blocks across streams, dramatically reducing fragmentation. Additionally add <code>--rmm-pool-size 13GB</code> (on a 16GB GPU) to pre-allocate a single contiguous pool at startup, which makes sub-allocations behave like a traditional malloc pool. For workloads that still OOM after these fixes, add <code>--enable-cudf-spill</code> to allow cuDF to move buffers to host RAM automatically when GPU pressure is high.</div>
-</div>
-</section>
-
-<section class="section section-alt" id="e4">
-  <div class="topic-header">
-    <div class="topic-num">E4</div>
-    <h2 class="topic">CUDA Pip Wheels — Official Installation Guide</h2>
-    <div class="topic-badge">Source: docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#pip-wheels</div>
-  </div>
-
-  <p class="body">Since RAPIDS 24.12, CUDA toolkit components are installable directly via pip — no apt/dnf required. This matters for RAPIDS DevOps because wheel-based RAPIDS packages (<code>cudf-cu12</code>, <code>cuml-cu12</code>) depend on these CUDA pip wheel packages for their CUDA runtime dependencies in non-conda environments.</p>
-
-  <h3 class="sub">E4.1 CUDA Pip Wheel Package Structure</h3>
-  <pre># Install CUDA 12 toolkit components via pip (no root, no apt)
-pip install nvidia-cuda-runtime-cu12      # CUDA runtime (libcudart.so.12)
-pip install nvidia-cuda-nvcc-cu12         # NVCC compiler (for runtime compilation)
-pip install nvidia-cublas-cu12            # cuBLAS
-pip install nvidia-cusolver-cu12          # cuSOLVER
-pip install nvidia-cusparse-cu12          # cuSPARSE
-pip install nvidia-cufft-cu12             # cuFFT
-pip install nvidia-cudnn-cu12             # cuDNN (for deep learning)
-
-# OR install all at once via metapackage
-pip install nvidia-cuda-toolkit           # pulls all CUDA 12 components
-
-# CUDA 13 equivalents
-pip install nvidia-cuda-runtime-cu13
-pip install nvidia-cublas-cu13</pre>
-
-  <h3 class="sub">E4.2 Why pip Wheels for CUDA — Key Advantages</h3>
-  <div class="tbl-wrap"><table>
-    <thead><tr><th>Aspect</th><th>apt/dnf install</th><th>pip wheels</th></tr></thead>
-    <tbody>
-      <tr><td class="key">Root required?</td><td class="warn">Yes</td><td class="win">No — installs to site-packages</td></tr>
-      <tr><td class="key">Version isolation</td><td class="warn">System-wide, one version at a time</td><td class="win">Per-virtualenv, multiple versions coexist</td></tr>
-      <tr><td class="key">CI/CD integration</td><td class="warn">Requires privileged container or apt cache</td><td class="win">pip install in Dockerfile USER layer</td></tr>
-      <tr><td class="key">RAPIDS wheel dep resolution</td><td>Manual</td><td class="win">Automatic — cudf-cu12 declares nvidia-cuda-runtime-cu12 as dep</td></tr>
-      <tr><td class="key">NVRTC (required for RAPIDS wheels)</td><td>Needs cuda-toolkit-devel package</td><td class="win"><code>pip install nvidia-cuda-nvrtc-cu12</code></td></tr>
-    </tbody>
-  </table></div>
-
-  <div class="note note-c"><strong>RAPIDS wheels require NVRTC:</strong> The official RAPIDS installation guide states that pip installations require NVRTC for Numba to function properly. For Docker, this means RAPIDS wheels require the <code>devel</code> flavor of <code>nvidia/cuda</code> images — the <code>base</code> and <code>runtime</code> flavors are not sufficient. Alternatively, install <code>nvidia-cuda-nvrtc-cu12</code> via pip into a runtime image.</div>
-
-  <h3 class="sub">E4.3 CUDA pip Wheel Dependency Chain for RAPIDS</h3>
-  <div class="flow">pip install cudf-cu12
-  ├─ requires: nvidia-cuda-runtime-cu12 ≥ 12.0
-  ├─ requires: nvidia-cublas-cu12        (for cuML, not cuDF directly)
-  ├─ requires: nvidia-cuda-nvrtc-cu12    (Numba JIT compilation)
-  └─ requires: rmm-cu12 == 26.2.*        (RAPIDS Memory Manager)
-
-pip install cuml-cu12
-  ├─ requires: cudf-cu12 == 26.2.*
-  ├─ requires: nvidia-cublas-cu12
-  ├─ requires: nvidia-cusolver-cu12      (PCA, SVD, KernelRidge)
-  └─ requires: nvidia-cusparse-cu12      (sparse ML ops)
-
-# All resolved automatically by pip dependency solver
-# No manual CUDA apt install needed in containers using this pattern</div>
-
-  <div class="exp-block">
-  <h4 class="exp-title">RAPIDS 24.12 Packaging Change — CUDA pip Wheels Impact</h4>
-  <div class="exp-body">RAPIDS 24.12 completed the migration to using CUDA pip wheels for CUDA runtime dependencies rather than expecting users to have a system CUDA installation. Before this change, installing <code>cudf-cu12</code> via pip required a separately installed CUDA 12 toolkit on the host — either via apt, dnf, or the CUDA runfile. If the toolkit version didn't match the wheel, you'd get cryptic ImportError or libcudart symbol errors. After the change, <code>pip install cudf-cu12</code> automatically pulls <code>nvidia-cuda-runtime-cu12</code> as a dependency — the CUDA runtime is installed into the virtualenv's site-packages alongside cuDF, isolated from any system CUDA installation. This is transformative for CI: a bare Docker container with just Python and NVIDIA drivers can now get a working RAPIDS installation with a single pip command, without needing a privileged apt install step or a fat CUDA-devel base image. The one remaining requirement is the NVIDIA driver on the host (libcuda.so.1) and NVRTC — but NVRTC is also available as <code>nvidia-cuda-nvrtc-cu12</code> via pip, so the entire stack is pip-installable.</div>
-</div>
-</section>
-
-<section class="section" id="e5">
-  <div class="topic-header">
-    <div class="topic-num">E5</div>
-    <h2 class="topic">Unified Quick Reference — New Facts from NVIDIA Blogs</h2>
-    <div class="topic-badge">Print for interview day · all sourced from official NVIDIA documentation</div>
-  </div>
-
-  <div class="tbl-wrap"><table>
-    <thead><tr><th>Fact</th><th>Value / Detail</th><th>Source</th></tr></thead>
-    <tbody>
-      <tr><td class="key">Qualification Tool install</td><td><code>pip install spark-rapids-user-tools</code></td><td>predicting-performance blog</td></tr>
-      <tr><td class="key">Qualification Tool CLI</td><td><code>spark_rapids qualification --eventlogs &lt;path&gt; --platform &lt;platform&gt;</code></td><td>predicting-performance blog</td></tr>
-      <tr><td class="key">Qualification ML model</td><td>XGBoost, pre-trained on NDS benchmarks (CPU+GPU historical run pairs)</td><td>predicting-performance blog</td></tr>
-      <tr><td class="key">Good GPU workload indicators</td><td>High-cardinality joins, aggregations, sort, window ops, Parquet/ORC/CSV transcoding</td><td>predicting-performance blog</td></tr>
-      <tr><td class="key">Poor GPU workload indicators</td><td>Small datasets, heavy data movement/shuffle, complex Python UDFs</td><td>predicting-performance blog</td></tr>
-      <tr><td class="key">Criteo Terabyte benchmark</td><td>43x speedup with 8x V100 32GB vs CPU (AWS r5d.24xlarge, 96 cores, 768GB RAM)</td><td>accelerating-spark-3.0 blog</td></tr>
-      <tr><td class="key">Data scientist time on ETL</td><td>80% of a data scientist's time is spent on data preprocessing (ETL/feature engineering)</td><td>accelerating-spark-3.0 blog</td></tr>
-      <tr><td class="key">UCX NVLink bandwidth</td><td>Up to 600 GB/s GPU-GPU on same node (vs PCIe: ~16 GB/s)</td><td>best-practices-dask blog</td></tr>
-      <tr><td class="key">dask.config GPU backend</td><td><code>dask.config.set({"dataframe.backend": "cudf"})</code></td><td>best-practices-dask blog</td></tr>
-      <tr><td class="key">dask.config env var</td><td><code>DASK_DATAFRAME__BACKEND=cudf</code></td><td>best-practices-dask blog</td></tr>
-      <tr><td class="key">--rmm-async</td><td>Switches to cudaMallocAsync — reduces GPU memory fragmentation that causes OOM even with free memory</td><td>best-practices-dask blog</td></tr>
-      <tr><td class="key">--rmm-pool-size</td><td>Pre-allocate GPU memory pool — makes thousands of alloc/free calls microsecond-fast vs millisecond</td><td>best-practices-dask blog</td></tr>
-      <tr><td class="key">--enable-cudf-spill</td><td>cuDF automatically moves buffers to host RAM when GPU memory is exhausted — prevents OOM crash</td><td>best-practices-dask blog</td></tr>
-      <tr><td class="key">CUDA pip wheels available since</td><td>RAPIDS 24.12 — full CUDA runtime installable via pip without system apt/dnf</td><td>cuda-installation-guide-linux</td></tr>
-      <tr><td class="key">CUDA runtime pip install</td><td><code>pip install nvidia-cuda-runtime-cu12</code> (or cu13)</td><td>cuda-installation-guide-linux</td></tr>
-      <tr><td class="key">NVRTC pip install</td><td><code>pip install nvidia-cuda-nvrtc-cu12</code> — required for Numba in RAPIDS wheels</td><td>cuda-installation-guide-linux</td></tr>
-      <tr><td class="key">CUDA metapackage</td><td><code>pip install nvidia-cuda-toolkit</code> — installs all CUDA 12 components</td><td>cuda-installation-guide-linux</td></tr>
-      <tr><td class="key">Spark physical plan interception</td><td>columnarOverrides() called after physical plan generation. Replaces SortExec→GpuSortExec, etc.</td><td>accelerating-spark-3.0 blog</td></tr>
-      <tr><td class="key">spark.rapids.sql.explain=ALL</td><td>Shows full replacement plan in driver log — GpuXxx = GPU, warnings = CPU fallback</td><td>accelerating-spark-3.0 blog</td></tr>
-    </tbody>
-  </table></div>
-</section>
-
-
-<!-- ════════════════════════════════════════════════════════
-     PART F HEADER
-═══════════════════════════════════════════════════════════ -->
 <div class="part-header" id="part-f">
   <div class="part-num">Part F</div>
   <div class="part-title">OSDU Open Source Infrastructure Work</div>
@@ -3978,44 +5047,67 @@ done</pre>
 
 </main>
 
+
 <script>
+
 (function() {
 
-  // ── SCROLL TO TARGET ──────────────────────────────────────────────────────
-  function scrollTo(targetId) {
-    var el = document.getElementById(targetId);
-    if (!el) return;
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // ── nav-logo → scroll to top (exec summary) ──────────────────────────────
+  var logo = document.getElementById('nav-logo');
+  if (logo) {
+    logo.addEventListener('click', function(e) {
+      e.preventDefault(); e.stopPropagation();
+      var wrap = document.getElementById('exec-wrap');
+      if (wrap) wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      else window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 
-  // ── INTERCEPT ALL data-target CLICKS ─────────────────────────────────────
-  document.addEventListener('click', function(e) {
-    // Walk up the DOM tree to find a data-target element
-    var el = e.target;
-    while (el && el !== document) {
-      var target = el.getAttribute('data-target');
-      if (target) {
-        e.preventDefault();
-        e.stopPropagation();
-        scrollTo(target);
-        // Update active state
-        document.querySelectorAll('.nav-link').forEach(function(l) {
-          l.classList.remove('active');
-        });
-        var matchingLink = document.querySelector('.nav-link[data-target="' + target + '"]');
-        if (matchingLink) matchingLink.classList.add('active');
-        return;
-      }
-      el = el.parentElement;
-    }
-  }, true); // capture phase to intercept before iframe routing
+  // ── Nav links (data-target) ───────────────────────────────────────────────
+  document.querySelectorAll('.nav-link[data-target]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault(); e.stopPropagation();
+      var target = document.getElementById(link.getAttribute('data-target'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
 
-  // ── ACTIVE NAV ON SCROLL ──────────────────────────────────────────────────
-  var sections = document.querySelectorAll('section[id], div[id]');
-  var navLinks = document.querySelectorAll('.nav-link');
+  // ── TOC cards (data-target) ───────────────────────────────────────────────
+  document.querySelectorAll('.toc-card[data-target], [data-target].toc-card').forEach(function(card) {
+    card.addEventListener('click', function(e) {
+      e.preventDefault(); e.stopPropagation();
+      var target = document.getElementById(card.getAttribute('data-target'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // ── Exec summary buttons ──────────────────────────────────────────────────
+  document.querySelectorAll('.ep-full-btn, .ep-jump').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault(); e.stopPropagation();
+      var target = document.getElementById(btn.getAttribute('data-target'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, true);
+  });
+
+  // ── Exec summary page tabs ────────────────────────────────────────────────
+  document.querySelectorAll('.ep-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var pg = tab.getAttribute('data-pg');
+      document.querySelectorAll('.ep-tab').forEach(function(t) { t.classList.remove('on'); });
+      document.querySelectorAll('.ep-page').forEach(function(p) { p.classList.remove('on'); });
+      tab.classList.add('on');
+      var el = document.getElementById('epg' + pg);
+      if (el) el.classList.add('on');
+    });
+  });
+
+  // ── Active nav on scroll ─────────────────────────────────────────────────
+  var allSections = document.querySelectorAll('section[id], div.part-header[id]');
+  var navLinks = document.querySelectorAll('.nav-link[data-target]');
 
   if ('IntersectionObserver' in window) {
-    var navObs = new IntersectionObserver(function(entries) {
+    var obs = new IntersectionObserver(function(entries) {
       entries.forEach(function(e) {
         if (e.isIntersecting) {
           navLinks.forEach(function(l) { l.classList.remove('active'); });
@@ -4023,32 +5115,22 @@ done</pre>
           if (a) a.classList.add('active');
         }
       });
-    }, { rootMargin: '-20% 0px -70% 0px' });
-    sections.forEach(function(s) { navObs.observe(s); });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    allSections.forEach(function(s) { obs.observe(s); });
   }
 
-  // ── SCROLL REVEAL ─────────────────────────────────────────────────────────
+  // ── Scroll reveal ─────────────────────────────────────────────────────────
   if ('IntersectionObserver' in window) {
-    var revealObs = new IntersectionObserver(function(entries) {
+    var rev = new IntersectionObserver(function(entries) {
       entries.forEach(function(e) {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          e.target.classList.add('on');
-        }
+        if (e.isIntersecting) { e.target.classList.add('visible'); e.target.classList.add('on'); }
       });
     }, { threshold: 0.04 });
-    document.querySelectorAll('.reveal').forEach(function(el) {
-      revealObs.observe(el);
-    });
+    document.querySelectorAll('.reveal').forEach(function(el) { rev.observe(el); });
   }
-
-  // ── SCROLL TO TOP ON REFRESH ─────────────────────────────────────────────
-  if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
-  }
-  window.scrollTo(0, 0);
 
 })();
+
 </script>
 </body>
 </html>
