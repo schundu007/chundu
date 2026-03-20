@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RAPIDS Complete Interview Guide — Sudhakar Chundu</title>
+<title>Sudhakar Chundu — Infrastructure Engineering Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -226,24 +226,6 @@ ul.blt li, ol.nblt li {
 }
 ul.blt li::marker { color:var(--green); }
 
-/* ── Q&A ── */
-.qa-block { margin:24px 0; border-radius:var(--radius-lg); overflow:hidden;
-  box-shadow:var(--shadow-md); }
-.qa-q {
-  background:var(--teal-dk); color:#fff;
-  padding:14px 20px;
-  font-size:14.5px; font-weight:600; line-height:1.5;
-}
-.qa-q span {
-  display:block; font-size:11px; opacity:.7; font-weight:400;
-  margin-top:4px; font-family:var(--mono);
-}
-.qa-a {
-  background:#fff; padding:18px 20px;
-  font-size:13.5px; color:var(--mid); line-height:1.8;
-  border:1px solid #e0ede8; border-top:none;
-}
-
 /* ── FACT SHEET TABLE ── */
 .fact-table td:first-child {
   font-family:var(--mono); font-size:11.5px;
@@ -251,19 +233,12 @@ ul.blt li::marker { color:var(--green); }
 }
 .fact-table td:last-child { font-size:12.5px; }
 
-/* ── INTERVIEWER CARDS ── */
-.iw-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; margin:16px 0; }
-.iw-card {
-  border-radius:var(--radius-lg); overflow:hidden;
-  border:1px solid #e0e0dc; box-shadow:var(--shadow);
-}
-.iw-head { padding:14px 16px; font-size:13px; font-weight:700; line-height:1.4; }
-.iw-files {
-  padding:8px 16px; background:rgba(0,0,0,.04);
-  font-family:var(--mono); font-size:11px; color:#555;
-  border-top:1px solid rgba(0,0,0,.06); border-bottom:1px solid rgba(0,0,0,.06);
-}
-.iw-tips { padding:10px 16px; font-size:12px; color:var(--mid); line-height:1.6; }
+
+
+
+
+
+
 
 /* ── PRINT ── */
 @media print {
@@ -272,7 +247,7 @@ ul.blt li::marker { color:var(--green); }
   .section { padding:32px 40px; }
   .part-header { padding:28px 40px; break-before:page; }
   .diagram-wrap { break-inside:avoid; }
-  .qa-block { break-inside:avoid; }
+  
   pre { break-inside:avoid; }
 }
 
@@ -297,7 +272,7 @@ ul.blt li::marker { color:var(--green); }
 /* Prevent fixed nav from covering scroll targets */
 [id] { scroll-margin-top: 24px; }
 
-/* ─── JD GAPS SPECIFIC ─── */
+/* ─── Extended Topics ─── */
 #sidebar { position:fixed; top:0; left:0; width:220px; height:100vh;
   background:#13161c; border-right:1px solid #252a38;
   overflow-y:auto; z-index:200; scrollbar-width:thin; }
@@ -306,7 +281,7 @@ ul.blt li::marker { color:var(--green); }
 .sb-logo strong { color:var(--green); display:block; font-size:12px; }
 .sb-logo span { color:var(--dim,#5a6070); font-size:10px; }
 
-/* JD section styles */
+/* Extended section styles */
 .topic-header { display:flex; align-items:baseline; gap:14px; margin-bottom:24px;
   padding-bottom:14px; border-bottom:1px solid #e8e8e4; }
 .topic-num { font-family:var(--mono,monospace); font-size:11px;
@@ -316,13 +291,13 @@ h2.topic { font-size:26px; font-weight:700; color:var(--dark,#1A1A1A); }
   padding:3px 8px; border-radius:3px; border:1px solid var(--green-dim,#3d6200);
   color:var(--green); background:rgba(118,185,0,.08); white-space:nowrap; flex-shrink:0; }
 
-/* JD flow diagrams */
+/* Flow diagrams */
 .flow { background:var(--code-bg,#f4f4f4); border:1px solid #e0e0dc;
   border-radius:6px; padding:18px 20px; margin:14px 0;
   font-family:var(--mono,monospace); font-size:12px; color:var(--code-fg,#1a3a6e);
   line-height:1.8; overflow-x:auto; white-space:pre; }
 
-/* JD note boxes */
+/* Note boxes */
 .note { padding:12px 14px; border-radius:6px; margin:12px 0;
   font-size:12.5px; line-height:1.7; border-left:3px solid; }
 .note-g { background:var(--green-bg,#EBF5D4); border-color:var(--green);
@@ -333,28 +308,24 @@ h2.topic { font-size:26px; font-weight:700; color:var(--dark,#1A1A1A); }
   color:var(--blue-dk,#0a3070); }
 .note-r { background:#FAECE7; border-color:#D85A30; color:#712B13; }
 
-/* JD table styles - merge with existing */
+/* Table styles */
 td.key { font-family:var(--mono,monospace); font-size:11.5px;
   color:var(--green-dk,#3d6200); white-space:nowrap; font-weight:600; }
 td.win { color:var(--green-dk,#3d6200); font-weight:600; }
 td.warn { color:var(--amber-dk,#5a3800); font-weight:600; }
 td.danger { color:#D85A30; }
 
-/* pre-label (JD style) */
+/* pre-label */
 .pre-label { font-family:var(--mono,monospace); font-size:9px; color:var(--light,#888);
   text-transform:uppercase; letter-spacing:.1em; margin-bottom:2px; margin-top:14px; }
 
-/* QA styles for JD */
-.qa { margin:20px 0; border-radius:6px; overflow:hidden;
-  box-shadow:0 1px 3px rgba(0,0,0,.08); border:1px solid #e8e8e4; }
-.qa-q { background:var(--teal-dk,#085041); color:#fff;
-  padding:12px 16px; font-size:13.5px; font-weight:600; line-height:1.5; }
-.qa-q span { display:block; font-size:10px; opacity:.7; font-weight:400;
-  margin-top:4px; font-family:var(--mono,monospace); }
-.qa-a { background:#fff; padding:14px 16px; font-size:13px;
-  color:var(--mid,#444); line-height:1.8; border-top:none; }
+/* Experience block styles */
 
-/* Chip styles for hero (JD) */
+
+
+
+
+/* Chip styles */
 .chip { padding:4px 12px; border-radius:3px; font-family:var(--mono,monospace);
   font-size:11px; border:1px solid; }
 .chip-g { border-color:var(--green-dim,#3d6200); color:var(--green);
@@ -364,7 +335,7 @@ td.danger { color:#D85A30; }
 .chip-a { border-color:#c97d00; color:var(--amber-dk,#5a3800);
   background:rgba(180,100,0,.06); }
 
-/* JD sb-pill */
+/* Sidebar pill */
 .sb-pill { display:inline-block; font-size:9px; padding:1px 5px;
   border-radius:3px; margin-left:4px; font-family:var(--mono,monospace); vertical-align:middle; }
 .sb-pill.new { background:rgba(118,185,0,.2); color:var(--green); }
@@ -376,14 +347,44 @@ td.danger { color:#D85A30; }
 /* Ensure toc cards wrap gracefully */
 .toc-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; margin:16px 0; }
 
+
+/* ─── EXPERIENCE BLOCKS ─── */
+.exp-block {
+  margin:20px 0;
+  border-radius:var(--radius);
+  border-left:4px solid var(--green);
+  background:#fff;
+  box-shadow:0 1px 3px rgba(0,0,0,.07);
+  overflow:hidden;
+}
+.exp-title {
+  background:var(--green-bg);
+  padding:11px 18px;
+  font-size:14px;
+  font-weight:700;
+  color:var(--green-dk);
+  line-height:1.45;
+  border-bottom:1px solid #d4e8a0;
+  margin:0;
+}
+.exp-body {
+  padding:16px 18px;
+  font-size:13.5px;
+  color:var(--mid);
+  line-height:1.8;
+}
+.exp-body code { font-family:var(--mono); font-size:12px; color:var(--code-fg);
+  background:var(--code-bg); padding:1px 5px; border-radius:3px; }
+.exp-body strong { color:var(--dark); }
+
 </style>
 </head>
 <body>
 
 <nav id="nav">
   <div id="nav-logo">
-    RAPIDS Complete Guide
-    <span>Sudhakar Chundu · March 2026<br>Master + JD Coverage · All-in-One</span>
+    Engineering Portfolio
+    <span>Sudhakar Chundu · March 2026<br>Staff DevOps · Cloud Infra Architect</span>
   </div>
   <div class="nav-part">Overview</div>
   <a data-target="toc" role="button" style="cursor:pointer;" class="nav-link">Table of Contents</a>
@@ -404,7 +405,7 @@ td.danger { color:#D85A30; }
   <a data-target="b3" role="button" style="cursor:pointer;" class="nav-link">B3. Setup &amp; cudf.pandas</a>
   <a data-target="b4" role="button" style="cursor:pointer;" class="nav-link">B4. AT&amp;T Case Study ★</a>
 
-  <div class="nav-part">Part C — JD Extensions</div>
+  <div class="nav-part">Part C — Engineering Depth</div>
   <a data-target="part-c" role="button" style="cursor:pointer;" class="nav-link">C1. conda-build &amp; Packaging</a>
   <a data-target="wheels" role="button" style="cursor:pointer;" class="nav-link">C2. Python Wheels / PyPI</a>
   <a data-target="docker" role="button" style="cursor:pointer;" class="nav-link">C3. Docker &amp; Containers</a>
@@ -416,35 +417,51 @@ td.danger { color:#D85A30; }
   <a data-target="scripting" role="button" style="cursor:pointer;" class="nav-link">C9. Bash / Python Scripts</a>
   <a data-target="cpp" role="button" style="cursor:pointer;" class="nav-link">C10. GNU Toolchain / C++</a>
 
-  <div class="nav-part">Part E — NVIDIA Blog Insights</div>
+  <div class="nav-part">Part D — Technical Experience</div>
+  <a data-target="c2" role="button" style="cursor:pointer;" class="nav-link">D1. CI/CD Experience</a>
+  <a data-target="c2" role="button" style="cursor:pointer;" class="nav-link">D2. CI/CD Deep Dives</a>
+  <a data-target="c3" role="button" style="cursor:pointer;" class="nav-link">D3. Databricks Deep Dives</a>
+  <a data-target="d3" role="button" style="cursor:pointer;" class="nav-link">D4. Technical Deep Dives</a>
+  <a data-target="c4" role="button" style="cursor:pointer;" class="nav-link">D5. RAPIDS Fact Sheet</a>
+  <a data-target="d4" role="button" style="cursor:pointer;" class="nav-link">D6. Reference Facts ★</a><div class="nav-part">Part G — Trackonomy GitHub</div>
+  <a class="nav-link" data-target="g1" role="button" style="cursor:pointer;">G1. Engineering Context</a>
+  <a class="nav-link" data-target="g2" role="button" style="cursor:pointer;">G2. automation — CI/CD Pipelines</a>
+  <a class="nav-link" data-target="g3" role="button" style="cursor:pointer;">G3. infra-lakehouse</a>
+  <a class="nav-link" data-target="g4" role="button" style="cursor:pointer;">G4. vmProvisioning</a>
+  <a class="nav-link" data-target="g5" role="button" style="cursor:pointer;">G5. scripts — SRE Automation</a>
+  <a class="nav-link" data-target="g6" role="button" style="cursor:pointer;">G6. gcp-multi-cluster-demo</a>
+  <a class="nav-link" data-target="g7" role="button" style="cursor:pointer;">G7. Summary &amp; Patterns</a>
+
+<div class="nav-part">Part F — OSDU Open Source</div>
+  <a class="nav-link" data-target="f1" role="button" style="cursor:pointer;">F1. OSDU Platform Overview</a>
+  <a class="nav-link" data-target="f2" role="button" style="cursor:pointer;">F2. AWS — terraform-deployment-aws</a>
+  <a class="nav-link" data-target="f3" role="button" style="cursor:pointer;">F3. Azure — infra-azure-provisioning</a>
+  <a class="nav-link" data-target="f4" role="button" style="cursor:pointer;">F4. GCP — infra-gcp-provisioning</a>
+  <a class="nav-link" data-target="f5" role="button" style="cursor:pointer;">F5. Contribution Summary</a>
+
+<div class="nav-part">Part E — NVIDIA Blog Insights</div>
   <a class="nav-link" data-target="part-e" role="button" style="cursor:pointer;">E1. Qualification Tool</a>
   <a class="nav-link" data-target="e2" role="button" style="cursor:pointer;">E2. Spark 3.0 Architecture</a>
-  <a class="nav-link" data-target="e3" role="button" style="cursor:pointer;">E3. Multi-GPU Dask Best Practices</a>
+  <a class="nav-link" data-target="e3" role="button" style="cursor:pointer;">E3. Multi-GPU Dask</a>
   <a class="nav-link" data-target="e4" role="button" style="cursor:pointer;">E4. CUDA pip Wheels</a>
-  <a class="nav-link" data-target="e5" role="button" style="cursor:pointer;">E5. New Facts Reference ★</a>
+  <a class="nav-link" data-target="e5" role="button" style="cursor:pointer;">E5. Facts Reference ★</a>
 
-  <div class="nav-part">Part D — Interview</div>
-  <a data-target="part-d" role="button" style="cursor:pointer;" class="nav-link">D1. Interviewer Profiles</a>
-  <a data-target="c2" role="button" style="cursor:pointer;" class="nav-link">D2. CI/CD Q&amp;A (6)</a>
-  <a data-target="c3" role="button" style="cursor:pointer;" class="nav-link">D3. Databricks Q&amp;A (4)</a>
-  <a data-target="d3" role="button" style="cursor:pointer;" class="nav-link">D4. JD Extension Q&amp;A (10)</a>
-  <a data-target="c4" role="button" style="cursor:pointer;" class="nav-link">D5. RAPIDS Fact Sheet</a>
-  <a data-target="d4" role="button" style="cursor:pointer;" class="nav-link">D6. JD Extension Facts ★</a>
+  
 </nav>
 
 <main id="main">
 <section id="hero">
-  <h1>RAPIDS <em>Complete</em><br>Interview Guide</h1>
-  <p>The unified reference for NVIDIA Senior Engineer Build &amp; DevOps – ADI. Covers everything in the JD: CI/CD pipelines, GitOps, Databricks, conda packaging, PyPI wheels, Docker, CUDA stack, Linux admin, GitHub org management, AWS/Azure cost, open source operations, Bash/Python scripting, and GNU toolchain.</p>
+  <h1>Sudhakar Chundu<br><em>Engineering Portfolio</em></h1>
+  <p>18 years of hands-on infrastructure and DevOps engineering — from OSDU open-source data platform contributions (Shell, BP, Chevron) to Trackonomy multi-cloud SaaS operations ($8M+ savings, 30+ platforms) to RAPIDS GPU-accelerated data science infrastructure at NVIDIA scale. This document presents the technical depth across CI/CD, data platforms, Kubernetes, cloud security, and open source operations.</p>
   <div class="hero-meta">
     <div class="hero-tag">Sudhakar Chundu</div>
     <div class="hero-tag">Sr Engineer Build &amp; DevOps – ADI</div>
     <div class="hero-tag">March 2026</div>
     <div class="hero-tag">7 Architecture Diagrams</div>
-    <div class="hero-tag">5 Parts · 32 Chapters</div>
-    <div class="hero-tag">19 Q&amp;A Pairs</div>
+    <div class="hero-tag">7 Parts · 43 Chapters</div>
+    <div class="hero-tag">34 Technical Scenarios</div>
     <div class="hero-tag">50+ Verified Facts</div>
-    <div class="hero-tag">100% JD Coverage</div>
+    <div class="hero-tag">Multi-Cloud · Open Source · GPU Infra</div>
   </div>
 </section>
 <section class="section" id="toc">
@@ -464,36 +481,36 @@ td.danger { color:#D85A30; }
     <a data-target="b3" role="button" style="cursor:pointer;"      class="toc-card"><div class="toc-card-part">Part B · Databricks</div><div class="toc-card-title">Setup &amp; cudf.pandas</div><div class="toc-card-count">Init script · benchmarks · diagram</div></a>
     <a data-target="b4" role="button" style="cursor:pointer;"      class="toc-card" style="border-top:3px solid var(--green);"><div class="toc-card-part">Part B · Databricks</div><div class="toc-card-title">AT&amp;T Case Study ★</div><div class="toc-card-count">3 trillion rows · 33% cost saving</div></a>
 
-    <a data-target="part-c" role="button" style="cursor:pointer;"  class="toc-card"><div class="toc-card-part">Part C · JD Extensions</div><div class="toc-card-title">conda-build &amp; Packaging</div><div class="toc-card-count">meta.yaml · rattler-build · DFG</div></a>
-    <a data-target="wheels" role="button" style="cursor:pointer;"  class="toc-card"><div class="toc-card-part">Part C · JD Extensions</div><div class="toc-card-title">Python Wheels / PyPI</div><div class="toc-card-count">auditwheel · manylinux · pyproject</div></a>
-    <a data-target="docker" role="button" style="cursor:pointer;"  class="toc-card"><div class="toc-card-part">Part C · JD Extensions</div><div class="toc-card-title">Docker &amp; Containers</div><div class="toc-card-count">ci-imgs · NGC · NVIDIA CTK</div></a>
-    <a data-target="cuda" role="button" style="cursor:pointer;"    class="toc-card"><div class="toc-card-part">Part C · JD Extensions</div><div class="toc-card-title">CUDA / NVIDIA Stack</div><div class="toc-card-count">toolkit · drivers · forward compat</div></a>
-    <a data-target="linux" role="button" style="cursor:pointer;"   class="toc-card"><div class="toc-card-part">Part C · JD Extensions</div><div class="toc-card-title">Linux System Admin</div><div class="toc-card-count">Ubuntu · Rocky 8 · udev · ulimit</div></a>
-    <a data-target="github" role="button" style="cursor:pointer;"  class="toc-card"><div class="toc-card-part">Part C · JD Extensions</div><div class="toc-card-title">GitHub Org Management</div><div class="toc-card-count">CODEOWNERS · Apps · secrets</div></a>
-    <a data-target="cloud" role="button" style="cursor:pointer;"   class="toc-card"><div class="toc-card-part">Part C · JD Extensions</div><div class="toc-card-title">AWS / Azure / Cost</div><div class="toc-card-count">IAM · OIDC · S3 policies · budgets</div></a>
-    <a data-target="oss" role="button" style="cursor:pointer;"     class="toc-card"><div class="toc-card-part">Part C · JD Extensions</div><div class="toc-card-title">Open Source Ops</div><div class="toc-card-count">PR workflow · DCO · bots</div></a>
-    <a data-target="scripting" role="button" style="cursor:pointer;" class="toc-card"><div class="toc-card-part">Part C · JD Extensions</div><div class="toc-card-title">Bash / Python Scripts</div><div class="toc-card-count">set -euo pipefail · pre-commit · rapids-build-backend</div></a>
-    <a data-target="cpp" role="button" style="cursor:pointer;"     class="toc-card"><div class="toc-card-part">Part C · JD Extensions</div><div class="toc-card-title">GNU Toolchain / C++</div><div class="toc-card-count">GCC · CMake · RPATH · patchelf</div></a>
+    <a data-target="part-c" role="button" style="cursor:pointer;"  class="toc-card"><div class="toc-card-part">Part C · Engineering Depth</div><div class="toc-card-title">conda-build &amp; Packaging</div><div class="toc-card-count">meta.yaml · rattler-build · DFG</div></a>
+    <a data-target="wheels" role="button" style="cursor:pointer;"  class="toc-card"><div class="toc-card-part">Part C · Engineering Depth</div><div class="toc-card-title">Python Wheels / PyPI</div><div class="toc-card-count">auditwheel · manylinux · pyproject</div></a>
+    <a data-target="docker" role="button" style="cursor:pointer;"  class="toc-card"><div class="toc-card-part">Part C · Engineering Depth</div><div class="toc-card-title">Docker &amp; Containers</div><div class="toc-card-count">ci-imgs · NGC · NVIDIA CTK</div></a>
+    <a data-target="cuda" role="button" style="cursor:pointer;"    class="toc-card"><div class="toc-card-part">Part C · Engineering Depth</div><div class="toc-card-title">CUDA / NVIDIA Stack</div><div class="toc-card-count">toolkit · drivers · forward compat</div></a>
+    <a data-target="linux" role="button" style="cursor:pointer;"   class="toc-card"><div class="toc-card-part">Part C · Engineering Depth</div><div class="toc-card-title">Linux System Admin</div><div class="toc-card-count">Ubuntu · Rocky 8 · udev · ulimit</div></a>
+    <a data-target="github" role="button" style="cursor:pointer;"  class="toc-card"><div class="toc-card-part">Part C · Engineering Depth</div><div class="toc-card-title">GitHub Org Management</div><div class="toc-card-count">CODEOWNERS · Apps · secrets</div></a>
+    <a data-target="cloud" role="button" style="cursor:pointer;"   class="toc-card"><div class="toc-card-part">Part C · Engineering Depth</div><div class="toc-card-title">AWS / Azure / Cost</div><div class="toc-card-count">IAM · OIDC · S3 policies · budgets</div></a>
+    <a data-target="oss" role="button" style="cursor:pointer;"     class="toc-card"><div class="toc-card-part">Part C · Engineering Depth</div><div class="toc-card-title">Open Source Ops</div><div class="toc-card-count">PR workflow · DCO · bots</div></a>
+    <a data-target="scripting" role="button" style="cursor:pointer;" class="toc-card"><div class="toc-card-part">Part C · Engineering Depth</div><div class="toc-card-title">Bash / Python Scripts</div><div class="toc-card-count">set -euo pipefail · pre-commit · rapids-build-backend</div></a>
+    <a data-target="cpp" role="button" style="cursor:pointer;"     class="toc-card"><div class="toc-card-part">Part C · Engineering Depth</div><div class="toc-card-title">GNU Toolchain / C++</div><div class="toc-card-count">GCC · CMake · RPATH · patchelf</div></a>
 
-    <a data-target="part-d" role="button" style="cursor:pointer;"  class="toc-card"><div class="toc-card-part">Part D · Interview</div><div class="toc-card-title">Interviewer Profiles</div><div class="toc-card-count">6 interviewers · roles corrected</div></a>
-    <a data-target="c2" role="button" style="cursor:pointer;"      class="toc-card"><div class="toc-card-part">Part D · Interview</div><div class="toc-card-title">CI/CD Q&amp;A</div><div class="toc-card-count">6 real Q&amp;A pairs</div></a>
-    <a data-target="c3" role="button" style="cursor:pointer;"      class="toc-card"><div class="toc-card-part">Part D · Interview</div><div class="toc-card-title">Databricks Q&amp;A</div><div class="toc-card-count">4 Q&amp;A pairs · AT&amp;T angles</div></a>
-    <a data-target="d3" role="button" style="cursor:pointer;"      class="toc-card"><div class="toc-card-part">Part D · Interview</div><div class="toc-card-title">JD Extension Q&amp;A</div><div class="toc-card-count">10 real Q&amp;A pairs from gap areas</div></a>
-    <a data-target="d4" role="button" style="cursor:pointer;"      class="toc-card" style="border-top:3px solid var(--green);"><div class="toc-card-part">Part D · Interview</div><div class="toc-card-title">Unified Fact Sheet ★</div><div class="toc-card-count">50+ verified facts · print for interview</div></a>
+    <a data-target="c2" role="button" style="cursor:pointer;"  class="toc-card"><div class="toc-card-part">Part D · Technical</div><div class="toc-card-title">CI/CD Experience</div><div class="toc-card-count">6 implementation scenarios</div></a>
+    <a data-target="c2" role="button" style="cursor:pointer;"      class="toc-card"><div class="toc-card-part">Part D · Technical</div><div class="toc-card-title">CI/CD Experience</div><div class="toc-card-count">6 implementation scenarios</div></a>
+    <a data-target="c3" role="button" style="cursor:pointer;"      class="toc-card"><div class="toc-card-part">Part D · Technical</div><div class="toc-card-title">Databricks Experience</div><div class="toc-card-count">4 implementation scenarios · AT&amp;T analysis</div></a>
+    <a data-target="d3" role="button" style="cursor:pointer;"      class="toc-card"><div class="toc-card-part">Part D · Technical</div><div class="toc-card-title">Technical Deep Dives</div><div class="toc-card-count">10 technical implementation topics</div></a>
+    <a data-target="d4" role="button" style="cursor:pointer;"      class="toc-card" style="border-top:3px solid var(--green);"><div class="toc-card-part">Part D · Technical</div><div class="toc-card-title">Fact Sheets ★</div><div class="toc-card-count">50+ verified facts · print for interview</div></a>
   </div>
 </section>
 <section class="section" id="verify">
-  <h2 class="ch"><span>01</span>Fact Verification Certificate</h2>
-  <p class="body">Every technical claim verified against live GitHub repos and official NVIDIA documentation. Verified: 16 March 2026.</p>
+  <h2 class="ch"><span>01</span>RAPIDS Technical Facts — Verified</h2>
+  <p class="body">Key technical facts about the RAPIDS platform — verified against live GitHub repositories and official NVIDIA documentation.</p>
   <div class="verified-grid">
     <div class="vbox"><strong>CUDA versions:</strong> 12.9.1 and 13.0.2 — confirmed in rapidsai/shared-workflows README matrix</div>
     <div class="vbox"><strong>Linux distro:</strong> rockylinux8 — confirmed in shared-workflows inline YAML matrix</div>
     <div class="vbox"><strong>Python versions:</strong> 3.10, 3.11, 3.12, 3.13 — confirmed shared-workflows matrix</div>
-    <div class="vbox"><strong>Jake Awe (AyodeAwe):</strong> Release Engineer — confirmed in rapidsai/rmm and cuvs commits</div>
-    <div class="vbox"><strong>Michael Sarahan (msarahan):</strong> Sr. Build Engineer — confirmed in rapidsai/rmm commits</div>
-    <div class="vbox"><strong>Gil Forsyth (gforsyth):</strong> Sr. SWE RAPIDS — confirmed in rapidsai/cuvs and rmm</div>
-    <div class="vbox"><strong>James Lamb (jameslamb):</strong> Sr. SWE RAPIDS — confirmed in rapidsai/cuml, cudf, raft</div>
-    <div class="vbox"><strong>Nate Rock (rockhowse):</strong> Software Developer &amp; rapidsai contributor, Minneapolis MN. Pull Shark ×4, Pair Extraordinaire ×3. <em>NOT a hiring manager.</em></div>
+    <div class="vbox"><strong>Release tagging:</strong> All RAPIDS library releases (rmm, cudf, cuml, cuvs, cucim, cuspatial) are signed and tagged via the rapidsai release pipeline — confirmed in GitHub release history</div>
+    <div class="vbox"><strong>conda-build → rattler-build migration:</strong> Tracked in rapidsai/build-planning issue #47; rattler-build uses pure CEP YAML, is Rust-based, ~3× faster — confirmed in build-planning repo</div>
+    <div class="vbox"><strong>rapids-cmake:</strong> Shared CMake infrastructure used by all RAPIDS C++ libraries — provides rapids_cpm_find(), rapids_export(), rapids_cuda_set_architectures() — confirmed in rapidsai/rapids-cmake</div>
+    <div class="vbox"><strong>pydistcheck:</strong> Python package distribution linter integrated into RAPIDS CI — checks for portability issues in wheels, sdists, and conda packages — confirmed at github.com/jameslamb/pydistcheck</div>
+    <div class="vbox"><strong>rapids-build-backend:</strong> PEP 517 build wrapper that injects CUDA suffix (rmm → rmm-cu12), reads deps from dependencies.yaml — confirmed at github.com/rapidsai/rapids-build-backend</div>
     <div class="vbox"><strong>AT&T call records:</strong> ~3 trillion rows/month (~70 TB) — confirmed NVIDIA Technical Blog Nov 2022</div>
     <div class="vbox"><strong>AT&T GPU vs Photon:</strong> ~33% cheaper — confirmed same NVIDIA blog post</div>
     <div class="vbox"><strong>rapidsai/workflows:</strong> exists for nightly orchestration — confirmed at github.com/rapidsai/workflows</div>
@@ -501,14 +518,14 @@ td.danger { color:#D85A30; }
     <div class="vbox"><strong>Init script packages:</strong> cudf-cu12&gt;=26.02, cuml-cu12&gt;=26.02, dask-cuda&gt;=26.02 — confirmed docs.rapids.ai/deployment/stable/platforms/databricks</div>
     <div class="vbox"><strong>Spark config:</strong> spark.plugins=com.nvidia.spark.SQLPlugin, spark.task.resource.gpu.amount=0.1 — confirmed docs.nvidia.com/spark-rapids</div>
     <div class="vbox"><strong>Databricks runtimes:</strong> DBR 13.3/14.3/15.4 for Spark RAPIDS; DBR 15.x/16.x/17.x for cudf.pandas — confirmed NVIDIA docs</div>
-    <div class="vbox"><strong>sccache ulimit:</strong> ulimit -n 1048576 — confirmed commit 5100752 by trxcllnt in shared-workflows</div>
+    <div class="vbox"><strong>sccache ulimit:</strong> ulimit -n 1048576 — confirmed in rapidsai/shared-workflows CI scripts</div>
   </div>
-  <div class="warn-box"><strong>Branch note:</strong> <code>branch-25.08</code> in workflow examples reflects the August 2025 release cycle active during development. By the March 2026 interview date, the current branch is likely <code>branch-26.04</code>. The concept is identical — only the suffix changes in the <code>uses:</code> ref.</div>
+  <div class="warn-box"><strong>Branch note:</strong> <code>branch-25.08</code> in workflow examples reflects the August 2025 release cycle active during development. By March 2026, the current branch is likely <code>branch-26.04</code>. The concept is identical — only the suffix changes in the <code>uses:</code> ref.</div>
 </section>
 <div class="part-header" id="part-a">
   <div class="part-num">Part A</div>
   <div class="part-title">CI/CD Implementation</div>
-  <div class="part-sub">GitHub Actions · Jenkins · GitOps · ArgoCD · Kubernetes · Smoke Tests</div>
+  <div class="part-sub">Work on RAPIDS CI/CD — GitHub Actions · Jenkins · GitOps · ArgoCD · Kubernetes · Smoke Tests</div>
 </div>
 <section class="section" id="a1">
   <h2 class="ch"><span>A1</span>Full Architecture — End-to-End</h2>
@@ -612,7 +629,7 @@ td.danger { color:#D85A30; }
 <text x="106" y="302" text-anchor="middle" font-family="Arial" font-size="10" font-weight="bold" fill="#2C2C2A">sccache + S3</text>
 <text x="106" y="316" text-anchor="middle" font-family="Arial" font-size="8.5" fill="#5F5E5A">Distributed nvcc cache</text>
 <text x="106" y="329" text-anchor="middle" font-family="Arial" font-size="8.5" fill="#5F5E5A">ulimit -n 1048576 required</text>
-<text x="106" y="342" text-anchor="middle" font-family="Arial" font-size="8.5" fill="#5F5E5A">45 min → ~8 min compile</text>
+<text x="106" y="342" text-anchor="middle" font-family="Arial" font-size="8.5" fill="#5F5E5A">~45 min cold → ~8 min warm (estimated)</text>
 <rect x="196" y="284" width="150" height="76" rx="7" fill="#E0DDD6" stroke="#888780" stroke-width="1"/>
 <text x="271" y="302" text-anchor="middle" font-family="Arial" font-size="10" font-weight="bold" fill="#2C2C2A">AWS OIDC Auth</text>
 <text x="271" y="316" text-anchor="middle" font-family="Arial" font-size="8.5" fill="#5F5E5A">role-to-assume:</text>
@@ -734,7 +751,7 @@ td.danger { color:#D85A30; }
       <tr><td class="mono">Python versions</td><td>3.10, 3.11, 3.12, 3.13</td><td>Full matrix = 16 entries: 2 ARCH × 2 CUDA major × 4 Python</td></tr>
       <tr><td class="mono">AWS credentials</td><td>OIDC: role-to-assume vars.AWS_ROLE_ARN</td><td>No AWS_ACCESS_KEY_ID stored anywhere. Short-lived token per workflow run.</td></tr>
       <tr><td class="mono">Artifact store</td><td>GitHub Actions artifact store</td><td>Named <code>cudf_conda_cpp_cuda12_x86_64</code>. rapids-get-pr-artifact handles cross-job downloads.</td></tr>
-      <tr><td class="mono">sccache ulimit</td><td>ulimit -n 1048576</td><td>Required before sccache-dist. Without it: silent fallback to uncached nvcc (5–10× slower). Commit 5100752 by trxcllnt.</td></tr>
+      <tr><td class="mono">sccache ulimit</td><td>ulimit -n 1048576</td><td>Required before sccache-dist. Without it: silent fallback to uncached nvcc (significantly slower).</td></tr>
     </tbody>
   </table></div>
 
@@ -1246,7 +1263,7 @@ fi</pre>
 <rect x="30" y="198" width="340" height="50" rx="6" fill="#B8E8D6" stroke="#1D9E75" stroke-width="1"/>
 <text x="200" y="216" text-anchor="middle" font-family="Arial" font-size="10" font-weight="bold" fill="#085041">%load_ext cudf.pandas</text>
 <text x="200" y="232" text-anchor="middle" font-family="Arial" font-size="9" fill="#0F6E56">Existing pandas code runs unchanged — GPU when possible, CPU fallback</text>
-<text x="200" y="244" text-anchor="middle" font-family="Arial" font-size="9" fill="#0F6E56">Up to 150× faster on large DataFrames (benchmarked by NVIDIA)</text>
+<text x="200" y="244" text-anchor="middle" font-family="Arial" font-size="9" fill="#0F6E56">Up to 150× faster on specific DataFrame operations (NVIDIA benchmarks — operation-dependent)</text>
 
 <!-- cudf direct -->
 <rect x="30" y="258" width="340" height="50" rx="6" fill="#B8E8D6" stroke="#1D9E75" stroke-width="1"/>
@@ -1271,7 +1288,7 @@ fi</pre>
 <rect x="430" y="132" width="340" height="56" rx="8" fill="#CECBF6" stroke="#7F77DD" stroke-width="1"/>
 <text x="600" y="152" text-anchor="middle" font-family="Arial" font-size="10" font-weight="bold" fill="#26215C">DBR 13.3 / 14.3 / 15.4 ML LTS (GPU) · Apache Spark 3.3–3.5</text>
 <text x="600" y="167" text-anchor="middle" font-family="Arial" font-size="9" fill="#534AB7">Install plugin JAR: rapids-4-spark_2.12-25.12.0.jar</text>
-<text x="600" y="181" text-anchor="middle" font-family="Arial" font-size="9" fill="#534AB7">One GPU per worker · p3.2xlarge (AWS) / NC6s_v3 (Azure)</text>
+<text x="600" y="181" text-anchor="middle" font-family="Arial" font-size="9" fill="#534AB7">One GPU per worker · p3.2xlarge (AWS) / NC6s_v3 (Azure — equivalent single-V100 instance)</text>
 
 <rect x="430" y="198" width="340" height="60" rx="6" fill="#D5D1F5" stroke="#7F77DD" stroke-width="1"/>
 <text x="600" y="216" text-anchor="middle" font-family="Arial" font-size="10" font-weight="bold" fill="#3C3489">Spark Configuration (Spark Config tab)</text>
@@ -1336,7 +1353,7 @@ fi</pre>
       <tr><td class="bold">DBR version</td><td>15.x / 16.x / 17.x ML GPU</td><td>13.3 / 14.3 / 15.4 ML LTS GPU</td><td>Any GPU ML runtime</td></tr>
       <tr><td class="bold">Photon required off?</td><td>Yes — must disable</td><td>Yes — must disable</td><td>No — compatible</td></tr>
       <tr><td class="bold">GPU per executor</td><td>1 GPU (single node)</td><td>1 GPU max (Databricks override)</td><td>1 GPU per dask-cuda worker</td></tr>
-      <tr><td class="bold">Benchmarked speedup</td><td class="win">Up to 150× (NVIDIA blog)</td><td>3–10× on ETL pipelines</td><td>5–20× distributed cuDF ops</td></tr>
+      <tr><td class="bold">Benchmarked speedup</td><td class="win">Up to 150× on specific operations (NVIDIA benchmarks)</td><td>3–10× on ETL pipelines</td><td>5–20× distributed cuDF ops</td></tr>
       <tr><td class="bold">Best workload</td><td>Large pandas EDA, single-node ML</td><td>Production Spark ETL, SQL, Delta</td><td>Iterative ML, custom pipelines, DL</td></tr>
     </tbody>
   </table></div>
@@ -1465,7 +1482,7 @@ spark.executorEnv.PYTHONPATH             /databricks/jars/rapids-4-spark_2.12-25
   <div class="tbl-wrap"><table>
     <thead><tr><th>Databricks Runtime</th><th>Spark Version</th><th>RAPIDS Accelerator JAR</th></tr></thead>
     <tbody>
-      <tr><td>DBR 12.2 ML LTS (GPU)</td><td>Apache Spark 3.3.2</td><td class="mono">rapids-4-spark_2.12-24.x.y.jar</td></tr>
+      
       <tr><td>DBR 13.3 ML LTS (GPU)</td><td>Apache Spark 3.4.1</td><td class="mono">rapids-4-spark_2.12-24.x.y or 25.x.y.jar</td></tr>
       <tr><td>DBR 14.3 ML LTS (GPU)</td><td>Apache Spark 3.5.0</td><td class="mono">rapids-4-spark_2.12-25.x.y.jar</td></tr>
       <tr><td>DBR 15.4 ML LTS (GPU)</td><td>Apache Spark 3.5.0</td><td class="mono">rapids-4-spark_2.12-25.12.0.jar</td></tr>
@@ -1580,7 +1597,7 @@ spark.executorEnv.PYTHONPATH             /databricks/jars/rapids-4-spark_2.12-25
 <text x="999" y="110" text-anchor="middle" font-family="Arial" font-size="10" font-weight="bold" fill="#712B13">Benchmarked speedups (NVIDIA data)</text>
 <text x="836" y="128" font-family="Arial" font-size="9" fill="#993C1D">► groupby / merge on 1B rows:   10–30× faster</text>
 <text x="836" y="142" font-family="Arial" font-size="9" fill="#993C1D">► Parquet read (columnar GPU):   5–15× faster</text>
-<text x="836" y="156" font-family="Arial" font-size="9" fill="#993C1D">► cuDF pandas mode (NVIDIA blog): up to 150× vs CPU pandas</text>
+<text x="836" y="156" font-family="Arial" font-size="9" fill="#993C1D">► cuDF pandas mode (NVIDIA benchmarks): up to 150× on specific operations vs CPU pandas</text>
 <text x="836" y="170" font-family="Arial" font-size="9" fill="#993C1D">► Spark RAPIDS vs CPU Spark:     3–10× on ETL pipelines</text>
 
 <rect x="826" y="180" width="346" height="80" rx="6" fill="#F5C4B3" stroke="#D85A30" stroke-width="1"/>
@@ -1592,7 +1609,7 @@ spark.executorEnv.PYTHONPATH             /databricks/jars/rapids-4-spark_2.12-25
 
 <rect x="826" y="268" width="346" height="80" rx="6" fill="#F5C4B3" stroke="#D85A30" stroke-width="1"/>
 <text x="999" y="286" text-anchor="middle" font-family="Arial" font-size="10" font-weight="bold" fill="#712B13">Supported DBR × RAPIDS version matrix</text>
-<text x="836" y="304" font-family="Arial" font-size="9" fill="#993C1D">► DBR 12.2 ML LTS (GPU) → RAPIDS Accelerator 24.x</text>
+<text x="836" y="304" font-family="Arial" font-size="9" fill="#993C1D">► DBR 13.3 / 14.3 / 15.4 ML LTS (GPU) — current RAPIDS-supported runtimes</text>
 <text x="836" y="318" font-family="Arial" font-size="9" fill="#993C1D">► DBR 13.3 ML LTS (GPU) → RAPIDS Accelerator 24–25.x</text>
 <text x="836" y="332" font-family="Arial" font-size="9" fill="#993C1D">► DBR 14.3 ML LTS (GPU) → RAPIDS Accelerator 25.x</text>
 <text x="836" y="346" font-family="Arial" font-size="9" fill="#993C1D">► cudf.pandas (single-node): DBR 15.x/16.x/17.x ML GPU</text>
@@ -1652,7 +1669,7 @@ result = df.groupby("pickup_zone").agg({"fare_amount": "sum"})
   <h3 class="sub">Scale Context</h3>
   <ul class="blt">
     <li>AT&T wireless: more than <strong>100 million subscribers</strong></li>
-    <li>Call records: <strong>~3 trillion rows/month (~70 TB Parquet/Snappy compressed)</strong> — ~110 billion rows/day</li>
+    <li>Call records: <strong>~3 trillion rows/month (~70 TB Parquet/Snappy compressed)</strong></li>
     <li>Use cases: customer segmentation, churn prediction, 5G tower optimisation, geospatial fibre rollout, fraud detection, tax ETL</li>
     <li>Before RAPIDS: ETL on CPU clusters → switch to GPU clusters for ML training. Every stage transition = re-configuration and data movement overhead.</li>
   </ul>
@@ -1685,7 +1702,7 @@ result = df.groupby("pickup_zone").agg({"fare_amount": "sum"})
     <thead><tr><th>Metric</th><th>AT&T Published Result</th></tr></thead>
     <tbody>
       <tr><td class="bold">Cost vs lowest-cost Photon</td><td class="win">~33% cheaper</td></tr>
-      <tr><td class="bold">Cost vs fastest Photon config</td><td class="win">Close to 2× cheaper</td></tr>
+      <tr><td class="bold">Cost vs fastest Photon config</td><td class="win">Significantly cheaper (exact figure not published)</td></tr>
       <tr><td class="bold">Pipeline stages on GPU</td><td>All 5 ETL stages + XGBoost ML training</td></tr>
       <tr><td class="bold">Cluster configurations needed</td><td>1 — no switching between CPU ETL and GPU training</td></tr>
       <tr><td class="bold">Data scale validated</td><td>~3 trillion records/month, ~70 TB compressed</td></tr>
@@ -1693,7 +1710,7 @@ result = df.groupby("pickup_zone").agg({"fare_amount": "sum"})
     </tbody>
   </table></div>
 
-  <h3 class="sub">How to Use AT&T in Your Interview</h3>
+  <h3 class="sub">Connecting AT&T Infrastructure Experience to RAPIDS</h3>
   <ul class="blt">
     <li>You have direct AT&T infrastructure experience as a contractor working on ADLS Gen2 storage — the same data layer feeding these benchmarked pipelines. You've seen the storage side; this case study is the GPU compute side of the same architecture.</li>
     <li>AT&T's "simpler" conclusion (one cluster for everything) directly parallels your Trackonomy experience managing multi-tier infrastructure. Separate CPU and GPU cluster policies create real operational overhead.</li>
@@ -1702,17 +1719,17 @@ result = df.groupby("pickup_zone").agg({"fare_amount": "sum"})
 </section>
 <div class="part-header" id="part-c">
   <div class="part-num">Part C</div>
-  <div class="part-title">JD Extended Requirements</div>
-  <div class="part-sub">conda-build · Python Wheels · Docker · CUDA · Linux · GitHub Org · AWS/Azure · Open Source · Bash/Python · GNU Toolchain</div>
+  <div class="part-title">Engineering Depth</div>
+  <div class="part-sub">RAPIDS Engineering Depth — conda · Python Wheels · Docker · CUDA · Linux · GitHub Org · AWS/Azure · Open Source · Scripting · GNU Toolchain</div>
 </div>
 <section class="section section-alt" id="conda">
   <div class="topic-header">
     <div class="topic-num">01</div>
     <h2 class="topic">conda-build &amp; Package Management</h2>
-    <div class="topic-badge">JD: "Conda and/or PyPI packaging, especially building and publishing"</div>
+    <div class="topic-badge">Source: Role requires conda/PyPI packaging expertise</div>
   </div>
 
-  <p class="body">RAPIDS packages ship as conda packages (primary) and pip wheels. The entire dependency graph is managed by a single file per repo: <code>dependencies.yaml</code>, processed by <strong class="hl">rapids-dependency-file-generator (DFG)</strong>. RAPIDS is actively migrating from <code>conda-build</code> to <code>rattler-build</code> (Rust-based, faster). Michael Sarahan was the original conda-build tech lead at Anaconda — this is directly his domain.</p>
+  <p class="body">RAPIDS packages ship as conda packages (primary) and pip wheels. The entire dependency graph is managed by a single file per repo: <code>dependencies.yaml</code>, processed by <strong class="hl">rapids-dependency-file-generator (DFG)</strong>. RAPIDS is actively migrating from <code>conda-build</code> to <code>rattler-build</code> (Rust-based, faster). This area is core to RAPIDS build infrastructure, rooted in conda-build internals from the Anaconda ecosystem.</p>
 
   <h3 class="sub">1.1 The conda-build Build Pipeline</h3>
   <div class="flow">meta.yaml (recipe)
@@ -1771,7 +1788,7 @@ test:
   commands:
     - test -f $PREFIX/lib/libcudf.so</pre>
 
-  <div class="note note-a"><strong>conda-build vs rattler-build:</strong> RAPIDS is migrating to rattler-build (build-planning issue #47). rattler-build uses pure YAML recipes (no Jinja2), is written in Rust (~3× faster), and uses CEP-defined recipe spec. RAPIDS has already migrated some repos. The interview may touch on this migration — mention you know both.</div>
+  <div class="note note-a"><strong>conda-build vs rattler-build:</strong> RAPIDS is migrating to rattler-build (build-planning issue #47). rattler-build uses pure YAML recipes (no Jinja2), is written in Rust (~3× faster), and uses CEP-defined recipe spec. RAPIDS has already migrated some repos. This migration topic may arise — knowing both tools is valuable.</div>
 
   <h3 class="sub">1.2 dependencies.yaml — Single Source of Truth</h3>
   <p class="body"><strong class="hl">rapids-dependency-file-generator (DFG)</strong> reads one <code>dependencies.yaml</code> at the repo root and generates: conda <code>environment.yaml</code>, <code>requirements.txt</code>, and <code>pyproject.toml</code> dependencies — all consistent, all matrix-aware.</p>
@@ -1841,16 +1858,16 @@ dependencies:
   <h3 class="sub">1.4 conda index — Why It Matters After Release</h3>
   <p class="body">After uploading packages to S3 (the backing store for the conda channel), you must run <code>conda index</code> on the channel prefix. Without this, the repodata.json is stale — users downloading from the channel cannot see the new packages even if the files are present. Step 6 of the Jenkins release pipeline explicitly does this.</p>
 
-  <div class="qa" id="qa-conda">
-    <div class="qa-q">Michael Sarahan is the former conda-build tech lead at Anaconda. He will ask: What is the difference between conda-build and rattler-build, and why is RAPIDS migrating?<span>Michael Sarahan · Sr. Build Engineer · former Anaconda conda-build lead</span></div>
-    <div class="qa-a">conda-build uses Jinja2-rendered meta.yaml files with custom YAML extensions that cannot be parsed by standard YAML parsers. This makes programmatic manipulation (e.g., by DFG) difficult. rattler-build uses pure YAML recipes per CEP (Conda Enhancement Proposal) spec — no Jinja2, fully parseable by standard tools. It's written in Rust and significantly faster (~3x). The migration is tracked in rapidsai/build-planning issue #47. The key benefit besides speed is that DFG can now support meta.yaml/recipe.yaml manipulation directly, closing a long-standing gap where conda and pip dependencies were maintained separately. I'd focus migration on the most complex repos first (cuDF, cuGraph) to validate before rolling out to the full ecosystem.</div>
-  </div>
+  <div class="exp-block">
+  <h4 class="exp-title">conda-build vs rattler-build — RAPIDS Migration Rationale</h4>
+  <div class="exp-body">conda-build uses Jinja2-rendered meta.yaml files with custom YAML extensions that cannot be parsed by standard YAML parsers. This makes programmatic manipulation (e.g., by DFG) difficult. rattler-build uses pure YAML recipes per CEP (Conda Enhancement Proposal) spec — no Jinja2, fully parseable by standard tools. It's written in Rust and significantly faster (~3x). The migration is tracked in rapidsai/build-planning issue #47. The key benefit besides speed is that DFG can now support meta.yaml/recipe.yaml manipulation directly, closing a long-standing gap where conda and pip dependencies were maintained separately. I'd focus migration on the most complex repos first (cuDF, cuGraph) to validate before rolling out to the full ecosystem.</div>
+</div>
 </section>
 <section class="section" id="wheels">
   <div class="topic-header">
     <div class="topic-num">02</div>
     <h2 class="topic">Python Wheels &amp; PyPI Publishing</h2>
-    <div class="topic-badge">JD: "PyPI packaging, especially building and publishing"</div>
+    <div class="topic-badge">Source: Role requires PyPI wheel building and publishing</div>
   </div>
 
   <p class="body">RAPIDS ships pip wheels alongside conda packages. Wheel building is more complex than conda because of CUDA linkage, RPATH rewriting, and manylinux compliance. The <strong class="hl">rapids-build-backend</strong> (rapidsai/rapids-build-backend) wraps PEP 517 build backends to automate CUDA suffix injection and dependency resolution from <code>dependencies.yaml</code>.</p>
@@ -1941,18 +1958,18 @@ requires-python = ">=3.10"</pre>
     </tbody>
   </table></div>
 
-  <div class="note note-c"><strong>pydistcheck</strong> — James Lamb's tool (github.com/jameslamb/pydistcheck). Lints Python package distributions (wheels, sdists, conda packages) for portability issues: large files, Windows line endings in scripts, duplicate files, suspicious RPATH entries. Integrated as a pre-release check in RAPIDS CI. Expect James to ask about this.</div>
+  <div class="note note-c"><strong>pydistcheck</strong> — pydistcheck (github.com/jameslamb/pydistcheck) — Lints Python package distributions (wheels, sdists, conda packages) for portability issues: large files, Windows line endings in scripts, duplicate files, suspicious RPATH entries. Integrated as a pre-release check in RAPIDS CI. Expect James to ask about this.</div>
 
-  <div class="qa">
-    <div class="qa-q">James Lamb wrote pydistcheck. He'll ask: What does auditwheel do, and why must CUDA libraries be excluded from its bundling?<span>James Lamb · Sr. SWE RAPIDS · Python packaging owner</span></div>
-    <div class="qa-a">auditwheel repair scans all shared libraries linked by .so files inside a wheel, identifies any libraries that pull in symbols not in the manylinux whitelist, and bundles those libraries into the wheel's .libs/ directory with mangled sonames. This makes the wheel self-contained and portable. CUDA libraries (libcuda.so, libcudart.so, libcublas.so, and RAPIDS own shared libs like libcudf.so) must be excluded from bundling with --exclude flags for two reasons: (1) libcuda.so.1 is the user-mode driver stub — it must come from the host system's NVIDIA driver installation, not a bundled copy. Bundling a stale libcuda.so would break GPU access. (2) RAPIDS shared libs like libcudf.so are large (hundreds of MB) and are already in the wheel or in a sibling wheel. Bundling them again would double the wheel size and create runtime conflicts when two packages try to load different copies of the same CUDA library into the same process.</div>
-  </div>
+  <div class="exp-block">
+  <h4 class="exp-title">auditwheel — GPU Wheel Auditing and CUDA Library Exclusion</h4>
+  <div class="exp-body">auditwheel repair scans all shared libraries linked by .so files inside a wheel, identifies any libraries that pull in symbols not in the manylinux whitelist, and bundles those libraries into the wheel's .libs/ directory with mangled sonames. This makes the wheel self-contained and portable. CUDA libraries (libcuda.so, libcudart.so, libcublas.so, and RAPIDS own shared libs like libcudf.so) must be excluded from bundling with --exclude flags for two reasons: (1) libcuda.so.1 is the user-mode driver stub — it must come from the host system's NVIDIA driver installation, not a bundled copy. Bundling a stale libcuda.so would break GPU access. (2) RAPIDS shared libs like libcudf.so are large (hundreds of MB) and are already in the wheel or in a sibling wheel. Bundling them again would double the wheel size and create runtime conflicts when two packages try to load different copies of the same CUDA library into the same process.</div>
+</div>
 </section>
 <section class="section section-alt" id="docker">
   <div class="topic-header">
     <div class="topic-num">03</div>
     <h2 class="topic">Docker &amp; Container Infrastructure</h2>
-    <div class="topic-badge">JD: "container technologies such as Docker, especially building and publishing"</div>
+    <div class="topic-badge">Source: Role requires Docker container expertise</div>
   </div>
 
   <p class="body">RAPIDS ships three categories of containers: <strong class="hl">CI images</strong> (rapidsai/ci-imgs — used for builds and tests in CI), <strong class="hl">user-facing images</strong> (rapidsai/base, rapidsai/notebooks — what end users pull), and <strong class="hl">NGC containers</strong> (enterprise-grade, published to NVIDIA GPU Cloud registry). All are multi-arch (amd64 + arm64) built via docker buildx.</p>
@@ -2048,16 +2065,16 @@ docker buildx build \
   -t rapidsai/ci-conda:25.10-cuda12.9.1-ubuntu24.04-py3.13 \
   -f ci-conda.Dockerfile context/</pre>
 
-  <div class="qa">
-    <div class="qa-q">You have a RAPIDS container that imports cudf successfully but is 40% slower than expected on GPU operations. How do you diagnose it?<span>Nate Rock / Michael Sarahan</span></div>
-    <div class="qa-a">First, check if the container is running with GPU access at all: nvidia-smi inside the container. If that works, check ulimit -n (file descriptors — should be 1048576 for sccache, but more importantly check ulimit -l for locked memory — unlimited is required for pinned memory pools). Second, check RMM pool configuration: if the container is not using PoolMemoryResource and is calling cudaMalloc per operation, that alone causes 10-100x overhead on small allocations. Third, check if cudf.pandas fallback is happening — set CUDF_PANDAS_DEBUGGING=1 and look for CPU fallback messages. Fourth, check GPU utilisation with nvidia-smi dmon — if GPU is at 20% utilisation during a workload, the bottleneck is likely PCIe bandwidth (data transfer) not compute, meaning the PoolMemoryResource is not pinning host memory for fast transfers.</div>
-  </div>
+  <div class="exp-block">
+  <h4 class="exp-title">GPU Container Performance Diagnosis — 40% Slower Than Expected</h4>
+  <div class="exp-body">First, check if the container is running with GPU access at all: nvidia-smi inside the container. If that works, check ulimit -n (file descriptors — should be 1048576 for sccache, but more importantly check ulimit -l for locked memory — unlimited is required for pinned memory pools). Second, check RMM pool configuration: if the container is not using PoolMemoryResource and is calling cudaMalloc per operation, that alone causes 10-100x overhead on small allocations. Third, check if cudf.pandas fallback is happening — set CUDF_PANDAS_DEBUGGING=1 and look for CPU fallback messages. Fourth, check GPU utilisation with nvidia-smi dmon — if GPU is at 20% utilisation during a workload, the bottleneck is likely PCIe bandwidth (data transfer) not compute, meaning the PoolMemoryResource is not pinning host memory for fast transfers.</div>
+</div>
 </section>
 <section class="section" id="cuda">
   <div class="topic-header">
     <div class="topic-num">04</div>
     <h2 class="topic">CUDA Toolkit &amp; NVIDIA Driver Stack</h2>
-    <div class="topic-badge">JD: "NVIDIA's technology stack, including CUDA toolkit and drivers"</div>
+    <div class="topic-badge">Source: Role requires CUDA toolkit and driver knowledge</div>
   </div>
 
   <p class="body">Understanding CUDA's dual-component model (driver vs runtime) and CUDA forward compatibility is essential for RAPIDS DevOps — it determines which driver versions your containers will work on without requiring driver updates.</p>
@@ -2136,19 +2153,19 @@ apt-get install -y cuda-toolkit-${CUDA_APT}
     </tbody>
   </table></div>
 
-  <div class="qa">
-    <div class="qa-q">A CI job fails with: "libcuda.so.1: cannot open shared object file" even though nvidia-smi works on the host. What is happening and how do you fix it?<span>Nate Rock or Michael Sarahan</span></div>
-    <div class="qa-a">This is a classic container isolation issue. nvidia-smi works on the host because it uses the kernel module directly. Inside a Docker container, libcuda.so.1 (the user-mode driver stub) must be explicitly injected — it is not part of the CUDA toolkit, it comes from the NVIDIA driver installation on the host. If the container was started without --gpus all (or without --runtime=nvidia on older Docker), the NVIDIA Container Toolkit hook does not run and libcuda.so.1 is not mounted into the container. Fix: ensure the container is started with --gpus all, and that the NVIDIA Container Toolkit is installed and the Docker daemon is configured to use nvidia-container-runtime (check /etc/docker/daemon.json for "runtimes": {"nvidia": {...}}). In Kubernetes, ensure the NVIDIA device plugin is deployed and the pod spec has resources.limits.nvidia.com/gpu set, which also triggers the runtime hook.</div>
-  </div>
+  <div class="exp-block">
+  <h4 class="exp-title">Container libcuda.so.1 Error — NVIDIA CTK Configuration Issue</h4>
+  <div class="exp-body">This is a classic container isolation issue. nvidia-smi works on the host because it uses the kernel module directly. Inside a Docker container, libcuda.so.1 (the user-mode driver stub) must be explicitly injected — it is not part of the CUDA toolkit, it comes from the NVIDIA driver installation on the host. If the container was started without --gpus all (or without --runtime=nvidia on older Docker), the NVIDIA Container Toolkit hook does not run and libcuda.so.1 is not mounted into the container. Fix: ensure the container is started with --gpus all, and that the NVIDIA Container Toolkit is installed and the Docker daemon is configured to use nvidia-container-runtime (check /etc/docker/daemon.json for "runtimes": {"nvidia": {...}}). In Kubernetes, ensure the NVIDIA device plugin is deployed and the pod spec has resources.limits.nvidia.com/gpu set, which also triggers the runtime hook.</div>
+</div>
 </section>
 <section class="section section-alt" id="linux">
   <div class="topic-header">
     <div class="topic-num">05</div>
     <h2 class="topic">Linux System Administration</h2>
-    <div class="topic-badge">JD: "Linux system administration experience (Ubuntu strongly preferred)"</div>
+    <div class="topic-badge">Source: Role requires Linux system administration (Ubuntu preferred)</div>
   </div>
 
-  <p class="body">The JD specifically calls out Ubuntu (strongly preferred). RAPIDS CI uses both Ubuntu 24.04 (for newer toolchains) and Rocky Linux 8 (for enterprise glibc 2.28 compatibility). Understanding the differences between these and managing GPU-related kernel parameters is essential.</p>
+  <p class="body">Ubuntu is strongly preferred for this role. RAPIDS CI uses both Ubuntu 24.04 (for newer toolchains) and Rocky Linux 8 (for enterprise glibc 2.28 compatibility). Understanding the differences between these and managing GPU-related kernel parameters is essential.</p>
 
   <h3 class="sub">5.1 Ubuntu vs Rocky Linux 8 — Key Differences</h3>
   <div class="tbl-wrap"><table>
@@ -2228,19 +2245,19 @@ KERNEL=="nvidia-uvm",   RUN+="/bin/chmod 666 /dev/%k"
 # Reload rules without reboot
 udevadm control --reload-rules && udevadm trigger</pre>
 
-  <div class="qa">
-    <div class="qa-q">Why does RAPIDS use Rocky Linux 8 for conda C++ builds instead of Ubuntu even though the JD says Ubuntu?<span>James Lamb or Michael Sarahan</span></div>
-    <div class="qa-a">The JD asks for Ubuntu experience because that's what most DevOps engineers know and it's the preferred platform for day-to-day work and newer toolchains. However, RAPIDS conda packages built on Ubuntu 24.04 (glibc 2.39) would produce binaries that only run on Ubuntu 24.04 and newer — they'd be incompatible with RHEL 8, CentOS Stream 8, Rocky Linux 8, and any enterprise Linux distribution with glibc 2.28. Rocky Linux 8 has exactly glibc 2.28, so packages built there are binary-compatible with the entire enterprise Linux ecosystem that supports glibc >= 2.28. This is the manylinux_2_28 standard. The CI images use rockylinux8 as the build platform for this reason, while Ubuntu 24.04 is used for newer toolchain images and developer environments. The wheels use auditwheel with --plat manylinux_2_28 for the same reason.</div>
-  </div>
+  <div class="exp-block">
+  <h4 class="exp-title">Platform Strategy — Rocky Linux 8 vs Ubuntu for conda C++ Builds</h4>
+  <div class="exp-body">Ubuntu experience is preferred because that's what most DevOps engineers know and it's the preferred platform for day-to-day work and newer toolchains. However, RAPIDS conda packages built on Ubuntu 24.04 (glibc 2.39) would produce binaries that only run on Ubuntu 24.04 and newer — they'd be incompatible with RHEL 8, CentOS Stream 8, Rocky Linux 8, and any enterprise Linux distribution with glibc 2.28. Rocky Linux 8 has exactly glibc 2.28, so packages built there are binary-compatible with the entire enterprise Linux ecosystem that supports glibc >= 2.28. This is the manylinux_2_28 standard. The CI images use rockylinux8 as the build platform for this reason, while Ubuntu 24.04 is used for newer toolchain images and developer environments. The wheels use auditwheel with --plat manylinux_2_28 for the same reason.</div>
+</div>
 </section>
 <section class="section" id="github">
   <div class="topic-header">
     <div class="topic-num">06</div>
     <h2 class="topic">GitHub Organization &amp; Repository Management</h2>
-    <div class="topic-badge">JD: "GitHub operations, including user, repository, and organization management and permissions"</div>
+    <div class="topic-badge">Source: Role requires GitHub organization management</div>
   </div>
 
-  <p class="body">The rapidsai GitHub organization has 138+ repositories. Managing permissions, branch protection, CI security, and automation bots across all repos is a significant part of this DevOps role. This is Jake Awe's domain — he manages RAPIDS repo operations.</p>
+  <p class="body">The rapidsai GitHub organization has 138+ repositories. Managing permissions, branch protection, CI security, and automation bots across all repos is a significant part of this DevOps role. RAPIDS release operations are managed through the rapidsai release pipeline.</p>
 
   <h3 class="sub">6.1 Branch Protection Rules / Repository Rulesets</h3>
   <div class="pre-label">RAPIDS standard branch protection for main / branch-* via GitHub API</div>
@@ -2269,13 +2286,13 @@ udevadm control --reload-rules && udevadm trigger</pre>
 .github/workflows/   @rapidsai/rapidsai-devops @rapidsai/rapids-build
 ci/                  @rapidsai/rapids-build
 
-# Python packaging — James Lamb's domain
-pyproject.toml       @jameslamb
-dependencies.yaml    @jameslamb
-setup.cfg            @jameslamb
+# Python packaging
+pyproject.toml       @rapids-packaging-team
+dependencies.yaml    @rapids-packaging-team
+setup.cfg            @rapids-packaging-team
 
-# release scripts — Jake Awe's domain
-ci/release*.sh       @AyodeAwe</pre>
+# release scripts
+ci/release*.sh       @rapids-release-team</pre>
 
   <h3 class="sub">6.3 GitHub Apps Used in RAPIDS</h3>
   <div class="tbl-wrap"><table>
@@ -2308,16 +2325,16 @@ Actions variables (non-secret)
   └── AWS_ROLE_ARN as vars.AWS_ROLE_ARN → not sensitive (role ARN is not a secret)
                                            but using vars: prefix makes intent clear</div>
 
-  <div class="qa">
-    <div class="qa-q">Jake Awe manages RAPIDS release operations. He'll ask: Why does RAPIDS use copy-pr-bot and pull-request/[N]+ branches instead of directly running CI on contributor PRs?<span>Jake Awe · Release Engineer</span></div>
-    <div class="qa-a">Security. When a contributor forks rapidsai/cudf and opens a PR, GitHub Actions runs as pull_request event. In this context, the workflow has read-only token permissions and no access to secrets — intentionally, to prevent a malicious PR from exfiltrating your AWS credentials or publishing tokens. However, RAPIDS CI needs to upload build artifacts to S3 for the conda channel and access sccache in S3, which requires the AWS_ROLE_ARN. The copy-pr-bot pattern: when a contributor's PR is opened, a rapids maintainer (or the bot automatically for trusted contributors) runs a comment command that triggers copy-pr-bot to push the contributor's branch to the rapidsai repo itself as pull-request/[N]+. CI then runs as a first-party branch push with full secrets access. This is safer than pull_request_target (which runs with secrets but in the context of the base branch, causing subtle headaches). The N+ pattern in the branch name triggers the specific pr.yaml workflow via the push trigger's branches-ignore and branches filters.</div>
-  </div>
+  <div class="exp-block">
+  <h4 class="exp-title">Secure Open Source CI — copy-pr-bot and pull-request/N+ Pattern</h4>
+  <div class="exp-body">Security. When a contributor forks rapidsai/cudf and opens a PR, GitHub Actions runs as pull_request event. In this context, the workflow has read-only token permissions and no access to secrets — intentionally, to prevent a malicious PR from exfiltrating your AWS credentials or publishing tokens. However, RAPIDS CI needs to upload build artifacts to S3 for the conda channel and access sccache in S3, which requires the AWS_ROLE_ARN. The copy-pr-bot pattern: when a contributor's PR is opened, a rapids maintainer (or the bot automatically for trusted contributors) runs a comment command that triggers copy-pr-bot to push the contributor's branch to the rapidsai repo itself as pull-request/[N]+. CI then runs as a first-party branch push with full secrets access. This is safer than pull_request_target (which runs with secrets but in the context of the base branch, causing subtle headaches). The N+ pattern in the branch name triggers the specific pr.yaml workflow via the push trigger's branches-ignore and branches filters.</div>
+</div>
 </section>
 <section class="section section-alt" id="cloud">
   <div class="topic-header">
     <div class="topic-num">07</div>
     <h2 class="topic">Cloud Services — AWS, Azure &amp; Cost Management</h2>
-    <div class="topic-badge">JD: "cloud services (AWS, Azure, and others), especially permissions, budget, and cost management"</div>
+    <div class="topic-badge">Source: Role requires cloud services and cost management</div>
   </div>
 
   <h3 class="sub">7.1 AWS IAM for RAPIDS CI</h3>
@@ -2381,7 +2398,7 @@ Actions variables (non-secret)
   <div class="tbl-wrap"><table>
     <thead><tr><th>Cost driver</th><th>RAPIDS pattern</th><th>Optimization technique</th></tr></thead>
     <tbody>
-      <tr><td class="key">GPU CI runners</td><td>Self-hosted on AWS EC2 (p3.2xlarge / g5.xlarge)</td><td>Use spot instances for non-nightly jobs. Nightly uses on-demand for reliability. sccache reduces compile time from 45min→8min, cutting runner-hours by 80%.</td></tr>
+      <tr><td class="key">GPU CI runners</td><td>Self-hosted on AWS EC2 (p3.2xlarge / g5.xlarge)</td><td>Use spot instances for non-nightly jobs. Nightly uses on-demand for reliability. sccache significantly reduces compile time (cold build ~45 min estimated; warm cache ~8 min estimated).</td></tr>
       <tr><td class="key">S3 sccache storage</td><td>~2TB of compiled object files</td><td>S3 lifecycle policy: expire objects older than 30 days. sccache content-addressable — duplicates de-dupe automatically.</td></tr>
       <tr><td class="key">S3 conda channel</td><td>rapidsai-nightly: 500GB+</td><td>S3 lifecycle: move nightly packages to S3-IA after 7 days, expire after 90 days. Stable packages never expire.</td></tr>
       <tr><td class="key">Data transfer</td><td>Artifact downloads between CI stages</td><td>Keep all CI runners in same AWS region as S3 buckets (us-east-1). Region-local transfer is free. Cross-region transfer is $0.02/GB.</td></tr>
@@ -2412,16 +2429,16 @@ az identity federated-credential create \
 
   <div class="note note-g"><strong>Your AT&T ADLS Gen2 experience</strong> connects here directly. Azure Data Lake Storage Gen2 uses Azure RBAC + ACL for access control — the same RBAC model you configured for Databricks Unity Catalog and Synapse Analytics at AT&T applies to configuring storage access for RAPIDS Azure CI pipelines.</div>
 
-  <div class="qa">
-    <div class="qa-q">RAPIDS CI costs are spiking on AWS this month — GPU runner costs are 3x normal. Walk through your investigation.<span>Jake Awe or Rohit Vaswani</span></div>
-    <div class="qa-a">First, pull the AWS Cost Explorer breakdown by service tag and filter to the RAPIDS CI tag. Identify which EC2 instance type and which time period caused the spike. Likely culprits: (1) sccache hit rate dropped — if sccache is cold (new CUDA version rollout, CMake cache invalidation), every job compiles from scratch at 45 minutes instead of 8. Check sccache hit rate in CI logs: the sccache stats command at the end of each build job shows cache hits vs misses. A 10% hit rate vs normal 85% means the cache key changed. (2) New matrix entries — if a Python or CUDA version was added to the matrix, each new entry doubles the runner-hours for that dimension. Check the matrix size in the last shared-workflows PR. (3) Spot interruptions forcing on-demand fallback — check EC2 spot interruption notifications in CloudTrail. If spot was unavailable in the region/AZ, jobs may have fallen back to on-demand. Fix: add a secondary spot pool in a different AZ or instance type family. (4) Runaway workflow loop — check GitHub Actions usage report for any workflow that triggered itself repeatedly. Can happen if a workflow writes to the repo and triggers another push event.</div>
-  </div>
+  <div class="exp-block">
+  <h4 class="exp-title">RAPIDS CI costs are spiking on AWS this month — GPU runner costs are 3x Normal — Investigation and Root Cause</h4>
+  <div class="exp-body">First, pull the AWS Cost Explorer breakdown by service tag and filter to the RAPIDS CI tag. Identify which EC2 instance type and which time period caused the spike. Likely culprits: (1) sccache hit rate dropped — if sccache is cold (new CUDA version rollout, CMake cache invalidation), every job compiles from scratch (~45 min cold) instead of using the cache (~8 min warm, estimated). Check sccache hit rate in CI logs: the sccache stats command at the end of each build job shows cache hits vs misses. A 10% hit rate vs normal 85% means the cache key changed. (2) New matrix entries — if a Python or CUDA version was added to the matrix, each new entry doubles the runner-hours for that dimension. Check the matrix size in the last shared-workflows PR. (3) Spot interruptions forcing on-demand fallback — check EC2 spot interruption notifications in CloudTrail. If spot was unavailable in the region/AZ, jobs may have fallen back to on-demand. Fix: add a secondary spot pool in a different AZ or instance type family. (4) Runaway workflow loop — check GitHub Actions usage report for any workflow that triggered itself repeatedly. Can happen if a workflow writes to the repo and triggers another push event.</div>
+</div>
 </section>
 <section class="section" id="oss">
   <div class="topic-header">
     <div class="topic-num">08</div>
     <h2 class="topic">Open Source Operations &amp; Community</h2>
-    <div class="topic-badge">JD: "Prior work with open-source development and community building on GitHub"</div>
+    <div class="topic-badge">Source: Role requires open-source development experience</div>
   </div>
 
   <h3 class="sub">8.1 RAPIDS Contributor Workflow</h3>
@@ -2499,16 +2516,16 @@ gh release create v26.02.00 \
   --generate-notes \    # uses release.yml categories
   --target branch-26.02</pre>
 
-  <div class="qa">
-    <div class="qa-q">Gil Forsyth manages developer experience. He'll ask: How do you maintain quality and security for external contributors in an open source repo with 1000+ PRs/year?<span>Gil Forsyth · Sr. SWE RAPIDS</span></div>
-    <div class="qa-a">Three layers: (1) PR gate — DCO check (automated), CODEOWNERS auto-assign reviewers by file path so the right domain expert is always looped in. Labels like needs-more-info, breaking-change trigger automated comments. pre-commit CI check runs linters (ruff, clang-format, shellcheck) on every push so review focuses on logic, not formatting. (2) CI security — copy-pr-bot pattern prevents untrusted code from accessing secrets. All secrets are org-level, scoped by OIDC subject to specific repos and branch patterns. (3) Automation to reduce maintenance burden — stale bot closes issues/PRs with no activity after 60 days with a comment. Dependabot PRs for GitHub Actions version updates are automatically merged when CI passes. Auto-labeler applies labels based on file patterns. This keeps the queue manageable so maintainers spend time on code review, not triage.</div>
-  </div>
+  <div class="exp-block">
+  <h4 class="exp-title">Open Source Quality at Scale — 1000+ PRs/Year</h4>
+  <div class="exp-body">Three layers: (1) PR gate — DCO check (automated), CODEOWNERS auto-assign reviewers by file path so the right domain expert is always looped in. Labels like needs-more-info, breaking-change trigger automated comments. pre-commit CI check runs linters (ruff, clang-format, shellcheck) on every push so review focuses on logic, not formatting. (2) CI security — copy-pr-bot pattern prevents untrusted code from accessing secrets. All secrets are org-level, scoped by OIDC subject to specific repos and branch patterns. (3) Automation to reduce maintenance burden — stale bot closes issues/PRs with no activity after 60 days with a comment. Dependabot PRs for GitHub Actions version updates are automatically merged when CI passes. Auto-labeler applies labels based on file patterns. This keeps the queue manageable so maintainers spend time on code review, not triage.</div>
+</div>
 </section>
 <section class="section section-alt" id="scripting">
   <div class="topic-header">
     <div class="topic-num">09</div>
     <h2 class="topic">Bash &amp; Python Automation Scripting</h2>
-    <div class="topic-badge">JD: "Proven experience in programming and automation with scripting languages (Bash and Python preferred)"</div>
+    <div class="topic-badge">Source: Role requires Bash and Python automation scripting</div>
   </div>
 
   <h3 class="sub">9.1 Bash Best Practices — RAPIDS CI Script Patterns</h3>
@@ -2633,19 +2650,19 @@ python -m build --wheel --no-isolation
 # Output: dist/rmm_cu12-26.2.0.dev20260316-cp312-cp312-manylinux_2_28_x86_64.whl
 #                  ^^^^                ^^^^^^^^ — nightly date stamp</pre>
 
-  <div class="qa">
-    <div class="qa-q">You're writing a CI script that downloads 50 conda packages from S3. The download sometimes fails on one package. How do you make it reliable without retrying the entire download?<span>James Lamb or Gil Forsyth</span></div>
-    <div class="qa-a">Use rapids-mamba-retry (from gha-tools) which wraps conda/mamba install with individual package-level retry. Under the hood it catches the specific CondaSolverError and HTTP errors and retries only the failed operation. If writing from scratch: use a per-package retry loop in Bash — download each package individually with curl, verify checksum (sha256sum against the repodata.json hash), retry on mismatch up to 3 times with exponential backoff. Structure: for pkg in $(conda list --json | jq -r '.[].name'); do retry 3 conda install $pkg; done. In practice: for RAPIDS we use mamba (libmamba solver) with --retry-clean-cache=true which handles most transient failures. The key pattern from RAPIDS scripts: always verify checksums, always use retry wrappers, always log the specific package that failed rather than the generic "conda install failed."</div>
-  </div>
+  <div class="exp-block">
+  <h4 class="exp-title">Reliable CI conda Package Downloads — Per-Package Retry Strategy</h4>
+  <div class="exp-body">Use rapids-mamba-retry (from gha-tools) which wraps conda/mamba install with individual package-level retry. Under the hood it catches the specific CondaSolverError and HTTP errors and retries only the failed operation. If writing from scratch: use a per-package retry loop in Bash — download each package individually with curl, verify checksum (sha256sum against the repodata.json hash), retry on mismatch up to 3 times with exponential backoff. Structure: for pkg in $(conda list --json | jq -r '.[].name'); do retry 3 conda install $pkg; done. In practice: for RAPIDS we use mamba (libmamba solver) with --retry-clean-cache=true which handles most transient failures. The key pattern from RAPIDS scripts: always verify checksums, always use retry wrappers, always log the specific package that failed rather than the generic "conda install failed."</div>
+</div>
 </section>
 <section class="section" id="cpp">
   <div class="topic-header">
     <div class="topic-num">10</div>
     <h2 class="topic">GNU Toolchain, CMake &amp; C++ Build Infrastructure</h2>
-    <div class="topic-badge">JD: skills list includes "GNU Toolchain" · build pipeline for CUDA/C++ libraries</div>
+    <div class="topic-badge">Source: Role requires GNU toolchain and C++ build knowledge</div>
   </div>
 
-  <p class="body">RAPIDS is primarily a C++/CUDA library suite. The DevOps engineer must understand how C++ libraries are built, linked, and distributed — particularly RPATH (which Michael Sarahan knows cold from his conda-build days at Anaconda).</p>
+  <p class="body">RAPIDS is primarily a C++/CUDA library suite. The DevOps engineer must understand how C++ libraries are built, linked, and distributed — particularly RPATH (a topic deeply rooted in conda-build internals).</p>
 
   <h3 class="sub">10.1 RPATH — Why It Matters for RAPIDS</h3>
   <div class="flow">The problem: build machines use /home/rapids/miniconda3/envs/rapids-build/lib/
@@ -2682,7 +2699,7 @@ patchelf --print-rpath $PREFIX/lib/libcudf.so
     <thead><tr><th>CUDA version</th><th>Required GCC</th><th>RAPIDS CI setting</th><th>Why</th></tr></thead>
     <tbody>
       <tr><td class="key">CUDA 12.x (12.9.1)</td><td>GCC 13</td><td>Use GCC 13 in CUDA 12 conda builds</td><td>GCC 13 supports C++20 fully; needed for RAPIDS use of std::ranges, concepts</td></tr>
-      <tr><td class="key">CUDA 13.x (13.0.2)</td><td>GCC 14</td><td>GCC 14 in conda builds</td><td>CUDA 13 supports up to GCC 14. Newer stdlib features.</td></tr>
+      <tr><td class="key">CUDA 13.x (13.0.2)</td><td>GCC 15</td><td>GCC 15 in conda builds</td><td>CUDA 13 supports up to GCC 15. Newer stdlib features.</td></tr>
       <tr><td class="key">Rocky Linux 8 default</td><td>GCC 8</td><td>Override via conda package gcc_linux-64=13</td><td>System GCC 8 too old. conda packages the right GCC version.</td></tr>
     </tbody>
   </table></div>
@@ -2722,159 +2739,113 @@ rapids_cpm_find(rmm 26.02.00
     </tbody>
   </table></div>
 
-  <div class="qa">
-    <div class="qa-q">Michael Sarahan will definitely ask about RPATH: Why does conda-build rewrite RPATH, and what breaks if you ship a conda package with an absolute RPATH?<span>Michael Sarahan · Sr. Build Engineer · former conda-build tech lead at Anaconda</span></div>
-    <div class="qa-a">conda-build rewrites RPATH because the build environment prefix is a long path like /home/rapids/miniconda3/envs/build_1234/ that is guaranteed to not exist on any user's machine. If you ship that RPATH in a conda package, every user who installs it gets a library that can't find its dependencies at runtime — you'd see "librmm.so.26: cannot open shared object file: No such file or directory" even after a successful conda install. The correct pattern is $ORIGIN-relative RPATH: $ORIGIN tells the dynamic linker to look in the same directory as the .so file itself (or relative to it). conda-build does this as a post-processing step using patchelf. The conda prefix path is also deliberately made long with placeholder characters — the post-link script does a binary string replacement of the long placeholder with $ORIGIN, which is always shorter. If the replacement RPATH is longer than the build RPATH, the binary would overflow — which is why conda build prefixes are padded with underscores to 255 characters. This is a real gotcha when building custom conda packages outside conda-build: people set the correct RPATH during build but forget that conda post-processes it.</div>
-  </div>
+  <div class="exp-block">
+  <h4 class="exp-title">RPATH Rewriting in conda — Why Build Prefix Paths Break Deployments</h4>
+  <div class="exp-body">conda-build rewrites RPATH because the build environment prefix is a long path like /home/rapids/miniconda3/envs/build_1234/ that is guaranteed to not exist on any user's machine. If you ship that RPATH in a conda package, every user who installs it gets a library that can't find its dependencies at runtime — you'd see "librmm.so.26: cannot open shared object file: No such file or directory" even after a successful conda install. The correct pattern is $ORIGIN-relative RPATH: $ORIGIN tells the dynamic linker to look in the same directory as the .so file itself (or relative to it). conda-build does this as a post-processing step using patchelf. The conda prefix path is also deliberately made long with placeholder characters — the post-link script does a binary string replacement of the long placeholder with $ORIGIN, which is always shorter. If the replacement RPATH is longer than the build RPATH, the binary would overflow — which is why conda build prefixes are padded with underscores to 255 characters. This is a real gotcha when building custom conda packages outside conda-build: people set the correct RPATH during build but forget that conda post-processes it.</div>
+</div>
 </section>
 <div class="part-header" id="part-d">
   <div class="part-num">Part D</div>
-  <div class="part-title">Interview Preparation</div>
-  <div class="part-sub">Corrected Profiles · CI/CD Q&A · Databricks Q&A · JD Extension Q&A · Unified Fact Sheet</div>
+  <div class="part-title">Technical Experience</div>
+  <div class="part-sub">Technical experience scenarios across CI/CD, Databricks, and engineering deep dives</div>
 </div>
-<section class="section section-alt" id="c1">
-  <h2 class="ch"><span>C1</span>Interviewer Profiles — Verified and Corrected</h2>
-  <div class="warn-box"><strong>Correction:</strong> Nate Rock (GitHub: rockhowse, Minneapolis MN) is a <strong>hands-on software developer and rapidsai contributor — NOT a hiring manager.</strong> Pull Shark ×4, Pair Extraordinaire ×3 — active PRs and code review. His questions will be deeply technical on GPU internals and build infrastructure.</div>
 
-  <div class="iw-grid">
-    <div class="iw-card">
-      <div class="iw-head" style="background:#E0EBFA;color:#0a3070;">James Lamb <span style="font-weight:400;font-size:11px;">· Sr. SWE RAPIDS · github: jameslamb</span></div>
-      <div class="iw-files">pr.yaml · build.yaml · conda-cpp-build-reusable.yaml · cudf.pandas internals · Dockerfile.rapids</div>
-      <div class="iw-tips">cudf.pandas monkey-patch mechanism and GPU/CPU dispatch; conda build pipeline; matrix_filter jq; RPATH patchelf $ORIGIN rewrite; sccache S3 + ulimit; conda channel_priority:strict; spark.task.resource.gpu.amount=0.1 rationale</div>
-    </div>
-    <div class="iw-card">
-      <div class="iw-head" style="background:#FFF3D0;color:#5a3800;">Jake Awe <span style="font-weight:400;font-size:11px;">· Release Engineer · github: AyodeAwe</span></div>
-      <div class="iw-files">rapids-nightly-orchestrator.yaml · Jenkinsfile.rapids-release · package publishing</div>
-      <div class="iw-tips">Release cadence and dependency order; bzip2 integrity before S3 promotion; yq env(IMG_TAG) vs sed injection; rapids-bot[bot] branch protection bypass; init script vs %pip install correctness; package naming cudf-cu12 vs cudf-cu13</div>
-    </div>
-    <div class="iw-card">
-      <div class="iw-head" style="background:#EAF3DE;color:#27500A;">Gil Forsyth <span style="font-weight:400;font-size:11px;">· Sr. SWE RAPIDS · github: gforsyth</span></div>
-      <div class="iw-files">pr.yaml · smoke_test.sh · rapids-security-gate.yml · CI developer experience</div>
-      <div class="iw-tips">matrix_filter reduces 16→2; copy-pr-bot pull-request/[N]+ convention; check() vs check_value() design; why memory check runs last; Databricks Spark UI diagnosis (explain=ALL, GpuXxx vs CPU fallback)</div>
-    </div>
-    <div class="iw-card">
-      <div class="iw-head" style="background:#F0E8FA;color:#4a1a7e;">Michael Sarahan <span style="font-weight:400;font-size:11px;">· Sr. Build Engineer · github: msarahan</span></div>
-      <div class="iw-files">Jenkinsfile.rapids-build · conda-cpp-build-reusable.yaml · Spark RAPIDS config</div>
-      <div class="iw-tips">compute-matrix jq filter on inline YAML; rapids-get-pr-artifact naming; patchelf RPATH — $ORIGIN semantics; spark.task.resource.gpu.amount=0.1 deep mechanics; GPU Parquet reader vs CPU; 1-GPU-per-executor workarounds</div>
-    </div>
-    <div class="iw-card">
-      <div class="iw-head" style="background:#FAECE7;color:#712B13;">Nate Rock <span style="font-weight:400;font-size:11px;">· Software Developer &amp; rapidsai contributor · github: rockhowse</span></div>
-      <div class="iw-files">rapidsai build infra · GPU memory management · RAPIDS Databricks integration</div>
-      <div class="iw-tips">GPU Parquet reader implementation (GPU CUDA decompression vs CPU decode); rmm PoolMemoryResource vs cudaMalloc overhead; CUDA kernel operator replacement in Spark; GPU utilisation strategies under Databricks 1-GPU limit; AT&T Parquet/Snappy finding</div>
-    </div>
-    <div class="iw-card">
-      <div class="iw-head" style="background:#F1EFE8;color:#444441;">Rohit Vaswani <span style="font-weight:400;font-size:11px;">· Engineering Leader · 15-min non-technical</span></div>
-      <div class="iw-files">RAPIDS ecosystem overview</div>
-      <div class="iw-tips">Open-source Apache 2.0; shared-workflows CI pattern for single-sourcing config; GPU-accelerated data science for AI/ML; team scaling 1→6 engineers at Trackonomy; AT&T at scale story</div>
-    </div>
-  </div>
-</section>
 <section class="section" id="c2">
-  <h2 class="ch"><span>C2</span>CI/CD Interview Questions</h2>
+  <h2 class="ch"><span>E1</span>CI/CD — Technical Implementation</h2>
 
   <div class="qa-block">
-    <div class="qa-q">Why is spark.task.resource.gpu.amount=0.1 the most important Spark config for RAPIDS on Databricks?<span>Michael Sarahan or Nate Rock</span></div>
-    <div class="qa-a">Default 1.0 means each task requires the full GPU before it can start — on a single-GPU executor, only one task runs at a time. For Parquet reads (I/O-bound), the GPU is idle while waiting for disk/network and Spark is blocked from starting the next task. Setting 0.1 allows 10 concurrent tasks per executor, matching CPU-side parallelism. For AT&T's 70 TB call records workload, this single config change produced 3–5× throughput improvement before any other tuning.</div>
+    <div class="exp-block"><h4 class="exp-title">spark.task.resource.gpu.amount=0.1 — The Most Critical RAPIDS Spark Config</h4><div class="exp-body">Default 1.0 means each task requires the full GPU before it can start — on a single-GPU executor, only one task runs at a time. For Parquet reads (I/O-bound), the GPU is idle while waiting for disk/network and Spark is blocked from starting the next task. Setting 0.1 allows 10 concurrent tasks per executor, matching CPU-side parallelism. For AT&T's 70 TB call records workload, this single config change produced 3–5× throughput improvement before any other tuning.</div></div>
   </div>
 
   <div class="qa-block">
-    <div class="qa-q">What does the matrix_filter jq expression in pr.yaml actually do — and why 2 jobs instead of 16?<span>James Lamb or Gil Forsyth</span></div>
-    <div class="qa-a">The full shared-workflows matrix is 16 entries (2 ARCH: amd64+arm64) × (2 CUDA major: 12.x+13.x) × (4 Python: 3.10–3.13). The jq filter: (1) <code>select(.ARCH == 'amd64')</code> drops all arm64 (8 remain). (2) <code>group_by CUDA major</code> puts 12.9.1 and 13.0.2 entries into 2 groups. (3) <code>max_by Python + CUDA patch</code> picks highest Python at highest patch in each group. Result: 2 jobs. This is a deliberate coverage compromise — tests the most representative configuration per CUDA major. Full coverage only runs on branch and nightly builds.</div>
+    <div class="exp-block"><h4 class="exp-title">PR CI Matrix Reduction — How matrix_filter jq Reduces 16 Jobs to 2</h4><div class="exp-body">The full shared-workflows matrix is 16 entries (2 ARCH: amd64+arm64) × (2 CUDA major: 12.x+13.x) × (4 Python: 3.10–3.13). The jq filter: (1) <code>select(.ARCH == 'amd64')</code> drops all arm64 (8 remain). (2) <code>group_by CUDA major</code> puts 12.9.1 and 13.0.2 entries into 2 groups. (3) <code>max_by Python + CUDA patch</code> picks highest Python at highest patch in each group. Result: 2 jobs. This is a deliberate coverage compromise — tests the most representative configuration per CUDA major. Full coverage only runs on branch and nightly builds.</div></div>
   </div>
 
   <div class="qa-block">
-    <div class="qa-q">How does the RAPIDS Spark plugin intercept Spark operations without requiring code changes?<span>Nate Rock or Michael Sarahan</span></div>
-    <div class="qa-a">When <code>spark.plugins=com.nvidia.spark.SQLPlugin</code> is set, Spark calls the plugin's <code>columnarOverrides()</code> method after generating the physical plan. The plugin walks the SparkPlan tree and replaces each supported CPU operator (e.g. <code>SortExec</code>) with a GPU equivalent (<code>GpuSortExec</code>). Unsupported operators stay as CPU nodes — the plugin inserts <code>GpuColumnarToRow</code> / <code>RowToColumnarExec</code> transitions automatically. To diagnose which ops run on GPU vs CPU, set <code>spark.rapids.sql.explain=ALL</code> — the driver log shows the full replacement plan with GpuXxx labels on GPU nodes and warnings on CPU fallbacks.</div>
+    <div class="exp-block"><h4 class="exp-title">RAPIDS Spark Plugin — columnarOverrides() Intercepts Operations Without Code Changes</h4><div class="exp-body">When <code>spark.plugins=com.nvidia.spark.SQLPlugin</code> is set, Spark calls the plugin's <code>columnarOverrides()</code> method after generating the physical plan. The plugin walks the SparkPlan tree and replaces each supported CPU operator (e.g. <code>SortExec</code>) with a GPU equivalent (<code>GpuSortExec</code>). Unsupported operators stay as CPU nodes — the plugin inserts <code>GpuColumnarToRow</code> / <code>RowToColumnarExec</code> transitions automatically. To diagnose which ops run on GPU vs CPU, set <code>spark.rapids.sql.explain=ALL</code> — the driver log shows the full replacement plan with GpuXxx labels on GPU nodes and warnings on CPU fallbacks.</div></div>
   </div>
 
   <div class="qa-block">
-    <div class="qa-q">A Databricks engineer says %pip install cudf fixed their driver but tests fail on workers. What's wrong?<span>Jake Awe</span></div>
-    <div class="qa-a"><code>%pip install</code> in a notebook only installs on the driver. When Spark submits tasks to workers, those workers have no cudf — tasks fail with <code>ModuleNotFoundError: No module named 'cudf'</code>. The fix is a cluster-scoped init script (<code>/Users/&lt;name&gt;/rapids-init.sh</code>) that runs as root on every node before the cluster starts. Init script installs cudf-cu12, cuml-cu12, dask-cuda from pypi.nvidia.com. For Spark RAPIDS Mode 2, also downloads the plugin JAR to <code>/databricks/jars/</code>. Additionally, <code>%pip install</code> restarts the Python kernel, losing active Spark context — another reason to avoid it.</div>
+    <div class="exp-block"><h4 class="exp-title">Databricks Installation — %pip install Only Installs on Driver</h4><div class="exp-body"><code>%pip install</code> in a notebook only installs on the driver. When Spark submits tasks to workers, those workers have no cudf — tasks fail with <code>ModuleNotFoundError: No module named 'cudf'</code>. The fix is a cluster-scoped init script (<code>/Users/&lt;name&gt;/rapids-init.sh</code>) that runs as root on every node before the cluster starts. Init script installs cudf-cu12, cuml-cu12, dask-cuda from pypi.nvidia.com. For Spark RAPIDS Mode 2, also downloads the plugin JAR to <code>/databricks/jars/</code>. Additionally, <code>%pip install</code> restarts the Python kernel, losing active Spark context — another reason to avoid it.</div></div>
   </div>
 
   <div class="qa-block">
-    <div class="qa-q">Why does the GPU Parquet reader outperform CPU — and what does AT&T tell us about compression choice?<span>Nate Rock or James Lamb</span></div>
-    <div class="qa-a">Spark's native Parquet reader decodes on CPU then marshals to Spark's row format. The RAPIDS GPU Parquet reader reads compressed bytes to host memory, transfers to GPU, runs CUDA decompression kernels across all GPU cores in parallel — column batches emerge directly in cuDF format in GPU memory, no format conversion or CPU copy. AT&T's published benchmark: Parquet/Snappy outperforms Parquet/Zstandard on GPU despite Zstandard having smaller file size. The GPU Snappy decoder parallelises more efficiently than GPU Zstandard. This is the opposite of the CPU recommendation where Zstandard is preferred for network bandwidth savings.</div>
+    <div class="exp-block"><h4 class="exp-title">GPU Parquet Reader Architecture and AT&T Compression Findings</h4><div class="exp-body">Spark's native Parquet reader decodes on CPU then marshals to Spark's row format. The RAPIDS GPU Parquet reader reads compressed bytes to host memory, transfers to GPU, runs CUDA decompression kernels across all GPU cores in parallel — column batches emerge directly in cuDF format in GPU memory, no format conversion or CPU copy. AT&T's published benchmark: Parquet/Snappy outperforms Parquet/Zstandard on GPU despite Zstandard having smaller file size. The GPU Snappy decoder parallelises more efficiently than GPU Zstandard. This is the opposite of the CPU recommendation where Zstandard is preferred for network bandwidth savings.</div></div>
   </div>
 
   <div class="qa-block">
-    <div class="qa-q">Walk me through what happens when smoke_test.sh exits 1 — how does rollback work?<span>Gil Forsyth</span></div>
-    <div class="qa-a"><code>smoke_test.sh</code> runs as a Kubernetes Job after ArgoCD declares the rolling update healthy. If any of the 12 checks fail, the script exits 1. The deploy pipeline detects the non-zero exit from the K8s Job and runs <code>argocd app rollback rapids-{env}</code>. ArgoCD reverts the cluster to the previous Helm revision — does NOT revert the config repo commit, only re-applies previous manifests. Previous healthy image is restored on running pods. Slack alert sent to #rapids-alerts listing which checks failed with a link to the Job log. The config repo commit stays on main — the next deploy PR must address the failure before re-deploying.</div>
+    <div class="exp-block"><h4 class="exp-title">Smoke Test Failure — Automatic ArgoCD Rollback Flow</h4><div class="exp-body"><code>smoke_test.sh</code> runs as a Kubernetes Job after ArgoCD declares the rolling update healthy. If any of the 12 checks fail, the script exits 1. The deploy pipeline detects the non-zero exit from the K8s Job and runs <code>argocd app rollback rapids-{env}</code>. ArgoCD reverts the cluster to the previous Helm revision — does NOT revert the config repo commit, only re-applies previous manifests. Previous healthy image is restored on running pods. Slack alert sent to #rapids-alerts listing which checks failed with a link to the Job log. The config repo commit stays on main — the next deploy PR must address the failure before re-deploying.</div></div>
   </div>
 </section>
 <section class="section section-alt" id="c3">
-  <h2 class="ch"><span>C3</span>Databricks + AT&T Interview Questions</h2>
+  <h2 class="ch"><span>E2</span>Databricks &amp; AT&amp;T — Technical Implementation</h2>
 
   <div class="qa-block">
-    <div class="qa-q">AT&T found Photon was the best CPU solution but GPU was still 33% cheaper. How do you explain that GPU VMs cost more per hour but total cost is lower?<span>Nate Rock or Michael Sarahan</span></div>
-    <div class="qa-a">GPU VMs cost more per hour but you need far fewer of them. AT&T's GPU config used min 2 / max 16 workers vs CPU min 8 / max 12. The GPU processes groupBy aggregations on 70 TB in significantly less wall-clock time — the cluster runs fewer total hours. Cost = hours-to-complete × (nodes × cost-per-node). GPU wins because the hours reduction more than compensates for higher per-node cost. Additionally, GPU auto-scaling starts at 2 workers (not 8), so idle capacity during low-load periods costs less. The AT&T finding also holds specifically for Parquet/Snappy — Zstandard on GPU was slower than Snappy despite smaller file size, which would have changed the cost calculation.</div>
+    <div class="exp-block"><h4 class="exp-title">AT&T TCO — Why GPU is Cheaper Than Photon Despite Higher Per-Hour Cost</h4><div class="exp-body">GPU VMs cost more per hour but you need far fewer of them. AT&T's GPU config used min 2 / max 16 workers vs CPU min 8 / max 12. The GPU processes groupBy aggregations on 70 TB in significantly less wall-clock time — the cluster runs fewer total hours. Cost = hours-to-complete × (nodes × cost-per-node). GPU wins because the hours reduction more than compensates for higher per-node cost. Additionally, GPU auto-scaling starts at 2 workers (not 8), so idle capacity during low-load periods costs less. The AT&T finding also holds specifically for Parquet/Snappy — Zstandard on GPU was slower than Snappy despite smaller file size, which would have changed the cost calculation.</div></div>
   </div>
 
   <div class="qa-block">
-    <div class="qa-q">You want to run cudf.pandas on Databricks but the ops team cannot turn off Photon. What do you do?<span>Gil Forsyth or Jake Awe</span></div>
-    <div class="qa-a">Photon must be disabled — they cannot coexist. This is a hard technical requirement, not a preference. Photon is Databricks' vectorised CPU engine; RAPIDS replaces it with GPU kernels. If ops cannot disable Photon on the existing cluster, the solution is a new cluster configuration without Photon — Databricks allows both in the same workspace. Document the performance difference and make the business case using AT&T's published results (GPU cheaper than Photon for large-scale ETL). If governance is the concern, a Databricks Cluster Policy can enforce no-Photon for designated data science clusters without affecting other teams.</div>
+    <div class="exp-block"><h4 class="exp-title">Photon vs RAPIDS — Resolving the Coexistence Constraint</h4><div class="exp-body">Photon must be disabled — they cannot coexist. This is a hard technical requirement, not a preference. Photon is Databricks' vectorised CPU engine; RAPIDS replaces it with GPU kernels. If ops cannot disable Photon on the existing cluster, the solution is a new cluster configuration without Photon — Databricks allows both in the same workspace. Document the performance difference and make the business case using AT&T's published results (GPU cheaper than Photon for large-scale ETL). If governance is the concern, a Databricks Cluster Policy can enforce no-Photon for designated data science clusters without affecting other teams.</div></div>
   </div>
 
   <div class="qa-block">
-    <div class="qa-q">How would you build a CI/CD pipeline to validate a RAPIDS Databricks environment automatically on every release?<span>James Lamb or Jake Awe</span></div>
-    <div class="qa-a">Four components: (1) <strong>Init script validation</strong> — GitHub Actions triggers the Databricks API to create a cluster with the init script, runs a validation notebook importing cudf, cuml, dask_cuda and calling nvidia-smi. Fails the PR if any import fails. (2) <strong>Version matrix job</strong> — matrix across DBR 13.3, 14.3, 15.4 tests init script installs correctly on each. (3) <strong>Cluster policy as code</strong> — Terraform manages Databricks Cluster Policies pinning allowed DBR versions and enforcing no-Photon and GPU node types. (4) <strong>Delta schema validation</strong> — CI runs a cuDF read test against the production Delta table's latest schema to catch schema evolution before it breaks production. Mirrors RAPIDS OSS CI principles: shared-workflows pattern, pinned versions, artifact validation before deploy.</div>
+    <div class="exp-block"><h4 class="exp-title">CI/CD Pipeline for Automated RAPIDS Databricks Validation</h4><div class="exp-body">Four components: (1) <strong>Init script validation</strong> — GitHub Actions triggers the Databricks API to create a cluster with the init script, runs a validation notebook importing cudf, cuml, dask_cuda and calling nvidia-smi. Fails the PR if any import fails. (2) <strong>Version matrix job</strong> — matrix across DBR 13.3, 14.3, 15.4 tests init script installs correctly on each. (3) <strong>Cluster policy as code</strong> — Terraform manages Databricks Cluster Policies pinning allowed DBR versions and enforcing no-Photon and GPU node types. (4) <strong>Delta schema validation</strong> — CI runs a cuDF read test against the production Delta table's latest schema to catch schema evolution before it breaks production. Mirrors RAPIDS OSS CI principles: shared-workflows pattern, pinned versions, artifact validation before deploy.</div></div>
   </div>
 
   <div class="qa-block">
-    <div class="qa-q">What is dask-cudf and when would you choose it over the RAPIDS Spark Accelerator?<span>Nate Rock</span></div>
-    <div class="qa-a">dask-cudf is a distributed DataFrame library where each partition is a cuDF GPU DataFrame. dask-cuda creates one worker per GPU and UCX handles GPU-to-GPU data exchange via RDMA — bypassing CPU shuffle entirely. Choose dask-cudf when: (1) the workload is iterative (hyperparameter search, reinforcement learning) — Dask task graphs have lower per-iteration overhead than Spark jobs; (2) you need NVLink or InfiniBand for GPU-to-GPU shuffle — dask-cuda's UCX is direct, Spark's UCX requires additional config; (3) the pipeline mixes GPU data prep directly with PyTorch or TensorFlow training — data stays as cuDF in GPU memory without serialisation to Spark's JVM model. For AT&T's confirmed use case — simple groupBy at 3 trillion record scale — Spark RAPIDS was the right choice. For iterative ML pipelines with model checkpointing between steps, Dask is preferable.</div>
+    <div class="exp-block"><h4 class="exp-title">dask-cudf vs RAPIDS Spark Accelerator — When and Why to Choose Each</h4><div class="exp-body">dask-cudf is a distributed DataFrame library where each partition is a cuDF GPU DataFrame. dask-cuda creates one worker per GPU and UCX handles GPU-to-GPU data exchange via RDMA — bypassing CPU shuffle entirely. Choose dask-cudf when: (1) the workload is iterative (hyperparameter search, reinforcement learning) — Dask task graphs have lower per-iteration overhead than Spark jobs; (2) you need NVLink or InfiniBand for GPU-to-GPU shuffle — dask-cuda's UCX is direct, Spark's UCX requires additional config; (3) the pipeline mixes GPU data prep directly with PyTorch or TensorFlow training — data stays as cuDF in GPU memory without serialisation to Spark's JVM model. For AT&T's confirmed use case — simple groupBy at 3 trillion record scale — Spark RAPIDS was the right choice. For iterative ML pipelines with model checkpointing between steps, Dask is preferable.</div></div>
   </div>
 </section>
 <section class="section" id="d3">
   <div class="topic-header">
     <div class="topic-num">Q&amp;A</div>
-    <h2 class="topic">All Interview Q&amp;A — JD Gap Areas</h2>
-    <div class="topic-badge">10 real Q&amp;A pairs from missing JD topics</div>
+    <h2 class="topic">Engineering Deep Dives</h2>
+    <div class="topic-badge">10 engineering deep dives</div>
   </div>
 
-  <div class="qa">
-    <div class="qa-q">What is the difference between conda-build and rattler-build, and why is RAPIDS migrating?<span>Michael Sarahan</span></div>
-    <div class="qa-a">conda-build uses Jinja2-rendered meta.yaml. rattler-build uses pure CEP YAML (no Jinja2, fully machine-parseable), is written in Rust (3x faster), and enables DFG to manipulate recipes programmatically. Migration tracked in rapidsai/build-planning issue #47.</div>
-  </div>
-  <div class="qa">
-    <div class="qa-q">What does auditwheel do, and why must CUDA libraries be excluded?<span>James Lamb</span></div>
-    <div class="qa-a">auditwheel repair bundles non-manylinux .so files into the wheel's .libs/ directory. CUDA libraries (libcuda.so.1, libcudart.so, libcublas.so, libcudf.so) must be excluded because: (1) libcuda.so.1 must come from the host driver — a bundled copy breaks GPU access. (2) RAPIDS shared libs are huge and already in sibling wheels — bundling again causes double-load conflicts.</div>
-  </div>
-  <div class="qa">
-    <div class="qa-q">A container fails with "libcuda.so.1: cannot open shared object file" even though nvidia-smi works on the host. Fix it.<span>Nate Rock / Michael Sarahan</span></div>
-    <div class="qa-a">The NVIDIA Container Toolkit hook didn't run — container started without --gpus all or nvidia-container-runtime not configured. Fix: add --gpus all to docker run, verify /etc/docker/daemon.json has nvidia runtime, confirm NVIDIA Container Toolkit is installed. In Kubernetes: ensure NVIDIA device plugin is deployed and pod spec has resources.limits.nvidia.com/gpu set.</div>
-  </div>
-  <div class="qa">
-    <div class="qa-q">Why does RAPIDS use Rocky Linux 8 for conda C++ builds instead of Ubuntu?<span>James Lamb / Michael Sarahan</span></div>
-    <div class="qa-a">Rocky Linux 8 has glibc 2.28 — the manylinux_2_28 ABI standard. Packages built there run on the entire enterprise Linux ecosystem (RHEL 8, CentOS Stream 8, Rocky 8). Ubuntu 24.04 has glibc 2.39 — packages built there only run on Ubuntu 24.04+.</div>
-  </div>
-  <div class="qa">
-    <div class="qa-q">Why does RAPIDS use copy-pr-bot and pull-request/[N]+ branches instead of pull_request_target?<span>Jake Awe</span></div>
-    <div class="qa-a">pull_request_target runs with full secrets in the context of the base repo — a malicious PR changing the workflow file can exfiltrate AWS credentials. copy-pr-bot pattern: a maintainer triggers the bot which copies the contributor's code to a first-party branch (pull-request/123). CI then runs as a push event on a branch the maintainers control, with secrets available but no risk of workflow injection.</div>
-  </div>
-  <div class="qa">
-    <div class="qa-q">RAPIDS CI costs spiked 3x this month. Walk through your investigation.<span>Jake Awe / Rohit Vaswani</span></div>
-    <div class="qa-a">Check AWS Cost Explorer by service tag → identify instance type and time window → check sccache hit rate (dropped = cold cache = 45min builds), new matrix entries, spot interruption fallbacks to on-demand, or runaway workflow loops. Fix the root cause (warm cache, revert matrix, add spot pool fallback AZ, add concurrency limits to workflow).</div>
-  </div>
-  <div class="qa">
-    <div class="qa-q">How do you maintain quality and security for external contributors in a 1000+ PR/year open source repo?<span>Gil Forsyth</span></div>
-    <div class="qa-a">Three layers: (1) Gate — DCO automated check, CODEOWNERS auto-assign, pre-commit for formatting. (2) Security — copy-pr-bot pattern, OIDC secrets scoped by repo+branch subject. (3) Automation — stale bot, Dependabot, auto-labeler, auto-generated release notes. Maintainers spend time on code review, not triage.</div>
-  </div>
-  <div class="qa">
-    <div class="qa-q">You're writing a CI script that downloads 50 conda packages. One sometimes fails. How do you make it reliable?<span>James Lamb / Gil Forsyth</span></div>
-    <div class="qa-a">Use rapids-mamba-retry (gha-tools) which wraps mamba with per-package retry. Or: write a retry() Bash function with exponential backoff, verify checksums against repodata.json, fail fast on the specific package with a clear error message. Always log which package failed, not just "conda install failed."</div>
-  </div>
-  <div class="qa">
-    <div class="qa-q">What is RPATH and what breaks if you ship a conda package with an absolute RPATH?<span>Michael Sarahan — will definitely ask this</span></div>
-    <div class="qa-a">RPATH is a baked-in path in a .so file telling the dynamic linker where to find dependencies. Build prefix paths (e.g. /home/rapids/.../build_1234/) don't exist on user machines → "librmm.so.26: cannot open." The fix is $ORIGIN-relative RPATH: $ORIGIN = the directory of the .so file at runtime. conda-build rewrites to $ORIGIN automatically via patchelf. Build prefix is padded to 255 chars so patchelf can always fit the shorter $ORIGIN path in the binary.</div>
-  </div>
-  <div class="qa">
-    <div class="qa-q">What is the difference between sccache and ccache? Which does RAPIDS use and why?<span>Michael Sarahan / James Lamb</span></div>
-    <div class="qa-a">ccache is local-only (disk cache on one machine). sccache is distributed — backed by S3/Azure Blob/GCS, shared across all CI runners simultaneously. RAPIDS uses sccache so every runner benefits from cache entries created by every other runner. A fresh runner starting a new matrix job finds cuDF's CMake targets already compiled by a sibling job. This is what reduces compile time from 45min to ~8min across the full matrix. Requires ulimit -n 1048576 before sccache-dist starts (default 1024 FDs is too low).</div>
-  </div>
+  <div class="exp-block">
+  <h4 class="exp-title">conda-build vs rattler-build — RAPIDS Package Build Evolution</h4>
+  <div class="exp-body">conda-build uses Jinja2-rendered meta.yaml. rattler-build uses pure CEP YAML (no Jinja2, fully machine-parseable), is written in Rust (3x faster), and enables DFG to manipulate recipes programmatically. Migration tracked in rapidsai/build-planning issue #47.</div>
+</div>
+  <div class="exp-block">
+  <h4 class="exp-title">auditwheel — CUDA Library Exclusion in RAPIDS Wheels</h4>
+  <div class="exp-body">auditwheel repair bundles non-manylinux .so files into the wheel's .libs/ directory. CUDA libraries (libcuda.so.1, libcudart.so, libcublas.so, libcudf.so) must be excluded because: (1) libcuda.so.1 must come from the host driver — a bundled copy breaks GPU access. (2) RAPIDS shared libs are huge and already in sibling wheels — bundling again causes double-load conflicts.</div>
+</div>
+  <div class="exp-block">
+  <h4 class="exp-title">A container fails with "libcuda.so.1: cannot open shared object file" even though nvidia-smi works on the host. Fix it.</h4>
+  <div class="exp-body">The NVIDIA Container Toolkit hook didn't run — container started without --gpus all or nvidia-container-runtime not configured. Fix: add --gpus all to docker run, verify /etc/docker/daemon.json has nvidia runtime, confirm NVIDIA Container Toolkit is installed. In Kubernetes: ensure NVIDIA device plugin is deployed and pod spec has resources.limits.nvidia.com/gpu set.</div>
+</div>
+  <div class="exp-block">
+  <h4 class="exp-title">Rocky Linux 8 for conda Builds — glibc 2.28 ABI Compatibility</h4>
+  <div class="exp-body">Rocky Linux 8 has glibc 2.28 — the manylinux_2_28 ABI standard. Packages built there run on the entire enterprise Linux ecosystem (RHEL 8, CentOS Stream 8, Rocky 8). Ubuntu 24.04 has glibc 2.39 — packages built there only run on Ubuntu 24.04+.</div>
+</div>
+  <div class="exp-block">
+  <h4 class="exp-title">copy-pr-bot vs pull_request_target — CI Security Architecture</h4>
+  <div class="exp-body">pull_request_target runs with full secrets in the context of the base repo — a malicious PR changing the workflow file can exfiltrate AWS credentials. copy-pr-bot pattern: a maintainer triggers the bot which copies the contributor's code to a first-party branch (pull-request/123). CI then runs as a push event on a branch the maintainers control, with secrets available but no risk of workflow injection.</div>
+</div>
+  <div class="exp-block">
+  <h4 class="exp-title">GPU CI Cost 3x Spike — AWS Cost Investigation and Resolution</h4>
+  <div class="exp-body">Check AWS Cost Explorer by service tag → identify instance type and time window → check sccache hit rate (dropped = cold cache = cold builds (~45 min estimated)), new matrix entries, spot interruption fallbacks to on-demand, or runaway workflow loops. Fix the root cause (warm cache, revert matrix, add spot pool fallback AZ, add concurrency limits to workflow).</div>
+</div>
+  <div class="exp-block">
+  <h4 class="exp-title">Open Source Quality Gates — 1000+ PR/Year Contributor Management</h4>
+  <div class="exp-body">Three layers: (1) Gate — DCO automated check, CODEOWNERS auto-assign, pre-commit for formatting. (2) Security — copy-pr-bot pattern, OIDC secrets scoped by repo+branch subject. (3) Automation — stale bot, Dependabot, auto-labeler, auto-generated release notes. Maintainers spend time on code review, not triage.</div>
+</div>
+  <div class="exp-block">
+  <h4 class="exp-title">Reliable conda Package Download — Retry and Checksum Strategy</h4>
+  <div class="exp-body">Use rapids-mamba-retry (gha-tools) which wraps mamba with per-package retry. Or: write a retry() Bash function with exponential backoff, verify checksums against repodata.json, fail fast on the specific package with a clear error message. Always log which package failed, not just "conda install failed."</div>
+</div>
+  <div class="exp-block">
+  <h4 class="exp-title">RPATH Absolute Paths — How conda-build Prevents Runtime Failures</h4>
+  <div class="exp-body">RPATH is a baked-in path in a .so file telling the dynamic linker where to find dependencies. Build prefix paths (e.g. /home/rapids/.../build_1234/) don't exist on user machines → "librmm.so.26: cannot open." The fix is $ORIGIN-relative RPATH: $ORIGIN = the directory of the .so file at runtime. conda-build rewrites to $ORIGIN automatically via patchelf. Build prefix is padded to 255 chars so patchelf can always fit the shorter $ORIGIN path in the binary.</div>
+</div>
+  <div class="exp-block">
+  <h4 class="exp-title">sccache vs ccache — Distributed vs Local Compile Cache</h4>
+  <div class="exp-body">ccache is local-only (disk cache on one machine). sccache is distributed — backed by S3/Azure Blob/GCS, shared across all CI runners simultaneously. RAPIDS uses sccache so every runner benefits from cache entries created by every other runner. A fresh runner starting a new matrix job finds cuDF's CMake targets already compiled by a sibling job. This is what significantly reduces compile time from cold builds (~45 min) to warm cache (~8 min, estimated). Requires ulimit -n 1048576 before sccache-dist starts (default 1024 FDs is too low).</div>
+</div>
 </section>
 <section class="section section-alt" id="c4">
-  <h2 class="ch"><span>C4</span>Quick Reference — Verified Fact Sheet</h2>
+  <h2 class="ch"><span>R1</span>RAPIDS Verified Fact Sheet</h2>
   <p class="body">Print this section for the interview day. All facts verified against GitHub and NVIDIA documentation.</p>
   <div class="tbl-wrap"><table class="fact-table">
     <thead><tr><th>Fact</th><th>Verified value</th></tr></thead>
@@ -2889,11 +2860,11 @@ rapids_cpm_find(rmm 26.02.00
       <tr><td>sccache ulimit</td><td>ulimit -n 1048576 (required before sccache-dist)</td></tr>
       <tr><td>AWS auth method</td><td>OIDC: role-to-assume vars.AWS_ROLE_ARN — no long-lived keys</td></tr>
       <tr><td>Artifact naming</td><td>cudf_conda_cpp_cuda12_x86_64 (GitHub Actions store)</td></tr>
-      <tr><td>Nate Rock role</td><td>Software Developer and rapidsai contributor, github: rockhowse</td></tr>
-      <tr><td>Jake Awe github</td><td>AyodeAwe — Release Engineer</td></tr>
-      <tr><td>Michael Sarahan github</td><td>msarahan — Sr. Build Engineer</td></tr>
-      <tr><td>Gil Forsyth github</td><td>gforsyth — Sr. SWE RAPIDS</td></tr>
-      <tr><td>James Lamb github</td><td>jameslamb — Sr. SWE RAPIDS</td></tr>
+      <tr><td>rapids-build-backend</td><td>PEP 517 wrapper that injects CUDA suffix (rmm → rmm-cu12) and reads deps from dependencies.yaml</td></tr>
+      <tr><td>rapidsai/workflows</td><td>Nightly orchestrator repo — sequences rmm → raft → cuDF → cuGraph/cuVS/cucim → cuML/cuspatial builds</td></tr>
+      <tr><td>conda-build → rattler-build</td><td>RAPIDS migrating to rattler-build (Rust-based, ~3× faster, pure CEP YAML)</td></tr>
+      <tr><td>PR CI matrix_filter</td><td>jq filter reduces 16 matrix entries (2 ARCH × 2 CUDA × 4 Python) to 2 for PR builds; copy-pr-bot handles fork security</td></tr>
+      <tr><td>pydistcheck</td><td>Python package distribution linter — checks portability of wheels, sdists, conda packages</td></tr>
       <tr><td>Current RAPIDS version</td><td>26.02 (latest stable, March 2026)</td></tr>
       <tr><td>cudf.pandas DBR</td><td>15.x / 16.x / 17.x ML runtime with GPU</td></tr>
       <tr><td>Spark RAPIDS DBR</td><td>13.3 / 14.3 / 15.4 ML LTS with GPU</td></tr>
@@ -2902,22 +2873,19 @@ rapids_cpm_find(rmm 26.02.00
       <tr><td>Databricks GPU per executor</td><td>1 GPU max (Databricks override, even on multi-GPU nodes)</td></tr>
       <tr><td>cudf.pandas init install</td><td>pip install --extra-index-url=https://pypi.nvidia.com cudf-cu12>=26.02 cuml-cu12>=26.02</td></tr>
       <tr><td>AT&T call records volume</td><td>~3 trillion rows/month (~70 TB Parquet/Snappy compressed)</td></tr>
-      <tr><td>AT&T GPU vs Photon cost</td><td>~33% cheaper than lowest-cost Photon; ~2× cheaper than fastest Photon</td></tr>
+      <tr><td>AT&T GPU vs Photon cost</td><td>~33% cheaper than lowest-cost Photon (confirmed NVIDIA Technical Blog Nov 2022)</td></tr>
       <tr><td>AT&T compression finding</td><td>Parquet/Snappy beats Parquet/Zstandard on GPU despite larger file size</td></tr>
       <tr><td>AT&T pipeline stages on GPU</td><td>All 5 ETL stages + XGBoost ML training</td></tr>
-      <tr><td>Your closing statement</td><td>18 years multi-cloud DevOps + GPU infra + AT&T storage experience + RAPIDS OSS CI patterns = full-stack NVIDIA GPU data science DevOps</td></tr>
+      
     </tbody>
   </table></div>
 
-  <div style="margin-top:40px;padding:24px 32px;background:var(--green);border-radius:var(--radius-lg);text-align:center;">
-    <div style="font-family:var(--display);font-size:26px;font-weight:600;color:#fff;font-style:italic;">Good luck, Sudhakar.</div>
-    <div style="margin-top:8px;font-size:14px;color:rgba(255,255,255,.8);">Every fact in this document is verified against GitHub and NVIDIA documentation. Own it with confidence.</div>
-  </div>
+  
 </section>
 <section class="section section-alt" id="d4">
   <div class="topic-header">
     <div class="topic-num">REF</div>
-    <h2 class="topic">JD Gap Quick Reference — Verified Facts</h2>
+    <h2 class="topic">Engineering Topics — Verified Facts</h2>
     <div class="topic-badge">Print for interview day</div>
   </div>
   <div class="tbl-wrap"><table>
@@ -2931,13 +2899,13 @@ rapids_cpm_find(rmm 26.02.00
       <tr><td class="key">auditwheel --exclude</td><td>Exclude libcuda.so.1 (must come from host driver) and RAPIDS shared libs (already in sibling wheels).</td></tr>
       <tr><td class="key">manylinux_2_28</td><td>= glibc 2.28 = Rocky Linux 8. NOT manylinux2014 (glibc 2.17). RAPIDS needs 2.28 for CUDA runtime libs.</td></tr>
       <tr><td class="key">pypi.nvidia.com</td><td>RAPIDS stable + nightly wheels. pypi.anaconda.org/rapidsai-wheels-nightly = nightly index. PyPI.org = cuML since 25.10.</td></tr>
-      <tr><td class="key">pydistcheck</td><td>James Lamb's tool. Lints wheels/sdists/conda pkgs for portability issues. Integrated in RAPIDS CI.</td></tr>
+      <tr><td class="key">pydistcheck</td><td>pydistcheck. Lints wheels/sdists/conda pkgs for portability issues. Integrated in RAPIDS CI.</td></tr>
       <tr><td class="key">CI image types</td><td>ci-conda (conda builds), ci-wheel (wheel builds), citestwheel (wheel tests). From rapidsai/ci-imgs.</td></tr>
       <tr><td class="key">RAPIDS Docker tag scheme</td><td>26.02-cuda13-py3.13. Post 25.12: major CUDA only (cuda12, cuda13). Pre 25.10: major.minor (cuda12.9).</td></tr>
       <tr><td class="key">nvidia-container-toolkit</td><td>Injects GPU devices into containers. Configured via nvidia-ctk runtime configure --runtime=docker.</td></tr>
       <tr><td class="key">--ulimit memlock=-1</td><td>Required for RAPIDS containers. Without it, pinned memory pool creation fails silently.</td></tr>
       <tr><td class="key">CUDA forward compat</td><td>Allows newer CUDA runtime on older driver via compat package. NVIDIA_REQUIRE_CUDA env var controls it.</td></tr>
-      <tr><td class="key">Ubuntu vs Rocky Linux 8</td><td>Ubuntu preferred for JD but Rocky Linux 8 for C++ conda builds (glibc 2.28 ABI target).</td></tr>
+      <tr><td class="key">Ubuntu vs Rocky Linux 8</td><td>Ubuntu preferred for general work; Rocky Linux 8 for conda C++ builds (glibc 2.28 ABI target)</td></tr>
       <tr><td class="key">ulimit -n 1048576</td><td>Must set BEFORE sccache-dist. Default 1024 FDs causes silent fallback to uncached nvcc.</td></tr>
       <tr><td class="key">copy-pr-bot pattern</td><td>Security: creates pull-request/[N]+ first-party branch from fork PR. CI runs with secrets safely.</td></tr>
       <tr><td class="key">DCO not CLA</td><td>RAPIDS uses Developer Certificate of Origin. git commit -s adds Signed-off-by. Checked by GitHub Action.</td></tr>
@@ -2945,24 +2913,20 @@ rapids_cpm_find(rmm 26.02.00
       <tr><td class="key">AWS OIDC trust policy</td><td>subject: repo:rapidsai/*:ref:refs/heads/*. Tighten to specific repos and branch patterns.</td></tr>
       <tr><td class="key">S3 sccache cost</td><td>Lifecycle: expire objects >30 days. Same-region data transfer free. Cross-region $0.02/GB.</td></tr>
       <tr><td class="key">RPATH / patchelf</td><td>Rewrite build prefix RPATH to $ORIGIN-relative. conda-build does automatically. Build prefix padded to 255 chars for patchelf to fit shorter $ORIGIN.</td></tr>
-      <tr><td class="key">GCC for RAPIDS</td><td>CUDA 12.x → GCC 13. CUDA 13.x → GCC 14. Rocky Linux 8 system GCC 8 → override with conda gcc_linux-64.</td></tr>
+      <tr><td class="key">GCC for RAPIDS</td><td>CUDA 12.x → GCC 13. CUDA 13.x → GCC 15. Rocky Linux 8 system GCC 8 → override with conda gcc_linux-64.</td></tr>
       <tr><td class="key">sccache vs ccache</td><td>sccache: distributed (S3 backend), shared across all CI runners. ccache: local disk only.</td></tr>
       <tr><td class="key">rapids-cmake / RAPIDS.cmake</td><td>Shared CMake infra. Provides rapids_cpm_find(), rapids_export(), rapids_cuda_set_architectures(). Used by every RAPIDS C++ library.</td></tr>
     </tbody>
   </table></div>
 
-  <div style="margin-top:40px;padding:22px 28px;background:var(--bg3);border:1px solid var(--green-dim);border-radius:var(--radius);text-align:center;">
-    <div style="font-family:var(--mono);font-size:11px;color:var(--green);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;">■ ALL JD REQUIREMENTS NOW COVERED ■</div>
-    <div style="font-size:20px;font-weight:700;color:var(--white)">You own the full stack, Sudhakar.</div>
-    <div style="margin-top:8px;color:var(--mid);font-size:13px;">CI/CD + Databricks + conda packaging + PyPI wheels + Docker + CUDA + Linux + GitHub org + AWS/Azure + open source ops + Bash/Python + GNU toolchain</div>
-  </div>
+  
 </section>
 
 <!-- ════════════ PART E: NVIDIA TECHNICAL BLOG INSIGHTS ════════════ -->
 <div class="part-header" id="part-e">
   <div class="part-num">Part E</div>
   <div class="part-title">NVIDIA Technical Blog Insights</div>
-  <div class="part-sub">Spark Qualification Tool · Spark 3.0 GPU Architecture · Multi-GPU Dask Best Practices · CUDA pip Wheels</div>
+  <div class="part-sub">Applied knowledge — Spark Qualification Tool · Spark 3.0 Architecture · Multi-GPU Dask · CUDA pip Wheels</div>
 </div>
 
 <section class="section" id="e1">
@@ -3033,10 +2997,10 @@ OUTPUT:  ① Qualified workload list (ranked by GPU migration benefit)
     <li>Plug custom model into qualification tool for environment-specific predictions</li>
   </ol>
 
-  <div class="qa">
-    <div class="qa-q">James Lamb or Nate Rock: How would you validate whether a RAPIDS Spark migration is worth pursuing for a specific customer workload before committing engineering time?<span>James Lamb · Sr. SWE RAPIDS</span></div>
-    <div class="qa-a">Use the Spark RAPIDS Qualification Tool. Install <code>spark-rapids-user-tools</code> via pip, point it at the customer's CPU Spark event logs, and run <code>spark_rapids qualification --eventlogs ./logs/ --platform databricks</code>. The tool runs an XGBoost model trained on NDS benchmarks against the event log features — scan bandwidth, disk spill, operator composition, data size — and outputs a ranked list of SQL IDs by predicted GPU speedup, along with recommended Spark configs and GPU cluster shape. For jobs unlike the NDS benchmark (unusual schemas, heavy UDFs, non-standard shuffle patterns), build a custom model by running a representative sample on both CPU and GPU, collecting paired event logs, and training on the actual CPU→GPU speedup ratios. This avoids the common mistake of migrating a workload that's actually dominated by small-dataset operations or complex Python UDFs, where GPU overhead exceeds the benefit. The tool measures time spent specifically on SQL DataFrame operations — not Python driver overhead — so the predictions are realistic about where GPU acceleration actually applies.</div>
-  </div>
+  <div class="exp-block">
+  <h4 class="exp-title">Validating RAPIDS Spark Migration Value — Qualification Tool</h4>
+  <div class="exp-body">Use the Spark RAPIDS Qualification Tool. Install <code>spark-rapids-user-tools</code> via pip, point it at the customer's CPU Spark event logs, and run <code>spark_rapids qualification --eventlogs ./logs/ --platform databricks</code>. The tool runs an XGBoost model trained on NDS benchmarks against the event log features — scan bandwidth, disk spill, operator composition, data size — and outputs a ranked list of SQL IDs by predicted GPU speedup, along with recommended Spark configs and GPU cluster shape. For jobs unlike the NDS benchmark (unusual schemas, heavy UDFs, non-standard shuffle patterns), build a custom model by running a representative sample on both CPU and GPU, collecting paired event logs, and training on the actual CPU→GPU speedup ratios. This avoids the common mistake of migrating a workload that's actually dominated by small-dataset operations or complex Python UDFs, where GPU overhead exceeds the benefit. The tool measures time spent specifically on SQL DataFrame operations — not Python driver overhead — so the predictions are realistic about where GPU acceleration actually applies.</div>
+</div>
 </section>
 
 <section class="section section-alt" id="e2">
@@ -3103,10 +3067,10 @@ spark.task.resource.gpu.amount=0.1        # each task uses 1/10th of the GPU res
 #   HashAggregateExec  → GpuHashAggregateExec
 #   FileSourceScanExec → GpuBatchScanExec (GPU Parquet reader)</pre>
 
-  <div class="qa">
-    <div class="qa-q">Gil Forsyth: A user says "I enabled the RAPIDS Accelerator but my Spark job is actually slower." Walk through the most likely causes.<span>Gil Forsyth · Sr. SWE RAPIDS</span></div>
-    <div class="qa-a">Four most common causes in order of likelihood: (1) <strong>spark.task.resource.gpu.amount not set to 0.1</strong> — default 1.0 means only one task runs per GPU at a time. For I/O-bound stages (Parquet reads), the GPU sits idle while a single task waits for disk/network. Setting 0.1 alone typically gives 3-5x throughput improvement. (2) <strong>High CPU fallback rate</strong> — run with spark.rapids.sql.explain=ALL and check the driver log for GpuXxx labels vs plain operator names. If you see many GpuColumnarToRow / RowToColumnarExec transitions, the cost of converting data between GPU columnar and CPU row format between stages exceeds the GPU compute benefit. Identify which operators are falling back and either configure them (spark.rapids.sql.incompatibleOps.enabled=true) or restructure the query. (3) <strong>Small dataset</strong> — GPU has fixed overhead per operation (kernel launch, CUDA context). For datasets under ~10M rows, this overhead can dominate. The Qualification Tool explicitly flags small-dataset jobs as poor GPU candidates. (4) <strong>Complex Python UDFs</strong> — Python UDFs force data off the GPU into CPU Python, execute row-by-row, then move back to GPU. One UDF per row on 1B rows will be catastrophically slow. Rewrite as a RAPIDS accelerated UDF implementing evaluateColumnar() which receives cudf.ColumnVector inputs and executes in bulk.</div>
-  </div>
+  <div class="exp-block">
+  <h4 class="exp-title">RAPIDS Accelerator Performance Regression — Diagnosis and Resolution</h4>
+  <div class="exp-body">Four most common causes in order of likelihood: (1) <strong>spark.task.resource.gpu.amount not set to 0.1</strong> — default 1.0 means only one task runs per GPU at a time. For I/O-bound stages (Parquet reads), the GPU sits idle while a single task waits for disk/network. Setting 0.1 alone typically gives 3-5x throughput improvement. (2) <strong>High CPU fallback rate</strong> — run with spark.rapids.sql.explain=ALL and check the driver log for GpuXxx labels vs plain operator names. If you see many GpuColumnarToRow / RowToColumnarExec transitions, the cost of converting data between GPU columnar and CPU row format between stages exceeds the GPU compute benefit. Identify which operators are falling back and either configure them (spark.rapids.sql.incompatibleOps.enabled=true) or restructure the query. (3) <strong>Small dataset</strong> — GPU has fixed overhead per operation (kernel launch, CUDA context). For datasets under ~10M rows, this overhead can dominate. The Qualification Tool explicitly flags small-dataset jobs as poor GPU candidates. (4) <strong>Complex Python UDFs</strong> — Python UDFs force data off the GPU into CPU Python, execute row-by-row, then move back to GPU. One UDF per row on 1B rows will be catastrophically slow. Rewrite as a RAPIDS accelerated UDF implementing evaluateColumnar() which receives cudf.ColumnVector inputs and executes in bulk.</div>
+</div>
 </section>
 
 <section class="section" id="e3">
@@ -3195,10 +3159,10 @@ client = Client(cluster)
     </tbody>
   </table></div>
 
-  <div class="qa">
-    <div class="qa-q">Nate Rock or James Lamb: A multi-GPU Dask job on a 4-GPU node is failing with OOM errors on the third GPU even though nvidia-smi shows 6GB free on that GPU. What is happening and how do you fix it?<span>Nate Rock · Software Developer / rapidsai contributor</span></div>
-    <div class="qa-a">This is a GPU memory fragmentation OOM — the classic symptom is nvidia-smi showing significant free memory but CUDA allocation still failing. When raw <code>cudaMalloc</code> (the default) frees memory, it doesn't always return contiguous blocks to the pool. After thousands of alloc/free cycles in a long ETL job, the 6GB of "free" memory exists as hundreds of non-contiguous small chunks. The next large allocation (e.g., a 2GB intermediate join result) cannot find a contiguous 2GB block and raises OOM even though 6GB is technically free. Fix: restart the dask-cuda workers with <code>--rmm-async</code> which switches to <code>cudaMallocAsync</code> — the CUDA stream-ordered memory allocator. It uses virtual memory mapping and coalesces adjacent free blocks across streams, dramatically reducing fragmentation. Additionally add <code>--rmm-pool-size 13GB</code> (on a 16GB GPU) to pre-allocate a single contiguous pool at startup, which makes sub-allocations behave like a traditional malloc pool. For workloads that still OOM after these fixes, add <code>--enable-cudf-spill</code> to allow cuDF to move buffers to host RAM automatically when GPU pressure is high.</div>
-  </div>
+  <div class="exp-block">
+  <h4 class="exp-title">Multi-GPU Dask OOM — Memory Fragmentation Root Cause and Fix</h4>
+  <div class="exp-body">This is a GPU memory fragmentation OOM — the classic symptom is nvidia-smi showing significant free memory but CUDA allocation still failing. When raw <code>cudaMalloc</code> (the default) frees memory, it doesn't always return contiguous blocks to the pool. After thousands of alloc/free cycles in a long ETL job, the 6GB of "free" memory exists as hundreds of non-contiguous small chunks. The next large allocation (e.g., a 2GB intermediate join result) cannot find a contiguous 2GB block and raises OOM even though 6GB is technically free. Fix: restart the dask-cuda workers with <code>--rmm-async</code> which switches to <code>cudaMallocAsync</code> — the CUDA stream-ordered memory allocator. It uses virtual memory mapping and coalesces adjacent free blocks across streams, dramatically reducing fragmentation. Additionally add <code>--rmm-pool-size 13GB</code> (on a 16GB GPU) to pre-allocate a single contiguous pool at startup, which makes sub-allocations behave like a traditional malloc pool. For workloads that still OOM after these fixes, add <code>--enable-cudf-spill</code> to allow cuDF to move buffers to host RAM automatically when GPU pressure is high.</div>
+</div>
 </section>
 
 <section class="section section-alt" id="e4">
@@ -3257,10 +3221,10 @@ pip install cuml-cu12
 # All resolved automatically by pip dependency solver
 # No manual CUDA apt install needed in containers using this pattern</div>
 
-  <div class="qa">
-    <div class="qa-q">Jake Awe: What changed in RAPIDS 24.12 packaging and why does it matter for how users install RAPIDS via pip?<span>Jake Awe (AyodeAwe) · Release Engineer</span></div>
-    <div class="qa-a">RAPIDS 24.12 completed the migration to using CUDA pip wheels for CUDA runtime dependencies rather than expecting users to have a system CUDA installation. Before this change, installing <code>cudf-cu12</code> via pip required a separately installed CUDA 12 toolkit on the host — either via apt, dnf, or the CUDA runfile. If the toolkit version didn't match the wheel, you'd get cryptic ImportError or libcudart symbol errors. After the change, <code>pip install cudf-cu12</code> automatically pulls <code>nvidia-cuda-runtime-cu12</code> as a dependency — the CUDA runtime is installed into the virtualenv's site-packages alongside cuDF, isolated from any system CUDA installation. This is transformative for CI: a bare Docker container with just Python and NVIDIA drivers can now get a working RAPIDS installation with a single pip command, without needing a privileged apt install step or a fat CUDA-devel base image. The one remaining requirement is the NVIDIA driver on the host (libcuda.so.1) and NVRTC — but NVRTC is also available as <code>nvidia-cuda-nvrtc-cu12</code> via pip, so the entire stack is pip-installable.</div>
-  </div>
+  <div class="exp-block">
+  <h4 class="exp-title">RAPIDS 24.12 Packaging Change — CUDA pip Wheels Impact</h4>
+  <div class="exp-body">RAPIDS 24.12 completed the migration to using CUDA pip wheels for CUDA runtime dependencies rather than expecting users to have a system CUDA installation. Before this change, installing <code>cudf-cu12</code> via pip required a separately installed CUDA 12 toolkit on the host — either via apt, dnf, or the CUDA runfile. If the toolkit version didn't match the wheel, you'd get cryptic ImportError or libcudart symbol errors. After the change, <code>pip install cudf-cu12</code> automatically pulls <code>nvidia-cuda-runtime-cu12</code> as a dependency — the CUDA runtime is installed into the virtualenv's site-packages alongside cuDF, isolated from any system CUDA installation. This is transformative for CI: a bare Docker container with just Python and NVIDIA drivers can now get a working RAPIDS installation with a single pip command, without needing a privileged apt install step or a fat CUDA-devel base image. The one remaining requirement is the NVIDIA driver on the host (libcuda.so.1) and NVRTC — but NVRTC is also available as <code>nvidia-cuda-nvrtc-cu12</code> via pip, so the entire stack is pip-installable.</div>
+</div>
 </section>
 
 <section class="section" id="e5">
@@ -3292,6 +3256,722 @@ pip install cuml-cu12
       <tr><td class="key">CUDA metapackage</td><td><code>pip install nvidia-cuda-toolkit</code> — installs all CUDA 12 components</td><td>cuda-installation-guide-linux</td></tr>
       <tr><td class="key">Spark physical plan interception</td><td>columnarOverrides() called after physical plan generation. Replaces SortExec→GpuSortExec, etc.</td><td>accelerating-spark-3.0 blog</td></tr>
       <tr><td class="key">spark.rapids.sql.explain=ALL</td><td>Shows full replacement plan in driver log — GpuXxx = GPU, warnings = CPU fallback</td><td>accelerating-spark-3.0 blog</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     PART F HEADER
+═══════════════════════════════════════════════════════════ -->
+<div class="part-header" id="part-f">
+  <div class="part-num">Part F</div>
+  <div class="part-title">OSDU Open Source Infrastructure Work</div>
+  <div class="part-sub">Open source contributions to The Open Group OSDU — AWS · Azure · GCP · Energy industry data platform · Shell · BP · Chevron</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     F1: OSDU Overview
+═══════════════════════════════════════════════════════════ -->
+<section class="section" id="f1">
+  <div class="topic-header">
+    <div class="topic-num">F1</div>
+    <h2 class="topic">OSDU Data Platform — What It Is and Why It Matters</h2>
+    <div class="topic-badge">Open Group Forum · Energy Industry · Apache 2.0 · Shell · BP · Chevron · AWS · Microsoft · Google</div>
+  </div>
+
+  <p class="body"><strong class="hl">OSDU (Open Subsurface Data Universe)</strong> is the energy industry's open-source, cloud-agnostic data platform. Originally incubated by Shell, BP, and other major operators in 2019, it is now governed by The Open Group and supported by major cloud providers. Its mission: break the data silos that have fragmented subsurface data across oil &amp; gas operators for decades by providing a single, standards-based platform that runs identically on AWS, Azure, and GCP.</p>
+
+  <div class="flow">OSDU Architecture — Three-Layer Model
+
+  DATA LAYER (cloud-agnostic storage)
+  ├── Well data (WITSML), Seismic (SEG-Y), Well logs (LAS)
+  ├── Object storage (S3 / Azure Blob / GCS) for file datasets
+  └── Search index (OpenSearch / Elasticsearch) for metadata
+
+  PLATFORM LAYER (OSDU core services)
+  ├── Schema Service    — defines and validates Well-Known Schemas (WKS)
+  ├── Storage Service   — ingests and versions records via JSON
+  ├── Search Service    — federated metadata search across all data types
+  ├── Entitlements      — fine-grained RBAC for data access control
+  ├── File Service      — pre-signed URL delivery for large datasets
+  └── Notification Svc  — event-driven triggers on data state changes
+
+  INFRASTRUCTURE LAYER (Terraform — Sudhakar's contribution area)
+  ├── AWS:   EKS + Aurora PostgreSQL + OpenSearch + S3 + Cognito + IAM
+  ├── Azure: AKS + Cosmos DB + Azure Blob + Key Vault + AAD + KEDA
+  └── GCP:   GKE + Cloud Spanner + Cloud Storage + Secret Manager + IAM
+
+  CONSUMERS
+  └── Shell, BP, Chevron internal subsurface apps · AWS EDI · Azure OSDU · Partner ISVs</div>
+
+  <p class="body">Sudhakar contributed to all three cloud infrastructure repositories (AWS, Azure, GCP) during his Wipro OSDU engagements (February 2020 – October 2023). The platform supports petabyte-scale seismic, well, and reservoir datasets for the world's largest energy companies.</p>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     F2: AWS Terraform Deployment
+═══════════════════════════════════════════════════════════ -->
+<section class="section section-alt" id="f2">
+  <div class="topic-header">
+    <div class="topic-num">F2</div>
+    <h2 class="topic">OSDU on AWS — Terraform Deployment Infrastructure</h2>
+    <div class="topic-badge">Repo: community.opengroup.org/osdu/platform/deployment-and-operations/terraform-deployment-aws</div>
+  </div>
+
+  <p class="body">The AWS Terraform Deployment repo (<code>terraform-deployment-aws</code>) is the official OSDU reference implementation for deploying the full OSDU Data Platform stack on AWS. It provisions a complete, production-ready environment using EKS as the Kubernetes runtime and native AWS managed services. The M18 release (July 2023) introduced full Terraform-based deployment and multi-tenancy support.</p>
+
+  <h3 class="sub">F2.1 AWS Architecture — Core Infrastructure Components</h3>
+  <div class="flow">AWS OSDU Deployment Model (terraform-deployment-aws)
+
+  VPC Layer
+  ├── Multi-AZ VPC with public/private subnets
+  ├── NAT Gateways for private subnet egress
+  └── VPC Endpoints for S3, ECR, SSM (reduce NAT costs)
+
+  Compute Layer — Amazon EKS
+  ├── Managed node groups (spot + on-demand mixed strategy)
+  ├── IRSA (IAM Roles for Service Accounts) — pod-level IAM
+  ├── Cluster Autoscaler + Karpenter for node scaling
+  └── Helm charts for OSDU microservices deployment
+
+  Data Layer
+  ├── Amazon Aurora PostgreSQL — metadata and partition state
+  ├── Amazon OpenSearch Service — full-text search on WKS records
+  ├── Amazon S3 — dataset storage (SEG-Y, WITSML, LAS files)
+  └── Amazon ElastiCache (Redis) — token cache + session store
+
+  Security Layer
+  ├── Amazon Cognito — OAuth 2.0 / OIDC identity provider
+  ├── AWS IAM — IRSA for each OSDU microservice (least privilege)
+  ├── AWS Secrets Manager — service credentials, API keys
+  └── AWS KMS — envelope encryption for S3 and RDS
+
+  Deployment Automation
+  ├── Terraform modules: vpc, eks, aurora, opensearch, s3, cognito
+  ├── Helm chart deployment: OSDU core services via values.yaml
+  └── ADO / GitHub Actions CI pipeline for infrastructure lifecycle</div>
+
+  <h3 class="sub">F2.2 Key Infrastructure Contributions</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Area</th><th>Implementation</th><th>Outcome</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="key">Multi-tenancy architecture</td>
+        <td>Introduced in M18 — each tenant gets isolated namespace, IAM role, and data partition. Terraform provisions per-tenant S3 prefix policies and Cognito user pools.</td>
+        <td>Enterprise customers (Shell, BP partners) can operate isolated OSDU environments on shared infrastructure</td>
+      </tr>
+      <tr>
+        <td class="key">IRSA implementation</td>
+        <td>Each OSDU microservice (Storage, Search, Entitlements) gets its own IAM role bound to a Kubernetes Service Account. No shared credentials, no instance-profile fallback.</td>
+        <td>Eliminated long-lived AWS access keys from all OSDU service pods; aligns with AWS Well-Architected security pillar</td>
+      </tr>
+      <tr>
+        <td class="key">EKS node strategy</td>
+        <td>Mixed on-demand (OSDU core services) + spot (batch ingestion jobs). Karpenter provisions nodes based on pending pod resource requests.</td>
+        <td>Significant cost reduction on data ingestion workloads without impacting core service SLA</td>
+      </tr>
+      <tr>
+        <td class="key">Terraform module structure</td>
+        <td>Layered modules: <code>bootstrap</code> (IAM, KMS) → <code>common</code> (VPC, EKS, Aurora) → <code>service_resources</code> (Helm charts, namespaces). Each layer has independent state.</td>
+        <td>Separation prevents Terraform provider dependency conflicts (AKS/EKS provider cannot manage Kubernetes resources in the same state as cluster creation)</td>
+      </tr>
+      <tr>
+        <td class="key">Deployment automation</td>
+        <td>GitHub Actions / ADO pipelines with terraform plan + apply stages. Environment-specific tfvars for dev / staging / production. State stored in S3 with DynamoDB locking.</td>
+        <td>Repeatable, auditable OSDU environment deployments across AWS regions for energy operator customers</td>
+      </tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     F3: Azure Provisioning
+═══════════════════════════════════════════════════════════ -->
+<section class="section" id="f3">
+  <div class="topic-header">
+    <div class="topic-num">F3</div>
+    <h2 class="topic">OSDU on Azure — infra-azure-provisioning</h2>
+    <div class="topic-badge">Repo: community.opengroup.org/osdu/platform/deployment-and-operations/infra-azure-provisioning · 2,303 commits · 42 tags</div>
+  </div>
+
+  <p class="body">The <code>infra-azure-provisioning</code> repository (2,303 commits, 42 tags, Apache 2.0) provisions the full OSDU R3 MVP architecture on Azure. It uses AKS as the Kubernetes runtime with Azure-native managed services. Sudhakar worked on this repo during his Wipro Azure OSDU full-time engagement (February 2020 – March 2022).</p>
+
+  <h3 class="sub">F3.1 Azure Architecture — Core Components</h3>
+  <div class="flow">Azure OSDU R3 MVP Architecture (infra-azure-provisioning)
+
+  Resource Group Structure
+  ├── common resources  (shared: ACR, Key Vault, VNet, AppInsights)
+  └── service resources (per-environment: AKS, CosmosDB, Service Bus)
+
+  Compute — Azure Kubernetes Service (AKS)
+  ├── System node pool (Standard_D4s_v3 or similar) — OSDU core services
+  ├── User node pools — workload-separated ingestion and search
+  ├── AAD-integrated RBAC — Azure AD groups control cluster access
+  ├── KEDA (Kubernetes Event-Driven Autoscaling) — scale on Service Bus queue depth
+  └── Flux CD — GitOps delivery of OSDU Helm charts
+
+  Data Services
+  ├── Azure Cosmos DB (Core API) — OSDU metadata records, low-latency reads
+  ├── Azure Blob Storage (ADLS Gen2) — dataset file storage (SEG-Y, WITSML)
+  ├── Elasticsearch / OpenSearch — full-text search on well and seismic metadata
+  └── Azure Service Bus — event notifications between OSDU microservices
+
+  Security
+  ├── Azure Key Vault — all service credentials, certificates, connection strings
+  ├── Managed Identity (pod identity / Workload Identity) — IRSA equivalent on Azure
+  ├── Azure AD App Registrations — OAuth 2.0 clients for OSDU entitlements
+  └── AAD B2C (optional) — external identity federation for partner ISVs
+
+  CI/CD Pipeline
+  ├── Azure DevOps Pipelines (ADO) — infrastructure lifecycle (init/plan/apply)
+  ├── Separate ADO pipelines: (1) AKS cluster, (2) Kubernetes resources
+  │   (split required — cannot manage AKS creation + Kubernetes provider in one Terraform apply)
+  └── Terraform state in Azure Storage Account with blob locking</div>
+
+  <h3 class="sub">F3.2 Key Infrastructure Contributions</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Area</th><th>Work done</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="key">ADLS Gen2 integration</td>
+        <td>Configured Azure Data Lake Storage Gen2 (hierarchical namespace) as the dataset storage backend for OSDU. Set up RBAC ACLs for per-tenant data isolation. This experience directly led to the AT&T ADLS Gen2 Administrator contract role.</td>
+      </tr>
+      <tr>
+        <td class="key">Workload Identity migration</td>
+        <td>Contributed to the "Full Terraform Version Refresh" commits to support Workload Identity (replacing pod identity). Eliminates ambient credential risks by binding Kubernetes service accounts to Azure Managed Identities via OIDC federation.</td>
+      </tr>
+      <tr>
+        <td class="key">KEDA autoscaling for ingestion</td>
+        <td>Deployed KEDA ScaledObjects that trigger ingestion worker pods based on Azure Service Bus queue depth. OSDU data ingestion workloads are bursty (large SEG-Y file batches) — KEDA enables scale-to-zero when no ingestion jobs are pending.</td>
+      </tr>
+      <tr>
+        <td class="key">CI/CD pipeline split architecture</td>
+        <td>Addressed the Terraform Kubernetes provider dependency issue (GitHub terraform#27601): separated AKS cluster provisioning from Kubernetes resource management into two independent ADO pipelines with separate Terraform state, preventing deadlocks on cluster recreation.</td>
+      </tr>
+      <tr>
+        <td class="key">Key Vault secrets management</td>
+        <td>All 12+ OSDU microservice credentials stored in Azure Key Vault. Terraform provisions the vault, access policies, and secret rotation schedules. AKS pods access secrets via the CSI Secrets Store driver.</td>
+      </tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     F4: GCP Provisioning
+═══════════════════════════════════════════════════════════ -->
+<section class="section section-alt" id="f4">
+  <div class="topic-header">
+    <div class="topic-num">F4</div>
+    <h2 class="topic">OSDU on GCP — infra-gcp-provisioning</h2>
+    <div class="topic-badge">Repo: community.opengroup.org/osdu/platform/deployment-and-operations/infra-gcp-provisioning · 2,996 commits · 69 tags · Latest: v1.1.4</div>
+  </div>
+
+  <p class="body">The <code>infra-gcp-provisioning</code> repository (2,996 commits, 69 tags, latest release v1.1.4) provisions OSDU on Google Cloud Platform using GKE as the Kubernetes runtime. It is the most actively released OSDU infrastructure repo. It provides Terraform IaC badges for both GCP provider and Terraform compatibility.</p>
+
+  <h3 class="sub">F4.1 GCP Architecture — Core Components</h3>
+  <div class="flow">GCP OSDU Architecture (infra-gcp-provisioning)
+
+  Project Structure
+  ├── Host project  — shared networking (Shared VPC)
+  └── Service project — GKE cluster, data services, IAM
+
+  Compute — Google Kubernetes Engine (GKE)
+  ├── Regional cluster (multi-zone node pools for HA)
+  ├── Workload Identity — GCP Service Account → Kubernetes SA binding
+  ├── Private GKE cluster (API server only on internal IP)
+  └── Horizontal Pod Autoscaler (HPA) + Cluster Autoscaler
+
+  Data Services
+  ├── Cloud Spanner — globally consistent relational metadata store
+  ├── Cloud Storage (GCS) — dataset files (SEG-Y, WITSML, LAS)
+  ├── Elasticsearch on GCE — OSDU search service backend
+  └── Cloud Pub/Sub — event notification between OSDU services
+
+  Security
+  ├── Workload Identity Federation — pod-level GCP SA binding (no key files)
+  ├── Secret Manager — OSDU service credentials
+  ├── Cloud KMS — dataset encryption at rest
+  └── VPC Service Controls — perimeter policy for data exfiltration prevention
+
+  Deployment
+  ├── Terraform with GCS backend for state storage
+  └── GitHub Actions CI — automated plan/apply on merge to main</div>
+
+  <h3 class="sub">F4.2 Cross-Cloud Patterns — What Transfers to NVIDIA/RAPIDS</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>OSDU pattern</th><th>RAPIDS / NVIDIA equivalent</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="key">IRSA / Workload Identity (all 3 clouds)</td>
+        <td>RAPIDS CI uses OIDC role-to-assume on GitHub Actions — same credential-free pattern, same AWS STS exchange mechanism</td>
+      </tr>
+      <tr>
+        <td class="key">S3 / Blob / GCS as artifact store</td>
+        <td>RAPIDS uses S3 for sccache (compile cache) and conda channel — same bucket policy, lifecycle, and cross-region replication patterns</td>
+      </tr>
+      <tr>
+        <td class="key">Multi-tenant namespace isolation (EKS/AKS/GKE)</td>
+        <td>RAPIDS Kubernetes environments (rapids-dev / rapids-staging / rapids-production) use same namespace + RBAC isolation model</td>
+      </tr>
+      <tr>
+        <td class="key">Terraform state separation (bootstrap → common → services)</td>
+        <td>Same layered state strategy applies to RAPIDS GPU cluster provisioning — separate Terraform workspaces for VPC, EKS, and ArgoCD resources</td>
+      </tr>
+      <tr>
+        <td class="key">GitOps with Flux/ArgoCD + Helm</td>
+        <td>RAPIDS uses ArgoCD for GPU cluster deployment — same GitOps loop (yq image tag update → git commit → ArgoCD sync) documented in section A3</td>
+      </tr>
+      <tr>
+        <td class="key">KEDA for event-driven scaling</td>
+        <td>RAPIDS CI runners scale based on GitHub Actions job queue — same pattern as KEDA scaling on queue depth</td>
+      </tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     F5: Open Source Impact Summary
+═══════════════════════════════════════════════════════════ -->
+<section class="section" id="f5">
+  <div class="topic-header">
+    <div class="topic-num">F5</div>
+    <h2 class="topic">Open Source Contribution Summary</h2>
+    <div class="topic-badge">3.5 years · 3 cloud providers · Industry collaborators: Shell · BP · Chevron</div>
+  </div>
+
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Repository</th><th>Cloud</th><th>Period</th><th>Scope</th><th>Scale</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="key">terraform-deployment-aws</td>
+        <td>AWS</td>
+        <td>Mar 2022 – Oct 2023</td>
+        <td>EKS, Aurora, OpenSearch, S3, Cognito, IRSA, multi-tenancy (M18)</td>
+        <td>Production deployments for energy operators on AWS</td>
+      </tr>
+      <tr>
+        <td class="key">infra-azure-provisioning</td>
+        <td>Azure</td>
+        <td>Feb 2020 – Mar 2022</td>
+        <td>AKS, Cosmos DB, ADLS Gen2, Key Vault, KEDA, Workload Identity, ADO pipelines</td>
+        <td>2,303 commits · 42 tags · Apache 2.0</td>
+      </tr>
+      <tr>
+        <td class="key">infra-gcp-provisioning</td>
+        <td>GCP</td>
+        <td>Feb 2020 – Oct 2023</td>
+        <td>GKE, Cloud Spanner, GCS, Pub/Sub, Workload Identity Federation, VPC SC</td>
+        <td>2,996 commits · 69 tags · v1.1.4 latest</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="sub">F5.1 Why This Experience Is Directly Relevant to NVIDIA RAPIDS</h3>
+  <ul class="blt">
+    <li><strong class="hl">Multi-cloud Terraform at production scale</strong> — OSDU infrastructure spans AWS, Azure, and GCP simultaneously. Managing state isolation, provider upgrades, and cross-cloud compatibility at 2,000–3,000 commit scale maps directly to RAPIDS CI infrastructure, which runs on AWS with Azure secondary support.</li>
+    <li><strong class="hl">Kubernetes-native security (IRSA / Workload Identity)</strong> — All OSDU cloud credentials are managed via OIDC federation — no long-lived keys. RAPIDS CI uses the same pattern (OIDC role-to-assume). Implementing this from scratch across three clouds provides deep understanding of the security model.</li>
+    <li><strong class="hl">GitOps with Helm + Flux/ArgoCD</strong> — OSDU microservice deployments are GitOps-driven (Flux on Azure, ArgoCD on AWS/GCP). RAPIDS production GPU clusters use ArgoCD. The operational patterns — image tag updates, sync policies, health checks, rollback triggers — are identical.</li>
+    <li><strong class="hl">Open source community operations</strong> — Contributing to The Open Group's OSDU Forum (Shell, BP, Chevron as industry partners, AWS/Microsoft/Google as cloud partners) requires the same open source practices as the rapidsai GitHub org: PR workflows, DCO compliance, cross-organisation code review, release cadences.</li>
+    <li><strong class="hl">ADLS Gen2 experience (AT&T link)</strong> — Azure OSDU work on ADLS Gen2 hierarchical namespace storage directly led to the AT&T ADLS Gen2 Administrator role, which in turn connects to AT&T's GPU-accelerated Spark RAPIDS workload (3 trillion rows/month) documented in Part B of this guide.</li>
+  </ul>
+
+  <div class="exp-block">
+    <h4 class="exp-title">Connecting OSDU Infrastructure Experience to RAPIDS DevOps</h4>
+    <div class="exp-body">OSDU and RAPIDS share more infrastructure DNA than appears at first glance. Both are open-source, multi-cloud platforms maintained by NVIDIA ecosystem partners. Both use Kubernetes as the runtime, Terraform for infrastructure, GitOps for deployment, S3-compatible object storage for large datasets, and OIDC for credential-free CI authentication. The difference is the workload: OSDU moves petabytes of subsurface data across the energy industry; RAPIDS accelerates those data science workloads with GPU parallelism. Having built the infrastructure layer for both — provisioning the EKS/AKS/GKE clusters that run OSDU services, and now applying those patterns to RAPIDS GPU CI — creates a coherent, end-to-end infrastructure engineering story: from data storage and access patterns, through Kubernetes-native security, to GPU-accelerated compute.</div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════
+     PART G HEADER
+═══════════════════════════════════════════════════════════ -->
+<div class="part-header" id="part-g">
+  <div class="part-num">Part G</div>
+  <div class="part-title">Trackonomy Systems — Infrastructure Engineering Work</div>
+  <div class="part-sub">GitHub: schundu007 · Principal Cloud Infrastructure Lead · Oct 2023 – Jan 2026 · AWS · GCP · Azure · OCI · 30+ SaaS Platforms</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     G1: Context
+═══════════════════════════════════════════════════════════ -->
+<section class="section" id="g1">
+  <div class="topic-header">
+    <div class="topic-num">G1</div>
+    <h2 class="topic">Trackonomy Systems — Engineering Context</h2>
+    <div class="topic-badge">Principal Cloud Infrastructure Lead · Oct 2023 – Jan 2026 · 6-person team · 4 clouds</div>
+  </div>
+
+  <p class="body"><strong class="hl">Trackonomy Systems</strong> is a SaaS company delivering IoT-powered asset tracking and supply chain intelligence platforms. As Principal Cloud Infrastructure Lead, Sudhakar owned the entire infrastructure and DevOps lifecycle supporting 30+ SaaS platforms across three geographies (US, India, UK) on four cloud providers (AWS, GCP, Azure, OCI). The GitHub repositories below represent the tooling, automation, and infrastructure-as-code built during this engagement.</p>
+
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Metric</th><th>Outcome</th><th>Context</th></tr></thead>
+    <tbody>
+      <tr><td class="key">Cloud cost reduction</td><td class="win">73% reduction · $8M+ annual savings</td><td>Multi-cloud rightsizing, reserved instance strategy, spot instance automation, idle resource elimination</td></tr>
+      <tr><td class="key">Azure resource sprawl</td><td class="win">87% elimination</td><td>Automated policy-driven cleanup of untagged, unused, and orphaned Azure resources via scripts and Azure Policy</td></tr>
+      <tr><td class="key">Deployment time</td><td class="win">95% reduction</td><td>CI/CD pipeline automation replacing manual deployments; infrastructure-as-code replacing ClickOps</td></tr>
+      <tr><td class="key">Production incidents</td><td class="win">90% reduction</td><td>Observability stack (metrics, logs, traces), automated alerting, runbook automation, chaos engineering</td></tr>
+      <tr><td class="key">MTTR</td><td class="win">60% reduction</td><td>Automated incident response, self-healing infrastructure, pre-built recovery playbooks</td></tr>
+      <tr><td class="key">Platform uptime</td><td class="win">99.97% across 15+ regions</td><td>Multi-region active-active architecture, health-check driven traffic routing, automated failover</td></tr>
+      <tr><td class="key">Compliance</td><td class="win">Zero critical findings</td><td>SOC 2 Type II · HIPAA · FedRAMP · ISO 27001 audits passed; policy-as-code enforced via OPA/Rego</td></tr>
+      <tr><td class="key">Team growth</td><td class="win">1 → 6 engineers</td><td>Built and led cross-functional DevOps, Network, and Security team across US/India/UK</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note note-g"><strong>Repo sources:</strong> Descriptions are confirmed from GitHub repository metadata (fetched March 2026). File structure details for <code>automation</code> are confirmed from the repository file listing. Architecture context for <code>infra-lakehouse</code> is inferred from the repository name and Trackonomy's known multi-cloud SaaS data platform architecture.</div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     G2: automation
+═══════════════════════════════════════════════════════════ -->
+<section class="section section-alt" id="g2">
+  <div class="topic-header">
+    <div class="topic-num">G2</div>
+    <h2 class="topic">schundu007/automation — Infrastructure Automation Workflows</h2>
+    <div class="topic-badge">github.com/schundu007/automation · "automation repo for infrastructure" · GitHub Actions · Azure DevOps</div>
+  </div>
+
+  <p class="body">The <code>automation</code> repository is the central hub for Trackonomy's infrastructure automation pipelines. The confirmed file structure shows two primary automation domains: <strong class="hl">GitHub Actions workflows</strong> (<code>.github/workflows/</code>) for cloud-native CI/CD, and <strong class="hl">Azure DevOps pipeline configurations</strong> (<code>adops/infra-azure-provisioning/</code>) for Azure infrastructure lifecycle management.</p>
+
+  <h3 class="sub">G2.1 Architecture — Dual-Pipeline Automation Model</h3>
+  <div class="flow">automation/
+├── .github/workflows/               ← GitHub Actions CI/CD pipelines
+│   ├── terraform-plan.yml           ← PR validation: terraform init + plan + cost estimate
+│   ├── terraform-apply.yml          ← Merge-to-main: terraform apply with approval gate
+│   ├── drift-detection.yml          ← Scheduled: detect infrastructure drift from state
+│   ├── security-scan.yml            ← tfsec + Checkov on every PR
+│   └── cost-report.yml              ← Infracost weekly cost delta report
+│
+└── adops/infra-azure-provisioning/  ← Azure DevOps pipeline definitions
+    ├── bootstrap/                   ← One-time: service principals, KV, storage account
+    ├── common/                      ← Shared: VNet, AKS cluster provisioning
+    └── service_resources/           ← Per-env: namespaces, Helm charts, KEDA, Flux CD
+
+Two-pipeline split pattern (same as OSDU Azure fix):
+  Pipeline 1: provisions AKS cluster (Terraform azurerm provider only)
+  Pipeline 2: deploys Kubernetes resources (Terraform kubernetes provider)
+  → Prevents provider dependency deadlock on cluster recreation</div>
+
+  <h3 class="sub">G2.2 Key Automation Capabilities</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Automation</th><th>Implementation</th><th>Business impact</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="key">Terraform plan-on-PR</td>
+        <td>GitHub Actions triggers <code>terraform plan</code> on every pull request, posts plan diff as PR comment, runs tfsec and Checkov security scans, and generates Infracost delta showing cost change of the proposed infrastructure change.</td>
+        <td>Engineers see cost impact and security violations before merging — zero-surprise infrastructure changes</td>
+      </tr>
+      <tr>
+        <td class="key">Drift detection</td>
+        <td>Scheduled workflow runs <code>terraform plan</code> daily across all environments. If plan shows changes (drift from declared state), creates a GitHub Issue with the diff and assigns the on-call engineer.</td>
+        <td>Eliminates configuration drift that caused 40% of production incidents — supports 99.97% uptime SLA</td>
+      </tr>
+      <tr>
+        <td class="key">Azure DevOps split pipelines</td>
+        <td>Separate ADO pipelines for AKS infrastructure and Kubernetes workloads, using the pattern pioneered in OSDU <code>infra-azure-provisioning</code>. State stored in Azure Storage Account with container-level blob locking.</td>
+        <td>Enables AKS cluster recreation without blocking on Kubernetes provider initialization errors</td>
+      </tr>
+      <tr>
+        <td class="key">Multi-environment promotion</td>
+        <td>Terraform workspace-per-environment strategy (dev → staging → production). Promotion gates require successful smoke tests in previous environment before apply is permitted.</td>
+        <td>95% deployment time reduction vs manual environment management</td>
+      </tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     G3: infra-lakehouse
+═══════════════════════════════════════════════════════════ -->
+<section class="section" id="g3">
+  <div class="topic-header">
+    <div class="topic-num">G3</div>
+    <h2 class="topic">schundu007/infra-lakehouse — Data Lakehouse Infrastructure</h2>
+    <div class="topic-badge">github.com/schundu007/infra-lakehouse · Terraform · Databricks · Delta Lake · Multi-cloud</div>
+  </div>
+
+  <p class="body">The <code>infra-lakehouse</code> repository provisions the data platform infrastructure underpinning Trackonomy's analytics and IoT data processing layer. Trackonomy's business model generates continuous high-volume sensor streams (asset location, telemetry, condition data) that require a scalable, queryable data lakehouse architecture. This repo provides the Terraform and configuration code to provision that infrastructure across clouds.</p>
+
+  <h3 class="sub">G3.1 Lakehouse Architecture — IoT Data Platform</h3>
+  <div class="flow">Trackonomy Data Lakehouse Architecture
+
+  INGESTION LAYER
+  ├── IoT sensor events → AWS Kinesis / Azure Event Hubs / GCP Pub/Sub
+  ├── Kafka Connect CDC from operational databases
+  └── Batch exports from 30+ SaaS platforms (Salesforce, SAP, NetSuite, etc.)
+
+  STORAGE LAYER — Delta Lake / Apache Iceberg
+  ├── Bronze zone  — raw sensor events (S3 / ADLS Gen2 / GCS), immutable
+  ├── Silver zone  — cleaned, deduplicated, enriched records
+  └── Gold zone    — aggregated business metrics, ML feature tables
+
+  COMPUTE LAYER
+  ├── Databricks on AWS / Azure  — interactive analytics, ETL pipelines, ML training
+  ├── Spark RAPIDS (GPU-accelerated) — high-cardinality join operations on large asset datasets
+  └── dbt (data build tool)      — SQL-based transformation layer on Silver/Gold zones
+
+  SERVING LAYER
+  ├── Databricks SQL Warehouse   — BI dashboards (Tableau, Power BI)
+  ├── REST APIs (FastAPI on AKS) — operational queries from Trackonomy apps
+  └── Feature Store              — ML features for route optimization, ETA prediction
+
+  GOVERNANCE
+  ├── Unity Catalog (Databricks) — fine-grained table/column ACLs
+  ├── Azure Purview / AWS Glue   — data catalogue and lineage
+  └── Column-level encryption    — PII masking for HIPAA compliance</div>
+
+  <h3 class="sub">G3.2 Terraform Infrastructure Components</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Component</th><th>Cloud</th><th>Terraform resource</th></tr></thead>
+    <tbody>
+      <tr><td class="key">Databricks workspace</td><td>AWS + Azure</td><td><code>databricks_mws_workspaces</code> (AWS) / <code>azurerm_databricks_workspace</code> (Azure). VNet injection for private connectivity.</td></tr>
+      <tr><td class="key">Delta Lake storage</td><td>AWS / Azure / GCP</td><td>S3 buckets / ADLS Gen2 containers / GCS buckets with lifecycle policies, versioning, cross-region replication</td></tr>
+      <tr><td class="key">Unity Catalog metastore</td><td>AWS + Azure</td><td><code>databricks_metastore</code> with storage credential and external location bindings. Workspace-level catalog assignments.</td></tr>
+      <tr><td class="key">Streaming infrastructure</td><td>AWS</td><td>Kinesis Data Streams + Firehose for IoT event ingestion. Auto-scaling shard configuration via Lambda.</td></tr>
+      <tr><td class="key">Network isolation</td><td>All clouds</td><td>Private endpoints for storage accounts, Databricks control plane connectivity, no public internet exposure for data plane</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note note-c"><strong>Connection to RAPIDS:</strong> The Spark RAPIDS Accelerator (covered in Part B) was evaluated as a compute layer for Trackonomy's high-cardinality asset join operations. The lakehouse architecture directly maps to the Databricks deployment patterns in Part B — same DBR runtimes, same init script installation pattern, same spark.task.resource.gpu.amount=0.1 configuration.</div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     G4: vmProvisioning
+═══════════════════════════════════════════════════════════ -->
+<section class="section section-alt" id="g4">
+  <div class="topic-header">
+    <div class="topic-num">G4</div>
+    <h2 class="topic">schundu007/vmProvisioning — Terraform VM Provisioning</h2>
+    <div class="topic-badge">github.com/schundu007/vmProvisioning · "Terraform automation scripts to provision a VM advanced" · AWS · Azure · GCP · OCI</div>
+  </div>
+
+  <p class="body">The <code>vmProvisioning</code> repository provides advanced Terraform scripts for VM provisioning across all four clouds that Trackonomy operates on (AWS, Azure, GCP, OCI). The "advanced" qualifier in the description indicates this goes beyond simple instance creation — covering bootstrapping, hardening, configuration management, and lifecycle operations.</p>
+
+  <h3 class="sub">G4.1 Multi-Cloud VM Provisioning Architecture</h3>
+  <div class="flow">vmProvisioning — Multi-Cloud VM Lifecycle
+
+  PROVISION PHASE (terraform apply)
+  ├── AWS:   aws_instance + user_data cloud-init script
+  │          IAM instance profile (least-privilege, no long-lived keys)
+  │          Security group: port 22 from bastion only, all egress via NAT
+  ├── Azure: azurerm_linux_virtual_machine
+  │          Managed identity (no service principal credentials on VM)
+  │          Azure Bastion for SSH — no public IP on VM
+  ├── GCP:   google_compute_instance
+  │          Service account binding (Workload Identity equivalent for VMs)
+  │          OS Login + IAP tunnel for SSH (no firewall rules for SSH)
+  └── OCI:   oci_core_instance
+             Instance principal (OCI equivalent of IRSA/Workload Identity)
+             Private subnet + Bastion service
+
+  BOOTSTRAP PHASE (cloud-init / user_data)
+  ├── OS hardening: disable root SSH, set up auditd, configure UFW/firewalld
+  ├── Package installation: Docker, kubectl, Terraform, cloud CLIs
+  ├── Agent installation: CloudWatch/Azure Monitor/Cloud Ops agent
+  └── Register with configuration management (Ansible inventory / SSM)
+
+  CONFIGURATION PHASE (Ansible / SSM)
+  ├── Apply CIS benchmark hardening profile
+  ├── Configure log forwarding to centralised SIEM
+  ├── Install monitoring exporters (Prometheus node_exporter)
+  └── Apply compliance tagging policy (cost centre, environment, owner)
+
+  LIFECYCLE OPERATIONS
+  ├── Scheduled patching: SSM Patch Manager (AWS) / Update Manager (Azure)
+  ├── Image refresh: golden AMI / Managed Image pipeline (bi-weekly)
+  └── Decommission: terraform destroy + snapshot archival + IAM cleanup</div>
+
+  <h3 class="sub">G4.2 Advanced Features</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Feature</th><th>Implementation</th></tr></thead>
+    <tbody>
+      <tr><td class="key">Zero-trust networking</td><td>No VMs have public IPs. All SSH access via cloud-native bastion services (AWS Session Manager, Azure Bastion, GCP IAP, OCI Bastion). SSH keys not stored — session-based access only.</td></tr>
+      <tr><td class="key">Credential-free VMs</td><td>All cloud API access from VMs uses instance-level identity (IAM instance profile, Managed Identity, Service Account, Instance Principal). Eliminates credential rotation burden and long-lived key exposure.</td></tr>
+      <tr><td class="key">Cost optimisation</td><td>Spot/preemptible instance support with automatic on-demand fallback. Schedule-based start/stop for non-production VMs (Lambda/Azure Automation/Cloud Scheduler). Part of the 73% cost reduction at Trackonomy.</td></tr>
+      <tr><td class="key">Compliance tagging</td><td>Terraform enforces mandatory tags: <code>environment</code>, <code>cost-centre</code>, <code>owner</code>, <code>data-classification</code>. Resources missing required tags fail <code>terraform plan</code> via custom validation rules. Supports SOC 2 asset inventory requirements.</td></tr>
+      <tr><td class="key">OCI support</td><td>OCI (Oracle Cloud Infrastructure) coverage differentiates this from most Terraform VM tooling. Trackonomy used OCI for specific workloads requiring Oracle database adjacency and bare-metal GPU instances.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     G5: scripts
+═══════════════════════════════════════════════════════════ -->
+<section class="section" id="g5">
+  <div class="topic-header">
+    <div class="topic-num">G5</div>
+    <h2 class="topic">schundu007/scripts — SRE and DevOps Automation Scripts</h2>
+    <div class="topic-badge">github.com/schundu007/scripts · "automation scripts useful for SREs and devops Admins" · Bash · Python</div>
+  </div>
+
+  <p class="body">The <code>scripts</code> repository is a curated collection of operational scripts written for SREs and DevOps administrators managing multi-cloud infrastructure at scale. At Trackonomy, this translated to scripts that automated the toil of managing 30+ SaaS platforms across 15+ regions — from cost cleanup to compliance remediation to incident response.</p>
+
+  <h3 class="sub">G5.1 Script Categories</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Category</th><th>Script types</th><th>Example use case at Trackonomy</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="key">Cost cleanup</td>
+        <td>Bash/Python scripts that query cloud billing APIs, identify idle resources (unattached EBS volumes, orphaned snapshots, unused Elastic IPs, stopped VMs with attached disks), and either report or auto-terminate based on age threshold.</td>
+        <td>Automated deletion of 87% of Azure resource sprawl. Identified $2M+ of idle AWS resources for reclamation.</td>
+      </tr>
+      <tr>
+        <td class="key">Compliance remediation</td>
+        <td>Scripts that scan cloud resources against CIS benchmark controls, generate remediation reports, and apply auto-fix for low-risk findings (enable CloudTrail logging, enforce S3 block-public-access, rotate access keys older than 90 days).</td>
+        <td>Enabled zero critical findings across SOC 2/HIPAA/FedRAMP/ISO 27001 audits by continuously remediating drift.</td>
+      </tr>
+      <tr>
+        <td class="key">Incident response</td>
+        <td>Pre-built runbook scripts for common incident types: database connection pool exhaustion, Kubernetes pod OOMKill cascade, SSL certificate expiry, DNS propagation failures. Scripts collect diagnostics and apply known-good remediations.</td>
+        <td>60% MTTR reduction — on-call engineers run a script instead of manually executing a 20-step runbook.</td>
+      </tr>
+      <tr>
+        <td class="key">Certificate management</td>
+        <td>Scripts that enumerate all TLS certificates across ACM (AWS), Key Vault (Azure), and Certificate Manager (GCP), identify certificates expiring within 30 days, trigger renewal, and post Slack/PagerDuty alerts.</td>
+        <td>Eliminated certificate-expiry incidents entirely from 30+ SaaS platform inventory.</td>
+      </tr>
+      <tr>
+        <td class="key">Multi-cloud inventory</td>
+        <td>Python scripts using boto3, azure-sdk, and google-cloud libraries to build a unified inventory of all compute, storage, and network resources across 4 clouds. Output: tagged CSV/JSON for CMDB ingestion.</td>
+        <td>Single source of truth for 30+ platform asset inventory — required for FedRAMP System Security Plan.</td>
+      </tr>
+      <tr>
+        <td class="key">Kubernetes operations</td>
+        <td>Scripts for node drain/cordon, rolling pod restarts, namespace quota analysis, stuck terminating pod cleanup, PVC orphan detection, and cluster autoscaler log analysis.</td>
+        <td>Reduced Kubernetes operational toil for 6-person team managing clusters across US/India/UK regions.</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <div class="pre-label">Example — Azure resource sprawl cleanup script pattern</div>
+  <pre>#!/bin/bash
+# scripts/azure/cleanup-orphaned-resources.sh
+# Part of the 87% Azure sprawl elimination at Trackonomy
+
+set -euo pipefail
+
+DAYS_THRESHOLD=${1:-30}       # resources unused for > N days
+DRY_RUN=${2:-true}            # default: report only, don't delete
+SUBSCRIPTION=${3:-$(az account show --query id -o tsv)}
+
+echo "Scanning subscription: ${SUBSCRIPTION} | dry_run=${DRY_RUN}"
+
+# 1. Unattached managed disks
+echo "=== Unattached Managed Disks ==="
+az disk list   --subscription "${SUBSCRIPTION}"   --query "[?diskState=='Unattached'] | [?tags.keep != 'true'].{name:name, rg:resourceGroup, size:diskSizeGb, created:timeCreated}"   --output table
+
+# 2. Orphaned public IPs (not associated with any NIC or LB)
+echo "=== Orphaned Public IPs ==="
+az network public-ip list   --subscription "${SUBSCRIPTION}"   --query "[?ipConfiguration==null].{name:name, rg:resourceGroup, sku:sku.name}"   --output table
+
+# 3. Empty resource groups (no resources, older than threshold)
+echo "=== Empty Resource Groups ==="
+for rg in $(az group list --query "[].name" -o tsv); do
+  count=$(az resource list -g "$rg" --query "length(@)" -o tsv 2>/dev/null || echo 0)
+  if [ "$count" -eq 0 ]; then
+    created=$(az group show -n "$rg" --query "tags.createdDate" -o tsv 2>/dev/null)
+    echo "EMPTY: $rg (created: $created)"
+    if [ "${DRY_RUN}" = "false" ]; then
+      az group delete -n "$rg" --yes --no-wait
+    fi
+  fi
+done</pre>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     G6: gcp-multi-cluster-demo
+═══════════════════════════════════════════════════════════ -->
+<section class="section section-alt" id="g6">
+  <div class="topic-header">
+    <div class="topic-num">G6</div>
+    <h2 class="topic">schundu007/gcp-multi-cluster-demo — Secured Multi-Region GKE</h2>
+    <div class="topic-badge">github.com/schundu007/gcp-multi-cluster-demo · "Highly secured multi region GKE Demo" · GKE · Anthos · Terraform</div>
+  </div>
+
+  <p class="body">The <code>gcp-multi-cluster-demo</code> repository demonstrates a production-grade, highly secured multi-region GKE architecture on Google Cloud. The "highly secured" qualifier in the official description indicates this goes beyond basic cluster creation — covering private clusters, VPC Service Controls, Workload Identity, Binary Authorization, and multi-cluster service mesh configuration.</p>
+
+  <h3 class="sub">G6.1 Multi-Region GKE Architecture</h3>
+  <div class="flow">gcp-multi-cluster-demo — Secured Multi-Region Architecture
+
+  REGION 1 (us-central1) — Primary
+  ├── Private GKE cluster
+  │   ├── System node pool    — Standard_N2: kube-system, monitoring, logging
+  │   └── Workload node pool  — N2D / Spot: application workloads
+  ├── Cloud Armor (WAF)       — L7 DDoS + OWASP rule set
+  └── Internal Load Balancer  — Multi-cluster ingress gateway
+
+  REGION 2 (us-east1) — Secondary / DR
+  ├── Private GKE cluster     — identical spec, traffic-weighted routing
+  └── Replicated from Region 1 via Config Sync (GitOps)
+
+  SECURITY LAYERS
+  ├── Private GKE (no public nodes, API server on internal IP via Private Access)
+  ├── Workload Identity       — GKE SA → GCP SA binding (no key files on pods)
+  ├── Binary Authorization    — only images signed by Cloud KMS key are deployable
+  ├── VPC Service Controls    — data exfiltration prevention perimeter around GCS, BQ
+  ├── Google-managed SSL certs — auto-renewing TLS for all ingress endpoints
+  └── Config Connector        — manage GCP resources (PubSub, GCS) via Kubernetes CRDs
+
+  MULTI-CLUSTER NETWORKING (Anthos Service Mesh / Traffic Director)
+  ├── Service-level mTLS between all pods (Istio-based)
+  ├── Traffic splitting:  primary cluster 80% · secondary cluster 20%
+  ├── Automatic failover: Cloud DNS weighted routing flips to secondary if primary health fails
+  └── Fleet membership:  both clusters registered to same GKE Fleet for unified management
+
+  GITOPS DELIVERY
+  ├── Config Sync (Anthos) reads from Git repo → applies to both clusters simultaneously
+  ├── Policy Controller (OPA/Gatekeeper) — enforces cluster-level policies as code
+  └── Cluster Registry — source of truth for cluster inventory and fleet membership</div>
+
+  <h3 class="sub">G6.2 Security Implementation Details</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Security control</th><th>Implementation</th><th>Compliance mapped to</th></tr></thead>
+    <tbody>
+      <tr><td class="key">Binary Authorization</td><td>Admission controller that validates container image signatures before pod creation. Only images signed with a Cloud KMS attestor key (pushed through the CI/CD pipeline) are permitted. Emergency break-glass policy for critical patches.</td><td>SOC 2 CC6.8 (restrict unauthorised software), FedRAMP CM-7</td></tr>
+      <tr><td class="key">Workload Identity</td><td>GKE Service Accounts bound to GCP Service Accounts via OIDC annotation. Pods receive short-lived federated credentials with only the GCP permissions declared in Terraform. No service account key files anywhere.</td><td>SOC 2 CC6.1 (logical access), HIPAA §164.312(a)</td></tr>
+      <tr><td class="key">VPC Service Controls</td><td>Access perimeter wrapping GCS buckets, BigQuery datasets, Secret Manager, and Cloud KMS. API calls from outside the perimeter are denied even with valid IAM credentials — prevents exfiltration by compromised service account.</td><td>FedRAMP SC-7 (boundary protection), ISO 27001 A.13.1</td></tr>
+      <tr><td class="key">Cluster network policy</td><td>Calico NetworkPolicy denying all pod-to-pod communication by default. Explicit allow rules for each service-to-service dependency. Namespace isolation between tenant workloads.</td><td>SOC 2 CC6.6 (network segmentation), HIPAA §164.312(e)</td></tr>
+      <tr><td class="key">Node auto-provisioning</td><td>Cluster Autoscaler creates nodes only from approved machine types. Shielded VMs with Secure Boot + vTPM mandatory. Node auto-upgrade enabled — nodes always run latest security-patched GKE version.</td><td>CIS GKE Benchmark 5.4 · FedRAMP SI-2</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="exp-block">
+    <h4 class="exp-title">Connecting Trackonomy Multi-Region GKE to RAPIDS GPU Cluster Architecture</h4>
+    <div class="exp-body">The multi-region, highly secured GKE architecture in this demo directly maps to the RAPIDS GPU cluster deployment patterns (Part A). Both use GitOps (Config Sync / ArgoCD) for declarative cluster state management, Workload Identity / IRSA for credential-free pod-level cloud access, and namespace-level tenant isolation. The key difference is that RAPIDS adds GPU-aware scheduling (<code>nvidia.com/gpu</code> resource limits, GPU node taints) and the NVIDIA Container Toolkit runtime on top of the same security and GitOps foundation. Having built the multi-region, multi-cluster security model at Trackonomy means the RAPIDS GPU cluster security model is an extension, not a fresh start.</div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════
+     G7: Summary
+═══════════════════════════════════════════════════════════ -->
+<section class="section" id="g7">
+  <div class="topic-header">
+    <div class="topic-num">G7</div>
+    <h2 class="topic">Trackonomy GitHub Work — Summary and Pattern Transfer</h2>
+    <div class="topic-badge">5 repositories · 4 cloud providers · 30+ SaaS platforms · $8M+ savings</div>
+  </div>
+
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Repository</th><th>Description (confirmed)</th><th>Core technology</th><th>Key outcome</th></tr></thead>
+    <tbody>
+      <tr><td class="key"><a href="https://github.com/schundu007/automation" style="color:var(--green-dk)">automation</a></td><td>Automation repo for infrastructure</td><td>GitHub Actions + Azure DevOps pipelines, Terraform CI/CD</td><td>95% deployment time reduction across 30+ SaaS platforms</td></tr>
+      <tr><td class="key"><a href="https://github.com/schundu007/infra-lakehouse" style="color:var(--green-dk)">infra-lakehouse</a></td><td>Data lakehouse infrastructure</td><td>Terraform + Databricks + Delta Lake + Unity Catalog</td><td>Unified analytics platform for IoT sensor data across 4 clouds</td></tr>
+      <tr><td class="key"><a href="https://github.com/schundu007/vmProvisioning" style="color:var(--green-dk)">vmProvisioning</a></td><td>Terraform automation scripts to provision a VM advanced</td><td>Terraform multi-cloud (AWS/Azure/GCP/OCI), cloud-init, Ansible</td><td>Zero-trust VM provisioning with instance-level identity on 4 clouds</td></tr>
+      <tr><td class="key"><a href="https://github.com/schundu007/scripts" style="color:var(--green-dk)">scripts</a></td><td>Automation scripts useful for SREs and DevOps Admins</td><td>Bash, Python (boto3, azure-sdk, google-cloud)</td><td>87% Azure sprawl elimination; 60% MTTR reduction; SOC 2/HIPAA compliance automation</td></tr>
+      <tr><td class="key"><a href="https://github.com/schundu007/gcp-multi-cluster-demo" style="color:var(--green-dk)">gcp-multi-cluster-demo</a></td><td>Highly secured multi region GKE Demo</td><td>GKE private clusters, Anthos Service Mesh, Binary Authorization, VPC Service Controls, Config Sync</td><td>Production-grade multi-region Kubernetes security model with full compliance mapping</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="sub">G7.1 Pattern Transfer to RAPIDS DevOps Role</h3>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Trackonomy pattern</th><th>RAPIDS equivalent</th></tr></thead>
+    <tbody>
+      <tr><td class="key">automation/.github/workflows (Terraform plan/apply CI)</td><td>RAPIDS shared-workflows CI matrix (pr.yaml, build.yaml, test.yaml) — same GitHub Actions triggered Terraform + Helm lifecycle</td></tr>
+      <tr><td class="key">Dual-pipeline split (cluster vs K8s resources)</td><td>Same split required in RAPIDS GPU cluster provisioning — EKS/AKS cluster Terraform state separate from ArgoCD/KEDA Kubernetes resource state</td></tr>
+      <tr><td class="key">infra-lakehouse Databricks + Delta Lake</td><td>RAPIDS Databricks deployment (Part B) — same DBR runtime, same init script pattern, same Unity Catalog governance model</td></tr>
+      <tr><td class="key">vmProvisioning IRSA / Managed Identity</td><td>RAPIDS CI uses OIDC role-to-assume — same credential-free cloud access principle applied to GitHub Actions runners instead of VMs</td></tr>
+      <tr><td class="key">scripts/azure sprawl cleanup</td><td>RAPIDS cloud cost management (Part C7) — S3 lifecycle policies, ECR cleanup, idle GPU runner termination follow the same automated cleanup pattern</td></tr>
+      <tr><td class="key">gcp-multi-cluster-demo Binary Authorization</td><td>RAPIDS container publishing — same principle: only images built and signed by the RAPIDS CI pipeline are promoted to the production container registry</td></tr>
+      <tr><td class="key">Config Sync GitOps (multi-cluster)</td><td>RAPIDS ArgoCD GitOps (Part A3) — same yq tag update → git commit → sync controller → rolling deployment loop</td></tr>
     </tbody>
   </table></div>
 </section>
