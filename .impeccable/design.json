@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-05-17T00:00:00Z",
+  "title": "Design System: Sudhakar Chundu Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "alert-lime": {
+        "role": "primary",
+        "displayName": "Alert Lime",
+        "canonical": "oklch(94% 0.22 115)",
+        "tonalRamp": ["#1a2800", "#2d4400", "#426100", "#5c8000", "#7fa000", "#a8c20d", "#c8e63d", "#E0FF4F"]
+      },
+      "zinc-black": {
+        "role": "neutral",
+        "displayName": "Zinc Black",
+        "canonical": "oklch(8% 0.002 285)",
+        "tonalRamp": ["#09090b", "#18181b", "#27272a", "#3f3f46", "#52525b", "#71717a", "#a1a1aa", "#fafafa"]
+      },
+      "zinc-surface": {
+        "role": "neutral",
+        "displayName": "Zinc Surface",
+        "canonical": "oklch(14% 0.003 285)",
+        "tonalRamp": ["#09090b", "#18181b", "#27272a", "#3f3f46", "#52525b", "#71717a", "#a1a1aa", "#fafafa"]
+      },
+      "warm-ivory": {
+        "role": "neutral",
+        "displayName": "Warm Ivory",
+        "canonical": "oklch(98% 0.005 85)",
+        "tonalRamp": ["#3a3832", "#5a5750", "#7a776e", "#9a978e", "#bab7ae", "#d4d1c8", "#F3F2EC", "#FEFDFB"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headlines and primary section titles only. Sora 800." },
+      "headline": { "displayName": "Headline", "purpose": "Section headings. Sora 700." },
+      "title": { "displayName": "Title", "purpose": "Card headings and subsection labels. Sora 600." },
+      "body": { "displayName": "Body", "purpose": "All paragraph copy. Plus Jakarta Sans 400. Max 65ch." },
+      "label": { "displayName": "Label/Mono", "purpose": "Dates, tags, code, technical metadata only. JetBrains Mono 700 uppercase tracked." }
+    },
+    "shadows": [
+      { "name": "ambient-low", "value": "0 1px 3px rgba(0,0,0,0.3)", "purpose": "Barely-there depth on static elements." },
+      { "name": "ambient-mid", "value": "0 4px 16px rgba(0,0,0,0.4)", "purpose": "Default card shadow at rest." },
+      { "name": "ambient-lift", "value": "0 8px 32px rgba(0,0,0,0.5)", "purpose": "Card/interactive element hover state." },
+      { "name": "ambient-high", "value": "0 16px 48px rgba(0,0,0,0.6)", "purpose": "Floating layers: modals, dropdowns." },
+      { "name": "lime-glow", "value": "0 4px 16px rgba(224,255,79,0.3)", "purpose": "Primary button hover ONLY. The only colored shadow in the system." }
+    ],
+    "motion": [
+      { "name": "fast", "value": "150ms ease", "purpose": "Micro-interactions: color shifts, opacity changes." },
+      { "name": "standard", "value": "300ms cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Default state transitions: hover, focus, theme toggle." },
+      { "name": "slow", "value": "500ms cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Entrance animations and large layout transitions." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "768px" },
+      { "name": "tablet", "value": "1024px" },
+      { "name": "desktop", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The primary CTA. Lime fill inverts the palette — the most visually distinct element on any page.",
+      "html": "<button class=\"ds-btn-primary\">Download Resume</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: #E0FF4F; color: #09090b; border: none; border-radius: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.875rem; font-weight: 700; cursor: pointer; text-decoration: none; transition: 300ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-primary:hover { background: #d4f038; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(224,255,79,0.3); } .ds-btn-primary:focus-visible { outline: 2px solid #E0FF4F; outline-offset: 3px; } .ds-btn-primary:active { transform: translateY(0); box-shadow: none; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action. Transparent with muted border; border and text shift to lime on hover.",
+      "html": "<button class=\"ds-btn-outline\">View Projects</button>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: transparent; color: #fafafa; border: 2px solid #71717a; border-radius: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.875rem; font-weight: 600; cursor: pointer; text-decoration: none; transition: 300ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-outline:hover { border-color: #E0FF4F; color: #E0FF4F; background: rgba(224,255,79,0.05); } .ds-btn-outline:focus-visible { outline: 2px solid #E0FF4F; outline-offset: 3px; }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": null,
+      "description": "Content container. Flat at rest, lifted 4px on hover. Used for experience items, projects, and blog posts.",
+      "html": "<div class=\"ds-card\"><span class=\"ds-card-date\">2023</span><h3>Staff DevOps Engineer</h3><p class=\"ds-card-body\">Led GPU infrastructure at scale across distributed ML training clusters.</p><div class=\"ds-card-tags\"><span class=\"ds-tag\">Kubernetes</span><span class=\"ds-tag\">NVIDIA</span></div></div>",
+      "css": ".ds-card { background: #18181b; border-radius: 16px; padding: 1.75rem; transition: 300ms cubic-bezier(0.4, 0, 0.2, 1); position: relative; box-shadow: 0 4px 16px rgba(0,0,0,0.4); } .ds-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.5); } .ds-card h3 { font-family: 'Sora', sans-serif; font-size: 1.125rem; font-weight: 600; color: #fafafa; margin: 0 0 0.5rem; } .ds-card-body { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem; line-height: 1.7; color: #a1a1aa; margin: 0; } .ds-card-date { display: inline-block; padding: 0.25rem 0.75rem; background: rgba(224,255,79,0.08); border-radius: 9999px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 600; color: #E0FF4F; margin-bottom: 0.75rem; } .ds-card-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; } .ds-tag { padding: 0.35rem 0.85rem; background: #27272a; color: #a1a1aa; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; font-weight: 500; border-radius: 9999px; transition: 150ms ease; } .ds-tag:hover { color: #E0FF4F; background: rgba(224,255,79,0.08); }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "72px frosted zinc bar. Links use a 2px lime underline indicator that grows from center on hover/active.",
+      "html": "<nav class=\"ds-nav\"><div class=\"ds-nav-inner\"><a href=\"/\" class=\"ds-nav-logo\">SC</a><ul class=\"ds-nav-links\"><li><a href=\"/about\" class=\"ds-nav-link\">About</a></li><li><a href=\"/resume\" class=\"ds-nav-link ds-nav-link--active\">Resume</a></li><li><a href=\"/projects\" class=\"ds-nav-link\">Projects</a></li></ul></div></nav>",
+      "css": ".ds-nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(9,9,11,0.9); backdrop-filter: blur(8px); z-index: 100; height: 72px; display: flex; align-items: center; } .ds-nav-inner { width: 80%; max-width: 1920px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; } .ds-nav-logo { font-family: 'Sora', sans-serif; font-size: 1.25rem; font-weight: 700; color: #fafafa; text-decoration: none; transition: 300ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-nav-logo:hover { color: #E0FF4F; } .ds-nav-links { display: flex; list-style: none; margin: 0; padding: 0; gap: 0.5rem; } .ds-nav-link { position: relative; color: #a1a1aa; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.875rem; font-weight: 500; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; transition: 300ms cubic-bezier(0.4, 0, 0.2, 1); } .ds-nav-link::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: #E0FF4F; transition: 300ms cubic-bezier(0.4, 0, 0.2, 1); transform: translateX(-50%); } .ds-nav-link:hover { color: #fafafa; } .ds-nav-link:hover::after, .ds-nav-link--active::after { width: calc(100% - 2rem); } .ds-nav-link--active { color: #fafafa; }"
+    },
+    {
+      "name": "Section Label",
+      "kind": "chip",
+      "refersTo": "tag-chip",
+      "description": "Uppercase monospace eyebrow label above section headings. Uses Alert Lime at very low opacity.",
+      "html": "<span class=\"ds-section-label\">Experience</span>",
+      "css": ".ds-section-label { display: inline-block; padding: 0.35rem 1rem; background: rgba(224,255,79,0.08); border-radius: 9999px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; color: #E0FF4F; letter-spacing: 0.12em; text-transform: uppercase; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Signal Board",
+    "overview": "This is a precision instrumentation aesthetic, not a marketing aesthetic. The design operates the way a well-configured monitoring system does: information surfaces exactly when it's needed, hierarchy communicates priority at a glance, and the accent color carries one meaning only — a live indicator, not decoration. Every layout decision is defensible as a structural choice.\n\nThe surface is almost entirely Zinc Black and zinc neutrals. A single Alert Lime occupies less than 8% of any screen — used on CTAs, active states, date chips, and hover indicators. That rarity is the mechanism. When recruiter eyes land on the lime, it marks exactly what matters: a call to action, a live system, a highlight worth reading.\n\nThis system explicitly rejects generic developer portfolio templates (same hero + skills grid + contact form, repeated endlessly), agency-portfolio scroll-jacking and particle flair, and dark-SaaS clichés like purple-to-pink gradients, neon glassmorphism cards, and hero-metric stat blocks.",
+    "keyCharacteristics": [
+      "Near-achromatic dark base: three zinc steps carry all depth",
+      "Single functional accent: Alert Lime is a status indicator, not a design flourish",
+      "Typographic hierarchy does the heavy lifting: scale ratios exceed 1.3x between steps",
+      "Shadows respond to interaction: flat at rest, ambient depth on hover",
+      "Monospace as a semantic signal: JetBrains Mono appears only on labels, dates, and code"
+    ],
+    "rules": [
+      { "name": "The One Signal Rule", "body": "Alert Lime appears on ≤8% of any screen. It marks CTAs, active states, and date chips only. A second lime element in the same viewport dilutes the signal.", "section": "colors" },
+      { "name": "The No-Pure-White Rule", "body": "Neither pure white (#ffffff) nor pure black (#000000) appears anywhere. Zinc Black (#09090b) and Chalk White (#fafafa) are the extremes.", "section": "colors" },
+      { "name": "The Mono Semantic Rule", "body": "JetBrains Mono means: date, tag, code, or technical metadata. It never appears in running prose or headings.", "section": "typography" },
+      { "name": "The Tight Headlines Rule", "body": "Display and Headline use negative letter-spacing (-0.025em to -0.03em). Wide-tracked headlines at large scale read as undecided, not refined.", "section": "typography" },
+      { "name": "The Responsive Depth Rule", "body": "Shadows are state feedback. At rest: ambient-mid. On hover: ambient-lift. On press: ambient-low. Never apply ambient-high to non-floating elements.", "section": "elevation" },
+      { "name": "The One Glow Rule", "body": "The lime glow appears only on .btn-primary:hover. Nowhere else. A second lime glow creates visual competition with the primary CTA.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use Alert Lime exclusively for interactive state signals: CTAs, active nav underlines, date chips, hover text shifts.",
+      "Do use JetBrains Mono only for metadata: dates, technology tags, code snippets.",
+      "Do let tonal zinc steps carry all at-rest depth.",
+      "Do apply negative letter-spacing to Display and Headline.",
+      "Do cap body line length at 65ch.",
+      "Do respect prefers-reduced-motion for the neural network background and scroll animations.",
+      "Do scale shadows with interaction state.",
+      "Do use evidence-first copy: company names, years, outcomes, metrics."
+    ],
+    "donts": [
+      "Don't use generic Bootstrap-style template layouts: same hero + skills grid + contact form repeated section by section.",
+      "Don't use gradient text (background-clip: text with a gradient).",
+      "Don't add a second accent color.",
+      "Don't use glassmorphism decoratively.",
+      "Don't use purple-to-pink gradients, neon glows, or dark-SaaS hero metric cards.",
+      "Don't use border-left greater than 1px as a colored accent stripe.",
+      "Don't add shadows or glows at rest to non-interactive elements.",
+      "Don't use the lime accent on more than one element per visible viewport block."
+    ]
+  }
+}

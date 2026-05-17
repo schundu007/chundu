@@ -48,6 +48,7 @@
             height: 100%;
             z-index: -1;
             pointer-events: none;
+            will-change: transform;
         }
 
         /* AI Hero Section */
@@ -182,92 +183,6 @@
             transform: translateY(-2px);
             background: #d4f038;
             box-shadow: 0 4px 16px rgba(224, 255, 79, 0.3);
-        }
-
-        /* Profile Card */
-        .profile-card {
-            background: var(--bg-card);
-            border: none;
-            border-radius: var(--radius-xl);
-            padding: 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--shadow-lg);
-            transition: var(--transition-normal);
-        }
-
-        .profile-card:hover {
-            box-shadow: var(--shadow-xl);
-        }
-
-        .profile-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 100px;
-            background: var(--accent-highlight);
-            opacity: 0.06;
-        }
-
-        .profile-image {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            margin: 0 auto 1.25rem;
-            padding: 3px;
-            background: var(--accent-highlight);
-            position: relative;
-            z-index: 1;
-        }
-
-        .profile-image img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: center top;
-            border: 3px solid var(--bg-secondary);
-        }
-
-        .profile-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .profile-card .location {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.35rem;
-            margin-bottom: 1rem;
-        }
-
-        .profile-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            justify-content: center;
-        }
-
-        .profile-tag {
-            padding: 0.4rem 0.85rem;
-            background: rgba(224, 255, 79, 0.08);
-            border: none;
-            border-radius: var(--radius-full);
-            font-size: 0.8rem;
-            color: var(--accent-highlight);
-            font-weight: 500;
-            transition: var(--transition-fast);
-            text-decoration: none;
-        }
-
-        .profile-tag:hover {
-            background: rgba(224, 255, 79, 0.15);
         }
 
         /* Testimonials */
@@ -575,18 +490,21 @@
 
         /* Responsive */
         @media (max-width: 1024px) {
-            .hero-content h1 {
-                font-size: 2.5rem;
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            .hero-subtitle {
-                margin: 0 auto 2rem;
+            .skill-card:nth-child(n) {
+                grid-column: span 1;
+                padding: 1.5rem;
             }
 
-            .cta-buttons {
-                justify-content: center;
+            .skill-card:nth-child(1) h3,
+            .skill-card:nth-child(2) h3,
+            .skill-card:nth-child(6) h3,
+            .skill-card:nth-child(7) h3 {
+                font-size: 1rem;
             }
-
         }
 
         @media (max-width: 768px) {
@@ -609,23 +527,20 @@
             .skills-grid {
                 grid-template-columns: 1fr;
             }
+        }
 
-            .skill-card:nth-child(n) {
-                grid-column: span 1;
-            }
+        /* Focus states */
+        .company-logo-link:focus-visible {
+            outline: 2px solid var(--accent-highlight);
+            outline-offset: 3px;
+            border-color: var(--accent-highlight);
+        }
 
-            .skill-card:nth-child(1) h3,
-            .skill-card:nth-child(2) h3,
-            .skill-card:nth-child(6) h3,
-            .skill-card:nth-child(7) h3 {
-                font-size: 1rem;
-            }
-
-            .skill-card:nth-child(1),
-            .skill-card:nth-child(2),
-            .skill-card:nth-child(6),
-            .skill-card:nth-child(7) {
-                padding: 1.5rem;
+        /* Reduced motion: testimonials fallback layout when animation is disabled */
+        @media (prefers-reduced-motion: reduce) {
+            .testimonials-track {
+                flex-wrap: wrap;
+                overflow-x: visible;
             }
         }
 
@@ -687,8 +602,8 @@
                 <li><a href="projects/">Achievements</a></li>
                 <li><a href="opensource/">Open Source</a></li>
                 <div class="nav-social">
-                    <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/schundu007" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/schundu" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
                 </div>
                 <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
                     <i class="fas fa-moon"></i>
@@ -720,14 +635,9 @@
                         <span class="gradient-text">& Site Reliability</span>
                     </h1>
                     <p class="hero-subtitle">
-                        Senior DevOps/SRE leader with 18+ years of progressive experience (13+ cloud engineering, 5 years
-                        Linux/Middleware administration) architecting and operating large-scale production environments
-                        serving 3M+ users with 99.99% uptime. Primary on-call owner for GPU clusters (65+ NVIDIA A100/H100)
-                        and multi-cloud infrastructure (AWS, Azure, OCI). <strong>Performance engineering specialist</strong>:
-                        improved GPU utilization from 45% to 78%, reduced job queue wait times by 60%, and cut p99 latency by 40%.
-                        Expert in systems performance analysis (perf, strace, kernel tuning), GPU profiling (nvidia-smi, dcgm-exporter),
-                        Kubernetes, Terraform, GitOps (ArgoCD, Flux), and observability stacks (Prometheus, Grafana, Datadog).
-                        I lead incident command, author postmortems, and define meaningful SLOs. Speaker at KubeCon, SREcon, and DevOps Days.
+                        18+ years keeping large-scale production systems running. On-call owner for 65+ NVIDIA A100/H100 GPU clusters
+                        and multi-cloud infrastructure serving 3M+ users at 99.99% uptime. <strong>$8M+ in infrastructure cost savings.</strong>
+                        GPU utilization lifted from 45% to 78%. p99 latency cut 40%. Speaker at KubeCon, SREcon, and DevOps Days.
                     </p>
                     <div class="hero-facts">
                         <span><strong>18 yrs</strong> hands-on</span>
@@ -743,7 +653,7 @@
                             <i class="fas fa-file-alt"></i>
                             View Resume
                         </a>
-                        <a href="https://www.linkedin.com/in/schundu" class="btn btn-outline" target="_blank">
+                        <a href="https://www.linkedin.com/in/schundu" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-linkedin"></i>
                             Connect on LinkedIn
                         </a>
@@ -769,7 +679,7 @@
                         <div class="testimonial-author">
                             <div class="testimonial-avatar">NP</div>
                             <div class="testimonial-info">
-                                <h4>Nirali Patidar</h4>
+                                <h3>Nirali Patidar</h3>
                                 <p>Mission-Driven TPM Leader | AI/ML</p>
                                 <p class="testimonial-company">Former Atlassian, Cisco, Oracle</p>
                             </div>
@@ -782,7 +692,7 @@
                         <div class="testimonial-author">
                             <div class="testimonial-avatar">MY</div>
                             <div class="testimonial-info">
-                                <h4>Manal Yaqub</h4>
+                                <h3>Manal Yaqub</h3>
                                 <p>Startups @ Databricks</p>
                                 <p class="testimonial-company">Client Partner</p>
                             </div>
@@ -795,7 +705,7 @@
                         <div class="testimonial-author">
                             <div class="testimonial-avatar">KR</div>
                             <div class="testimonial-info">
-                                <h4>Kedar Rajwade</h4>
+                                <h3>Kedar Rajwade</h3>
                                 <p>Director of Engineering</p>
                                 <p class="testimonial-company">Distributed Systems | Agentic AI</p>
                             </div>
@@ -808,7 +718,7 @@
                         <div class="testimonial-author">
                             <div class="testimonial-avatar">KA</div>
                             <div class="testimonial-info">
-                                <h4>Keith Abrams</h4>
+                                <h3>Keith Abrams</h3>
                                 <p>General Counsel</p>
                                 <p class="testimonial-company">Trackonomy Systems</p>
                             </div>
@@ -821,7 +731,7 @@
                         <div class="testimonial-author">
                             <div class="testimonial-avatar">DR</div>
                             <div class="testimonial-info">
-                                <h4>Diwakar Reddy</h4>
+                                <h3>Diwakar Reddy</h3>
                                 <p>Technical Lead | Mobile Engineering</p>
                                 <p class="testimonial-company">Industrial IoT | AI and ML</p>
                             </div>
@@ -834,7 +744,7 @@
                         <div class="testimonial-author">
                             <div class="testimonial-avatar">KV</div>
                             <div class="testimonial-info">
-                                <h4>Kasi Viswanath</h4>
+                                <h3>Kasi Viswanath</h3>
                                 <p>Senior DevOps Engineer</p>
                                 <p class="testimonial-company">Trackonomy Systems</p>
                             </div>
@@ -847,7 +757,7 @@
                         <div class="testimonial-author">
                             <div class="testimonial-avatar">AP</div>
                             <div class="testimonial-info">
-                                <h4>Abhijeet Purkar</h4>
+                                <h3>Abhijeet Purkar</h3>
                                 <p>Software and Data | CMU</p>
                                 <p class="testimonial-company">Gold Medalist OU</p>
                             </div>
@@ -860,7 +770,7 @@
                         <div class="testimonial-author">
                             <div class="testimonial-avatar">RA</div>
                             <div class="testimonial-info">
-                                <h4>Raymundo Alatorre</h4>
+                                <h3>Raymundo Alatorre</h3>
                                 <p>Sr. Manager Automation & IIoT</p>
                                 <p class="testimonial-company">Flex</p>
                             </div>
@@ -869,7 +779,7 @@
                 </div>
             </div>
             <div style="text-align: center;">
-                <a href="https://www.linkedin.com/in/schundu/details/recommendations/" target="_blank" class="linkedin-badge">
+                <a href="https://www.linkedin.com/in/schundu/details/recommendations/" target="_blank" rel="noopener noreferrer" class="linkedin-badge">
                     <i class="fab fa-linkedin"></i>
                     See all <strong>45+ recommendations</strong> on LinkedIn
                     <i class="fas fa-arrow-right"></i>
@@ -1084,24 +994,24 @@
                     <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Organizations where my expertise in GPU infrastructure, SRE, and platform engineering can drive the most impact.</p>
                 </div>
                 <div class="companies-grid">
-                    <a href="https://www.nvidia.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/nvidia.png" alt="NVIDIA"></a>
-                    <a href="https://careers.google.com" target="_blank" class="company-logo-link"><img src="assets/images/logos/google.png" alt="Google"></a>
-                    <a href="https://www.metacareers.com" target="_blank" class="company-logo-link"><img src="assets/images/logos/meta.png" alt="Meta"></a>
-                    <a href="https://www.amazon.jobs" target="_blank" class="company-logo-link"><img src="assets/images/logos/amazon.png" alt="Amazon"></a>
-                    <a href="https://careers.microsoft.com" target="_blank" class="company-logo-link"><img src="assets/images/logos/microsoft.png" alt="Microsoft"></a>
-                    <a href="https://openai.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/openai.png" alt="OpenAI"></a>
-                    <a href="https://www.apple.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/apple.png" alt="Apple"></a>
-                    <a href="https://cerebras.net/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/cerebras.png" alt="Cerebras"></a>
-                    <a href="https://groq.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/groq.png" alt="Groq"></a>
-                    <a href="https://scale.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/scaleai.png" alt="Scale AI"></a>
-                    <a href="https://www.oracle.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/oracle.png" alt="Oracle"></a>
-                    <a href="https://www.cisco.com/c/en/us/about/careers.html" target="_blank" class="company-logo-link"><img src="assets/images/logos/cisco.png" alt="Cisco"></a>
-                    <a href="https://www.salesforce.com/company/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/salesforce.png" alt="Salesforce"></a>
-                    <a href="https://www.intuit.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/intuit.png" alt="Intuit"></a>
-                    <a href="https://www.visa.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/visa.png" alt="Visa"></a>
-                    <a href="https://www.jpmorgan.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/jpmorgan.png" alt="JPMorgan Chase"></a>
-                    <a href="https://corporate.walmart.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/walmart.png" alt="Walmart"></a>
-                    <a href="https://www.capitalone.com/tech/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/capitalone.png" alt="Capital One"></a>
+                    <a href="https://www.nvidia.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/nvidia.png" alt="NVIDIA" loading="lazy"></a>
+                    <a href="https://careers.google.com" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/google.png" alt="Google" loading="lazy"></a>
+                    <a href="https://www.metacareers.com" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/meta.png" alt="Meta" loading="lazy"></a>
+                    <a href="https://www.amazon.jobs" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/amazon.png" alt="Amazon" loading="lazy"></a>
+                    <a href="https://careers.microsoft.com" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/microsoft.png" alt="Microsoft" loading="lazy"></a>
+                    <a href="https://openai.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/openai.png" alt="OpenAI" loading="lazy"></a>
+                    <a href="https://www.apple.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/apple.png" alt="Apple" loading="lazy"></a>
+                    <a href="https://cerebras.net/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/cerebras.png" alt="Cerebras" loading="lazy"></a>
+                    <a href="https://groq.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/groq.png" alt="Groq" loading="lazy"></a>
+                    <a href="https://scale.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/scaleai.png" alt="Scale AI" loading="lazy"></a>
+                    <a href="https://www.oracle.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/oracle.png" alt="Oracle" loading="lazy"></a>
+                    <a href="https://www.cisco.com/c/en/us/about/careers.html" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/cisco.png" alt="Cisco" loading="lazy"></a>
+                    <a href="https://www.salesforce.com/company/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/salesforce.png" alt="Salesforce" loading="lazy"></a>
+                    <a href="https://www.intuit.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/intuit.png" alt="Intuit" loading="lazy"></a>
+                    <a href="https://www.visa.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/visa.png" alt="Visa" loading="lazy"></a>
+                    <a href="https://www.jpmorgan.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/jpmorgan.png" alt="JPMorgan Chase" loading="lazy"></a>
+                    <a href="https://corporate.walmart.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/walmart.png" alt="Walmart" loading="lazy"></a>
+                    <a href="https://www.capitalone.com/tech/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/capitalone.png" alt="Capital One" loading="lazy"></a>
                 </div>
             </div>
         </section>
