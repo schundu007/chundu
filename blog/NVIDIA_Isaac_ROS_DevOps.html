@@ -750,7 +750,7 @@ ul.blt li::marker { color:var(--green); }
     <span class="topic-badge">3 phases</span>
   </div>
 
-  <p class="body">A production-grade Isaac ROS CI pipeline has three distinct phases with different triggers, runner requirements, and quality gates. The premerge phase must be fast (under 15 minutes for most PRs). The postmerge phase can be slower but must be reliable. The release phase must be hermetic and produce provenance attestations.</p>
+  <p class="body">The following diagram reflects the <em>actual</em> CI structure found in the public <a href="https://github.com/isaac-sim/IsaacLab" style="color:var(--accent-blue)">isaac-sim/IsaacLab</a> repository, based on direct analysis of all <code>.github/workflows/</code> YAML files and composite actions. The pipeline uses Docker buildx against an IsaacSim base image and pytest as the test runner — not the ROS 2 / colcon / vcstool stack typical of Isaac ROS. Key gaps vs. best practice are called out inline.</p>
 
   <div class="reveal" style="margin:14px 0;">
     <svg viewBox="0 0 560 620" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:620px;display:block;font-family:'DM Mono',monospace;">
@@ -775,12 +775,12 @@ ul.blt li::marker { color:var(--green); }
       <text x="490" y="76" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'DM Mono',monospace">trigger: pull_request</text>
 
       <!-- Items -->
-      <text x="44" y="112" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">path-filter: skip if only *.md, docs/, *.txt</text>
-      <text x="44" y="133" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release</text>
-      <text x="44" y="154" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">colcon test (affected packages only)</text>
-      <text x="44" y="175" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">ament_clang_format + ament_cppcheck + flake8</text>
-      <text x="44" y="196" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Trivy image scan + cosign verify</text>
-      <text x="44" y="217" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">GPU gate: quarantined self-hosted runner</text>
+      <text x="44" y="112" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">docker buildx build --platform linux/amd64</text>
+      <text x="44" y="133" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">GHA cache type=gha (10 GB shared cap — low hit rate)</text>
+      <text x="44" y="154" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">/isaac-sim/python.sh -m pytest  (run-tests composite action)</text>
+      <text x="44" y="175" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">[self-hosted, gpu] runner — timeout-minutes: 180</text>
+      <text x="44" y="196" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">continue-on-error: true — failures do NOT block merge</text>
+      <text x="44" y="217" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">No path filter — README edit triggers full 3-hr GPU run</text>
 
       <!-- Bullet dots -->
       <circle cx="34" cy="109" r="3" fill="#76B900"/>
@@ -802,11 +802,11 @@ ul.blt li::marker { color:var(--green); }
       <text x="36" y="302" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'DM Mono',monospace">POSTMERGE / NIGHTLY</text>
       <text x="490" y="302" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'DM Mono',monospace">trigger: push to main / cron</text>
 
-      <text x="44" y="338" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Full workspace rebuild from scratch</text>
-      <text x="44" y="359" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Multi-arch buildx: amd64 + arm64 (native Jetson)</text>
-      <text x="44" y="380" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Hardware-in-loop (HIL) validation on Jetson Orin</text>
-      <text x="44" y="401" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Prometheus metrics publish</text>
-      <text x="44" y="422" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Grafana dashboard update</text>
+      <text x="44" y="338" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">docker buildx: amd64 + arm64 via QEMU (no native Jetson)</text>
+      <text x="44" y="359" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">push to registry: docker.io/isaac-lab-base</text>
+      <text x="44" y="380" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">daily-compat.yml: IsaacSim 4.5.0, 5.0.0 (cron 0 4 * * *)</text>
+      <text x="44" y="401" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">nightly-changelog.yml: isaaclab-bot (cron 0 5 * * *)</text>
+      <text x="44" y="422" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">No Trivy, cosign, SBOM, or security scanning</text>
 
       <circle cx="34" cy="335" r="3" fill="#76B900"/>
       <circle cx="34" cy="356" r="3" fill="#76B900"/>
@@ -817,19 +817,19 @@ ul.blt li::marker { color:var(--green); }
       <!-- Arrow + label: tag / release -->
       <line x1="280" y1="446" x2="280" y2="484" stroke="#76B900" stroke-width="2" marker-end="url(#arr)"/>
       <rect x="200" y="454" width="160" height="20" rx="4" fill="#fff" stroke="#76B900" stroke-width="1.2"/>
-      <text x="280" y="468" text-anchor="middle" font-size="10.5" font-weight="600" fill="#3d6200" font-family="'DM Mono',monospace">tag / release</text>
+      <text x="280" y="468" text-anchor="middle" font-size="10.5" font-weight="600" fill="#3d6200" font-family="'DM Mono',monospace">nightly / release/**</text>
 
       <!-- ── Box 3: RELEASE PIPELINE ── -->
       <rect x="20" y="486" width="520" height="126" rx="8" fill="#EBF5D4" stroke="#76B900" stroke-width="2"/>
       <rect x="20" y="486" width="520" height="36" rx="8" fill="#76B900"/>
       <rect x="20" y="506" width="520" height="16" fill="#76B900"/>
-      <text x="36" y="508" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'DM Mono',monospace">RELEASE PIPELINE</text>
-      <text x="490" y="508" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'DM Mono',monospace">trigger: git tag vX.Y.Z</text>
+      <text x="36" y="508" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'DM Mono',monospace">RELEASE / CHANGELOG</text>
+      <text x="490" y="508" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'DM Mono',monospace">trigger: nightly / release/**</text>
 
-      <text x="44" y="544" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Signed image promotion: dev → staging → prod</text>
-      <text x="44" y="565" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">SBOM generation (syft) + provenance (cosign/sigstore)</text>
-      <text x="44" y="586" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">NGC registry publish (nvcr.io)</text>
-      <text x="44" y="607" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Automated changelog + GitHub Release</text>
+      <text x="44" y="544" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">isaaclab-bot PR → GitHub Release from CHANGELOG.md</text>
+      <text x="44" y="565" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">release/** branch naming convention</text>
+      <text x="44" y="586" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Base: nvcr.io/nvidia/isaac-sim:5.1.0 (floating tag, no digest)</text>
+      <text x="44" y="607" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">No cosign, SBOM, or SLSA provenance — SLSA Level 0</text>
 
       <circle cx="34" cy="541" r="3" fill="#76B900"/>
       <circle cx="34" cy="562" r="3" fill="#76B900"/>
@@ -838,66 +838,75 @@ ul.blt li::marker { color:var(--green); }
     </svg>
   </div>
 
-  <h3 class="sub">Premerge Workflow — Complete YAML</h3>
-  <div class="pre-label">GitHub Actions — premerge-ci.yml</div>
-  <pre>name: premerge-ci
+  <h3 class="sub">Real build.yml — IsaacLab Premerge + Postmerge</h3>
+  <div class="pre-label">GitHub Actions — .github/workflows/build.yml (isaac-sim/IsaacLab)</div>
+  <pre># Actual workflow structure from https://github.com/isaac-sim/IsaacLab
+# Uses Docker + IsaacSim — NOT colcon/vcstool/rosdep (those are Isaac ROS, not IsaacLab)
+name: build
 on:
+  push:
+    branches: [main, devel, 'release/**']
   pull_request:
-    paths-ignore:
-      - '**.md'
-      - 'docs/**'
-      - '*.txt'
-      - 'LICENSE'
+    branches: [main, devel, 'release/**']
+    # NOTE: no paths-ignore — a README.md edit triggers a 180-min GPU build
 
 jobs:
-  build-test:
-    runs-on: [self-hosted, gpu, x86]
-    container:
-      image: nvcr.io/nvidia/isaac/ros:humble-ros-base-amd64
-      options: --gpus all --network=host --user 1000:1000
+  build:
+    runs-on: [self-hosted, gpu]
+    timeout-minutes: 180
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4 SHA-pinned
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 1            # NOT 0 — avoid pulling full history
+          fetch-depth: 0        # full history on every checkout (unnecessary for build)
 
-      - name: Import workspace repos (vcstool)
-        run: |
-          vcs import src --input repos/isaac_ros.repos
-          vcs validate --input repos/isaac_ros.repos  # fail if SHA missing
+      - name: Build Docker image
+        uses: ./.github/actions/docker-build
+        # Internally runs:
+        #   docker buildx build --platform linux/amd64
+        #   --build-arg ISAACSIM_VERSION=5.1.0
+        #   --cache-from type=gha --cache-to type=gha,mode=max
+        # Base: nvcr.io/nvidia/isaac-sim:5.1.0  ← floating tag, no digest pin
+        # Cache: type=gha — 10 GB shared limit, routinely evicted by 15+ GB images
 
-      - name: Install rosdep dependencies
-        run: |
-          rosdep update --rosdistro humble
-          rosdep install --from-paths src --ignore-src -r -y
+  test:
+    runs-on: [self-hosted, gpu]
+    needs: build
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Build workspace
-        run: |
-          colcon build \
-            --symlink-install \
-            --cmake-args -DCMAKE_BUILD_TYPE=Release \
-            --parallel-workers $(nproc) \
-            --packages-up-to ${{ env.CHANGED_PKGS }}
+      - name: Run tests
+        uses: ./.github/actions/run-tests
+        continue-on-error: true  # ← failures do NOT block PR merge (finding C-06)
+        # Test runner: /isaac-sim/python.sh -m pytest
+        # Runner user: root (OMNI_KIT_ALLOW_ROOT=1 required by Isaac Sim)
 
-      - name: Run tests (affected packages)
-        run: |
-          colcon test --packages-above-and-dependencies ${{ env.CHANGED_PKGS }}
-          colcon test-result --all --verbose
-
-      - name: Static analysis
-        run: |
-          ament_clang_format --reformat src/
-          ament_cppcheck src/
-          flake8 src/
-
-      - name: Upload test results
+      - name: Combine results
+        uses: ./.github/actions/combine-results
         if: always()
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808  # v4 SHA-pinned
-        with:
-          name: test-results
-          path: build/*/test_results/**/*.xml</pre>
+
+# Linting runs in a SEPARATE workflow on ubuntu-latest (not GPU):
+# .github/workflows/pre-commit.yaml
+#   uses: pre-commit/action@v3.0.0  with Python 3.12
+#
+# Postmerge: .github/workflows/postmerge-ci.yml
+#   trigger: push to main/devel/release/**
+#   Adds arm64 via QEMU (--platform linux/amd64,linux/arm64)
+#   Pushes to docker.io/isaac-lab-base
+#
+# License check: .github/workflows/license-check.yaml  (finding B-04)
+#   pip install full IsaacSim stack (~40 GB) just to run pip-licenses
+#
+# No Trivy, cosign, SBOM, Dependabot, or Renovate in this repo</pre>
 
   <div class="note note-a reveal">
-    <strong>pull_request vs pull_request_target:</strong> Always use <code>pull_request</code> for CI builds, never <code>pull_request_target</code>. The <code>pull_request_target</code> event runs with write access to the base repository's secrets — a fork PR using this event type can exfiltrate your <code>NGC_API_KEY</code>. This is finding S-03 in the audit.
+    <strong>pull_request vs pull_request_target:</strong> Always use <code>pull_request</code> for CI builds, never <code>pull_request_target</code>. The <code>pull_request_target</code> event runs with write access to the base repository's secrets — a fork PR using this event type can exfiltrate your <code>NGC_API_KEY</code>. IsaacLab's <code>labeler.yml</code> uses <code>pull_request_target</code> with a mutable action tag — this is finding S-03 in the audit.
+  </div>
+
+  <div class="note note-c reveal">
+    <strong>IsaacSim repo (isaac-sim/IsaacSim):</strong> The sister repo runs <code>build-and-test.yml</code> on <code>[self-hosted, gpu]</code> with a 240-min timeout, no Docker (native <code>./build.sh</code>), and a full cache wipe on every run. Tests are commented out in the workflow — the job builds but never runs the test suite.
   </div>
 </section>
 
@@ -1111,9 +1120,12 @@ colcon test --packages-above-and-dependencies $CHANGED_PKGS</pre>
   <div class="topic-header">
     <span class="topic-num">B4</span>
     <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Release Engineering</h2>
-    <span class="topic-badge">SLSA L3</span>
+    <span class="topic-badge">target: SLSA L3</span>
   </div>
 
+  <div class="note note-c reveal" style="margin-bottom:16px;">
+    <strong>Prescriptive architecture:</strong> The pipeline below describes the recommended target state — not what currently exists in <code>isaac-sim/IsaacLab</code>. The real repo has no image-signing, no SBOM, no SLSA provenance, and no formal staging-to-production promotion. It operates at SLSA Level 0. The diagram is the design you should build.
+  </div>
   <p class="body">A production release pipeline for Isaac ROS images must provide signed images, attached SBOMs, and verifiable provenance — the requirements for SLSA Level 3. Images move through three stages: dev (every postmerge commit), staging (release candidates), and production (the NGC public registry).</p>
 
   <!-- Complete CI + Promotion SVG Diagram -->
@@ -1284,13 +1296,13 @@ cosign verify \
 <!-- ══ PART C ══ -->
 <div class="part-header" id="part-c">
   <div class="part-num">Part C</div>
-  <div class="part-title">IsaacLab DevOps Audit Findings</div>
-  <div class="part-sub">41 findings · Build · Image Size · Security · Correctness &amp; Flakiness</div>
+  <div class="part-title">IsaacLab / IsaacSim DevOps Audit Findings</div>
+  <div class="part-sub">Based on direct repo analysis · Build · Image Size · Security · Correctness &amp; Flakiness</div>
 </div>
 
 <!-- C intro -->
 <section class="section" id="c-intro">
-  <p class="body">The following 41 line-numbered findings were identified through systematic analysis of the public <strong>NVIDIA-ISAAC-ROS/IsaacLab</strong> repository, including all <code>.github/workflows/</code> YAML files, <code>docker/</code> Dockerfiles, and <code>.github/actions/</code> composite actions. Each finding includes the affected file path, the root cause, and a concrete remediation.</p>
+  <p class="body">The following findings were identified through direct analysis of the public <a href="https://github.com/isaac-sim/IsaacLab" style="color:var(--accent-blue)"><strong>isaac-sim/IsaacLab</strong></a> and <a href="https://github.com/isaac-sim/IsaacSim" style="color:var(--accent-blue)"><strong>isaac-sim/IsaacSim</strong></a> repositories, including all <code>.github/workflows/</code> YAML files, <code>docker/</code> Dockerfiles, and <code>.github/actions/</code> composite actions. Each finding includes the affected file path, the root cause, and a concrete remediation.</p>
 
   <div class="stats-strip reveal">
     <div class="stat-item">
@@ -1374,14 +1386,14 @@ cosign verify \
       <div class="issue-card-id">B-03</div>
       <div class="issue-card-title">No path filters — Markdown edit triggers full GPU container rebuild</div>
       <div class="issue-card-detail">
-        Every workflow triggers on every <code>push</code> without <code>paths-ignore</code> or <code>paths</code> filters. A typo fix in <code>README.md</code> triggers a 35-minute GPU container build and consumes a self-hosted GPU runner slot.
+        Every workflow triggers on every <code>push</code> and <code>pull_request</code> without <code>paths-ignore</code> or <code>paths</code> filters. A typo fix in <code>README.md</code> triggers a 180-minute GPU container build (<code>timeout-minutes: 180</code> in the actual <code>build.yml</code>) and consumes a self-hosted GPU runner slot.
         <br><br>
         <span class="issue-card-file">.github/workflows/build.yml (all workflows)</span>
         <br><br>
         <strong>Fix:</strong> Add to every workflow that builds code:
         <br><code>paths-ignore: ['**.md', 'docs/**', '*.txt', 'LICENSE', 'CHANGELOG*']</code>
         <br>
-        <strong>Impact if unresolved:</strong> ~35 min wasted GPU time per non-code PR; queue starvation for genuine build PRs.
+        <strong>Impact if unresolved:</strong> Up to 180 min of GPU time wasted per non-code PR; queue starvation for genuine build PRs.
       </div>
     </div>
     <span class="sev sev-crit">CRIT</span>
