@@ -86,10 +86,7 @@
             width: 80%;
             max-width: 1920px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 340px;
-            gap: 4rem;
-            align-items: center;
+            display: block;
             position: relative;
             z-index: 1;
         }
@@ -555,11 +552,6 @@
 
         /* Responsive */
         @media (max-width: 1024px) {
-            .hero-container {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
             .hero-content h1 {
                 font-size: 2.5rem;
             }
@@ -570,11 +562,6 @@
 
             .cta-buttons {
                 justify-content: center;
-            }
-
-            .profile-card {
-                max-width: 320px;
-                margin: 0 auto;
             }
 
             .hero-stats {
@@ -694,19 +681,6 @@
                             <i class="fab fa-linkedin"></i>
                             Connect on LinkedIn
                         </a>
-                    </div>
-                </div>
-                <div class="profile-card">
-                    <div class="profile-image">
-                        <img src="assets/images/profile.jpg" alt="Sudhakar Chundu">
-                    </div>
-                    <h3>Sudhakar Chundu</h3>
-                    <p class="location"><i class="fas fa-map-marker-alt"></i> San Jose, California</p>
-                    <div class="profile-tags">
-                        <span class="profile-tag">SRE</span>
-                        <span class="profile-tag">GPU/Slurm</span>
-                        <span class="profile-tag">Performance Engineering</span>
-                        <span class="profile-tag">Kubernetes</span>
                     </div>
                 </div>
             </div>

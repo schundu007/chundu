@@ -1,0 +1,2104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sudhakar Chundu — NVIDIA Isaac ROS DevOps Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GGNQHMGCLH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GGNQHMGCLH');
+</script>
+
+<style>
+:root {
+  --green:#76B900; --green-dk:#3d6200; --green-bg:#EBF5D4;
+  --green-mid:#5a9000;
+  --dark:#111; --mid:#444; --light:#888; --faint:#bbb;
+  --white:#fff; --off:#f9f9f7;
+  --code-bg:#f3f3ef; --code-fg:#1a3a6e;
+  --amber:#FFF3D0; --amber-dk:#5a3800;
+  --blue:#E0EBFA; --blue-dk:#0a3070;
+  --teal:#d8f5ea; --teal-dk:#085041;
+  --purple:#EEEDFE; --purple-dk:#3C3489;
+  --coral:#FAECE7; --coral-dk:#712B13;
+  --radius:8px; --radius-lg:12px;
+  --shadow:0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:0 4px 16px rgba(0,0,0,.10);
+  --mono:'DM Mono', monospace;
+  --display:'Fraunces', serif;
+  --sans:'Syne', sans-serif;
+}
+
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:var(--sans);
+  font-size:15px; line-height:1.7;
+  color:var(--dark);
+  background:#f5f5f2;
+}
+
+/* ── NAV ── */
+#nav {
+  position:fixed; top:0; left:0; width:240px; height:100vh;
+  background:#111; color:#ccc;
+  overflow-y:auto; z-index:100;
+  padding:0 0 40px;
+  border-right:1px solid #222;
+}
+#nav-logo {
+  background:var(--green); padding:18px 20px;
+  font-family:var(--display); font-size:13px; font-weight:600;
+  color:#fff; letter-spacing:.02em; line-height:1.4;
+}
+#nav-logo a {
+  display:block; font-size:10px; font-weight:300; opacity:.8;
+  margin-top:4px; color:rgba(255,255,255,.75); text-decoration:none;
+  border:none !important;
+}
+#nav-logo a:hover { opacity:1; }
+.nav-part {
+  padding:14px 20px 4px;
+  font-size:9px; letter-spacing:.15em; text-transform:uppercase;
+  color:#555; font-weight:600; font-family:var(--mono);
+  border-top:1px solid #1e1e1e; margin-top:4px;
+}
+.nav-part:first-of-type { border-top:none; margin-top:0; }
+.nav-link {
+  display:block; padding:6px 20px 6px 24px;
+  font-size:12px; color:#888; text-decoration:none;
+  border-left:2px solid transparent;
+  transition:color .12s, border-color .12s, background .12s;
+  font-family:var(--sans); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.nav-link:hover { color:#fff; border-left-color:var(--green); background:rgba(118,185,0,.08); }
+.nav-link.active { color:var(--green); border-left-color:var(--green); background:rgba(118,185,0,.05); font-weight:600; }
+.nav-sub { font-size:11px; color:#666; padding-left:32px; }
+.nav-sub:hover { color:#ccc; }
+
+/* ── MAIN ── */
+#main { margin-left:240px; min-height:100vh; }
+
+/* ── HERO ── */
+#hero {
+  background:var(--green);
+  padding:80px 60px 60px;
+  position:relative; overflow:hidden;
+}
+#hero::before {
+  content:''; position:absolute; top:-40px; right:-60px;
+  width:400px; height:400px; border-radius:50%;
+  background:rgba(255,255,255,.06);
+}
+#hero h1 {
+  font-family:var(--display); font-size:48px; font-weight:700;
+  color:#fff; line-height:1.15; max-width:720px;
+  font-style:italic;
+}
+#hero h1 em { font-style:normal; color:var(--green-bg); }
+#hero p {
+  margin-top:16px; color:rgba(255,255,255,.85);
+  font-size:14px; max-width:600px; font-family:var(--sans); font-weight:400;
+}
+.hero-sub {
+  margin-top:8px; color:rgba(255,255,255,.65);
+  font-size:13px; max-width:680px; font-family:var(--mono);
+}
+.hero-meta {
+  margin-top:28px; display:flex; gap:10px; flex-wrap:wrap;
+}
+.hero-tag {
+  background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.25);
+  padding:5px 14px; border-radius:20px;
+  font-size:12px; color:#fff; font-weight:600;
+  font-family:var(--mono);
+}
+
+/* ── SECTIONS ── */
+.section { padding:52px 60px; border-bottom:1px solid #eaeae6; background:#fff; scroll-margin-top:20px; }
+.section-alt { background:#f9f9f7; }
+.section:last-child { border-bottom:none; }
+.part-header {
+  background:#111; color:#fff;
+  padding:36px 60px 28px;
+  border-left:6px solid var(--green);
+  position:relative;
+}
+.part-num {
+  font-family:var(--mono); font-size:11px; letter-spacing:.15em;
+  text-transform:uppercase; color:var(--green); margin-bottom:6px;
+}
+.part-title {
+  font-family:var(--display); font-size:28px; font-weight:600;
+  font-style:italic; color:#fff; line-height:1.2;
+}
+.part-sub {
+  font-size:12px; color:#888; margin-top:8px;
+  font-family:var(--mono); line-height:1.6;
+}
+
+h2.ch, h2.topic {
+  font-family:var(--display); font-size:26px; font-weight:600;
+  font-style:italic; color:#111;
+  padding-bottom:10px; margin-bottom:6px;
+  border-bottom:3px solid var(--green);
+}
+h2.ch span, h2.topic span { font-style:normal; color:var(--green); font-size:16px; font-family:var(--mono); font-weight:400; margin-right:10px; }
+h3.sub {
+  font-size:14px; font-weight:700; color:#111;
+  margin:28px 0 8px; padding-left:12px;
+  border-left:3px solid var(--green);
+  font-family:var(--sans);
+}
+.topic-num { font-family:var(--mono); font-size:11px; color:var(--green); font-weight:700; }
+.topic-badge {
+  font-family:var(--mono); font-size:10px;
+  padding:3px 10px; border-radius:20px;
+  border:1px solid #c8e8a0; color:#3d6200;
+  background:var(--green-bg); margin-left:auto; flex-shrink:0;
+  white-space:nowrap;
+}
+.topic-header {
+  display:flex; align-items:baseline; gap:12px; margin-bottom:22px;
+  padding-bottom:14px; border-bottom:1px solid #e8e8e4;
+}
+
+p.body { color:#444; font-size:14px; line-height:1.8; margin:8px 0; }
+
+/* ── TABLES ── */
+.tbl-wrap { overflow-x:auto; margin:16px 0; }
+table {
+  width:100%; border-collapse:collapse;
+  font-size:13px; border-radius:var(--radius-lg);
+  overflow:hidden; border:1px solid #e8e8e4;
+  box-shadow:var(--shadow);
+}
+thead th {
+  background:#111; color:#fff;
+  padding:10px 16px; text-align:left;
+  font-family:var(--mono); font-size:11px; font-weight:600;
+  letter-spacing:.04em;
+}
+tbody td { padding:10px 16px; border-bottom:1px solid #f0f0ec; color:#444; vertical-align:top; }
+tbody tr:last-child td { border-bottom:none; }
+tbody tr:hover td { background:#f9f9f7; }
+td.key { font-family:var(--mono); font-size:12px; color:#3d6200; font-weight:600; white-space:nowrap; }
+td.mono { font-family:var(--mono); font-size:11.5px; color:var(--code-fg); }
+td.win { color:#3d6200; font-weight:700; }
+td.warn { color:#5a3800; font-weight:600; }
+td.danger { color:#D85A30; font-weight:600; }
+
+/* ── CODE ── */
+pre {
+  background:#f8f8f6; border:1px solid #e0e0dc;
+  border-left:4px solid var(--green); border-radius:var(--radius);
+  padding:18px 20px; font-family:var(--mono); font-size:12px;
+  color:var(--code-fg); overflow-x:auto; line-height:1.7;
+  box-shadow:var(--shadow); margin:14px 0; white-space:pre;
+}
+code {
+  font-family:var(--mono); font-size:12.5px;
+  background:#f0f0ec; color:var(--code-fg);
+  padding:2px 6px; border-radius:3px; border:1px solid #e0e0dc;
+}
+.pre-label {
+  font-family:var(--mono); font-size:9px; color:var(--light);
+  text-transform:uppercase; letter-spacing:.1em;
+  margin-bottom:2px; margin-top:14px;
+}
+
+/* ── VERIFIED GRID ── */
+.verified-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:16px 0; }
+.vbox {
+  background:#fff; border:1px solid #e8e8e4;
+  border-radius:var(--radius); padding:12px 16px;
+  font-size:13px; color:#444; line-height:1.6;
+  box-shadow:var(--shadow); border-left:3px solid var(--green);
+}
+.vbox strong { color:#111; }
+
+/* ── WARN / NOTE BOXES ── */
+.warn-box {
+  padding:12px 16px; border-radius:var(--radius);
+  border-left:4px solid #c97d00;
+  background:var(--amber); margin:16px 0;
+  font-size:13px; color:var(--amber-dk); line-height:1.6;
+}
+.warn-box strong { color:#7a4a00; }
+.note { padding:14px 18px; border-radius:var(--radius); margin:14px 0; font-size:13px; line-height:1.7; border-left:4px solid; }
+.note-g { background:var(--green-bg); border-color:var(--green); color:var(--green-dk); }
+.note-a { background:var(--amber); border-color:#c97d00; color:var(--amber-dk); }
+.note-c { background:var(--blue); border-color:var(--blue-dk); color:var(--blue-dk); }
+.note-r { background:#FAECE7; border-color:#D85A30; color:#712B13; }
+
+/* ── FLOW DIAGRAMS ── */
+.flow {
+  background:#f8f8f6; border:1px solid #e0e0dc;
+  border-left:4px solid var(--green); border-radius:var(--radius);
+  padding:18px 20px; font-family:var(--mono); font-size:12px;
+  color:var(--code-fg); overflow-x:auto; line-height:1.8;
+  white-space:pre; margin:14px 0;
+}
+
+/* ── EXP BLOCKS ── */
+.exp-block {
+  border-left:4px solid var(--green); background:#fff;
+  border-radius:var(--radius); box-shadow:var(--shadow);
+  overflow:hidden; margin:16px 0;
+}
+.exp-title {
+  background:var(--green-bg); padding:12px 18px;
+  font-size:14px; font-weight:700; color:var(--green-dk);
+  border-bottom:1px solid #c8e8a0; margin:0;
+}
+.exp-body {
+  padding:16px 18px; font-size:13.5px; color:#444; line-height:1.8;
+}
+.exp-body code { font-family:var(--mono); font-size:12px; color:var(--code-fg); background:var(--code-bg); padding:1px 5px; border-radius:3px; }
+.exp-body strong { color:var(--dark); }
+
+/* ── TOC ── */
+.toc-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; margin:16px 0; }
+.toc-card {
+  background:#fff; border:1px solid #e8e8e4;
+  border-radius:var(--radius-lg); padding:14px 16px;
+  text-decoration:none; display:block;
+  box-shadow:var(--shadow); cursor:pointer;
+  transition:border-color .12s, box-shadow .12s, transform .1s;
+}
+.toc-card:hover { border-color:var(--green); box-shadow:0 4px 16px rgba(118,185,0,.15); transform:translateY(-1px); }
+.toc-card-part { font-size:9px; text-transform:uppercase; letter-spacing:.12em; color:#888; margin-bottom:3px; font-family:var(--mono); }
+.toc-card-title { font-size:14px; font-weight:700; color:#111; }
+.toc-card-count { font-size:11px; color:#888; margin-top:3px; }
+
+/* ── CHIPS ── */
+.chip { padding:4px 12px; border-radius:3px; font-family:var(--mono); font-size:11px; border:1px solid; display:inline-block; margin:2px; }
+.chip-g { border-color:#3d6200; color:var(--green); background:rgba(118,185,0,.08); }
+.chip-c { border-color:var(--blue-dk); color:var(--blue-dk); background:rgba(0,80,200,.06); }
+.chip-a { border-color:#c97d00; color:var(--amber-dk); background:rgba(180,100,0,.06); }
+
+/* ── STATS STRIP ── */
+.stats-strip {
+  display:flex; gap:0; border-radius:var(--radius-lg);
+  border:1px solid #e8e8e4; overflow:hidden;
+  background:#fff; box-shadow:var(--shadow); margin:20px 0;
+}
+.stat-item {
+  flex:1; display:flex; flex-direction:column; align-items:center;
+  padding:14px 10px; border-right:1px solid #e8e8e4;
+}
+.stat-item:last-child { border-right:none; }
+.stat-n { font-size:22px; font-weight:700; color:var(--green); font-family:var(--mono); }
+.stat-l { font-size:9px; color:#888; text-align:center; margin-top:3px; text-transform:uppercase; letter-spacing:.05em; line-height:1.4; }
+
+/* ── SEVERITY / ISSUE CARDS (gitpulser-inspired) ── */
+.sev { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:4px; font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.05em; }
+.sev-crit { background:#FAECE7; color:#D85A30; border:1px solid #D85A30; }
+.sev-high { background:#FFF3D0; color:#5a3800; border:1px solid #c97d00; }
+.sev-med { background:#E0EBFA; color:#0a3070; border:1px solid #0a3070; }
+.sev-low { background:var(--green-bg); color:var(--green-dk); border:1px solid var(--green); }
+.issue-card {
+  background:#fff; border-radius:var(--radius); border:1px solid #e0e0dc;
+  padding:14px 18px; margin:8px 0; box-shadow:var(--shadow);
+  display:flex; align-items:flex-start; gap:14px;
+}
+.issue-card-body { flex:1; }
+.issue-card-id { font-family:var(--mono); font-size:10px; font-weight:700; color:var(--light); text-transform:uppercase; margin-bottom:4px; }
+.issue-card-title { font-size:14px; font-weight:700; color:#111; margin-bottom:4px; line-height:1.4; }
+.issue-card-detail { font-size:12.5px; color:#555; line-height:1.65; }
+.issue-card-file { font-family:var(--mono); font-size:11px; color:var(--code-fg); margin-top:4px; background:#f0f0ec; display:inline-block; padding:1px 6px; border-radius:3px; }
+.issue-metric { font-family:var(--mono); font-size:18px; font-weight:700; color:#D85A30; min-width:60px; text-align:right; }
+.phase-block {
+  background:#fff; border-radius:var(--radius-lg); border:1px solid #e0e0dc;
+  padding:20px 24px; margin:12px 0; box-shadow:var(--shadow);
+}
+.phase-num { font-family:var(--mono); font-size:10px; color:var(--green); font-weight:700; text-transform:uppercase; letter-spacing:.1em; margin-bottom:6px; }
+.phase-title { font-size:15px; font-weight:700; color:#111; margin-bottom:8px; }
+
+/* ── LINKS ── */
+a[href]:not(.nav-link):not(.toc-card) {
+  color:#3d6200; text-decoration:none;
+  border-bottom:1px solid #c8e8a0;
+  transition:color .12s, border-color .12s;
+}
+a[href]:not(.nav-link):not(.toc-card):hover { color:var(--green); border-bottom-color:var(--green); }
+
+/* ── BULLETS ── */
+ul.blt, ol.nblt { padding-left:22px; margin:10px 0; }
+ul.blt li, ol.nblt li { padding:3px 0; color:var(--mid); font-size:14px; line-height:1.65; }
+ul.blt li::marker { color:var(--green); }
+
+/* ── FACT TABLE ── */
+.fact-table td:first-child { font-family:var(--mono); font-size:11.5px; color:var(--green-dk); font-weight:600; width:42%; vertical-align:top; }
+.fact-table td:last-child { font-size:12.5px; }
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity:0; transform:translateY(16px); transition:opacity .4s, transform .4s; }
+.reveal.visible { opacity:1; transform:none; }
+
+/* ── PRINT ── */
+@media print {
+  #nav { display:none !important; }
+  #main { margin-left:0 !important; }
+  .section { padding:32px 40px; }
+  .part-header { padding:28px 40px; break-before:page; }
+  pre { break-inside:avoid; }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width:900px) {
+  #nav { display:none; }
+  #main { margin-left:0; }
+  #hero { padding:40px 24px; }
+  #hero h1 { font-size:32px; }
+  .section { padding:32px 24px; }
+  .part-header { padding:28px 24px; }
+  .verified-grid { grid-template-columns:1fr; }
+  .stats-strip { flex-wrap:wrap; }
+  .toc-grid { grid-template-columns:1fr; }
+}
+
+[id] { scroll-margin-top:24px; }
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR NAV ── -->
+<nav id="nav">
+  <div id="nav-logo">
+    NVIDIA Isaac ROS<br>DevOps Reference
+    <span style="font-style:italic; font-size:10px; color:rgba(255,255,255,.6);">Sudhakar Chundu</span>
+    <a href="../blog/">← Blog</a>
+  </div>
+
+  <div class="nav-part">Overview</div>
+  <a class="nav-link" href="#overview">Overview &amp; Contents</a>
+
+  <div class="nav-part">Part A — Platform</div>
+  <a class="nav-link nav-sub" href="#a1">A1 Isaac Ecosystem</a>
+  <a class="nav-link nav-sub" href="#a2">A2 CI Engineer's View</a>
+  <a class="nav-link nav-sub" href="#a3">A3 ROS 2 Fundamentals</a>
+
+  <div class="nav-part">Part B — CI/CD Pipeline</div>
+  <a class="nav-link nav-sub" href="#b1">B1 Pipeline Architecture</a>
+  <a class="nav-link nav-sub" href="#b2">B2 Multi-Arch Build</a>
+  <a class="nav-link nav-sub" href="#b3">B3 Multi-Repo Builds</a>
+  <a class="nav-link nav-sub" href="#b4">B4 Release Engineering</a>
+
+  <div class="nav-part">Part C — Audit Findings</div>
+  <a class="nav-link nav-sub" href="#c1">C1 Build &amp; Caching</a>
+  <a class="nav-link nav-sub" href="#c2">C2 Image Size</a>
+  <a class="nav-link nav-sub" href="#c3">C3 Security</a>
+  <a class="nav-link nav-sub" href="#c4">C4 Correctness &amp; Flakiness</a>
+
+  <div class="nav-part">Part D — Reference</div>
+  <a class="nav-link nav-sub" href="#d1">D1 Colcon &amp; Ament</a>
+  <a class="nav-link nav-sub" href="#d2">D2 Registry &amp; NGC</a>
+  <a class="nav-link nav-sub" href="#d3">D3 Observability</a>
+  <a class="nav-link nav-sub" href="#d4">D4 Fact Sheet ★</a>
+</nav>
+
+<!-- ── MAIN ── -->
+<main id="main">
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <h1>NVIDIA Isaac ROS <em>DevOps</em></h1>
+  <p style="font-size:15px; font-weight:600; opacity:.9;">Engineering Reference</p>
+  <p class="hero-sub">CI/CD &bull; Multi-Arch Build &bull; IsaacLab Audit &bull; ROS 2 Platform &bull; Registry &amp; NGC</p>
+  <div class="hero-meta">
+    <span class="hero-tag">Isaac ROS</span>
+    <span class="hero-tag">ROS 2 Humble/Jazzy</span>
+    <span class="hero-tag">GitHub Actions</span>
+    <span class="hero-tag">colcon</span>
+    <span class="hero-tag">NGC</span>
+    <span class="hero-tag">Jetson Orin</span>
+    <span class="hero-tag">CUDA</span>
+    <span class="hero-tag">multi-arch</span>
+  </div>
+</section>
+
+<!-- ── OVERVIEW ── -->
+<section class="section" id="overview">
+  <div class="topic-header">
+    <span class="topic-num">OVERVIEW</span>
+    <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Contents &amp; Scope</h2>
+    <span class="topic-badge">4 Parts · 41 Findings</span>
+  </div>
+
+  <p class="body">This guide is an engineering-grade DevOps reference for the NVIDIA Isaac robotics platform, written from the perspective of a CI/CD and platform engineer. It covers how the Isaac ecosystem is structured, how to design production-grade CI/CD pipelines for ROS 2 workspaces, a systematic audit of the public IsaacLab repository, and a complete technical reference for day-to-day operations.</p>
+
+  <div class="toc-grid" style="margin-top:24px;">
+    <a class="toc-card" href="#a1">
+      <div class="toc-card-part">Part A</div>
+      <div class="toc-card-title">Platform &amp; Architecture</div>
+      <div class="toc-card-count">Isaac Ecosystem · CI Engineer's View · ROS 2 Fundamentals</div>
+    </a>
+    <a class="toc-card" href="#b1">
+      <div class="toc-card-part">Part B</div>
+      <div class="toc-card-title">CI/CD Pipeline Design</div>
+      <div class="toc-card-count">Pipeline Architecture · Multi-Arch · Multi-Repo · Release</div>
+    </a>
+    <a class="toc-card" href="#c1">
+      <div class="toc-card-part">Part C</div>
+      <div class="toc-card-title">IsaacLab Audit Findings</div>
+      <div class="toc-card-count">41 findings: Build · Image · Security · Correctness</div>
+    </a>
+    <a class="toc-card" href="#d1">
+      <div class="toc-card-part">Part D</div>
+      <div class="toc-card-title">Technical Reference</div>
+      <div class="toc-card-count">Colcon · NGC Registry · Observability · Fact Sheet ★</div>
+    </a>
+  </div>
+
+  <div class="stats-strip reveal">
+    <div class="stat-item">
+      <span class="stat-n">41</span>
+      <span class="stat-l">Audit Findings</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-n">8</span>
+      <span class="stat-l">GHA Workflows</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-n">25–40 min</span>
+      <span class="stat-l">Faster PR Builds</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-n">SLSA L1→L3</span>
+      <span class="stat-l">Supply Chain Uplift</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-n">&gt;90%</span>
+      <span class="stat-l">Cache Hit Target</span>
+    </div>
+  </div>
+
+  <div class="note note-a" style="margin-top:20px;">
+    <strong>Audit scope:</strong> The findings in Part C are derived from systematic analysis of the public <code>NVIDIA-ISAAC-ROS/IsaacLab</code> GitHub repository workflows, Dockerfiles, and CI configuration. They represent patterns observed across the repository and are intended as a professional DevOps audit deliverable.
+  </div>
+</section>
+
+<!-- ══ PART A ══ -->
+<div class="part-header" id="part-a">
+  <div class="part-num">Part A</div>
+  <div class="part-title">Platform &amp; Architecture</div>
+  <div class="part-sub">Isaac Ecosystem · CI Engineer's Mental Model · ROS 2 Fundamentals</div>
+</div>
+
+<!-- A1 -->
+<section class="section" id="a1">
+  <div class="topic-header">
+    <span class="topic-num">A1</span>
+    <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">The Isaac Ecosystem</h2>
+    <span class="topic-badge">4 components</span>
+  </div>
+
+  <p class="body">NVIDIA's Isaac platform is a suite of hardware-accelerated tools for robotics development. From a DevOps perspective, each component has distinct CI implications: different base images, GPU runner requirements, build tooling, and registry configurations.</p>
+
+  <div class="tbl-wrap reveal">
+    <table>
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Purpose</th>
+          <th>CI Relevance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Isaac ROS</strong></td>
+          <td>Hardware-accelerated ROS 2 packages for perception, navigation, manipulation</td>
+          <td class="key">colcon builds, NGC base images, NITROS zero-copy transport</td>
+        </tr>
+        <tr>
+          <td><strong>Isaac Lab</strong></td>
+          <td>GPU-accelerated reinforcement learning simulation for robot policy training</td>
+          <td class="key">GPU runner requirements, long-running RL tests (&gt;100 min), IsaacSim dependency</td>
+        </tr>
+        <tr>
+          <td><strong>Isaac Sim</strong></td>
+          <td>Photorealistic robot simulation built on NVIDIA Omniverse</td>
+          <td class="key">Extremely large image (50 GB+), NGC auth required, no QEMU support</td>
+        </tr>
+        <tr>
+          <td><strong>NITROS</strong></td>
+          <td>NVIDIA Isaac Transport for ROS — zero-copy DMA between GPU memory and ROS 2 topics</td>
+          <td class="key">CUDA version pinning, driver compatibility testing, SM arch list must match</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">Key Facts for CI Engineers</h3>
+  <div class="verified-grid reveal">
+    <div class="vbox"><strong>Isaac ROS targets:</strong> x86 with Hopper/Ada GPUs, Jetson Orin (SM 8.7), Jetson Thor (SM 10.x, Blackwell)</div>
+    <div class="vbox"><strong>Base images:</strong> <code>nvcr.io/nvidia/isaac/ros:humble-ros-base-amd64</code> and <code>:humble-ros-base-arm64</code></div>
+    <div class="vbox"><strong>NGC auth required:</strong> All pulls from <code>nvcr.io</code> need a valid <code>NGC_API_KEY</code> — username is always the literal string <code>$oauthtoken</code></div>
+    <div class="vbox"><strong>CUDA arch list:</strong> Must include SM 8.0, 8.6, 8.7, 9.0 for full x86 + Jetson Orin coverage; add 10.0 for Jetson Thor</div>
+    <div class="vbox"><strong>NITROS requirement:</strong> CUDA driver version on runner must match the CUDA runtime in the container — driver forward compatibility is limited</div>
+    <div class="vbox"><strong>Isaac Sim pull size:</strong> Pulling the IsaacSim container image can consume 40–60 GB of disk and 20+ minutes on a cold runner</div>
+  </div>
+
+  <div class="note note-g" style="margin-top:20px;">
+    <strong>NITROS zero-copy path:</strong> NITROS enables direct GPU memory → ROS 2 topic transfer without a CPU round-trip bounce. This means the CUDA context on the runner host must be active and the container must have <code>--gpus all</code>. A CI runner without a physical GPU cannot test NITROS code paths — it requires hardware.
+  </div>
+</section>
+
+<!-- A2 -->
+<section class="section section-alt" id="a2">
+  <div class="topic-header">
+    <span class="topic-num">A2</span>
+    <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">The CI Engineer's View of ROS 2</h2>
+    <span class="topic-badge">This role</span>
+  </div>
+
+  <p class="body">ROS 2 can be approached from several angles. A CI/CD engineer's perspective is distinct from an application developer's or platform engineer's. The table below maps the three lenses and clarifies where CI ownership begins.</p>
+
+  <div class="tbl-wrap reveal">
+    <table>
+      <thead>
+        <tr><th>Role</th><th>Primary Concern</th><th>Owns</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Application Engineer</strong></td>
+          <td>Writes nodes, action servers, launch files; tunes algorithms</td>
+          <td>package.xml, CMakeLists.txt, node logic</td>
+        </tr>
+        <tr>
+          <td><strong>Platform Engineer</strong></td>
+          <td>Stands up the development environment; manages DDS configuration, hardware drivers</td>
+          <td>rmw selection, cyclonedds.xml, runtime containers</td>
+        </tr>
+        <tr>
+          <td class="win"><strong>Build / CI / Release Engineer</strong></td>
+          <td class="win">Owns the pipeline — reproducible builds, fast feedback, image publishing, supply-chain security</td>
+          <td class="win">GitHub Actions, colcon build, NGC publish, SLSA provenance — THIS ROLE</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">Job Description Mapping</h3>
+  <div class="tbl-wrap reveal">
+    <table>
+      <thead>
+        <tr><th>JD Requirement</th><th>Technical Translation</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>"Build, operate, improve end-to-end CI/CD for Isaac robotics platform"</td>
+          <td>GitHub Actions / GitLab CI driving <code>colcon build</code>, pytest suites, NGC image publishing. Owns workflow YAML, runner infrastructure, cache strategy.</td>
+        </tr>
+        <tr>
+          <td>"Reproducible behavior across NVIDIA compute platforms"</td>
+          <td>Same image on x86 Hopper, Grace ARM, Jetson Orin. One Dockerfile, <code>docker buildx</code>, CUDA arch lists. Pinned base image digests, not floating tags.</td>
+        </tr>
+        <tr>
+          <td>"Triage CI failures: infra vs product"</td>
+          <td>Runner OOM vs colcon build error vs rosdep key change vs cache eviction vs flaky test vs driver incompatibility. Requires structured failure categorization.</td>
+        </tr>
+        <tr>
+          <td>"Observability across pipelines"</td>
+          <td>Build duration percentiles, cache hit rate, test flake rate, runner queue depth — all scraped from GHA API and exposed as Prometheus metrics.</td>
+        </tr>
+        <tr>
+          <td>"Multi-repo builds, complex dependency graphs"</td>
+          <td><code>vcstool</code> .repos file, <code>colcon graph</code>, <code>--packages-up-to</code>. Affected-package detection avoids rebuilding the full workspace on every PR.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="warn-box reveal">
+    <strong>Common confusion:</strong> Many CI engineers treat the ROS 2 workspace as a monorepo when it is actually a multi-repo workspace managed by <code>vcstool</code>. Failing to understand the dependency graph means over-building (every PR rebuilds everything) or under-building (transitive dependents are not re-tested after a dependency change).
+  </div>
+</section>
+
+<!-- A3 -->
+<section class="section" id="a3">
+  <div class="topic-header">
+    <span class="topic-num">A3</span>
+    <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">ROS 2 Fundamentals for CI Engineers</h2>
+    <span class="topic-badge">Essential only</span>
+  </div>
+
+  <p class="body">A CI engineer does not need to master ROS 2 application development. Three things matter: the package/build system (what produces artifacts and how), IPC/pub-sub (DDS — affects test runtime isolation), and the distribution model (which Ubuntu version, which EOL date, which base image).</p>
+
+  <h3 class="sub">Distribution Reference</h3>
+  <div class="tbl-wrap reveal">
+    <table>
+      <thead>
+        <tr><th>Distro</th><th>LTS / Status</th><th>Ubuntu Base</th><th>CI Guidance</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="key">Humble Hawksbill</td>
+          <td class="win">LTS — EOL May 2027</td>
+          <td>22.04 (jammy)</td>
+          <td>Default for all current Isaac ROS packages. Use this unless explicitly migrating.</td>
+        </tr>
+        <tr>
+          <td class="key">Iron Irwini</td>
+          <td class="warn">EOL Dec 2024</td>
+          <td>22.04 (jammy)</td>
+          <td>Do not use. EOL reached.</td>
+        </tr>
+        <tr>
+          <td class="key">Jazzy Jalisco</td>
+          <td class="win">LTS — EOL May 2029</td>
+          <td>24.04 (noble)</td>
+          <td>Some Isaac ROS packages migrating here. Begin parallel CI matrix now.</td>
+        </tr>
+        <tr>
+          <td class="key">Kilted Kaiju</td>
+          <td>Non-LTS EOL Dec 2026</td>
+          <td>24.04 (noble)</td>
+          <td>Skip in production CI. Non-LTS means shorter support window with no ROI.</td>
+        </tr>
+        <tr>
+          <td class="key">Rolling Ridley</td>
+          <td>Always rolling</td>
+          <td>Latest Ubuntu</td>
+          <td>Use in development compatibility matrices and upstream regression detection.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">Key CI Commands</h3>
+  <div class="tbl-wrap reveal">
+    <table>
+      <thead>
+        <tr><th>Command</th><th>What It Does</th><th>CI Usage</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mono">colcon build</td>
+          <td>Builds all packages in topological dependency order</td>
+          <td>Core build step in every CI job</td>
+        </tr>
+        <tr>
+          <td class="mono">colcon test</td>
+          <td>Runs ament/pytest/gtest test suites for all packages</td>
+          <td>Run after build; output JUnit XML to <code>build/*/test_results/</code></td>
+        </tr>
+        <tr>
+          <td class="mono">rosdep install</td>
+          <td>Resolves apt/pip dependencies from <code>package.xml</code> declarations</td>
+          <td>Must run before build; cache the apt lists</td>
+        </tr>
+        <tr>
+          <td class="mono">vcstool (vcs)</td>
+          <td>Multi-repo workspace management via <code>.repos</code> file</td>
+          <td>Import pinned repositories before build</td>
+        </tr>
+        <tr>
+          <td class="mono">colcon graph</td>
+          <td>Prints the dependency graph as a tree or dot graph</td>
+          <td>Used in affected-package detection scripts</td>
+        </tr>
+        <tr>
+          <td class="mono">colcon list</td>
+          <td>Lists all packages discovered in the workspace</td>
+          <td>Used to validate workspace completeness</td>
+        </tr>
+        <tr>
+          <td class="mono">ament_clang_format</td>
+          <td>Checks / reformats C++ files to the ament style</td>
+          <td>Premerge static analysis gate</td>
+        </tr>
+        <tr>
+          <td class="mono">ament_cppcheck</td>
+          <td>Runs cppcheck static analysis on C++ sources</td>
+          <td>Premerge gate; configure with <code>.cppcheck</code> suppress list</td>
+        </tr>
+        <tr>
+          <td class="mono">flake8</td>
+          <td>Python linter for ROS 2 Python packages</td>
+          <td>Premerge gate; configure via <code>setup.cfg</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note note-c reveal">
+    <strong>DDS and test isolation:</strong> ROS 2 uses DDS (Data Distribution Service) for pub-sub IPC. In CI, multiple test jobs on the same host can interfere via multicast DDS discovery. Set <code>ROS_DOMAIN_ID</code> to a unique integer per job (e.g., the GHA job matrix index mod 232) and use <code>RMW_IMPLEMENTATION=rmw_fastrtps_cpp</code> with unicast configuration to prevent cross-job topic pollution.
+  </div>
+</section>
+
+<!-- ══ PART B ══ -->
+<div class="part-header" id="part-b">
+  <div class="part-num">Part B</div>
+  <div class="part-title">CI/CD Pipeline Design</div>
+  <div class="part-sub">Pipeline Architecture · Multi-Arch Build · Multi-Repo Management · Release Engineering</div>
+</div>
+
+<!-- B1 -->
+<section class="section" id="b1">
+  <div class="topic-header">
+    <span class="topic-num">B1</span>
+    <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Pipeline Architecture</h2>
+    <span class="topic-badge">3 phases</span>
+  </div>
+
+  <p class="body">A production-grade Isaac ROS CI pipeline has three distinct phases with different triggers, runner requirements, and quality gates. The premerge phase must be fast (under 15 minutes for most PRs). The postmerge phase can be slower but must be reliable. The release phase must be hermetic and produce provenance attestations.</p>
+
+  <div class="flow reveal">PR opened
+    │
+    ▼
+┌─────────────────────────────────────────────────────────────┐
+│  PREMERGE VALIDATION                                         │
+│  trigger: pull_request (not pull_request_target)            │
+│  ├─ path-filter: skip if only *.md, docs/, *.txt            │
+│  ├─ colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release    │
+│  ├─ colcon test (affected packages only)                    │
+│  ├─ ament_clang_format + ament_cppcheck + flake8            │
+│  ├─ Trivy image scan + cosign verify                        │
+│  └─ GPU gate: quarantined self-hosted runner                │
+└─────────────────────────────────────────────────────────────┘
+    │ merge to main
+    ▼
+┌─────────────────────────────────────────────────────────────┐
+│  POSTMERGE / NIGHTLY                                         │
+│  ├─ Full workspace rebuild from scratch                     │
+│  ├─ Multi-arch buildx: amd64 + arm64 (native Jetson)       │
+│  ├─ Hardware-in-loop (HIL) validation on Jetson Orin        │
+│  ├─ Prometheus metrics publish                              │
+│  └─ Grafana dashboard update                                │
+└─────────────────────────────────────────────────────────────┘
+    │ tag / release
+    ▼
+┌─────────────────────────────────────────────────────────────┐
+│  RELEASE PIPELINE                                            │
+│  ├─ Signed image promotion: dev → staging → prod            │
+│  ├─ SBOM generation (syft) + provenance (cosign/sigstore)   │
+│  ├─ NGC registry publish (nvcr.io)                          │
+│  └─ Automated changelog + GitHub Release                    │
+└─────────────────────────────────────────────────────────────┘</div>
+
+  <h3 class="sub">Premerge Workflow — Complete YAML</h3>
+  <div class="pre-label">GitHub Actions — premerge-ci.yml</div>
+  <pre>name: premerge-ci
+on:
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - '*.txt'
+      - 'LICENSE'
+
+jobs:
+  build-test:
+    runs-on: [self-hosted, gpu, x86]
+    container:
+      image: nvcr.io/nvidia/isaac/ros:humble-ros-base-amd64
+      options: --gpus all --network=host --user 1000:1000
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4 SHA-pinned
+        with:
+          fetch-depth: 1            # NOT 0 — avoid pulling full history
+
+      - name: Import workspace repos (vcstool)
+        run: |
+          vcs import src --input repos/isaac_ros.repos
+          vcs validate --input repos/isaac_ros.repos  # fail if SHA missing
+
+      - name: Install rosdep dependencies
+        run: |
+          rosdep update --rosdistro humble
+          rosdep install --from-paths src --ignore-src -r -y
+
+      - name: Build workspace
+        run: |
+          colcon build \
+            --symlink-install \
+            --cmake-args -DCMAKE_BUILD_TYPE=Release \
+            --parallel-workers $(nproc) \
+            --packages-up-to ${{ env.CHANGED_PKGS }}
+
+      - name: Run tests (affected packages)
+        run: |
+          colcon test --packages-above-and-dependencies ${{ env.CHANGED_PKGS }}
+          colcon test-result --all --verbose
+
+      - name: Static analysis
+        run: |
+          ament_clang_format --reformat src/
+          ament_cppcheck src/
+          flake8 src/
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808  # v4 SHA-pinned
+        with:
+          name: test-results
+          path: build/*/test_results/**/*.xml</pre>
+
+  <div class="note note-a reveal">
+    <strong>pull_request vs pull_request_target:</strong> Always use <code>pull_request</code> for CI builds, never <code>pull_request_target</code>. The <code>pull_request_target</code> event runs with write access to the base repository's secrets — a fork PR using this event type can exfiltrate your <code>NGC_API_KEY</code>. This is finding S-03 in the audit.
+  </div>
+</section>
+
+<!-- B2 -->
+<section class="section section-alt" id="b2">
+  <div class="topic-header">
+    <span class="topic-num">B2</span>
+    <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Multi-Architecture Build Strategy</h2>
+    <span class="topic-badge">amd64 + arm64</span>
+  </div>
+
+  <p class="body">The biggest multi-arch pitfall for Isaac ROS is the <code>TORCH_CUDA_ARCH_LIST</code> build argument. Setting it to <code>8.0+PTX</code> (a common default) compiles only Ampere A100 code and inserts PTX for forward compatibility — but PTX JIT compilation is slow (30+ seconds per model) and the generated code is not as fast as native CUDA. Worse, it silently excludes Jetson Orin (SM 8.7) and Jetson Thor (SM 10.x) from native compilation.</p>
+
+  <h3 class="sub">Platform Targeting Matrix</h3>
+  <div class="tbl-wrap reveal">
+    <table>
+      <thead>
+        <tr><th>Platform</th><th>SM Arch</th><th>Runner Tag</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>x86 + RTX 4090</strong></td>
+          <td class="key">SM 8.9 (Ada)</td>
+          <td class="mono">arch:amd64, gpu:rtx4090</td>
+          <td>Developer workstation class; good for fast premerge</td>
+        </tr>
+        <tr>
+          <td><strong>x86 + A100</strong></td>
+          <td class="key">SM 8.0 (Ampere)</td>
+          <td class="mono">arch:amd64, gpu:a100</td>
+          <td>Production training/inference class; required for Isaac Lab tests</td>
+        </tr>
+        <tr>
+          <td><strong>Jetson Orin</strong></td>
+          <td class="key">SM 8.7 (Ampere)</td>
+          <td class="mono">arch:arm64, board:orin</td>
+          <td>64 GB unified memory variant recommended for CI; native arm64 builds only</td>
+        </tr>
+        <tr>
+          <td><strong>Jetson Thor</strong></td>
+          <td class="key">SM 10.x (Blackwell)</td>
+          <td class="mono">arch:arm64, board:thor</td>
+          <td>Next-gen platform; begin CI runner provisioning now</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">Correct CUDA Arch List</h3>
+  <div class="pre-label">Dockerfile — ARG at top of file</div>
+  <pre>ARG TORCH_CUDA_ARCH_LIST="8.0;8.6;8.7;8.9;9.0;10.0+PTX"
+# 8.0  = A100 (Ampere)
+# 8.6  = RTX 3090 (Ampere)
+# 8.7  = Jetson Orin (Ampere mobile)
+# 8.9  = RTX 4090 (Ada)
+# 9.0  = H100 (Hopper)
+# 10.0 = Jetson Thor / RTX 5090 (Blackwell)
+# +PTX = forward-compatible PTX for future GPUs</pre>
+
+  <h3 class="sub">Multi-Stage Dockerfile Pattern</h3>
+  <div class="pre-label">Dockerfile — multi-stage builder/runtime split</div>
+  <pre># ── BUILD STAGE ──────────────────────────────────────────────────────────────
+FROM nvcr.io/nvidia/isaac/ros:humble-ros-base AS builder
+ARG CUDA_VERSION=12.4
+ARG TORCH_CUDA_ARCH_LIST="8.0;8.6;8.7;8.9;9.0;10.0+PTX"
+
+WORKDIR /workspace/src
+
+# CRITICAL: COPY requirements before source — preserves pip layer on src changes
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .                             # source after deps — deps layer is cached
+RUN colcon build --symlink-install \
+    --cmake-args \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DTORCH_CUDA_ARCH_LIST="${TORCH_CUDA_ARCH_LIST}"
+
+# ── RUNTIME STAGE ─────────────────────────────────────────────────────────────
+FROM nvcr.io/nvidia/isaac/ros:humble-ros-base AS runtime
+COPY --from=builder /workspace/install /workspace/install
+# Build tools (gcc, cmake, python-dev) are NOT present in this image
+# Result: 1.5-3 GB smaller than single-stage, smaller attack surface
+
+LABEL org.opencontainers.image.source="https://github.com/myorg/isaac-ros"
+LABEL org.opencontainers.image.revision="${GIT_SHA}"
+LABEL org.opencontainers.image.created="${BUILD_DATE}"
+
+ENTRYPOINT ["/ros_entrypoint.sh"]
+CMD ["bash"]</pre>
+
+  <h3 class="sub">Multi-Arch Build Command</h3>
+  <div class="pre-label">CI script — postmerge buildx</div>
+  <pre>docker buildx build \
+  --platform linux/amd64,linux/arm64 \
+  --build-arg CUDA_VERSION=12.4 \
+  --build-arg TORCH_CUDA_ARCH_LIST="8.0;8.6;8.7;8.9;9.0;10.0+PTX" \
+  --cache-from type=registry,ref=nvcr.io/myorg/cache:buildcache \
+  --cache-to   type=registry,ref=nvcr.io/myorg/cache:buildcache,mode=max \
+  --push \
+  -t nvcr.io/myorg/isaac-ros:humble-${GIT_SHA} \
+  -t nvcr.io/myorg/isaac-ros:humble-latest \
+  .</pre>
+
+  <div class="warn-box reveal">
+    <strong>QEMU is not acceptable for arm64 production builds:</strong> QEMU software emulation is 5–10x slower than native ARM execution. A postmerge multi-arch build that takes 30 minutes on native Jetson Orin runners takes 90+ minutes with QEMU. Provision native Jetson Orin or AWS Graviton runners tagged <code>arch:arm64</code> and use them for the arm64 build leg.
+  </div>
+</section>
+
+<!-- B3 -->
+<section class="section" id="b3">
+  <div class="topic-header">
+    <span class="topic-num">B3</span>
+    <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Multi-Repo Workspace Management</h2>
+    <span class="topic-badge">vcstool + colcon</span>
+  </div>
+
+  <p class="body">Isaac ROS is composed of dozens of independent repositories. A CI workspace must import them all in a reproducible, auditable way. The <code>vcstool</code> utility manages this via a <code>.repos</code> YAML file. The critical rule: every entry must be pinned to a full commit SHA, never a branch name. Branch names are mutable — they can be force-pushed and will silently change your build.</p>
+
+  <h3 class="sub">vcstool .repos File Pattern</h3>
+  <div class="pre-label">repos/isaac_ros.repos — commit SHA pinning</div>
+  <pre>repositories:
+  # RULE: always pin to full commit SHA, never to a branch or tag
+  # Tags can be force-pushed; SHAs are immutable
+  isaac_ros_common:
+    type: git
+    url: https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common
+    version: abc1234def5678901234567890abcdef12345678
+
+  isaac_ros_nitros:
+    type: git
+    url: https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_nitros
+    version: 9f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a
+
+  isaac_ros_image_pipeline:
+    type: git
+    url: https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_image_pipeline
+    version: 1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b</pre>
+
+  <h3 class="sub">Affected-Package Detection</h3>
+  <p class="body">Running <code>colcon build</code> on the full workspace for every PR wastes GPU runner time. The correct approach detects which packages changed (and their transitive dependents) and builds only those.</p>
+  <div class="pre-label">scripts/affected_build.sh</div>
+  <pre>#!/bin/bash
+# Detect which colcon packages were affected by this PR
+
+# 1. Get changed files vs merge base
+CHANGED_FILES=$(git diff --name-only origin/main...HEAD)
+
+# 2. Map changed files to package names (find nearest package.xml)
+CHANGED_PKGS=$(python3 scripts/find_affected_packages.py "$CHANGED_FILES")
+
+echo "Affected packages: $CHANGED_PKGS"
+
+# 3. Build affected packages AND everything that depends on them
+colcon build \
+  --symlink-install \
+  --cmake-args -DCMAKE_BUILD_TYPE=Release \
+  --packages-up-to $CHANGED_PKGS
+
+# 4. Test affected packages and their dependents
+colcon test --packages-above-and-dependencies $CHANGED_PKGS</pre>
+
+  <h3 class="sub">Cache Layer Strategy</h3>
+  <div class="tbl-wrap reveal">
+    <table>
+      <thead>
+        <tr><th>Layer</th><th>Cache Key</th><th>Backend</th><th>Hit Rate Target</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="key">pip dependencies</td>
+          <td>Hash of <code>requirements.txt</code> + platform arch</td>
+          <td>S3 bucket via pip cache</td>
+          <td class="win">&gt;95%</td>
+        </tr>
+        <tr>
+          <td class="key">colcon build artifacts</td>
+          <td>Git commit SHA + platform + CUDA version</td>
+          <td>S3 + sccache for CUDA objects</td>
+          <td class="win">&gt;80%</td>
+        </tr>
+        <tr>
+          <td class="key">Docker layers</td>
+          <td>Dockerfile hash per stage (builder vs runtime)</td>
+          <td>Registry cache (<code>type=registry</code>) on ECR or NGC</td>
+          <td class="win">&gt;90%</td>
+        </tr>
+        <tr>
+          <td class="key">rosdep cache</td>
+          <td>Hash of <code>rosdep.yaml</code> + distro</td>
+          <td>GHA cache action</td>
+          <td class="win">&gt;90%</td>
+        </tr>
+        <tr>
+          <td class="key">apt package lists</td>
+          <td>Date (weekly) + OS version</td>
+          <td>GHA cache action</td>
+          <td>~70% (weekly expiry)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note note-c reveal">
+    <strong>GHA cache 10 GB limit:</strong> GitHub Actions' built-in <code>actions/cache</code> has a 10 GB total limit shared across all branches and all workflows in a repository. Docker layer caches will bust this limit frequently on Isaac ROS workspaces. Switch Docker layer caching to <code>type=registry</code> cache on an ECR or NGC private registry — no size limit, much higher hit rates.
+  </div>
+</section>
+
+<!-- B4 -->
+<section class="section section-alt" id="b4">
+  <div class="topic-header">
+    <span class="topic-num">B4</span>
+    <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Release Engineering</h2>
+    <span class="topic-badge">SLSA L3</span>
+  </div>
+
+  <p class="body">A production release pipeline for Isaac ROS images must provide signed images, attached SBOMs, and verifiable provenance — the requirements for SLSA Level 3. Images move through three stages: dev (every postmerge commit), staging (release candidates), and production (the NGC public registry).</p>
+
+  <div class="phase-block reveal">
+    <div class="phase-num">Stage 1 — Dev</div>
+    <div class="phase-title">Postmerge Image Push</div>
+    <p style="font-size:13px; color:#555; line-height:1.65;">Every merge to main triggers a multi-arch build and pushes to the dev registry with a 7-day retention policy. These images are signed and scanned but not promoted.</p>
+    <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;">
+      <span class="chip chip-g">nvcr.io/myorg/isaac-ros-dev</span>
+      <span class="chip chip-c">7-day retention</span>
+      <span class="chip chip-a">cosign signed</span>
+    </div>
+  </div>
+
+  <div class="phase-block reveal">
+    <div class="phase-num">Stage 2 — Staging</div>
+    <div class="phase-title">Release Candidate Promotion</div>
+    <p style="font-size:13px; color:#555; line-height:1.65;">A release candidate is promoted from dev to staging by a manual workflow dispatch or a <code>rc/*</code> tag push. Staging images undergo hardware-in-loop validation on a physical Jetson Orin before being cleared for production.</p>
+    <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;">
+      <span class="chip chip-g">nvcr.io/myorg/isaac-ros-staging</span>
+      <span class="chip chip-c">30-day retention</span>
+      <span class="chip chip-a">HIL validated</span>
+    </div>
+  </div>
+
+  <div class="phase-block reveal">
+    <div class="phase-num">Stage 3 — Production (NGC)</div>
+    <div class="phase-title">NGC Publish</div>
+    <p style="font-size:13px; color:#555; line-height:1.65;">After staging validation, images are promoted to the NGC production registry. SBOM is attached, provenance attestation is recorded, and the release is permanent (no TTL).</p>
+    <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;">
+      <span class="chip chip-g">nvcr.io/nvidia/isaac/ros</span>
+      <span class="chip chip-c">permanent</span>
+      <span class="chip chip-a">SBOM attached</span>
+      <span class="chip chip-g">SLSA L3</span>
+    </div>
+  </div>
+
+  <h3 class="sub">Signing, SBOM, and Provenance Commands</h3>
+  <div class="pre-label">release pipeline — post-build steps</div>
+  <pre># 1. Sign the image digest with cosign
+cosign sign --key cosign.key \
+  nvcr.io/myorg/isaac-ros@${IMAGE_DIGEST}
+
+# 2. Generate SBOM in SPDX-JSON format (syft)
+syft nvcr.io/myorg/isaac-ros:${TAG} \
+  -o spdx-json > sbom.json
+
+# 3. Attach SBOM to the image
+cosign attach sbom \
+  --sbom sbom.json \
+  nvcr.io/myorg/isaac-ros:${TAG}
+
+# 4. Generate and attach build provenance (SLSA Level 3)
+cosign attest \
+  --predicate provenance.json \
+  --type slsaprovenance \
+  --key cosign.key \
+  nvcr.io/myorg/isaac-ros@${IMAGE_DIGEST}
+
+# 5. Verify before promoting to NGC
+cosign verify \
+  --certificate-identity-regexp '.*github.com/myorg/isaac-ros.*' \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  nvcr.io/myorg/isaac-ros:${TAG}</pre>
+
+  <div class="note note-g reveal">
+    <strong>SLSA Level 3 requirements:</strong> (1) Hermetic builds — build process reads only declared inputs; (2) Isolated runners — no shared state between builds; (3) Provenance attestation — cryptographically signed build record including inputs, outputs, and build environment; (4) Signed outputs — all published artifacts signed with a verifiable key or OIDC keyless signing.
+  </div>
+</section>
+
+<!-- ══ PART C ══ -->
+<div class="part-header" id="part-c">
+  <div class="part-num">Part C</div>
+  <div class="part-title">IsaacLab DevOps Audit Findings</div>
+  <div class="part-sub">41 findings · Build · Image Size · Security · Correctness &amp; Flakiness</div>
+</div>
+
+<!-- C intro -->
+<section class="section" id="c-intro">
+  <p class="body">The following 41 line-numbered findings were identified through systematic analysis of the public <strong>NVIDIA-ISAAC-ROS/IsaacLab</strong> repository, including all <code>.github/workflows/</code> YAML files, <code>docker/</code> Dockerfiles, and <code>.github/actions/</code> composite actions. Each finding includes the affected file path, the root cause, and a concrete remediation.</p>
+
+  <div class="stats-strip reveal">
+    <div class="stat-item">
+      <span class="stat-n" style="color:#D85A30;">14</span>
+      <span class="stat-l">CRIT findings</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-n" style="color:#c97d00;">12</span>
+      <span class="stat-l">MED findings</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-n" style="color:#0a3070;">15</span>
+      <span class="stat-l">LOW / INFO</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-n">25–40 min</span>
+      <span class="stat-l">PR path faster</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-n">~60 min</span>
+      <span class="stat-l">Postmerge faster</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-n">1.5–3 GB</span>
+      <span class="stat-l">Smaller images</span>
+    </div>
+  </div>
+
+  <div class="note note-a">
+    <strong>Aggregate impact:</strong> After remediating all CRIT and MED findings, expected outcomes are: 25–40 min faster PR critical path, ~60 min faster postmerge multi-arch publish, 1.5–3 GB smaller final images, Docker layer cache hit rate from ~30% to &gt;90%, and supply-chain posture from SLSA Level 1 to Level 3.
+  </div>
+</section>
+
+<!-- C1 -->
+<section class="section" id="c1">
+  <div class="topic-header">
+    <span class="topic-num">C1</span>
+    <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Build Time &amp; Caching</h2>
+    <span class="topic-badge">8 findings</span>
+  </div>
+
+  <!-- B-01 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">B-01</div>
+      <div class="issue-card-title">COPY source before pip install — busts deps cache on every PR</div>
+      <div class="issue-card-detail">
+        Source <code>COPY . .</code> appears before <code>pip install -r requirements.txt</code>. Since any source file change invalidates Docker layer cache at that point, the entire pip install layer is re-executed on every PR — even when only a comment changed.
+        <br><br>
+        <span class="issue-card-file">docker/Dockerfile.curobo:87, 131-132</span>
+        <br><br>
+        <strong>Fix:</strong> <code>COPY requirements.txt .</code> → <code>RUN pip install</code> → <code>COPY . .</code>
+        <br>
+        <strong>Impact if unresolved:</strong> 8–12 min wasted per PR run on pip dependency reinstall.
+      </div>
+    </div>
+    <span class="sev sev-crit">CRIT</span>
+  </div>
+
+  <!-- B-02 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">B-02</div>
+      <div class="issue-card-title">GHA cache backend hits 10 GB cap — needs registry cache</div>
+      <div class="issue-card-detail">
+        The Docker build uses <code>actions/cache</code> as the layer cache backend. This has a 10 GB total limit shared across all branches and workflows. Isaac ROS base images alone exceed 10 GB, causing constant cache eviction and near-zero effective hit rates.
+        <br><br>
+        <span class="issue-card-file">.github/actions/docker-build/action.yml</span>
+        <br><br>
+        <strong>Fix:</strong> Switch to <code>--cache-from type=registry,ref=nvcr.io/myorg/cache:buildcache</code> and <code>--cache-to type=registry,...,mode=max</code>. Use a private ECR or NGC registry for the cache target.
+        <br>
+        <strong>Impact if unresolved:</strong> Effective Docker cache hit rate &lt;10%, 35+ min per build that could be &lt;5 min on warm cache.
+      </div>
+    </div>
+    <span class="sev sev-crit">CRIT</span>
+  </div>
+
+  <!-- B-03 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">B-03</div>
+      <div class="issue-card-title">No path filters — Markdown edit triggers full GPU container rebuild</div>
+      <div class="issue-card-detail">
+        Every workflow triggers on every <code>push</code> without <code>paths-ignore</code> or <code>paths</code> filters. A typo fix in <code>README.md</code> triggers a 35-minute GPU container build and consumes a self-hosted GPU runner slot.
+        <br><br>
+        <span class="issue-card-file">.github/workflows/build.yml (all workflows)</span>
+        <br><br>
+        <strong>Fix:</strong> Add to every workflow that builds code:
+        <br><code>paths-ignore: ['**.md', 'docs/**', '*.txt', 'LICENSE', 'CHANGELOG*']</code>
+        <br>
+        <strong>Impact if unresolved:</strong> ~35 min wasted GPU time per non-code PR; queue starvation for genuine build PRs.
+      </div>
+    </div>
+    <span class="sev sev-crit">CRIT</span>
+  </div>
+
+  <!-- B-04 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">B-04</div>
+      <div class="issue-card-title">License-check installs full IsaacSim stack to enumerate licenses</div>
+      <div class="issue-card-detail">
+        The <code>license-check.yaml</code> workflow uses <code>pip-licenses</code>, which installs the complete production dependency tree (including IsaacSim at 40+ GB) to introspect license metadata. This runs in the PR critical path and takes 20+ minutes.
+        <br><br>
+        <span class="issue-card-file">.github/workflows/license-check.yaml</span>
+        <br><br>
+        <strong>Fix:</strong> Resolve licenses from <code>requirements.txt</code> directly using <code>pip-audit</code> or <code>pip-licenses --from=mixed</code> in a lightweight Python venv without installing the actual packages. Cache the license list output keyed by a hash of <code>requirements.txt</code>.
+        <br>
+        <strong>Impact if unresolved:</strong> 20–25 min overhead in PR critical path for a check that could complete in &lt;60 seconds.
+      </div>
+    </div>
+    <span class="sev sev-crit">CRIT</span>
+  </div>
+
+  <!-- B-08 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">B-08</div>
+      <div class="issue-card-title">QEMU emulation for arm64 instead of native runner</div>
+      <div class="issue-card-detail">
+        Postmerge multi-arch builds use QEMU software emulation for the arm64 build leg. QEMU emulation is 5–10x slower than native execution and cannot run GPU code paths. The postmerge arm64 build takes ~90 minutes vs ~30 minutes on native Jetson Orin runners.
+        <br><br>
+        <span class="issue-card-file">.github/workflows/postmerge-ci.yml</span>
+        <br><br>
+        <strong>Fix:</strong> Provision native Jetson Orin CI runners (or AWS Graviton as proxy) tagged <code>[self-hosted, arch:arm64]</code>. Use a build matrix with explicit platform selectors for each leg.
+        <br>
+        <strong>Impact if unresolved:</strong> ~60 min extra per postmerge publish; QEMU cannot test NITROS or other GPU code paths.
+      </div>
+    </div>
+    <span class="sev sev-crit">CRIT</span>
+  </div>
+
+  <!-- B-05 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">B-05</div>
+      <div class="issue-card-title">lfs:true on every checkout — repo has zero LFS files</div>
+      <div class="issue-card-detail">
+        Every <code>actions/checkout</code> step sets <code>lfs: true</code>, which invokes Git LFS batch operations on every checkout. The repository contains no LFS-tracked files, making this a pure overhead with no benefit.
+        <br><br>
+        <span class="issue-card-file">.github/workflows/*.yml (all checkout steps)</span>
+        <br><br>
+        <strong>Fix:</strong> Remove <code>lfs: true</code> from all checkout steps. Add it back only if LFS tracking is introduced.
+        <br>
+        <strong>Impact if unresolved:</strong> 3–5 s wasted per job, compounded across all parallel jobs and all PRs.
+      </div>
+    </div>
+    <span class="sev sev-med">MED</span>
+  </div>
+
+  <!-- B-06 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">B-06</div>
+      <div class="issue-card-title">fetch-depth:0 on every checkout — pulls full git history</div>
+      <div class="issue-card-detail">
+        All checkout steps use <code>fetch-depth: 0</code> (full history). For build and test jobs, only the working tree is needed. Full history adds 15–40 s per checkout on repositories with long git history.
+        <br><br>
+        <span class="issue-card-file">.github/workflows/*.yml (all checkout steps)</span>
+        <br><br>
+        <strong>Fix:</strong> Use <code>fetch-depth: 1</code> for all build, test, and lint jobs. Use <code>fetch-depth: 0</code> only for semantic-release, changelog generation, or jobs that need <code>git log</code>.
+      </div>
+    </div>
+    <span class="sev sev-med">MED</span>
+  </div>
+
+  <!-- B-09 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">B-09</div>
+      <div class="issue-card-title">cuRobo CUDA compile not using sccache</div>
+      <div class="issue-card-detail">
+        CUDA compilation (via <code>nvcc</code>) is the most expensive build step in the Isaac ROS stack. The pipeline does not configure sccache as a compiler wrapper, meaning every CUDA source file is recompiled from scratch on cache miss rather than retrieved from a shared object cache.
+        <br><br>
+        <span class="issue-card-file">docker/Dockerfile.curobo, .github/actions/docker-build/action.yml</span>
+        <br><br>
+        <strong>Fix:</strong> Install sccache, set <code>RUSTC_WRAPPER=sccache</code>, configure <code>SCCACHE_BUCKET=s3://your-bucket</code>, and pass <code>-DCMAKE_CUDA_COMPILER_LAUNCHER=sccache</code> to cmake. Expect 60–80% hit rate on warm cache.
+      </div>
+    </div>
+    <span class="sev sev-med">MED</span>
+  </div>
+</section>
+
+<!-- C2 -->
+<section class="section section-alt" id="c2">
+  <div class="topic-header">
+    <span class="topic-num">C2</span>
+    <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Image Size</h2>
+    <span class="topic-badge">4 findings</span>
+  </div>
+
+  <!-- I-01 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">I-01</div>
+      <div class="issue-card-title">No multi-stage builder/runtime split — build tools in final image</div>
+      <div class="issue-card-detail">
+        The final production image contains build-time tools: <code>gcc</code>, <code>g++</code>, <code>cmake</code>, <code>python3-dev</code>, <code>build-essential</code>, and all pip build wheels. These are never needed at runtime. Keeping them inflates the image by 1.5–3 GB and adds unnecessary attack surface.
+        <br><br>
+        <span class="issue-card-file">docker/Dockerfile.base, docker/Dockerfile.curobo</span>
+        <br><br>
+        <strong>Fix:</strong> Use a <code>FROM ... AS builder</code> stage for compilation, then <code>FROM ... AS runtime</code> with only <code>COPY --from=builder /workspace/install .</code>. The runtime stage should not install any compiler or Python development headers.
+        <br>
+        <strong>Impact if unresolved:</strong> 1.5–3 GB larger images; slower pulls on cold runners; broader CVE surface area in production deployments.
+      </div>
+    </div>
+    <span class="sev sev-crit">CRIT</span>
+  </div>
+
+  <!-- I-03 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">I-03</div>
+      <div class="issue-card-title">TORCH_CUDA_ARCH_LIST=8.0+PTX — excludes Jetson Orin and Thor</div>
+      <div class="issue-card-detail">
+        The default <code>TORCH_CUDA_ARCH_LIST=8.0+PTX</code> compiles native code only for SM 8.0 (A100) and inserts PTX for all other GPUs. Jetson Orin (SM 8.7) and Jetson Thor (SM 10.x) fall back to PTX JIT at first run, adding 30–60 seconds of JIT compilation per model load and producing slower code than native SASS.
+        <br><br>
+        <span class="issue-card-file">docker/Dockerfile.curobo ARG line, .github/actions/docker-build/action.yml</span>
+        <br><br>
+        <strong>Fix:</strong> <code>ARG TORCH_CUDA_ARCH_LIST="8.0;8.6;8.7;8.9;9.0;10.0+PTX"</code>
+        <br>The +PTX at the end still provides forward compatibility for future GPUs.
+      </div>
+    </div>
+    <span class="sev sev-crit">CRIT</span>
+  </div>
+
+  <!-- I-02 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">I-02</div>
+      <div class="issue-card-title">Dockerfile.base and Dockerfile.curobo are 90% duplicated</div>
+      <div class="issue-card-detail">
+        Both Dockerfiles begin with the same base image, the same <code>apt-get install</code> block, the same ROS workspace setup, and the same Python environment configuration. Maintenance changes must be applied in two places; drift between the files causes subtle environment differences in CI.
+        <br><br>
+        <span class="issue-card-file">docker/Dockerfile.base, docker/Dockerfile.curobo</span>
+        <br><br>
+        <strong>Fix:</strong> Restructure as <code>FROM nvcr.io/nvidia/isaac/ros:humble-ros-base AS base</code> in <code>Dockerfile.base</code>, then in <code>Dockerfile.curobo</code>: <code>FROM base AS curobo</code> followed by cuRobo-specific layers only.
+      </div>
+    </div>
+    <span class="sev sev-med">MED</span>
+  </div>
+
+  <!-- I-06 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">I-06</div>
+      <div class="issue-card-title">Missing OCI standard image labels</div>
+      <div class="issue-card-detail">
+        Published images have no <code>org.opencontainers.image.*</code> labels. This makes it impossible to trace a running container back to its source repository, commit SHA, or build date — a basic operational and compliance requirement.
+        <br><br>
+        <span class="issue-card-file">docker/Dockerfile.base, docker/Dockerfile.curobo</span>
+        <br><br>
+        <strong>Fix:</strong>
+        <pre style="margin:6px 0; font-size:11px;">LABEL org.opencontainers.image.version="${VERSION}"
+LABEL org.opencontainers.image.source="https://github.com/myorg/isaac-ros"
+LABEL org.opencontainers.image.revision="${GIT_SHA}"
+LABEL org.opencontainers.image.created="${BUILD_DATE}"</pre>
+        Pass these as <code>--build-arg</code> values from the CI workflow.
+      </div>
+    </div>
+    <span class="sev sev-med">MED</span>
+  </div>
+</section>
+
+<!-- C3 -->
+<section class="section" id="c3">
+  <div class="topic-header">
+    <span class="topic-num">C3</span>
+    <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Security</h2>
+    <span class="topic-badge">7 findings</span>
+  </div>
+
+  <!-- S-01/S-02 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">S-01 / S-02</div>
+      <div class="issue-card-title">docker login -p $NGC_API_KEY leaks secret to process list</div>
+      <div class="issue-card-detail">
+        Both the composite action and the postmerge workflow use <code>docker login -p $NGC_API_KEY</code>. The <code>-p</code> flag puts the secret directly in the process argument vector, which is visible to any process that can read <code>/proc/&lt;pid&gt;/cmdline</code> on the same host. This is a well-known secret leak pattern.
+        <br><br>
+        <span class="issue-card-file">.github/actions/docker-build/action.yml:37, .github/workflows/postmerge-ci.yml:64</span>
+        <br><br>
+        <strong>Fix (everywhere):</strong>
+        <pre style="margin:6px 0; font-size:11px;">echo "$NGC_API_KEY" | docker login nvcr.io \
+  --username '$oauthtoken' \
+  --password-stdin</pre>
+        The <code>--password-stdin</code> flag reads the password from stdin, keeping it out of the process argument list. Note that the username for NGC is the literal string <code>$oauthtoken</code> (including the dollar sign), not a variable.
+      </div>
+    </div>
+    <span class="sev sev-crit">CRIT</span>
+  </div>
+
+  <!-- S-03 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">S-03</div>
+      <div class="issue-card-title">pull_request_target with mutable action tags — secret exfiltration risk</div>
+      <div class="issue-card-detail">
+        The <code>labeler.yml</code> workflow uses the <code>pull_request_target</code> event, which runs with write permissions from the base repository (including access to secrets). Combined with third-party actions pinned to mutable version tags (<code>@v6</code>), a compromised upstream action maintainer can force-push a tag and inject code that exfiltrates <code>NGC_API_KEY</code> during the next PR from any fork.
+        <br><br>
+        <span class="issue-card-file">.github/workflows/labeler.yml</span>
+        <br><br>
+        <strong>Fix:</strong> Switch the labeler workflow to use <code>pull_request</code> instead of <code>pull_request_target</code>. If write access to the PR is required (e.g., to apply labels), use a separate <code>workflow_run</code> triggered workflow with minimal permissions. SHA-pin all third-party actions.
+      </div>
+    </div>
+    <span class="sev sev-crit">CRIT</span>
+  </div>
+
+  <!-- S-04 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">S-04</div>
+      <div class="issue-card-title">Self-hosted GPU runner executes fork PR code without a trust gate</div>
+      <div class="issue-card-detail">
+        The main <code>build.yml</code> workflow runs on <code>[self-hosted, gpu, x86]</code> runners for all pull requests, including those from forks. A malicious contributor can submit a PR that reads environment variables or files from the runner host, exfiltrating secrets, runner SSH keys, or NGC API credentials.
+        <br><br>
+        <span class="issue-card-file">.github/workflows/build.yml</span>
+        <br><br>
+        <strong>Fix:</strong> Gate all self-hosted runner jobs with an explicit trust check:
+        <pre style="margin:6px 0; font-size:11px;">if: github.event.pull_request.head.repo.full_name == github.repository</pre>
+        For fork PRs, run only on GitHub-hosted runners with no secrets. Require a maintainer approval comment to trigger GPU jobs on fork PRs.
+      </div>
+    </div>
+    <span class="sev sev-crit">CRIT</span>
+  </div>
+
+  <!-- S-07 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">S-07</div>
+      <div class="issue-card-title">All third-party actions pinned to mutable version tags</div>
+      <div class="issue-card-detail">
+        Every third-party action reference uses a mutable semver tag: <code>actions/checkout@v4</code>, <code>actions/upload-artifact@v2</code>, <code>actions/labeler@v6</code>. A git tag can be force-pushed to point to an entirely different commit without changing the tag name, silently changing the code your pipeline executes.
+        <br><br>
+        <span class="issue-card-file">.github/workflows/*.yml (all workflow files)</span>
+        <br><br>
+        <strong>Fix:</strong> Pin every third-party action to its full commit SHA:
+        <pre style="margin:6px 0; font-size:11px;">uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2</pre>
+        Use Renovate or Dependabot to keep SHAs up-to-date automatically.
+      </div>
+    </div>
+    <span class="sev sev-crit">CRIT</span>
+  </div>
+
+  <!-- S-08 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">S-08</div>
+      <div class="issue-card-title">No CodeQL/SAST, Trivy/SBOM, cosign, Dependabot, or Renovate</div>
+      <div class="issue-card-detail">
+        The repository has zero supply-chain controls. There is no SAST scanning, no container image scanning, no signed images, no SBOM, no automated dependency update bot, and no provenance attestation. This is a SLSA Level 1 posture for a production robotics platform.
+        <br><br>
+        <span class="issue-card-file">Repository-wide — no .github/workflows/codeql.yml, trivy.yml, renovate.json</span>
+        <br><br>
+        <strong>Fix (priority order):</strong>
+        <br>1. Add <code>renovate.json</code> or Dependabot config to auto-update action SHAs and pip dependencies.
+        <br>2. Add <code>trivy.yml</code> workflow to scan images for CVEs on every postmerge push.
+        <br>3. Add <code>codeql.yml</code> for C++ and Python static analysis.
+        <br>4. Add cosign image signing and SBOM attachment in the postmerge pipeline.
+        <br>5. Add SLSA provenance attestation to reach SLSA Level 3.
+      </div>
+    </div>
+    <span class="sev sev-crit">CRIT</span>
+  </div>
+
+  <!-- S-05 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">S-05</div>
+      <div class="issue-card-title">Container runs as root with --network=host</div>
+      <div class="issue-card-detail">
+        Test containers run as UID 0 (root) and with <code>--network=host</code>. A container process exploiting a vulnerability can access the host network directly and write to host paths mounted as volumes.
+        <br><br>
+        <span class="issue-card-file">.github/workflows/build.yml (container options)</span>
+        <br><br>
+        <strong>Fix:</strong> Add <code>--user 1000:1000</code> to container options. Use <code>--network=bridge</code> for test containers; reserve <code>--network=host</code> only for jobs that genuinely require host network access (e.g., NITROS transport tests).
+      </div>
+    </div>
+    <span class="sev sev-med">MED</span>
+  </div>
+
+  <!-- S-06 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">S-06</div>
+      <div class="issue-card-title">DOCKER_TLS_CERTDIR="" disables TLS on Docker socket</div>
+      <div class="issue-card-detail">
+        Setting <code>DOCKER_TLS_CERTDIR=""</code> in the DinD (Docker-in-Docker) service disables TLS on the Docker socket. Any process on the runner host that can reach the Docker socket can execute arbitrary containers without authentication.
+        <br><br>
+        <span class="issue-card-file">.github/workflows/build.yml (services: docker section)</span>
+        <br><br>
+        <strong>Fix:</strong> Set <code>DOCKER_TLS_CERTDIR</code> to a valid certificate directory path (e.g., <code>/certs</code>) and configure the client to use TLS. Alternatively, use the Docker socket from the host runner rather than DinD.
+      </div>
+    </div>
+    <span class="sev sev-med">MED</span>
+  </div>
+</section>
+
+<!-- C4 -->
+<section class="section section-alt" id="c4">
+  <div class="topic-header">
+    <span class="topic-num">C4</span>
+    <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Correctness &amp; Flakiness</h2>
+    <span class="topic-badge">7 findings</span>
+  </div>
+
+  <!-- C-01/C-02/C-03 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">C-01 / C-02 / C-03</div>
+      <div class="issue-card-title">Non-existent action versions — these workflows FAIL on every run</div>
+      <div class="issue-card-detail">
+        The <code>docs.yaml</code> workflow references three action versions that do not exist: <code>actions/upload-artifact@v7</code>, <code>actions/download-artifact@v8</code>, and <code>actions/checkout@v6</code>. The maximum published versions are v4, v4, and v4 respectively. These errors cause an immediate workflow failure on every trigger.
+        <br><br>
+        <span class="issue-card-file">.github/workflows/docs.yaml</span>
+        <br><br>
+        <strong>Fix:</strong> Replace all three with SHA-pinned references to the current v4 releases:
+        <pre style="margin:6px 0; font-size:11px;">uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683        # v4
+uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808    # v4
+uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16  # v4</pre>
+        <strong>Severity note:</strong> This is CRIT because the docs workflow is completely broken on every run — not occasionally, but 100% of the time.
+      </div>
+    </div>
+    <span class="sev sev-crit">CRIT</span>
+  </div>
+
+  <!-- C-04 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">C-04</div>
+      <div class="issue-card-title">develop vs devel branch mismatch breaks multi-version docs deploy</div>
+      <div class="issue-card-detail">
+        The <code>docs.yaml</code> trigger filters on <code>branches: [devel]</code> but the deploy step logic references <code>develop</code>. The branch name mismatch means docs are never deployed to the correct environment, and the versioned docs publishing path uses the wrong branch as the "latest" pointer.
+        <br><br>
+        <span class="issue-card-file">.github/workflows/docs.yaml:12, :100</span>
+        <br><br>
+        <strong>Fix:</strong> Audit the actual default branch name and make the trigger and deploy step consistent. If the branch is <code>main</code>, update both locations to <code>main</code>.
+      </div>
+    </div>
+    <span class="sev sev-crit">CRIT</span>
+  </div>
+
+  <!-- C-06 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">C-06</div>
+      <div class="issue-card-title">continue-on-error:true masks failing test results</div>
+      <div class="issue-card-detail">
+        Multiple test jobs use <code>continue-on-error: true</code> without a subsequent explicit failure check. The workflow step reports green even when tests fail. PRs are merged with failing tests; the failures are only discovered post-merge when downstream jobs pick them up.
+        <br><br>
+        <span class="issue-card-file">.github/workflows/build.yml (test stages)</span>
+        <br><br>
+        <strong>Fix:</strong> Remove <code>continue-on-error: true</code>. If a step genuinely must continue after failure (e.g., to upload test artifacts), separate it: run the test step without <code>continue-on-error</code>, upload results with <code>if: always()</code>, and let the job fail on test failure.
+      </div>
+    </div>
+    <span class="sev sev-crit">CRIT</span>
+  </div>
+
+  <!-- F-02 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">F-02</div>
+      <div class="issue-card-title">RL training test (6000s timeout) runs in PR critical path</div>
+      <div class="issue-card-detail">
+        A reinforcement learning training test with a <code>timeout: 6000</code> (100 minutes) timeout is included in the premerge PR validation suite. This means every PR — including a one-line documentation fix — must wait up to 100 minutes for this test to complete before the merge button is available.
+        <br><br>
+        <span class="issue-card-file">.github/workflows/build.yml (RL training test job)</span>
+        <br><br>
+        <strong>Fix:</strong> Move the RL training test to a nightly scheduled workflow. Replace it in the PR premerge suite with a short smoke test (e.g., 2-minute policy rollout check with a fixed random seed) that validates environment loading and basic forward pass without full training convergence.
+        <br>
+        <strong>Impact if unresolved:</strong> Every PR blocks for up to 100 minutes regardless of change scope.
+      </div>
+    </div>
+    <span class="sev sev-crit">CRIT</span>
+  </div>
+
+  <!-- F-03 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">F-03</div>
+      <div class="issue-card-title">TESTS_TO_SKIP 'app.close issue' — known unresolved stability bug</div>
+      <div class="issue-card-detail">
+        A test configuration file hard-skips tests with the annotation <code>'app.close issue'</code>, indicating that the application teardown lifecycle has a known bug that causes test hangs or crashes. The tests are skipped rather than fixed, masking a production stability risk in the <code>app.close()</code> code path.
+        <br><br>
+        <span class="issue-card-file">tests/pytest.ini or conftest.py (TESTS_TO_SKIP section)</span>
+        <br><br>
+        <strong>Fix:</strong> File a tracked issue with a specific milestone. Replace the blanket skip with an <code>@pytest.mark.known_issue("GH-1234")</code> mark. Fix the underlying <code>app.close()</code> lifecycle bug — a process that cannot cleanly shut down will cause resource leaks in production deployments.
+      </div>
+    </div>
+    <span class="sev sev-crit">CRIT</span>
+  </div>
+
+  <!-- F-04 -->
+  <div class="issue-card reveal">
+    <div class="issue-card-body">
+      <div class="issue-card-id">F-04</div>
+      <div class="issue-card-title">Two test jobs share one GPU — contention and flakiness</div>
+      <div class="issue-card-detail">
+        Multiple concurrent test jobs are scheduled on the same self-hosted GPU runner without GPU resource partitioning. Concurrent CUDA memory allocations can cause <code>CUDA_ERROR_OUT_OF_MEMORY</code> failures in jobs that would pass in isolation. Timing-dependent failures from shared GPU state produce flaky test results that are hard to bisect.
+        <br><br>
+        <span class="issue-card-file">.github/workflows/build.yml (concurrency group missing for GPU jobs)</span>
+        <br><br>
+        <strong>Fix:</strong> Add a <code>concurrency</code> group to GPU jobs to serialize execution on shared runners. For multiple parallel GPU jobs, use MIG (Multi-Instance GPU) partitioning on A100/H100 runners or provision one runner per GPU.
+        <pre style="margin:6px 0; font-size:11px;">concurrency:
+  group: gpu-runner-${{ runner.name }}
+  cancel-in-progress: false</pre>
+      </div>
+    </div>
+    <span class="sev sev-med">MED</span>
+  </div>
+</section>
+
+<!-- ══ PART D ══ -->
+<div class="part-header" id="part-d">
+  <div class="part-num">Part D</div>
+  <div class="part-title">Technical Reference</div>
+  <div class="part-sub">Colcon &amp; Ament · NGC Registry · Observability · Fact Sheet</div>
+</div>
+
+<!-- D1 -->
+<section class="section" id="d1">
+  <div class="topic-header">
+    <span class="topic-num">D1</span>
+    <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Colcon &amp; Ament Build System</h2>
+    <span class="topic-badge">Build reference</span>
+  </div>
+
+  <p class="body">Colcon is the meta-build system that orchestrates ROS 2 package builds. It discovers packages by finding <code>package.xml</code> files, resolves the dependency graph, and invokes the appropriate build tool (ament_cmake, ament_python, cmake, or plain Python setuptools) for each package in topological order.</p>
+
+  <h3 class="sub">Essential Colcon Commands</h3>
+  <div class="tbl-wrap reveal">
+    <table>
+      <thead>
+        <tr><th>Command</th><th>What It Does</th><th>When to Use in CI</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mono">colcon build</td>
+          <td>Build all discovered packages in topological dependency order</td>
+          <td>Full workspace build in postmerge and release jobs</td>
+        </tr>
+        <tr>
+          <td class="mono">colcon build --packages-select pkg_a pkg_b</td>
+          <td>Build only the specified packages (no dependencies)</td>
+          <td>Targeted rebuild of known-affected packages only</td>
+        </tr>
+        <tr>
+          <td class="mono">colcon build --packages-up-to pkg_a</td>
+          <td>Build <code>pkg_a</code> and all packages it depends on (transitive closure of dependencies)</td>
+          <td>Preferred for premerge — build the changed package and everything it needs</td>
+        </tr>
+        <tr>
+          <td class="mono">colcon build --packages-above pkg_a</td>
+          <td>Build all packages that depend on <code>pkg_a</code> (reverse dependency closure)</td>
+          <td>After changing a shared library — rebuild all consumers</td>
+        </tr>
+        <tr>
+          <td class="mono">colcon build --packages-above-and-dependencies pkg_a</td>
+          <td>Build <code>pkg_a</code>'s full upward closure plus all their dependencies</td>
+          <td>Comprehensive affected-package rebuild in premerge</td>
+        </tr>
+        <tr>
+          <td class="mono">colcon test</td>
+          <td>Run all test suites (ament, pytest, gtest) for all packages</td>
+          <td>After build step; outputs JUnit XML to <code>build/*/test_results/</code></td>
+        </tr>
+        <tr>
+          <td class="mono">colcon test-result --all --verbose</td>
+          <td>Aggregate and display test results from all packages</td>
+          <td>After <code>colcon test</code>; fail CI if any test failed</td>
+        </tr>
+        <tr>
+          <td class="mono">colcon graph</td>
+          <td>Print the package dependency graph (tree or dot format)</td>
+          <td>Debugging dependency issues; input to affected-package scripts</td>
+        </tr>
+        <tr>
+          <td class="mono">colcon list</td>
+          <td>List all packages discovered in the workspace with their paths</td>
+          <td>Validate workspace completeness after <code>vcs import</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">package.xml Dependency Types</h3>
+  <p class="body">Rosdep resolves different dependency types differently. The CI engineer must understand these to correctly configure the install step and avoid over-installing (pulling in build tools into the runtime image).</p>
+  <div class="pre-label">package.xml — format 3 with all dependency types</div>
+  <pre>&lt;package format="3"&gt;
+  &lt;name&gt;my_isaac_ros_pkg&lt;/name&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+
+  &lt;!-- Both build AND runtime dependency --&gt;
+  &lt;depend&gt;rclcpp&lt;/depend&gt;
+  &lt;depend&gt;sensor_msgs&lt;/depend&gt;
+
+  &lt;!-- Build-time only — NOT installed in runtime image --&gt;
+  &lt;build_depend&gt;ament_cmake&lt;/build_depend&gt;
+  &lt;build_depend&gt;rosidl_default_generators&lt;/build_depend&gt;
+
+  &lt;!-- Runtime only — not needed to compile --&gt;
+  &lt;exec_depend&gt;python3-numpy&lt;/exec_depend&gt;
+  &lt;exec_depend&gt;isaac_ros_nitros&lt;/exec_depend&gt;
+
+  &lt;!-- Test only — excluded from both runtime and build images in CI --&gt;
+  &lt;test_depend&gt;ament_lint_auto&lt;/test_depend&gt;
+  &lt;test_depend&gt;ament_cmake_gtest&lt;/test_depend&gt;
+
+  &lt;export&gt;
+    &lt;build_type&gt;ament_cmake&lt;/build_type&gt;
+  &lt;/export&gt;
+&lt;/package&gt;</pre>
+
+  <div class="note note-g reveal">
+    <strong>--symlink-install flag:</strong> Using <code>colcon build --symlink-install</code> creates symlinks from the <code>install/</code> directory back to the source files instead of copying them. This means Python scripts and launch files can be edited in place without rebuilding. Use this in development CI; do NOT use it in release/production builds where the install directory must be self-contained and portable.
+  </div>
+
+  <h3 class="sub">COLCON_EXTENSION_BLOCKLIST</h3>
+  <p class="body">In CI, you often want to exclude packages that should not be built (e.g., example packages, tutorial code, or packages with external hardware dependencies). The <code>COLCON_EXTENSION_BLOCKLIST</code> environment variable provides a coarser mechanism, but for per-package exclusion, use <code>--packages-ignore</code>:</p>
+  <div class="pre-label">CI script — excluding non-essential packages</div>
+  <pre>colcon build \
+  --symlink-install \
+  --cmake-args -DCMAKE_BUILD_TYPE=Release \
+  --packages-ignore \
+    isaac_ros_examples \
+    isaac_ros_tutorials \
+  --packages-up-to isaac_ros_nitros isaac_ros_image_proc</pre>
+</section>
+
+<!-- D2 -->
+<section class="section section-alt" id="d2">
+  <div class="topic-header">
+    <span class="topic-num">D2</span>
+    <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Registry &amp; NGC Infrastructure</h2>
+    <span class="topic-badge">NGC + ECR</span>
+  </div>
+
+  <p class="body">NVIDIA's GPU Cloud (NGC) registry (<code>nvcr.io</code>) is the source of all Isaac ROS base images and the publishing target for production Isaac ROS images. Authentication, digest pinning, and lifecycle management are CI engineer responsibilities.</p>
+
+  <h3 class="sub">Correct NGC Authentication Pattern</h3>
+  <div class="pre-label">.github/workflows/*.yml — auth step</div>
+  <pre># CORRECT: secret never appears in process argv
+- name: Log in to NGC registry
+  run: |
+    echo "${{ secrets.NGC_API_KEY }}" | docker login nvcr.io \
+      --username '$oauthtoken' \
+      --password-stdin
+  # Note: username is the LITERAL string '$oauthtoken' (with the dollar sign)
+  # It is NOT a variable — it is always this exact string for NGC auth
+
+# CORRECT: pull with digest pinning (not a floating tag)
+- name: Pull base image (pinned digest)
+  run: |
+    docker pull nvcr.io/nvidia/isaac/ros@sha256:abc123def456...
+    # Tag the digest for local use
+    docker tag nvcr.io/nvidia/isaac/ros@sha256:abc123def456... \
+      nvcr.io/nvidia/isaac/ros:humble-ros-base-amd64
+
+# WRONG (never do this): tag can be force-pushed, mutable
+# docker pull nvcr.io/nvidia/isaac/ros:humble-ros-base-amd64</pre>
+
+  <h3 class="sub">Registry Hierarchy</h3>
+  <div class="tbl-wrap reveal">
+    <table>
+      <thead>
+        <tr><th>Stage</th><th>Registry Path</th><th>Retention</th><th>Access</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="key">dev</td>
+          <td class="mono">nvcr.io/myorg/isaac-ros-dev</td>
+          <td>7-day TTL</td>
+          <td>Internal CI runners only</td>
+        </tr>
+        <tr>
+          <td class="key">staging</td>
+          <td class="mono">nvcr.io/myorg/isaac-ros-staging</td>
+          <td>30-day TTL</td>
+          <td>QA team + HIL runners</td>
+        </tr>
+        <tr>
+          <td class="key win">production</td>
+          <td class="mono win">nvcr.io/nvidia/isaac/ros</td>
+          <td>Permanent</td>
+          <td>Public; cosign signed; SBOM attached</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">ECR Lifecycle Policy (Python snippet)</h3>
+  <div class="pre-label">scripts/set_ecr_lifecycle.py</div>
+  <pre>import boto3, json
+
+ecr = boto3.client('ecr', region_name='us-east-1')
+
+# Expire dev images older than 7 days
+lifecycle_policy = {
+    "rules": [
+        {
+            "rulePriority": 1,
+            "description": "Expire dev images older than 7 days",
+            "selection": {
+                "tagStatus": "tagged",
+                "tagPrefixList": ["dev-"],
+                "countType": "sinceImagePushed",
+                "countUnit": "days",
+                "countNumber": 7
+            },
+            "action": {"type": "expire"}
+        },
+        {
+            "rulePriority": 2,
+            "description": "Keep at most 30 staging images",
+            "selection": {
+                "tagStatus": "tagged",
+                "tagPrefixList": ["staging-"],
+                "countType": "imageCountMoreThan",
+                "countNumber": 30
+            },
+            "action": {"type": "expire"}
+        }
+    ]
+}
+
+ecr.put_lifecycle_policy(
+    repositoryName='isaac-ros',
+    lifecyclePolicyText=json.dumps(lifecycle_policy)
+)</pre>
+</section>
+
+<!-- D3 -->
+<section class="section" id="d3">
+  <div class="topic-header">
+    <span class="topic-num">D3</span>
+    <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Observability Stack</h2>
+    <span class="topic-badge">Prometheus + Grafana</span>
+  </div>
+
+  <p class="body">A production CI/CD observability stack for Isaac ROS tracks pipeline health across build duration, cache effectiveness, test flakiness, runner utilization, and image size. All metrics should be exposed to Prometheus and visualized in Grafana dashboards with alerting thresholds.</p>
+
+  <h3 class="sub">Metrics to Track</h3>
+  <div class="tbl-wrap reveal">
+    <table>
+      <thead>
+        <tr><th>Metric</th><th>Type &amp; Aggregation</th><th>Alert Threshold</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mono">ci_build_duration_seconds</td>
+          <td>Histogram — p50/p95/p99 per package name and platform</td>
+          <td class="warn">Alert if p95 &gt; 600 s (10 min)</td>
+        </tr>
+        <tr>
+          <td class="mono">ci_cache_hit_rate</td>
+          <td>Gauge — per cache layer type (pip, colcon, docker, rosdep)</td>
+          <td class="warn">Alert if &lt; 70%</td>
+        </tr>
+        <tr>
+          <td class="mono">ci_test_flake_rate</td>
+          <td>Gauge — per test ID, rolling 7-day window</td>
+          <td class="warn">Alert if &gt; 5% for any single test</td>
+        </tr>
+        <tr>
+          <td class="mono">ci_runner_queue_depth</td>
+          <td>Gauge — per runner label group</td>
+          <td class="warn">Alert if &gt; 3 jobs queued for GPU runners</td>
+        </tr>
+        <tr>
+          <td class="mono">ci_gpu_utilization</td>
+          <td>Gauge — per runner host (nvidia-smi scrape)</td>
+          <td class="warn">Alert if &lt; 50% during active build window</td>
+        </tr>
+        <tr>
+          <td class="mono">ci_image_size_bytes</td>
+          <td>Gauge — per image tag and architecture</td>
+          <td class="warn">Alert if delta &gt; 500 MB vs previous tag</td>
+        </tr>
+        <tr>
+          <td class="mono">ci_workflow_success_rate</td>
+          <td>Gauge — per workflow name, rolling 24h</td>
+          <td class="warn">Alert if &lt; 80% for any workflow</td>
+        </tr>
+        <tr>
+          <td class="mono">ci_sbom_cve_count</td>
+          <td>Gauge — per severity (CRITICAL, HIGH) per image tag</td>
+          <td class="danger">Alert on any CRITICAL CVE in production image</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">Prometheus Scrape Configuration</h3>
+  <div class="pre-label">prometheus/prometheus.yml — CI layer</div>
+  <pre>global:
+  scrape_interval: 30s
+  evaluation_interval: 30s
+
+scrape_configs:
+  # GHA API metrics exporter (prometheus-github-actions-exporter)
+  - job_name: 'github_actions'
+    static_configs:
+      - targets: ['gha-exporter:9090']
+    relabel_configs:
+      - source_labels: [__name__]
+        regex: 'gha_(workflow|job|runner)_.*'
+        action: keep
+
+  # Runner host metrics (nvidia-smi + node_exporter)
+  - job_name: 'gpu_runners'
+    static_configs:
+      - targets:
+        - 'runner-gpu-01:9100'  # node_exporter
+        - 'runner-gpu-01:9835'  # dcgm-exporter (NVIDIA GPU metrics)
+        - 'runner-gpu-02:9100'
+        - 'runner-gpu-02:9835'
+
+  # Custom CI pipeline metrics (pushed via pushgateway)
+  - job_name: 'ci_pipeline'
+    honor_labels: true
+    static_configs:
+      - targets: ['pushgateway:9091']</pre>
+
+  <h3 class="sub">Pushing Build Metrics from GHA</h3>
+  <div class="pre-label">.github/workflows/postmerge-ci.yml — metrics push step</div>
+  <pre>- name: Push build duration metrics
+  if: always()
+  run: |
+    BUILD_DURATION=${{ steps.build.outputs.duration_seconds }}
+    PLATFORM=${{ matrix.platform }}
+    STATUS=${{ job.status }}
+
+    # Push to Prometheus Pushgateway
+    cat <<EOF | curl --data-binary @- \
+      http://pushgateway:9091/metrics/job/isaac_ros_ci/platform/${PLATFORM}
+    # HELP ci_build_duration_seconds Build duration in seconds
+    # TYPE ci_build_duration_seconds gauge
+    ci_build_duration_seconds{workflow="postmerge",status="${STATUS}"} ${BUILD_DURATION}
+    EOF</pre>
+</section>
+
+<!-- D4 -->
+<section class="section section-alt" id="d4">
+  <div class="topic-header">
+    <span class="topic-num">D4</span>
+    <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Fact Sheet <span style="color:var(--green);">★</span></h2>
+    <span class="topic-badge">Technical Reference</span>
+  </div>
+
+  <p class="body">Quick-reference facts for Isaac ROS CI engineers. These cover the most commonly looked-up values: EOL dates, command syntax, platform specifics, and tool configuration.</p>
+
+  <div class="verified-grid reveal">
+    <div class="vbox"><strong>ROS 2 Humble LTS EOL:</strong> May 2027 · Ubuntu 22.04 (jammy) · Current default for all Isaac ROS packages</div>
+    <div class="vbox"><strong>ROS 2 Jazzy LTS EOL:</strong> May 2029 · Ubuntu 24.04 (noble) · Migration target; some Isaac ROS packages moving here now</div>
+    <div class="vbox"><strong>NITROS:</strong> Zero-copy DMA — GPU memory → ROS 2 topics with no CPU bounce. Requires physical GPU on runner; cannot test with QEMU.</div>
+    <div class="vbox"><strong>Jetson Orin:</strong> SM 8.7 (Ampere family) · aarch64 · Up to 64 GB unified CPU/GPU memory · Nano/NX/AGX variants</div>
+    <div class="vbox"><strong>Jetson Thor:</strong> SM 10.x (Blackwell family) · aarch64 · Target platform for next-gen Isaac ROS in 2025–2026</div>
+    <div class="vbox"><strong>colcon default parallelism:</strong> <code>--parallel-workers $(nproc)</code> · Use the parallel executor by default for maximum throughput</div>
+    <div class="vbox"><strong>sccache CUDA:</strong> Set <code>RUSTC_WRAPPER=sccache</code>, <code>SCCACHE_BUCKET=s3://your-bucket</code>, and cmake flag <code>-DCMAKE_CUDA_COMPILER_LAUNCHER=sccache</code></div>
+    <div class="vbox"><strong>SLSA Level 3:</strong> Hermetic builds + isolated runners + provenance attestation + signed outputs. Requires cosign + syft + Reusable Workflows or hermetic build service.</div>
+    <div class="vbox"><strong>NGC auth username:</strong> Always the literal string <code>$oauthtoken</code> — not a variable, not your email. NGC API key goes to <code>--password-stdin</code>, never <code>-p</code>.</div>
+    <div class="vbox"><strong>Isaac ROS base image:</strong> <code>nvcr.io/nvidia/isaac/ros:humble-ros-base-amd64</code> and <code>:humble-ros-base-arm64</code> — always pull by digest in production</div>
+    <div class="vbox"><strong>rosdep workflow:</strong> <code>rosdep init</code> only once per runner setup; <code>rosdep update --rosdistro humble</code> on every fresh runner before build</div>
+    <div class="vbox"><strong>vcstool import:</strong> <code>vcs import src --input repos/isaac_ros.repos</code> · <code>vcs validate</code> to confirm all SHAs resolve</div>
+    <div class="vbox"><strong>DDS default (Humble):</strong> FastDDS (eProsima) · Set <code>RMW_IMPLEMENTATION=rmw_fastrtps_cpp</code> · Zenoh available as alternative via <code>rmw_zenoh_cpp</code></div>
+    <div class="vbox"><strong>ROS_DOMAIN_ID:</strong> Set per CI job to a unique integer to prevent cross-job DDS topic interference on shared runners</div>
+    <div class="vbox"><strong>COLCON_EXTENSION_BLOCKLIST:</strong> Env var to exclude colcon extension packages; use <code>--packages-ignore</code> for per-package exclusion in CI</div>
+    <div class="vbox"><strong>CUDA arch list for full coverage:</strong> <code>"8.0;8.6;8.7;8.9;9.0;10.0+PTX"</code> — covers A100, RTX 3090, Orin, RTX 4090, H100, Thor, and future GPUs via PTX</div>
+    <div class="vbox"><strong>cosign sign:</strong> Use <code>--key cosign.key</code> for static keys or keyless OIDC signing via <code>--certificate-identity-regexp</code> in GitHub Actions OIDC context</div>
+    <div class="vbox"><strong>Docker buildx bake:</strong> HCL-based multi-target build definition file. Preferred over long inline <code>docker buildx build</code> flag strings for multi-platform builds.</div>
+    <div class="vbox"><strong>actions/cache 10 GB limit:</strong> Shared across all branches and workflows in the repository. Use <code>type=registry</code> cache on ECR/NGC for Docker layers — no size limit.</div>
+    <div class="vbox"><strong>colcon test result location:</strong> JUnit XML at <code>build/&lt;pkg&gt;/test_results/&lt;pkg&gt;/*.xml</code> — upload with <code>actions/upload-artifact</code> using <code>if: always()</code></div>
+    <div class="vbox"><strong>fetch-depth in CI:</strong> Always use <code>fetch-depth: 1</code> for build/test jobs. Only use <code>fetch-depth: 0</code> for semantic-release or changelog jobs that need full history.</div>
+    <div class="vbox"><strong>Affected-package detection:</strong> <code>git diff --name-only origin/main...HEAD</code> → map to package names → <code>colcon list + colcon graph</code> → resolve transitive dependents</div>
+    <div class="vbox"><strong>Isaac Sim image size:</strong> 40–60 GB on first pull. Cache in a runner-local registry mirror or pre-warm runners with a scheduled pull job during off-peak hours.</div>
+    <div class="vbox"><strong>MIG partitioning:</strong> On A100/H100 runners with multiple concurrent GPU jobs, use NVIDIA MIG to create isolated GPU instances. Prevents CUDA OOM from job contention.</div>
+  </div>
+
+  <h3 class="sub" style="margin-top:32px;">Colcon Build Flag Reference</h3>
+  <div class="tbl-wrap reveal">
+    <table class="fact-table">
+      <thead>
+        <tr><th>Flag</th><th>Effect</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>--symlink-install</td><td>Symlink instead of copy — for development builds; do NOT use in release images</td></tr>
+        <tr><td>--merge-install</td><td>Merge all installs into a single prefix — reduces PATH complexity in containers</td></tr>
+        <tr><td>--parallel-workers N</td><td>Max concurrent package builds; default is <code>nproc</code></td></tr>
+        <tr><td>--cmake-args ...</td><td>Passed verbatim to cmake for every package that uses ament_cmake</td></tr>
+        <tr><td>--event-handlers console_cohesion+</td><td>Buffer output per package instead of interleaving — easier to read in CI logs</td></tr>
+        <tr><td>--continue-on-error</td><td>Build other packages even if one fails — useful to collect all errors at once</td></tr>
+        <tr><td>COLCON_LOG_PATH</td><td>Env var to control where colcon writes its log files</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="exp-block reveal" style="margin-top:28px;">
+    <div class="exp-title">Quick Diagnostic Checklist — Pipeline Failure Triage</div>
+    <div class="exp-body">
+      <ol class="nblt">
+        <li><strong>Runner OOM?</strong> Check <code>ci_gpu_utilization</code> metric and GHA job log for <code>Killed</code> or <code>CUDA_ERROR_OUT_OF_MEMORY</code>. Fix: add swap, increase runner memory, or reduce <code>--parallel-workers</code>.</li>
+        <li><strong>Cache miss?</strong> Check <code>ci_cache_hit_rate</code>. If &lt;50%, check that cache keys include all relevant inputs (requirements hash, platform, CUDA version).</li>
+        <li><strong>rosdep failure?</strong> Usually a new apt package dependency added to <code>package.xml</code> that is not yet in the <code>rosdep</code> database. Fix: add an override in <code>rosdep.yaml</code> or file an upstream PR.</li>
+        <li><strong>NITROS transport failure?</strong> Check that the runner has <code>--gpus all</code> and that the CUDA driver on the host matches the CUDA runtime in the container (check <code>nvidia-smi</code> vs <code>nvcc --version</code>).</li>
+        <li><strong>Flaky test?</strong> Check <code>ci_test_flake_rate</code>. Re-run the test 5 times in isolation. If it passes 4/5, add <code>@pytest.mark.flaky(reruns=3)</code> as a temporary measure and file a stability bug.</li>
+        <li><strong>NGC pull failure?</strong> Verify <code>NGC_API_KEY</code> secret is set and not expired. Check that authentication uses <code>--password-stdin</code> and username is the literal <code>$oauthtoken</code>.</li>
+        <li><strong>QEMU timeout?</strong> This is finding B-08. QEMU is too slow for production arm64 builds. Provision native Jetson Orin or Graviton runners.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="note note-g reveal" style="margin-top:20px;">
+    <strong>Portfolio context:</strong> This reference guide is maintained as part of <a href="https://www.sudhakarchundu.org">Sudhakar Chundu's engineering portfolio</a>. For related guides, see the <a href="../blog/">blog index</a> including the NVIDIA RAPIDS guide and conference materials.
+  </div>
+</section>
+
+</main>
+
+<script>
+// ── SCROLL REVEAL ──────────────────────────────────────────────────────────
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.05 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// ── ACTIVE NAV LINK ON SCROLL ──────────────────────────────────────────────
+const navLinks = document.querySelectorAll('.nav-link');
+const sections = document.querySelectorAll('[id]');
+
+const navObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.getAttribute('id');
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        const href = link.getAttribute('href');
+        if (href === '#' + id) {
+          link.classList.add('active');
+        }
+      });
+    }
+  });
+}, {
+  rootMargin: '-20% 0px -70% 0px',
+  threshold: 0
+});
+
+sections.forEach(section => navObs.observe(section));
+
+// ── SCROLL TO TOP ON PAGE REFRESH ─────────────────────────────────────────
+if (history.scrollRestoration) {
+  history.scrollRestoration = 'manual';
+}
+window.addEventListener('beforeunload', () => {
+  window.scrollTo(0, 0);
+});
+</script>
+</body>
+</html>
