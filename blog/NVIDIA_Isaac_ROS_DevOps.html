@@ -752,38 +752,91 @@ ul.blt li::marker { color:var(--green); }
 
   <p class="body">A production-grade Isaac ROS CI pipeline has three distinct phases with different triggers, runner requirements, and quality gates. The premerge phase must be fast (under 15 minutes for most PRs). The postmerge phase can be slower but must be reliable. The release phase must be hermetic and produce provenance attestations.</p>
 
-  <div class="flow reveal">PR opened
-    │
-    ▼
-┌─────────────────────────────────────────────────────────────┐
-│  PREMERGE VALIDATION                                         │
-│  trigger: pull_request (not pull_request_target)            │
-│  ├─ path-filter: skip if only *.md, docs/, *.txt            │
-│  ├─ colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release    │
-│  ├─ colcon test (affected packages only)                    │
-│  ├─ ament_clang_format + ament_cppcheck + flake8            │
-│  ├─ Trivy image scan + cosign verify                        │
-│  └─ GPU gate: quarantined self-hosted runner                │
-└─────────────────────────────────────────────────────────────┘
-    │ merge to main
-    ▼
-┌─────────────────────────────────────────────────────────────┐
-│  POSTMERGE / NIGHTLY                                         │
-│  ├─ Full workspace rebuild from scratch                     │
-│  ├─ Multi-arch buildx: amd64 + arm64 (native Jetson)       │
-│  ├─ Hardware-in-loop (HIL) validation on Jetson Orin        │
-│  ├─ Prometheus metrics publish                              │
-│  └─ Grafana dashboard update                                │
-└─────────────────────────────────────────────────────────────┘
-    │ tag / release
-    ▼
-┌─────────────────────────────────────────────────────────────┐
-│  RELEASE PIPELINE                                            │
-│  ├─ Signed image promotion: dev → staging → prod            │
-│  ├─ SBOM generation (syft) + provenance (cosign/sigstore)   │
-│  ├─ NGC registry publish (nvcr.io)                          │
-│  └─ Automated changelog + GitHub Release                    │
-└─────────────────────────────────────────────────────────────┘</div>
+  <div class="reveal" style="margin:14px 0;">
+    <svg viewBox="0 0 560 620" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:620px;display:block;font-family:'DM Mono',monospace;">
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#76B900"/>
+        </marker>
+      </defs>
+
+      <!-- ── Trigger label: PR opened ── -->
+      <text x="280" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#3d6200" font-family="'DM Mono',monospace">PR opened</text>
+
+      <!-- Arrow down to box 1 -->
+      <line x1="280" y1="28" x2="280" y2="52" stroke="#76B900" stroke-width="2" marker-end="url(#arr)"/>
+
+      <!-- ── Box 1: PREMERGE VALIDATION ── -->
+      <rect x="20" y="54" width="520" height="186" rx="8" fill="#EBF5D4" stroke="#76B900" stroke-width="2"/>
+      <!-- Header bar -->
+      <rect x="20" y="54" width="520" height="36" rx="8" fill="#76B900"/>
+      <rect x="20" y="74" width="520" height="16" fill="#76B900"/>
+      <text x="36" y="76" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'DM Mono',monospace">PREMERGE VALIDATION</text>
+      <text x="490" y="76" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'DM Mono',monospace">trigger: pull_request</text>
+
+      <!-- Items -->
+      <text x="44" y="112" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">path-filter: skip if only *.md, docs/, *.txt</text>
+      <text x="44" y="133" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release</text>
+      <text x="44" y="154" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">colcon test (affected packages only)</text>
+      <text x="44" y="175" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">ament_clang_format + ament_cppcheck + flake8</text>
+      <text x="44" y="196" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Trivy image scan + cosign verify</text>
+      <text x="44" y="217" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">GPU gate: quarantined self-hosted runner</text>
+
+      <!-- Bullet dots -->
+      <circle cx="34" cy="109" r="3" fill="#76B900"/>
+      <circle cx="34" cy="130" r="3" fill="#76B900"/>
+      <circle cx="34" cy="151" r="3" fill="#76B900"/>
+      <circle cx="34" cy="172" r="3" fill="#76B900"/>
+      <circle cx="34" cy="193" r="3" fill="#76B900"/>
+      <circle cx="34" cy="214" r="3" fill="#76B900"/>
+
+      <!-- Arrow + label: merge to main -->
+      <line x1="280" y1="240" x2="280" y2="278" stroke="#76B900" stroke-width="2" marker-end="url(#arr)"/>
+      <rect x="200" y="248" width="160" height="20" rx="4" fill="#fff" stroke="#76B900" stroke-width="1.2"/>
+      <text x="280" y="262" text-anchor="middle" font-size="10.5" font-weight="600" fill="#3d6200" font-family="'DM Mono',monospace">merge to main</text>
+
+      <!-- ── Box 2: POSTMERGE / NIGHTLY ── -->
+      <rect x="20" y="280" width="520" height="166" rx="8" fill="#EBF5D4" stroke="#76B900" stroke-width="2"/>
+      <rect x="20" y="280" width="520" height="36" rx="8" fill="#76B900"/>
+      <rect x="20" y="300" width="520" height="16" fill="#76B900"/>
+      <text x="36" y="302" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'DM Mono',monospace">POSTMERGE / NIGHTLY</text>
+      <text x="490" y="302" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'DM Mono',monospace">trigger: push to main / cron</text>
+
+      <text x="44" y="338" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Full workspace rebuild from scratch</text>
+      <text x="44" y="359" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Multi-arch buildx: amd64 + arm64 (native Jetson)</text>
+      <text x="44" y="380" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Hardware-in-loop (HIL) validation on Jetson Orin</text>
+      <text x="44" y="401" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Prometheus metrics publish</text>
+      <text x="44" y="422" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Grafana dashboard update</text>
+
+      <circle cx="34" cy="335" r="3" fill="#76B900"/>
+      <circle cx="34" cy="356" r="3" fill="#76B900"/>
+      <circle cx="34" cy="377" r="3" fill="#76B900"/>
+      <circle cx="34" cy="398" r="3" fill="#76B900"/>
+      <circle cx="34" cy="419" r="3" fill="#76B900"/>
+
+      <!-- Arrow + label: tag / release -->
+      <line x1="280" y1="446" x2="280" y2="484" stroke="#76B900" stroke-width="2" marker-end="url(#arr)"/>
+      <rect x="200" y="454" width="160" height="20" rx="4" fill="#fff" stroke="#76B900" stroke-width="1.2"/>
+      <text x="280" y="468" text-anchor="middle" font-size="10.5" font-weight="600" fill="#3d6200" font-family="'DM Mono',monospace">tag / release</text>
+
+      <!-- ── Box 3: RELEASE PIPELINE ── -->
+      <rect x="20" y="486" width="520" height="126" rx="8" fill="#EBF5D4" stroke="#76B900" stroke-width="2"/>
+      <rect x="20" y="486" width="520" height="36" rx="8" fill="#76B900"/>
+      <rect x="20" y="506" width="520" height="16" fill="#76B900"/>
+      <text x="36" y="508" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'DM Mono',monospace">RELEASE PIPELINE</text>
+      <text x="490" y="508" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'DM Mono',monospace">trigger: git tag vX.Y.Z</text>
+
+      <text x="44" y="544" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Signed image promotion: dev → staging → prod</text>
+      <text x="44" y="565" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">SBOM generation (syft) + provenance (cosign/sigstore)</text>
+      <text x="44" y="586" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">NGC registry publish (nvcr.io)</text>
+      <text x="44" y="607" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Automated changelog + GitHub Release</text>
+
+      <circle cx="34" cy="541" r="3" fill="#76B900"/>
+      <circle cx="34" cy="562" r="3" fill="#76B900"/>
+      <circle cx="34" cy="583" r="3" fill="#76B900"/>
+      <circle cx="34" cy="604" r="3" fill="#76B900"/>
+    </svg>
+  </div>
 
   <h3 class="sub">Premerge Workflow — Complete YAML</h3>
   <div class="pre-label">GitHub Actions — premerge-ci.yml</div>
