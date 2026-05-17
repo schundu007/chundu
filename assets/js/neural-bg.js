@@ -43,17 +43,17 @@ class AmbientBackground {
         const isMobile = window.innerWidth < 768;
         this.orbs = [];
 
-        // Large soft gradient orbs — lime/green tones (Nebius-inspired)
+        // Large soft gradient orbs — professional blue tones
         const orbConfigs = isMobile ? [
-            { x: 0.25, y: 0.2, r: 220, color: [180, 220, 50], speed: 0.0003 },
-            { x: 0.75, y: 0.6, r: 180, color: [120, 180, 40], speed: 0.0004 },
-            { x: 0.5, y: 0.85, r: 200, color: [160, 200, 60], speed: 0.00035 },
+            { x: 0.25, y: 0.2, r: 220, color: [59, 130, 246], speed: 0.0003 },
+            { x: 0.75, y: 0.6, r: 180, color: [37, 99, 235], speed: 0.0004 },
+            { x: 0.5, y: 0.85, r: 200, color: [96, 165, 250], speed: 0.00035 },
         ] : [
-            { x: 0.2, y: 0.15, r: 400, color: [180, 220, 50], speed: 0.0002, phase: 0 },
-            { x: 0.8, y: 0.2, r: 350, color: [140, 200, 40], speed: 0.00025, phase: 1.5 },
-            { x: 0.15, y: 0.7, r: 320, color: [160, 210, 55], speed: 0.00022, phase: 3 },
-            { x: 0.75, y: 0.75, r: 380, color: [120, 180, 60], speed: 0.00018, phase: 4.5 },
-            { x: 0.5, y: 0.45, r: 300, color: [200, 230, 70], speed: 0.0003, phase: 2.2 },
+            { x: 0.2, y: 0.15, r: 400, color: [59, 130, 246], speed: 0.0002, phase: 0 },
+            { x: 0.8, y: 0.2, r: 350, color: [37, 99, 235], speed: 0.00025, phase: 1.5 },
+            { x: 0.15, y: 0.7, r: 320, color: [79, 142, 247], speed: 0.00022, phase: 3 },
+            { x: 0.75, y: 0.75, r: 380, color: [29, 78, 216], speed: 0.00018, phase: 4.5 },
+            { x: 0.5, y: 0.45, r: 300, color: [96, 165, 250], speed: 0.0003, phase: 2.2 },
         ];
 
         orbConfigs.forEach(cfg => {
@@ -155,19 +155,19 @@ class AmbientBackground {
         const light = this.isLight();
         const gradient = this.ctx.createLinearGradient(0, 0, this.width, 0);
         const opacity = light ? 0.04 : 0.06;
-        gradient.addColorStop(0, `rgba(180, 220, 50, 0)`);
-        gradient.addColorStop(0.3, `rgba(180, 220, 50, ${opacity})`);
-        gradient.addColorStop(0.5, `rgba(224, 255, 79, ${opacity * 1.2})`);
-        gradient.addColorStop(0.7, `rgba(160, 200, 60, ${opacity})`);
-        gradient.addColorStop(1, `rgba(160, 200, 60, 0)`);
+        gradient.addColorStop(0, `rgba(59, 130, 246, 0)`);
+        gradient.addColorStop(0.3, `rgba(59, 130, 246, ${opacity})`);
+        gradient.addColorStop(0.5, `rgba(91, 156, 248, ${opacity * 1.2})`);
+        gradient.addColorStop(0.7, `rgba(79, 142, 247, ${opacity})`);
+        gradient.addColorStop(1, `rgba(79, 142, 247, 0)`);
 
         this.ctx.fillStyle = gradient;
         this.ctx.fillRect(0, 0, this.width, 2);
 
         // Soft glow under the line
         const glowGrad = this.ctx.createLinearGradient(0, 0, 0, 120);
-        glowGrad.addColorStop(0, `rgba(224, 255, 79, ${opacity * 0.6})`);
-        glowGrad.addColorStop(1, 'rgba(224, 255, 79, 0)');
+        glowGrad.addColorStop(0, `rgba(91, 156, 248, ${opacity * 0.6})`);
+        glowGrad.addColorStop(1, 'rgba(91, 156, 248, 0)');
         this.ctx.fillStyle = glowGrad;
         this.ctx.fillRect(0, 0, this.width, 120);
     }
