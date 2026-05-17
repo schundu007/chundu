@@ -110,9 +110,13 @@
             font-size: 0.9rem;
         }
 
+        .hero-content {
+            max-width: 820px;
+        }
+
         .hero-content h1 {
-            font-size: 3rem;
-            line-height: 1.1;
+            font-size: clamp(2.5rem, 4vw, 3.75rem);
+            line-height: 1.08;
             margin-bottom: 1.5rem;
             font-weight: 700;
             letter-spacing: -0.02em;
@@ -138,42 +142,27 @@
             opacity: 1;
         }
 
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
+        .hero-facts {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.25rem 0;
             margin-bottom: 2.5rem;
-        }
-
-        .hero-stat {
-            background: var(--bg-card);
-            border: none;
-            border-radius: var(--radius-lg);
-            padding: 1.25rem 1rem;
-            text-align: center;
-            transition: var(--transition-normal);
-            box-shadow: var(--shadow-md);
-        }
-
-        .hero-stat:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .hero-stat-value {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--accent-highlight);
             font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
         }
 
-        .hero-stat-label {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-top: 0.35rem;
-            font-weight: 500;
+        .hero-facts .fact-sep {
+            margin: 0 0.875rem;
+            color: var(--accent-highlight);
+            opacity: 0.4;
+            font-weight: 300;
+        }
+
+        .hero-facts strong {
+            color: var(--text-primary);
+            font-weight: 600;
         }
 
         .cta-buttons {
@@ -488,11 +477,30 @@
             font-weight: 500;
         }
 
-        /* Skills Grid */
+        /* Skills Grid — varied sizing to break identical-card monotony */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(6, 1fr);
             gap: 1.25rem;
+        }
+
+        /* Row 1: 2 large feature cards */
+        .skill-card:nth-child(1),
+        .skill-card:nth-child(2) {
+            grid-column: span 3;
+        }
+
+        /* Row 2: 3 compact cards */
+        .skill-card:nth-child(3),
+        .skill-card:nth-child(4),
+        .skill-card:nth-child(5) {
+            grid-column: span 2;
+        }
+
+        /* Row 3: 2 large cards again */
+        .skill-card:nth-child(6),
+        .skill-card:nth-child(7) {
+            grid-column: span 3;
         }
 
         .skill-card {
@@ -504,27 +512,42 @@
             box-shadow: var(--shadow-md);
         }
 
+        /* Feature cards (rows 1 and 3) get more breathing room */
+        .skill-card:nth-child(1),
+        .skill-card:nth-child(2),
+        .skill-card:nth-child(6),
+        .skill-card:nth-child(7) {
+            padding: 2rem 2.25rem;
+        }
+
         .skill-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-3px);
             box-shadow: var(--shadow-lg);
         }
 
         .skill-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--accent-highlight);
+            width: 40px;
+            height: 40px;
+            background: rgba(224, 255, 79, 0.1);
             border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 1rem;
-            font-size: 1.25rem;
-            color: #09090b;
+            font-size: 1.1rem;
+            color: var(--accent-highlight);
         }
 
         .skill-card h3 {
             font-size: 1rem;
             margin-bottom: 0.5rem;
+        }
+
+        .skill-card:nth-child(1) h3,
+        .skill-card:nth-child(2) h3,
+        .skill-card:nth-child(6) h3,
+        .skill-card:nth-child(7) h3 {
+            font-size: 1.125rem;
         }
 
         .skill-card p {
@@ -564,11 +587,6 @@
                 justify-content: center;
             }
 
-            .hero-stats {
-                grid-template-columns: repeat(2, 1fr);
-                max-width: 420px;
-                margin: 0 auto 2rem;
-            }
         }
 
         @media (max-width: 768px) {
@@ -591,6 +609,63 @@
             .skills-grid {
                 grid-template-columns: 1fr;
             }
+
+            .skill-card:nth-child(n) {
+                grid-column: span 1;
+            }
+
+            .skill-card:nth-child(1) h3,
+            .skill-card:nth-child(2) h3,
+            .skill-card:nth-child(6) h3,
+            .skill-card:nth-child(7) h3 {
+                font-size: 1rem;
+            }
+
+            .skill-card:nth-child(1),
+            .skill-card:nth-child(2),
+            .skill-card:nth-child(6),
+            .skill-card:nth-child(7) {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Companies grid */
+        .companies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 1rem;
+            max-width: 960px;
+            margin: 2rem auto 0;
+        }
+
+        .company-logo-link {
+            background: var(--bg-card);
+            border: 1px solid transparent;
+            border-radius: var(--radius-lg);
+            padding: 1.25rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-normal);
+            text-decoration: none;
+        }
+
+        .company-logo-link:hover {
+            border-color: var(--accent-highlight);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .company-logo-link img {
+            max-width: 76px;
+            max-height: 36px;
+            object-fit: contain;
+            opacity: 0.85;
+            transition: opacity var(--transition-fast);
+        }
+
+        .company-logo-link:hover img {
+            opacity: 1;
         }
     </style>
 </head>
@@ -654,23 +729,14 @@
                         Kubernetes, Terraform, GitOps (ArgoCD, Flux), and observability stacks (Prometheus, Grafana, Datadog).
                         I lead incident command, author postmortems, and define meaningful SLOs. Speaker at KubeCon, SREcon, and DevOps Days.
                     </p>
-                    <div class="hero-stats">
-                        <div class="hero-stat">
-                            <div class="hero-stat-value"><span class="counter" data-target="18">0</span>+</div>
-                            <div class="hero-stat-label">Years Hands-On</div>
-                        </div>
-                        <div class="hero-stat">
-                            <div class="hero-stat-value"><span class="counter" data-target="99.99">0</span>%</div>
-                            <div class="hero-stat-label">SLO Maintained</div>
-                        </div>
-                        <div class="hero-stat">
-                            <div class="hero-stat-value"><span class="counter" data-target="65">0</span>+</div>
-                            <div class="hero-stat-label">GPUs Managed</div>
-                        </div>
-                        <div class="hero-stat">
-                            <div class="hero-stat-value">$<span class="counter" data-target="8">0</span>M</div>
-                            <div class="hero-stat-label">Cost Saved</div>
-                        </div>
+                    <div class="hero-facts">
+                        <span><strong>18 yrs</strong> hands-on</span>
+                        <span class="fact-sep">·</span>
+                        <span><strong>99.99%</strong> SLO maintained</span>
+                        <span class="fact-sep">·</span>
+                        <span><strong>65+</strong> GPUs managed</span>
+                        <span class="fact-sep">·</span>
+                        <span><strong>$8M+</strong> infrastructure cost saved</span>
                     </div>
                     <div class="cta-buttons">
                         <a href="resume/" class="btn btn-primary">
@@ -1017,63 +1083,25 @@
                     <h2>Companies I <span>Admire</span></h2>
                     <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Organizations where my expertise in GPU infrastructure, SRE, and platform engineering can drive the most impact.</p>
                 </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1.5rem; max-width: 900px; margin: 2rem auto 0;">
-                    <a href="https://www.nvidia.com/careers" target="_blank" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-normal); text-decoration: none;" onmouseover="this.style.borderColor='var(--accent-cyan)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--glass-border)';this.style.transform='none'">
-                        <img src="assets/images/logos/nvidia.png" alt="NVIDIA" style="max-width: 80px; max-height: 40px; object-fit: contain; filter: brightness(0.9);">
-                    </a>
-                    <a href="https://careers.google.com" target="_blank" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-normal); text-decoration: none;" onmouseover="this.style.borderColor='var(--accent-cyan)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--glass-border)';this.style.transform='none'">
-                        <img src="assets/images/logos/google.png" alt="Google" style="max-width: 80px; max-height: 40px; object-fit: contain; filter: brightness(0.9);">
-                    </a>
-                    <a href="https://www.metacareers.com" target="_blank" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-normal); text-decoration: none;" onmouseover="this.style.borderColor='var(--accent-cyan)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--glass-border)';this.style.transform='none'">
-                        <img src="assets/images/logos/meta.png" alt="Meta" style="max-width: 80px; max-height: 40px; object-fit: contain; filter: brightness(0.9);">
-                    </a>
-                    <a href="https://www.amazon.jobs" target="_blank" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-normal); text-decoration: none;" onmouseover="this.style.borderColor='var(--accent-cyan)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--glass-border)';this.style.transform='none'">
-                        <img src="assets/images/logos/amazon.png" alt="Amazon" style="max-width: 80px; max-height: 40px; object-fit: contain; filter: brightness(0.9);">
-                    </a>
-                    <a href="https://careers.microsoft.com" target="_blank" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-normal); text-decoration: none;" onmouseover="this.style.borderColor='var(--accent-cyan)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--glass-border)';this.style.transform='none'">
-                        <img src="assets/images/logos/microsoft.png" alt="Microsoft" style="max-width: 80px; max-height: 40px; object-fit: contain; filter: brightness(0.9);">
-                    </a>
-                    <a href="https://openai.com/careers" target="_blank" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-normal); text-decoration: none;" onmouseover="this.style.borderColor='var(--accent-cyan)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--glass-border)';this.style.transform='none'">
-                        <img src="assets/images/logos/openai.png" alt="OpenAI" style="max-width: 80px; max-height: 40px; object-fit: contain; filter: brightness(0.9);">
-                    </a>
-                    <a href="https://www.apple.com/careers" target="_blank" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-normal); text-decoration: none;" onmouseover="this.style.borderColor='var(--accent-cyan)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--glass-border)';this.style.transform='none'">
-                        <img src="assets/images/logos/apple.png" alt="Apple" style="max-width: 80px; max-height: 40px; object-fit: contain; filter: brightness(0.9);">
-                    </a>
-                    <a href="https://cerebras.net/careers" target="_blank" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-normal); text-decoration: none;" onmouseover="this.style.borderColor='var(--accent-cyan)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--glass-border)';this.style.transform='none'">
-                        <img src="assets/images/logos/cerebras.png" alt="Cerebras" style="max-width: 80px; max-height: 40px; object-fit: contain; filter: brightness(0.9);">
-                    </a>
-                    <a href="https://groq.com/careers" target="_blank" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-normal); text-decoration: none;" onmouseover="this.style.borderColor='var(--accent-cyan)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--glass-border)';this.style.transform='none'">
-                        <img src="assets/images/logos/groq.png" alt="Groq" style="max-width: 80px; max-height: 40px; object-fit: contain; filter: brightness(0.9);">
-                    </a>
-                    <a href="https://scale.com/careers" target="_blank" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-normal); text-decoration: none;" onmouseover="this.style.borderColor='var(--accent-cyan)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--glass-border)';this.style.transform='none'">
-                        <img src="assets/images/logos/scaleai.png" alt="Scale AI" style="max-width: 80px; max-height: 40px; object-fit: contain; filter: brightness(0.9);">
-                    </a>
-                    <a href="https://www.oracle.com/careers" target="_blank" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-normal); text-decoration: none;" onmouseover="this.style.borderColor='var(--accent-cyan)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--glass-border)';this.style.transform='none'">
-                        <img src="assets/images/logos/oracle.png" alt="Oracle" style="max-width: 80px; max-height: 40px; object-fit: contain; filter: brightness(0.9);">
-                    </a>
-                    <a href="https://www.cisco.com/c/en/us/about/careers.html" target="_blank" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-normal); text-decoration: none;" onmouseover="this.style.borderColor='var(--accent-cyan)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--glass-border)';this.style.transform='none'">
-                        <img src="assets/images/logos/cisco.png" alt="Cisco" style="max-width: 80px; max-height: 40px; object-fit: contain; filter: brightness(0.9);">
-                    </a>
-                </div>
-                <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 1.5rem; max-width: 900px; margin-left: auto; margin-right: auto;">
-                    <a href="https://www.salesforce.com/company/careers" target="_blank" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-normal); text-decoration: none; flex: 1; min-width: 120px; max-width: 150px;" onmouseover="this.style.borderColor='var(--accent-cyan)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--glass-border)';this.style.transform='none'">
-                        <img src="assets/images/logos/salesforce.png" alt="Salesforce" style="max-width: 80px; max-height: 35px; object-fit: contain; filter: brightness(0.9);">
-                    </a>
-                    <a href="https://www.intuit.com/careers" target="_blank" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-normal); text-decoration: none; flex: 1; min-width: 120px; max-width: 150px;" onmouseover="this.style.borderColor='var(--accent-cyan)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--glass-border)';this.style.transform='none'">
-                        <img src="assets/images/logos/intuit.png" alt="Intuit" style="max-width: 80px; max-height: 35px; object-fit: contain; filter: brightness(0.9);">
-                    </a>
-                    <a href="https://www.visa.com/careers" target="_blank" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-normal); text-decoration: none; flex: 1; min-width: 120px; max-width: 150px;" onmouseover="this.style.borderColor='var(--accent-cyan)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--glass-border)';this.style.transform='none'">
-                        <img src="assets/images/logos/visa.png" alt="Visa" style="max-width: 80px; max-height: 35px; object-fit: contain; filter: brightness(0.9);">
-                    </a>
-                    <a href="https://www.jpmorgan.com/careers" target="_blank" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-normal); text-decoration: none; flex: 1; min-width: 120px; max-width: 150px;" onmouseover="this.style.borderColor='var(--accent-cyan)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--glass-border)';this.style.transform='none'">
-                        <img src="assets/images/logos/jpmorgan.png" alt="JPMorgan Chase" style="max-width: 80px; max-height: 35px; object-fit: contain; filter: brightness(0.9);">
-                    </a>
-                    <a href="https://corporate.walmart.com/careers" target="_blank" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-normal); text-decoration: none; flex: 1; min-width: 120px; max-width: 150px;" onmouseover="this.style.borderColor='var(--accent-cyan)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--glass-border)';this.style.transform='none'">
-                        <img src="assets/images/logos/walmart.png" alt="Walmart" style="max-width: 80px; max-height: 35px; object-fit: contain; filter: brightness(0.9);">
-                    </a>
-                    <a href="https://www.capitalone.com/tech/careers" target="_blank" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: center; transition: var(--transition-normal); text-decoration: none; flex: 1; min-width: 120px; max-width: 150px;" onmouseover="this.style.borderColor='var(--accent-cyan)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='var(--glass-border)';this.style.transform='none'">
-                        <img src="assets/images/logos/capitalone.png" alt="Capital One" style="max-width: 80px; max-height: 35px; object-fit: contain; filter: brightness(0.9);">
-                    </a>
+                <div class="companies-grid">
+                    <a href="https://www.nvidia.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/nvidia.png" alt="NVIDIA"></a>
+                    <a href="https://careers.google.com" target="_blank" class="company-logo-link"><img src="assets/images/logos/google.png" alt="Google"></a>
+                    <a href="https://www.metacareers.com" target="_blank" class="company-logo-link"><img src="assets/images/logos/meta.png" alt="Meta"></a>
+                    <a href="https://www.amazon.jobs" target="_blank" class="company-logo-link"><img src="assets/images/logos/amazon.png" alt="Amazon"></a>
+                    <a href="https://careers.microsoft.com" target="_blank" class="company-logo-link"><img src="assets/images/logos/microsoft.png" alt="Microsoft"></a>
+                    <a href="https://openai.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/openai.png" alt="OpenAI"></a>
+                    <a href="https://www.apple.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/apple.png" alt="Apple"></a>
+                    <a href="https://cerebras.net/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/cerebras.png" alt="Cerebras"></a>
+                    <a href="https://groq.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/groq.png" alt="Groq"></a>
+                    <a href="https://scale.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/scaleai.png" alt="Scale AI"></a>
+                    <a href="https://www.oracle.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/oracle.png" alt="Oracle"></a>
+                    <a href="https://www.cisco.com/c/en/us/about/careers.html" target="_blank" class="company-logo-link"><img src="assets/images/logos/cisco.png" alt="Cisco"></a>
+                    <a href="https://www.salesforce.com/company/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/salesforce.png" alt="Salesforce"></a>
+                    <a href="https://www.intuit.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/intuit.png" alt="Intuit"></a>
+                    <a href="https://www.visa.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/visa.png" alt="Visa"></a>
+                    <a href="https://www.jpmorgan.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/jpmorgan.png" alt="JPMorgan Chase"></a>
+                    <a href="https://corporate.walmart.com/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/walmart.png" alt="Walmart"></a>
+                    <a href="https://www.capitalone.com/tech/careers" target="_blank" class="company-logo-link"><img src="assets/images/logos/capitalone.png" alt="Capital One"></a>
                 </div>
             </div>
         </section>
@@ -1130,52 +1158,6 @@
         if (track) {
             const cards = track.querySelectorAll('.testimonial-card');
             cards.forEach(card => track.appendChild(card.cloneNode(true)));
-        }
-
-        // Animated counters
-        const animateCounters = () => {
-            const counters = document.querySelectorAll('.counter');
-            counters.forEach(counter => {
-                const target = parseFloat(counter.getAttribute('data-target'));
-                const duration = 2000;
-                const start = performance.now();
-
-                const updateCounter = (currentTime) => {
-                    const elapsed = currentTime - start;
-                    const progress = Math.min(elapsed / duration, 1);
-                    const easeOut = 1 - Math.pow(1 - progress, 3);
-                    const current = target * easeOut;
-
-                    if (target === 99.99) {
-                        counter.textContent = current.toFixed(2);
-                    } else {
-                        counter.textContent = Math.floor(current);
-                    }
-
-                    if (progress < 1) {
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.textContent = target;
-                    }
-                };
-
-                requestAnimationFrame(updateCounter);
-            });
-        };
-
-        // Trigger animation when hero is visible
-        const heroSection = document.querySelector('.hero');
-        if (heroSection) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        animateCounters();
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.3 });
-
-            observer.observe(heroSection);
         }
 
         // Scroll reveal animation
