@@ -891,6 +891,8 @@ td.danger { color:#D85A30; }
 }
 #nav-logo:hover { background:#1a1a1a; }
 #nav-logo span { display:block; font-size:10px; font-weight:400; color:#666; margin-top:3px; font-family:var(--mono); }
+#nav-logo a { display:block; font-size:10px; font-weight:300; opacity:.7; margin-top:4px; color:rgba(255,255,255,.75); text-decoration:none; }
+#nav-logo a:hover { opacity:1; }
 
 .nav-part {
   padding:16px 20px 5px;
@@ -1242,6 +1244,8 @@ a[href]:not(.nav-link):not(.ep-link-card):not(.ep-article):not(.ep-full-btn):not
   <div id="nav-logo" style="cursor:pointer;" data-target="exec-wrap">
     Engineering Portfolio
     <span>Sudhakar Chundu<br>Staff DevOps · Cloud Infra Architect</span>
+    <a href="../" onclick="event.stopPropagation()">← Home</a>
+    <a href="../blog/" onclick="event.stopPropagation()">← Blog</a>
   </div>
 
   <div class="nav-part">Overview</div>
