@@ -891,8 +891,19 @@ td.danger { color:#D85A30; }
 }
 #nav-logo:hover { background:#1a1a1a; }
 #nav-logo span { display:block; font-size:10px; font-weight:400; color:#666; margin-top:3px; font-family:var(--mono); }
-#nav-logo a { display:block; font-size:10px; font-weight:300; opacity:.7; margin-top:4px; color:rgba(255,255,255,.75); text-decoration:none; }
-#nav-logo a:hover { opacity:1; }
+#nav-logo a {
+  display:inline-block; font-size:11px; font-weight:600;
+  margin-top:8px; margin-right:6px;
+  padding:4px 12px; border-radius:20px;
+  background:rgba(255,255,255,0.18); color:#fff;
+  text-decoration:none; border:1px solid rgba(255,255,255,0.45);
+  transition:background .18s, border-color .18s, box-shadow .18s;
+  letter-spacing:.02em;
+}
+#nav-logo a:hover {
+  background:rgba(255,255,255,0.32); border-color:rgba(255,255,255,0.9);
+  box-shadow:0 0 10px rgba(255,255,255,0.35);
+}
 
 .nav-part {
   padding:16px 20px 5px;
@@ -1244,8 +1255,10 @@ a[href]:not(.nav-link):not(.ep-link-card):not(.ep-article):not(.ep-full-btn):not
   <div id="nav-logo" style="cursor:pointer;" data-target="exec-wrap">
     Engineering Portfolio
     <span>Sudhakar Chundu<br>Staff DevOps · Cloud Infra Architect</span>
-    <a href="../" onclick="event.stopPropagation()">← Home</a>
-    <a href="../blog/" onclick="event.stopPropagation()">← Blog</a>
+    <div style="margin-top:10px; display:flex; gap:6px; flex-wrap:wrap;" onclick="event.stopPropagation()">
+      <a href="../">← Home</a>
+      <a href="../blog/">← Blog</a>
+    </div>
   </div>
 
   <div class="nav-part">Overview</div>

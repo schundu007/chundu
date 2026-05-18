@@ -59,11 +59,18 @@ body {
   color:#fff; letter-spacing:.02em; line-height:1.4;
 }
 #nav-logo a {
-  display:block; font-size:10px; font-weight:300; opacity:.8;
-  margin-top:4px; color:rgba(255,255,255,.75); text-decoration:none;
-  border:none !important;
+  display:inline-block; font-size:11px; font-weight:600;
+  margin-top:8px; margin-right:6px;
+  padding:4px 12px; border-radius:20px;
+  background:rgba(255,255,255,0.18); color:#fff;
+  text-decoration:none; border:1px solid rgba(255,255,255,0.45);
+  transition:background .18s, border-color .18s, box-shadow .18s;
+  letter-spacing:.02em;
 }
-#nav-logo a:hover { opacity:1; }
+#nav-logo a:hover {
+  background:rgba(255,255,255,0.32); border-color:rgba(255,255,255,0.9);
+  box-shadow:0 0 10px rgba(255,255,255,0.35);
+}
 .nav-part {
   padding:14px 20px 4px;
   font-size:9px; letter-spacing:.15em; text-transform:uppercase;
@@ -374,8 +381,10 @@ ul.blt li::marker { color:var(--green); }
   <div id="nav-logo">
     NVIDIA Isaac ROS<br>DevOps Reference
     <span style="font-style:italic; font-size:10px; color:rgba(255,255,255,.6);">Sudhakar Chundu</span>
-    <a href="../">← Home</a>
-    <a href="../blog/">← Blog</a>
+    <div style="margin-top:10px; display:flex; gap:6px; flex-wrap:wrap;">
+      <a href="../">← Home</a>
+      <a href="../blog/">← Blog</a>
+    </div>
   </div>
 
   <div class="nav-part">Overview</div>
