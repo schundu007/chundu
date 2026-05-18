@@ -157,7 +157,6 @@ h3.sub {
   border-left:3px solid var(--green);
   font-family:var(--sans);
 }
-.topic-num { font-family:var(--mono); font-size:11px; color:var(--green); font-weight:700; }
 .topic-badge {
   font-family:var(--mono); font-size:10px;
   padding:3px 10px; border-radius:20px;
@@ -428,7 +427,7 @@ ul.blt li::marker { color:var(--green); }
 <!-- ── OVERVIEW ── -->
 <section class="section" id="overview">
   <div class="topic-header">
-    <span class="topic-num">OVERVIEW</span>
+
     <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Contents &amp; Scope</h2>
     <span class="topic-badge">4 Parts · 41 Findings</span>
   </div>
@@ -496,7 +495,7 @@ ul.blt li::marker { color:var(--green); }
 <!-- A1 -->
 <section class="section" id="a1">
   <div class="topic-header">
-    <span class="topic-num">A1</span>
+
     <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">The Isaac Ecosystem</h2>
     <span class="topic-badge">4 components</span>
   </div>
@@ -555,7 +554,7 @@ ul.blt li::marker { color:var(--green); }
 <!-- A2 -->
 <section class="section section-alt" id="a2">
   <div class="topic-header">
-    <span class="topic-num">A2</span>
+
     <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">The CI Engineer's View of ROS 2</h2>
     <span class="topic-badge">This role</span>
   </div>
@@ -626,7 +625,7 @@ ul.blt li::marker { color:var(--green); }
 <!-- A3 -->
 <section class="section" id="a3">
   <div class="topic-header">
-    <span class="topic-num">A3</span>
+
     <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">ROS 2 Fundamentals for CI Engineers</h2>
     <span class="topic-badge">Essential only</span>
   </div>
@@ -745,7 +744,7 @@ ul.blt li::marker { color:var(--green); }
 <!-- B1 -->
 <section class="section" id="b1">
   <div class="topic-header">
-    <span class="topic-num">B1</span>
+
     <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Pipeline Architecture</h2>
     <span class="topic-badge">3 phases</span>
   </div>
@@ -913,7 +912,7 @@ jobs:
 <!-- B2 -->
 <section class="section section-alt" id="b2">
   <div class="topic-header">
-    <span class="topic-num">B2</span>
+
     <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Multi-Architecture Build Strategy</h2>
     <span class="topic-badge">amd64 + arm64</span>
   </div>
@@ -1019,7 +1018,7 @@ CMD ["bash"]</pre>
 <!-- B3 -->
 <section class="section" id="b3">
   <div class="topic-header">
-    <span class="topic-num">B3</span>
+
     <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Multi-Repo Workspace Management</h2>
     <span class="topic-badge">vcstool + colcon</span>
   </div>
@@ -1118,7 +1117,7 @@ colcon test --packages-above-and-dependencies $CHANGED_PKGS</pre>
 <!-- B4 -->
 <section class="section section-alt" id="b4">
   <div class="topic-header">
-    <span class="topic-num">B4</span>
+
     <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Release Engineering</h2>
     <span class="topic-badge">target: SLSA L3</span>
   </div>
@@ -1339,7 +1338,7 @@ cosign verify \
 <!-- C1 -->
 <section class="section" id="c1">
   <div class="topic-header">
-    <span class="topic-num">C1</span>
+
     <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Build Time &amp; Caching</h2>
     <span class="topic-badge">8 findings</span>
   </div>
@@ -1489,7 +1488,7 @@ cosign verify \
 <!-- C2 -->
 <section class="section section-alt" id="c2">
   <div class="topic-header">
-    <span class="topic-num">C2</span>
+
     <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Image Size</h2>
     <span class="topic-badge">4 findings</span>
   </div>
@@ -1570,7 +1569,7 @@ LABEL org.opencontainers.image.created="${BUILD_DATE}"</pre>
 <!-- C3 -->
 <section class="section" id="c3">
   <div class="topic-header">
-    <span class="topic-num">C3</span>
+
     <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Security</h2>
     <span class="topic-badge">7 findings</span>
   </div>
@@ -1704,7 +1703,7 @@ LABEL org.opencontainers.image.created="${BUILD_DATE}"</pre>
 <!-- C4 -->
 <section class="section section-alt" id="c4">
   <div class="topic-header">
-    <span class="topic-num">C4</span>
+
     <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Correctness &amp; Flakiness</h2>
     <span class="topic-badge">7 findings</span>
   </div>
@@ -1825,7 +1824,7 @@ uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16  # v4</
 <!-- D1 -->
 <section class="section" id="d1">
   <div class="topic-header">
-    <span class="topic-num">D1</span>
+
     <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Colcon &amp; Ament Build System</h2>
     <span class="topic-badge">Build reference</span>
   </div>
@@ -1935,7 +1934,7 @@ uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16  # v4</
 <!-- D2 -->
 <section class="section section-alt" id="d2">
   <div class="topic-header">
-    <span class="topic-num">D2</span>
+
     <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Registry &amp; NGC Infrastructure</h2>
     <span class="topic-badge">NGC + ECR</span>
   </div>
@@ -2037,7 +2036,7 @@ ecr.put_lifecycle_policy(
 <!-- D3 -->
 <section class="section" id="d3">
   <div class="topic-header">
-    <span class="topic-num">D3</span>
+
     <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Observability Stack</h2>
     <span class="topic-badge">Prometheus + Grafana</span>
   </div>
@@ -2147,7 +2146,7 @@ scrape_configs:
 <!-- D4 -->
 <section class="section section-alt" id="d4">
   <div class="topic-header">
-    <span class="topic-num">D4</span>
+
     <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Fact Sheet <span style="color:var(--green);">★</span></h2>
     <span class="topic-badge">Technical Reference</span>
   </div>
