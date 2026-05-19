@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sudhakar Chundu — NVIDIA Isaac ROS DevOps Reference</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;900&family=Source+Code+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GGNQHMGCLH"></script>
@@ -31,9 +31,9 @@
   --radius:8px; --radius-lg:12px;
   --shadow:0 1px 3px rgba(0,0,0,.08);
   --shadow-md:0 4px 16px rgba(0,0,0,.10);
-  --mono:'Source Code Pro', monospace;
-  --display:'Source Sans 3', sans-serif;
-  --sans:'Source Sans 3', sans-serif;
+  --mono:'JetBrains Mono', 'Fira Code', monospace;
+  --display:'Sora', -apple-system, sans-serif;
+  --sans:'Sora', -apple-system, sans-serif;
 }
 
 *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
@@ -839,7 +839,7 @@ ul.blt li::marker { color:var(--green); }
   <p class="body">The following diagram reflects the <em>actual</em> CI structure found in the public <a href="https://github.com/isaac-sim/IsaacLab" style="color:var(--accent-blue)">isaac-sim/IsaacLab</a> repository, based on direct analysis of all <code>.github/workflows/</code> YAML files and composite actions. The pipeline uses Docker buildx against an IsaacSim base image and pytest as the test runner — not the ROS 2 / colcon / vcstool stack typical of Isaac ROS. Key gaps vs. best practice are called out inline.</p>
 
   <div class="reveal" style="margin:14px 0;">
-    <svg viewBox="0 0 560 620" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:620px;display:block;font-family:'Source Code Pro',monospace;">
+    <svg viewBox="0 0 560 620" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:620px;display:block;font-family:'JetBrains Mono',monospace;">
       <defs>
         <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
           <path d="M0,0 L0,6 L8,3 z" fill="#76B900"/>
@@ -847,7 +847,7 @@ ul.blt li::marker { color:var(--green); }
       </defs>
 
       <!-- ── Trigger label: PR opened ── -->
-      <text x="280" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#3d6200" font-family="'Source Code Pro',monospace">PR opened</text>
+      <text x="280" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#3d6200" font-family="'JetBrains Mono',monospace">PR opened</text>
 
       <!-- Arrow down to box 1 -->
       <line x1="280" y1="28" x2="280" y2="52" stroke="#76B900" stroke-width="2" marker-end="url(#arr)"/>
@@ -857,16 +857,16 @@ ul.blt li::marker { color:var(--green); }
       <!-- Header bar -->
       <rect x="20" y="54" width="520" height="36" rx="8" fill="#76B900"/>
       <rect x="20" y="74" width="520" height="16" fill="#76B900"/>
-      <text x="36" y="76" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'Source Code Pro',monospace">PREMERGE VALIDATION</text>
-      <text x="490" y="76" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'Source Code Pro',monospace">trigger: pull_request</text>
+      <text x="36" y="76" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'JetBrains Mono',monospace">PREMERGE VALIDATION</text>
+      <text x="490" y="76" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'JetBrains Mono',monospace">trigger: pull_request</text>
 
       <!-- Items -->
-      <text x="44" y="112" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">docker buildx build --platform linux/amd64</text>
-      <text x="44" y="133" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">GHA cache type=gha (10 GB shared cap — low hit rate)</text>
-      <text x="44" y="154" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">/isaac-sim/python.sh -m pytest  (run-tests composite action)</text>
-      <text x="44" y="175" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">[self-hosted, gpu] runner — timeout-minutes: 180</text>
-      <text x="44" y="196" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">continue-on-error: true — failures do NOT block merge</text>
-      <text x="44" y="217" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">No path filter — README edit triggers full 3-hr GPU run</text>
+      <text x="44" y="112" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">docker buildx build --platform linux/amd64</text>
+      <text x="44" y="133" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">GHA cache type=gha (10 GB shared cap — low hit rate)</text>
+      <text x="44" y="154" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">/isaac-sim/python.sh -m pytest  (run-tests composite action)</text>
+      <text x="44" y="175" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">[self-hosted, gpu] runner — timeout-minutes: 180</text>
+      <text x="44" y="196" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">continue-on-error: true — failures do NOT block merge</text>
+      <text x="44" y="217" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">No path filter — README edit triggers full 3-hr GPU run</text>
 
       <!-- Bullet dots -->
       <circle cx="34" cy="109" r="3" fill="#76B900"/>
@@ -879,20 +879,20 @@ ul.blt li::marker { color:var(--green); }
       <!-- Arrow + label: merge to main -->
       <line x1="280" y1="240" x2="280" y2="278" stroke="#76B900" stroke-width="2" marker-end="url(#arr)"/>
       <rect x="200" y="248" width="160" height="20" rx="4" fill="#fff" stroke="#76B900" stroke-width="1.2"/>
-      <text x="280" y="262" text-anchor="middle" font-size="10.5" font-weight="600" fill="#3d6200" font-family="'Source Code Pro',monospace">merge to main</text>
+      <text x="280" y="262" text-anchor="middle" font-size="10.5" font-weight="600" fill="#3d6200" font-family="'JetBrains Mono',monospace">merge to main</text>
 
       <!-- ── Box 2: POSTMERGE / NIGHTLY ── -->
       <rect x="20" y="280" width="520" height="166" rx="8" fill="#EBF5D4" stroke="#76B900" stroke-width="2"/>
       <rect x="20" y="280" width="520" height="36" rx="8" fill="#76B900"/>
       <rect x="20" y="300" width="520" height="16" fill="#76B900"/>
-      <text x="36" y="302" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'Source Code Pro',monospace">POSTMERGE / NIGHTLY</text>
-      <text x="490" y="302" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'Source Code Pro',monospace">trigger: push to main / cron</text>
+      <text x="36" y="302" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'JetBrains Mono',monospace">POSTMERGE / NIGHTLY</text>
+      <text x="490" y="302" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'JetBrains Mono',monospace">trigger: push to main / cron</text>
 
-      <text x="44" y="338" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">docker buildx: amd64 + arm64 via QEMU (no native Jetson)</text>
-      <text x="44" y="359" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">push to registry: docker.io/isaac-lab-base</text>
-      <text x="44" y="380" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">daily-compat.yml: IsaacSim 4.5.0, 5.0.0 (cron 0 4 * * *)</text>
-      <text x="44" y="401" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">nightly-changelog.yml: isaaclab-bot (cron 0 5 * * *)</text>
-      <text x="44" y="422" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">No Trivy, cosign, SBOM, or security scanning</text>
+      <text x="44" y="338" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">docker buildx: amd64 + arm64 via QEMU (no native Jetson)</text>
+      <text x="44" y="359" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">push to registry: docker.io/isaac-lab-base</text>
+      <text x="44" y="380" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">daily-compat.yml: IsaacSim 4.5.0, 5.0.0 (cron 0 4 * * *)</text>
+      <text x="44" y="401" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">nightly-changelog.yml: isaaclab-bot (cron 0 5 * * *)</text>
+      <text x="44" y="422" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">No Trivy, cosign, SBOM, or security scanning</text>
 
       <circle cx="34" cy="335" r="3" fill="#76B900"/>
       <circle cx="34" cy="356" r="3" fill="#76B900"/>
@@ -903,19 +903,19 @@ ul.blt li::marker { color:var(--green); }
       <!-- Arrow + label: tag / release -->
       <line x1="280" y1="446" x2="280" y2="484" stroke="#76B900" stroke-width="2" marker-end="url(#arr)"/>
       <rect x="200" y="454" width="160" height="20" rx="4" fill="#fff" stroke="#76B900" stroke-width="1.2"/>
-      <text x="280" y="468" text-anchor="middle" font-size="10.5" font-weight="600" fill="#3d6200" font-family="'Source Code Pro',monospace">nightly / release/**</text>
+      <text x="280" y="468" text-anchor="middle" font-size="10.5" font-weight="600" fill="#3d6200" font-family="'JetBrains Mono',monospace">nightly / release/**</text>
 
       <!-- ── Box 3: RELEASE PIPELINE ── -->
       <rect x="20" y="486" width="520" height="126" rx="8" fill="#EBF5D4" stroke="#76B900" stroke-width="2"/>
       <rect x="20" y="486" width="520" height="36" rx="8" fill="#76B900"/>
       <rect x="20" y="506" width="520" height="16" fill="#76B900"/>
-      <text x="36" y="508" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'Source Code Pro',monospace">RELEASE / CHANGELOG</text>
-      <text x="490" y="508" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'Source Code Pro',monospace">trigger: nightly / release/**</text>
+      <text x="36" y="508" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'JetBrains Mono',monospace">RELEASE / CHANGELOG</text>
+      <text x="490" y="508" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'JetBrains Mono',monospace">trigger: nightly / release/**</text>
 
-      <text x="44" y="544" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">isaaclab-bot PR → GitHub Release from CHANGELOG.md</text>
-      <text x="44" y="565" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">release/** branch naming convention</text>
-      <text x="44" y="586" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">Base: nvcr.io/nvidia/isaac-sim:5.1.0 (floating tag, no digest)</text>
-      <text x="44" y="607" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">No cosign, SBOM, or SLSA provenance — SLSA Level 0</text>
+      <text x="44" y="544" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">isaaclab-bot PR → GitHub Release from CHANGELOG.md</text>
+      <text x="44" y="565" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">release/** branch naming convention</text>
+      <text x="44" y="586" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">Base: nvcr.io/nvidia/isaac-sim:5.1.0 (floating tag, no digest)</text>
+      <text x="44" y="607" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">No cosign, SBOM, or SLSA provenance — SLSA Level 0</text>
 
       <circle cx="34" cy="541" r="3" fill="#76B900"/>
       <circle cx="34" cy="562" r="3" fill="#76B900"/>
@@ -1216,7 +1216,7 @@ colcon test --packages-above-and-dependencies $CHANGED_PKGS</pre>
 
   <!-- Complete CI + Promotion SVG Diagram -->
   <div class="reveal" style="margin:18px 0 24px;">
-    <svg viewBox="0 0 560 1100" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:640px;display:block;font-family:'Source Code Pro',monospace;">
+    <svg viewBox="0 0 560 1100" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:640px;display:block;font-family:'JetBrains Mono',monospace;">
       <defs>
         <marker id="cg" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#76B900"/></marker>
         <marker id="ca" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#c97d00"/></marker>
@@ -1225,89 +1225,89 @@ colcon test --packages-above-and-dependencies $CHANGED_PKGS</pre>
       </defs>
 
       <!-- trigger label -->
-      <text x="280" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#3d6200" font-family="'Source Code Pro',monospace">PR opened</text>
+      <text x="280" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#3d6200" font-family="'JetBrains Mono',monospace">PR opened</text>
       <line x1="280" y1="28" x2="280" y2="50" stroke="#76B900" stroke-width="2" marker-end="url(#cg)"/>
 
       <!-- Box 1: PREMERGE CI -->
       <rect x="20" y="52" width="520" height="194" rx="8" fill="#EBF5D4" stroke="#76B900" stroke-width="2"/>
       <rect x="20" y="52" width="520" height="34"  rx="8" fill="#76B900"/>
       <rect x="20" y="72"  width="520" height="14" fill="#76B900"/>
-      <text x="36" y="74" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'Source Code Pro',monospace">PREMERGE CI</text>
-      <text x="530" y="74" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'Source Code Pro',monospace">trigger: pull_request (not pull_request_target)</text>
-      <circle cx="36" cy="106" r="3" fill="#76B900"/><text x="46" y="109" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">path-filter: skip *.md, docs/, *.txt</text>
-      <circle cx="36" cy="127" r="3" fill="#76B900"/><text x="46" y="130" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release</text>
-      <circle cx="36" cy="148" r="3" fill="#76B900"/><text x="46" y="151" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">colcon test (affected packages only)</text>
-      <circle cx="36" cy="169" r="3" fill="#76B900"/><text x="46" y="172" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">ament_clang_format + cppcheck + flake8</text>
-      <circle cx="36" cy="190" r="3" fill="#76B900"/><text x="46" y="193" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">Trivy image scan + cosign verify</text>
-      <circle cx="36" cy="211" r="3" fill="#76B900"/><text x="46" y="214" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">GPU gate: quarantined self-hosted runner</text>
+      <text x="36" y="74" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'JetBrains Mono',monospace">PREMERGE CI</text>
+      <text x="530" y="74" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'JetBrains Mono',monospace">trigger: pull_request (not pull_request_target)</text>
+      <circle cx="36" cy="106" r="3" fill="#76B900"/><text x="46" y="109" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">path-filter: skip *.md, docs/, *.txt</text>
+      <circle cx="36" cy="127" r="3" fill="#76B900"/><text x="46" y="130" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release</text>
+      <circle cx="36" cy="148" r="3" fill="#76B900"/><text x="46" y="151" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">colcon test (affected packages only)</text>
+      <circle cx="36" cy="169" r="3" fill="#76B900"/><text x="46" y="172" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">ament_clang_format + cppcheck + flake8</text>
+      <circle cx="36" cy="190" r="3" fill="#76B900"/><text x="46" y="193" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">Trivy image scan + cosign verify</text>
+      <circle cx="36" cy="211" r="3" fill="#76B900"/><text x="46" y="214" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">GPU gate: quarantined self-hosted runner</text>
 
       <!-- merge to main connector -->
       <line x1="280" y1="246" x2="280" y2="284" stroke="#76B900" stroke-width="2" marker-end="url(#cg)"/>
       <rect x="198" y="254" width="164" height="20" rx="4" fill="#fff" stroke="#76B900" stroke-width="1.3"/>
-      <text x="280" y="268" text-anchor="middle" font-size="10.5" font-weight="600" fill="#3d6200" font-family="'Source Code Pro',monospace">merge to main</text>
+      <text x="280" y="268" text-anchor="middle" font-size="10.5" font-weight="600" fill="#3d6200" font-family="'JetBrains Mono',monospace">merge to main</text>
 
       <!-- Box 2: POSTMERGE BUILD -->
       <rect x="20" y="286" width="520" height="194" rx="8" fill="#EBF5D4" stroke="#5a9000" stroke-width="2"/>
       <rect x="20" y="286" width="520" height="34"  rx="8" fill="#5a9000"/>
       <rect x="20" y="306" width="520" height="14" fill="#5a9000"/>
-      <text x="36" y="308" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'Source Code Pro',monospace">POSTMERGE BUILD</text>
-      <text x="530" y="308" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'Source Code Pro',monospace">trigger: push to main / cron</text>
-      <circle cx="36" cy="340" r="3" fill="#5a9000"/><text x="46" y="343" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">multi-arch buildx: amd64 + arm64 (native Jetson)</text>
-      <circle cx="36" cy="361" r="3" fill="#5a9000"/><text x="46" y="364" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">cosign sign — keyless OIDC via GitHub Actions</text>
-      <circle cx="36" cy="382" r="3" fill="#5a9000"/><text x="46" y="385" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">Trivy scan + SBOM draft generation (syft)</text>
-      <circle cx="36" cy="403" r="3" fill="#5a9000"/><text x="46" y="406" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">HIL smoke test on Jetson Orin</text>
-      <circle cx="36" cy="424" r="3" fill="#5a9000"/><text x="46" y="427" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">Prometheus metrics push + Grafana update</text>
-      <circle cx="36" cy="445" r="3" fill="#5a9000"/><text x="46" y="448" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">Push signed image to DEV registry</text>
+      <text x="36" y="308" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'JetBrains Mono',monospace">POSTMERGE BUILD</text>
+      <text x="530" y="308" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'JetBrains Mono',monospace">trigger: push to main / cron</text>
+      <circle cx="36" cy="340" r="3" fill="#5a9000"/><text x="46" y="343" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">multi-arch buildx: amd64 + arm64 (native Jetson)</text>
+      <circle cx="36" cy="361" r="3" fill="#5a9000"/><text x="46" y="364" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">cosign sign — keyless OIDC via GitHub Actions</text>
+      <circle cx="36" cy="382" r="3" fill="#5a9000"/><text x="46" y="385" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">Trivy scan + SBOM draft generation (syft)</text>
+      <circle cx="36" cy="403" r="3" fill="#5a9000"/><text x="46" y="406" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">HIL smoke test on Jetson Orin</text>
+      <circle cx="36" cy="424" r="3" fill="#5a9000"/><text x="46" y="427" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">Prometheus metrics push + Grafana update</text>
+      <circle cx="36" cy="445" r="3" fill="#5a9000"/><text x="46" y="448" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">Push signed image to DEV registry</text>
 
       <!-- push signed image connector (dashed = conditional path) -->
       <line x1="280" y1="480" x2="280" y2="518" stroke="#c97d00" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#ca)"/>
       <rect x="178" y="488" width="204" height="20" rx="4" fill="#fff" stroke="#c97d00" stroke-width="1.3"/>
-      <text x="280" y="502" text-anchor="middle" font-size="10.5" font-weight="600" fill="#5a3800" font-family="'Source Code Pro',monospace">push signed image to dev</text>
+      <text x="280" y="502" text-anchor="middle" font-size="10.5" font-weight="600" fill="#5a3800" font-family="'JetBrains Mono',monospace">push signed image to dev</text>
 
       <!-- Box 3: DEV REGISTRY -->
       <rect x="20" y="520" width="520" height="170" rx="8" fill="#FFF3D0" stroke="#c97d00" stroke-width="2"/>
       <rect x="20" y="520" width="520" height="34"  rx="8" fill="#c97d00"/>
       <rect x="20" y="540" width="520" height="14" fill="#c97d00"/>
-      <text x="36" y="542" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'Source Code Pro',monospace">DEV REGISTRY</text>
-      <text x="530" y="542" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'Source Code Pro',monospace">every merge to main — 7-day retention</text>
-      <circle cx="36" cy="574" r="3" fill="#c97d00"/><text x="46" y="577" font-size="11.5" fill="#5a3800" font-family="'Source Code Pro',monospace">nvcr.io/myorg/isaac-ros-dev:&lt;git-sha&gt;</text>
-      <circle cx="36" cy="595" r="3" fill="#c97d00"/><text x="46" y="598" font-size="11.5" fill="#5a3800" font-family="'Source Code Pro',monospace">multi-arch manifest: amd64 + arm64</text>
-      <circle cx="36" cy="616" r="3" fill="#c97d00"/><text x="46" y="619" font-size="11.5" fill="#5a3800" font-family="'Source Code Pro',monospace">cosign signed + Trivy vulnerability scanned</text>
-      <circle cx="36" cy="637" r="3" fill="#c97d00"/><text x="46" y="640" font-size="11.5" fill="#5a3800" font-family="'Source Code Pro',monospace">SBOM draft attached (syft SPDX-JSON)</text>
-      <circle cx="36" cy="658" r="3" fill="#c97d00"/><text x="46" y="661" font-size="11.5" fill="#5a3800" font-family="'Source Code Pro',monospace">ECR lifecycle policy: auto-expire at 7 days</text>
+      <text x="36" y="542" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'JetBrains Mono',monospace">DEV REGISTRY</text>
+      <text x="530" y="542" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'JetBrains Mono',monospace">every merge to main — 7-day retention</text>
+      <circle cx="36" cy="574" r="3" fill="#c97d00"/><text x="46" y="577" font-size="11.5" fill="#5a3800" font-family="'JetBrains Mono',monospace">nvcr.io/myorg/isaac-ros-dev:&lt;git-sha&gt;</text>
+      <circle cx="36" cy="595" r="3" fill="#c97d00"/><text x="46" y="598" font-size="11.5" fill="#5a3800" font-family="'JetBrains Mono',monospace">multi-arch manifest: amd64 + arm64</text>
+      <circle cx="36" cy="616" r="3" fill="#c97d00"/><text x="46" y="619" font-size="11.5" fill="#5a3800" font-family="'JetBrains Mono',monospace">cosign signed + Trivy vulnerability scanned</text>
+      <circle cx="36" cy="637" r="3" fill="#c97d00"/><text x="46" y="640" font-size="11.5" fill="#5a3800" font-family="'JetBrains Mono',monospace">SBOM draft attached (syft SPDX-JSON)</text>
+      <circle cx="36" cy="658" r="3" fill="#c97d00"/><text x="46" y="661" font-size="11.5" fill="#5a3800" font-family="'JetBrains Mono',monospace">ECR lifecycle policy: auto-expire at 7 days</text>
 
       <!-- rc tag connector -->
       <line x1="280" y1="690" x2="280" y2="728" stroke="#1a4a8a" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#cb)"/>
       <rect x="168" y="698" width="224" height="20" rx="4" fill="#fff" stroke="#1a4a8a" stroke-width="1.3"/>
-      <text x="280" y="712" text-anchor="middle" font-size="10.5" font-weight="600" fill="#0a3070" font-family="'Source Code Pro',monospace">rc/* tag or workflow_dispatch</text>
+      <text x="280" y="712" text-anchor="middle" font-size="10.5" font-weight="600" fill="#0a3070" font-family="'JetBrains Mono',monospace">rc/* tag or workflow_dispatch</text>
 
       <!-- Box 4: STAGING REGISTRY -->
       <rect x="20" y="730" width="520" height="150" rx="8" fill="#E0EBFA" stroke="#1a4a8a" stroke-width="2"/>
       <rect x="20" y="730" width="520" height="34"  rx="8" fill="#1a4a8a"/>
       <rect x="20" y="750" width="520" height="14" fill="#1a4a8a"/>
-      <text x="36" y="752" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'Source Code Pro',monospace">STAGING REGISTRY</text>
-      <text x="530" y="752" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'Source Code Pro',monospace">rc/* tag push — 30-day retention</text>
-      <circle cx="36" cy="784" r="3" fill="#1a4a8a"/><text x="46" y="787" font-size="11.5" fill="#0a3070" font-family="'Source Code Pro',monospace">nvcr.io/myorg/isaac-ros-staging:rc-&lt;sha&gt;</text>
-      <circle cx="36" cy="805" r="3" fill="#1a4a8a"/><text x="46" y="808" font-size="11.5" fill="#0a3070" font-family="'Source Code Pro',monospace">full HIL validation suite on physical Jetson Orin</text>
-      <circle cx="36" cy="826" r="3" fill="#1a4a8a"/><text x="46" y="829" font-size="11.5" fill="#0a3070" font-family="'Source Code Pro',monospace">cosign signature re-verified before promotion</text>
-      <circle cx="36" cy="847" r="3" fill="#1a4a8a"/><text x="46" y="850" font-size="11.5" fill="#0a3070" font-family="'Source Code Pro',monospace">SBOM validated; provenance attestation drafted</text>
+      <text x="36" y="752" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'JetBrains Mono',monospace">STAGING REGISTRY</text>
+      <text x="530" y="752" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'JetBrains Mono',monospace">rc/* tag push — 30-day retention</text>
+      <circle cx="36" cy="784" r="3" fill="#1a4a8a"/><text x="46" y="787" font-size="11.5" fill="#0a3070" font-family="'JetBrains Mono',monospace">nvcr.io/myorg/isaac-ros-staging:rc-&lt;sha&gt;</text>
+      <circle cx="36" cy="805" r="3" fill="#1a4a8a"/><text x="46" y="808" font-size="11.5" fill="#0a3070" font-family="'JetBrains Mono',monospace">full HIL validation suite on physical Jetson Orin</text>
+      <circle cx="36" cy="826" r="3" fill="#1a4a8a"/><text x="46" y="829" font-size="11.5" fill="#0a3070" font-family="'JetBrains Mono',monospace">cosign signature re-verified before promotion</text>
+      <circle cx="36" cy="847" r="3" fill="#1a4a8a"/><text x="46" y="850" font-size="11.5" fill="#0a3070" font-family="'JetBrains Mono',monospace">SBOM validated; provenance attestation drafted</text>
 
       <!-- git tag + HIL pass connector -->
       <line x1="280" y1="880" x2="280" y2="918" stroke="#085041" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#ct)"/>
       <rect x="158" y="888" width="244" height="20" rx="4" fill="#fff" stroke="#085041" stroke-width="1.3"/>
-      <text x="280" y="902" text-anchor="middle" font-size="10.5" font-weight="600" fill="#085041" font-family="'Source Code Pro',monospace">git tag vX.Y.Z + HIL pass</text>
+      <text x="280" y="902" text-anchor="middle" font-size="10.5" font-weight="600" fill="#085041" font-family="'JetBrains Mono',monospace">git tag vX.Y.Z + HIL pass</text>
 
       <!-- Box 5: NGC PRODUCTION -->
       <rect x="20" y="920" width="520" height="168" rx="8" fill="#d8f5ea" stroke="#085041" stroke-width="2"/>
       <rect x="20" y="920" width="520" height="34"  rx="8" fill="#085041"/>
       <rect x="20" y="940" width="520" height="14" fill="#085041"/>
-      <text x="36" y="942" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'Source Code Pro',monospace">NGC PRODUCTION</text>
-      <text x="530" y="942" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'Source Code Pro',monospace">trigger: git tag vX.Y.Z — permanent</text>
-      <circle cx="36" cy="974" r="3" fill="#085041"/><text x="46" y="977" font-size="11.5" fill="#085041" font-family="'Source Code Pro',monospace">nvcr.io/nvidia/isaac/ros:vX.Y.Z</text>
-      <circle cx="36" cy="995" r="3" fill="#085041"/><text x="46" y="998" font-size="11.5" fill="#085041" font-family="'Source Code Pro',monospace">SBOM attached + published (syft / SPDX-JSON)</text>
-      <circle cx="36" cy="1016" r="3" fill="#085041"/><text x="46" y="1019" font-size="11.5" fill="#085041" font-family="'Source Code Pro',monospace">SLSA Level 3 provenance (cosign attest)</text>
-      <circle cx="36" cy="1037" r="3" fill="#085041"/><text x="46" y="1040" font-size="11.5" fill="#085041" font-family="'Source Code Pro',monospace">NGC public registry — no retention TTL</text>
-      <circle cx="36" cy="1058" r="3" fill="#085041"/><text x="46" y="1061" font-size="11.5" fill="#085041" font-family="'Source Code Pro',monospace">Automated changelog + GitHub Release created</text>
+      <text x="36" y="942" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'JetBrains Mono',monospace">NGC PRODUCTION</text>
+      <text x="530" y="942" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'JetBrains Mono',monospace">trigger: git tag vX.Y.Z — permanent</text>
+      <circle cx="36" cy="974" r="3" fill="#085041"/><text x="46" y="977" font-size="11.5" fill="#085041" font-family="'JetBrains Mono',monospace">nvcr.io/nvidia/isaac/ros:vX.Y.Z</text>
+      <circle cx="36" cy="995" r="3" fill="#085041"/><text x="46" y="998" font-size="11.5" fill="#085041" font-family="'JetBrains Mono',monospace">SBOM attached + published (syft / SPDX-JSON)</text>
+      <circle cx="36" cy="1016" r="3" fill="#085041"/><text x="46" y="1019" font-size="11.5" fill="#085041" font-family="'JetBrains Mono',monospace">SLSA Level 3 provenance (cosign attest)</text>
+      <circle cx="36" cy="1037" r="3" fill="#085041"/><text x="46" y="1040" font-size="11.5" fill="#085041" font-family="'JetBrains Mono',monospace">NGC public registry — no retention TTL</text>
+      <circle cx="36" cy="1058" r="3" fill="#085041"/><text x="46" y="1061" font-size="11.5" fill="#085041" font-family="'JetBrains Mono',monospace">Automated changelog + GitHub Release created</text>
     </svg>
   </div>
 
