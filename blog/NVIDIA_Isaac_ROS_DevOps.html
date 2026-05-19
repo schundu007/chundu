@@ -47,51 +47,112 @@ body {
 
 /* ── NAV ── */
 #nav {
-  position:fixed; top:0; left:0; width:240px; height:100vh;
-  background:#111; color:#ccc;
+  position:fixed; top:0; left:0; width:252px; height:100vh;
+  background:#0d0d0d; color:#ccc;
   overflow-y:auto; z-index:100;
-  padding:0 0 40px;
-  border-right:1px solid #222;
+  padding:0 0 48px;
+  border-right:1px solid #1c1c1c;
+  scrollbar-width:thin; scrollbar-color:#2a2a2a transparent;
 }
+#nav::-webkit-scrollbar { width:4px; }
+#nav::-webkit-scrollbar-track { background:transparent; }
+#nav::-webkit-scrollbar-thumb { background:#2a2a2a; border-radius:4px; }
+#nav::-webkit-scrollbar-thumb:hover { background:#3a3a3a; }
+
 #nav-logo {
-  background:var(--green); padding:18px 20px;
-  font-family:var(--display); font-size:13px; font-weight:600;
-  color:#fff; letter-spacing:.02em; line-height:1.4;
+  background:linear-gradient(135deg, #76b900 0%, #5a9000 100%);
+  padding:22px 20px 18px;
+  font-family:var(--display); font-size:14px; font-weight:700;
+  color:#fff; letter-spacing:.01em; line-height:1.35;
+  position:relative; overflow:hidden;
+}
+#nav-logo::after {
+  content:''; position:absolute; bottom:-20px; right:-20px;
+  width:80px; height:80px; border-radius:50%;
+  background:rgba(255,255,255,.06);
+}
+#nav-logo .nav-logo-sub {
+  display:block; font-size:11px; font-weight:400;
+  color:rgba(255,255,255,.7); margin-top:3px;
+  font-family:var(--mono); letter-spacing:.03em;
+}
+#nav-logo .nav-logo-author {
+  display:block; font-size:10px; font-style:italic;
+  color:rgba(255,255,255,.55); margin-top:2px;
+  font-family:var(--sans);
+}
+.nav-logo-links {
+  display:flex; gap:5px; flex-wrap:wrap; margin-top:12px; position:relative; z-index:1;
 }
 #nav-logo a {
-  display:inline-block; font-size:11px; font-weight:600;
-  margin-top:8px; margin-right:6px;
-  padding:4px 12px; border-radius:20px;
-  background:rgba(255,255,255,0.18); color:#fff;
-  text-decoration:none; border:1px solid rgba(255,255,255,0.45);
-  transition:background .18s, border-color .18s, box-shadow .18s;
-  letter-spacing:.02em;
+  display:inline-block; font-size:10px; font-weight:600;
+  padding:3px 10px; border-radius:3px;
+  background:rgba(0,0,0,0.25); color:rgba(255,255,255,.9);
+  text-decoration:none; border:1px solid rgba(255,255,255,0.25);
+  transition:background .15s, border-color .15s, color .15s;
+  letter-spacing:.03em; font-family:var(--mono);
 }
 #nav-logo a:hover {
-  background:rgba(255,255,255,0.32); border-color:rgba(255,255,255,0.9);
-  box-shadow:0 0 10px rgba(255,255,255,0.35);
+  background:rgba(0,0,0,0.45); border-color:rgba(255,255,255,0.6);
+  color:#fff;
+}
+.nav-search {
+  padding:10px 14px 10px;
+  border-bottom:1px solid #1c1c1c;
+}
+.nav-search input {
+  width:100%; background:#1a1a1a; border:1px solid #2a2a2a;
+  border-radius:4px; padding:6px 10px;
+  font-family:var(--mono); font-size:11px; color:#bbb;
+  outline:none; transition:border-color .15s;
+}
+.nav-search input::placeholder { color:#444; }
+.nav-search input:focus { border-color:#3d6200; }
+.nav-section-group {
+  margin-top:4px;
 }
 .nav-part {
-  padding:14px 20px 4px;
-  font-size:9px; letter-spacing:.15em; text-transform:uppercase;
-  color:#555; font-weight:600; font-family:var(--mono);
-  border-top:1px solid #1e1e1e; margin-top:4px;
+  padding:14px 20px 6px;
+  font-size:9px; letter-spacing:.16em; text-transform:uppercase;
+  color:#444; font-weight:700; font-family:var(--mono);
+  display:flex; align-items:center; gap:8px;
 }
-.nav-part:first-of-type { border-top:none; margin-top:0; }
+.nav-part::before {
+  content:''; display:block; height:1px; flex:1;
+  background:linear-gradient(to right, #2a2a2a, transparent);
+}
+.nav-part-label { flex-shrink:0; }
 .nav-link {
-  display:block; padding:6px 20px 6px 24px;
-  font-size:12px; color:#888; text-decoration:none;
+  display:flex; align-items:center; gap:0;
+  padding:7px 16px 7px 20px;
+  font-size:12px; color:#777; text-decoration:none;
   border-left:2px solid transparent;
-  transition:color .12s, border-color .12s, background .12s;
+  transition:color .15s, border-color .15s, background .15s, padding-left .15s;
   font-family:var(--sans); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  position:relative;
 }
-.nav-link:hover { color:#fff; border-left-color:var(--green); background:rgba(118,185,0,.08); }
-.nav-link.active { color:var(--green); border-left-color:var(--green); background:rgba(118,185,0,.05); font-weight:600; }
-.nav-sub { font-size:11px; color:#666; padding-left:32px; }
-.nav-sub:hover { color:#ccc; }
+.nav-link:hover {
+  color:#e0e0e0; border-left-color:var(--green);
+  background:rgba(118,185,0,.07);
+  padding-left:22px;
+}
+.nav-link.active {
+  color:var(--green); border-left-color:var(--green);
+  background:rgba(118,185,0,.1); font-weight:600;
+  padding-left:22px;
+}
+.nav-link.active::after {
+  content:''; position:absolute; right:12px; top:50%; transform:translateY(-50%);
+  width:5px; height:5px; border-radius:50%; background:var(--green);
+}
+.nav-sub {
+  font-size:11px; color:#555; padding-left:30px;
+}
+.nav-sub:hover { color:#c0c0c0; }
+.nav-sub.active { padding-left:32px; }
 
 /* ── MAIN ── */
-#main { margin-left:240px; min-height:100vh; }
+#main { margin-left:252px; min-height:100vh; }
 
 /* ── HERO ── */
 #hero {
@@ -379,42 +440,55 @@ ul.blt li::marker { color:var(--green); }
 <!-- ── SIDEBAR NAV ── -->
 <nav id="nav">
   <div id="nav-logo">
-    NVIDIA Isaac ROS<br>DevOps Reference
-    <span style="font-style:italic; font-size:10px; color:rgba(255,255,255,.6);">Sudhakar Chundu</span>
-    <div style="margin-top:10px; display:flex; gap:6px; flex-wrap:wrap;">
+    NVIDIA Isaac ROS
+    <span class="nav-logo-sub">DevOps Reference</span>
+    <span class="nav-logo-author">by Sudhakar Chundu</span>
+    <div class="nav-logo-links">
       <a href="../">← Home</a>
       <a href="../blog/">← Blog</a>
     </div>
   </div>
 
-  <div class="nav-part">Overview</div>
-  <a class="nav-link" href="#overview">Overview &amp; Contents</a>
+  <div class="nav-section-group">
+    <div class="nav-part"><span class="nav-part-label">Overview</span></div>
+    <a class="nav-link" href="#overview">Contents &amp; Scope</a>
+  </div>
 
-  <div class="nav-part">Part A — Platform</div>
-  <a class="nav-link nav-sub" href="#a1">Isaac Ecosystem</a>
-  <a class="nav-link nav-sub" href="#a2">CI Engineer's View</a>
-  <a class="nav-link nav-sub" href="#a3">ROS 2 Fundamentals</a>
+  <div class="nav-section-group">
+    <div class="nav-part"><span class="nav-part-label">A — Platform</span></div>
+    <a class="nav-link nav-sub" href="#a1">Isaac Ecosystem</a>
+    <a class="nav-link nav-sub" href="#a2">CI Engineer's View</a>
+    <a class="nav-link nav-sub" href="#a3">ROS 2 Fundamentals</a>
+  </div>
 
-  <div class="nav-part">Part B — CI/CD Pipeline</div>
-  <a class="nav-link nav-sub" href="#b1">Pipeline Architecture</a>
-  <a class="nav-link nav-sub" href="#b2">Multi-Arch Build</a>
-  <a class="nav-link nav-sub" href="#b3">Multi-Repo Builds</a>
-  <a class="nav-link nav-sub" href="#b4">Release Engineering</a>
+  <div class="nav-section-group">
+    <div class="nav-part"><span class="nav-part-label">B — CI/CD Pipeline</span></div>
+    <a class="nav-link nav-sub" href="#b1">Pipeline Architecture</a>
+    <a class="nav-link nav-sub" href="#b2">Multi-Arch Build</a>
+    <a class="nav-link nav-sub" href="#b3">Multi-Repo Builds</a>
+    <a class="nav-link nav-sub" href="#b4">Release Engineering</a>
+  </div>
 
-  <div class="nav-part">Part C — Audit Findings</div>
-  <a class="nav-link nav-sub" href="#c1">Build &amp; Caching</a>
-  <a class="nav-link nav-sub" href="#c2">Image Size</a>
-  <a class="nav-link nav-sub" href="#c3">Security</a>
-  <a class="nav-link nav-sub" href="#c4">Correctness &amp; Flakiness</a>
+  <div class="nav-section-group">
+    <div class="nav-part"><span class="nav-part-label">C — Audit Findings</span></div>
+    <a class="nav-link nav-sub" href="#c1">Build &amp; Caching</a>
+    <a class="nav-link nav-sub" href="#c2">Image Size</a>
+    <a class="nav-link nav-sub" href="#c3">Security</a>
+    <a class="nav-link nav-sub" href="#c4">Correctness &amp; Flakiness</a>
+  </div>
 
-  <div class="nav-part">Part E — CI/CD Analysis</div>
-  <a class="nav-link nav-sub" href="#e1">IsaacLab CI/CD Report</a>
+  <div class="nav-section-group">
+    <div class="nav-part"><span class="nav-part-label">E — CI/CD Analysis</span></div>
+    <a class="nav-link nav-sub" href="#e1">IsaacLab CI/CD Report</a>
+  </div>
 
-  <div class="nav-part">Part D — Reference</div>
-  <a class="nav-link nav-sub" href="#d1">Colcon &amp; Ament</a>
-  <a class="nav-link nav-sub" href="#d2">Registry &amp; NGC</a>
-  <a class="nav-link nav-sub" href="#d3">Observability</a>
-  <a class="nav-link nav-sub" href="#d4">Fact Sheet ★</a>
+  <div class="nav-section-group">
+    <div class="nav-part"><span class="nav-part-label">D — Reference</span></div>
+    <a class="nav-link nav-sub" href="#d1">Colcon &amp; Ament</a>
+    <a class="nav-link nav-sub" href="#d2">Registry &amp; NGC</a>
+    <a class="nav-link nav-sub" href="#d3">Observability</a>
+    <a class="nav-link nav-sub" href="#d4">Fact Sheet ★</a>
+  </div>
 </nav>
 
 <!-- ── MAIN ── -->
