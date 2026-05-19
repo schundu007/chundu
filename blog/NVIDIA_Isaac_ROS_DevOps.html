@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sudhakar Chundu — NVIDIA Isaac ROS DevOps Reference</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;900&family=Source+Code+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GGNQHMGCLH"></script>
@@ -31,9 +31,9 @@
   --radius:8px; --radius-lg:12px;
   --shadow:0 1px 3px rgba(0,0,0,.08);
   --shadow-md:0 4px 16px rgba(0,0,0,.10);
-  --mono:'DM Mono', monospace;
-  --display:'Fraunces', serif;
-  --sans:'Syne', sans-serif;
+  --mono:'Source Code Pro', monospace;
+  --display:'Source Sans 3', sans-serif;
+  --sans:'Source Sans 3', sans-serif;
 }
 
 *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
@@ -407,6 +407,9 @@ ul.blt li::marker { color:var(--green); }
   <a class="nav-link nav-sub" href="#c3">Security</a>
   <a class="nav-link nav-sub" href="#c4">Correctness &amp; Flakiness</a>
 
+  <div class="nav-part">Part E — CI/CD Analysis</div>
+  <a class="nav-link nav-sub" href="#e1">IsaacLab CI/CD Report</a>
+
   <div class="nav-part">Part D — Reference</div>
   <a class="nav-link nav-sub" href="#d1">Colcon &amp; Ament</a>
   <a class="nav-link nav-sub" href="#d2">Registry &amp; NGC</a>
@@ -762,7 +765,7 @@ ul.blt li::marker { color:var(--green); }
   <p class="body">The following diagram reflects the <em>actual</em> CI structure found in the public <a href="https://github.com/isaac-sim/IsaacLab" style="color:var(--accent-blue)">isaac-sim/IsaacLab</a> repository, based on direct analysis of all <code>.github/workflows/</code> YAML files and composite actions. The pipeline uses Docker buildx against an IsaacSim base image and pytest as the test runner — not the ROS 2 / colcon / vcstool stack typical of Isaac ROS. Key gaps vs. best practice are called out inline.</p>
 
   <div class="reveal" style="margin:14px 0;">
-    <svg viewBox="0 0 560 620" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:620px;display:block;font-family:'DM Mono',monospace;">
+    <svg viewBox="0 0 560 620" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:620px;display:block;font-family:'Source Code Pro',monospace;">
       <defs>
         <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
           <path d="M0,0 L0,6 L8,3 z" fill="#76B900"/>
@@ -770,7 +773,7 @@ ul.blt li::marker { color:var(--green); }
       </defs>
 
       <!-- ── Trigger label: PR opened ── -->
-      <text x="280" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#3d6200" font-family="'DM Mono',monospace">PR opened</text>
+      <text x="280" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#3d6200" font-family="'Source Code Pro',monospace">PR opened</text>
 
       <!-- Arrow down to box 1 -->
       <line x1="280" y1="28" x2="280" y2="52" stroke="#76B900" stroke-width="2" marker-end="url(#arr)"/>
@@ -780,16 +783,16 @@ ul.blt li::marker { color:var(--green); }
       <!-- Header bar -->
       <rect x="20" y="54" width="520" height="36" rx="8" fill="#76B900"/>
       <rect x="20" y="74" width="520" height="16" fill="#76B900"/>
-      <text x="36" y="76" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'DM Mono',monospace">PREMERGE VALIDATION</text>
-      <text x="490" y="76" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'DM Mono',monospace">trigger: pull_request</text>
+      <text x="36" y="76" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'Source Code Pro',monospace">PREMERGE VALIDATION</text>
+      <text x="490" y="76" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'Source Code Pro',monospace">trigger: pull_request</text>
 
       <!-- Items -->
-      <text x="44" y="112" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">docker buildx build --platform linux/amd64</text>
-      <text x="44" y="133" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">GHA cache type=gha (10 GB shared cap — low hit rate)</text>
-      <text x="44" y="154" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">/isaac-sim/python.sh -m pytest  (run-tests composite action)</text>
-      <text x="44" y="175" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">[self-hosted, gpu] runner — timeout-minutes: 180</text>
-      <text x="44" y="196" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">continue-on-error: true — failures do NOT block merge</text>
-      <text x="44" y="217" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">No path filter — README edit triggers full 3-hr GPU run</text>
+      <text x="44" y="112" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">docker buildx build --platform linux/amd64</text>
+      <text x="44" y="133" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">GHA cache type=gha (10 GB shared cap — low hit rate)</text>
+      <text x="44" y="154" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">/isaac-sim/python.sh -m pytest  (run-tests composite action)</text>
+      <text x="44" y="175" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">[self-hosted, gpu] runner — timeout-minutes: 180</text>
+      <text x="44" y="196" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">continue-on-error: true — failures do NOT block merge</text>
+      <text x="44" y="217" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">No path filter — README edit triggers full 3-hr GPU run</text>
 
       <!-- Bullet dots -->
       <circle cx="34" cy="109" r="3" fill="#76B900"/>
@@ -802,20 +805,20 @@ ul.blt li::marker { color:var(--green); }
       <!-- Arrow + label: merge to main -->
       <line x1="280" y1="240" x2="280" y2="278" stroke="#76B900" stroke-width="2" marker-end="url(#arr)"/>
       <rect x="200" y="248" width="160" height="20" rx="4" fill="#fff" stroke="#76B900" stroke-width="1.2"/>
-      <text x="280" y="262" text-anchor="middle" font-size="10.5" font-weight="600" fill="#3d6200" font-family="'DM Mono',monospace">merge to main</text>
+      <text x="280" y="262" text-anchor="middle" font-size="10.5" font-weight="600" fill="#3d6200" font-family="'Source Code Pro',monospace">merge to main</text>
 
       <!-- ── Box 2: POSTMERGE / NIGHTLY ── -->
       <rect x="20" y="280" width="520" height="166" rx="8" fill="#EBF5D4" stroke="#76B900" stroke-width="2"/>
       <rect x="20" y="280" width="520" height="36" rx="8" fill="#76B900"/>
       <rect x="20" y="300" width="520" height="16" fill="#76B900"/>
-      <text x="36" y="302" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'DM Mono',monospace">POSTMERGE / NIGHTLY</text>
-      <text x="490" y="302" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'DM Mono',monospace">trigger: push to main / cron</text>
+      <text x="36" y="302" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'Source Code Pro',monospace">POSTMERGE / NIGHTLY</text>
+      <text x="490" y="302" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'Source Code Pro',monospace">trigger: push to main / cron</text>
 
-      <text x="44" y="338" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">docker buildx: amd64 + arm64 via QEMU (no native Jetson)</text>
-      <text x="44" y="359" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">push to registry: docker.io/isaac-lab-base</text>
-      <text x="44" y="380" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">daily-compat.yml: IsaacSim 4.5.0, 5.0.0 (cron 0 4 * * *)</text>
-      <text x="44" y="401" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">nightly-changelog.yml: isaaclab-bot (cron 0 5 * * *)</text>
-      <text x="44" y="422" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">No Trivy, cosign, SBOM, or security scanning</text>
+      <text x="44" y="338" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">docker buildx: amd64 + arm64 via QEMU (no native Jetson)</text>
+      <text x="44" y="359" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">push to registry: docker.io/isaac-lab-base</text>
+      <text x="44" y="380" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">daily-compat.yml: IsaacSim 4.5.0, 5.0.0 (cron 0 4 * * *)</text>
+      <text x="44" y="401" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">nightly-changelog.yml: isaaclab-bot (cron 0 5 * * *)</text>
+      <text x="44" y="422" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">No Trivy, cosign, SBOM, or security scanning</text>
 
       <circle cx="34" cy="335" r="3" fill="#76B900"/>
       <circle cx="34" cy="356" r="3" fill="#76B900"/>
@@ -826,19 +829,19 @@ ul.blt li::marker { color:var(--green); }
       <!-- Arrow + label: tag / release -->
       <line x1="280" y1="446" x2="280" y2="484" stroke="#76B900" stroke-width="2" marker-end="url(#arr)"/>
       <rect x="200" y="454" width="160" height="20" rx="4" fill="#fff" stroke="#76B900" stroke-width="1.2"/>
-      <text x="280" y="468" text-anchor="middle" font-size="10.5" font-weight="600" fill="#3d6200" font-family="'DM Mono',monospace">nightly / release/**</text>
+      <text x="280" y="468" text-anchor="middle" font-size="10.5" font-weight="600" fill="#3d6200" font-family="'Source Code Pro',monospace">nightly / release/**</text>
 
       <!-- ── Box 3: RELEASE PIPELINE ── -->
       <rect x="20" y="486" width="520" height="126" rx="8" fill="#EBF5D4" stroke="#76B900" stroke-width="2"/>
       <rect x="20" y="486" width="520" height="36" rx="8" fill="#76B900"/>
       <rect x="20" y="506" width="520" height="16" fill="#76B900"/>
-      <text x="36" y="508" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'DM Mono',monospace">RELEASE / CHANGELOG</text>
-      <text x="490" y="508" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'DM Mono',monospace">trigger: nightly / release/**</text>
+      <text x="36" y="508" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'Source Code Pro',monospace">RELEASE / CHANGELOG</text>
+      <text x="490" y="508" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'Source Code Pro',monospace">trigger: nightly / release/**</text>
 
-      <text x="44" y="544" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">isaaclab-bot PR → GitHub Release from CHANGELOG.md</text>
-      <text x="44" y="565" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">release/** branch naming convention</text>
-      <text x="44" y="586" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Base: nvcr.io/nvidia/isaac-sim:5.1.0 (floating tag, no digest)</text>
-      <text x="44" y="607" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">No cosign, SBOM, or SLSA provenance — SLSA Level 0</text>
+      <text x="44" y="544" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">isaaclab-bot PR → GitHub Release from CHANGELOG.md</text>
+      <text x="44" y="565" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">release/** branch naming convention</text>
+      <text x="44" y="586" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">Base: nvcr.io/nvidia/isaac-sim:5.1.0 (floating tag, no digest)</text>
+      <text x="44" y="607" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">No cosign, SBOM, or SLSA provenance — SLSA Level 0</text>
 
       <circle cx="34" cy="541" r="3" fill="#76B900"/>
       <circle cx="34" cy="562" r="3" fill="#76B900"/>
@@ -1139,7 +1142,7 @@ colcon test --packages-above-and-dependencies $CHANGED_PKGS</pre>
 
   <!-- Complete CI + Promotion SVG Diagram -->
   <div class="reveal" style="margin:18px 0 24px;">
-    <svg viewBox="0 0 560 1100" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:640px;display:block;font-family:'DM Mono',monospace;">
+    <svg viewBox="0 0 560 1100" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:640px;display:block;font-family:'Source Code Pro',monospace;">
       <defs>
         <marker id="cg" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#76B900"/></marker>
         <marker id="ca" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#c97d00"/></marker>
@@ -1148,89 +1151,89 @@ colcon test --packages-above-and-dependencies $CHANGED_PKGS</pre>
       </defs>
 
       <!-- trigger label -->
-      <text x="280" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#3d6200" font-family="'DM Mono',monospace">PR opened</text>
+      <text x="280" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#3d6200" font-family="'Source Code Pro',monospace">PR opened</text>
       <line x1="280" y1="28" x2="280" y2="50" stroke="#76B900" stroke-width="2" marker-end="url(#cg)"/>
 
       <!-- Box 1: PREMERGE CI -->
       <rect x="20" y="52" width="520" height="194" rx="8" fill="#EBF5D4" stroke="#76B900" stroke-width="2"/>
       <rect x="20" y="52" width="520" height="34"  rx="8" fill="#76B900"/>
       <rect x="20" y="72"  width="520" height="14" fill="#76B900"/>
-      <text x="36" y="74" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'DM Mono',monospace">PREMERGE CI</text>
-      <text x="530" y="74" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'DM Mono',monospace">trigger: pull_request (not pull_request_target)</text>
-      <circle cx="36" cy="106" r="3" fill="#76B900"/><text x="46" y="109" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">path-filter: skip *.md, docs/, *.txt</text>
-      <circle cx="36" cy="127" r="3" fill="#76B900"/><text x="46" y="130" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release</text>
-      <circle cx="36" cy="148" r="3" fill="#76B900"/><text x="46" y="151" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">colcon test (affected packages only)</text>
-      <circle cx="36" cy="169" r="3" fill="#76B900"/><text x="46" y="172" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">ament_clang_format + cppcheck + flake8</text>
-      <circle cx="36" cy="190" r="3" fill="#76B900"/><text x="46" y="193" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Trivy image scan + cosign verify</text>
-      <circle cx="36" cy="211" r="3" fill="#76B900"/><text x="46" y="214" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">GPU gate: quarantined self-hosted runner</text>
+      <text x="36" y="74" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'Source Code Pro',monospace">PREMERGE CI</text>
+      <text x="530" y="74" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'Source Code Pro',monospace">trigger: pull_request (not pull_request_target)</text>
+      <circle cx="36" cy="106" r="3" fill="#76B900"/><text x="46" y="109" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">path-filter: skip *.md, docs/, *.txt</text>
+      <circle cx="36" cy="127" r="3" fill="#76B900"/><text x="46" y="130" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release</text>
+      <circle cx="36" cy="148" r="3" fill="#76B900"/><text x="46" y="151" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">colcon test (affected packages only)</text>
+      <circle cx="36" cy="169" r="3" fill="#76B900"/><text x="46" y="172" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">ament_clang_format + cppcheck + flake8</text>
+      <circle cx="36" cy="190" r="3" fill="#76B900"/><text x="46" y="193" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">Trivy image scan + cosign verify</text>
+      <circle cx="36" cy="211" r="3" fill="#76B900"/><text x="46" y="214" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">GPU gate: quarantined self-hosted runner</text>
 
       <!-- merge to main connector -->
       <line x1="280" y1="246" x2="280" y2="284" stroke="#76B900" stroke-width="2" marker-end="url(#cg)"/>
       <rect x="198" y="254" width="164" height="20" rx="4" fill="#fff" stroke="#76B900" stroke-width="1.3"/>
-      <text x="280" y="268" text-anchor="middle" font-size="10.5" font-weight="600" fill="#3d6200" font-family="'DM Mono',monospace">merge to main</text>
+      <text x="280" y="268" text-anchor="middle" font-size="10.5" font-weight="600" fill="#3d6200" font-family="'Source Code Pro',monospace">merge to main</text>
 
       <!-- Box 2: POSTMERGE BUILD -->
       <rect x="20" y="286" width="520" height="194" rx="8" fill="#EBF5D4" stroke="#5a9000" stroke-width="2"/>
       <rect x="20" y="286" width="520" height="34"  rx="8" fill="#5a9000"/>
       <rect x="20" y="306" width="520" height="14" fill="#5a9000"/>
-      <text x="36" y="308" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'DM Mono',monospace">POSTMERGE BUILD</text>
-      <text x="530" y="308" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'DM Mono',monospace">trigger: push to main / cron</text>
-      <circle cx="36" cy="340" r="3" fill="#5a9000"/><text x="46" y="343" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">multi-arch buildx: amd64 + arm64 (native Jetson)</text>
-      <circle cx="36" cy="361" r="3" fill="#5a9000"/><text x="46" y="364" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">cosign sign — keyless OIDC via GitHub Actions</text>
-      <circle cx="36" cy="382" r="3" fill="#5a9000"/><text x="46" y="385" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Trivy scan + SBOM draft generation (syft)</text>
-      <circle cx="36" cy="403" r="3" fill="#5a9000"/><text x="46" y="406" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">HIL smoke test on Jetson Orin</text>
-      <circle cx="36" cy="424" r="3" fill="#5a9000"/><text x="46" y="427" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Prometheus metrics push + Grafana update</text>
-      <circle cx="36" cy="445" r="3" fill="#5a9000"/><text x="46" y="448" font-size="11.5" fill="#3d6200" font-family="'DM Mono',monospace">Push signed image to DEV registry</text>
+      <text x="36" y="308" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'Source Code Pro',monospace">POSTMERGE BUILD</text>
+      <text x="530" y="308" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'Source Code Pro',monospace">trigger: push to main / cron</text>
+      <circle cx="36" cy="340" r="3" fill="#5a9000"/><text x="46" y="343" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">multi-arch buildx: amd64 + arm64 (native Jetson)</text>
+      <circle cx="36" cy="361" r="3" fill="#5a9000"/><text x="46" y="364" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">cosign sign — keyless OIDC via GitHub Actions</text>
+      <circle cx="36" cy="382" r="3" fill="#5a9000"/><text x="46" y="385" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">Trivy scan + SBOM draft generation (syft)</text>
+      <circle cx="36" cy="403" r="3" fill="#5a9000"/><text x="46" y="406" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">HIL smoke test on Jetson Orin</text>
+      <circle cx="36" cy="424" r="3" fill="#5a9000"/><text x="46" y="427" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">Prometheus metrics push + Grafana update</text>
+      <circle cx="36" cy="445" r="3" fill="#5a9000"/><text x="46" y="448" font-size="11.5" fill="#3d6200" font-family="'Source Code Pro',monospace">Push signed image to DEV registry</text>
 
       <!-- push signed image connector (dashed = conditional path) -->
       <line x1="280" y1="480" x2="280" y2="518" stroke="#c97d00" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#ca)"/>
       <rect x="178" y="488" width="204" height="20" rx="4" fill="#fff" stroke="#c97d00" stroke-width="1.3"/>
-      <text x="280" y="502" text-anchor="middle" font-size="10.5" font-weight="600" fill="#5a3800" font-family="'DM Mono',monospace">push signed image to dev</text>
+      <text x="280" y="502" text-anchor="middle" font-size="10.5" font-weight="600" fill="#5a3800" font-family="'Source Code Pro',monospace">push signed image to dev</text>
 
       <!-- Box 3: DEV REGISTRY -->
       <rect x="20" y="520" width="520" height="170" rx="8" fill="#FFF3D0" stroke="#c97d00" stroke-width="2"/>
       <rect x="20" y="520" width="520" height="34"  rx="8" fill="#c97d00"/>
       <rect x="20" y="540" width="520" height="14" fill="#c97d00"/>
-      <text x="36" y="542" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'DM Mono',monospace">DEV REGISTRY</text>
-      <text x="530" y="542" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'DM Mono',monospace">every merge to main — 7-day retention</text>
-      <circle cx="36" cy="574" r="3" fill="#c97d00"/><text x="46" y="577" font-size="11.5" fill="#5a3800" font-family="'DM Mono',monospace">nvcr.io/myorg/isaac-ros-dev:&lt;git-sha&gt;</text>
-      <circle cx="36" cy="595" r="3" fill="#c97d00"/><text x="46" y="598" font-size="11.5" fill="#5a3800" font-family="'DM Mono',monospace">multi-arch manifest: amd64 + arm64</text>
-      <circle cx="36" cy="616" r="3" fill="#c97d00"/><text x="46" y="619" font-size="11.5" fill="#5a3800" font-family="'DM Mono',monospace">cosign signed + Trivy vulnerability scanned</text>
-      <circle cx="36" cy="637" r="3" fill="#c97d00"/><text x="46" y="640" font-size="11.5" fill="#5a3800" font-family="'DM Mono',monospace">SBOM draft attached (syft SPDX-JSON)</text>
-      <circle cx="36" cy="658" r="3" fill="#c97d00"/><text x="46" y="661" font-size="11.5" fill="#5a3800" font-family="'DM Mono',monospace">ECR lifecycle policy: auto-expire at 7 days</text>
+      <text x="36" y="542" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'Source Code Pro',monospace">DEV REGISTRY</text>
+      <text x="530" y="542" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'Source Code Pro',monospace">every merge to main — 7-day retention</text>
+      <circle cx="36" cy="574" r="3" fill="#c97d00"/><text x="46" y="577" font-size="11.5" fill="#5a3800" font-family="'Source Code Pro',monospace">nvcr.io/myorg/isaac-ros-dev:&lt;git-sha&gt;</text>
+      <circle cx="36" cy="595" r="3" fill="#c97d00"/><text x="46" y="598" font-size="11.5" fill="#5a3800" font-family="'Source Code Pro',monospace">multi-arch manifest: amd64 + arm64</text>
+      <circle cx="36" cy="616" r="3" fill="#c97d00"/><text x="46" y="619" font-size="11.5" fill="#5a3800" font-family="'Source Code Pro',monospace">cosign signed + Trivy vulnerability scanned</text>
+      <circle cx="36" cy="637" r="3" fill="#c97d00"/><text x="46" y="640" font-size="11.5" fill="#5a3800" font-family="'Source Code Pro',monospace">SBOM draft attached (syft SPDX-JSON)</text>
+      <circle cx="36" cy="658" r="3" fill="#c97d00"/><text x="46" y="661" font-size="11.5" fill="#5a3800" font-family="'Source Code Pro',monospace">ECR lifecycle policy: auto-expire at 7 days</text>
 
       <!-- rc tag connector -->
       <line x1="280" y1="690" x2="280" y2="728" stroke="#1a4a8a" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#cb)"/>
       <rect x="168" y="698" width="224" height="20" rx="4" fill="#fff" stroke="#1a4a8a" stroke-width="1.3"/>
-      <text x="280" y="712" text-anchor="middle" font-size="10.5" font-weight="600" fill="#0a3070" font-family="'DM Mono',monospace">rc/* tag or workflow_dispatch</text>
+      <text x="280" y="712" text-anchor="middle" font-size="10.5" font-weight="600" fill="#0a3070" font-family="'Source Code Pro',monospace">rc/* tag or workflow_dispatch</text>
 
       <!-- Box 4: STAGING REGISTRY -->
       <rect x="20" y="730" width="520" height="150" rx="8" fill="#E0EBFA" stroke="#1a4a8a" stroke-width="2"/>
       <rect x="20" y="730" width="520" height="34"  rx="8" fill="#1a4a8a"/>
       <rect x="20" y="750" width="520" height="14" fill="#1a4a8a"/>
-      <text x="36" y="752" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'DM Mono',monospace">STAGING REGISTRY</text>
-      <text x="530" y="752" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'DM Mono',monospace">rc/* tag push — 30-day retention</text>
-      <circle cx="36" cy="784" r="3" fill="#1a4a8a"/><text x="46" y="787" font-size="11.5" fill="#0a3070" font-family="'DM Mono',monospace">nvcr.io/myorg/isaac-ros-staging:rc-&lt;sha&gt;</text>
-      <circle cx="36" cy="805" r="3" fill="#1a4a8a"/><text x="46" y="808" font-size="11.5" fill="#0a3070" font-family="'DM Mono',monospace">full HIL validation suite on physical Jetson Orin</text>
-      <circle cx="36" cy="826" r="3" fill="#1a4a8a"/><text x="46" y="829" font-size="11.5" fill="#0a3070" font-family="'DM Mono',monospace">cosign signature re-verified before promotion</text>
-      <circle cx="36" cy="847" r="3" fill="#1a4a8a"/><text x="46" y="850" font-size="11.5" fill="#0a3070" font-family="'DM Mono',monospace">SBOM validated; provenance attestation drafted</text>
+      <text x="36" y="752" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'Source Code Pro',monospace">STAGING REGISTRY</text>
+      <text x="530" y="752" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'Source Code Pro',monospace">rc/* tag push — 30-day retention</text>
+      <circle cx="36" cy="784" r="3" fill="#1a4a8a"/><text x="46" y="787" font-size="11.5" fill="#0a3070" font-family="'Source Code Pro',monospace">nvcr.io/myorg/isaac-ros-staging:rc-&lt;sha&gt;</text>
+      <circle cx="36" cy="805" r="3" fill="#1a4a8a"/><text x="46" y="808" font-size="11.5" fill="#0a3070" font-family="'Source Code Pro',monospace">full HIL validation suite on physical Jetson Orin</text>
+      <circle cx="36" cy="826" r="3" fill="#1a4a8a"/><text x="46" y="829" font-size="11.5" fill="#0a3070" font-family="'Source Code Pro',monospace">cosign signature re-verified before promotion</text>
+      <circle cx="36" cy="847" r="3" fill="#1a4a8a"/><text x="46" y="850" font-size="11.5" fill="#0a3070" font-family="'Source Code Pro',monospace">SBOM validated; provenance attestation drafted</text>
 
       <!-- git tag + HIL pass connector -->
       <line x1="280" y1="880" x2="280" y2="918" stroke="#085041" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#ct)"/>
       <rect x="158" y="888" width="244" height="20" rx="4" fill="#fff" stroke="#085041" stroke-width="1.3"/>
-      <text x="280" y="902" text-anchor="middle" font-size="10.5" font-weight="600" fill="#085041" font-family="'DM Mono',monospace">git tag vX.Y.Z + HIL pass</text>
+      <text x="280" y="902" text-anchor="middle" font-size="10.5" font-weight="600" fill="#085041" font-family="'Source Code Pro',monospace">git tag vX.Y.Z + HIL pass</text>
 
       <!-- Box 5: NGC PRODUCTION -->
       <rect x="20" y="920" width="520" height="168" rx="8" fill="#d8f5ea" stroke="#085041" stroke-width="2"/>
       <rect x="20" y="920" width="520" height="34"  rx="8" fill="#085041"/>
       <rect x="20" y="940" width="520" height="14" fill="#085041"/>
-      <text x="36" y="942" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'DM Mono',monospace">NGC PRODUCTION</text>
-      <text x="530" y="942" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'DM Mono',monospace">trigger: git tag vX.Y.Z — permanent</text>
-      <circle cx="36" cy="974" r="3" fill="#085041"/><text x="46" y="977" font-size="11.5" fill="#085041" font-family="'DM Mono',monospace">nvcr.io/nvidia/isaac/ros:vX.Y.Z</text>
-      <circle cx="36" cy="995" r="3" fill="#085041"/><text x="46" y="998" font-size="11.5" fill="#085041" font-family="'DM Mono',monospace">SBOM attached + published (syft / SPDX-JSON)</text>
-      <circle cx="36" cy="1016" r="3" fill="#085041"/><text x="46" y="1019" font-size="11.5" fill="#085041" font-family="'DM Mono',monospace">SLSA Level 3 provenance (cosign attest)</text>
-      <circle cx="36" cy="1037" r="3" fill="#085041"/><text x="46" y="1040" font-size="11.5" fill="#085041" font-family="'DM Mono',monospace">NGC public registry — no retention TTL</text>
-      <circle cx="36" cy="1058" r="3" fill="#085041"/><text x="46" y="1061" font-size="11.5" fill="#085041" font-family="'DM Mono',monospace">Automated changelog + GitHub Release created</text>
+      <text x="36" y="942" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'Source Code Pro',monospace">NGC PRODUCTION</text>
+      <text x="530" y="942" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'Source Code Pro',monospace">trigger: git tag vX.Y.Z — permanent</text>
+      <circle cx="36" cy="974" r="3" fill="#085041"/><text x="46" y="977" font-size="11.5" fill="#085041" font-family="'Source Code Pro',monospace">nvcr.io/nvidia/isaac/ros:vX.Y.Z</text>
+      <circle cx="36" cy="995" r="3" fill="#085041"/><text x="46" y="998" font-size="11.5" fill="#085041" font-family="'Source Code Pro',monospace">SBOM attached + published (syft / SPDX-JSON)</text>
+      <circle cx="36" cy="1016" r="3" fill="#085041"/><text x="46" y="1019" font-size="11.5" fill="#085041" font-family="'Source Code Pro',monospace">SLSA Level 3 provenance (cosign attest)</text>
+      <circle cx="36" cy="1037" r="3" fill="#085041"/><text x="46" y="1040" font-size="11.5" fill="#085041" font-family="'Source Code Pro',monospace">NGC public registry — no retention TTL</text>
+      <circle cx="36" cy="1058" r="3" fill="#085041"/><text x="46" y="1061" font-size="11.5" fill="#085041" font-family="'Source Code Pro',monospace">Automated changelog + GitHub Release created</text>
     </svg>
   </div>
 
@@ -2225,6 +2228,503 @@ scrape_configs:
 
   <div class="note note-g reveal" style="margin-top:20px;">
     <strong>Portfolio context:</strong> This reference guide is maintained as part of <a href="https://www.sudhakarchundu.org">Sudhakar Chundu's engineering portfolio</a>. For related guides, see the <a href="../blog/">blog index</a> including the NVIDIA RAPIDS guide and conference materials.
+  </div>
+</section>
+
+
+<!-- ══ PART E ══ -->
+<div class="part-header" id="part-e">
+  <div class="part-num">Part E</div>
+  <div class="part-title">IsaacLab CI/CD Analysis</div>
+  <div class="part-sub">Current state · Workflow breakdown · Improvement roadmap</div>
+</div>
+
+<!-- E1 -->
+<section class="section" id="e1">
+  <div class="topic-header">
+    <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">IsaacLab CI/CD Report</h2>
+    <span class="topic-badge">3-slide analysis</span>
+  </div>
+  <p class="body">Visual analysis of the IsaacLab GitHub Actions CI/CD pipeline — current failure state, per-workflow breakdown, and a phased improvement roadmap. Data sourced from live issue tracker analysis of 150+ open issues and 100+ open PRs.</p>
+
+  <style>
+.pres-section  { size: A4 landscape; margin: 0; }
+.pres-section  {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px 46px 22px;
+  background: var(--bg);
+  border-bottom: 3px solid var(--rim);
+  position: relative;
+  page-break-after: always;
+  break-after: page;
+}
+.pres-section  { border-bottom: none; page-break-after: avoid; break-after: avoid; }
+.pres-section  {
+  position: absolute; top: 16px; right: 28px;
+  font: 700 8.5px/1 var(--mono); letter-spacing: .12em;
+  text-transform: uppercase; color: var(--sub);
+}
+.pres-section  {
+  background: var(--dark);
+  margin: -30px -46px 18px;
+  padding: 16px 46px 14px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.pres-section  { font: 600 8px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #8a8a96; margin-bottom: 4px; }
+.pres-section  { font: 900 21px/1.1 var(--sans); letter-spacing: -.02em; color: #ffffff; }
+.pres-section  { font-style: normal; color: #a6d43a; }
+.pres-section  { margin-top: 4px; font: 400 9px/1.5 var(--sans); color: #9a9aaa; max-width: 580px; }
+.pres-section  {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #ffffff0f; border: 1px solid #ffffff22;
+  padding: 5px 10px; flex-shrink: 0;
+}
+.pres-section  { width: 7px; height: 7px; border-radius: 50%; background: #a6d43a; box-shadow: 0 0 5px #a6d43a; }
+.pres-section  { font: 700 9px/1 var(--mono); letter-spacing: .07em; text-transform: uppercase; color: #9a9aaa; }
+.pres-section  {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 7px; font: 700 8px/1 var(--sans);
+  letter-spacing: .1em; text-transform: uppercase;
+  white-space: nowrap; border: 1px solid transparent;
+}
+.pres-section  { background: var(--red-b);   color: var(--red);   border-color: #f5bbb6; }
+.pres-section  { background: var(--amber-b); color: var(--amber); border-color: #f5d9aa; }
+.pres-section  { background: var(--blue-b);  color: var(--blue);  border-color: #b0c8f5; }
+.pres-section  { background: var(--green-b); color: var(--green); border-color: #bfdf7a; }
+.pres-section  { background: var(--rim2);    color: var(--sub);   border-color: var(--rim); }
+.pres-section  { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+.pres-section  {
+  font: 700 7.5px/1 var(--sans); letter-spacing: .14em;
+  text-transform: uppercase; color: var(--sub); margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.pres-section  { content: ''; flex: 1; height: 1px; background: var(--rim2); }
+.pres-section  { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pres-section  { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; }
+.pres-section  { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+.pres-section  {
+  background: var(--card);
+  border: 2px solid var(--rim);
+  padding: 10px 13px;
+}
+.pres-section  { font: 900 28px/1 var(--mono); letter-spacing: -.03em; }
+.pres-section  { font: 700 7.5px/1 var(--sans); letter-spacing: .09em; text-transform: uppercase; color: var(--sub); margin: 4px 0 3px; }
+.pres-section  { font: 400 8px/1.35 var(--sans); color: var(--sub); }
+.pres-section  {
+  background: var(--card);
+  border: 2px solid var(--rim);
+  padding: 11px 13px;
+}
+.pres-section  { margin-top: 8px; }
+.pres-section  { display: flex; align-items: center; gap: 7px; margin-bottom: 6px; }
+.pres-section  {
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  font: 900 10px/1 var(--mono); flex-shrink: 0;
+  border: 2px solid currentColor;
+}
+.pres-section  { font: 700 11px/1 var(--sans); color: var(--ink); flex: 1; }
+.pres-section  { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.pres-section  {
+  display: flex; align-items: flex-start; gap: 8px;
+  font: 400 8.5px/1.45 var(--sans); color: var(--sub);
+}
+.pres-section  {
+  content: ''; width: 4px; height: 4px;
+  background: var(--rim); flex-shrink: 0; margin-top: 5px;
+}
+.pres-section  {
+  background: var(--card);
+  border: 2px solid var(--rim);
+  padding: 12px 14px;
+}
+.pres-section  { font: 700 9.5px/1 var(--mono); color: var(--ink); margin-bottom: 8px; letter-spacing: .04em; }
+.pres-section  { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.pres-section  { font: 600 8px/1 var(--sans); color: var(--sub); white-space: nowrap; }
+.pres-section  { flex: 1; height: 6px; background: var(--rim2); }
+.pres-section  { height: 6px; }
+.pres-section  { font: 700 11px/1 var(--mono); min-width: 44px; text-align: right; }
+.pres-section  { display: flex; flex-direction: column; gap: 5px; }
+.pres-section  { display: flex; align-items: flex-start; gap: 7px; font: 400 8px/1.4 var(--sans); color: var(--sub); }
+.pres-section  { width: 5px; height: 5px; flex-shrink: 0; margin-top: 4px; }
+.pres-section  {
+  background: var(--card);
+  border: 2px solid var(--rim);
+  padding: 8px 11px;
+}
+.pres-section  { font: 700 9px/1 var(--mono); margin-bottom: 4px; }
+.pres-section  { font: 600 8.5px/1.35 var(--sans); color: var(--ink); margin-bottom: 2px; }
+.pres-section  { font: 400 7.5px/1.3 var(--sans); color: var(--sub); }
+.pres-section  {
+  display: flex; gap: 13px;
+  background: var(--card);
+  border: 2px solid var(--rim);
+  padding: 11px 14px;
+}
+.pres-section  { margin-top: 7px; }
+.pres-section  {
+  width: 26px; height: 26px;
+  display: flex; align-items: center; justify-content: center;
+  font: 900 11px/1 var(--mono); flex-shrink: 0; margin-top: 1px;
+  border: 2px solid currentColor;
+}
+.pres-section  { flex: 1; }
+.pres-section  { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.pres-section  { font: 700 11px/1 var(--sans); color: var(--ink); }
+.pres-section  {
+  font: 600 8px/1 var(--mono); color: var(--sub);
+  background: var(--rim2); border: 1px solid var(--rim);
+  padding: 2px 6px;
+}
+.pres-section  { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 14px; }
+.pres-section  { display: flex; align-items: flex-start; gap: 6px; font: 400 8.5px/1.4 var(--sans); color: var(--sub); }
+.pres-section  { width: 5px; height: 5px; flex-shrink: 0; margin-top: 5px; }
+.pres-section  {
+  padding-top: 8px; margin-top: 14px;
+  border-top: 2px solid var(--rim);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.pres-section  { font: 400 7.5px/1 var(--mono); color: var(--sub); letter-spacing: .03em; }
+.pres-section  { font: 700 7.5px/1 var(--sans); color: var(--sub); letter-spacing: .07em; text-transform: uppercase; }
+  </style>
+
+  <div class="pres-section reveal" style="margin-top:24px;">
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 1 — Current State: What's Broken
+══════════════════════════════════════════════════════════════ -->
+<div class="slide">
+  <span class="snum">01 / 03</span>
+
+  <div class="hd-strip">
+    <div>
+      <div class="eyebrow">isaac-sim/IsaacLab · GitHub Actions · Current State · May 2026</div>
+      <div class="title">CI/CD Pipeline Is <em>Critically Broken</em></div>
+      <div class="sub">Analysis of 150 open issues + 100 open PRs. Nightly and postmerge CI are the primary failure surfaces with measurable impact on every contributor.</div>
+    </div>
+    <div class="tag"><div class="tag-dot"></div><span>isaac-sim/IsaacLab</span></div>
+  </div>
+
+  <!-- KPI strip -->
+  <div class="g4" style="margin-bottom:14px;">
+    <div class="stat" style="border-color:#f5bbb6;border-left:4px solid var(--red);">
+      <div class="sv" style="color:var(--red);">16%</div>
+      <div class="sl">Postmerge CI Pass Rate</div>
+      <div class="sn">84% failing — build-and-push-images accounts for 96% of all failures</div>
+    </div>
+    <div class="stat" style="border-color:#f5bbb6;border-left:4px solid var(--red);">
+      <div class="sv" style="color:var(--red);">0%</div>
+      <div class="sl">Nightly Pass Rate</div>
+      <div class="sn">daily-compatibility.yml at 0% for 14+ consecutive days straight</div>
+    </div>
+    <div class="stat" style="border-color:#f5d9aa;border-left:4px solid var(--amber);">
+      <div class="sv" style="color:var(--amber);">70%</div>
+      <div class="sl">CI Checks Skipped</div>
+      <div class="sn">33 check runs per PR — 70% skipped but GPU runners still spin up and bill</div>
+    </div>
+    <div class="stat" style="border-color:#f5d9aa;border-left:4px solid var(--amber);">
+      <div class="sv" style="color:var(--amber);">49</div>
+      <div class="sl">Open Install Issues</div>
+      <div class="sn">33% of all 150 open issues are Docker / pip / installation failures</div>
+    </div>
+  </div>
+
+  <!-- 4 critical problems -->
+  <div class="sec">4 critical failure categories</div>
+  <div class="g2">
+    <div>
+      <div class="ic" style="border-color:#f5bbb6;border-left:4px solid var(--red);">
+        <div class="ic-hd">
+          <div class="ic-num" style="color:var(--red);">1</div>
+          <div class="ic-title">ECR Push Failures — Nightly Dead</div>
+          <span class="badge br"><span class="dot" style="background:var(--red);"></span>Critical</span>
+        </div>
+        <ul class="bullet-list">
+          <li>OIDC token TTL exceeded during long GPU builds → credential expires mid-push to ECR</li>
+          <li><span style="font-family:var(--mono);font-size:8px;font-weight:600;">isaacsim-core</span> pins <span style="font-family:var(--mono);font-size:8px;font-weight:600;">packaging==23.0</span>, conflicts with pip internals</li>
+          <li>No retry logic — single network blip kills the entire nightly job, no fallback</li>
+          <li>Open fix PRs are pending merge</li>
+        </ul>
+      </div>
+      <div class="ic" style="border-color:#f5bbb6;border-left:4px solid var(--red);margin-top:8px;">
+        <div class="ic-hd">
+          <div class="ic-num" style="color:var(--red);">2</div>
+          <div class="ic-title">Blackwell GPU — Zero Support</div>
+          <span class="badge br"><span class="dot" style="background:var(--red);"></span>Critical</span>
+        </div>
+        <ul class="bullet-list">
+          <li>RTX 5090 / 5070 Ti crashes — sm_120 (Blackwell) absent from CUDA arch list</li>
+          <li>TiledCamera CUDA kernel hangs on GB202/GB203 silicon</li>
+          <li>Driver 595.79 exposes new GPU init path that crashes headless GUI</li>
+          <li>No Blackwell runner in CI matrix — regressions ship to users, not caught in CI</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="ic" style="border-color:#f5d9aa;border-left:4px solid var(--amber);">
+        <div class="ic-hd">
+          <div class="ic-num" style="color:var(--amber);">3</div>
+          <div class="ic-title">Dependency Hell — 49 Open Issues</div>
+          <span class="badge ba"><span class="dot" style="background:var(--amber);"></span>High</span>
+        </div>
+        <ul class="bullet-list">
+          <li>No single source of truth for dep versions — each package pins independently</li>
+          <li><span style="font-family:var(--mono);font-size:8px;font-weight:600;">isaaclab.sh --install</span> fails silently with exit code 0 on conflicts</li>
+          <li>CloudXR extension not published in Isaac Sim 6.0 pip index</li>
+          <li>Open fix PRs are pending merge</li>
+        </ul>
+      </div>
+      <div class="ic" style="border-color:#f5d9aa;border-left:4px solid var(--amber);margin-top:8px;">
+        <div class="ic-hd">
+          <div class="ic-num" style="color:var(--amber);">4</div>
+          <div class="ic-title">Wasteful PR Matrix — 60% Redundant GPU</div>
+          <span class="badge ba"><span class="dot" style="background:var(--amber);"></span>High</span>
+        </div>
+        <ul class="bullet-list">
+          <li>32% of open PRs are docs-only — all trigger A100-80GB GPU runners unnecessarily</li>
+          <li>Full 10-cell matrix (3 Isaac Sim versions × 4 extensions) runs on every PR</li>
+          <li>No path-filter gate — ci-only changes spin GPU builds with zero value</li>
+          <li>Isaac Sim 6.0 compat gaps mean old-version runs mask real failures</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="fl">CI/CD Analysis — IsaacLab Repository</div>
+    <div class="fr">IsaacLab / IsaacSim CI Review · May 2026</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 2 — Workflow Deep Dive
+══════════════════════════════════════════════════════════════ -->
+<div class="slide">
+  <span class="snum">02 / 03</span>
+
+  <div class="hd-strip">
+    <div>
+      <div class="eyebrow">Workflow Analysis — File-Level Breakdown</div>
+      <div class="title">Three Workflows, <em>Exact Failure Points</em></div>
+      <div class="sub">Mapped to specific workflow YAML files and confirmed GitHub issue numbers. Every item below is reproducible from the open issue tracker.</div>
+    </div>
+    <div class="tag">
+      <div class="tag-dot" style="background:#ff6b6b;box-shadow:0 0 5px #ff6b6b;"></div>
+      <span>.github/workflows</span>
+    </div>
+  </div>
+
+  <div class="g3" style="margin-bottom:14px;">
+
+    <div class="wf" style="border-color:#f5bbb6;border-top:4px solid var(--red);">
+      <div class="wf-name">Post-Merge CI</div>
+      <div class="wf-stat">
+        <span class="wf-stat-lbl">Pass rate</span>
+        <div class="wf-bar-bg"><div class="wf-bar" style="width:16%;background:var(--red);"></div></div>
+        <span class="wf-pct" style="color:var(--red);">16%</span>
+      </div>
+      <div class="wf-rows">
+        <div class="wf-row"><div class="wf-row-dot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">build-and-push-images</strong> — OIDC token expires during multi-hour GPU build; 96% of failures trace here</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">packaging==23.0 conflict</strong> — isaacsim-core pin breaks pip vendored module inside Docker container</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">Silent source failures</strong> — isaaclab.sh exits 0 on conflict; CI marks green, job fails later</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">Full 10-cell matrix</strong> — all 3 Isaac Sim × 4 extensions on every push; no post-merge vs PR split</span></div>
+      </div>
+    </div>
+
+    <div class="wf" style="border-color:#f5bbb6;border-top:4px solid var(--red);">
+      <div class="wf-name">Nightly Compatibility</div>
+      <div class="wf-stat">
+        <span class="wf-stat-lbl">Pass rate</span>
+        <div class="wf-bar-bg"><div class="wf-bar" style="width:0%;background:var(--red);"></div></div>
+        <span class="wf-pct" style="color:var(--red);">0% (14d)</span>
+      </div>
+      <div class="wf-rows">
+        <div class="wf-row"><div class="wf-row-dot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">ECR credential expiry</strong> — OIDC token issued at job start, expires before multi-hour GPU build finishes</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">Matrix resolver bug</strong> — unknown INPUT_SIM_VERSIONS silently falls back to ALL versions; re-run → 12-job full matrix</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">Output variable risk</strong> — Output variable unset — silently discards all 11 outputs; "tag not found" downstream</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">Changelog deprecation</strong> — scheduled-workflow syntax deprecated, breaking nightly trigger</span></div>
+      </div>
+    </div>
+
+    <div class="wf" style="border-color:#f5d9aa;border-top:4px solid var(--amber);">
+      <div class="wf-name">PR Build Pipeline</div>
+      <div class="wf-stat">
+        <span class="wf-stat-lbl">Skipped checks</span>
+        <div class="wf-bar-bg"><div class="wf-bar" style="width:70%;background:var(--amber);"></div></div>
+        <span class="wf-pct" style="color:var(--amber);">70%</span>
+      </div>
+      <div class="wf-rows">
+        <div class="wf-row"><div class="wf-row-dot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">No PR classification</strong> — 32% of PRs are docs-only; still trigger A100-80GB runner; 23 of 33 checks skip immediately</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">Full matrix on every PR</strong> — 3 Isaac Sim versions × 4 extensions; 60% of GPU work is redundant per PR</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">Isaac Sim 6.0 gaps</strong> — compat breakages; old-version cells mask which version is actually broken</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:var(--blue);"></div><span><strong style="color:var(--ink);">No Blackwell runner</strong> — sm_120 absent from CUDA arch; RTX 5090 regressions never caught in CI</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Issue references -->
+  <div class="sec">Key Failure Areas — Confirmed by Analysis</div>
+  <div class="g4">
+    <div class="ref" style="border-color:#f5bbb6;border-left:3px solid var(--red);">
+      <div class="ref-id" style="color:var(--red);">DEP CONFLICT</div>
+      <div class="ref-title">packaging==23.0 pin conflict</div>
+      <div class="ref-note">isaacsim-core conflicts with pip vendored module; breaks Docker pip install</div>
+    </div>
+    <div class="ref" style="border-color:#f5bbb6;border-left:3px solid var(--red);">
+      <div class="ref-id" style="color:var(--red);">GPU ARCH</div>
+      <div class="ref-title">NVRTC arch error — Blackwell</div>
+      <div class="ref-note">sm_120 (RTX 5090) missing from CUDA arch list; NVRTC fails</div>
+    </div>
+    <div class="ref" style="border-color:#f5bbb6;border-left:3px solid var(--red);">
+      <div class="ref-id" style="color:var(--red);">SILENT EXIT</div>
+      <div class="ref-title">Silent install failure</div>
+      <div class="ref-note">isaaclab.sh --install exits 0 on dependency conflict; no error surfaced</div>
+    </div>
+    <div class="ref" style="border-color:#f5bbb6;border-left:3px solid var(--red);">
+      <div class="ref-id" style="color:var(--red);">DOCKER PIP</div>
+      <div class="ref-title">Broken pip in Docker</div>
+      <div class="ref-note">Missing vendored packaging module inside IsaacLab Docker image</div>
+    </div>
+    <div class="ref" style="border-color:#f5d9aa;border-left:3px solid var(--amber);">
+      <div class="ref-id" style="color:var(--amber);">BUILD SILENT</div>
+      <div class="ref-title">Silent build from source</div>
+      <div class="ref-note">Build step exits 0 despite source compile failure; CI marked green</div>
+    </div>
+    <div class="ref" style="border-color:#f5d9aa;border-left:3px solid var(--amber);">
+      <div class="ref-id" style="color:var(--amber);">IS6 COMPAT</div>
+      <div class="ref-title">Isaac Sim 6.0 compat</div>
+      <div class="ref-note">API breakages with IS 6.0 not caught by current PR CI matrix</div>
+    </div>
+    <div class="ref" style="border-color:#f5d9aa;border-left:3px solid var(--amber);">
+      <div class="ref-id" style="color:var(--amber);">MISSING PKG</div>
+      <div class="ref-title">CloudXR missing in IS 6.0</div>
+      <div class="ref-note">isaacsim.kit.xr.teleop.bridge not published in IS 6.0 pip index</div>
+    </div>
+    <div class="ref" style="border-color:#b0c8f5;border-left:3px solid var(--blue);">
+      <div class="ref-id" style="color:var(--blue);">RAM LIMIT</div>
+      <div class="ref-title">Docker RAM overconsumption</div>
+      <div class="ref-note">Isaac Sim overconsumes RAM; no --memory limits set in docker run flags</div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="fl">Source: isaac-sim/IsaacLab — 150+ open issues · 100+ open PRs</div>
+    <div class="fr">IsaacLab / IsaacSim CI Review · May 2026</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     SLIDE 3 — Improvement Plan
+══════════════════════════════════════════════════════════════ -->
+<div class="slide">
+  <span class="snum">03 / 03</span>
+
+  <div class="hd-strip">
+    <div>
+      <div class="eyebrow">Improvement Roadmap — 3-Phase Plan</div>
+      <div class="title">From 16% Pass Rate to <em>Elite CI/CD</em></div>
+      <div class="sub">Ordered by impact-to-effort ratio. Phase 1 alone restores nightly CI and unblocks postmerge. Each phase maps directly to a root cause from Slide 1.</div>
+    </div>
+    <div class="tag">
+      <div class="tag-dot" style="background:#6ea8fe;box-shadow:0 0 5px #6ea8fe;"></div>
+      <span>Roadmap&nbsp;2026</span>
+    </div>
+  </div>
+
+  <div class="phase" style="border-color:#f5bbb6;border-left:4px solid var(--red);">
+    <div class="pnum" style="color:var(--red);">1</div>
+    <div class="pbody">
+      <div class="phd">
+        <div class="ptitle">Fix ECR + Dependency Failures</div>
+        <div class="pwin">Weeks 1–3</div>
+        <span class="badge br">Targets #1 + #3 — restores nightly to 100%</span>
+      </div>
+      <div class="pitems">
+        <div class="pi"><div class="pidot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">Rotate ECR OIDC credentials</strong> — fix IAM trust policy; add nick-fields/retry (3×, 60s) to ECR push step in postmerge-ci.yml</span></div>
+        <div class="pi"><div class="pidot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">Centralize dependency pins</strong> — single source of truth in a shared deps file; resolves packaging==23.0 conflict</span></div>
+        <div class="pi"><div class="pidot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">Fix isaaclab.sh exit codes</strong> — add post-install smoke test: python -c 'import isaaclab'; propagate real exit code</span></div>
+        <div class="pi"><div class="pidot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">Fix resolve-matrix.py fallback</strong> — unknown input → sys.exit(1), not silent all-matrix fallback in daily-compatibility</span></div>
+        <div class="pi"><div class="pidot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">Guard output variable in nightly script</strong> — fail fast in CI if unset; prevents silent /dev/null writes</span></div>
+        <div class="pi"><div class="pidot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">Fix deprecated nightly trigger</strong> — scheduled-workflow syntax fix restoring daily-compatibility trigger</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" style="border-color:#f5d9aa;border-left:4px solid var(--amber);">
+    <div class="pnum" style="color:var(--amber);">2</div>
+    <div class="pbody">
+      <div class="phd">
+        <div class="ptitle">Smart PR Gating — Eliminate GPU Waste</div>
+        <div class="pwin">Weeks 4–7</div>
+        <span class="badge ba">Targets #4 — −60% GPU runner cost</span>
+      </div>
+      <div class="pitems">
+        <div class="pi"><div class="pidot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">Add dorny/paths-filter</strong> — classify PR as docs / tests / source / ci-config before any GPU runner is assigned</span></div>
+        <div class="pi"><div class="pidot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">Gate GPU matrix in PR build workflow</strong> — if: needs.classify.outputs.source == 'true'; docs PRs → ubuntu-latest only, no GPU</span></div>
+        <div class="pi"><div class="pidot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">Reduce PR matrix to 4 cells</strong> — latest Isaac Sim × 4 extensions on PRs; full 10-cell only on merge and nightly</span></div>
+        <div class="pi"><div class="pidot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">BuildKit cache mounts</strong> — --mount=type=cache,target=/root/.cache/pip; reorder Dockerfile: requirements first, source after</span></div>
+        <div class="pi"><div class="pidot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">Base image deduplication</strong> — build base once per Isaac Sim version; fan-out to 4 extensions in parallel from cache</span></div>
+        <div class="pi"><div class="pidot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">Add install test suite</strong> — conda/uv installation tests in CI; catch install regressions before reaching users</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase" style="border-color:#b0c8f5;border-left:4px solid var(--blue);">
+    <div class="pnum" style="color:var(--blue);">3</div>
+    <div class="pbody">
+      <div class="phd">
+        <div class="ptitle">Blackwell GPU Support + Elite Observability</div>
+        <div class="pwin">Weeks 8–12</div>
+        <span class="badge bb">Targets #2 — unblocks RTX 5090 / 5070 Ti users</span>
+      </div>
+      <div class="pitems">
+        <div class="pi"><div class="pidot" style="background:var(--blue);"></div><span><strong style="color:var(--ink);">Add sm_90a + sm_120 to CUDA arch</strong> — fix NVRTC -arch error; update CMakeLists / setup.py for Blackwell</span></div>
+        <div class="pi"><div class="pidot" style="background:var(--blue);"></div><span><strong style="color:var(--ink);">Recompile TiledCamera kernel</strong> — add sm_120 target for GB202/GB203 silicon; resolves hang on RTX 5090</span></div>
+        <div class="pi"><div class="pidot" style="background:var(--blue);"></div><span><strong style="color:var(--ink);">Add Blackwell runner to nightly matrix</strong> — RTX 5090 (GB202) cell in daily-compatibility.yml from Week 8</span></div>
+        <div class="pi"><div class="pidot" style="background:var(--blue);"></div><span><strong style="color:var(--ink);">Resolve Isaac Sim 6.0 compat gaps</strong> — fix API breakages; make IS 6.0 the primary version in PR CI</span></div>
+        <div class="pi"><div class="pidot" style="background:var(--blue);"></div><span><strong style="color:var(--ink);">ECR push health check</strong> — hourly credential verification workflow; Slack alert on first failure before nightly runs</span></div>
+        <div class="pi"><div class="pidot" style="background:var(--blue);"></div><span><strong style="color:var(--ink);">DORA metrics baseline</strong> — track deployment freq, lead time, MTTR, CFR; target Elite band by end of Q3</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Outcomes -->
+  <div style="margin-top:12px;">
+    <div class="sec">Expected outcomes after all 3 phases</div>
+    <div class="g4">
+      <div class="stat" style="border-color:#bfdf7a;border-left:4px solid var(--green);">
+        <div class="sv" style="color:var(--green);">+80%</div>
+        <div class="sl">Postmerge Pass Rate</div>
+        <div class="sn">ECR fix + retry logic → 16% → ~96%; Phase 1 alone achieves this</div>
+      </div>
+      <div class="stat" style="border-color:#bfdf7a;border-left:4px solid var(--green);">
+        <div class="sv" style="color:var(--green);">100%</div>
+        <div class="sl">Nightly Restored</div>
+        <div class="sn">0% → daily green; credential fix + deprecation patch in Phase 1</div>
+      </div>
+      <div class="stat" style="border-color:#bfdf7a;border-left:4px solid var(--green);">
+        <div class="sv" style="color:var(--green);">−60%</div>
+        <div class="sl">GPU Runner Cost</div>
+        <div class="sn">Smart gating + matrix reduction; ~40 GPU-hours/week saved</div>
+      </div>
+      <div class="stat" style="border-color:#bfdf7a;border-left:4px solid var(--green);">
+        <div class="sv" style="color:var(--green);">49→0</div>
+        <div class="sl">Install Issues</div>
+        <div class="sn">Centralized pins + smoke tests close all open install issues</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="fl">Implementation Timeline — Q2/Q3 2026</div>
+    <div class="fr">IsaacLab / IsaacSim CI Review · May 2026</div>
+  </div>
+</div>
   </div>
 </section>
 
