@@ -37,6 +37,7 @@
 
   html {
     scroll-behavior: smooth;
+    zoom: 1.25;
   }
 
   .header {
@@ -507,8 +508,8 @@ body {
 /* Main content with sidebar */
 .main-content {
   margin-left: 280px;
-  max-width: 1100px;
-  padding: 2rem;
+  max-width: calc(100vw - 280px);
+  padding: 2rem 3rem;
 }
 
 /* Hide sidebar on mobile */
