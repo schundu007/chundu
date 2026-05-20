@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GGNQHMGCLH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-GGNQHMGCLH');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudhakar Chundu | Senior DevOps & Platform Engineering Profile</title>
+    <meta name="description" content="Sudhakar Chundu — Senior DevOps & Platform Engineering, 18+ Years, Multi-Cloud Architect. AIOps, IaC, GPU/AI Infrastructure, Kubernetes, Zero-Trust Security, SRE, Robotics DevOps.">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=2">
+    <script src="../assets/js/theme.js"></script>
+
+    <style>
+        :root {
+            --p-bg: #07090f;
+            --p-card: #0e1220;
+            --p-card2: #111624;
+            --p-border: #1e2540;
+            --p-teal: #00c8d4;
+            --p-teal-dim: #00a8b2;
+            --p-green: #00e676;
+            --p-green-dim: #00c853;
+            --p-purple: #7c4dff;
+            --p-yellow: #ffd740;
+            --p-orange: #ff6d00;
+            --p-text: #e8eaf0;
+            --p-muted: #8892a4;
+            --p-link: #26c6da;
+        }
+
+        body {
+            background: var(--p-bg) !important;
+        }
+
+        /* Override theme bg for this page */
+        .profile-page-wrapper {
+            background: var(--p-bg);
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        /* ── HEADER ── */
+        .prof-header {
+            padding: 2.5rem 2.5rem 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1.5rem;
+            align-items: flex-start;
+            border-bottom: 1px solid var(--p-border);
+        }
+
+        .prof-name {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            color: #ffffff;
+            line-height: 1;
+            margin: 0 0 0.6rem;
+        }
+
+        .prof-title {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(0.95rem, 2vw, 1.2rem);
+            font-weight: 500;
+            color: var(--p-teal);
+            margin: 0 0 0.55rem;
+            letter-spacing: 0.01em;
+        }
+
+        .prof-tags {
+            font-size: 0.82rem;
+            color: var(--p-muted);
+            letter-spacing: 0.02em;
+        }
+
+        .prof-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            min-width: 320px;
+        }
+
+        .prof-link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.85rem;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            text-decoration: none;
+            transition: opacity 0.2s;
+            white-space: nowrap;
+        }
+        .prof-link-btn:hover { opacity: 0.8; }
+
+        .plb-linkedin  { background: #131929; color: var(--p-teal); border: 1px solid #1e3040; }
+        .plb-github    { background: #101a12; color: var(--p-green); border: 1px solid var(--p-green-dim); }
+        .plb-site      { background: var(--p-teal); color: #07090f; border: 1px solid var(--p-teal); font-weight: 700; }
+        .plb-medium    { background: #0f1520; color: var(--p-teal); border: 1px solid var(--p-teal-dim); }
+
+        /* ── STATS ── */
+        .prof-stats {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1px;
+            background: var(--p-border);
+            border-top: 1px solid var(--p-border);
+            border-bottom: 1px solid var(--p-border);
+        }
+
+        .stat-cell {
+            background: var(--p-card);
+            padding: 1.1rem 1rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+            font-weight: 800;
+            color: var(--p-teal);
+            line-height: 1;
+            margin-bottom: 0.35rem;
+        }
+
+        .stat-label {
+            font-size: 0.73rem;
+            color: var(--p-muted);
+            line-height: 1.3;
+        }
+
+        /* ── GRID BODY ── */
+        .prof-body {
+            display: grid;
+            grid-template-columns: 1fr 1.15fr 1fr;
+            gap: 1px;
+            background: var(--p-border);
+            flex: 1;
+        }
+
+        .prof-col {
+            background: var(--p-bg);
+            padding: 1.4rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.4rem;
+        }
+
+        /* ── SECTION BLOCK ── */
+        .sec-block {}
+
+        .sec-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .sec-icon {
+            font-size: 0.9rem;
+        }
+
+        .sec-title {
+            font-family: 'Sora', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--p-text);
+        }
+
+        .sec-subtitle {
+            font-size: 0.75rem;
+            color: var(--p-muted);
+            margin-bottom: 0.75rem;
+            font-style: italic;
+        }
+
+        /* Colored left border accents per section */
+        .sec-intl { border-left: 3px solid var(--p-purple); padding-left: 0.75rem; }
+        .sec-iac  { border-left: 3px solid var(--p-teal);   padding-left: 0.75rem; }
+        .sec-role { border-left: 3px solid var(--p-orange);  padding-left: 0.75rem; }
+        .sec-oss  { border-left: 3px solid #aa00ff;         padding-left: 0.75rem; }
+        .sec-aiops { border-left: 3px solid var(--p-yellow); padding-left: 0.75rem; }
+
+        /* ── BULLET ITEMS ── */
+        .bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
+
+        .bullet-list li {
+            font-size: 0.78rem;
+            color: var(--p-text);
+            line-height: 1.45;
+            padding-left: 0.85rem;
+            position: relative;
+        }
+
+        .bullet-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--p-teal);
+            font-size: 0.7rem;
+        }
+
+        .bullet-list li.dot::before { content: '•'; color: var(--p-muted); }
+
+        .inline-link {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--p-link);
+            text-decoration: none;
+            margin-top: 0.15rem;
+        }
+        .inline-link:hover { text-decoration: underline; }
+
+        .bullet-label {
+            color: var(--p-text);
+            font-weight: 600;
+            font-size: 0.78rem;
+        }
+
+        /* ── REPO CARDS ── */
+        .repo-card {
+            border: 1px solid var(--p-green-dim);
+            border-radius: 6px;
+            padding: 0.85rem 1rem;
+            margin-bottom: 0.75rem;
+            background: #090f0b;
+        }
+
+        .repo-card-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--p-green);
+            margin-bottom: 0.3rem;
+        }
+
+        .repo-card-title::before {
+            content: '○';
+            font-size: 0.75rem;
+            color: var(--p-green);
+        }
+
+        .repo-card-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--p-link);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.45rem;
+        }
+        .repo-card-link:hover { text-decoration: underline; }
+
+        .repo-card-desc {
+            font-size: 0.73rem;
+            color: var(--p-muted);
+            line-height: 1.45;
+        }
+
+        /* ── TECH CHIPS ── */
+        .tech-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-bottom: 0.85rem;
+        }
+
+        .tech-chip {
+            font-size: 0.68rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--p-muted);
+            background: var(--p-card2);
+            border: 1px solid var(--p-border);
+            border-radius: 4px;
+            padding: 0.15rem 0.45rem;
+        }
+
+        /* ── OSS CARDS ── */
+        .oss-card {
+            padding: 0.85rem 0;
+            border-bottom: 1px solid var(--p-border);
+        }
+        .oss-card:last-child { border-bottom: none; }
+
+        .oss-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .oss-card-name {
+            font-family: 'Sora', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--p-text);
+        }
+
+        .oss-card-subtitle {
+            font-size: 0.72rem;
+            color: var(--p-muted);
+            font-style: italic;
+            margin-bottom: 0.3rem;
+        }
+
+        .oss-card-desc {
+            font-size: 0.72rem;
+            color: var(--p-muted);
+            line-height: 1.45;
+        }
+
+        /* colored icons for oss items */
+        .ico-bar  { color: #29b6f6; }
+        .ico-bolt { color: var(--p-yellow); }
+        .ico-bldg { color: var(--p-green); }
+        .ico-circ { color: #26de81; }
+
+        /* ── FOOTER BAR ── */
+        .prof-footer {
+            background: var(--p-card);
+            border-top: 1px solid var(--p-border);
+            padding: 0.65rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .prof-footer-left {
+            font-size: 0.72rem;
+            color: var(--p-muted);
+        }
+
+        .prof-footer-left span.sep { margin: 0 0.4rem; color: var(--p-border); }
+
+        .prof-footer-right {
+            font-size: 0.7rem;
+            color: var(--p-muted);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .prof-body { grid-template-columns: 1fr 1fr; }
+            .prof-col:last-child { grid-column: 1 / -1; }
+            .prof-stats { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 680px) {
+            .prof-header { grid-template-columns: 1fr; }
+            .prof-links { min-width: auto; }
+            .prof-body { grid-template-columns: 1fr; }
+            .prof-col:last-child { grid-column: 1; }
+            .prof-stats { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="../" class="logo">
+                <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu" class="logo-icon">
+                Sudhakar Chundu
+            </a>
+            <ul class="nav-links">
+                <li><a href="../about/">About</a></li>
+                <li><a href="../resume/">Resume</a></li>
+                <li><a href="../blog/">Blog</a></li>
+                <li><a href="../projects/">Achievements</a></li>
+                <li><a href="../opensource/">Open Source</a></li>
+                <li><a href="./" class="active">Profile</a></li>
+                <div class="nav-social">
+                    <a href="https://github.com/schundu007" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/schundu" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
+                <div class="nav-auth">
+                    <button class="btn-signin" onclick="showLoginModal && showLoginModal()">Sign In</button>
+                </div>
+            </ul>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="profile-page-wrapper">
+
+        <!-- ── HEADER ── -->
+        <div class="prof-header">
+            <div>
+                <h1 class="prof-name">SUDHAKAR CHUNDU</h1>
+                <p class="prof-title">Senior DevOps &amp; Platform Engineering &nbsp;|&nbsp; 18+ Years &nbsp;|&nbsp; Multi-Cloud Architect</p>
+                <p class="prof-tags">AIOps &nbsp;·&nbsp; IaC &nbsp;·&nbsp; GPU/AI Infrastructure &nbsp;·&nbsp; Kubernetes &nbsp;·&nbsp; Zero-Trust Security &nbsp;·&nbsp; SRE &nbsp;·&nbsp; Robotics DevOps</p>
+            </div>
+            <div class="prof-links">
+                <a href="https://www.linkedin.com/in/schundu" target="_blank" rel="noopener" class="prof-link-btn plb-linkedin">
+                    <i class="fab fa-linkedin"></i> linkedin.com/in/schundu
+                </a>
+                <a href="https://github.com/schundu007" target="_blank" rel="noopener" class="prof-link-btn plb-github">
+                    <i class="fab fa-github"></i> github.com /schundu007
+                </a>
+                <a href="https://www.sudhakarchundu.org" target="_blank" rel="noopener" class="prof-link-btn plb-site">
+                    <i class="fas fa-globe"></i> sudhakarchundu.org
+                </a>
+                <a href="https://medium.com/@schundu" target="_blank" rel="noopener" class="prof-link-btn plb-medium">
+                    <i class="fab fa-medium"></i> medium.com /@schundu
+                </a>
+            </div>
+        </div>
+
+        <!-- ── STATS ── -->
+        <div class="prof-stats">
+            <div class="stat-cell">
+                <div class="stat-value">18+</div>
+                <div class="stat-label">Years Experience</div>
+            </div>
+            <div class="stat-cell">
+                <div class="stat-value">4</div>
+                <div class="stat-label">Clouds (Azure/AWS/GCP/OCI)</div>
+            </div>
+            <div class="stat-cell">
+                <div class="stat-value">30+</div>
+                <div class="stat-label">SaaS Platforms Supported</div>
+            </div>
+            <div class="stat-cell">
+                <div class="stat-value">99.97%</div>
+                <div class="stat-label">Platform Uptime SLA</div>
+            </div>
+            <div class="stat-cell">
+                <div class="stat-value">$8M+</div>
+                <div class="stat-label">Annual Cost Savings</div>
+            </div>
+            <div class="stat-cell">
+                <div class="stat-value">87%</div>
+                <div class="stat-label">VM Elimination</div>
+            </div>
+        </div>
+
+        <!-- ── BODY COLUMNS ── -->
+        <div class="prof-body">
+
+            <!-- ── COL 1 ── -->
+            <div class="prof-col">
+
+                <!-- International Projects -->
+                <div class="sec-block sec-intl">
+                    <div class="sec-header">
+                        <span class="sec-icon">🌐</span>
+                        <span class="sec-title">International Projects</span>
+                    </div>
+                    <p class="sec-subtitle">Multi-Cloud · OSDU Energy Platform</p>
+                    <ul class="bullet-list">
+                        <li>OSDU Forum — Shell, BP, Chevron: Azure + AWS OSDU deployment-and-operations</li>
+                        <li>Azure OSDU (Wipro, Hyderabad): Full-time enterprise energy data platform</li>
+                        <li>AWS OSDU (Tecra/Wipro): Contract delivery for OSDU cloud platform ops</li>
+                        <li>NTT Data &amp; TCS: 10+ years multinational client delivery across US and India</li>
+                    </ul>
+                </div>
+
+                <!-- AIOps -->
+                <div class="sec-block sec-aiops">
+                    <div class="sec-header">
+                        <span class="sec-icon" style="color:var(--p-yellow)">⚡</span>
+                        <span class="sec-title">AIOps — Multi-Cloud Infra &amp; CI/CD</span>
+                    </div>
+                    <ul class="bullet-list">
+                        <li>
+                            <span class="bullet-label">GCP Design Problems &amp; Solutions</span>
+                            <a class="inline-link" href="https://sudhakarchundu.org/blog/gcp-design-problems-solutions.html" target="_blank">sudhakarchundu.org/blog/gcp-design-problems-solutions.html</a>
+                        </li>
+                        <li>
+                            <span class="bullet-label">NVIDIA RAPIDS ADI DevOps Portfolio</span>
+                            <a class="inline-link" href="https://sudhakarchundu.org/blog/NVIDIA_RAPIDS_ADI.html" target="_blank">sudhakarchundu.org/blog/NVIDIA_RAPIDS_ADI.html</a>
+                        </li>
+                        <li>
+                            <span class="bullet-label">NVIDIA Isaac ROS DevOps Portfolio</span>
+                            <a class="inline-link" href="https://sudhakarchundu.org/blog/NVIDIA_Isaac_ROS_DevOps.html" target="_blank">sudhakarchundu.org/blog/NVIDIA_Isaac_ROS_DevOps.html</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- ── COL 2 ── -->
+            <div class="prof-col">
+
+                <!-- IaC Automation -->
+                <div class="sec-block sec-iac">
+                    <div class="sec-header">
+                        <span class="sec-icon">⚙️</span>
+                        <span class="sec-title">IaC Automation — Microservices Architecture</span>
+                    </div>
+                    <div class="tech-chips">
+                        <span class="tech-chip">Terraform</span>
+                        <span class="tech-chip">Bicep</span>
+                        <span class="tech-chip">Docker</span>
+                        <span class="tech-chip">Kubernetes</span>
+                        <span class="tech-chip">Helm</span>
+                        <span class="tech-chip">CloudFormation</span>
+                        <span class="tech-chip">Python</span>
+                        <span class="tech-chip">Bash</span>
+                    </div>
+
+                    <div class="repo-card">
+                        <div class="repo-card-title">infra-aws-provisioning</div>
+                        <a class="repo-card-link" href="https://github.com/schundu007/infra-aws-provisioning" target="_blank">github.com /schundu007/infra-aws-provisioning</a>
+                        <p class="repo-card-desc">AWS infrastructure provisioning — EC2, EKS, RDS, S3, IAM, VPC with Terraform and CloudFormation templates, CI/CD integration</p>
+                    </div>
+
+                    <div class="repo-card">
+                        <div class="repo-card-title">automation</div>
+                        <a class="repo-card-link" href="https://github.com/schundu007/automation" target="_blank">github.com /schundu007/automation</a>
+                        <p class="repo-card-desc">Multi-cloud automation scripts: Python and Bash automation for Azure, AWS, GCP — VM provisioning, network config, secrets management</p>
+                    </div>
+                </div>
+
+                <!-- Current Role -->
+                <div class="sec-block sec-role">
+                    <div class="sec-header">
+                        <span class="sec-icon" style="color:var(--p-orange)">▶</span>
+                        <span class="sec-title">Current Role — AT&amp;T (2026)</span>
+                    </div>
+                    <ul class="bullet-list">
+                        <li class="dot">Azure Data Platform Administrator (Contract)</li>
+                        <li class="dot">IBM watsonx / CP4D v5.3, Databricks DEEP Foundry MLOps</li>
+                        <li class="dot">Medallion Architecture, ADLS Gen2 HNS (18 storage accounts)</li>
+                        <li class="dot">Microsoft Entra ID Zero-Trust IAM, SailPoint IGA</li>
+                        <li class="dot">Terraform IaC, REST API automation (Python and Bash)</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- ── COL 3 ── -->
+            <div class="prof-col">
+
+                <!-- Open Source Products -->
+                <div class="sec-block sec-oss">
+                    <div class="sec-header">
+                        <span class="sec-icon" style="color:#aa00ff">◆</span>
+                        <span class="sec-title">Open Source Products</span>
+                    </div>
+
+                    <div class="oss-card">
+                        <div class="oss-card-header">
+                            <i class="fas fa-chart-bar ico-bar"></i>
+                            <span class="oss-card-name">GitPulse</span>
+                        </div>
+                        <div class="oss-card-subtitle">Git Health Analytics Platform</div>
+                        <a class="inline-link" href="https://gitpulservercel.app" target="_blank">gitpulservercel.app</a>
+                        <p class="oss-card-desc">End-to-end Git health metrics: pipelines, observability, user metrics, security findings, improvement plans, and infra observability</p>
+                    </div>
+
+                    <div class="oss-card">
+                        <div class="oss-card-header">
+                            <i class="fas fa-bolt ico-bolt"></i>
+                            <span class="oss-card-name">CloudForge</span>
+                        </div>
+                        <div class="oss-card-subtitle">SRE / DevOps Task Execution Engine</div>
+                        <a class="inline-link" href="https://github.com/schundu007/cloudforge" target="_blank">github.com /schundu007/cloudforge</a>
+                        <p class="oss-card-desc">Writes GitHub Actions pipelines, Terraform IaC, IAM/OPA/Checkov policies, OTel/Prometheus/Grafana configs for AWS, GCP, Azure, OCI. Auto-fix loop with git diff review</p>
+                    </div>
+
+                    <div class="oss-card">
+                        <div class="oss-card-header">
+                            <i class="fas fa-building ico-bldg"></i>
+                            <span class="oss-card-name">Infra-Lakehouse</span>
+                        </div>
+                        <div class="oss-card-subtitle">Production Kubernetes Data Lakehouse</div>
+                        <a class="inline-link" href="https://github.com/schundu007/infra-lakehouse" target="_blank">github.com /schundu007/infra-lakehouse</a>
+                        <p class="oss-card-desc">Helm charts and Docker images for Apache Spark with Delta Lake, Hive Metastore, Unity Catalog, and Jupyter on Kubernetes</p>
+                    </div>
+
+                    <div class="oss-card">
+                        <div class="oss-card-header">
+                            <i class="fas fa-circle ico-circ"></i>
+                            <span class="oss-card-name">Radar</span>
+                        </div>
+                        <div class="oss-card-subtitle">Modern Kubernetes Visibility Tool</div>
+                        <a class="inline-link" href="https://github.com/schundu007/radar" target="_blank">github.com /schundu007/radar</a>
+                        <p class="oss-card-desc">Local-first K8s topology, event timeline, service traffic, resource browser, Helm management, GitOps for FluxCD and ArgoCD. No cloud dependency</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div><!-- /prof-body -->
+
+        <!-- ── FOOTER BAR ── -->
+        <div class="prof-footer">
+            <div class="prof-footer-left">
+                sbchundu@gmail.com
+                <span class="sep">·</span>
+                San Jose, CA
+                <span class="sep">·</span>
+                Open to: Senior DevOps Engineer &nbsp;·&nbsp; Platform Engineer &nbsp;·&nbsp; SRE &nbsp;·&nbsp; Cloud Architect &nbsp;·&nbsp; AI/GPU Infrastructure
+            </div>
+            <div class="prof-footer-right">&copy; 2026 Sudhakar</div>
+        </div>
+
+    </div><!-- /profile-page-wrapper -->
+
+    <!-- Site footer -->
+    <footer>
+        <div class="footer-content">
+            <span class="footer-logo">Sudhakar Chundu</span>
+            <div class="footer-links">
+                <a href="../">Home</a>
+                <a href="../resume/">Resume</a>
+                <a href="../blog/">Blog</a>
+                <a href="../projects/">Achievements</a>
+                <a href="../contact/">Contact</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/schundu007" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/schundu" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://medium.sudhakarchundu.org/" target="_blank"><i class="fab fa-medium"></i></a>
+            </div>
+        </div>
+        <p>&copy; 2026 Sudhakar Chundu. All rights reserved.</p>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+
+    <script>
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+    </script>
+    <script src="../assets/js/neural-bg.js"></script>
+</body>
+</html>
