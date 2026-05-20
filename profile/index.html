@@ -336,11 +336,43 @@
             line-height: 1.45;
         }
 
-        /* colored icons for oss items */
-        .ico-bar  { color: #29b6f6; }
-        .ico-bolt { color: var(--p-yellow); }
-        .ico-bldg { color: var(--p-green); }
-        .ico-circ { color: #26de81; }
+        /* logo icons */
+        .sec-logo {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+            display: inline-block;
+            vertical-align: middle;
+            filter: brightness(1.1);
+        }
+        .sec-logo-sm {
+            width: 13px;
+            height: 13px;
+            object-fit: contain;
+            display: inline-block;
+            vertical-align: middle;
+            opacity: 0.85;
+        }
+        .sec-logo-group { display: inline-flex; align-items: center; gap: 4px; }
+        .oss-logo {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+            display: inline-block;
+            vertical-align: middle;
+            filter: brightness(1.15);
+        }
+        .chip-icon {
+            width: 11px;
+            height: 11px;
+            object-fit: contain;
+            vertical-align: middle;
+            display: inline-block;
+            margin-right: 3px;
+            opacity: 0.85;
+        }
+        /* GitHub FA brand icon sized for oss cards */
+        .ico-gh-brand { font-size: 1rem; color: #e8eaf0; }
 
         /* ── FOOTER BAR ── */
         .prof-footer {
@@ -476,12 +508,18 @@
                 <!-- International Projects -->
                 <div class="sec-block sec-intl">
                     <div class="sec-header">
-                        <span class="sec-icon">🌐</span>
+                        <span class="sec-logo-group">
+                            <img src="../assets/icons/aws.svg"   class="sec-logo" alt="AWS">
+                            <img src="../assets/icons/azure.svg" class="sec-logo" alt="Azure">
+                            <img src="../assets/icons/gcp.svg"   class="sec-logo" alt="GCP">
+                        </span>
                         <span class="sec-title">International Projects</span>
                     </div>
                     <p class="sec-subtitle">Multi-Cloud · OSDU Energy Platform</p>
                     <ul class="bullet-list">
-                        <li>OSDU Forum — Shell, BP, Chevron: Azure + AWS OSDU deployment-and-operations</li>
+                        <li>OSDU Forum — Shell, BP, Chevron: Azure + AWS OSDU deployment-and-operations
+                            <a class="inline-link" href="https://community.opengroup.org/osdu/platform/deployment-and-operations" target="_blank">community.opengroup.org/osdu/platform/deployment-and-operations</a>
+                        </li>
                         <li>Azure OSDU (Wipro, Hyderabad): Full-time enterprise energy data platform</li>
                         <li>AWS OSDU (Tecra/Wipro): Contract delivery for OSDU cloud platform ops</li>
                         <li>NTT Data &amp; TCS: 10+ years multinational client delivery across US and India</li>
@@ -491,7 +529,10 @@
                 <!-- AIOps -->
                 <div class="sec-block sec-aiops">
                     <div class="sec-header">
-                        <span class="sec-icon" style="color:var(--p-yellow)">⚡</span>
+                        <span class="sec-logo-group">
+                            <img src="../assets/icons/githubactions.svg" class="sec-logo" alt="GitHub Actions">
+                            <img src="../assets/icons/gcp.svg"           class="sec-logo-sm" alt="GCP">
+                        </span>
                         <span class="sec-title">AIOps — Multi-Cloud Infra &amp; CI/CD</span>
                     </div>
                     <ul class="bullet-list">
@@ -518,29 +559,38 @@
                 <!-- IaC Automation -->
                 <div class="sec-block sec-iac">
                     <div class="sec-header">
-                        <span class="sec-icon">⚙️</span>
+                        <span class="sec-logo-group">
+                            <img src="../assets/icons/terraform.svg" class="sec-logo" alt="Terraform">
+                            <img src="../assets/icons/helm.svg"      class="sec-logo-sm" alt="Helm">
+                        </span>
                         <span class="sec-title">IaC Automation — Microservices Architecture</span>
                     </div>
                     <div class="tech-chips">
-                        <span class="tech-chip">Terraform</span>
-                        <span class="tech-chip">Bicep</span>
-                        <span class="tech-chip">Docker</span>
-                        <span class="tech-chip">Kubernetes</span>
-                        <span class="tech-chip">Helm</span>
-                        <span class="tech-chip">CloudFormation</span>
-                        <span class="tech-chip">Python</span>
-                        <span class="tech-chip">Bash</span>
+                        <span class="tech-chip"><img src="../assets/icons/terraform.svg"   class="chip-icon" alt="">Terraform</span>
+                        <span class="tech-chip"><img src="../assets/icons/azure.svg"       class="chip-icon" alt="">Bicep</span>
+                        <span class="tech-chip"><img src="../assets/icons/docker.svg"      class="chip-icon" alt="">Docker</span>
+                        <span class="tech-chip"><img src="../assets/icons/kubernetes.svg"  class="chip-icon" alt="">Kubernetes</span>
+                        <span class="tech-chip"><img src="../assets/icons/helm.svg"        class="chip-icon" alt="">Helm</span>
+                        <span class="tech-chip"><img src="../assets/icons/aws.svg"         class="chip-icon" alt="">CloudFormation</span>
+                        <span class="tech-chip"><img src="../assets/icons/python.svg"      class="chip-icon" alt="">Python</span>
+                        <span class="tech-chip"><img src="../assets/icons/bash.svg"        class="chip-icon" alt="">Bash</span>
                     </div>
 
                     <div class="repo-card">
-                        <div class="repo-card-title">infra-aws-provisioning</div>
-                        <a class="repo-card-link" href="https://github.com/schundu007/infra-aws-provisioning" target="_blank">github.com /schundu007/infra-aws-provisioning</a>
+                        <div class="repo-card-title">
+                            <img src="../assets/icons/aws.svg" class="chip-icon" style="width:14px;height:14px;" alt="AWS">
+                            infra-aws-provisioning
+                        </div>
+                        <a class="repo-card-link" href="https://github.com/schundu007/infra-aws-provisioning" target="_blank"><i class="fab fa-github" style="font-size:0.7rem;margin-right:3px;"></i>github.com /schundu007/infra-aws-provisioning</a>
                         <p class="repo-card-desc">AWS infrastructure provisioning — EC2, EKS, RDS, S3, IAM, VPC with Terraform and CloudFormation templates, CI/CD integration</p>
                     </div>
 
                     <div class="repo-card">
-                        <div class="repo-card-title">automation</div>
-                        <a class="repo-card-link" href="https://github.com/schundu007/automation" target="_blank">github.com /schundu007/automation</a>
+                        <div class="repo-card-title">
+                            <img src="../assets/icons/python.svg" class="chip-icon" style="width:14px;height:14px;" alt="Python">
+                            automation
+                        </div>
+                        <a class="repo-card-link" href="https://github.com/schundu007/automation" target="_blank"><i class="fab fa-github" style="font-size:0.7rem;margin-right:3px;"></i>github.com /schundu007/automation</a>
                         <p class="repo-card-desc">Multi-cloud automation scripts: Python and Bash automation for Azure, AWS, GCP — VM provisioning, network config, secrets management</p>
                     </div>
                 </div>
@@ -548,7 +598,9 @@
                 <!-- Current Role -->
                 <div class="sec-block sec-role">
                     <div class="sec-header">
-                        <span class="sec-icon" style="color:var(--p-orange)">▶</span>
+                        <span class="sec-logo-group">
+                            <img src="../assets/icons/azure.svg" class="sec-logo" alt="Azure">
+                        </span>
                         <span class="sec-title">Current Role — AT&amp;T (2026)</span>
                     </div>
                     <ul class="bullet-list">
@@ -568,13 +620,13 @@
                 <!-- Open Source Products -->
                 <div class="sec-block sec-oss">
                     <div class="sec-header">
-                        <span class="sec-icon" style="color:#aa00ff">◆</span>
+                        <i class="fab fa-github ico-gh-brand"></i>
                         <span class="sec-title">Open Source Products</span>
                     </div>
 
                     <div class="oss-card">
                         <div class="oss-card-header">
-                            <i class="fas fa-chart-bar ico-bar"></i>
+                            <i class="fab fa-github ico-gh-brand"></i>
                             <span class="oss-card-name">GitPulse</span>
                         </div>
                         <div class="oss-card-subtitle">Git Health Analytics Platform</div>
@@ -584,7 +636,7 @@
 
                     <div class="oss-card">
                         <div class="oss-card-header">
-                            <i class="fas fa-bolt ico-bolt"></i>
+                            <img src="../assets/icons/githubactions.svg" class="oss-logo" alt="GitHub Actions">
                             <span class="oss-card-name">CloudForge</span>
                         </div>
                         <div class="oss-card-subtitle">SRE / DevOps Task Execution Engine</div>
@@ -594,7 +646,7 @@
 
                     <div class="oss-card">
                         <div class="oss-card-header">
-                            <i class="fas fa-building ico-bldg"></i>
+                            <img src="../assets/icons/kubernetes.svg" class="oss-logo" alt="Kubernetes">
                             <span class="oss-card-name">Infra-Lakehouse</span>
                         </div>
                         <div class="oss-card-subtitle">Production Kubernetes Data Lakehouse</div>
@@ -604,7 +656,7 @@
 
                     <div class="oss-card">
                         <div class="oss-card-header">
-                            <i class="fas fa-circle ico-circ"></i>
+                            <img src="../assets/icons/helm.svg" class="oss-logo" alt="Helm">
                             <span class="oss-card-name">Radar</span>
                         </div>
                         <div class="oss-card-subtitle">Modern Kubernetes Visibility Tool</div>
