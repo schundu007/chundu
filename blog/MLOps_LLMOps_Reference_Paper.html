@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GGNQHMGCLH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-GGNQHMGCLH');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLOps &amp; LLMOps Reference Architecture | Sudhakar Chundu</title>
+    <meta name="description" content="IEEE reference architecture paper unifying classic ML and generative AI under one governance plane for industrial and manufacturing AI.">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=2">
+    <script src="../assets/js/theme.js"></script>
+    <style>
+        .paper-hero {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            padding: 3rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .paper-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .paper-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 1rem;
+            background: rgba(14, 165, 233, 0.15);
+            border: 1px solid rgba(14, 165, 233, 0.35);
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 1.5rem;
+        }
+
+        .paper-title {
+            font-size: 2rem;
+            line-height: 1.25;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .paper-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .paper-meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .paper-author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .paper-author img {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid var(--glass-border);
+        }
+
+        .paper-author-info strong {
+            display: block;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        .paper-author-info span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .paper-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .paper-stat i {
+            color: var(--accent-blue);
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.875rem 1.75rem;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: var(--radius-md);
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-normal);
+            cursor: pointer;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow-blue);
+            color: white;
+        }
+
+        .paper-section {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .paper-section h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .paper-section h2 i {
+            color: var(--accent-blue);
+        }
+
+        .paper-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .contributions-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .contributions-list li {
+            display: flex;
+            gap: 0.85rem;
+            align-items: flex-start;
+            color: var(--text-secondary);
+            font-size: 0.925rem;
+            line-height: 1.65;
+        }
+
+        .contributions-list li::before {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 8px;
+            min-width: 8px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            margin-top: 0.55rem;
+        }
+
+        .keywords-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .keyword-tag {
+            padding: 0.3rem 0.85rem;
+            background: var(--bg-primary);
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            border: 1px solid var(--glass-border);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+            transition: var(--transition-fast);
+        }
+
+        .back-link:hover {
+            color: var(--accent-blue);
+        }
+
+        @media (max-width: 768px) {
+            .paper-title { font-size: 1.5rem; }
+            .paper-hero { padding: 2rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="neural-bg"></canvas>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../" class="logo">
+                <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu" class="logo-icon">
+                Sudhakar Chundu
+            </a>
+            <ul class="nav-links">
+                <li><a href="../about/">About</a></li>
+                <li><a href="../resume/">Resume</a></li>
+                <li><a href="./" class="active">Blog</a></li>
+                <li><a href="../projects/">Achievements</a></li>
+                <li><a href="../opensource/">Open Source</a></li>
+                <div class="nav-social">
+                    <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/schundu" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
+                <div class="nav-auth">
+                    <button class="btn-signin" onclick="showLoginModal()">Sign In</button>
+                </div>
+            </ul>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="section">
+            <div class="container" style="max-width: 860px;">
+                <a href="./" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to Blog
+                </a>
+
+                <!-- Paper Hero -->
+                <div class="paper-hero">
+                    <span class="paper-badge"><i class="fas fa-file-alt"></i> IEEE Reference Paper</span>
+                    <h1 class="paper-title">Unifying Classic Machine Learning and Generative AI Under One Governance Plane</h1>
+                    <p class="paper-subtitle">A Reference Architecture and Operational Practices for Industrial and Manufacturing AI</p>
+
+                    <div class="paper-meta-row">
+                        <div class="paper-author">
+                            <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu">
+                            <div class="paper-author-info">
+                                <strong>Sudhakar Chundu</strong>
+                                <span>IEEE &middot; chundubabu@gmail.com</span>
+                            </div>
+                        </div>
+                        <div class="paper-stat"><i class="fas fa-calendar"></i> June 2026</div>
+                        <div class="paper-stat"><i class="fas fa-clock"></i> ~45 min read</div>
+                        <div class="paper-stat"><i class="fas fa-layer-group"></i> 8 Sections</div>
+                    </div>
+
+                    <a href="MLOps_LLMOps_Reference_Paper.docx" download class="download-btn">
+                        <i class="fas fa-download"></i> Download Paper (.docx)
+                    </a>
+                </div>
+
+                <!-- Abstract -->
+                <div class="paper-section">
+                    <h2><i class="fas fa-align-left"></i> Abstract</h2>
+                    <p>
+                        Manufacturing and other industrial organizations are now running two kinds of AI side by side: the familiar predictive stack — yield models, vision-based defect detectors, failure forecasts — trained on equipment and process data, and a generative layer of copilots and agents that work over engineering documents. The two are usually built by separate teams on separate tooling, and that split is where governance, security, and delivery begin to fray.
+                    </p>
+                    <br>
+                    <p>
+                        This paper presents a vendor-neutral reference architecture that places both lifecycles under a single governance plane, adapted for the strict networking, edge-deployment, and asynchronous document-ingestion realities of industrial environments, together with operational practices for taking models and language-based systems from prototype to monitored production. We define a drift taxonomy specific to manufacturing execution data and distinguish detection that is possible without labels from detection that requires delayed ground truth. We contrast retrieval-augmented generation, direct generation, and agentic patterns, and give selection guidance. Finally, we define an evaluation methodology that corrects for model-graded evaluator bias and a continuous-delivery pipeline that gates generative systems with the same rigor applied to predictive models.
+                    </p>
+                </div>
+
+                <!-- Key Contributions -->
+                <div class="paper-section">
+                    <h2><i class="fas fa-star"></i> Key Contributions</h2>
+                    <ul class="contributions-list">
+                        <li>A vendor-neutral reference architecture spanning a cloud control plane and the industrial edge, including an asynchronous document-ingestion and vectorization pipeline.</li>
+                        <li>A baselining methodology for predictive models and foundation-model selection, with metric selection guidance for imbalanced manufacturing datasets.</li>
+                        <li>A drift taxonomy for manufacturing execution data that separates label-free from label-dependent detection — covariate drift, concept drift, prediction drift, and pipeline drift.</li>
+                        <li>Selection guidance across retrieval-augmented generation, direct generation, and agentic patterns with decision criteria grounded in latency, grounding requirements, and cost.</li>
+                        <li>An evaluation methodology that corrects for model-graded evaluator bias using adversarial calibration and human-anchored rubrics.</li>
+                        <li>Continuous-delivery and edge-aware monitoring patterns that gate generative systems with the same rigor applied to predictive models, including signed container delivery to constrained edge hardware.</li>
+                    </ul>
+                </div>
+
+                <!-- Keywords -->
+                <div class="paper-section">
+                    <h2><i class="fas fa-tags"></i> Keywords</h2>
+                    <div class="keywords-row">
+                        <span class="keyword-tag">MLOps</span>
+                        <span class="keyword-tag">LLMOps</span>
+                        <span class="keyword-tag">RAG</span>
+                        <span class="keyword-tag">Agentic AI</span>
+                        <span class="keyword-tag">Concept Drift</span>
+                        <span class="keyword-tag">Model Evaluation</span>
+                        <span class="keyword-tag">Continuous Delivery</span>
+                        <span class="keyword-tag">Manufacturing AI</span>
+                        <span class="keyword-tag">Edge Computing</span>
+                        <span class="keyword-tag">Governance</span>
+                    </div>
+                </div>
+
+                <!-- Download CTA -->
+                <div class="paper-section" style="text-align: center;">
+                    <h2 style="justify-content: center;"><i class="fas fa-file-word"></i> Download Full Paper</h2>
+                    <p style="margin-bottom: 1.5rem;">The complete reference paper with architecture diagrams, drift taxonomy tables, evaluation frameworks, and continuous delivery patterns.</p>
+                    <a href="MLOps_LLMOps_Reference_Paper.docx" download class="download-btn">
+                        <i class="fas fa-download"></i> Download MLOps / LLMOps Reference Paper
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <span class="footer-logo">Sudhakar Chundu</span>
+            <div class="footer-links">
+                <a href="../">Home</a>
+                <a href="../resume/">Resume</a>
+                <a href="../projects/">Achievements</a>
+                <a href="../contact/">Contact</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/schundu007" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/schundu" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://medium.com/@schundu" target="_blank"><i class="fab fa-medium"></i></a>
+            </div>
+        </div>
+        <p>&copy; 2026 Sudhakar Chundu. All rights reserved.</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+
+    <script>
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+    </script>
+    <script src="../assets/js/neural-bg.js"></script>
+</body>
+</html>
