@@ -164,6 +164,10 @@
             .toc-list { grid-template-columns: 1fr; }
             .metric-grid { grid-template-columns: repeat(2, 1fr); }
         }
+
+        /* Force all Mermaid diagrams onto a dark canvas */
+        .mermaid { background: #0d1117; border-radius: 8px; padding: 1rem 0; display: block; }
+        .mermaid svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
     </style>
 </head>
 <body>
@@ -294,7 +298,7 @@
                     <div class="diagram-wrap">
                         <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 1 — iOS Release Cadence (2-week sprint)</div>
                         <div class="mermaid">
-%%{init: {'theme':'dark','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#e2e8f0','primaryBorderColor':'#0ea5e9','lineColor':'#64748b','secondaryColor':'#1e293b','tertiaryColor':'#0f172a'}}}%%
+%%{init: {"theme": "dark"}}%%
 gantt
     title iOS Release Cadence
     dateFormat  YYYY-MM-DD
@@ -325,7 +329,7 @@ gantt
                     <div class="diagram-wrap">
                         <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 2 — Full Pipeline Architecture</div>
                         <div class="mermaid">
-%%{init: {'theme':'dark','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#e2e8f0','primaryBorderColor':'#0ea5e9','lineColor':'#64748b','secondaryColor':'#1e293b','tertiaryColor':'#0f172a'}}}%%
+%%{init: {"theme": "dark"}}%%
 flowchart TD
     PR[Pull Request / Merge to main] --> LINT[SwiftLint + SwiftFormat]
     LINT --> RESOLVE[SPM / CocoaPods Resolve]
@@ -353,7 +357,7 @@ flowchart TD
                     <div class="diagram-wrap">
                         <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 3 — Agent Pool Architecture</div>
                         <div class="mermaid">
-%%{init: {'theme':'dark','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#e2e8f0','primaryBorderColor':'#0ea5e9','lineColor':'#64748b','secondaryColor':'#1e293b','tertiaryColor':'#0f172a'}}}%%
+%%{init: {"theme": "dark"}}%%
 graph LR
     GH[GitHub Actions / Jenkins] --> POOL[Agent Pool Manager]
     POOL --> M1A[Mac mini M2\nAgent A]
@@ -447,7 +451,7 @@ graph LR
                     <div class="diagram-wrap">
                         <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 4 — Automated Code Signing Sequence</div>
                         <div class="mermaid">
-%%{init: {'theme':'dark','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#e2e8f0','primaryBorderColor':'#0ea5e9','lineColor':'#64748b','secondaryColor':'#1e293b','tertiaryColor':'#0f172a'}}}%%
+%%{init: {"theme": "dark"}}%%
 sequenceDiagram
     participant CI as CI Agent
     participant Match as Fastlane Match
@@ -655,7 +659,7 @@ sequenceDiagram
                     <div class="diagram-wrap">
                         <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 5 — Environment Promotion Flow</div>
                         <div class="mermaid">
-%%{init: {'theme':'dark','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#e2e8f0','primaryBorderColor':'#0ea5e9','lineColor':'#64748b','secondaryColor':'#1e293b','tertiaryColor':'#0f172a'}}}%%
+%%{init: {"theme": "dark"}}%%
 flowchart LR
     DEV["Dev\ncom.org.app.dev\nDebug config\nLocal API"]
     QA["QA\ncom.org.app.qa\nQA config\nStaging API"]
@@ -721,7 +725,7 @@ flowchart LR
                     <div class="diagram-wrap">
                         <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 6 — TestFlight Distribution Architecture</div>
                         <div class="mermaid">
-%%{init: {'theme':'dark','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#e2e8f0','primaryBorderColor':'#0ea5e9','lineColor':'#64748b','secondaryColor':'#1e293b','tertiaryColor':'#0f172a'}}}%%
+%%{init: {"theme": "dark"}}%%
 graph TD
     BUILD[IPA Upload via ASC API] --> PROCESS[Apple Processing\n5 to 15 min]
     PROCESS --> INTERNAL{Internal Groups}
@@ -788,7 +792,7 @@ graph TD
                     <div class="diagram-wrap">
                         <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 7 — Feature Flag Rollout Architecture</div>
                         <div class="mermaid">
-%%{init: {'theme':'dark','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#e2e8f0','primaryBorderColor':'#0ea5e9','lineColor':'#64748b','secondaryColor':'#1e293b','tertiaryColor':'#0f172a'}}}%%
+%%{init: {"theme": "dark"}}%%
 flowchart TD
     APP[iOS App Launch] --> SDK[Feature Flag SDK\nLocal Cache]
     SDK --> EVAL{Evaluate Flag}
@@ -865,7 +869,7 @@ flowchart TD
                     <div class="diagram-wrap">
                         <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 8 — Mobile Observability Architecture</div>
                         <div class="mermaid">
-%%{init: {'theme':'dark','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#e2e8f0','primaryBorderColor':'#0ea5e9','lineColor':'#64748b','secondaryColor':'#1e293b','tertiaryColor':'#0f172a'}}}%%
+%%{init: {"theme": "dark"}}%%
 graph TD
     APP[iOS App] --> CRASH[Crash Reporter\nFirebase Crashlytics / Sentry]
     APP --> APM[APM SDK\nNetwork latency / Frame rate / Memory]
@@ -1002,16 +1006,60 @@ graph TD
             startOnLoad: true,
             theme: 'dark',
             themeVariables: {
+                darkMode: true,
+                background: '#0d1117',
+                mainBkg: '#161b22',
+                fontFamily: 'Sora, sans-serif',
+                fontSize: '14px',
+                /* general */
                 primaryColor: '#1e3a5f',
                 primaryTextColor: '#e2e8f0',
                 primaryBorderColor: '#0ea5e9',
-                lineColor: '#64748b',
+                lineColor: '#94a3b8',
                 secondaryColor: '#1e293b',
                 tertiaryColor: '#0f172a',
-                fontFamily: 'Sora, sans-serif'
+                edgeLabelBackground: '#1e293b',
+                clusterBkg: '#1e293b',
+                clusterBorder: '#0ea5e9',
+                titleColor: '#e2e8f0',
+                nodeTextColor: '#e2e8f0',
+                /* sequence diagrams */
+                actorBkg: '#1e293b',
+                actorTextColor: '#e2e8f0',
+                actorBorder: '#0ea5e9',
+                actorLineColor: '#94a3b8',
+                signalColor: '#e2e8f0',
+                signalTextColor: '#e2e8f0',
+                labelBoxBkgColor: '#1e293b',
+                labelBoxBorderColor: '#0ea5e9',
+                labelTextColor: '#e2e8f0',
+                loopTextColor: '#e2e8f0',
+                noteBkgColor: '#1e3a5f',
+                noteTextColor: '#e2e8f0',
+                noteBorderColor: '#0ea5e9',
+                activationBkgColor: '#1d4ed8',
+                activationBorderColor: '#0ea5e9',
+                sequenceNumberColor: '#e2e8f0',
+                /* gantt charts */
+                gridColor: '#30363d',
+                section0: '#161b22',
+                section1: '#1c2433',
+                taskBkgColor: '#1e3a5f',
+                taskBorderColor: '#0ea5e9',
+                taskTextColor: '#e2e8f0',
+                taskTextLightColor: '#e2e8f0',
+                taskTextOutsideColor: '#cbd5e1',
+                taskTextClickableColor: '#38bdf8',
+                activeTaskBkgColor: '#0369a1',
+                activeTaskBorderColor: '#0ea5e9',
+                doneTaskBkgColor: '#1e4d3f',
+                doneTaskBorderColor: '#10b981',
+                critBkgColor: '#450a0a',
+                critBorderColor: '#ef4444',
+                todayLineColor: '#f59e0b',
             },
             flowchart: { curve: 'basis', padding: 20 },
-            sequence: { actorMargin: 60 },
+            sequence: { actorMargin: 60, useMaxWidth: true },
             gantt: { axisFormat: '%m/%d' }
         });
 
