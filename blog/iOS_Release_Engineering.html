@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GGNQHMGCLH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-GGNQHMGCLH');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iOS Release Engineering: End-to-End Deployment Architecture | Sudhakar Chundu</title>
+    <meta name="description" content="Comprehensive reference for iOS release engineering — CI/CD pipelines, code signing, TestFlight, App Store Connect automation, multi-environment deployment, and enterprise-scale rollout strategies.">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=2">
+    <script src="../assets/js/theme.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        .paper-hero {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            padding: 3rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .paper-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+        .paper-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 1rem;
+            background: rgba(14, 165, 233, 0.15);
+            border: 1px solid rgba(14, 165, 233, 0.35);
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 1.5rem;
+        }
+        .paper-title {
+            font-size: 2rem;
+            line-height: 1.25;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+        .paper-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+        .paper-meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .paper-author { display: flex; align-items: center; gap: 0.75rem; }
+        .paper-author img { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--glass-border); }
+        .paper-author-info strong { display: block; font-size: 0.95rem; color: var(--text-primary); }
+        .paper-author-info span { font-size: 0.8rem; color: var(--text-muted); }
+        .paper-stat { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-muted); }
+        .paper-stat i { color: var(--accent-blue); }
+
+        .toc-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            border-left: 3px solid var(--accent-blue);
+        }
+        .toc-card h3 { font-size: 1rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem; }
+        .toc-list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.4rem 2rem; }
+        .toc-list li a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0; transition: color 0.2s; }
+        .toc-list li a:hover { color: var(--accent-blue); }
+        .toc-num { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-blue); min-width: 1.5rem; }
+
+        .content-section {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        .content-section h2 { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
+        .section-icon { width: 36px; height: 36px; background: var(--gradient-primary); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1rem; color: white; flex-shrink: 0; }
+        .content-section h3 { font-size: 1.1rem; font-weight: 600; color: var(--accent-highlight); margin: 1.75rem 0 0.75rem; }
+        .content-section p { color: var(--text-secondary); line-height: 1.75; margin-bottom: 1rem; }
+        .content-section ul, .content-section ol { color: var(--text-secondary); line-height: 1.8; padding-left: 1.5rem; margin-bottom: 1rem; }
+        .content-section li { margin-bottom: 0.35rem; }
+
+        .diagram-wrap { background: rgba(0,0,0,0.25); border-radius: var(--radius-md); padding: 2rem 1.5rem; margin: 1.5rem 0; overflow-x: auto; }
+        .diagram-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.4rem; }
+        .mermaid svg { max-width: 100%; height: auto; }
+
+        .code-block { background: #0d1117; border-radius: var(--radius-md); padding: 1.5rem; margin: 1.25rem 0; overflow-x: auto; position: relative; }
+        .code-block .code-lang { position: absolute; top: 0.6rem; right: 0.75rem; font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono); text-transform: uppercase; }
+        .code-block pre { margin: 0; font-family: var(--font-mono); font-size: 0.82rem; color: #e6edf3; line-height: 1.65; white-space: pre; }
+        .kw  { color: #ff7b72; }
+        .str { color: #a5d6ff; }
+        .cmt { color: #8b949e; }
+        .fn  { color: #d2a8ff; }
+        .num { color: #f2cc60; }
+        .var { color: #79c0ff; }
+
+        .metric-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin: 1.25rem 0; }
+        .metric-card { background: rgba(14, 165, 233, 0.08); border: 1px solid rgba(14, 165, 233, 0.2); border-radius: var(--radius-md); padding: 1.25rem; text-align: center; }
+        .metric-card .metric-val { font-size: 1.75rem; font-weight: 700; color: var(--accent-cyan); font-family: var(--font-mono); }
+        .metric-card .metric-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.35rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        .callout { border-radius: var(--radius-md); padding: 1.25rem 1.5rem; margin: 1.25rem 0; display: flex; gap: 0.85rem; }
+        .callout-warn { background: rgba(245, 158, 11, 0.1); border-left: 3px solid #f59e0b; }
+        .callout-info { background: rgba(14, 165, 233, 0.1); border-left: 3px solid var(--accent-blue); }
+        .callout-success { background: rgba(16, 185, 129, 0.1); border-left: 3px solid #10b981; }
+        .callout i { font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0; }
+        .callout-warn i { color: #f59e0b; }
+        .callout-info i { color: var(--accent-blue); }
+        .callout-success i { color: #10b981; }
+        .callout p { margin: 0; font-size: 0.9rem; color: var(--text-secondary); }
+        .callout strong { color: var(--text-primary); }
+
+        .data-table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: 0.875rem; }
+        .data-table th { background: rgba(14, 165, 233, 0.15); color: var(--accent-cyan); font-weight: 600; padding: 0.75rem 1rem; text-align: left; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .data-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--glass-border); color: var(--text-secondary); vertical-align: top; }
+        .data-table tr:hover td { background: rgba(255,255,255,0.03); }
+        .badge-green { color: #10b981; font-weight: 600; }
+        .badge-yellow { color: #f59e0b; font-weight: 600; }
+
+        .phase-steps { display: flex; flex-direction: column; gap: 0; margin: 1.25rem 0; }
+        .phase-step { display: flex; gap: 1.25rem; position: relative; }
+        .phase-step:not(:last-child)::before { content: ''; position: absolute; left: 17px; top: 40px; bottom: -8px; width: 2px; background: var(--glass-border); }
+        .step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--gradient-primary); color: white; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.2rem; }
+        .step-body { padding-bottom: 1.5rem; flex: 1; }
+        .step-body h4 { font-size: 0.95rem; color: var(--text-primary); margin-bottom: 0.35rem; }
+        .step-body p { font-size: 0.875rem; color: var(--text-secondary); margin: 0; line-height: 1.6; }
+
+        .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem; }
+        .breadcrumb a { color: var(--accent-blue); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .paper-hero { padding: 1.75rem; }
+            .paper-title { font-size: 1.5rem; }
+            .content-section { padding: 1.5rem; }
+            .toc-list { grid-template-columns: 1fr; }
+            .metric-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="neural-bg"></canvas>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../" class="logo">
+                <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu" class="logo-icon">
+                Sudhakar Chundu
+            </a>
+            <ul class="nav-links">
+                <li><a href="../about/">About</a></li>
+                <li><a href="../resume/">Resume</a></li>
+                <li><a href="./" class="active">Blog</a></li>
+                <li><a href="../projects/">Achievements</a></li>
+                <li><a href="../opensource/">Open Source</a></li>
+                <div class="nav-social">
+                    <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/babucs" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
+                <div class="nav-auth">
+                    <button class="btn-signin" onclick="showLoginModal()">Sign In</button>
+                </div>
+            </ul>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="section">
+            <div class="container">
+
+                <nav class="breadcrumb">
+                    <a href="../">Home</a>
+                    <i class="fas fa-chevron-right" style="font-size:0.7rem"></i>
+                    <a href="./">Blog</a>
+                    <i class="fas fa-chevron-right" style="font-size:0.7rem"></i>
+                    <span>iOS Release Engineering</span>
+                </nav>
+
+                <!-- Hero -->
+                <div class="paper-hero">
+                    <span class="paper-badge"><i class="fab fa-apple"></i> Mobile DevOps</span>
+                    <h1 class="paper-title">iOS Release Engineering: End-to-End Deployment Architecture</h1>
+                    <p class="paper-subtitle">A comprehensive technical reference for enterprise iOS CI/CD — covering build pipelines, code signing automation, multi-environment promotion, TestFlight staged rollouts, App Store Connect API integration, and production monitoring patterns at scale.</p>
+                    <div class="paper-meta-row">
+                        <div class="paper-author">
+                            <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu">
+                            <div class="paper-author-info">
+                                <strong>Sudhakar Chundu</strong>
+                                <span>Staff DevOps Engineer &amp; SRE</span>
+                            </div>
+                        </div>
+                        <div class="paper-stat"><i class="fas fa-calendar"></i> June 2026</div>
+                        <div class="paper-stat"><i class="fas fa-clock"></i> 55 min read</div>
+                        <div class="paper-stat"><i class="fas fa-layer-group"></i> 8 Sections</div>
+                        <div class="paper-stat"><i class="fas fa-project-diagram"></i> 12 Diagrams</div>
+                    </div>
+                    <div class="metric-grid">
+                        <div class="metric-card">
+                            <div class="metric-val">&lt;18m</div>
+                            <div class="metric-label">Build-to-TestFlight</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-val">99.4%</div>
+                            <div class="metric-label">Pipeline Success Rate</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-val">4</div>
+                            <div class="metric-label">Environments</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-val">Zero</div>
+                            <div class="metric-label">Manual Sign Steps</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-val">12h</div>
+                            <div class="metric-label">Dev-to-Prod Cycle</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOC -->
+                <div class="toc-card">
+                    <h3><i class="fas fa-list"></i> Table of Contents</h3>
+                    <ul class="toc-list">
+                        <li><a href="#s1"><span class="toc-num">01</span>Release Engineering Overview</a></li>
+                        <li><a href="#s2"><span class="toc-num">02</span>CI/CD Pipeline Architecture</a></li>
+                        <li><a href="#s3"><span class="toc-num">03</span>Code Signing &amp; Provisioning</a></li>
+                        <li><a href="#s4"><span class="toc-num">04</span>Build System &amp; Xcode Configuration</a></li>
+                        <li><a href="#s5"><span class="toc-num">05</span>Environment Promotion Strategy</a></li>
+                        <li><a href="#s6"><span class="toc-num">06</span>TestFlight &amp; App Store Distribution</a></li>
+                        <li><a href="#s7"><span class="toc-num">07</span>Feature Flags &amp; Staged Rollout</a></li>
+                        <li><a href="#s8"><span class="toc-num">08</span>Monitoring, Alerting &amp; Rollback</a></li>
+                    </ul>
+                </div>
+
+                <!-- Section 1 -->
+                <div id="s1" class="content-section">
+                    <h2><span class="section-icon"><i class="fas fa-sitemap"></i></span>1. Release Engineering Overview</h2>
+                    <p>iOS release engineering at enterprise scale requires coordinating Xcode build toolchains, Apple's code-signing infrastructure, App Store Connect API, and internal CI platforms — all under strict Apple platform constraints that do not exist in server-side deployments. This document captures the architectural patterns, automation tooling, and operational procedures for a production-grade mobile release pipeline.</p>
+
+                    <h3>Core Challenges vs. Server-Side CI/CD</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Dimension</th><th>iOS Deployment</th><th>Server-Side Deployment</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Build execution</td><td>macOS only — Apple Silicon or Intel Mac agents</td><td>Any Linux/Windows runner</td></tr>
+                            <tr><td>Signing</td><td>Apple certificates + provisioning profiles; notarization required</td><td>TLS certs via ACME/Let's Encrypt</td></tr>
+                            <tr><td>Distribution channel</td><td>App Store Connect API, TestFlight, MDM/Enterprise</td><td>Docker registry, Helm, direct SSH</td></tr>
+                            <tr><td>Rollback</td><td>Submit prior build to App Store; MDM force-update</td><td>Helm rollback / traffic shift</td></tr>
+                            <tr><td>Review gate</td><td>Apple App Review (hours to days)</td><td>None</td></tr>
+                            <tr><td>Binary validation</td><td>Bitcode, entitlements, privacy manifests</td><td>Container scan, SBOM</td></tr>
+                            <tr><td>Environment parity</td><td>Simulator vs. device; OS fragmentation across fleet</td><td>Docker ensures parity</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Release Cadence Model</h3>
+                    <p>A healthy enterprise iOS cadence separates internal iteration speed from App Store submission frequency. The recommended model combines continuous internal delivery with periodic (weekly or biweekly) store submissions.</p>
+                    <div class="diagram-wrap">
+                        <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 1 — iOS Release Cadence (2-week sprint)</div>
+                        <div class="mermaid">
+%%{init: {'theme':'dark','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#e2e8f0','primaryBorderColor':'#0ea5e9','lineColor':'#64748b','secondaryColor':'#1e293b','tertiaryColor':'#0f172a'}}}%%
+gantt
+    title iOS Release Cadence
+    dateFormat  YYYY-MM-DD
+    section Feature
+    Feature Development     :a1, 2026-06-01, 7d
+    Code Review + Merge     :a2, after a1, 2d
+    section CI
+    CI Build + Unit Tests   :b1, 2026-06-01, 9d
+    Integration Tests       :b2, 2026-06-05, 5d
+    section Internal
+    Dev Build (daily)       :c1, 2026-06-01, 14d
+    QA Build (TestFlight)   :c2, 2026-06-04, 10d
+    Beta Release            :c3, 2026-06-08, 6d
+    section Store
+    Release Candidate       :d1, 2026-06-10, 2d
+    App Store Submission    :d2, 2026-06-12, 1d
+    App Review              :d3, 2026-06-12, 3d
+    Phased Rollout          :d4, 2026-06-15, 1d
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2 -->
+                <div id="s2" class="content-section">
+                    <h2><span class="section-icon"><i class="fas fa-infinity"></i></span>2. CI/CD Pipeline Architecture</h2>
+                    <p>The pipeline is organized into discrete stages that run on self-hosted macOS agents. Each stage produces an artifact consumed by the next, enabling parallel fan-out for multi-scheme builds.</p>
+
+                    <div class="diagram-wrap">
+                        <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 2 — Full Pipeline Architecture</div>
+                        <div class="mermaid">
+%%{init: {'theme':'dark','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#e2e8f0','primaryBorderColor':'#0ea5e9','lineColor':'#64748b','secondaryColor':'#1e293b','tertiaryColor':'#0f172a'}}}%%
+flowchart TD
+    PR[Pull Request / Merge to main] --> LINT[SwiftLint + SwiftFormat]
+    LINT --> RESOLVE[SPM / CocoaPods Resolve]
+    RESOLVE --> UNITTEST[xcodebuild test\nUnit + Snapshot Tests]
+    UNITTEST --> BUILD{Build Type}
+    BUILD -->|Dev| DEVBUILD[Debug Build\nSimulator + Device]
+    BUILD -->|QA| QABUILD[AdHoc Build\nTestFlight Internal]
+    BUILD -->|Beta| BETABUILD[AdHoc Build\nTestFlight External]
+    BUILD -->|Release| RELBUILD[AppStore Build\nRelease + Bitcode]
+    DEVBUILD --> DEVDIST[Artifacts Bucket\nDev Team Install]
+    QABUILD --> SIGN1[Fastlane match\nAdHoc Signing]
+    BETABUILD --> SIGN2[Fastlane match\nAdHoc Signing]
+    RELBUILD --> SIGN3[Fastlane match\nAppStore Signing]
+    SIGN1 --> TF_INTERNAL[TestFlight Internal]
+    SIGN2 --> TF_EXTERNAL[TestFlight External Beta]
+    SIGN3 --> VALIDATE[App Store Connect\nBinary Validation]
+    VALIDATE --> REVIEW[Apple App Review]
+    REVIEW --> PHASED[Phased Release\n1% to 100%]
+    TF_EXTERNAL --> UITEST[UI / XCUITest\nDevice Farm]
+    UITEST --> RELBUILD
+                        </div>
+                    </div>
+
+                    <h3>macOS Agent Topology</h3>
+                    <div class="diagram-wrap">
+                        <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 3 — Agent Pool Architecture</div>
+                        <div class="mermaid">
+%%{init: {'theme':'dark','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#e2e8f0','primaryBorderColor':'#0ea5e9','lineColor':'#64748b','secondaryColor':'#1e293b','tertiaryColor':'#0f172a'}}}%%
+graph LR
+    GH[GitHub Actions / Jenkins] --> POOL[Agent Pool Manager]
+    POOL --> M1A[Mac mini M2\nAgent A]
+    POOL --> M1B[Mac mini M2\nAgent B]
+    POOL --> M1C[Mac Studio M2 Max\nAgent C — Release Builds]
+    M1A & M1B --> CACHE[Shared Build Cache\nccache + DerivedData NFS]
+    CACHE --> S3[Artifact Store\nS3 / GCS]
+    M1C --> SIGN_VAULT[Keychain / Vault\nCertificate Store]
+    SIGN_VAULT --> ASC[App Store Connect API]
+                        </div>
+                    </div>
+
+                    <h3>CI Platform Comparison</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Platform</th><th>macOS Support</th><th>Concurrency</th><th>Cost Model</th><th>Best For</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>GitHub Actions + Self-hosted</td><td class="badge-green">Full</td><td>Unlimited (own fleet)</td><td>Infrastructure only</td><td>Teams already on GitHub</td></tr>
+                            <tr><td>Bitrise</td><td class="badge-green">Full (cloud M2)</td><td>Per-plan</td><td>Per build minute</td><td>Managed, low-ops overhead</td></tr>
+                            <tr><td>Xcode Cloud</td><td class="badge-green">Native</td><td>Limited</td><td>Per compute hour</td><td>Apple-native, simple apps</td></tr>
+                            <tr><td>Jenkins + macOS nodes</td><td class="badge-green">Full</td><td>Unlimited (own fleet)</td><td>Infrastructure only</td><td>Large existing Jenkins deployments</td></tr>
+                            <tr><td>CircleCI</td><td class="badge-yellow">Cloud M1</td><td>Per-plan</td><td>Per credit</td><td>Mixed mobile + backend teams</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>GitHub Actions Pipeline YAML</h3>
+                    <div class="code-block">
+                        <span class="code-lang">YAML</span>
+                        <pre><span class="cmt"># .github/workflows/ios-release.yml</span>
+<span class="kw">name:</span> <span class="str">iOS Release Pipeline</span>
+
+<span class="kw">on:</span>
+  <span class="kw">push:</span>
+    <span class="kw">branches:</span> [<span class="str">main</span>, <span class="str">release/*</span>]
+  <span class="kw">pull_request:</span>
+    <span class="kw">branches:</span> [<span class="str">main</span>]
+
+<span class="kw">env:</span>
+  <span class="var">XCODE_VERSION:</span> <span class="str">'15.4'</span>
+  <span class="var">RUBY_VERSION:</span>  <span class="str">'3.2'</span>
+  <span class="var">FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT:</span> <span class="num">120</span>
+
+<span class="kw">jobs:</span>
+  <span class="kw">lint-and-test:</span>
+    <span class="kw">name:</span> <span class="str">Lint + Unit Tests</span>
+    <span class="kw">runs-on:</span> <span class="str">self-hosted-macos-m2</span>
+    <span class="kw">steps:</span>
+      - <span class="kw">uses:</span> <span class="str">actions/checkout@v4</span>
+      - <span class="fn">name:</span> <span class="str">Select Xcode</span>
+        <span class="kw">run:</span> <span class="str">sudo xcode-select -s /Applications/Xcode_${{ env.XCODE_VERSION }}.app</span>
+      - <span class="fn">name:</span> <span class="str">Restore SPM cache</span>
+        <span class="kw">uses:</span> <span class="str">actions/cache@v4</span>
+        <span class="kw">with:</span>
+          <span class="kw">path:</span> <span class="str">.build</span>
+          <span class="kw">key:</span>  <span class="str">spm-${{ hashFiles('**/Package.resolved') }}</span>
+      - <span class="fn">name:</span> <span class="str">SwiftLint</span>
+        <span class="kw">run:</span> <span class="str">fastlane lint</span>
+      - <span class="fn">name:</span> <span class="str">Unit Tests</span>
+        <span class="kw">run:</span> <span class="str">fastlane test</span>
+
+  <span class="kw">build-and-distribute:</span>
+    <span class="kw">name:</span> <span class="str">Build + Distribute</span>
+    <span class="kw">needs:</span> <span class="str">lint-and-test</span>
+    <span class="kw">runs-on:</span> <span class="str">self-hosted-macos-m2</span>
+    <span class="kw">strategy:</span>
+      <span class="kw">matrix:</span>
+        <span class="kw">lane:</span> [<span class="str">qa</span>, <span class="str">beta</span>]
+    <span class="kw">steps:</span>
+      - <span class="fn">name:</span> <span class="str">Fastlane ${{ matrix.lane }}</span>
+        <span class="kw">env:</span>
+          <span class="var">MATCH_PASSWORD:</span>  <span class="str">${{ secrets.MATCH_PASSWORD }}</span>
+          <span class="var">ASC_API_KEY_ID:</span>  <span class="str">${{ secrets.ASC_API_KEY_ID }}</span>
+          <span class="var">ASC_ISSUER_ID:</span>   <span class="str">${{ secrets.ASC_ISSUER_ID }}</span>
+          <span class="var">ASC_PRIVATE_KEY:</span> <span class="str">${{ secrets.ASC_PRIVATE_KEY }}</span>
+        <span class="kw">run:</span> <span class="str">fastlane ${{ matrix.lane }}</span></pre>
+                    </div>
+                </div>
+
+                <!-- Section 3 -->
+                <div id="s3" class="content-section">
+                    <h2><span class="section-icon"><i class="fas fa-key"></i></span>3. Code Signing &amp; Provisioning</h2>
+                    <p>Code signing is the most operationally fragile aspect of iOS CI. Manual signing fails at scale — certificates expire, profiles mismatch, and Keychain state bleeds between builds. The solution is fully automated signing via <strong>Fastlane match</strong> backed by a private Git repository or secrets manager.</p>
+
+                    <div class="callout callout-warn">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p><strong>Never store .p12 or .mobileprovision files in your source repo.</strong> Treat them as secrets — rotate on engineer departure and schedule renewal alerts 60 days before expiry.</p>
+                    </div>
+
+                    <h3>Code Signing Flow with Fastlane match</h3>
+                    <div class="diagram-wrap">
+                        <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 4 — Automated Code Signing Sequence</div>
+                        <div class="mermaid">
+%%{init: {'theme':'dark','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#e2e8f0','primaryBorderColor':'#0ea5e9','lineColor':'#64748b','secondaryColor':'#1e293b','tertiaryColor':'#0f172a'}}}%%
+sequenceDiagram
+    participant CI as CI Agent
+    participant Match as Fastlane Match
+    participant Vault as Cert Repo / Vault
+    participant AC as Apple Developer Portal
+    participant KC as Agent Keychain
+
+    CI->>Match: fastlane match adhoc
+    Match->>Vault: Fetch encrypted cert + profile
+    alt Cert not found or expired
+        Match->>AC: Create new certificate via API
+        AC-->>Match: .p12 certificate
+        Match->>Vault: Encrypt + store .p12 + .mobileprovision
+    end
+    Vault-->>Match: Decrypt assets
+    Match->>KC: Install cert to Keychain
+    Match->>KC: Install provisioning profile
+    KC-->>CI: Signing identity ready
+    CI->>CI: xcodebuild archive (signed)
+                        </div>
+                    </div>
+
+                    <h3>Certificate Types &amp; Validity</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Certificate Type</th><th>Match Type</th><th>Validity</th><th>Use Case</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Apple Development</td><td><code>development</code></td><td>1 year</td><td>Dev builds, device debugging</td></tr>
+                            <tr><td>iOS Distribution (AdHoc)</td><td><code>adhoc</code></td><td>1 year</td><td>TestFlight internal, QA device pools</td></tr>
+                            <tr><td>iOS Distribution (App Store)</td><td><code>appstore</code></td><td>1 year</td><td>TestFlight external, App Store submission</td></tr>
+                            <tr><td>Apple Push Services</td><td>Manual</td><td>1 year</td><td>APNs for push notifications</td></tr>
+                            <tr><td>Enterprise (In-House)</td><td><code>enterprise</code></td><td>3 years</td><td>Internal apps outside App Store</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Matchfile Configuration</h3>
+                    <div class="code-block">
+                        <span class="code-lang">Ruby</span>
+                        <pre><span class="cmt"># fastlane/Matchfile</span>
+<span class="fn">git_url</span>(<span class="str">"git@github.com:your-org/ios-certificates.git"</span>)
+<span class="fn">storage_mode</span>(<span class="str">"git"</span>)          <span class="cmt"># or "s3", "google_cloud"</span>
+<span class="fn">type</span>(<span class="str">"appstore"</span>)             <span class="cmt"># default; override per lane</span>
+<span class="fn">app_identifier</span>([
+  <span class="str">"com.yourorg.app"</span>,
+  <span class="str">"com.yourorg.app.NotificationExtension"</span>,
+  <span class="str">"com.yourorg.app.WidgetExtension"</span>
+])
+<span class="fn">username</span>(<span class="str">"ci-bot@yourorg.com"</span>)
+<span class="fn">readonly</span>(<span class="kw">true</span>)              <span class="cmt"># CI never creates new certs</span></pre>
+                    </div>
+
+                    <h3>Device Registration Automation</h3>
+                    <p>Device UDIDs for QA and beta testers must be registered in the Apple Developer Portal before AdHoc profiles can include them. Automate this with the App Store Connect API so new device onboarding is self-service.</p>
+                    <div class="code-block">
+                        <span class="code-lang">Ruby</span>
+                        <pre><span class="cmt"># fastlane/lanes/devices.rb</span>
+<span class="fn">lane</span> :<span class="var">register_device</span> <span class="kw">do</span> |<span class="var">options</span>|
+  <span class="fn">register_devices</span>(
+    <span class="var">devices:</span> { <span class="str">"QA iPhone 15"</span> => <span class="var">options</span>[:<span class="var">udid</span>] },
+    <span class="var">platform:</span> <span class="str">"ios"</span>,
+    <span class="var">api_key_path:</span> <span class="str">"./fastlane/asc_api_key.json"</span>
+  )
+  <span class="fn">match</span>(<span class="var">type:</span> <span class="str">"adhoc"</span>, <span class="var">force_for_new_devices:</span> <span class="kw">true</span>)
+<span class="kw">end</span></pre>
+                    </div>
+                </div>
+
+                <!-- Section 4 -->
+                <div id="s4" class="content-section">
+                    <h2><span class="section-icon"><i class="fas fa-hammer"></i></span>4. Build System &amp; Xcode Configuration</h2>
+                    <p>Reproducible Xcode builds require locking toolchain versions, managing Swift Package Manager resolution, and isolating DerivedData per build job. Performance optimization centers on shared caches and parallelizing test execution across simulators.</p>
+
+                    <h3>xcodebuild Reference</h3>
+                    <div class="code-block">
+                        <span class="code-lang">Shell</span>
+                        <pre><span class="cmt"># Archive for App Store</span>
+<span class="fn">xcodebuild</span> archive \
+  <span class="kw">-project</span>       MyApp.xcodeproj \
+  <span class="kw">-scheme</span>        MyApp \
+  <span class="kw">-configuration</span> Release \
+  <span class="kw">-destination</span>   <span class="str">'generic/platform=iOS'</span> \
+  <span class="kw">-archivePath</span>   build/MyApp.xcarchive \
+  <span class="kw">-derivedDataPath</span> build/DerivedData \
+  <span class="var">CODE_SIGN_IDENTITY</span>=<span class="str">"Apple Distribution: YourOrg (TEAMID)"</span> \
+  <span class="var">PROVISIONING_PROFILE_SPECIFIER</span>=<span class="str">"match AppStore com.yourorg.app"</span> \
+  | <span class="fn">xcbeautify</span>
+
+<span class="cmt"># Export IPA from archive</span>
+<span class="fn">xcodebuild</span> -exportArchive \
+  <span class="kw">-archivePath</span>       build/MyApp.xcarchive \
+  <span class="kw">-exportPath</span>        build/output \
+  <span class="kw">-exportOptionsPlist</span> ExportOptions/AppStore.plist
+
+<span class="cmt"># Parallel unit tests across simulators</span>
+<span class="fn">xcodebuild</span> test \
+  <span class="kw">-scheme</span>                       MyAppTests \
+  <span class="kw">-destination</span>                  <span class="str">'platform=iOS Simulator,name=iPhone 16'</span> \
+  <span class="kw">-destination</span>                  <span class="str">'platform=iOS Simulator,name=iPhone 16 Plus'</span> \
+  <span class="kw">-parallel-testing-enabled</span>     YES \
+  <span class="kw">-parallel-testing-worker-count</span> <span class="num">4</span> \
+  <span class="kw">-resultBundlePath</span>             build/TestResults.xcresult</pre>
+                    </div>
+
+                    <h3>Build Performance Optimizations</h3>
+                    <div class="phase-steps">
+                        <div class="phase-step">
+                            <div class="step-num">1</div>
+                            <div class="step-body">
+                                <h4>SPM Cache Pinning</h4>
+                                <p>Commit <code>Package.resolved</code> and cache <code>.build/</code> keyed on its hash. Avoids re-resolving dependencies on every build — saves 2–4 minutes per run.</p>
+                            </div>
+                        </div>
+                        <div class="phase-step">
+                            <div class="step-num">2</div>
+                            <div class="step-body">
+                                <h4>DerivedData NFS Share</h4>
+                                <p>Mount a shared NFS or SMB volume for DerivedData across agents in the same pool. Incremental builds reuse compiled module caches across machines.</p>
+                            </div>
+                        </div>
+                        <div class="phase-step">
+                            <div class="step-num">3</div>
+                            <div class="step-body">
+                                <h4>Whole-Module Compilation</h4>
+                                <p>Set <code>SWIFT_COMPILATION_MODE = wholemodule</code> for release builds and <code>incremental</code> for debug. Whole-module compiles parallelize across all CPU cores.</p>
+                            </div>
+                        </div>
+                        <div class="phase-step">
+                            <div class="step-num">4</div>
+                            <div class="step-body">
+                                <h4>Bazel Remote Cache</h4>
+                                <p>For monorepos with multiple targets, adopt Bazel with <code>rules_apple</code> for remote caching and fine-grained incremental builds. Reduces full clean build times by 60–80%.</p>
+                            </div>
+                        </div>
+                        <div class="phase-step">
+                            <div class="step-num">5</div>
+                            <div class="step-body">
+                                <h4>xcbeautify Output Formatting</h4>
+                                <p>Pipe xcodebuild output through xcbeautify for structured CI logs. Pair with <code>--report junit</code> to publish test results to your CI dashboard automatically.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Fastfile — All Lanes</h3>
+                    <div class="code-block">
+                        <span class="code-lang">Ruby</span>
+                        <pre><span class="cmt"># fastlane/Fastfile</span>
+<span class="fn">default_platform</span>(:<span class="var">ios</span>)
+
+<span class="kw">platform</span> :<span class="var">ios</span> <span class="kw">do</span>
+
+  <span class="fn">before_all</span> <span class="kw">do</span>
+    <span class="fn">setup_ci</span>
+    <span class="fn">app_store_connect_api_key</span>(
+      <span class="var">key_id:</span>               <span class="var">ENV</span>[<span class="str">"ASC_API_KEY_ID"</span>],
+      <span class="var">issuer_id:</span>            <span class="var">ENV</span>[<span class="str">"ASC_ISSUER_ID"</span>],
+      <span class="var">key_content:</span>          <span class="var">ENV</span>[<span class="str">"ASC_PRIVATE_KEY"</span>],
+      <span class="var">is_key_content_base64:</span> <span class="kw">true</span>
+    )
+  <span class="kw">end</span>
+
+  <span class="fn">lane</span> :<span class="var">lint</span> <span class="kw">do</span>
+    <span class="fn">swiftlint</span>(<span class="var">mode:</span> :<span class="var">lint</span>, <span class="var">strict:</span> <span class="kw">true</span>)
+  <span class="kw">end</span>
+
+  <span class="fn">lane</span> :<span class="var">test</span> <span class="kw">do</span>
+    <span class="fn">run_tests</span>(
+      <span class="var">scheme:</span>           <span class="str">"MyAppTests"</span>,
+      <span class="var">devices:</span>          [<span class="str">"iPhone 16"</span>, <span class="str">"iPad Pro 13-inch (M4)"</span>],
+      <span class="var">code_coverage:</span>    <span class="kw">true</span>,
+      <span class="var">output_files:</span>     <span class="str">"report.junit"</span>,
+      <span class="var">parallel_testing:</span> <span class="kw">true</span>
+    )
+  <span class="kw">end</span>
+
+  <span class="fn">lane</span> :<span class="var">qa</span> <span class="kw">do</span>
+    <span class="fn">increment_build_number</span>(<span class="var">xcodeproj:</span> <span class="str">"MyApp.xcodeproj"</span>)
+    <span class="fn">match</span>(<span class="var">type:</span> <span class="str">"adhoc"</span>)
+    <span class="fn">build_app</span>(<span class="var">scheme:</span> <span class="str">"MyApp"</span>, <span class="var">configuration:</span> <span class="str">"QA"</span>, <span class="var">export_method:</span> <span class="str">"ad-hoc"</span>)
+    <span class="fn">upload_to_testflight</span>(<span class="var">groups:</span> [<span class="str">"QA Team"</span>], <span class="var">notify_external_testers:</span> <span class="kw">false</span>)
+  <span class="kw">end</span>
+
+  <span class="fn">lane</span> :<span class="var">release</span> <span class="kw">do</span>
+    <span class="fn">ensure_git_branch</span>(<span class="var">branch:</span> <span class="str">"release/*"</span>)
+    <span class="fn">increment_version_number</span>(<span class="var">bump_type:</span> :<span class="var">patch</span>)
+    <span class="fn">increment_build_number</span>
+    <span class="fn">match</span>(<span class="var">type:</span> <span class="str">"appstore"</span>)
+    <span class="fn">build_app</span>(<span class="var">scheme:</span> <span class="str">"MyApp"</span>, <span class="var">configuration:</span> <span class="str">"Release"</span>, <span class="var">export_method:</span> <span class="str">"app-store"</span>)
+    <span class="fn">upload_to_app_store</span>(
+      <span class="var">submit_for_review:</span>  <span class="kw">false</span>,
+      <span class="var">automatic_release:</span> <span class="kw">false</span>
+    )
+    <span class="fn">slack</span>(<span class="var">message:</span> <span class="str">"Release build uploaded to App Store Connect"</span>)
+  <span class="kw">end</span>
+
+<span class="kw">end</span></pre>
+                    </div>
+                </div>
+
+                <!-- Section 5 -->
+                <div id="s5" class="content-section">
+                    <h2><span class="section-icon"><i class="fas fa-layer-group"></i></span>5. Environment Promotion Strategy</h2>
+                    <p>iOS apps require distinct build configurations and bundle IDs per environment so devices can install multiple variants simultaneously and API endpoints are isolated. Use Xcode Build Configurations combined with <code>.xcconfig</code> files to keep environments declarative and diff-able.</p>
+
+                    <div class="diagram-wrap">
+                        <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 5 — Environment Promotion Flow</div>
+                        <div class="mermaid">
+%%{init: {'theme':'dark','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#e2e8f0','primaryBorderColor':'#0ea5e9','lineColor':'#64748b','secondaryColor':'#1e293b','tertiaryColor':'#0f172a'}}}%%
+flowchart LR
+    DEV["Dev\ncom.org.app.dev\nDebug config\nLocal API"]
+    QA["QA\ncom.org.app.qa\nQA config\nStaging API"]
+    BETA["Beta\ncom.org.app.beta\nRelease config\nProd-like API"]
+    PROD["Production\ncom.org.app\nRelease config\nProd API"]
+
+    DEV -->|"Daily builds\nAutomatic trigger"| QA
+    QA -->|"QA sign-off\nManual gate"| BETA
+    BETA -->|"PM approval\nManual gate"| PROD
+
+    style DEV fill:#1e3a5f,stroke:#0ea5e9
+    style QA fill:#1e4a3f,stroke:#10b981
+    style BETA fill:#3a2a1e,stroke:#f59e0b
+    style PROD fill:#2a1e3a,stroke:#8b5cf6
+                        </div>
+                    </div>
+
+                    <h3>xcconfig Per Environment</h3>
+                    <div class="code-block">
+                        <span class="code-lang">xcconfig</span>
+                        <pre><span class="cmt">// Configs/QA.xcconfig</span>
+<span class="var">APP_BUNDLE_ID</span>                          = com.yourorg.app.qa
+<span class="var">APP_DISPLAY_NAME</span>                       = MyApp QA
+<span class="var">API_BASE_URL</span>                           = https://api-staging.yourorg.com
+<span class="var">FEATURE_FLAGS_ENDPOINT</span>                 = https://flags-staging.yourorg.com
+<span class="var">CODE_SIGN_IDENTITY</span>                     = iPhone Distribution
+<span class="var">PROVISIONING_PROFILE_APP</span>               = match AdHoc com.yourorg.app.qa
+<span class="var">SWIFT_ACTIVE_COMPILATION_CONDITIONS</span>    = QA DEBUG
+
+<span class="cmt">// Configs/Release.xcconfig</span>
+<span class="var">APP_BUNDLE_ID</span>                          = com.yourorg.app
+<span class="var">APP_DISPLAY_NAME</span>                       = MyApp
+<span class="var">API_BASE_URL</span>                           = https://api.yourorg.com
+<span class="var">FEATURE_FLAGS_ENDPOINT</span>                 = https://flags.yourorg.com
+<span class="var">CODE_SIGN_IDENTITY</span>                     = Apple Distribution
+<span class="var">PROVISIONING_PROFILE_APP</span>               = match AppStore com.yourorg.app
+<span class="var">SWIFT_ACTIVE_COMPILATION_CONDITIONS</span>    = RELEASE</pre>
+                    </div>
+
+                    <h3>Environment Configuration Matrix</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Setting</th><th>Dev</th><th>QA</th><th>Beta</th><th>Production</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Bundle ID suffix</td><td>.dev</td><td>.qa</td><td>.beta</td><td>(none)</td></tr>
+                            <tr><td>API endpoint</td><td>localhost / ngrok</td><td>staging</td><td>prod-like</td><td>production</td></tr>
+                            <tr><td>Signing type</td><td>development</td><td>adhoc</td><td>adhoc</td><td>appstore</td></tr>
+                            <tr><td>Distribution</td><td>Direct install</td><td>TestFlight internal</td><td>TestFlight external</td><td>App Store</td></tr>
+                            <tr><td>Logging level</td><td>VERBOSE</td><td>DEBUG</td><td>INFO</td><td>ERROR</td></tr>
+                            <tr><td>Analytics</td><td>Disabled</td><td>Sandbox</td><td>Sandbox</td><td>Production</td></tr>
+                            <tr><td>Crash reporting</td><td>Console only</td><td>Dev DSN</td><td>Beta DSN</td><td>Prod DSN</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Section 6 -->
+                <div id="s6" class="content-section">
+                    <h2><span class="section-icon"><i class="fab fa-apple"></i></span>6. TestFlight &amp; App Store Distribution</h2>
+                    <p>TestFlight and App Store Connect API are the two distribution mechanisms available for production iOS. Understanding their constraints is essential for designing a reliable release pipeline.</p>
+
+                    <h3>TestFlight Group Hierarchy</h3>
+                    <div class="diagram-wrap">
+                        <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 6 — TestFlight Distribution Architecture</div>
+                        <div class="mermaid">
+%%{init: {'theme':'dark','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#e2e8f0','primaryBorderColor':'#0ea5e9','lineColor':'#64748b','secondaryColor':'#1e293b','tertiaryColor':'#0f172a'}}}%%
+graph TD
+    BUILD[IPA Upload via ASC API] --> PROCESS[Apple Processing\n5 to 15 min]
+    PROCESS --> INTERNAL{Internal Groups}
+    INTERNAL --> QA_GRP[QA Team\n20 devices]
+    INTERNAL --> ENG_GRP[Engineering\n50 devices]
+    INTERNAL --> PM_GRP[Product\n10 devices]
+    PROCESS --> BETA_REVIEW[Beta App Review\nUp to 24h - External only]
+    BETA_REVIEW --> EXTERNAL{External Groups}
+    EXTERNAL --> PILOT[Pilot Users\n100 users]
+    EXTERNAL --> PARTNER[Partner Beta\n500 users]
+    EXTERNAL --> PUBLIC[Public Beta\n10,000 users]
+    PUBLIC --> STORE[App Store Release]
+                        </div>
+                    </div>
+
+                    <div class="callout callout-info">
+                        <i class="fas fa-info-circle"></i>
+                        <p><strong>Internal vs. External TestFlight:</strong> Internal builds (up to 100 testers from your org) skip Beta App Review and are available within minutes of processing. External builds require a one-time Beta App Review per build, adding up to 24 hours. Structure your pipeline so QA uses internal groups only.</p>
+                    </div>
+
+                    <h3>App Store Connect API — Upload &amp; Status</h3>
+                    <div class="code-block">
+                        <span class="code-lang">Shell</span>
+                        <pre><span class="cmt"># Upload IPA via xcrun altool (API key auth — no 2FA)</span>
+<span class="fn">xcrun</span> altool --upload-app \
+  --type ios \
+  --file   <span class="str">"build/output/MyApp.ipa"</span> \
+  --apiKey    <span class="str">"$ASC_API_KEY_ID"</span> \
+  --apiIssuer <span class="str">"$ASC_ISSUER_ID"</span>
+
+<span class="cmt"># Poll build processing status</span>
+<span class="fn">curl</span> -H <span class="str">"Authorization: Bearer $TOKEN"</span> \
+  <span class="str">"https://api.appstoreconnect.apple.com/v1/builds?filter[app]=APP_ID&sort=-uploadedDate&limit=1"</span>
+
+<span class="cmt"># Add build to TestFlight internal group</span>
+<span class="fn">curl</span> -X POST \
+  -H <span class="str">"Authorization: Bearer $TOKEN"</span> \
+  -H <span class="str">"Content-Type: application/json"</span> \
+  -d <span class="str">'{"data":{"type":"betaGroups","id":"GROUP_ID"}}'</span> \
+  <span class="str">"https://api.appstoreconnect.apple.com/v1/builds/BUILD_ID/relationships/betaGroups"</span></pre>
+                    </div>
+
+                    <h3>App Store Review Checklist</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Check</th><th>How to Verify</th><th>Common Rejection Reason</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Privacy Manifest (PrivacyInfo.xcprivacy)</td><td>Xcode build phase warning</td><td>Missing API usage declarations</td></tr>
+                            <tr><td>App Tracking Transparency</td><td>ATT prompt present if IDFA used</td><td>Accessing IDFA without permission</td></tr>
+                            <tr><td>Entitlements match capabilities</td><td><code>codesign -d --entitlements :-</code></td><td>Entitlement not in profile</td></tr>
+                            <tr><td>No private API usage</td><td>Xcode Organizer scan + strings grep</td><td>Private framework reference</td></tr>
+                            <tr><td>Minimum OS version set</td><td>Deployment target in xcconfig</td><td>Crash on supported OS version</td></tr>
+                            <tr><td>App Store screenshots present</td><td>Deliver metadata folder</td><td>Wrong device size or placeholder content</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Section 7 -->
+                <div id="s7" class="content-section">
+                    <h2><span class="section-icon"><i class="fas fa-flag"></i></span>7. Feature Flags &amp; Staged Rollout</h2>
+                    <p>Because iOS App Store updates take days, feature flags are the primary mechanism for controlling what users see after a release. Decoupling code deployment from feature activation allows safe progressive exposure independent of the App Store review cycle.</p>
+
+                    <div class="diagram-wrap">
+                        <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 7 — Feature Flag Rollout Architecture</div>
+                        <div class="mermaid">
+%%{init: {'theme':'dark','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#e2e8f0','primaryBorderColor':'#0ea5e9','lineColor':'#64748b','secondaryColor':'#1e293b','tertiaryColor':'#0f172a'}}}%%
+flowchart TD
+    APP[iOS App Launch] --> SDK[Feature Flag SDK\nLocal Cache]
+    SDK --> EVAL{Evaluate Flag}
+    EVAL -->|"Cached + fresh"| DECISION[Flag Decision\nON / OFF / Variant]
+    EVAL -->|"Stale or cold start"| FETCH[Fetch from\nFlags Service]
+    FETCH --> CACHE[Update Local Cache\nUserDefaults / Keychain]
+    CACHE --> DECISION
+    DECISION -->|"ON"| NEW[New Feature Code Path]
+    DECISION -->|"OFF"| OLD[Existing Code Path]
+    DECISION -->|"Variant B"| EXP[Experiment Variant]
+
+    FLAGS_SVC[Flags Service] --> RULES{Targeting Rules}
+    RULES --> PCT[Percentage Rollout\ne.g. 10% of users]
+    RULES --> SEG[User Segment\nBeta / power users]
+    RULES --> ENV[Environment\nProduction only]
+    RULES --> VER[App Version\ngreater than 3.2.0]
+                        </div>
+                    </div>
+
+                    <h3>Rollout Schedule</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Phase</th><th>Rollout %</th><th>Duration</th><th>Gate Criteria</th><th>Action on Failure</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Canary</td><td>1%</td><td>24h</td><td>Crash rate &lt; baseline + 0.5%</td><td>Kill switch OFF</td></tr>
+                            <tr><td>Early Adopters</td><td>10%</td><td>48h</td><td>P99 latency stable, no ANR spike</td><td>Kill switch OFF</td></tr>
+                            <tr><td>Majority</td><td>50%</td><td>48h</td><td>D1 retention within 2% of control</td><td>Kill switch OFF</td></tr>
+                            <tr><td>Full</td><td>100%</td><td>Permanent</td><td>All metrics stable</td><td>Hotfix release</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Swift Feature Flag Client</h3>
+                    <div class="code-block">
+                        <span class="code-lang">Swift</span>
+                        <pre><span class="cmt">// FeatureFlags.swift</span>
+<span class="kw">enum</span> <span class="fn">Feature</span>: <span class="fn">String</span>, <span class="fn">CaseIterable</span> {
+    <span class="kw">case</span> <span class="var">newCheckoutFlow</span> = <span class="str">"new_checkout_flow"</span>
+    <span class="kw">case</span> <span class="var">aiSearch</span>        = <span class="str">"ai_search"</span>
+    <span class="kw">case</span> <span class="var">offlineMode</span>     = <span class="str">"offline_mode"</span>
+}
+
+<span class="kw">final class</span> <span class="fn">FeatureFlagService</span> {
+    <span class="kw">static let</span> <span class="var">shared</span> = <span class="fn">FeatureFlagService</span>()
+    <span class="kw">private var</span> <span class="var">cache</span>: [<span class="fn">String</span>: <span class="fn">Bool</span>] = [:]
+
+    <span class="kw">func</span> <span class="fn">isEnabled</span>(<span class="var">_</span> <span class="var">feature</span>: <span class="fn">Feature</span>) -> <span class="fn">Bool</span> {
+        <span class="var">cache</span>[<span class="var">feature</span>.<span class="var">rawValue</span>] ?? <span class="kw">false</span>
+    }
+
+    <span class="kw">func</span> <span class="fn">fetchFlags</span>() <span class="kw">async throws</span> {
+        <span class="kw">let</span> <span class="var">url</span> = <span class="fn">URL</span>(<span class="var">string</span>: <span class="var">Config</span>.<span class="var">featureFlagsEndpoint</span>)!
+        <span class="kw">let</span> (<span class="var">data</span>, _) = <span class="kw">try await</span> <span class="fn">URLSession</span>.<span class="var">shared</span>.<span class="fn">data</span>(<span class="var">from</span>: <span class="var">url</span>)
+        <span class="var">cache</span> = <span class="kw">try</span> <span class="fn">JSONDecoder</span>().<span class="fn">decode</span>([<span class="fn">String</span>: <span class="fn">Bool</span>].<span class="kw">self</span>, <span class="var">from</span>: <span class="var">data</span>)
+        <span class="fn">persistToUserDefaults</span>(<span class="var">cache</span>)
+    }
+}
+
+<span class="cmt">// Call site</span>
+<span class="kw">if</span> <span class="fn">FeatureFlagService</span>.<span class="var">shared</span>.<span class="fn">isEnabled</span>(.<span class="var">newCheckoutFlow</span>) {
+    <span class="fn">showNewCheckout</span>()
+} <span class="kw">else</span> {
+    <span class="fn">showLegacyCheckout</span>()
+}</pre>
+                    </div>
+                </div>
+
+                <!-- Section 8 -->
+                <div id="s8" class="content-section">
+                    <h2><span class="section-icon"><i class="fas fa-chart-line"></i></span>8. Monitoring, Alerting &amp; Rollback</h2>
+                    <p>Production mobile monitoring differs from server-side: you cannot restart a process, you have no SSH access, and user sessions span background/foreground transitions. Signal sources include crash reporters, APM SDKs, and server-side API telemetry correlated against the release version.</p>
+
+                    <h3>Observability Stack</h3>
+                    <div class="diagram-wrap">
+                        <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 8 — Mobile Observability Architecture</div>
+                        <div class="mermaid">
+%%{init: {'theme':'dark','themeVariables':{'primaryColor':'#1e3a5f','primaryTextColor':'#e2e8f0','primaryBorderColor':'#0ea5e9','lineColor':'#64748b','secondaryColor':'#1e293b','tertiaryColor':'#0f172a'}}}%%
+graph TD
+    APP[iOS App] --> CRASH[Crash Reporter\nFirebase Crashlytics / Sentry]
+    APP --> APM[APM SDK\nNetwork latency / Frame rate / Memory]
+    APP --> ANALYTICS[Analytics Events\nUser funnels / Conversions]
+    APP --> LOGS[Structured Logs\nOSLog to remote endpoint]
+
+    SERVER[API Backend] --> TRACES[Distributed Traces\nOpenTelemetry]
+    SERVER --> METRICS[Server Metrics\nPrometheus / Datadog]
+
+    CRASH & APM & ANALYTICS & LOGS --> INGEST[Telemetry Ingest]
+    TRACES & METRICS --> INGEST
+    INGEST --> DASH[Dashboard\nGrafana / Datadog]
+    INGEST --> ALERTS[Alert Rules\nCrash rate / ANR / Session error]
+    ALERTS --> ONCALL[On-Call\nPagerDuty / OpsGenie]
+    ONCALL --> ROLLBACK{Decision}
+    ROLLBACK -->|"Feature flag"| FF_OFF[Kill Switch OFF\nSeconds]
+    ROLLBACK -->|"Severe"| APP_STORE[Request Version\nRemoval from Store]
+    ROLLBACK -->|"Hotfix"| HOTFIX[Hotfix Build\nExpedited Review]
+                        </div>
+                    </div>
+
+                    <h3>Key Metrics &amp; Alert Thresholds</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Metric</th><th>Normal Range</th><th>Warning</th><th>Critical (Page)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Crash-free sessions</td><td>&gt; 99.5%</td><td>&lt; 99.5%</td><td>&lt; 99.0%</td></tr>
+                            <tr><td>ANR (hang) rate</td><td>&lt; 0.2%</td><td>&gt; 0.3%</td><td>&gt; 0.5%</td></tr>
+                            <tr><td>App launch time (cold)</td><td>&lt; 2s</td><td>&gt; 3s</td><td>&gt; 5s</td></tr>
+                            <tr><td>Main thread frame drops</td><td>&lt; 5%</td><td>&gt; 8%</td><td>&gt; 15%</td></tr>
+                            <tr><td>API error rate</td><td>&lt; 1%</td><td>&gt; 2%</td><td>&gt; 5%</td></tr>
+                            <tr><td>Memory footprint (peak)</td><td>&lt; 200MB</td><td>&gt; 300MB</td><td>&gt; 500MB (OOM)</td></tr>
+                            <tr><td>Day-1 retention delta</td><td>±2% vs. prior</td><td>−4%</td><td>−7%</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Rollback Decision Tree</h3>
+                    <div class="phase-steps">
+                        <div class="phase-step">
+                            <div class="step-num">1</div>
+                            <div class="step-body">
+                                <h4>Feature Flag Kill Switch (seconds)</h4>
+                                <p>If the issue is scoped to a flagged feature, disable the flag in the service. The app picks it up on next poll (typically &lt; 5 min). No app update required. Resolves ~80% of incidents.</p>
+                            </div>
+                        </div>
+                        <div class="phase-step">
+                            <div class="step-num">2</div>
+                            <div class="step-body">
+                                <h4>Phased Release Pause (minutes)</h4>
+                                <p>If the release is still in phased rollout, pause or halt via App Store Connect. Prevents further user exposure while the issue is diagnosed.</p>
+                            </div>
+                        </div>
+                        <div class="phase-step">
+                            <div class="step-num">3</div>
+                            <div class="step-body">
+                                <h4>Hotfix Expedited Review (hours)</h4>
+                                <p>For crashes affecting all users, submit a hotfix and request expedited review via the Resolution Center. Apple typically acts within 2–4 hours for critical safety issues.</p>
+                            </div>
+                        </div>
+                        <div class="phase-step">
+                            <div class="step-num">4</div>
+                            <div class="step-body">
+                                <h4>Version Removal Request (last resort)</h4>
+                                <p>Contact Apple to remove the current App Store version. Prevents new installs but does not affect existing installs. Use only for severe security vulnerabilities. Allow 24–48 hours.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="callout callout-success">
+                        <i class="fas fa-check-circle"></i>
+                        <p><strong>Golden rule:</strong> Ship feature flags for every significant code path. The ability to disable a feature in seconds is worth the added conditional in the codebase.</p>
+                    </div>
+
+                    <h3>Post-Release Verification Runbook</h3>
+                    <div class="code-block">
+                        <span class="code-lang">Markdown</span>
+                        <pre><span class="str">## Post-Release Checklist</span>
+
+<span class="cmt">### T+0 (Immediately after release)</span>
+- [ ] Verify build appears in App Store Connect with correct version and build number
+- [ ] Confirm TestFlight internal group receives notification
+- [ ] Validate crash-free rate baseline in Crashlytics vs. prior version
+- [ ] Check API error rates — no spike correlated with release
+- [ ] Verify feature flag service is reachable from production app
+
+<span class="cmt">### T+1h</span>
+- [ ] Review top crash reports — any new crash signatures?
+- [ ] Check P99 API latency — within 10% of pre-release baseline
+- [ ] Confirm phased rollout percentage is incrementing per schedule
+
+<span class="cmt">### T+24h</span>
+- [ ] App Store ratings — no sudden negative review spike
+- [ ] D1 retention within acceptable delta vs. prior cohort
+- [ ] Memory and CPU profiling — no regressions vs. prior version
+- [ ] Decision gate: proceed to 100% rollout or pause?</pre>
+                    </div>
+                </div>
+
+                <div style="text-align:center;margin-top:3rem;">
+                    <a href="./" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <span class="footer-logo">Sudhakar Chundu</span>
+            <div class="footer-links">
+                <a href="../">Home</a>
+                <a href="../resume/">Resume</a>
+                <a href="../projects/">Achievements</a>
+                <a href="../contact/">Contact</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/schundu007" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/babucs" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://medium.com/@schundu" target="_blank"><i class="fab fa-medium"></i></a>
+            </div>
+        </div>
+        <p>&copy; 2026 Sudhakar Chundu. All rights reserved.</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#1e3a5f',
+                primaryTextColor: '#e2e8f0',
+                primaryBorderColor: '#0ea5e9',
+                lineColor: '#64748b',
+                secondaryColor: '#1e293b',
+                tertiaryColor: '#0f172a',
+                fontFamily: 'Sora, sans-serif'
+            },
+            flowchart: { curve: 'basis', padding: 20 },
+            sequence: { actorMargin: 60 },
+            gantt: { axisFormat: '%m/%d' }
+        });
+
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+    </script>
+    <script src="../assets/js/neural-bg.js"></script>
+</body>
+</html>
