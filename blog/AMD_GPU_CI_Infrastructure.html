@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GGNQHMGCLH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-GGNQHMGCLH');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPU Stack CI Infrastructure: End-to-End Cloud Architecture | Sudhakar Chundu</title>
+    <meta name="description" content="A complete end-to-end CI infrastructure reference for a GPU driver/firmware stack on AWS — Terraform IaC, GitHub Actions pipelines, HSM code signing, KMS encryption, CloudTrail compliance, and hardware-in-the-loop GPU validation.">
+    <meta name="author" content="Sudhakar Chundu">
+    <meta name="keywords" content="Terraform, DevOps, CI/CD, Cloud Security, AWS, GitHub Actions, Infrastructure as Code, GPU, ROCm, HSM, KMS">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=2">
+    <script src="../assets/js/theme.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        .paper-hero {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            padding: 3rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .paper-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+        .paper-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 1rem;
+            background: rgba(14, 165, 233, 0.15);
+            border: 1px solid rgba(14, 165, 233, 0.35);
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 1.5rem;
+        }
+        .paper-title {
+            font-size: 2rem;
+            line-height: 1.25;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+        .paper-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+        .paper-meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .paper-author { display: flex; align-items: center; gap: 0.75rem; }
+        .paper-author img { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--glass-border); }
+        .paper-author-info strong { display: block; font-size: 0.95rem; color: var(--text-primary); }
+        .paper-author-info span { font-size: 0.8rem; color: var(--text-muted); }
+        .paper-stat { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-muted); }
+        .paper-stat i { color: var(--accent-blue); }
+
+        .toc-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            border-left: 3px solid var(--accent-blue);
+        }
+        .toc-card h3 { font-size: 1rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem; }
+        .toc-list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.4rem 2rem; }
+        .toc-list li a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0; transition: color 0.2s; }
+        .toc-list li a:hover { color: var(--accent-blue); }
+        .toc-num { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-blue); min-width: 1.5rem; }
+
+        .content-section {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        .content-section h2 { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
+        .section-icon { width: 36px; height: 36px; background: var(--gradient-primary); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1rem; color: white; flex-shrink: 0; }
+        .content-section h3 { font-size: 1.1rem; font-weight: 600; color: var(--accent-highlight); margin: 1.75rem 0 0.75rem; }
+        .content-section h4 { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin: 1.25rem 0 0.5rem; }
+        .content-section p { color: var(--text-secondary); line-height: 1.75; margin-bottom: 1rem; }
+        .content-section ul, .content-section ol { color: var(--text-secondary); line-height: 1.8; padding-left: 1.5rem; margin-bottom: 1rem; }
+        .content-section li { margin-bottom: 0.35rem; }
+        .content-section strong { color: var(--text-primary); }
+        .hl { background: rgba(245, 158, 11, 0.18); color: var(--text-primary); padding: 0 0.25rem; border-radius: 3px; }
+        code.inline { background: rgba(255,255,255,0.06); padding: 0.1rem 0.4rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.85em; color: var(--accent-cyan); }
+
+        .diagram-wrap { background: rgba(0,0,0,0.25); border-radius: var(--radius-md); padding: 2rem 1.5rem; margin: 1.5rem 0; overflow-x: auto; }
+        .diagram-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.4rem; }
+        .mermaid svg { max-width: 100%; height: auto; }
+
+        .code-block { background: #0d1117; border-radius: var(--radius-md); padding: 1.5rem; margin: 1.25rem 0; overflow-x: auto; position: relative; }
+        .code-block .code-lang { position: absolute; top: 0.6rem; right: 0.75rem; font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono); text-transform: uppercase; }
+        .code-block pre { margin: 0; font-family: var(--font-mono); font-size: 0.82rem; color: #e6edf3; line-height: 1.65; white-space: pre; }
+
+        .metric-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin: 1.25rem 0; }
+        .metric-card { background: rgba(14, 165, 233, 0.08); border: 1px solid rgba(14, 165, 233, 0.2); border-radius: var(--radius-md); padding: 1.25rem; text-align: center; }
+        .metric-card .metric-val { font-size: 1.75rem; font-weight: 700; color: var(--accent-cyan); font-family: var(--font-mono); }
+        .metric-card .metric-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.35rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        .callout { border-radius: var(--radius-md); padding: 1.25rem 1.5rem; margin: 1.25rem 0; display: flex; gap: 0.85rem; }
+        .callout-warn { background: rgba(245, 158, 11, 0.1); border-left: 3px solid #f59e0b; }
+        .callout-info { background: rgba(14, 165, 233, 0.1); border-left: 3px solid var(--accent-blue); }
+        .callout-success { background: rgba(16, 185, 129, 0.1); border-left: 3px solid #10b981; }
+        .callout i { font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0; }
+        .callout-warn i { color: #f59e0b; }
+        .callout-info i { color: var(--accent-blue); }
+        .callout-success i { color: #10b981; }
+        .callout div { min-width: 0; }
+        .callout p { margin: 0; font-size: 0.9rem; color: var(--text-secondary); }
+        .callout strong { color: var(--text-primary); }
+
+        .data-table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: 0.875rem; }
+        .data-table th { background: rgba(14, 165, 233, 0.15); color: var(--accent-cyan); font-weight: 600; padding: 0.75rem 1rem; text-align: left; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .data-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--glass-border); color: var(--text-secondary); vertical-align: top; }
+        .data-table tr:hover td { background: rgba(255,255,255,0.03); }
+        .badge-green { color: #10b981; font-weight: 600; }
+        .badge-red { color: #ef4444; font-weight: 600; }
+
+        .key-points { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .key-point { background: rgba(118, 75, 162, 0.12); border: 1px solid rgba(118, 75, 162, 0.28); border-radius: var(--radius-md); padding: 1.25rem; }
+        .key-point h4 { margin: 0 0 0.5rem; color: var(--text-primary); font-size: 0.95rem; }
+        .key-point p { margin: 0; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+
+        .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem; }
+        .breadcrumb a { color: var(--accent-blue); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .paper-hero { padding: 1.75rem; }
+            .paper-title { font-size: 1.5rem; }
+            .content-section { padding: 1.5rem; }
+            .toc-list { grid-template-columns: 1fr; }
+            .metric-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* Force all Mermaid diagrams onto a dark canvas */
+        .mermaid { background: #0d1117; border-radius: 8px; padding: 1rem 0; display: block; }
+        .mermaid svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+    </style>
+</head>
+<body>
+    <canvas id="neural-bg"></canvas>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../" class="logo">
+                <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu" class="logo-icon">
+                Sudhakar Chundu
+            </a>
+            <ul class="nav-links">
+                <li><a href="../about/">About</a></li>
+                <li><a href="../resume/">Resume</a></li>
+                <li><a href="./" class="active">Blog</a></li>
+                <li><a href="../projects/">Achievements</a></li>
+                <li><a href="../opensource/">Open Source</a></li>
+                <div class="nav-social">
+                    <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/babucs" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
+                <div class="nav-auth">
+                    <button class="btn-signin" onclick="showLoginModal()">Sign In</button>
+                </div>
+            </ul>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="section">
+            <div class="container">
+
+                <nav class="breadcrumb">
+                    <a href="../">Home</a>
+                    <i class="fas fa-chevron-right" style="font-size:0.7rem"></i>
+                    <a href="./">Blog</a>
+                    <i class="fas fa-chevron-right" style="font-size:0.7rem"></i>
+                    <span>GPU Stack CI Infrastructure</span>
+                </nav>
+
+                <!-- Hero -->
+                <div class="paper-hero">
+                    <span class="paper-badge"><i class="fas fa-microchip"></i> DevOps &middot; Cloud Security</span>
+                    <h1 class="paper-title">GPU Stack CI Infrastructure: End-to-End Cloud Architecture</h1>
+                    <p class="paper-subtitle">A complete, high-ownership reference for the CI infrastructure behind a GPU driver/firmware release pipeline (modeled on an open stack such as AMD ROCm) — Terraform-provisioned AWS foundations, self-hosted GitHub Actions runners, HSM firmware signing, KMS encryption everywhere, CloudTrail compliance, and hardware-in-the-loop GPU validation across 10+ SKUs.</p>
+                    <div class="paper-meta-row">
+                        <div class="paper-author">
+                            <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu">
+                            <div class="paper-author-info">
+                                <strong>Sudhakar Chundu</strong>
+                                <span>Staff DevOps Engineer &amp; SRE</span>
+                            </div>
+                        </div>
+                        <div class="paper-stat"><i class="fas fa-calendar"></i> July 2026</div>
+                        <div class="paper-stat"><i class="fas fa-clock"></i> 40 min read</div>
+                        <div class="paper-stat"><i class="fas fa-layer-group"></i> 10 Sections</div>
+                        <div class="paper-stat"><i class="fas fa-project-diagram"></i> 2 Diagrams</div>
+                    </div>
+                    <div class="metric-grid">
+                        <div class="metric-card">
+                            <div class="metric-val">&gt;95%</div>
+                            <div class="metric-label">Nightly Pass Rate</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-val">&lt;10m</div>
+                            <div class="metric-label">Pre-Submit SLA</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-val">10+</div>
+                            <div class="metric-label">GPU SKUs Tested</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-val">&lt;1h</div>
+                            <div class="metric-label">Release Production</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-val">100%</div>
+                            <div class="metric-label">Infra as Code</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOC -->
+                <div class="toc-card">
+                    <h3><i class="fas fa-list"></i> Table of Contents</h3>
+                    <ul class="toc-list">
+                        <li><a href="#s1"><span class="toc-num">01</span>Scope &amp; Ownership Model</a></li>
+                        <li><a href="#s2"><span class="toc-num">02</span>System Architecture Overview</a></li>
+                        <li><a href="#s3"><span class="toc-num">03</span>Terraform Infrastructure as Code</a></li>
+                        <li><a href="#s4"><span class="toc-num">04</span>GitHub Actions CI/CD Pipelines</a></li>
+                        <li><a href="#s5"><span class="toc-num">05</span>DevOps Security &amp; Code Signing</a></li>
+                        <li><a href="#s6"><span class="toc-num">06</span>Cloud Security: Encryption &amp; Compliance</a></li>
+                        <li><a href="#s7"><span class="toc-num">07</span>Hardware-in-the-Loop Testing</a></li>
+                        <li><a href="#s8"><span class="toc-num">08</span>Operational Playbook &amp; Runbooks</a></li>
+                        <li><a href="#s9"><span class="toc-num">09</span>12-Week Implementation Roadmap</a></li>
+                        <li><a href="#s10"><span class="toc-num">10</span>Key Performance Indicators</a></li>
+                    </ul>
+                </div>
+
+                <!-- Section 1 -->
+                <div id="s1" class="content-section">
+                    <h2><span class="section-icon"><i class="fas fa-crosshairs"></i></span>1. Scope &amp; Ownership Model</h2>
+                    <p>This reference describes the complete CI infrastructure for a GPU stack release pipeline where firmware, kernel driver, and the compute runtime (e.g. ROCm) must be validated <span class="hl">together</span> across a fleet of GPU SKUs. It is deliberately high-ownership: one platform team designs the architecture, provisions everything as code with Terraform, secures every layer (encryption, signing, audit logging), and owns reliability targets (95%+ nightly pass rate, &lt;24&nbsp;hour mean-time-to-detect regression).</p>
+
+                    <h3>Three Core Responsibilities</h3>
+                    <ul>
+                        <li><strong>Nightly integration CI</strong> — firmware + driver + runtime validated together across 10+ GPU SKUs.</li>
+                        <li><strong>Self-hosted runner provisioning</strong> — GitHub Actions runners that need NFS, HSM access, and network isolation, provisioned on AWS EC2.</li>
+                        <li><strong>AWS-aligned foundations</strong> — Terraform IaC, least-privilege IAM, encryption everywhere, compliance-ready audit trails.</li>
+                    </ul>
+
+                    <h3>What the Platform Team Owns</h3>
+                    <ul>
+                        <li><strong>Architecture decisions:</strong> GitHub Actions vs. Jenkins, Terraform vs. CloudFormation, cloud selection.</li>
+                        <li><strong>Infrastructure provisioning:</strong> VPC, subnets, security groups, IAM, EC2, EFS, KMS, Secrets Manager.</li>
+                        <li><strong>Runner provisioning:</strong> Actions registration, NFS mounts, HSM access, auto-shutdown automation.</li>
+                        <li><strong>CI/CD workflows:</strong> pre-submit gates, nightly builds, release-candidate validation, LKG (last-known-good) manifest.</li>
+                        <li><strong>Security &amp; compliance:</strong> firmware signing via HSM, SBOM, vulnerability scanning, audit logging.</li>
+                        <li><strong>Hardware integration:</strong> GPU device management, testing, benchmarking, thermal monitoring.</li>
+                        <li><strong>Operational excellence:</strong> observability, runbooks, failure-mode handling, cost optimization.</li>
+                    </ul>
+                </div>
+
+                <!-- Section 2 -->
+                <div id="s2" class="content-section">
+                    <h2><span class="section-icon"><i class="fas fa-sitemap"></i></span>2. System Architecture Overview</h2>
+                    <p>The CI system operates in three stages: <strong>pre-submit validation</strong> (fast feedback, 10&nbsp;min SLA), <strong>nightly integration</strong> (full-stack validation), and <strong>on-demand release production</strong> (sub-hour packaging and shipping).</p>
+
+                    <div class="diagram-wrap">
+                        <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 1 — End-to-End CI Flow</div>
+                        <div class="mermaid">
+flowchart TD
+    A[GitHub Repos<br/>firmware / driver / runtime] --> B{Trigger}
+    B -->|Pull Request| C[Pre-Submit<br/>10 min SLA]
+    B -->|22:00 UTC cron| D[Nightly Integration<br/>Full Stack]
+    C --> E[Self-Hosted Runners<br/>AWS EC2 / Private Subnets]
+    D --> E
+    E --> F[Firmware<br/>t3.2xlarge x3]
+    E --> G[Driver<br/>c5.xlarge x2]
+    E --> H[GPU Test<br/>g4dn.2xlarge x1]
+    F --> I[(S3 + Artifactory<br/>KMS / Versioned / Immutable)]
+    G --> I
+    H --> I
+    I --> J[LKG Manifest<br/>Git / GPG-signed YAML]
+    J --> K[release CLI<br/>resolve to sign to publish]
+                        </div>
+                    </div>
+
+                    <h3>Why Self-Hosted Runners?</h3>
+                    <p>GitHub-hosted runners cannot support firmware builds. Firmware requires:</p>
+                    <ul>
+                        <li><strong>NFS mounts</strong> to access cross-compiler toolchains (ARM, RISC-V targets).</li>
+                        <li><strong>CloudHSM access</strong> for code signing (the private key never leaves hardware).</li>
+                        <li><strong>Network isolation</strong> (no inbound internet, private subnets only).</li>
+                        <li><strong>Signing material via Secrets Manager</strong> with fine-grained IAM access.</li>
+                    </ul>
+                    <p>Self-hosted runners on EC2 in private subnets provide all of this while keeping the build environment under the platform team's control.</p>
+                </div>
+
+                <!-- Section 3 -->
+                <div id="s3" class="content-section">
+                    <h2><span class="section-icon"><i class="fas fa-cubes"></i></span>3. Terraform Infrastructure as Code</h2>
+                    <div class="callout callout-info">
+                        <i class="fas fa-info-circle"></i>
+                        <div><p><strong>Everything is code.</strong> VPC architecture, EC2 instances, IAM roles, KMS keys, S3 buckets, CloudTrail logging — version-controlled, reviewable, reproducible, and auditable.</p></div>
+                    </div>
+
+                    <h3>Module 1 — VPC (Networking)</h3>
+                    <p>Network design emphasizes <span class="hl">isolation and egress control</span>.</p>
+                    <div class="code-block"><span class="code-lang">hcl</span><pre>resource "aws_vpc" "rocm_ci" {
+  cidr_block           = "10.0.0.0/16"
+  enable_dns_hostnames = true
+  enable_dns_support   = true
+}
+
+# Public subnet (NAT gateway location)
+resource "aws_subnet" "public" {
+  vpc_id                  = aws_vpc.rocm_ci.id
+  cidr_block              = "10.0.0.0/24"
+  map_public_ip_on_launch = true
+}
+
+# Private subnets for runners (no public IPs)
+resource "aws_subnet" "runners_private" {
+  count             = 2
+  vpc_id            = aws_vpc.rocm_ci.id
+  cidr_block        = "10.0.${count.index + 1}.0/24"
+  availability_zone = data.aws_availability_zones.available.names[count.index]
+}
+
+# NAT Gateway (centralized egress control)
+resource "aws_nat_gateway" "rocm_ci" {
+  allocation_id = aws_eip.nat_gateway.id
+  subnet_id     = aws_subnet.public.id
+  depends_on    = [aws_internet_gateway.rocm_ci]
+}
+
+# Route table for private subnets (all egress via NAT)
+resource "aws_route_table" "runners_private" {
+  vpc_id = aws_vpc.rocm_ci.id
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.rocm_ci.id
+  }
+}</pre></div>
+
+                    <h4>Network Design Rationale</h4>
+                    <ul>
+                        <li><strong>VPC CIDR 10.0.0.0/16</strong> — 65,536 IPs for current and future growth.</li>
+                        <li><strong>Public subnet (10.0.0.0/24)</strong> — holds the NAT gateway only; all runners live in private subnets.</li>
+                        <li><strong>Private subnets (10.0.1&ndash;2.0/24)</strong> — runners across 2 AZs for high availability.</li>
+                        <li><strong>NAT egress</strong> — a single point of control; outbound endpoints can be whitelisted.</li>
+                        <li><strong>Multi-AZ</strong> — if AZ-1 fails, AZ-2 keeps building.</li>
+                    </ul>
+
+                    <h3>Module 2 — IAM (Least-Privilege Access)</h3>
+                    <p>IAM follows the <span class="hl">principle of least privilege</span>. Runners can only touch the resources they explicitly need.</p>
+                    <div class="code-block"><span class="code-lang">hcl</span><pre>resource "aws_iam_role" "runner_role" {
+  name = "rocm-ci-runner-role-${var.environment}"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Action    = "sts:AssumeRole"
+      Effect    = "Allow"
+      Principal = { Service = "ec2.amazonaws.com" }
+    }]
+  })
+}
+
+# S3 artifact access (scoped to the artifacts bucket only)
+resource "aws_iam_role_policy" "runner_s3_artifacts" {
+  name = "runner-s3-artifacts"
+  role = aws_iam_role.runner_role.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Sid      = "S3ArtifactAccess"
+      Effect   = "Allow"
+      Action   = ["s3:PutObject", "s3:GetObject", "s3:ListBucket", "s3:GetObjectVersion"]
+      Resource = [
+        "arn:aws:s3:::rocm-artifacts-${var.environment}",
+        "arn:aws:s3:::rocm-artifacts-${var.environment}/*"
+      ]
+    }]
+  })
+}
+
+# KMS (decrypt & generate data keys only)
+resource "aws_iam_role_policy" "runner_kms_decrypt" {
+  name = "runner-kms-decrypt"
+  role = aws_iam_role.runner_role.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Sid      = "KMSDecryptEncrypt"
+      Effect   = "Allow"
+      Action   = ["kms:Decrypt", "kms:GenerateDataKey", "kms:DescribeKey"]
+      Resource = [
+        aws_kms_key.rocm_artifacts.arn,
+        aws_kms_key.ebs.arn,
+        aws_kms_key.cloudwatch_logs.arn
+      ]
+    }]
+  })
+}
+
+# Secrets Manager (read-only, scoped to /rocm-ci/*)
+resource "aws_iam_role_policy" "runner_secrets_manager" {
+  name = "runner-secrets-manager"
+  role = aws_iam_role.runner_role.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Sid      = "SecretsManagerRead"
+      Effect   = "Allow"
+      Action   = ["secretsmanager:GetSecretValue", "secretsmanager:DescribeSecret"]
+      Resource = "arn:aws:secretsmanager:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:secret:/rocm-ci/*"
+    }]
+  })
+}
+
+# Instance profile (attaches the role to EC2 instances)
+resource "aws_iam_instance_profile" "runner_profile" {
+  name = "rocm-ci-runner-profile"
+  role = aws_iam_role.runner_role.name
+}</pre></div>
+
+                    <h4>Least-Privilege Breakdown</h4>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Resource</th><th>Can Do</th><th>Cannot Do</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>S3</strong></td><td class="badge-green">Upload/download the artifacts bucket only</td><td class="badge-red">Access other buckets, delete objects</td></tr>
+                            <tr><td><strong>KMS</strong></td><td class="badge-green">Decrypt, generate data keys, describe keys</td><td class="badge-red">Create/destroy keys, modify policies</td></tr>
+                            <tr><td><strong>Secrets</strong></td><td class="badge-green">Read <code class="inline">/rocm-ci/*</code> secrets only</td><td class="badge-red">Create/delete secrets, modify policies</td></tr>
+                            <tr><td><strong>CloudWatch</strong></td><td class="badge-green">Create log streams, write events</td><td class="badge-red">Delete logs, modify retention</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Module 3 — EC2 Runners (Compute)</h3>
+                    <p>Three runner types, right-sized for their workload:</p>
+                    <div class="code-block"><span class="code-lang">hcl</span><pre># Firmware builder (t3.2xlarge: 8 vCPU, 32 GB RAM, ~$5.5K/yr)
+resource "aws_instance" "firmware_builder" {
+  count                  = var.runner_count["firmware"] # 3 instances
+  ami                    = data.aws_ami.ubuntu_lts.id
+  instance_type          = "t3.2xlarge"
+  iam_instance_profile   = aws_iam_instance_profile.runner_profile.name
+  subnet_id              = aws_subnet.runners_private[count.index % 2].id
+  vpc_security_group_ids = [aws_security_group.runners.id]
+
+  root_block_device {
+    volume_type = "gp3"
+    volume_size = 100
+    encrypted   = true
+    kms_key_id  = aws_kms_key.ebs.arn
+  }
+
+  monitoring = true
+
+  tags = {
+    Name        = "rocm-firmware-builder-${count.index}"
+    Type        = "firmware-builder"
+    Environment = var.environment
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+# Kernel driver builder (c5.xlarge: 4 vCPU, 8 GB RAM, ~$1.2K/yr)
+resource "aws_instance" "driver_builder" {
+  count         = var.runner_count["driver"] # 2 instances
+  instance_type = "c5.xlarge"
+
+  root_block_device {
+    volume_type = "gp3"
+    volume_size = 50
+    encrypted   = true
+    kms_key_id  = aws_kms_key.ebs.arn
+  }
+}
+
+# GPU test runner (g4dn.2xlarge: 8 vCPU, 32 GB RAM, NVIDIA A10G, ~$15K/yr)
+resource "aws_instance" "gpu_test_runner" {
+  count         = var.runner_count["gpu-test"] # 1 instance
+  instance_type = "g4dn.2xlarge"
+
+  root_block_device {
+    volume_type = "gp3"
+    volume_size = 100
+    encrypted   = true
+    kms_key_id  = aws_kms_key.ebs.arn
+  }
+}
+
+# Security group (GitHub webhook inbound, all outbound via NAT)
+resource "aws_security_group" "runners" {
+  name_prefix = "rocm-ci-runners-"
+  vpc_id      = aws_vpc.rocm_ci.id
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["140.82.112.0/20", "143.55.64.0/20"] # GitHub Actions IPs
+    description = "GitHub Actions webhooks (HTTPS only)"
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Egress via NAT (no direct internet)"
+  }
+}</pre></div>
+
+                    <h4>Right-Sizing Strategy</h4>
+                    <ul>
+                        <li><strong>t3 for firmware</strong> — good CPU performance, reasonable cost, burstable baseline.</li>
+                        <li><strong>c5 for driver</strong> — CPU-optimized; the smaller <code class="inline">c5.xlarge</code> (not <code class="inline">c5.2xlarge</code>) is enough.</li>
+                        <li><strong>g4dn for GPU</strong> — a single instance for hardware validation; pre-submit gets lower priority.</li>
+                        <li><strong>gp3 volumes</strong> — ~20% cheaper than gp2 with a 3,000-IOPS baseline.</li>
+                        <li><strong>All encrypted</strong> — customer-managed KMS keys, not AWS-managed.</li>
+                        <li><strong>Auto-shutdown</strong> — idle runners terminated after 30 min via a Lambda.</li>
+                        <li><strong>Reserved Instances</strong> — firmware &amp; driver builders are always-on (40&ndash;50% savings).</li>
+                    </ul>
+                </div>
+
+                <!-- Section 4 -->
+                <div id="s4" class="content-section">
+                    <h2><span class="section-icon"><i class="fab fa-github"></i></span>4. GitHub Actions CI/CD Pipelines</h2>
+                    <div class="callout callout-info">
+                        <i class="fas fa-info-circle"></i>
+                        <div><p>Two pipelines: <strong>Pre-Submit</strong> (fast feedback, blocks bad code) and <strong>Nightly</strong> (full validation, hardware tests).</p></div>
+                    </div>
+
+                    <h3>Pre-Submit Validation (10 min SLA)</h3>
+                    <p>Triggered on pull requests that touch <code class="inline">firmware/</code>. Builds firmware, validates compatibility, runs security scans, and blocks incompatible code before merge.</p>
+                    <div class="code-block"><span class="code-lang">yaml</span><pre>name: Firmware Pre-Submit Validation
+on:
+  pull_request:
+    branches: [main]
+    paths: ['firmware/**']
+
+jobs:
+  build-and-validate:
+    runs-on: [self-hosted, firmware-builder]
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Load signing secrets from Secrets Manager
+        run: |
+          aws secretsmanager get-secret-value \
+            --secret-id /rocm-ci/signing-keys \
+            --query SecretString --output text | \
+            jq -r '.fw_signing_cert' &gt; /tmp/fw.crt
+
+      - name: Build firmware (all targets)
+        run: |
+          cd firmware
+          cmake -B build -DFIRMWARE_TARGETS=gfx908,gfx90a,gfx940
+          cmake --build build -j$(nproc)
+
+      - name: Generate SBOM (Software Bill of Materials)
+        run: |
+          syft firmware/build -o cyclonedx-json &gt; firmware-sbom.json
+
+      - name: Compatibility matrix check
+        run: |
+          python3 scripts/validate_compat.py \
+            --firmware-dir ./firmware/build \
+            --manifest-url s3://rocm-manifests/lkg.yaml
+
+      - name: Static security analysis (KICS)
+        run: |
+          kics scan -p firmware/ -o json &gt; kics.json
+          if grep -q '"CRITICAL"' kics.json; then
+            echo "::error::Critical security issues found"
+            exit 1
+          fi
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware-pre-submit-${{ github.run_id }}
+          path: firmware-sbom.json
+          retention-days: 7</pre></div>
+
+                    <h3>Nightly Integration Build (Full Stack)</h3>
+                    <p>Runs every night at 22:00 UTC. Builds all components together, runs hardware validation across GPU SKUs, and updates the LKG manifest on success.</p>
+                    <div class="code-block"><span class="code-lang">yaml</span><pre>name: Nightly Integration Build
+on:
+  schedule:
+    - cron: '0 22 * * *'
+
+jobs:
+  build-all-components:
+    runs-on: [self-hosted, firmware-builder]
+    outputs:
+      firmware-digest: ${{ steps.fw.outputs.digest }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build firmware
+        id: fw
+        run: |
+          cmake -B build -DFIRMWARE_TARGETS=gfx908,gfx90a,gfx940
+          cmake --build build -j$(nproc)
+          DIGEST=$(sha256sum build/firmware/*.bin | awk '{print $1}')
+          echo "digest=$DIGEST" &gt;&gt; $GITHUB_OUTPUT
+
+      - name: Push artifacts to S3
+        run: |
+          aws s3 cp build/firmware/ \
+            s3://rocm-artifacts/nightly-$(date +%Y%m%d)/ \
+            --recursive --sse aws:kms
+
+  hardware-validation:
+    needs: build-all-components
+    runs-on: [self-hosted, gpu-test-runner]
+    strategy:
+      matrix:
+        gpu: [MI300X, MI250X, MI210, MI100, MI50]
+      max-parallel: 2
+    steps:
+      - name: Flash firmware to GPU
+        run: |
+          python3 scripts/gpu_firmware_update.py \
+            --gpu-model ${{ matrix.gpu }} \
+            --firmware ./artifacts/firmware.bin \
+            --verify
+
+      - name: Run GPU validation tests
+        run: |
+          python3 test_harness.py \
+            --gpu-model ${{ matrix.gpu }} \
+            --output junit-${{ matrix.gpu }}.xml
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: hw-test-${{ matrix.gpu }}
+          path: junit-*.xml
+
+  update-lkg-manifest:
+    needs: [build-all-components, hardware-validation]
+    if: success()
+    runs-on: [self-hosted, firmware-builder]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: org/rocm-manifest
+          ref: lkg-main
+
+      - name: Generate LKG manifest
+        run: |
+          python3 scripts/update_manifest.py \
+            --firmware-digest ${{ needs.build-all-components.outputs.firmware-digest }}
+
+      - name: Sign manifest with GPG
+        run: |
+          gpg --import /var/secrets/rocm-ci-gpg-key
+          gpg --sign --detach-sign --armor manifest.yaml
+
+      - name: Commit and push
+        run: |
+          git config user.name 'rocm-ci-automation'
+          git add manifest.yaml manifest.yaml.asc
+          git commit -m "Update LKG: ${{ needs.build-all-components.outputs.firmware-digest }}"
+          git push origin lkg-main</pre></div>
+                </div>
+
+                <!-- Section 5 -->
+                <div id="s5" class="content-section">
+                    <h2><span class="section-icon"><i class="fas fa-shield-halved"></i></span>5. DevOps Security &amp; Code Signing</h2>
+                    <div class="callout callout-warn">
+                        <i class="fas fa-triangle-exclamation"></i>
+                        <div><p><strong>Security is not optional.</strong> Firmware signing via CloudHSM (key never leaves hardware), SBOM generation, vulnerability scanning, and complete audit trails.</p></div>
+                    </div>
+
+                    <div class="diagram-wrap">
+                        <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 2 — Firmware Signing &amp; Provenance Pipeline</div>
+                        <div class="mermaid">
+flowchart LR
+    A[Build on isolated<br/>runner] --> B[SHA-256 hash]
+    B --> C[Sign via CloudHSM<br/>VPC endpoint]
+    C --> D[Attach signature<br/>+ generate SBOM]
+    D --> E[Scan with Trivy<br/>fail on CRITICAL]
+    E --> F[(Upload to S3<br/>KMS / immutable / 5yr)]
+    F --> G[Audit trail<br/>job / identity / commits]
+    G --> H[Continuous CVE<br/>rescan and notify]
+                        </div>
+                    </div>
+
+                    <h3>Firmware Signing Pipeline (8-Stage Process)</h3>
+                    <ol>
+                        <li>Build firmware on an isolated runner (no internet, <code class="inline">/tmp</code> as ramfs).</li>
+                        <li>Compute a SHA-256 hash of the binary.</li>
+                        <li>Sign the hash via AWS CloudHSM (VPC endpoint — the private key never leaves hardware).</li>
+                        <li>Attach the signature to the binary; generate an SBOM (Syft, CycloneDX format).</li>
+                        <li>Scan for vulnerabilities with Trivy (fail on CRITICAL).</li>
+                        <li>Upload to S3 (KMS-encrypted, immutable, 5-year retention).</li>
+                        <li>Create a detailed audit trail (build job ID, builder identity, git commits, signing timestamp).</li>
+                        <li>Continuous CVE scanning (daily SBOM rescan, auto-notify consumers of new CVEs).</li>
+                    </ol>
+
+                    <h3>Firmware Signing Script (Python)</h3>
+                    <div class="code-block"><span class="code-lang">python</span><pre>#!/usr/bin/env python3
+import subprocess, hashlib, json, os
+from datetime import datetime, timezone
+
+def sign_firmware_binary(firmware_path):
+    """Sign a firmware binary via CloudHSM."""
+    if not os.path.exists(firmware_path):
+        raise FileNotFoundError(f"{firmware_path} not found")
+
+    # Compute SHA-256 hash
+    with open(firmware_path, "rb") as f:
+        fw_hash = hashlib.sha256(f.read()).hexdigest()
+    print(f"[*] Firmware hash: {fw_hash}")
+
+    # Sign via CloudHSM (VPC endpoint, no internet)
+    sign_result = subprocess.run([
+        "cloudhsm_client", "sign",
+        "--digest", fw_hash,
+        "--key-id", os.environ["HSM_KEY_ID"],
+        "--algorithm", "SHA256_RSA_PKCS",
+    ], capture_output=True, text=True, check=True)
+
+    signature = sign_result.stdout.strip()
+    sig_path = f"{firmware_path}.sig"
+    with open(sig_path, "w") as f:
+        f.write(signature)
+
+    metadata = {
+        "firmware": os.path.basename(firmware_path),
+        "hash_algo": "SHA256",
+        "hash": fw_hash,
+        "signed_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "signature_algo": "SHA256_RSA_PKCS",
+        "hsm_key_id": os.environ["HSM_KEY_ID"],
+    }
+    with open(f"{firmware_path}.metadata.json", "w") as f:
+        json.dump(metadata, f, indent=2)
+
+    print(f"[+] Firmware signed: {sig_path}")
+    return sig_path
+
+if __name__ == "__main__":
+    import sys
+    sign_firmware_binary(sys.argv[1])</pre></div>
+
+                    <h3>SBOM &amp; Vulnerability Scanning</h3>
+                    <div class="code-block"><span class="code-lang">bash</span><pre># Generate SBOM (Software Bill of Materials)
+syft ./firmware/build -o cyclonedx-json &gt; firmware-sbom.json
+
+# Scan for known CVEs
+trivy fs --severity HIGH,CRITICAL \
+  --format json --output trivy-results.json ./firmware/build
+
+# Fail if critical CVEs are found
+if grep -q '"Severity": "CRITICAL"' trivy-results.json; then
+  echo "CRITICAL CVEs detected - blocking release"
+  exit 1
+fi
+
+# Upload SBOM to the artifact repo (immutable storage)
+aws s3 cp firmware-sbom.json \
+  s3://rocm-artifacts/sbom/firmware-v1.2.0.json \
+  --sse aws:kms --storage-class STANDARD_IA</pre></div>
+
+                    <h3>Kernel Module Signing (Secure Boot)</h3>
+                    <div class="code-block"><span class="code-lang">bash</span><pre># Sign a kernel module for Secure Boot
+/usr/src/kernels/$(uname -r)/scripts/sign-file \
+  sha256 \
+  /var/secrets/kernel-signing.key \
+  /var/secrets/kernel-signing.crt \
+  amdgpu.ko
+
+# Notes:
+# - Key/cert stored in AWS Secrets Manager
+# - Runner IAM role can retrieve the key (restricted access only)
+# - Key rotation: annual + break-glass procedures
+# - Consumer verifies the signature before loading
+# - Unsigned modules rejected by UEFI firmware</pre></div>
+                </div>
+
+                <!-- Section 6 -->
+                <div id="s6" class="content-section">
+                    <h2><span class="section-icon"><i class="fas fa-lock"></i></span>6. Cloud Security: Encryption &amp; Compliance</h2>
+                    <div class="callout callout-info">
+                        <i class="fas fa-info-circle"></i>
+                        <div><p><strong>Encryption everywhere.</strong> All data encrypted at rest (KMS), in transit (HTTPS/TLS), with complete audit trails (CloudTrail).</p></div>
+                    </div>
+
+                    <h3>Encryption at Rest (Multi-Layer)</h3>
+                    <ul>
+                        <li><strong>S3 artifacts</strong> — KMS customer-managed key (not the default AWS key).</li>
+                        <li><strong>EBS volumes</strong> — KMS encryption on all runner disks.</li>
+                        <li><strong>EFS (NFS)</strong> — encryption at rest enabled.</li>
+                        <li><strong>CloudWatch Logs</strong> — KMS encryption for build output.</li>
+                        <li><strong>RDS (if used)</strong> — KMS encryption enabled.</li>
+                    </ul>
+
+                    <h3>KMS Key Management</h3>
+                    <div class="code-block"><span class="code-lang">hcl</span><pre>resource "aws_kms_key" "rocm_artifacts" {
+  description             = "KMS key for ROCm artifacts"
+  deletion_window_in_days = 30
+  enable_key_rotation     = true
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid       = "Enable IAM Root"
+        Effect    = "Allow"
+        Principal = { AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root" }
+        Action    = "kms:*"
+        Resource  = "*"
+      },
+      {
+        Sid       = "Allow Runner Role"
+        Effect    = "Allow"
+        Principal = { AWS = aws_iam_role.runner_role.arn }
+        Action    = ["kms:Decrypt", "kms:GenerateDataKey", "kms:DescribeKey"]
+        Resource  = "*"
+      },
+      {
+        Sid       = "Allow CloudTrail"
+        Effect    = "Allow"
+        Principal = { Service = "cloudtrail.amazonaws.com" }
+        Action    = ["kms:GenerateDataKey", "kms:Decrypt"]
+        Resource  = "*"
+        Condition = { StringLike = { "kms:EncryptionContext:aws:cloudtrail:arn" = "*" } }
+      }
+    ]
+  })
+}
+
+resource "aws_kms_alias" "rocm_artifacts" {
+  name          = "alias/rocm-artifacts"
+  target_key_id = aws_kms_key.rocm_artifacts.key_id
+}</pre></div>
+
+                    <h4>Key Rotation &amp; Management</h4>
+                    <ul>
+                        <li>Automatic annual rotation enabled.</li>
+                        <li>Key policy restricts access to specific IAM roles.</li>
+                        <li>CloudTrail logs all KMS operations.</li>
+                        <li>Access can be revoked by modifying the key policy (break-glass scenario).</li>
+                    </ul>
+
+                    <h3>CloudTrail Audit Logging</h3>
+                    <p>A comprehensive audit trail of all API calls:</p>
+                    <ul>
+                        <li>S3 artifact uploads, downloads, deletions (object-level logging).</li>
+                        <li>IAM role assumptions and policy modifications.</li>
+                        <li>KMS key access (encrypt, decrypt, policy changes).</li>
+                        <li>Secrets Manager secret retrievals.</li>
+                        <li>EC2 launches, terminations, security-group changes.</li>
+                        <li>Who accessed what, when, from where, and what happened.</li>
+                    </ul>
+                    <div class="code-block"><span class="code-lang">hcl</span><pre>resource "aws_cloudtrail" "rocm_ci" {
+  name                          = "rocm-ci-audit-trail"
+  s3_bucket_name                = aws_s3_bucket.cloudtrail_logs.id
+  include_global_service_events = true
+  is_multi_region_trail         = true
+  enable_log_file_validation    = true
+
+  depends_on = [aws_s3_bucket_policy.cloudtrail_logs]
+
+  event_selector {
+    read_write_type           = "All"
+    include_management_events = true
+
+    data_resource {
+      type   = "AWS::S3::Object"
+      values = ["${aws_s3_bucket.rocm_artifacts.arn}/*"]
+    }
+  }
+}</pre></div>
+
+                    <h3>S3 Artifact Repository Configuration</h3>
+                    <div class="code-block"><span class="code-lang">hcl</span><pre>resource "aws_s3_bucket" "rocm_artifacts" {
+  bucket = "rocm-ci-artifacts-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}"
+}
+
+# Versioning (never overwrite, only append)
+resource "aws_s3_bucket_versioning" "rocm_artifacts" {
+  bucket = aws_s3_bucket.rocm_artifacts.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+# Server-side encryption with KMS
+resource "aws_s3_bucket_server_side_encryption_configuration" "rocm_artifacts" {
+  bucket = aws_s3_bucket.rocm_artifacts.id
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm     = "aws:kms"
+      kms_master_key_id = aws_kms_key.rocm_artifacts.arn
+    }
+  }
+}
+
+# Block all public access
+resource "aws_s3_bucket_public_access_block" "rocm_artifacts" {
+  bucket                  = aws_s3_bucket.rocm_artifacts.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+# Lifecycle: GLACIER after 1 year, delete after 5 years
+resource "aws_s3_bucket_lifecycle_configuration" "rocm_artifacts" {
+  bucket = aws_s3_bucket.rocm_artifacts.id
+  rule {
+    id     = "archive-and-delete"
+    status = "Enabled"
+    transition {
+      days          = 365
+      storage_class = "GLACIER"
+    }
+    expiration {
+      days = 1825 # 5 years
+    }
+  }
+}</pre></div>
+                </div>
+
+                <!-- Section 7 -->
+                <div id="s7" class="content-section">
+                    <h2><span class="section-icon"><i class="fas fa-microchip"></i></span>7. Hardware-in-the-Loop Testing</h2>
+                    <p>GPU validation runs on real hardware: firmware flashing, device enumeration, memory-bandwidth measurement, thermal monitoring, and performance benchmarking across the SKU matrix.</p>
+
+                    <h3>GPU Test Harness (Python)</h3>
+                    <div class="code-block"><span class="code-lang">python</span><pre>#!/usr/bin/env python3
+import subprocess, re, time
+
+class GPUTestHarness:
+    def __init__(self, gpu_model, firmware_path):
+        self.gpu = gpu_model
+        self.firmware = firmware_path
+        self.results = {"gpu": gpu_model, "tests": []}
+
+    def flash_firmware(self):
+        """Flash firmware to the GPU with verification."""
+        print(f"[*] Flashing {self.gpu}...")
+        subprocess.run([
+            "rocm-flash-firmware",
+            "--device", self.gpu,
+            "--firmware", self.firmware,
+            "--verify",
+        ], timeout=300, check=True)
+
+    def test_device_enumeration(self):
+        """Verify the GPU is enumerated by rocm-smi."""
+        output = subprocess.check_output(["rocm-smi"]).decode()
+        assert self.gpu in output, f"{self.gpu} not found in rocm-smi output"
+        self.results["tests"].append({"name": "device_enumeration", "status": "PASS"})
+
+    def test_memory_access(self):
+        """Measure host-to-device bandwidth."""
+        output = subprocess.check_output(["rocm-bandwidth-test"]).decode()
+        match = re.search(r"Host to Device: ([0-9.]+)", output)
+        if match:
+            self.results["tests"].append({
+                "name": "memory_bandwidth",
+                "status": "PASS",
+                "bandwidth_gbps": float(match.group(1)),
+            })
+
+    def monitor_thermal(self):
+        """60-second sustained workload with thermal monitoring."""
+        print("[*] Thermal monitoring (60s)...")
+        temps = []
+        workload = subprocess.Popen(["rocm-benchmark", "--stress-test", "--duration", "60"])
+        start = time.monotonic()
+        while time.monotonic() - start &lt; 60:
+            temp_out = subprocess.check_output(["rocm-smi", "--showtemp"]).decode()
+            match = re.search(r"Temperature.*: ([0-9.]+)", temp_out)
+            if match:
+                temps.append(float(match.group(1)))
+            time.sleep(5)
+        workload.wait()
+        max_temp = max(temps) if temps else 0
+        self.results["thermal"] = {
+            "max_temp_c": max_temp,
+            "status": "PASS" if max_temp &lt; 85 else "FAIL",
+        }
+
+    def save_junit(self, output_path):
+        """Export results as JUnit XML."""
+        tests = self.results["tests"]
+        xml = f'&lt;?xml version="1.0"?&gt;\n'
+        xml += f'&lt;testsuite name="{self.gpu}-validation" tests="{len(tests)}"&gt;\n'
+        for test in tests:
+            xml += f'  &lt;testcase name="{test["name"]}" classname="GPU-{self.gpu}"&gt;\n'
+            if test["status"] == "FAIL":
+                xml += "    &lt;failure&gt;Test failed&lt;/failure&gt;\n"
+            xml += "  &lt;/testcase&gt;\n"
+        xml += "&lt;/testsuite&gt;\n"
+        with open(output_path, "w") as f:
+            f.write(xml)</pre></div>
+
+                    <h4>GPU Coverage</h4>
+                    <p>The hardware validation matrix spans multiple AMD data-center accelerator generations:</p>
+                    <ul>
+                        <li><strong>GCN / CDNA 1</strong> — MI50, MI100 (older generations still in customer fleets).</li>
+                        <li><strong>CDNA 2</strong> — MI210, MI250X (current generation).</li>
+                        <li><strong>CDNA 3</strong> — MI300X (latest, data-center focus).</li>
+                    </ul>
+                    <div class="callout callout-info">
+                        <i class="fas fa-circle-info"></i>
+                        <div><p>The AMD Instinct <strong>MI</strong> line is built on the GCN/CDNA compute architectures — distinct from the consumer RDNA line. The nightly matrix targets CDNA SKUs because that is where firmware/driver/runtime regressions matter most for accelerated compute.</p></div>
+                    </div>
+                </div>
+
+                <!-- Section 8 -->
+                <div id="s8" class="content-section">
+                    <h2><span class="section-icon"><i class="fas fa-book-open"></i></span>8. Operational Playbook &amp; Failure-Mode Runbooks</h2>
+                    <p>Reliability is owned, not hoped for. These are the scenario runbooks the platform team maintains for the most common failure modes — the same reasoning applies whether you are on call or explaining the design in a review.</p>
+
+                    <h4>Runbook — Pre-submit failure</h4>
+                    <div class="callout callout-warn">
+                        <i class="fas fa-triangle-exclamation"></i>
+                        <div><p><strong>Response:</strong> Check GitHub Actions logs first — compile error, build failure, or gate failure? If the compatibility check fails, verify the firmware/driver version matrix. If the security scan fails, review the KICS findings. If logs are inconclusive, connect to the runner via Systems Manager Session Manager (no direct SSH), check disk space, examine the nightly baseline, and reproduce locally. Then fix the code or investigate a toolchain version mismatch.</p></div>
+                    </div>
+
+                    <h4>Runbook — GPU test cluster fully booked</h4>
+                    <div class="callout callout-warn">
+                        <i class="fas fa-triangle-exclamation"></i>
+                        <div><p><strong>Response:</strong> Implement a priority queue in the workflows — nightly high, pre-submit lower. Runners check device availability and sleep with exponential backoff when unavailable. The permanent fix is to scale the cluster with the hardware team or add a device-reservation system with blocking.</p></div>
+                    </div>
+
+                    <h4>Runbook — Artifact integrity, build to consumer</h4>
+                    <div class="callout callout-success">
+                        <i class="fas fa-shield-halved"></i>
+                        <div><p><strong>Guarantee:</strong> Every artifact is signed and tracked. Firmware uses HSM signing (key never leaves hardware); kernels use a Secure Boot signature. All artifacts carry SBOMs. S3 stores them immutably with versioning. Consumers verify signatures with the public key. CloudTrail logs every access, and continuous CVE scanning flags newly disclosed issues.</p></div>
+                    </div>
+
+                    <h4>Runbook — NFS mount fails during build</h4>
+                    <div class="callout callout-warn">
+                        <i class="fas fa-triangle-exclamation"></i>
+                        <div><p><strong>Response:</strong> On the runner, <code class="inline">df -h /opt/rocm-tools</code> confirms it is unmounted. Check EFS health with <code class="inline">aws efs describe-file-systems</code>. Verify the EFS security group allows <code class="inline">2049/tcp</code> from the runner SG and that mount targets exist in both AZs. Remount manually, then investigate root cause (AZ outage? SG change? NFS timeout?) and update the runbook.</p></div>
+                    </div>
+
+                    <h4>Runbook — Balancing cost and reliability</h4>
+                    <div class="callout callout-info">
+                        <i class="fas fa-scale-balanced"></i>
+                        <div><p><strong>Approach:</strong> Right-size first (firmware builders need no GPU). Auto-shutdown idle runners after 30 min. Use Reserved Instances for baseline load (40&ndash;50% savings). Track cost per runner type and component. 95%+ availability is acceptable for pre-release validation, and savings are reinvested in monitoring and test coverage.</p></div>
+                    </div>
+                </div>
+
+                <!-- Section 9 -->
+                <div id="s9" class="content-section">
+                    <h2><span class="section-icon"><i class="fas fa-calendar-check"></i></span>9. 12-Week Implementation Roadmap</h2>
+
+                    <h3>Phase 1 (Weeks 1&ndash;2) — Foundation</h3>
+                    <ul>
+                        <li>VPC architecture: subnets, NAT, routing, security groups.</li>
+                        <li>IAM roles &amp; policies: least-privilege, scoped to resources.</li>
+                        <li>KMS: encryption at rest for S3, EBS, EFS, CloudWatch.</li>
+                        <li>Secrets Manager: kernel signing key, firmware signing cert.</li>
+                        <li>CloudTrail &amp; logging: audit trail for all API calls.</li>
+                    </ul>
+
+                    <h3>Phase 2 (Weeks 3&ndash;4) — Compute &amp; Storage</h3>
+                    <ul>
+                        <li>EC2 runners: firmware (t3.2xl &times;3), driver (c5.xl &times;2), GPU test (g4dn &times;1).</li>
+                        <li>GitHub Actions registration: labels route jobs to the correct runner type.</li>
+                        <li>EFS/NFS: <code class="inline">/opt/rocm-tools</code> (read-only after setup), mounted across AZs.</li>
+                        <li>S3 artifact repository: versioning, encryption, lifecycle, logging.</li>
+                        <li>CloudWatch monitoring: logs, metrics, alarms.</li>
+                    </ul>
+
+                    <h3>Phase 3 (Weeks 5&ndash;6) — CI/CD Pipelines</h3>
+                    <ul>
+                        <li>Pre-submit gate: 10-min SLA, build + validation + security.</li>
+                        <li>Nightly integration: full stack, GPU SKUs, hardware tests.</li>
+                        <li>LKG manifest: automatic update on success, GPG signing.</li>
+                        <li>Error handling: Slack notifications, escalation procedures.</li>
+                    </ul>
+
+                    <h3>Phase 4 (Weeks 7&ndash;8) — Hardware Integration</h3>
+                    <ul>
+                        <li>GPU device management: allocate, flash, test, monitor.</li>
+                        <li>Test harness: functional tests, benchmarks, thermal monitoring.</li>
+                        <li>Observability: Prometheus metrics, Grafana dashboards.</li>
+                        <li>Test the full SKU matrix: CDNA 1/2/3 families.</li>
+                    </ul>
+
+                    <h3>Phase 5 (Weeks 9&ndash;12) — Operations &amp; Reliability</h3>
+                    <ul>
+                        <li>Cost optimization: right-sizing, auto-shutdown, Reserved Instances.</li>
+                        <li>Runbooks: 10 common failure modes + remediation.</li>
+                        <li>Monitoring &amp; alerts: CloudWatch alarms, SNS notifications.</li>
+                        <li>Disaster recovery: state backup, secrets replication, RTO 4 hours.</li>
+                    </ul>
+                </div>
+
+                <!-- Section 10 -->
+                <div id="s10" class="content-section">
+                    <h2><span class="section-icon"><i class="fas fa-gauge-high"></i></span>10. Key Performance Indicators</h2>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Metric</th><th>Target</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Pre-submit feedback time</td><td class="badge-green">&lt; 15 minutes</td></tr>
+                            <tr><td>Nightly pass rate</td><td class="badge-green">&gt; 95%</td></tr>
+                            <tr><td>Hardware coverage</td><td class="badge-green">10+ GPU SKUs</td></tr>
+                            <tr><td>Release production time</td><td class="badge-green">&lt; 1 hour</td></tr>
+                            <tr><td>Mean time to detect regression (MTDD)</td><td class="badge-green">&lt; 24 hours</td></tr>
+                            <tr><td>Artifact traceability</td><td class="badge-green">100% with SBOM + provenance</td></tr>
+                            <tr><td>Infrastructure drift</td><td class="badge-green">0% (Terraform-detected)</td></tr>
+                            <tr><td>Encryption coverage</td><td class="badge-green">100% at rest + in transit</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Success Definition (Week 12)</h3>
+                    <ul>
+                        <li>100% of infrastructure defined in Terraform.</li>
+                        <li>&lt; 15 min pre-submit feedback time.</li>
+                        <li>&gt; 95% nightly build pass rate.</li>
+                        <li>10+ GPU SKUs in hardware validation.</li>
+                        <li>&lt; 1 hour release production time.</li>
+                        <li>Zero unencrypted data at rest.</li>
+                        <li>Complete CloudTrail audit trail (6+ months retention).</li>
+                        <li>On-call runbooks for 10 common failure modes.</li>
+                        <li>Monthly cost report (per runner type &amp; component).</li>
+                    </ul>
+
+                    <h3>Why This Architecture Matters</h3>
+                    <div class="key-points">
+                        <div class="key-point">
+                            <h4><i class="fas fa-cubes"></i> Architecture</h4>
+                            <p>Deliberate choices — GitHub Actions vs. Jenkins, Terraform vs. CloudFormation, cloud selection — all defensible and documented.</p>
+                        </div>
+                        <div class="key-point">
+                            <h4><i class="fas fa-lock"></i> Security</h4>
+                            <p>Encryption, authentication, audit logging, and compliance designed in at every layer, not bolted on.</p>
+                        </div>
+                        <div class="key-point">
+                            <h4><i class="fas fa-bolt"></i> Reliability</h4>
+                            <p>Uptime, cost optimization, performance, and scaling owned end-to-end with real SLOs.</p>
+                        </div>
+                        <div class="key-point">
+                            <h4><i class="fas fa-handshake"></i> Cross-Functional</h4>
+                            <p>Coordination with networking, the driver team, and release engineering to promote validated builds.</p>
+                        </div>
+                    </div>
+                    <p style="margin-top:1.5rem;font-weight:600;color:var(--text-primary);">This is not maintaining someone else's system — it is building the foundation that lets a GPU stack ship to customers, faster and with confidence.</p>
+                </div>
+
+                <div style="text-align:center;margin-top:3rem;">
+                    <a href="./" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <span class="footer-logo">Sudhakar Chundu</span>
+            <div class="footer-links">
+                <a href="../">Home</a>
+                <a href="../resume/">Resume</a>
+                <a href="../projects/">Achievements</a>
+                <a href="../contact/">Contact</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/schundu007" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/babucs" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://medium.com/@schundu" target="_blank"><i class="fab fa-medium"></i></a>
+            </div>
+        </div>
+        <p>&copy; 2026 Sudhakar Chundu. All rights reserved.</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                darkMode: true,
+                background: '#0d1117',
+                mainBkg: '#161b22',
+                fontFamily: 'Sora, sans-serif',
+                fontSize: '14px',
+                primaryColor: '#1e3a5f',
+                primaryTextColor: '#e2e8f0',
+                primaryBorderColor: '#0ea5e9',
+                lineColor: '#94a3b8',
+                secondaryColor: '#1e293b',
+                tertiaryColor: '#0f172a',
+                edgeLabelBackground: '#1e293b',
+                clusterBkg: '#1e293b',
+                clusterBorder: '#0ea5e9',
+                titleColor: '#e2e8f0',
+                nodeTextColor: '#e2e8f0',
+            },
+            flowchart: { curve: 'basis', padding: 20 }
+        });
+
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+    </script>
+    <script src="../assets/js/neural-bg.js"></script>
+</body>
+</html>
