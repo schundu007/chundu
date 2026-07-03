@@ -240,6 +240,11 @@ footer p{color:var(--light);font-size:.8rem;}
     <a class="nav-link nav-sub" href="#s9">9 · Implementation Roadmap</a>
     <a class="nav-link nav-sub" href="#s10">10 · KPIs</a>
   </div>
+
+  <div class="nav-section-group">
+    <div class="nav-part"><span class="nav-part-label">Engineering</span></div>
+    <a class="nav-link nav-sub" href="#s11">11 · AI-Assisted Engineering</a>
+  </div>
 </nav>
 
 <main id="main">
@@ -259,7 +264,7 @@ footer p{color:var(--light);font-size:.8rem;}
                         </div>
                         <div class="paper-stat"><i class="fas fa-calendar"></i> July 2025</div>
                         <div class="paper-stat"><i class="fas fa-clock"></i> 40 min read</div>
-                        <div class="paper-stat"><i class="fas fa-layer-group"></i> 10 Sections</div>
+                        <div class="paper-stat"><i class="fas fa-layer-group"></i> 11 Sections</div>
                         <div class="paper-stat"><i class="fas fa-project-diagram"></i> 2 Diagrams</div>
                     </div>
                     <div class="metric-grid">
@@ -300,6 +305,7 @@ footer p{color:var(--light);font-size:.8rem;}
                         <li><a href="#s8"><span class="toc-num">08</span>Operational Playbook &amp; Runbooks</a></li>
                         <li><a href="#s9"><span class="toc-num">09</span>12-Week Implementation Roadmap</a></li>
                         <li><a href="#s10"><span class="toc-num">10</span>Key Performance Indicators</a></li>
+                        <li><a href="#s11"><span class="toc-num">11</span>AI-Assisted Engineering</a></li>
                     </ul>
                 </div>
 
@@ -1228,6 +1234,65 @@ class GPUTestHarness:
                         </div>
                     </div>
                     <p style="margin-top:1.5rem;font-weight:600;color:var(--text-primary);">This is not maintaining someone else's system — it is building the foundation that lets a GPU stack ship to customers, faster and with confidence.</p>
+                </div>
+
+                <!-- Section 11 -->
+                <div id="s11" class="content-section">
+                    <h2><span class="section-icon"><i class="fas fa-wand-magic-sparkles"></i></span>11. AI-Assisted Engineering: Building This Faster</h2>
+                    <p>Every layer above — Terraform modules, self-hosted runner provisioning, GitHub Actions workflows, HSM signing glue, CloudTrail queries, on-call runbooks — is <span class="hl">high-volume automation work</span>. That is precisely the surface where an engineer paired with AI coding agents (Claude Code and similar agentic tools) moves several times faster than one working unaided. This section is concrete about <em>where</em> the leverage is, and — just as important in a security-critical pipeline — <em>where the human stays firmly in the loop</em>.</p>
+
+                    <div class="callout callout-info">
+                        <i class="fas fa-robot"></i>
+                        <div><p><strong>Why this stack is ideal for building AI-assisted engineering depth.</strong> A GPU driver/firmware CI pipeline is broad (IaC, CI/CD, cryptography, hardware, observability) and high-stakes (signed artifacts ship to customers). You use agents daily across all of it, but every change lands behind code review, signing, and audit logging — so you learn to drive agents <em>and</em> to verify them rigorously. That combination is exactly the skill the market is now paying a premium for.</p></div>
+                    </div>
+
+                    <h3>Where AI Agents Accelerate This Pipeline</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>CI / Infra Task</th><th>How an AI Agent Accelerates It</th><th>Human Ownership</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Terraform modules (VPC, IAM, KMS, EC2 runners)</td><td>Scaffolds resources, drafts least-privilege IAM policies, and generates variable/output boilerplate from a one-line intent</td><td>Review policy scope, run <code class="inline">plan</code>, approve <code class="inline">apply</code></td></tr>
+                            <tr><td>GitHub Actions workflows</td><td>Generates matrix builds, reusable workflow templates, and caching config across firmware / driver / runtime</td><td>Validate gates, secrets handling, runner labels</td></tr>
+                            <tr><td>Runner provisioning scripts</td><td>Writes cloud-init / user-data, NFS mount + HSM client setup, and auto-shutdown logic</td><td>Confirm network isolation and HSM access boundaries</td></tr>
+                            <tr><td>Signing &amp; SBOM glue</td><td>Drafts the sign &rarr; attest &rarr; publish scripting and SBOM generation steps</td><td>Verify the key never leaves the HSM; audit the trust chain</td></tr>
+                            <tr><td>Failure triage &amp; root cause</td><td>Summarizes CI logs, correlates flaky failures, and proposes the likely toolchain / version mismatch</td><td>Reproduce, decide the fix, update the runbook</td></tr>
+                            <tr><td>Runbooks &amp; docs</td><td>Turns a resolved incident into a structured runbook and keeps docs in sync with the IaC</td><td>Fact-check against real behavior before publishing</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>A Realistic Agent Loop</h3>
+                    <p>The day-to-day pattern is not "AI writes it all" — it is a tight loop where the agent handles breadth and boilerplate while the engineer owns intent, judgment, and verification:</p>
+                    <ol>
+                        <li><strong>Intent</strong> — describe the change ("add a <code class="inline">g4dn.2xlarge</code> GPU-test runner pool, encrypted EBS, auto-shutdown after 30 min idle").</li>
+                        <li><strong>Draft</strong> — the agent produces the Terraform, the workflow edit, and the matching runbook note.</li>
+                        <li><strong>Verify</strong> — <code class="inline">terraform plan</code>, a policy diff, and a read-through for least-privilege and secret leakage.</li>
+                        <li><strong>Land</strong> — behind code review, signing, and CloudTrail — the same guardrails as any human-authored change.</li>
+                    </ol>
+
+                    <div class="callout callout-warn">
+                        <i class="fas fa-shield-halved"></i>
+                        <div><p><strong>Guardrails in a high-stakes pipeline.</strong> Agents draft; they do not hold secrets or signing keys, and nothing they produce bypasses review or audit. HSM private keys, KMS grants, and production credentials stay out of agent context entirely. The speed-up comes from generation and triage — never from loosening the security model.</p></div>
+                    </div>
+
+                    <div class="key-points">
+                        <div class="key-point">
+                            <h4><i class="fas fa-gauge-high"></i> Speed</h4>
+                            <p>Boilerplate-heavy IaC and workflow work that took hours drops to minutes of draft-then-verify.</p>
+                        </div>
+                        <div class="key-point">
+                            <h4><i class="fas fa-magnifying-glass"></i> Triage</h4>
+                            <p>Faster mean-time-to-detect: agents summarize noisy CI logs and surface the likely root cause.</p>
+                        </div>
+                        <div class="key-point">
+                            <h4><i class="fas fa-user-shield"></i> Judgment</h4>
+                            <p>The engineer owns security scope, correctness, and the trust chain — verification is the core skill.</p>
+                        </div>
+                        <div class="key-point">
+                            <h4><i class="fas fa-arrow-trend-up"></i> Compounding</h4>
+                            <p>Daily agent use across a broad, real stack builds durable AI-assisted engineering depth.</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div style="text-align:center;margin-top:3rem;">
