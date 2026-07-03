@@ -20,6 +20,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     <link rel="stylesheet" href="../assets/css/style.css?v=2">
     <script src="../assets/js/theme.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
@@ -121,6 +122,19 @@
         .code-block { background: #0d1117; border-radius: var(--radius-md); padding: 1.5rem; margin: 1.25rem 0; overflow-x: auto; position: relative; }
         .code-block .code-lang { position: absolute; top: 0.6rem; right: 0.75rem; font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono); text-transform: uppercase; }
         .code-block pre { margin: 0; font-family: var(--font-mono); font-size: 0.82rem; color: #e6edf3; line-height: 1.65; white-space: pre; }
+        /* Prism.js — keep the site's dark container, let Prism color the tokens */
+        .code-block pre[class*="language-"],
+        .code-block code[class*="language-"] {
+            background: none;
+            text-shadow: none;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            line-height: 1.65;
+            margin: 0;
+            padding: 0;
+        }
+        .code-block pre[class*="language-"] { overflow: visible; }
+        .code-block code[class*="language-"] { white-space: pre; }
 
         .metric-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin: 1.25rem 0; }
         .metric-card { background: rgba(14, 165, 233, 0.08); border: 1px solid rgba(14, 165, 233, 0.2); border-radius: var(--radius-md); padding: 1.25rem; text-align: center; }
@@ -342,7 +356,7 @@ flowchart TD
 
                     <h3>Module 1 — VPC (Networking)</h3>
                     <p>Network design emphasizes <span class="hl">isolation and egress control</span>.</p>
-                    <div class="code-block"><span class="code-lang">hcl</span><pre>resource "aws_vpc" "rocm_ci" {
+                    <div class="code-block"><span class="code-lang">hcl</span><pre class="language-hcl"><code class="language-hcl">resource "aws_vpc" "rocm_ci" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
   enable_dns_support   = true
@@ -377,7 +391,7 @@ resource "aws_route_table" "runners_private" {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.rocm_ci.id
   }
-}</pre></div>
+}</code></pre></div>
 
                     <h4>Network Design Rationale</h4>
                     <ul>
@@ -390,7 +404,7 @@ resource "aws_route_table" "runners_private" {
 
                     <h3>Module 2 — IAM (Least-Privilege Access)</h3>
                     <p>IAM follows the <span class="hl">principle of least privilege</span>. Runners can only touch the resources they explicitly need.</p>
-                    <div class="code-block"><span class="code-lang">hcl</span><pre>resource "aws_iam_role" "runner_role" {
+                    <div class="code-block"><span class="code-lang">hcl</span><pre class="language-hcl"><code class="language-hcl">resource "aws_iam_role" "runner_role" {
   name = "rocm-ci-runner-role-${var.environment}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -458,7 +472,7 @@ resource "aws_iam_role_policy" "runner_secrets_manager" {
 resource "aws_iam_instance_profile" "runner_profile" {
   name = "rocm-ci-runner-profile"
   role = aws_iam_role.runner_role.name
-}</pre></div>
+}</code></pre></div>
 
                     <h4>Least-Privilege Breakdown</h4>
                     <table class="data-table">
@@ -475,7 +489,7 @@ resource "aws_iam_instance_profile" "runner_profile" {
 
                     <h3>Module 3 — EC2 Runners (Compute)</h3>
                     <p>Three runner types, right-sized for their workload:</p>
-                    <div class="code-block"><span class="code-lang">hcl</span><pre># Firmware builder (t3.2xlarge: 8 vCPU, 32 GB RAM, ~$5.5K/yr)
+                    <div class="code-block"><span class="code-lang">hcl</span><pre class="language-hcl"><code class="language-hcl"># Firmware builder (t3.2xlarge: 8 vCPU, 32 GB RAM, ~$5.5K/yr)
 resource "aws_instance" "firmware_builder" {
   count                  = var.runner_count["firmware"] # 3 instances
   ami                    = data.aws_ami.ubuntu_lts.id
@@ -550,7 +564,7 @@ resource "aws_security_group" "runners" {
     cidr_blocks = ["0.0.0.0/0"]
     description = "Egress via NAT (no direct internet)"
   }
-}</pre></div>
+}</code></pre></div>
 
                     <h4>Right-Sizing Strategy</h4>
                     <ul>
@@ -574,7 +588,7 @@ resource "aws_security_group" "runners" {
 
                     <h3>Pre-Submit Validation (10 min SLA)</h3>
                     <p>Triggered on pull requests that touch <code class="inline">firmware/</code>. Builds firmware, validates compatibility, runs security scans, and blocks incompatible code before merge.</p>
-                    <div class="code-block"><span class="code-lang">yaml</span><pre>name: Firmware Pre-Submit Validation
+                    <div class="code-block"><span class="code-lang">yaml</span><pre class="language-yaml"><code class="language-yaml">name: Firmware Pre-Submit Validation
 on:
   pull_request:
     branches: [main]
@@ -623,11 +637,11 @@ jobs:
         with:
           name: firmware-pre-submit-${{ github.run_id }}
           path: firmware-sbom.json
-          retention-days: 7</pre></div>
+          retention-days: 7</code></pre></div>
 
                     <h3>Nightly Integration Build (Full Stack)</h3>
                     <p>Runs every night at 22:00 UTC. Builds all components together, runs hardware validation across GPU SKUs, and updates the LKG manifest on success.</p>
-                    <div class="code-block"><span class="code-lang">yaml</span><pre>name: Nightly Integration Build
+                    <div class="code-block"><span class="code-lang">yaml</span><pre class="language-yaml"><code class="language-yaml">name: Nightly Integration Build
 on:
   schedule:
     - cron: '0 22 * * *'
@@ -706,7 +720,7 @@ jobs:
           git config user.name 'rocm-ci-automation'
           git add manifest.yaml manifest.yaml.asc
           git commit -m "Update LKG: ${{ needs.build-all-components.outputs.firmware-digest }}"
-          git push origin lkg-main</pre></div>
+          git push origin lkg-main</code></pre></div>
                 </div>
 
                 <!-- Section 5 -->
@@ -744,7 +758,7 @@ flowchart LR
                     </ol>
 
                     <h3>Firmware Signing Script (Python)</h3>
-                    <div class="code-block"><span class="code-lang">python</span><pre>#!/usr/bin/env python3
+                    <div class="code-block"><span class="code-lang">python</span><pre class="language-python"><code class="language-python">#!/usr/bin/env python3
 import subprocess, hashlib, json, os
 from datetime import datetime, timezone
 
@@ -787,10 +801,10 @@ def sign_firmware_binary(firmware_path):
 
 if __name__ == "__main__":
     import sys
-    sign_firmware_binary(sys.argv[1])</pre></div>
+    sign_firmware_binary(sys.argv[1])</code></pre></div>
 
                     <h3>SBOM &amp; Vulnerability Scanning</h3>
-                    <div class="code-block"><span class="code-lang">bash</span><pre># Generate SBOM (Software Bill of Materials)
+                    <div class="code-block"><span class="code-lang">bash</span><pre class="language-bash"><code class="language-bash"># Generate SBOM (Software Bill of Materials)
 syft ./firmware/build -o cyclonedx-json &gt; firmware-sbom.json
 
 # Scan for known CVEs
@@ -806,10 +820,10 @@ fi
 # Upload SBOM to the artifact repo (immutable storage)
 aws s3 cp firmware-sbom.json \
   s3://rocm-artifacts/sbom/firmware-v1.2.0.json \
-  --sse aws:kms --storage-class STANDARD_IA</pre></div>
+  --sse aws:kms --storage-class STANDARD_IA</code></pre></div>
 
                     <h3>Kernel Module Signing (Secure Boot)</h3>
-                    <div class="code-block"><span class="code-lang">bash</span><pre># Sign a kernel module for Secure Boot
+                    <div class="code-block"><span class="code-lang">bash</span><pre class="language-bash"><code class="language-bash"># Sign a kernel module for Secure Boot
 /usr/src/kernels/$(uname -r)/scripts/sign-file \
   sha256 \
   /var/secrets/kernel-signing.key \
@@ -821,7 +835,7 @@ aws s3 cp firmware-sbom.json \
 # - Runner IAM role can retrieve the key (restricted access only)
 # - Key rotation: annual + break-glass procedures
 # - Consumer verifies the signature before loading
-# - Unsigned modules rejected by UEFI firmware</pre></div>
+# - Unsigned modules rejected by UEFI firmware</code></pre></div>
                 </div>
 
                 <!-- Section 6 -->
@@ -842,7 +856,7 @@ aws s3 cp firmware-sbom.json \
                     </ul>
 
                     <h3>KMS Key Management</h3>
-                    <div class="code-block"><span class="code-lang">hcl</span><pre>resource "aws_kms_key" "rocm_artifacts" {
+                    <div class="code-block"><span class="code-lang">hcl</span><pre class="language-hcl"><code class="language-hcl">resource "aws_kms_key" "rocm_artifacts" {
   description             = "KMS key for ROCm artifacts"
   deletion_window_in_days = 30
   enable_key_rotation     = true
@@ -879,7 +893,7 @@ aws s3 cp firmware-sbom.json \
 resource "aws_kms_alias" "rocm_artifacts" {
   name          = "alias/rocm-artifacts"
   target_key_id = aws_kms_key.rocm_artifacts.key_id
-}</pre></div>
+}</code></pre></div>
 
                     <h4>Key Rotation &amp; Management</h4>
                     <ul>
@@ -899,7 +913,7 @@ resource "aws_kms_alias" "rocm_artifacts" {
                         <li>EC2 launches, terminations, security-group changes.</li>
                         <li>Who accessed what, when, from where, and what happened.</li>
                     </ul>
-                    <div class="code-block"><span class="code-lang">hcl</span><pre>resource "aws_cloudtrail" "rocm_ci" {
+                    <div class="code-block"><span class="code-lang">hcl</span><pre class="language-hcl"><code class="language-hcl">resource "aws_cloudtrail" "rocm_ci" {
   name                          = "rocm-ci-audit-trail"
   s3_bucket_name                = aws_s3_bucket.cloudtrail_logs.id
   include_global_service_events = true
@@ -917,10 +931,10 @@ resource "aws_kms_alias" "rocm_artifacts" {
       values = ["${aws_s3_bucket.rocm_artifacts.arn}/*"]
     }
   }
-}</pre></div>
+}</code></pre></div>
 
                     <h3>S3 Artifact Repository Configuration</h3>
-                    <div class="code-block"><span class="code-lang">hcl</span><pre>resource "aws_s3_bucket" "rocm_artifacts" {
+                    <div class="code-block"><span class="code-lang">hcl</span><pre class="language-hcl"><code class="language-hcl">resource "aws_s3_bucket" "rocm_artifacts" {
   bucket = "rocm-ci-artifacts-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}"
 }
 
@@ -966,7 +980,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "rocm_artifacts" {
       days = 1825 # 5 years
     }
   }
-}</pre></div>
+}</code></pre></div>
                 </div>
 
                 <!-- Section 7 -->
@@ -975,7 +989,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "rocm_artifacts" {
                     <p>GPU validation runs on real hardware: firmware flashing, device enumeration, memory-bandwidth measurement, thermal monitoring, and performance benchmarking across the SKU matrix.</p>
 
                     <h3>GPU Test Harness (Python)</h3>
-                    <div class="code-block"><span class="code-lang">python</span><pre>#!/usr/bin/env python3
+                    <div class="code-block"><span class="code-lang">python</span><pre class="language-python"><code class="language-python">#!/usr/bin/env python3
 import subprocess, re, time
 
 class GPUTestHarness:
@@ -1042,7 +1056,7 @@ class GPUTestHarness:
             xml += "  &lt;/testcase&gt;\n"
         xml += "&lt;/testsuite&gt;\n"
         with open(output_path, "w") as f:
-            f.write(xml)</pre></div>
+            f.write(xml)</code></pre></div>
 
                     <h4>GPU Coverage</h4>
                     <p>The hardware validation matrix spans multiple AMD data-center accelerator generations:</p>
@@ -1265,5 +1279,15 @@ class GPUTestHarness:
         });
     </script>
     <script src="../assets/js/neural-bg.js"></script>
+
+    <!-- Prism.js syntax highlighting (bash / python / yaml / hcl) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script>
+        if (window.Prism && Prism.plugins && Prism.plugins.autoloader) {
+            Prism.plugins.autoloader.languages_path = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/';
+        }
+        window.addEventListener('load', () => { if (window.Prism) Prism.highlightAll(); });
+    </script>
 </body>
 </html>

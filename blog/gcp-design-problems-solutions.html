@@ -545,6 +545,12 @@ body {
   background: rgba(37,99,235,0.1);
 }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+  /* highlight.js: colorize tokens while keeping the code-block container styling */
+  .code-block pre { margin: 0; background: none; padding: 0; }
+  .code-block code.hljs { background: transparent; padding: 0; white-space: pre-wrap; font: inherit; color: inherit; }
+</style>
 </head>
 <body>
 
@@ -2893,6 +2899,23 @@ document.addEventListener('DOMContentLoaded', function() {
       rankSpacing: 50,
       useMaxWidth: true
     }
+  });
+</script>
+
+<!-- Syntax highlighting (auto-detect: bash / gcloud / yaml / json) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+  document.querySelectorAll('.code-block').forEach(cb => {
+    let code = cb.querySelector('code');
+    if (!code) {
+      const pre = document.createElement('pre');
+      code = document.createElement('code');
+      code.textContent = cb.textContent;   // textContent keeps escaping safe
+      cb.textContent = '';
+      pre.appendChild(code);
+      cb.appendChild(pre);
+    }
+    if (window.hljs) { try { hljs.highlightElement(code); } catch (e) {} }
   });
 </script>
 </body>

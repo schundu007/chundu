@@ -443,6 +443,11 @@ ul.blt li::marker { color:var(--green); }
 
 [id] { scroll-margin-top:24px; }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+  /* highlight.js: colorize tokens while keeping this page's code background */
+  pre code.hljs { background: transparent; padding: 0; font: inherit; color: inherit; }
+</style>
 </head>
 <body>
 
@@ -2783,6 +2788,22 @@ if (history.scrollRestoration) {
 window.addEventListener('beforeunload', () => {
   window.scrollTo(0, 0);
 });
+</script>
+
+<!-- Syntax highlighting (auto-detect: bash / yaml / dockerfile / python / xml) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dockerfile.min.js"></script>
+<script>
+  document.querySelectorAll('pre').forEach(pre => {
+    let code = pre.querySelector('code');
+    if (!code) {
+      code = document.createElement('code');
+      code.textContent = pre.textContent;   // textContent keeps escaping safe
+      pre.textContent = '';
+      pre.appendChild(code);
+    }
+    if (window.hljs) { try { hljs.highlightElement(code); } catch (e) {} }
+  });
 </script>
 </body>
 </html>
