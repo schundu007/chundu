@@ -36,7 +36,7 @@ html { scroll-behavior:smooth; }
 
 body {
   font-family: var(--sans);
-  font-size:15px; line-height:1.7;
+  font-size:15px; line-height:1.6;
   color:var(--dark);
   background:var(--bg-base);
   overflow-x:hidden;
@@ -132,13 +132,13 @@ body {
 .nav-sub.active { padding-left:32px; }
 
 /* ── MAIN ── */
-#main { margin-left:252px; min-height:100vh; overflow-x:hidden; }
+#main { margin-left:max(252px, calc(50% - 424px)); max-width:1100px; margin-right:auto; min-height:100vh; overflow-x:hidden; }
 
 /* ── HERO ── */
 #hero {
   background:linear-gradient(135deg, #0f1a00 0%, #1a2d00 60%, #0d0d0f 100%);
   border-bottom:3px solid var(--green);
-  padding:64px 60px 48px;
+  padding:38px 36px 30px;
   position:relative; overflow:hidden;
 }
 #hero::before {
@@ -147,17 +147,18 @@ body {
   background:rgba(255,255,255,.06);
 }
 #hero h1 {
-  font-family:var(--display); font-size:42px; font-weight:800;
+  font-family:var(--display); font-size:32px; font-weight:800;
   color:#fafafa; line-height:1.1; max-width:720px;
+  margin-left:auto; margin-right:auto;
   letter-spacing:-.02em;
 }
 #hero h1 em { font-style:normal; color:var(--green-bg); }
 #hero p {
-  margin-top:16px; color:rgba(255,255,255,.8);
-  font-size:14px; max-width:600px; font-family:var(--sans); font-weight:400;
+  margin:16px auto 0; color:rgba(255,255,255,.8);
+  font-size:14px; max-width:720px; font-family:var(--sans); font-weight:400;
 }
 .hero-meta {
-  margin-top:28px; display:flex; gap:24px; flex-wrap:wrap;
+  margin:28px auto 0; max-width:720px; display:flex; gap:24px; flex-wrap:wrap;
 }
 .hero-tag {
   background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.25);
@@ -167,12 +168,12 @@ body {
 }
 
 /* ── SECTIONS ── */
-.section { padding:48px 60px; border-bottom:1px solid var(--bdr); background:var(--bg-base); scroll-margin-top:20px; }
+.section { padding:32px 36px; border-bottom:1px solid var(--bdr); background:var(--bg-base); scroll-margin-top:20px; }
 .section:last-child { border-bottom:none; }
 .section-alt { background:var(--bg-card); }
 .part-header {
   background:var(--bg-card); color:var(--ink);
-  padding:32px 60px 24px;
+  padding:28px 36px 20px;
   border-left:5px solid var(--green);
   border-bottom:1px solid var(--bdr);
 }
@@ -181,28 +182,28 @@ body {
   letter-spacing:.1em; text-transform:uppercase; margin-bottom:8px;
 }
 .part-title {
-  font-family:var(--display); font-size:38px; font-weight:600;
+  font-family:var(--display); font-size:20px; font-weight:600;
   color:#fff; font-style:italic;
 }
 .part-sub { margin-top:8px; font-size:14px; color:#888; }
 
 h2.ch {
-  font-family:var(--display); font-size:28px; font-weight:600;
+  font-family:var(--display); font-size:20px; font-weight:600;
   color:var(--dark); margin-bottom:6px;
   padding-bottom:10px;
   border-bottom:3px solid var(--green);
   font-style:italic;
 }
-h2.ch span { font-style:normal; color:var(--green); font-size:16px;
+h2.ch span { font-style:normal; color:var(--green); font-size:13px;
   font-family:var(--mono); font-weight:400; margin-right:10px; }
 
 h3.sub {
-  font-family:var(--sans); font-size:17px; font-weight:700;
+  font-family:var(--sans); font-size:16px; font-weight:700;
   color:var(--mid); margin:28px 0 10px;
   padding-left:12px; border-left:3px solid var(--green);
 }
 
-p.body { margin:10px 0; color:var(--mid); line-height:1.75; }
+p.body { margin:10px 0; color:var(--mid); line-height:1.6; }
 
 /* ── VERIFIED / WARN BOXES ── */
 .verified-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin:16px 0; }
@@ -350,7 +351,7 @@ ul.blt li::marker { color:var(--green); }
 /* Extended section styles */
 .topic-header { display:flex; align-items:baseline; gap:14px; margin-bottom:24px;
   padding-bottom:14px; border-bottom:1px solid #e8e8e4; }
-h2.topic { font-size:26px; font-weight:700; color:var(--dark,#1A1A1A); }
+h2.topic { font-size:20px; font-weight:700; color:var(--dark,#1A1A1A); }
 .topic-badge { margin-left:auto; font-family:var(--mono,monospace); font-size:10px;
   padding:3px 8px; border-radius:3px; border:1px solid var(--green-dim,#3d6200);
   color:var(--green); background:rgba(118,185,0,.08); white-space:nowrap; flex-shrink:0; }
@@ -549,7 +550,7 @@ td.danger { color:#D85A30; }
 #exec-nav {
   position:sticky; top:0; z-index:500;
   display:flex; align-items:center; gap:6px;
-  padding:10px 60px;
+  padding:10px 36px;
   background:#111;
   border-bottom:2px solid #76B900;
 }
@@ -577,12 +578,12 @@ td.danger { color:#D85A30; }
 /* ── PAGE SHELL ── */
 .ep-hero {
   background:var(--bg-ele); color:var(--ink);
-  padding:36px 60px 28px;
+  padding:30px 36px 22px;
   display:flex; align-items:flex-start; justify-content:space-between;
   gap:40px;
 }
 .ep-hero-name {
-  font-family:var(--display); font-size:32px; font-weight:600;
+  font-family:var(--display); font-size:24px; font-weight:600;
   font-style:italic; color:#fff; line-height:1.15;
 }
 .ep-hero-name em { color:#76B900; font-style:normal; }
@@ -592,7 +593,7 @@ td.danger { color:#D85A30; }
 .ep-role-name { font-size:15px; font-weight:700; color:#76B900; margin-top:4px; }
 .ep-jrid { font-size:11px; color:#555; margin-top:3px; font-family:var(--mono); }
 
-.ep-body { padding:32px 60px 40px; background:#f5f5f2; }
+.ep-body { padding:28px 36px 32px; background:#f5f5f2; }
 
 /* ── SECTION TITLE (matches .nav-part style) ── */
 .ep-stitle {
@@ -712,7 +713,7 @@ td.danger { color:#D85A30; }
 
 /* ── BOTTOM BAR (all pages) ── */
 .ep-bottom {
-  background:#111; padding:14px 60px;
+  background:#111; padding:14px 36px;
   display:flex; align-items:center; justify-content:space-between;
 }
 .ep-bottom-msg { font-size:12px; color:#555; font-family:var(--mono); }
@@ -734,7 +735,7 @@ td.danger { color:#D85A30; }
 #exec-nav {
   position:sticky; top:0; z-index:500;
   display:flex; align-items:center; gap:6px;
-  padding:10px 60px;
+  padding:10px 36px;
   background:#111;
   border-bottom:2px solid #76B900;
 }
@@ -762,12 +763,12 @@ td.danger { color:#D85A30; }
 /* ── PAGE SHELL ── */
 .ep-hero {
   background:var(--bg-ele); color:var(--ink);
-  padding:36px 60px 28px;
+  padding:30px 36px 22px;
   display:flex; align-items:flex-start; justify-content:space-between;
   gap:40px;
 }
 .ep-hero-name {
-  font-family:var(--display); font-size:32px; font-weight:600;
+  font-family:var(--display); font-size:24px; font-weight:600;
   font-style:italic; color:#fff; line-height:1.15;
 }
 .ep-hero-name em { color:#76B900; font-style:normal; }
@@ -777,7 +778,7 @@ td.danger { color:#D85A30; }
 .ep-role-name { font-size:15px; font-weight:700; color:#76B900; margin-top:4px; }
 .ep-jrid { font-size:11px; color:#555; margin-top:3px; font-family:var(--mono); }
 
-.ep-body { padding:32px 60px 40px; background:#f5f5f2; }
+.ep-body { padding:28px 36px 32px; background:#f5f5f2; }
 
 /* ── SECTION TITLE (matches .nav-part style) ── */
 .ep-stitle {
@@ -897,7 +898,7 @@ td.danger { color:#D85A30; }
 
 /* ── BOTTOM BAR (all pages) ── */
 .ep-bottom {
-  background:#111; padding:14px 60px;
+  background:#111; padding:14px 36px;
   display:flex; align-items:center; justify-content:space-between;
 }
 .ep-bottom-msg { font-size:12px; color:#555; font-family:var(--mono); }
@@ -950,7 +951,7 @@ td.danger { color:#D85A30; }
 /* ── Part headers: sharper enterprise look ── */
 .part-header {
   background:var(--bg-ele); color:var(--ink);
-  padding:36px 60px 28px;
+  padding:30px 36px 22px;
   border-left:6px solid #76B900;
   position:relative;
 }
@@ -959,7 +960,7 @@ td.danger { color:#D85A30; }
   text-transform:uppercase; color:#76B900; margin-bottom:6px;
 }
 .part-title {
-  font-family:var(--display); font-size:28px; font-weight:600;
+  font-family:var(--display); font-size:20px; font-weight:600;
   font-style:italic; color:#fff; line-height:1.2;
 }
 .part-sub {
@@ -969,7 +970,7 @@ td.danger { color:#D85A30; }
 
 /* ── Section headings ── */
 h2.ch, h2.topic {
-  font-family:var(--display); font-size:26px; font-weight:600;
+  font-family:var(--display); font-size:20px; font-weight:600;
   font-style:italic; color:#111;
   padding-bottom:10px; margin-bottom:6px;
   border-bottom:3px solid #76B900;
@@ -994,7 +995,7 @@ h3.sub {
 
 /* ── Body text ── */
 p.body, .ep-about-box p {
-  color:#444; font-size:14px; line-height:1.8;
+  color:#444; font-size:14px; line-height:1.6;
   margin:8px 0;
 }
 strong.hl { color:#111; font-weight:700; }
@@ -1061,7 +1062,7 @@ code {
 }
 
 /* ── Section alt subtle bg ── */
-.section { padding:52px 60px; border-bottom:1px solid #eaeae6; background:#fff; }
+.section { padding:32px 36px; border-bottom:1px solid #eaeae6; background:#fff; }
 .section-alt { background:#f9f9f7; }
 
 /* ── Global hyperlinks ── */

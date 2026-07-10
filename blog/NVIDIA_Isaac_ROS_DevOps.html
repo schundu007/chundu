@@ -48,7 +48,7 @@
 html { scroll-behavior:smooth; }
 body {
   font-family:var(--sans);
-  font-size:15px; line-height:1.7;
+  font-size:15px; line-height:1.6;
   color:var(--dark);
   background:var(--bg-base);
   overflow-x:hidden;
@@ -156,13 +156,13 @@ body {
 .nav-sub.active { padding-left:32px; }
 
 /* ── MAIN ── */
-#main { margin-left:252px; min-height:100vh; overflow-x:hidden; }
+#main { margin-left:max(252px, calc(50% - 424px)); max-width:1100px; margin-right:auto; min-height:100vh; overflow-x:hidden; }
 
 /* ── HERO ── */
 #hero {
   background:linear-gradient(135deg, #0f1a00 0%, #1a2d00 60%, #0d0d0f 100%);
   border-bottom:3px solid var(--green);
-  padding:64px 60px 48px;
+  padding:38px 36px 30px;
   position:relative; overflow:hidden;
 }
 #hero::before {
@@ -171,21 +171,22 @@ body {
   background:rgba(118,185,0,.04);
 }
 #hero h1 {
-  font-family:var(--display); font-size:42px; font-weight:800;
+  font-family:var(--display); font-size:32px; font-weight:800;
   color:#fafafa; line-height:1.1; max-width:720px;
+  margin-left:auto; margin-right:auto;
   letter-spacing:-.02em;
 }
 #hero h1 em { font-style:normal; color:var(--green); }
 #hero p {
-  margin-top:14px; color:#a1a1aa;
-  font-size:14px; max-width:600px; font-family:var(--sans); font-weight:400;
+  margin:14px auto 0; color:#a1a1aa;
+  font-size:14px; max-width:720px; font-family:var(--sans); font-weight:400;
 }
 .hero-sub {
-  margin-top:6px; color:#71717a;
-  font-size:12px; max-width:680px; font-family:var(--mono);
+  margin:6px auto 0; color:#71717a;
+  font-size:12px; max-width:720px; font-family:var(--mono);
 }
 .hero-meta {
-  margin-top:24px; display:flex; gap:8px; flex-wrap:wrap;
+  margin:24px auto 0; max-width:720px; display:flex; gap:8px; flex-wrap:wrap;
 }
 .hero-tag {
   background:rgba(118,185,0,.1); border:1px solid rgba(118,185,0,.3);
@@ -196,14 +197,14 @@ body {
 
 /* ── SECTIONS ── */
 .section {
-  padding:48px 60px; border-bottom:1px solid var(--bdr);
+  padding:32px 36px; border-bottom:1px solid var(--bdr);
   background:var(--bg-base); scroll-margin-top:20px;
 }
 .section-alt { background:var(--bg-card); }
 .section:last-child { border-bottom:none; }
 .part-header {
   background:var(--bg-card); color:var(--ink);
-  padding:32px 60px 24px;
+  padding:28px 36px 20px;
   border-left:5px solid var(--green);
   border-bottom:1px solid var(--bdr);
   position:relative;
@@ -213,7 +214,7 @@ body {
   text-transform:uppercase; color:var(--green); margin-bottom:6px;
 }
 .part-title {
-  font-family:var(--display); font-size:26px; font-weight:700;
+  font-family:var(--display); font-size:20px; font-weight:700;
   color:var(--ink); line-height:1.2;
 }
 .part-sub {
@@ -222,7 +223,7 @@ body {
 }
 
 h2.ch, h2.topic {
-  font-family:var(--display); font-size:22px; font-weight:700;
+  font-family:var(--display); font-size:20px; font-weight:700;
   color:var(--ink);
   padding-bottom:10px; margin-bottom:6px;
   border-bottom:2px solid var(--green);
@@ -246,7 +247,7 @@ h3.sub {
   padding-bottom:14px; border-bottom:1px solid var(--bdr);
 }
 
-p.body { color:var(--mid); font-size:14px; line-height:1.8; margin:8px 0; }
+p.body { color:var(--mid); font-size:14px; line-height:1.6; margin:8px 0; }
 
 /* ── TABLES ── */
 .tbl-wrap { overflow-x:auto; margin:16px 0; }
@@ -371,7 +372,7 @@ code {
   padding:14px 10px; border-right:1px solid var(--bdr);
 }
 .stat-item:last-child { border-right:none; }
-.stat-n { font-size:22px; font-weight:700; color:var(--green); font-family:var(--mono); }
+.stat-n { font-size:20px; font-weight:700; color:var(--green); font-family:var(--mono); }
 .stat-l { font-size:9px; color:var(--light); text-align:center; margin-top:3px; text-transform:uppercase; letter-spacing:.05em; line-height:1.4; }
 
 /* ── SEVERITY / ISSUE CARDS ── */
@@ -432,8 +433,8 @@ ul.blt li::marker { color:var(--green); }
 @media (max-width:900px) {
   #nav { display:none; }
   #main { margin-left:0; }
-  #hero { padding:40px 24px; }
-  #hero h1 { font-size:32px; }
+  #hero { padding:32px 24px; }
+  #hero h1 { font-size:26px; }
   .section { padding:32px 24px; }
   .part-header { padding:28px 24px; }
   .verified-grid { grid-template-columns:1fr; }
