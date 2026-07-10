@@ -309,7 +309,7 @@
       <a href="#s6">Signing</a>
       <a href="#s8">Hardware</a>
       <a href="#s10">Modernize</a>
-      <a href="#s14">Why me</a>
+      <a href="#s13">Why me</a>
       <a href="https://www.sudhakarchundu.org/">Home</a>
     </nav>
   </div>
@@ -353,7 +353,7 @@
         <div class="who">Sudhakar Chundu</div>
         <div class="role">Platform / CI &amp; Build-Infrastructure Engineer</div>
       </div>
-      <div class="meta">Revised July 2026<br>14 sections · 7 diagrams<br>~60 min read</div>
+      <div class="meta">Revised July 2026<br>13 sections · 7 diagrams<br>~55 min read</div>
     </div>
 
     <div class="stats">
@@ -386,11 +386,10 @@
         <a href="#s9"><span class="sn">09</span>Playbook &amp; runbooks</a>
         <h4>Delivery</h4>
         <a href="#s10"><span class="sn">10</span>Modernization plan</a>
-        <a href="#s11"><span class="sn">11</span>Roadmap</a>
-        <a href="#s12"><span class="sn">12</span>KPIs</a>
+        <a href="#s11"><span class="sn">11</span>KPIs</a>
         <h4>Engineering</h4>
-        <a href="#s13"><span class="sn">13</span>AI-assisted engineering</a>
-        <a href="#s14"><span class="sn">14</span>Why I'm the fit</a>
+        <a href="#s12"><span class="sn">12</span>AI-assisted engineering</a>
+        <a href="#s13"><span class="sn">13</span>Why I'm the fit</a>
       </nav>
     </aside>
 
@@ -584,7 +583,7 @@ flowchart LR
             <tr>
               <td>A <strong><code>CLAUDE.md</code></strong> in the repo root and <code>pre-commit</code> enabled.</td>
               <td>The team already treats agentic AI + shift-left linting as part of the workflow.</td>
-              <td>My AI-assisted approach (§12) fits existing norms — agents draft, humans verify behind review, signing, and audit.</td>
+              <td>My AI-assisted approach (§11) fits existing norms — agents draft, humans verify behind review, signing, and audit.</td>
             </tr>
           </tbody>
         </table>
@@ -1299,7 +1298,7 @@ jobs:
         run: aws s3 cp dist/ "s3://${{ steps.target.outputs.bucket }}/" --recursive</code></pre></div>
         </details>
 
-        <div class="note"><span class="tag">Callers get boring, which is the point</span>The nine files collapse to nine <em>matrix rows</em> in one caller. A retry fix lands once. The measurable outcome — workflow-file count and total YAML lines — is in the KPI table (§12), because "we reduced duplication" without a number is a feeling, not an engineering result.</div>
+        <div class="note"><span class="tag">Callers get boring, which is the point</span>The nine files collapse to nine <em>matrix rows</em> in one caller. A retry fix lands once. The measurable outcome — workflow-file count and total YAML lines — is in the KPI table (§11), because "we reduced duplication" without a number is a feeling, not an engineering result.</div>
 
         <h3>(c) Remote compiler caching: ccache against bazel-remote</h3>
         <p>Recall the two facts that make this necessary: the superbuild runs inside a container via <code>docker run</code>, not as Docker layers (§3), and ARC runner pods are destroyed after one job (§2). There is no layer cache to hit and no local disk that survives. The compiler cache <em>must</em> be a network service.</p>
@@ -1363,7 +1362,7 @@ jobs:
             ./build_tools/build_superbuild.sh \
               -DTHEROCK_AMDGPU_FAMILIES=${{ inputs.amdgpu_family }}
 
-      # Hit-rate is an SLO (KPI table, sec 12). Emit it; do not grep logs for it.
+      # Hit-rate is an SLO (KPI table, sec 11). Emit it; do not grep logs for it.
       # --print-stats is the stable machine-readable form: key&lt;TAB&gt;value.
       - name: Export cache hit-rate
         if: always()
@@ -2124,26 +2123,11 @@ class GPUTestHarness:
         <div class="note green"><span class="tag">The pattern to take away</span>Two of these six verdicts are "do the boring thing to code you already own." One is "adopt a tool that does exactly one thing well and nothing else." One is "run an experiment and let it decide." One is "no, and here's the four-point argument." <strong>That distribution is what an honest tooling evaluation looks like.</strong> A modernization plan where every candidate tool gets adopted isn't a plan — it's a shopping list, and someone else will maintain it.</div>
       </section>
 
+      
+
       <!-- 11 -->
       <section id="s11">
-        <div class="shead"><span class="sn">11</span><h2>12-week implementation roadmap</h2></div>
-        <div class="tbl-scroll">
-        <table class="tbl">
-          <thead><tr><th>Phase</th><th>Weeks</th><th>Delivered</th></tr></thead>
-          <tbody>
-            <tr><td><strong>Foundation</strong></td><td>1–2</td><td>VPC, IAM (least-privilege), KMS everywhere, Secrets Manager, CloudTrail.</td></tr>
-            <tr><td><strong>Compute &amp; storage</strong></td><td>3–4</td><td>EC2 build runners, Actions registration, EFS/NFS, S3 artifact repo, ccache/DVC caches.</td></tr>
-            <tr><td><strong>CI/CD pipelines</strong></td><td>5–6</td><td>Pre-submit gate (&lt;10 min), nightly integration, GPG-signed LKG, alerting.</td></tr>
-            <tr><td><strong>Hardware integration</strong></td><td>7–8</td><td>Instinct lab runner registration, test harness, gfx-family matrix, HUD dashboards.</td></tr>
-            <tr><td><strong>Operations</strong></td><td>9–12</td><td>Cost control, 10 failure-mode runbooks, alarms, DR (RTO 4h).</td></tr>
-          </tbody>
-        </table>
-        </div>
-      </section>
-
-      <!-- 12 -->
-      <section id="s12">
-        <div class="shead"><span class="sn">12</span><h2>Key performance indicators</h2></div>
+        <div class="shead"><span class="sn">11</span><h2>Key performance indicators</h2></div>
         <p>These targets are <strong>aspirational and illustrative</strong> — the scoreboard I’d stand up, not measurements taken from anyone’s live system. The cache-hit numbers especially are placeholders, to be replaced by a measured baseline in month one, for the reason given in §5(c): HIP device-code caching does not behave like host C++.</p>
         <div class="tbl-scroll">
         <table class="tbl">
@@ -2173,9 +2157,9 @@ class GPUTestHarness:
         </div>
       </section>
 
-      <!-- 13 -->
-      <section id="s13">
-        <div class="shead"><span class="sn">13</span><h2>AI-assisted engineering: building this faster</h2></div>
+      <!-- 12 -->
+      <section id="s12">
+        <div class="shead"><span class="sn">12</span><h2>AI-assisted engineering: building this faster</h2></div>
         <p>Every layer above is high-volume automation — Terraform modules, runner provisioning, Actions workflows, signing glue, CloudTrail queries, runbooks. That's exactly the surface where an engineer paired with AI coding agents moves several times faster. The public TheRock repository includes a <code>CLAUDE.md</code> at its root, so agentic tooling is evidently already part of the contributor workflow rather than something I'd be importing.</p>
         <div class="tbl-scroll">
         <table class="tbl">
@@ -2247,9 +2231,9 @@ flowchart LR
         <p>I build with this daily: <a href="https://github.com/schundu007/camora" target="_blank" rel="noopener">Camora</a> is a self-hosted platform spanning GitHub Actions, Buildkite, and Bazel with GPU provisioning/scheduling and an MCP architecture that orchestrates coding agents — the same draft-then-verify loop, in production.</p>
       </section>
 
-      <!-- 14 -->
-      <section id="s14">
-        <div class="shead"><span class="sn">14</span><h2>Why I'm the fit</h2></div>
+      <!-- 13 -->
+      <section id="s13">
+        <div class="shead"><span class="sn">13</span><h2>Why I'm the fit</h2></div>
         <p>The role wants one engineer to own GPU-stack CI end-to-end: stand up nightly integration builds, solve the self-hosted runner-provisioning problem, keep the infrastructure AWS-aligned, and set direction rather than maintain someone else's system. That's the work I've been doing for years — and, as §2–§7 show, on the same toolchain this stack is built from. The concrete first moves are already written down in §10; I'd start there.</p>
 
         <div class="tbl-scroll">
