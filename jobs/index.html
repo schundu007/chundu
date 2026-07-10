@@ -3737,9 +3737,9 @@
             website: 'sudhakarchundu.org',
             location: 'San Jose, CA',
             yearsExperience: '18+',
-            summary: 'Staff DevOps Engineer with 18+ years of hands-on experience across SRE, GPU infrastructure, cloud security, and platform engineering at enterprise scale. Primary on-call owner for production systems. Expert in Kubernetes, Slurm GPU clusters, Terraform, and multi-cloud architecture (AWS, Azure). Proven track record maintaining 99.99% SLO, building 65+ GPU compute platforms, achieving SOC2/HIPAA/FedRAMP compliance, and delivering $8M+ in documented cost savings. Active conference speaker at KubeCon, SREcon, and DevOps Days.',
+            summary: 'Staff DevOps Engineer with 18+ years of hands-on experience across SRE, GPU infrastructure, cloud security, and platform engineering at enterprise scale. Primary on-call owner for production systems. Expert in Kubernetes, Slurm GPU clusters, Terraform, and multi-cloud architecture (AWS, Azure). Proven track record maintaining 99.99% SLO, building 65+ GPU compute platforms, and achieving SOC2/HIPAA/FedRAMP compliance. Active conference speaker at KubeCon, SREcon, and DevOps Days.',
             keyMetrics: [
-                { value: '$8M+', label: 'Annual Savings | 73% Cost Reduction' },
+                { value: '45→78%', label: 'GPU Utilization Improved' },
                 { value: '10M+', label: 'Users Served | 15+ Regions' },
                 { value: '99.99%', label: 'GPU Cluster Uptime' }
             ],
@@ -3763,7 +3763,7 @@
                         'Platform Architecture: Designed and built K8s microservices platform from ground up; migrated 40+ workloads from VMs, VMSS, Azure WebApps, Function Apps, and datacenter Java applications to containerized architecture',
                         'Production Reliability: Primary on-call for Kubernetes clusters and GPU compute infrastructure; maintained 99.99% SLO for 18 months serving 12+ enterprise clients',
                         'DevSecOps & Compliance: Led SOC2 Type II, FedRAMP, and HIPAA certification; implemented Trivy, Falco, OPA, Gitleaks, and HashiCorp Vault for GenAI/LLM platform security',
-                        'Cloud FinOps: Reduced cloud costs 73% ($10M→$2.7M/year) through GPU utilization optimization, fair-share scheduling, reserved instance planning, and vendor consolidation',
+                        'Cloud FinOps: Built cost-visibility tooling and automation with GPU utilization optimization, fair-share scheduling, reserved instance planning, and vendor consolidation',
                         'Platform Engineering: Built CI/CD pipelines for 100+ applications using GitHub Actions, Docker, Terraform, and GitOps (ArgoCD, FluxCD); reduced deployment time 95% (days→15 minutes)',
                         'GPU Infrastructure: Built and operate 65+ GPU Slurm cluster for ML/AI workloads; NVIDIA scheduling, capacity planning, 99.99% GPU cluster availability',
                         'Incident Response: Run incident command for P1/P2 outages; authored postmortems and drove systemic fixes to prevent recurrence'
@@ -5012,7 +5012,7 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             // Create tailored summary based on job focus
             let tailoredSummary = USER_PROFILE.summary;
             if (parsedJD.focusAreas.includes('GPU/HPC') || parsedJD.focusAreas.includes('AI/ML')) {
-                tailoredSummary = `Distinguished Cloud AI Architect with 18+ years building GPU compute platforms and AI/ML infrastructure at scale. Expert in Slurm cluster management, NVIDIA GPU scheduling (A100/V100/DGX), Kubernetes orchestration, and distributed ML training. ${parsedJD.allFoundTools.length > 0 ? 'Proven expertise in ' + parsedJD.allFoundTools.slice(0, 5).join(', ').toUpperCase() + '.' : ''} Led teams managing $15M+ budgets delivering $8M+ in cost savings.`;
+                tailoredSummary = `Distinguished Cloud AI Architect with 18+ years building GPU compute platforms and AI/ML infrastructure at scale. Expert in Slurm cluster management, NVIDIA GPU scheduling (A100/V100/DGX), Kubernetes orchestration, and distributed ML training. ${parsedJD.allFoundTools.length > 0 ? 'Proven expertise in ' + parsedJD.allFoundTools.slice(0, 5).join(', ').toUpperCase() + '.' : ''} Led infrastructure teams of 6+ engineers with on-call ownership.`;
             } else if (parsedJD.focusAreas.includes('SRE')) {
                 tailoredSummary = `Senior Site Reliability Engineer and Platform Leader with 18+ years ensuring 99.97% uptime for mission-critical systems at planetary scale. Expert in SLI/SLO/SLA implementation, incident response, chaos engineering, and observability (Prometheus, Grafana, Datadog). ${parsedJD.allFoundTools.length > 0 ? 'Deep experience with ' + parsedJD.allFoundTools.slice(0, 5).join(', ').toUpperCase() + '.' : ''} Led 24x7 on-call rotations serving 10M+ users across 15+ regions.`;
             } else if (parsedJD.focusAreas.includes('Platform Engineering')) {

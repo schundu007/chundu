@@ -39,6 +39,10 @@
         .arch { margin: 0 0 0.875rem; }
         .arch img { width: 100%; max-width: 760px; display: block; margin: 0 auto; border: 1px solid var(--bg-tertiary); border-radius: var(--radius-md); }
         .arch figcaption { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-muted); margin-top: 0.375rem; text-align: center; }
+        .duo-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2.5rem; align-items: start; }
+        .duo-cols > div { min-width: 0; }
+        .duo-cols .ledger-row { grid-template-columns: 92px 1fr; gap: 0.75rem; }
+        @media (max-width: 900px) { .duo-cols { grid-template-columns: 1fr; } }
         @media (max-width: 640px) {
             .panel-head { flex-wrap: wrap; }
             .panel-meta { white-space: normal; }
@@ -144,9 +148,9 @@
                         <span class="panel-meta">Trackonomy · Oct 2023 – Jan 2026 · San Jose, CA</span>
                     </div>
                     <div class="panel-body">
-                        <p>As Staff DevOps Engineer / SRE, built and operate enterprise AI/ML platforms for healthcare, supply chain, airline, and government clients — deploying, training, and serving LLM/GenAI workloads at scale with enterprise security and compliance. Primary on-call owner for production systems: 99.99% SLO and zero critical security findings across SOC2, HIPAA, and FedRAMP frameworks.</p>
+                        <p>Enterprise AI/ML platforms for healthcare, supply-chain, airline, and government clients — LLM/GenAI at scale, 99.99% SLO, zero critical findings across SOC2, HIPAA, and FedRAMP.</p>
                         <div class="kpi-strip">
-                            <div class="kpi-cell"><div class="kpi-value">73%</div><div class="kpi-label">Cost reduction ($10M → $2.7M)</div></div>
+                            <div class="kpi-cell"><div class="kpi-value">50+/day</div><div class="kpi-label">Zero-downtime deployments</div></div>
                             <div class="kpi-cell"><div class="kpi-value">65</div><div class="kpi-label">GPU platform scale</div></div>
                             <div class="kpi-cell"><div class="kpi-value">99.97%</div><div class="kpi-label">Uptime ML/AI</div></div>
                             <div class="kpi-cell"><div class="kpi-value">45→78%</div><div class="kpi-label">GPU utilization</div></div>
@@ -161,55 +165,61 @@
                             <img src="../assets/images/trackonomy-azure-architecture.png" alt="Trackonomy Azure Platform Architecture">
                             <figcaption>Multi-tenant Azure platform — AKS, microservices, and enterprise security</figcaption>
                         </figure>
+                        <div class="duo-cols">
+                        <div>
                         <div class="sub-label">Azure Infrastructure — Terraform IaC + ArgoCD GitOps</div>
                         <div class="ledger-row">
                             <div class="ledger-meta">AKS</div>
-                            <div><div class="ledger-title">Production-grade Azure Kubernetes Service</div><div class="ledger-sub">Node auto-scaling, availability zones, Azure CNI networking, and Istio service mesh.</div></div>
+                            <div><div class="ledger-sub">Production AKS — auto-scaling, availability zones, Azure CNI, Istio.</div></div>
                         </div>
                         <div class="ledger-row">
                             <div class="ledger-meta">NETWORK</div>
-                            <div><div class="ledger-title">Hub-spoke VNet topology</div><div class="ledger-sub">Azure Firewall, NSGs, private endpoints, and Azure WAF for defense-in-depth security.</div></div>
+                            <div><div class="ledger-sub">Hub-spoke VNets — Azure Firewall, NSGs, private endpoints, WAF.</div></div>
                         </div>
                         <div class="ledger-row">
                             <div class="ledger-meta">IDENTITY</div>
-                            <div><div class="ledger-title">Azure AD integration</div><div class="ledger-sub">RBAC, Managed Identities, and Azure Key Vault with automatic rotation.</div></div>
+                            <div><div class="ledger-sub">Azure AD — RBAC, Managed Identities, Key Vault auto-rotation.</div></div>
                         </div>
                         <div class="ledger-row">
                             <div class="ledger-meta">DATA</div>
-                            <div><div class="ledger-title">Managed data services with private link</div><div class="ledger-sub">Azure PostgreSQL Flexible Server, Cosmos DB (multi-region), Azure Service Bus, and Event Hubs.</div></div>
+                            <div><div class="ledger-sub">Private-link data — PostgreSQL Flexible, Cosmos DB, Service Bus, Event Hubs.</div></div>
                         </div>
                         <div class="ledger-row">
                             <div class="ledger-meta">OBSERVE</div>
-                            <div><div class="ledger-title">Observability stack</div><div class="ledger-sub">Prometheus/Grafana on AKS with Datadog integration and custom GPU dashboards.</div></div>
+                            <div><div class="ledger-sub">Prometheus/Grafana + Datadog with custom GPU dashboards.</div></div>
                         </div>
                         <div class="ledger-row">
                             <div class="ledger-meta">CI/CD</div>
-                            <div><div class="ledger-title">GitHub Actions to ArgoCD GitOps</div><div class="ledger-sub">Terraform state in Azure Storage with policy-as-code.</div></div>
+                            <div><div class="ledger-sub">GitHub Actions → ArgoCD GitOps; Terraform with policy-as-code.</div></div>
                         </div>
+                        </div>
+                        <div>
                         <div class="sub-label">Key Responsibilities</div>
                         <div class="ledger-row">
                             <div class="ledger-meta">GPU 45→78%</div>
-                            <div><div class="ledger-title">65-GPU multi-tenant platform</div><div class="ledger-sub">Slurm, Kubernetes, and NVIDIA Triton for LLM/GenAI workloads; GPU utilization up from 45% to 78%, job queue wait times down 60%.</div></div>
+                            <div><div class="ledger-sub">65-GPU multi-tenant platform — Slurm, K8s, Triton; utilization 45→78%.</div></div>
                         </div>
                         <div class="ledger-row">
                             <div class="ledger-meta">-95% FAILS</div>
-                            <div><div class="ledger-title">Databricks performance crisis</div><div class="ledger-sub">Diagnosed critical cluster degradation hitting production ML pipelines; JVM profiling found a driver-node memory leak, cutting job failures by 95%.</div></div>
+                            <div><div class="ledger-sub">Databricks crisis — JVM profiling found driver memory leak; failures −95%.</div></div>
                         </div>
                         <div class="ledger-row">
-                            <div class="ledger-meta">$10M→$2.7M</div>
-                            <div><div class="ledger-title">Custom FinOps platform</div><div class="ledger-sub">Internal tooling for real-time cost visibility across AWS/Azure/OCI; automated rightsizing and spot instance management drove 73% cost reduction annually.</div></div>
+                            <div class="ledger-meta">FINOPS</div>
+                            <div><div class="ledger-sub">FinOps tooling — real-time cost visibility, rightsizing, spot automation.</div></div>
                         </div>
                         <div class="ledger-row">
                             <div class="ledger-meta">p99 -40%</div>
-                            <div><div class="ledger-title">Performance engineering</div><div class="ledger-sub">Kernel tuning, connection pooling, and systematic profiling with perf/strace; GPU profiling with nvidia-smi and dcgm-exporter.</div></div>
+                            <div><div class="ledger-sub">Kernel tuning + perf/strace profiling; GPU profiling with dcgm.</div></div>
                         </div>
                         <div class="ledger-row">
                             <div class="ledger-meta">0 FINDINGS</div>
-                            <div><div class="ledger-title">Security &amp; compliance</div><div class="ledger-sub">SOC2, HIPAA, and FedRAMP compliance achieved with zero critical findings.</div></div>
+                            <div><div class="ledger-sub">SOC2, HIPAA, FedRAMP with zero critical findings.</div></div>
                         </div>
                         <div class="ledger-row">
                             <div class="ledger-meta">TEAM 0→6</div>
-                            <div><div class="ledger-title">Team leadership</div><div class="ledger-sub">Built infrastructure team from 0 to 6 engineers with best practices and on-call rotations.</div></div>
+                            <div><div class="ledger-sub">Infrastructure team built 0→6 engineers with on-call rotations.</div></div>
+                        </div>
+                        </div>
                         </div>
                         <div class="sub-label">Industry Verticals</div>
                         <div class="row-tags">
@@ -249,7 +259,7 @@
                         <span class="panel-meta">Wipro · Feb 2020 – Oct 2023 · Remote (Global)</span>
                     </div>
                     <div class="panel-body">
-                        <p>The Open Subsurface Data Universe (OSDU) is the industry-standard platform for managing subsurface and wells data in oil and gas. Led cloud architecture and infrastructure for OSDU R3 on AWS and Azure across multiple major energy clients — GPU-accelerated ingestion and ML training pipelines for petabyte-scale seismic data, multi-tenant landing zones, and DevSecOps practices for enterprise compliance.</p>
+                        <p>Cloud architecture for OSDU R3 on AWS and Azure across major energy clients — GPU-accelerated ingestion and ML pipelines for petabyte-scale seismic data.</p>
                         <div class="kpi-strip">
                             <div class="kpi-cell"><div class="kpi-value">5+</div><div class="kpi-label">Global enterprises</div></div>
                             <div class="kpi-cell"><div class="kpi-value">PB</div><div class="kpi-label">Scale data processing</div></div>
@@ -260,6 +270,8 @@
                             <img src="../assets/images/osdu-azure-architecture.png" alt="OSDU Azure Architecture">
                             <figcaption>Multi-tenant OSDU R3 deployment with AKS, Event Hubs, and Cosmos DB</figcaption>
                         </figure>
+                        <div class="duo-cols">
+                        <div>
                         <div class="sub-label">AWS Infrastructure</div>
                         <div class="ledger-row">
                             <div class="ledger-meta">LANDING ZONE</div>
@@ -281,6 +293,8 @@
                             <div class="ledger-meta">SECURITY</div>
                             <div><div class="ledger-sub">IAM Identity Center, Secrets Manager, GuardDuty, and Security Hub for FedRAMP.</div></div>
                         </div>
+                        </div>
+                        <div>
                         <div class="sub-label">Azure Infrastructure</div>
                         <div class="ledger-row">
                             <div class="ledger-meta">LANDING ZONE</div>
@@ -301,6 +315,8 @@
                         <div class="ledger-row">
                             <div class="ledger-meta">CI/CD</div>
                             <div><div class="ledger-sub">Azure DevOps pipelines with Terraform modules and compliance-as-code.</div></div>
+                        </div>
+                        </div>
                         </div>
                         <div class="sub-label">Enterprise Clients</div>
                         <div class="row-tags">
@@ -339,7 +355,7 @@
                         <span class="panel-meta">Tata Consultancy Services · May 2007 – Feb 2020 · Multiple US Locations</span>
                     </div>
                     <div class="panel-body">
-                        <p>Progressive 13-year career across Fortune 500 clients in healthcare, government, telecom, and financial services — leading cloud infrastructure modernization in regulated industries, pioneering Docker and Kubernetes adoption (2013–2014), and driving multi-cloud migration strategies while managing $15M+ infrastructure budgets.</p>
+                        <p>13 years across Fortune 500 clients in regulated industries — cloud modernization, early Docker/Kubernetes adoption (2013–14), multi-cloud migrations.</p>
                         <div class="kpi-strip">
                             <div class="kpi-cell"><div class="kpi-value">13</div><div class="kpi-label">Years progressive growth</div></div>
                             <div class="kpi-cell"><div class="kpi-value">$15M+</div><div class="kpi-label">Budget managed</div></div>
