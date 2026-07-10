@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="assets/css/style.css?v=3">
+    <link rel="stylesheet" href="assets/css/style.css?v=4">
 
     <!-- Theme JS (load early to prevent flash) -->
     <script src="assets/js/theme.js"></script>
@@ -215,6 +215,74 @@
             font-weight: 600;
         }
 
+        /* Resume panel */
+        .resume-meta {
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            color: var(--text-muted);
+        }
+
+        .resume-file-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+        }
+
+        .resume-file-row > i {
+            font-size: 1.125rem;
+            color: var(--accent-blue);
+            flex-shrink: 0;
+        }
+
+        .resume-file-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.125rem;
+        }
+
+        .resume-file-name {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .resume-file-sub {
+            font-size: 0.6875rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        .resume-admin {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1rem;
+            border-top: 1px solid var(--bg-tertiary);
+        }
+
+        .resume-admin[hidden] {
+            display: none;
+        }
+
+        .resume-admin .btn {
+            min-height: 30px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        .resume-admin-status {
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            color: var(--text-muted);
+        }
+
+        .resume-admin-status.error {
+            color: #f87171;
+        }
+
         /* Quick links */
         .quicklinks {
             display: grid;
@@ -323,7 +391,6 @@
             <ul class="nav-links">
                 <li><a href="./" class="active">Overview</a></li>
                 <li><a href="about/">About</a></li>
-                <li><a href="resume/">Resume</a></li>
                 <li><a href="blog/">Blog</a></li>
                 <li><a href="projects/">Achievements</a></li>
                 <li><a href="opensource/">Open Source</a></li>
@@ -357,9 +424,9 @@
                 <span class="identity-status"><span class="dot"></span>Open to staff-level IC roles · US-based</span>
             </div>
             <div class="identity-actions">
-                <a href="resume/" class="btn btn-primary">
-                    <i class="fas fa-file-alt"></i>
-                    View Resume
+                <a href="assets/resume/Sudhakar_Chundu_Master_Resume.docx" class="btn btn-primary resume-download" download>
+                    <i class="fas fa-download"></i>
+                    Download Resume
                 </a>
                 <a href="https://www.linkedin.com/in/babucs" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-linkedin"></i>
@@ -403,7 +470,7 @@
                 <section class="panel" aria-labelledby="exp-title">
                     <div class="panel-head">
                         <h2 id="exp-title">Experience</h2>
-                        <a href="resume/" class="panel-link">Full resume →</a>
+                        <a href="#resume" class="panel-link">Resume file →</a>
                     </div>
                     <div class="ledger-row">
                         <div class="ledger-meta">2026 – now</div>
@@ -468,8 +535,38 @@
                 </section>
             </div>
 
-            <!-- Right column: focus, platforms, links -->
+            <!-- Right column: resume, focus, platforms, links -->
             <div class="dash-col">
+                <section class="panel" id="resume" aria-labelledby="resume-title">
+                    <div class="panel-head">
+                        <h2 id="resume-title">Resume</h2>
+                        <span id="resume-meta" class="resume-meta">Bundled copy</span>
+                    </div>
+                    <div class="resume-file-row">
+                        <i class="fas fa-file-word"></i>
+                        <div class="resume-file-info">
+                            <span class="resume-file-name">Master Resume (.docx)</span>
+                            <span id="resume-file-sub" class="resume-file-sub">Sudhakar Chundu · Staff DevOps / SRE</span>
+                        </div>
+                        <a href="assets/resume/Sudhakar_Chundu_Master_Resume.docx" class="btn btn-primary resume-download" download>
+                            <i class="fas fa-download"></i>
+                            Download
+                        </a>
+                    </div>
+                    <div id="resume-admin" class="resume-admin" hidden>
+                        <input type="file" id="resume-upload-input" accept=".docx,.pdf" hidden>
+                        <button class="btn btn-secondary" id="resume-update-btn" onclick="document.getElementById('resume-upload-input').click()">
+                            <i class="fas fa-upload"></i>
+                            Update
+                        </button>
+                        <button class="btn btn-outline" id="resume-delete-btn">
+                            <i class="fas fa-trash-alt"></i>
+                            Delete
+                        </button>
+                        <span id="resume-admin-status" class="resume-admin-status"></span>
+                    </div>
+                </section>
+
                 <section class="panel" aria-labelledby="focus-title">
                     <div class="panel-head">
                         <h2 id="focus-title">Focus Areas</h2>
@@ -539,7 +636,7 @@
                     </div>
                     <div class="quicklinks">
                         <a href="about/" class="quicklink"><i class="fas fa-user"></i>About</a>
-                        <a href="resume/" class="quicklink"><i class="fas fa-file-alt"></i>Resume</a>
+                        <a href="projects/#publications" class="quicklink"><i class="fas fa-book"></i>Publications</a>
                         <a href="blog/" class="quicklink"><i class="fas fa-pen-nib"></i>Blog</a>
                         <a href="projects/" class="quicklink"><i class="fas fa-trophy"></i>Achievements</a>
                         <a href="opensource/" class="quicklink"><i class="fab fa-github"></i>Open Source</a>
@@ -583,7 +680,7 @@
         <div class="footer-content">
             <span class="footer-logo">Sudhakar Chundu</span>
             <div class="footer-links">
-                <a href="resume/">Resume</a>
+                <a href="#resume">Resume</a>
                 <a href="blog/">Blog</a>
                 <a href="projects/">Achievements</a>
                 <a href="contact/">Contact</a>
@@ -601,6 +698,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
     <script src="assets/js/firebase-config.js"></script>
     <script src="assets/js/auth.js"></script>
 
@@ -621,6 +719,94 @@
                 navLinks.classList.remove('active');
             });
         });
+
+        // Resume file: public download + owner-only update/delete.
+        // Uploaded copies live in Firebase Storage and override the bundled
+        // docx; when Storage is empty/unavailable everyone gets the bundled file.
+        (function() {
+            const OWNER_EMAIL = 'chundubabu@gmail.com';
+            const STORAGE_PATH = 'resume/active.docx';
+            const FALLBACK_URL = 'assets/resume/Sudhakar_Chundu_Master_Resume.docx';
+
+            const metaEl = document.getElementById('resume-meta');
+            const adminEl = document.getElementById('resume-admin');
+            const statusEl = document.getElementById('resume-admin-status');
+            const deleteBtn = document.getElementById('resume-delete-btn');
+            const uploadInput = document.getElementById('resume-upload-input');
+            const downloadLinks = document.querySelectorAll('.resume-download');
+
+            let storageRef = null;
+            try {
+                if (window.isFirebaseConfigured && firebase.storage) {
+                    storageRef = firebase.storage().ref(STORAGE_PATH);
+                }
+            } catch (e) { /* storage unavailable: bundled copy only */ }
+
+            function setLinks(url) {
+                downloadLinks.forEach(a => { a.href = url; });
+            }
+
+            function setStatus(msg, isError) {
+                if (!statusEl) return;
+                statusEl.textContent = msg || '';
+                statusEl.classList.toggle('error', !!isError);
+            }
+
+            function refresh() {
+                if (!storageRef) return;
+                Promise.all([storageRef.getDownloadURL(), storageRef.getMetadata()])
+                    .then(([url, meta]) => {
+                        setLinks(url);
+                        const d = new Date(meta.updated);
+                        metaEl.textContent = 'Updated ' + d.toISOString().slice(0, 10);
+                    })
+                    .catch(() => {
+                        setLinks(FALLBACK_URL);
+                        metaEl.textContent = 'Bundled copy';
+                    });
+            }
+
+            window.addEventListener('authStateChanged', function(e) {
+                const user = e.detail && e.detail.user;
+                const isOwner = !!(user && user.email === OWNER_EMAIL);
+                adminEl.hidden = !isOwner || !storageRef;
+                setStatus('');
+            });
+
+            if (uploadInput) uploadInput.addEventListener('change', function() {
+                const file = uploadInput.files[0];
+                if (!file || !storageRef) return;
+                setStatus('Uploading 0%');
+                const task = storageRef.put(file, { contentType: file.type });
+                task.on('state_changed',
+                    snap => setStatus('Uploading ' + Math.round(100 * snap.bytesTransferred / snap.totalBytes) + '%'),
+                    err => setStatus('Upload failed: ' + err.code, true),
+                    () => { setStatus('Updated'); refresh(); }
+                );
+                uploadInput.value = '';
+            });
+
+            let deleteArmed = false;
+            if (deleteBtn) deleteBtn.addEventListener('click', function() {
+                if (!storageRef) return;
+                if (!deleteArmed) {
+                    deleteArmed = true;
+                    deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Confirm?';
+                    setTimeout(() => {
+                        deleteArmed = false;
+                        deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Delete';
+                    }, 4000);
+                    return;
+                }
+                deleteArmed = false;
+                deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Delete';
+                storageRef.delete()
+                    .then(() => { setStatus('Deleted; bundled copy active'); refresh(); })
+                    .catch(err => setStatus('Delete failed: ' + err.code, true));
+            });
+
+            refresh();
+        })();
     </script>
 
     <!-- Neural Network Animation -->
