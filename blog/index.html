@@ -16,141 +16,119 @@
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css?v=2">
     <!-- Theme JS (load early to prevent flash) -->
     <script src="../assets/js/theme.js"></script>
     <style>
-        /* Blog Page Specific Styles */
+        /* Blog Page Specific Styles — "Signal Board" post index */
+
+        .blog-container {
+            max-width: 1100px;
+        }
 
         /* Category Filter */
         .blog-filters {
             display: flex;
-            gap: 0.75rem;
             flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 3rem;
+            gap: 0.5rem;
+            margin-bottom: clamp(2.5rem, 5vw, 4rem);
         }
 
         .filter-btn {
-            padding: 0.5rem 1.25rem;
-            background: var(--bg-card);
-            border: none;
+            padding: 0.45rem 0.9rem;
+            background: transparent;
+            border: 1px solid var(--bg-tertiary);
             border-radius: var(--radius-full);
-            color: var(--text-secondary);
-            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
             font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
             cursor: pointer;
-            transition: var(--transition-normal);
-            font-family: var(--font-sans);
+            transition: var(--transition-fast);
+        }
+
+        .filter-btn .count {
+            opacity: 0.55;
+            margin-left: 0.4em;
         }
 
         .filter-btn:hover {
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
+            color: var(--text-primary);
+            border-color: var(--text-muted);
         }
 
         .filter-btn.active {
-            background: var(--gradient-primary);
-            border-color: transparent;
-            color: white;
+            background: var(--accent-highlight);
+            border-color: var(--accent-highlight);
+            color: var(--bg-primary);
+            font-weight: 700;
         }
 
-        /* Featured Post */
-        .featured-post {
+        .filter-btn:focus-visible {
+            outline: 2px solid var(--accent-highlight);
+            outline-offset: 2px;
+        }
+
+        /* Shared entry grid: mono meta column + content column */
+        .featured-post,
+        .post-row {
             display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 3rem;
-            align-items: center;
-            background: var(--bg-card);
-            border: none;
-            border-radius: var(--radius-xl);
-            padding: 2rem;
-            margin-bottom: 3rem;
-            transition: var(--transition-normal);
-            position: relative;
-            overflow: hidden;
+            grid-template-columns: 170px 1fr;
+            gap: clamp(1.5rem, 4vw, 3.5rem);
+            border-top: 1px solid var(--bg-tertiary);
         }
 
-        .featured-post::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--gradient-primary);
-        }
-
-        .featured-post:hover {
-            border-color: var(--glass-border-hover);
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .featured-image {
-            position: relative;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            aspect-ratio: 16/10;
-        }
-
-        .featured-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition-normal);
-        }
-
-        .featured-post:hover .featured-image img {
-            transform: scale(1.05);
-        }
-
-        .featured-badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-            padding: 0.4rem 0.85rem;
-            background: var(--gradient-primary);
-            border-radius: var(--radius-full);
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: white;
-            z-index: 1;
-        }
-
-        .featured-content {
-            padding: 1rem 0;
-        }
-
-        .featured-content .post-category {
-            display: inline-block;
-            padding: 0.35rem 0.85rem;
-            background: rgba(14, 165, 233, 0.15);
-            border: 1px solid rgba(14, 165, 233, 0.3);
-            border-radius: var(--radius-full);
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--accent-cyan);
+        .entry-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.7rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 1rem;
+            color: var(--text-muted);
+            padding-top: 0.35rem;
+        }
+
+        .entry-flag {
+            color: var(--accent-highlight);
+            font-weight: 700;
+        }
+
+        .entry-category {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.85rem;
+        }
+
+        /* Featured entry */
+        .featured-post {
+            padding: clamp(2.25rem, 5vw, 3.5rem) 0;
         }
 
         .featured-content h2 {
-            font-size: 1.75rem;
-            line-height: 1.3;
-            margin-bottom: 1rem;
-            transition: var(--transition-fast);
+            font-family: var(--font-display);
+            font-size: clamp(1.6rem, 3vw, 2.35rem);
+            font-weight: 700;
+            line-height: 1.22;
+            letter-spacing: -0.025em;
+            margin-bottom: 1.25rem;
         }
 
         .featured-content h2 a {
             color: var(--text-primary);
             text-decoration: none;
+            transition: var(--transition-fast);
         }
 
         .featured-content h2 a:hover {
@@ -161,343 +139,204 @@
             color: var(--text-secondary);
             font-size: 1rem;
             line-height: 1.7;
-            margin-bottom: 1.5rem;
+            max-width: 65ch;
+            margin-bottom: 1.75rem;
         }
 
-        .post-meta {
-            display: flex;
+        .read-link {
+            display: inline-flex;
             align-items: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .post-author {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .post-author img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid var(--glass-border);
-        }
-
-        .post-author-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .post-author-name {
+            gap: 0.5rem;
+            color: var(--text-primary);
             font-weight: 600;
             font-size: 0.9rem;
-            color: var(--text-primary);
-        }
-
-        .post-date {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .post-stats {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        .post-stats span {
-            display: flex;
-            align-items: center;
-            gap: 0.35rem;
-        }
-
-        .post-stats i {
-            font-size: 0.9rem;
-            color: var(--accent-blue);
-        }
-
-        /* Blog Grid */
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.75rem;
-        }
-
-        /* Blog Card */
-        .blog-card {
-            background: var(--bg-card);
-            border: none;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            transition: var(--transition-normal);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .blog-card:hover {
-            border-color: var(--glass-border-hover);
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .blog-card-image {
-            position: relative;
-            aspect-ratio: 16/9;
-            overflow: hidden;
-        }
-
-        .blog-card-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition-normal);
-        }
-
-        .blog-card:hover .blog-card-image img {
-            transform: scale(1.08);
-        }
-
-        .blog-card-image .post-category {
-            position: absolute;
-            top: 0.75rem;
-            left: 0.75rem;
-            padding: 0.3rem 0.7rem;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
-            border-radius: var(--radius-full);
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .blog-card-content {
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-
-        .blog-card-content h3 {
-            font-size: 1.1rem;
-            line-height: 1.4;
-            margin-bottom: 0.75rem;
-        }
-
-        .blog-card-content h3 a {
-            color: var(--text-primary);
             text-decoration: none;
             transition: var(--transition-fast);
         }
 
-        .blog-card-content h3 a:hover {
-            color: var(--accent-blue);
+        .read-link i {
+            font-size: 0.8rem;
+            transition: transform var(--transition-fast);
         }
 
-        .blog-card-content .post-excerpt {
+        .read-link:hover {
+            color: var(--accent-highlight);
+        }
+
+        .read-link:hover i {
+            transform: translateX(4px);
+        }
+
+        /* Post index */
+        .index-label {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin: clamp(2.5rem, 5vw, 4rem) 0 1.25rem;
+        }
+
+        .post-row {
+            position: relative;
+            padding: clamp(1.75rem, 3.5vw, 2.5rem) 0;
+        }
+
+        .post-index .post-row:last-child {
+            border-bottom: 1px solid var(--bg-tertiary);
+        }
+
+        .post-row h3 {
+            font-family: var(--font-display);
+            font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+            font-weight: 600;
+            line-height: 1.32;
+            letter-spacing: -0.015em;
+            margin-bottom: 0.75rem;
+            transition: var(--transition-fast);
+        }
+
+        .post-row h3 a {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        /* Whole row is the click target */
+        .post-row h3 a::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+        }
+
+        .post-row:hover h3 {
+            color: var(--accent-highlight);
+        }
+
+        .post-row .post-excerpt {
             color: var(--text-secondary);
-            font-size: 0.875rem;
-            line-height: 1.6;
-            margin-bottom: 1.25rem;
-            flex: 1;
+            font-size: 0.925rem;
+            line-height: 1.65;
+            max-width: 65ch;
             display: -webkit-box;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
 
-        .blog-card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 1rem;
-            border-top: 1px solid var(--glass-border);
-        }
-
-        .blog-card-footer .post-date {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .blog-card-footer .reading-time {
-            display: flex;
-            align-items: center;
-            gap: 0.35rem;
-            font-size: 0.8rem;
-            color: var(--accent-blue);
-            font-weight: 500;
-        }
-
-        /* Tags */
-        .post-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .post-tag {
-            padding: 0.25rem 0.65rem;
-            background: var(--bg-card);
-            border: none;
-            border-radius: var(--radius-sm);
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            font-family: var(--font-mono);
-            transition: var(--transition-fast);
-        }
-
-        .post-tag:hover {
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
-        }
-
-        /* Newsletter Section */
-        .newsletter-section {
-            background: var(--bg-card);
-            border: none;
-            border-radius: var(--radius-xl);
-            padding: 3rem;
-            text-align: center;
-            margin-top: 4rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .newsletter-section::before {
-            content: '';
+        .post-row .row-arrow {
             position: absolute;
-            top: 0;
-            left: 0;
             right: 0;
-            height: 3px;
-            background: var(--gradient-primary);
-        }
-
-        .newsletter-section h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .newsletter-section h3 span {
-            color: var(--accent-highlight);
-        }
-
-        .newsletter-section p {
-            color: var(--text-secondary);
-            max-width: 500px;
-            margin: 0 auto 1.5rem;
-        }
-
-        .newsletter-form {
-            display: flex;
-            gap: 0.75rem;
-            max-width: 450px;
-            margin: 0 auto;
-        }
-
-        .newsletter-form input {
-            flex: 1;
-            padding: 0.875rem 1.25rem;
-            background: var(--bg-primary);
-            border: none;
-            border-radius: var(--radius-md);
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            font-family: var(--font-sans);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            opacity: 0;
             transition: var(--transition-fast);
         }
 
-        .newsletter-form input:focus {
-            outline: none;
-            border-color: var(--accent-blue);
+        .post-row:hover .row-arrow {
+            opacity: 1;
+            color: var(--accent-highlight);
+            transform: translateY(-50%) translateX(2px);
         }
 
-        .newsletter-form input::placeholder {
+        /* Empty filter state */
+        .empty-state {
+            border-top: 1px solid var(--bg-tertiary);
+            border-bottom: 1px solid var(--bg-tertiary);
+            padding: 3rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
             color: var(--text-muted);
         }
 
-        .newsletter-form button {
-            padding: 0.875rem 1.5rem;
-            background: var(--gradient-primary);
+        .empty-state button {
+            background: none;
             border: none;
-            border-radius: var(--radius-md);
-            color: white;
-            font-weight: 600;
-            font-size: 0.9rem;
+            padding: 0;
+            font: inherit;
+            color: var(--accent-highlight);
             cursor: pointer;
-            transition: var(--transition-normal);
-            white-space: nowrap;
+            text-decoration: underline;
+            text-underline-offset: 3px;
         }
 
-        .newsletter-form button:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--glow-blue);
-        }
-
-        /* Medium CTA */
-        .medium-cta {
+        /* Outro — Medium follow */
+        .blog-outro {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%);
-            border-radius: var(--radius-lg);
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.5rem 3rem;
+            margin-top: clamp(3.5rem, 7vw, 5.5rem);
+            padding-top: 2.5rem;
+            border-top: 1px solid var(--bg-tertiary);
         }
 
-        .medium-cta p {
-            margin: 0;
+        .blog-outro h3 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            margin-bottom: 0.35rem;
+        }
+
+        .blog-outro p {
+            color: var(--text-muted);
             font-size: 0.9rem;
+            margin: 0;
         }
 
-        .medium-cta .btn {
-            background: #000;
-            color: #fff;
-            border: none;
+        /* Entrance + filter motion */
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .medium-cta .btn:hover {
-            background: #1a1a1a;
+        @media (prefers-reduced-motion: no-preference) {
+            .featured-post,
+            .post-row,
+            .blog-outro {
+                animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+            }
+
+            .post-row:nth-child(2) { animation-delay: 0.05s; }
+            .post-row:nth-child(3) { animation-delay: 0.1s; }
+            .post-row:nth-child(4) { animation-delay: 0.15s; }
+            .post-row:nth-child(5) { animation-delay: 0.2s; }
+            .post-row:nth-child(6) { animation-delay: 0.25s; }
         }
 
         /* Responsive */
-        @media (max-width: 1024px) {
-            .featured-post {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .blog-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
         @media (max-width: 768px) {
-            .blog-grid {
+            .featured-post,
+            .post-row {
                 grid-template-columns: 1fr;
+                gap: 1rem;
             }
 
-            .featured-content h2 {
-                font-size: 1.5rem;
+            .entry-meta {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 0.5rem 1.25rem;
+                padding-top: 0;
             }
 
-            .newsletter-form {
+            .post-row .row-arrow {
+                display: none;
+            }
+
+            .blog-outro {
                 flex-direction: column;
-            }
-
-            .blog-filters {
-                gap: 0.5rem;
-            }
-
-            .filter-btn {
-                padding: 0.4rem 1rem;
-                font-size: 0.8rem;
+                align-items: flex-start;
             }
         }
     </style>
@@ -548,148 +387,129 @@
 
         <!-- Blog Content -->
         <section class="section">
-            <div class="container">
+            <div class="container blog-container">
                 <!-- Category Filters -->
-                <div class="blog-filters">
-                    <button class="filter-btn active" data-filter="all">All Posts</button>
-                    <button class="filter-btn" data-filter="gcp">GCP</button>
-                    <button class="filter-btn" data-filter="kubernetes">Kubernetes</button>
-                    <button class="filter-btn" data-filter="devops">DevOps</button>
-                    <button class="filter-btn" data-filter="sre">SRE</button>
-                    <button class="filter-btn" data-filter="gpu">GPU/ML Infra</button>
-                    <button class="filter-btn" data-filter="finops">FinOps</button>
-                    <button class="filter-btn" data-filter="mobile">Mobile DevOps</button>
+                <div class="blog-filters" role="group" aria-label="Filter posts by category">
+                    <button class="filter-btn active" data-filter="all" aria-pressed="true">All Posts <span class="count">06</span></button>
+                    <button class="filter-btn" data-filter="gcp" aria-pressed="false">GCP <span class="count">01</span></button>
+                    <button class="filter-btn" data-filter="devops" aria-pressed="false">DevOps / CI <span class="count">01</span></button>
+                    <button class="filter-btn" data-filter="gpu" aria-pressed="false">GPU / ML Infra <span class="count">03</span></button>
+                    <button class="filter-btn" data-filter="mobile" aria-pressed="false">Mobile DevOps <span class="count">01</span></button>
                 </div>
 
                 <!-- Featured Post -->
                 <article class="featured-post" data-category="gcp">
-                    <div class="featured-image">
-                        <span class="featured-badge"><i class="fas fa-star"></i> Featured</span>
-                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80" alt="GCP Cloud Infrastructure Design">
+                    <div class="entry-meta">
+                        <span class="entry-flag"><i class="fas fa-star" aria-hidden="true"></i> Featured</span>
+                        <span>Mar 03 2026</span>
+                        <span>45 min read</span>
+                        <span>6 parts</span>
                     </div>
                     <div class="featured-content">
-                        <span class="post-category">GCP Architecture</span>
+                        <p class="entry-category">GCP Architecture</p>
                         <h2><a href="gcp-design-problems-solutions.html">GCP Design Problems and Solutions: 42 Scenarios with Architecture Diagrams</a></h2>
                         <p class="post-excerpt">
                             A comprehensive deep dive into GCP cloud infrastructure design covering TPUs, GPUs, GKE,
                             Kubernetes autoscaling, networking, security, Terraform, CI/CD pipelines, and real-world
                             consulting scenarios with detailed Mermaid architecture diagrams.
                         </p>
-                        <div class="post-meta">
-                            <div class="post-author">
-                                <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu">
-                                <div class="post-author-info">
-                                    <span class="post-author-name">Sudhakar Chundu</span>
-<span class="post-date">March 3, 2026</span>
-                                </div>
-                            </div>
-                            <div class="post-stats">
-                                <span><i class="fas fa-clock"></i> 45 min read</span>
-                                <span><i class="fas fa-layer-group"></i> 6 Parts</span>
-                            </div>
-                        </div>
+                        <a href="gcp-design-problems-solutions.html" class="read-link">Read the deep dive <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                     </div>
                 </article>
 
-                <!-- Blog Grid -->
-                <div class="blog-grid">
-                    <!-- GPU Stack CI Infrastructure Card -->
-                    <article class="blog-card" data-category="devops">
-                        <div class="blog-card-image">
-                            <img src="https://images.unsplash.com/photo-1591808216268-ce0b82787efe?w=600&q=80" alt="GPU Stack CI Infrastructure on AWS">
-                            <span class="post-category">DevOps / Cloud Security / AI</span>
+                <!-- Post Index -->
+                <p class="index-label" id="index-label">Index / 05 entries</p>
+                <div class="post-index">
+                    <article class="post-row" data-category="devops">
+                        <div class="entry-meta">
+                            <span>Jul 2026</span>
+                            <span>40 min read</span>
                         </div>
-                        <div class="blog-card-content">
+                        <div>
+                            <p class="entry-category">DevOps / Cloud Security / AI</p>
                             <h3><a href="AMD_GPU_CI_Infrastructure.html">Owning CI for AMD's Unified GPU Stack</a></h3>
                             <p class="post-excerpt">
-                                An end-to-end CI infrastructure reference for AMD's firmware + kernel driver + ROCm release pipeline, grounded in what ROCm/TheRock runs in the open today — Terraform IaC, self-hosted GitHub Actions runners on Linux and Windows, ccache/DVC build acceleration, HSM firmware signing, and hardware-in-the-loop validation on real AMD Instinct silicon — plus a Last-Known-Good manifest and a 30/60/90 plan to own it end-to-end.
+                                An end-to-end CI infrastructure reference for AMD's firmware, kernel driver, and ROCm release pipeline, grounded in what ROCm/TheRock runs in the open today: Terraform IaC, self-hosted GitHub Actions runners, HSM firmware signing, and hardware-in-the-loop validation on real AMD Instinct silicon.
                             </p>
-                            <div class="blog-card-footer">
-                                <span class="post-date">July 2026</span>
-                                <span class="reading-time"><i class="fas fa-clock"></i> 40 min read</span>
-                            </div>
                         </div>
+                        <i class="fas fa-arrow-right row-arrow" aria-hidden="true"></i>
                     </article>
-                    <!-- MLOps / LLMOps Reference Paper Card -->
-                    <article class="blog-card" data-category="gpu">
-                        <div class="blog-card-image">
-                            <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80" alt="MLOps LLMOps AI Governance">
-                            <span class="post-category">MLOps / LLMOps</span>
+
+                    <article class="post-row" data-category="gpu">
+                        <div class="entry-meta">
+                            <span>Jun 2026</span>
+                            <span>45 min read</span>
                         </div>
-                        <div class="blog-card-content">
+                        <div>
+                            <p class="entry-category">MLOps / LLMOps</p>
                             <h3><a href="MLOps_LLMOps_Reference_Paper.html">MLOps &amp; LLMOps: Unified Governance for Industrial AI</a></h3>
                             <p class="post-excerpt">
-                                IEEE reference architecture paper unifying classic ML and generative AI under one governance plane — covering drift taxonomy, RAG vs. agentic patterns, evaluator bias correction, and edge-aware continuous delivery for manufacturing environments.
+                                IEEE reference architecture paper unifying classic ML and generative AI under one governance plane: drift taxonomy, RAG vs. agentic patterns, evaluator bias correction, and edge-aware continuous delivery for manufacturing environments.
                             </p>
-                            <div class="blog-card-footer">
-                                <span class="post-date">June 2026</span>
-                                <span class="reading-time"><i class="fas fa-clock"></i> 45 min read</span>
-                            </div>
                         </div>
+                        <i class="fas fa-arrow-right row-arrow" aria-hidden="true"></i>
                     </article>
-                    <!-- NVIDIA RAPIDS ADI Card -->
-                    <article class="blog-card" data-category="gpu">
-                        <div class="blog-card-image">
-                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&q=80" alt="NVIDIA RAPIDS GPU Computing">
-                            <span class="post-category">GPU/ML Infra</span>
+
+                    <article class="post-row" data-category="mobile">
+                        <div class="entry-meta">
+                            <span>Jun 2026</span>
+                            <span>55 min read</span>
                         </div>
-                        <div class="blog-card-content">
-                            <h3><a href="NVIDIA_RAPIDS_ADI.html">NVIDIA RAPIDS Engineering Deep Dive</a></h3>
-                            <p class="post-excerpt">
-                                Comprehensive technical reference for NVIDIA RAPIDS — GPU-accelerated data science and analytics. Covers cuDF, cuML, cuGraph, packaging, CUDA internals, and real-world GPU infrastructure engineering.
-                            </p>
-                            <div class="blog-card-footer">
-                                <span class="post-date">March 2026</span>
-                                <span class="reading-time"><i class="fas fa-clock"></i> 60 min read</span>
-                            </div>
-                        </div>
-                    </article>
-                    <!-- iOS Release Engineering Card -->
-                    <article class="blog-card" data-category="mobile">
-                        <div class="blog-card-image">
-                            <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80" alt="iOS Release Engineering CI/CD">
-                            <span class="post-category">Mobile DevOps</span>
-                        </div>
-                        <div class="blog-card-content">
+                        <div>
+                            <p class="entry-category">Mobile DevOps</p>
                             <h3><a href="iOS_Release_Engineering.html">iOS Release Engineering: End-to-End Deployment Architecture</a></h3>
                             <p class="post-excerpt">
-                                Enterprise iOS CI/CD reference — build pipelines on macOS agents, Fastlane match code signing automation, multi-environment xcconfig promotion, TestFlight staged rollouts, App Store Connect API integration, feature flags, and production rollback runbooks.
+                                Enterprise iOS CI/CD reference: build pipelines on macOS agents, Fastlane match code signing automation, multi-environment xcconfig promotion, TestFlight staged rollouts, App Store Connect API integration, feature flags, and production rollback runbooks.
                             </p>
-                            <div class="blog-card-footer">
-                                <span class="post-date">June 2026</span>
-                                <span class="reading-time"><i class="fas fa-clock"></i> 55 min read</span>
-                            </div>
                         </div>
+                        <i class="fas fa-arrow-right row-arrow" aria-hidden="true"></i>
                     </article>
-                    <!-- NVIDIA Isaac ROS DevOps Card -->
-                    <article class="blog-card" data-category="gpu">
-                        <div class="blog-card-image">
-                            <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80" alt="NVIDIA Isaac ROS Robotics">
-                            <span class="post-category">Robotics / CI-CD</span>
+
+                    <article class="post-row" data-category="gpu">
+                        <div class="entry-meta">
+                            <span>May 2026</span>
+                            <span>75 min read</span>
                         </div>
-                        <div class="blog-card-content">
+                        <div>
+                            <p class="entry-category">Robotics / CI-CD</p>
                             <h3><a href="NVIDIA_Isaac_ROS_DevOps.html">NVIDIA Isaac ROS DevOps Engineering Deep Dive</a></h3>
                             <p class="post-excerpt">
-                                Comprehensive technical reference for Isaac ROS CI/CD — ROS 2 Humble/Jazzy build systems, NITROS acceleration, multi-arch Docker pipelines, NGC image publishing, and 41 IsaacLab audit findings with remediation patterns.
+                                Comprehensive technical reference for Isaac ROS CI/CD: ROS 2 Humble/Jazzy build systems, NITROS acceleration, multi-arch Docker pipelines, NGC image publishing, and 41 IsaacLab audit findings with remediation patterns.
                             </p>
-                            <div class="blog-card-footer">
-                                <span class="post-date">May 2026</span>
-                                <span class="reading-time"><i class="fas fa-clock"></i> 75 min read</span>
-                            </div>
                         </div>
+                        <i class="fas fa-arrow-right row-arrow" aria-hidden="true"></i>
+                    </article>
+
+                    <article class="post-row" data-category="gpu">
+                        <div class="entry-meta">
+                            <span>Mar 2026</span>
+                            <span>60 min read</span>
+                        </div>
+                        <div>
+                            <p class="entry-category">GPU / ML Infra</p>
+                            <h3><a href="NVIDIA_RAPIDS_ADI.html">NVIDIA RAPIDS Engineering Deep Dive</a></h3>
+                            <p class="post-excerpt">
+                                Comprehensive technical reference for NVIDIA RAPIDS, GPU-accelerated data science and analytics. Covers cuDF, cuML, cuGraph, packaging, CUDA internals, and real-world GPU infrastructure engineering.
+                            </p>
+                        </div>
+                        <i class="fas fa-arrow-right row-arrow" aria-hidden="true"></i>
                     </article>
                 </div>
 
-<!-- Newsletter Section -->
-                <div class="newsletter-section">
-                    <h3>Stay <span>Updated</span></h3>
-                    <p>Get notified when I publish new articles on DevOps, SRE, and cloud infrastructure.</p>
-                    <div class="medium-cta">
-                        <p>Follow me on</p>
-                        <a href="https://medium.com/@schundu" target="_blank" class="btn">
-                            <i class="fab fa-medium"></i> Medium
-                        </a>
+                <!-- Empty filter state -->
+                <div class="empty-state" hidden>
+                    No posts in this category yet. <button type="button" id="reset-filter">View all posts</button>
+                </div>
+
+                <!-- Outro -->
+                <div class="blog-outro">
+                    <div>
+                        <h3>New posts land here first.</h3>
+                        <p>Longer essays and cross-posts are on Medium.</p>
                     </div>
+                    <a href="https://medium.com/@schundu" target="_blank" class="btn btn-outline">
+                        <i class="fab fa-medium" aria-hidden="true"></i> Follow on Medium
+                    </a>
                 </div>
             </div>
         </section>
@@ -717,7 +537,6 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="../assets/js/firebase-config.js"></script>
     <script src="../assets/js/auth.js"></script>
 
@@ -740,38 +559,45 @@
 
         // Category Filter
         const filterBtns = document.querySelectorAll('.filter-btn');
-        const blogCards = document.querySelectorAll('.blog-card');
-        const featuredPost = document.querySelector('.featured-post');
+        const entries = document.querySelectorAll('.featured-post, .post-row');
+        const indexLabel = document.getElementById('index-label');
+        const emptyState = document.querySelector('.empty-state');
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Update active button
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+        function applyFilter(filter) {
+            filterBtns.forEach(b => {
+                const active = b.dataset.filter === filter;
+                b.classList.toggle('active', active);
+                b.setAttribute('aria-pressed', String(active));
+            });
 
-                const filter = btn.dataset.filter;
+            let visibleRows = 0;
+            let anyVisible = false;
 
-                // Filter cards
-                blogCards.forEach(card => {
-                    if (filter === 'all' || card.dataset.category === filter) {
-                        card.style.display = 'flex';
-                        card.style.animation = 'fadeInUp 0.4s ease forwards';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-
-                // Filter featured post
-                if (featuredPost) {
-                    if (filter === 'all' || featuredPost.dataset.category === filter) {
-                        featuredPost.style.display = 'grid';
-                        featuredPost.style.animation = 'fadeInUp 0.4s ease forwards';
-                    } else {
-                        featuredPost.style.display = 'none';
+            entries.forEach(entry => {
+                const show = filter === 'all' || entry.dataset.category === filter;
+                entry.style.display = show ? '' : 'none';
+                if (show) {
+                    anyVisible = true;
+                    if (entry.classList.contains('post-row')) visibleRows++;
+                    if (!prefersReducedMotion) {
+                        entry.style.animation = 'none';
+                        void entry.offsetWidth;
+                        entry.style.animation = 'rise 0.35s cubic-bezier(0.22, 1, 0.36, 1)';
                     }
                 }
             });
+
+            indexLabel.textContent = 'Index / ' + String(visibleRows).padStart(2, '0') + (visibleRows === 1 ? ' entry' : ' entries');
+            indexLabel.style.display = visibleRows > 0 ? '' : 'none';
+            emptyState.hidden = anyVisible;
+        }
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
         });
+
+        document.getElementById('reset-filter').addEventListener('click', () => applyFilter('all'));
     </script>
     <!-- Neural Network Background -->
     <script src="../assets/js/neural-bg.js"></script>
