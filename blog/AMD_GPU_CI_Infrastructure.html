@@ -11,10 +11,10 @@
 </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AMD GPU Stack CI Infrastructure — Grounded in ROCm/TheRock | Sudhakar Chundu</title>
+<title>AMD GPU Stack CI Infrastructure — Design Reference &amp; ROCm/TheRock Field Analysis | Sudhakar Chundu</title>
 <meta name="author" content="Sudhakar Chundu" />
-<meta name="description" content="An end-to-end CI infrastructure reference for AMD's unified GPU stack (firmware + kernel driver + ROCm), grounded in ROCm/TheRock's real workflows — Terraform IaC, self-hosted GitHub Actions runners, ccache/DVC build acceleration, HSM signing, hardware-in-the-loop on AMD Instinct, plus a 30/60/90 plan to own AMD CI." />
-<meta name="keywords" content="AMD, ROCm, TheRock, CI/CD, GitHub Actions, Terraform, self-hosted runners, ccache, DVC, firmware signing, HSM, KMS, hardware-in-the-loop, LKG, DevOps, Cloud Security" />
+<meta name="description" content="An end-to-end CI infrastructure reference for AMD's unified GPU stack (firmware + kernel driver + ROCm), set against a field analysis of what ROCm/TheRock actually runs today — ARC runner scale sets on Kubernetes (EKS/AKS), ~12k lines of Python that generate GitHub Actions matrices via fromJSON, OIDC role assumption, sccache against an in-cluster bazel-remote, SHA-pinned supply-chain controls — plus an honest ROI verdict on buildx/BuildKit, BuildKite and Bazel." />
+<meta name="keywords" content="AMD, AMD Instinct, MI300X, MI325X, Radeon, gfx targets, gfx942, gfx1100, ROCm, TheRock, CI/CD, GitHub Actions, Actions Runner Controller, ARC, Kubernetes, EKS, AKS, Karpenter, OIDC, IAM role assumption, buildx, BuildKit, registry cache, sccache, ccache, bazel-remote, remote build cache, BuildKite, dynamic pipelines, Bazel, Terraform, self-hosted runners, reusable workflows, dynamic matrix, gitleaks, CodeQL, actionlint, zizmor, Dependabot, SBOM, firmware signing, HSM, KMS, hardware-in-the-loop, LKG, DevOps, Cloud Security" />
 <link rel="icon" type="image/x-icon" href="../favicon.ico" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -195,7 +195,8 @@
       <a href="#s5">CI/CD</a>
       <a href="#s6">Signing</a>
       <a href="#s8">Hardware</a>
-      <a href="#s13">Why me</a>
+      <a href="#s10">Modernize</a>
+      <a href="#s14">Why me</a>
       <a href="https://www.sudhakarchundu.org/">Home</a>
     </nav>
   </div>
@@ -205,7 +206,7 @@
   <div class="wrap">
     <p class="eyebrow">DevOps · Cloud Security · AI-Assisted Engineering</p>
     <h1>Owning CI for AMD's unified GPU stack</h1>
-    <p class="lede">A complete, high-ownership reference for the CI infrastructure behind a GPU <b>firmware + kernel driver + ROCm</b> release pipeline — grounded in what <b>ROCm/TheRock</b> runs in the open today: nightly integration builds across GPU families, self-hosted runners on Linux and native Windows, ccache/DVC build acceleration, HSM firmware signing, and hardware-in-the-loop validation on real AMD Instinct silicon — with a Last-Known-Good manifest and a 30/60/90 plan to own it end-to-end.</p>
+    <p class="lede">Two documents in one. First, a complete high-ownership <b>design reference</b> for the CI infrastructure behind a GPU <b>firmware + kernel driver + ROCm</b> release pipeline: Terraform IaC, self-hosted runners, HSM signing, hardware-in-the-loop on real AMD Instinct silicon, and a Last-Known-Good manifest. Second, a <b>field analysis</b> of what <b>ROCm/TheRock</b> actually runs in the open today — <b>ARC</b> runner scale sets on <b>Kubernetes (EKS/AKS)</b>, ~12k lines of Python that generate Actions matrices, <b>OIDC</b> role assumption instead of long-lived keys, and <b>sccache</b> against an in-cluster <b>bazel-remote</b>. Where the two disagree, I say so — and I close with an honest ROI verdict on <b>buildx/BuildKit</b>, <b>BuildKite</b> and <b>Bazel</b>: adopt, evaluate, don't.</p>
 
     <div class="cistrip" aria-label="CI status, modeled on ROCm/TheRock live workflows">
       <span class="badge"><i></i>ci.yml · passing</span>
@@ -222,7 +223,7 @@
         <div class="who">Sudhakar Chundu</div>
         <div class="role">Platform / CI &amp; Build-Infrastructure Engineer</div>
       </div>
-      <div class="meta">Revised July 2026<br>13 sections · 2 diagrams<br>~40 min read</div>
+      <div class="meta">Revised July 2026<br>14 sections · 3 diagrams<br>~55 min read</div>
     </div>
 
     <div class="stats">
@@ -243,22 +244,23 @@
         <h4>Overview</h4>
         <a href="#s1"><span class="sn">01</span>Scope &amp; ownership</a>
         <a href="#s2"><span class="sn">02</span>System architecture</a>
-        <a href="#s3"><span class="sn">03</span>Grounded in TheRock</a>
+        <a href="#s3"><span class="sn">03</span>What TheRock actually runs</a>
         <h4>Infrastructure</h4>
         <a href="#s4"><span class="sn">04</span>Terraform IaC</a>
         <a href="#s5"><span class="sn">05</span>GitHub Actions CI/CD</a>
         <h4>Security</h4>
-        <a href="#s6"><span class="sn">06</span>Signing &amp; provenance</a>
-        <a href="#s7"><span class="sn">07</span>Encryption &amp; compliance</a>
+        <a href="#s6"><span class="sn">06</span>Signing, OIDC &amp; provenance</a>
+        <a href="#s7"><span class="sn">07</span>Encryption &amp; supply chain</a>
         <h4>Operations</h4>
         <a href="#s8"><span class="sn">08</span>Hardware-in-the-loop</a>
         <a href="#s9"><span class="sn">09</span>Playbook &amp; runbooks</a>
         <h4>Delivery</h4>
-        <a href="#s10"><span class="sn">10</span>Roadmap</a>
-        <a href="#s11"><span class="sn">11</span>KPIs</a>
+        <a href="#s10"><span class="sn">10</span>Modernization plan</a>
+        <a href="#s11"><span class="sn">11</span>Roadmap</a>
+        <a href="#s12"><span class="sn">12</span>KPIs</a>
         <h4>Engineering</h4>
-        <a href="#s12"><span class="sn">12</span>AI-assisted engineering</a>
-        <a href="#s13"><span class="sn">13</span>Why I'm the fit</a>
+        <a href="#s13"><span class="sn">13</span>AI-assisted engineering</a>
+        <a href="#s14"><span class="sn">14</span>Why I'm the fit</a>
       </nav>
     </aside>
 
@@ -267,7 +269,9 @@
 
       <div class="note blue" style="margin-top:0">
         <span class="tag">What changed in this revision</span>
-        Re-grounded against <a href="https://github.com/ROCm/TheRock" target="_blank" rel="noopener">ROCm/TheRock</a>'s real workflows and build system; added a JD-to-reality mapping (§3); corrected the GPU-test tier from an AWS NVIDIA instance to self-hosted <strong>AMD Instinct</strong> bare-metal (you can't validate AMD firmware on NVIDIA silicon); and added a 30/60/90 ownership plan (§13). Every code card is collapsed by default — expand what you want to read.
+        This post used to be a purely modeled architecture. It still is — but I went and read the actual <a href="https://github.com/ROCm/TheRock" target="_blank" rel="noopener">ROCm/TheRock</a> <code>.github/</code> and <code>build_tools/</code> trees, and the real system differs from my model in ways worth publishing. Runners are <strong>ARC scale sets on Kubernetes</strong>, not directly-provisioned EC2 (§2). The build matrix is <strong>generated by ~12,350 lines of Python</strong> and string-injected into Actions via <code>fromJSON()</code> (§3, §5). Auth is <strong>OIDC</strong>, not instance profiles (§6). Caching is <strong>sccache against an in-cluster bazel-remote</strong> (§5). I've added a new §10 with honest verdicts on buildx, BuildKite and Bazel — one adopt, one evaluate, one <em>don't</em>.
+        <br><br>
+        <strong>Read the labels.</strong> Throughout, <span class="pill">modeled</span> marks my design; <span class="pill pass">confirmed</span> marks what TheRock demonstrably does; <span class="pill run">inferred</span> marks a reasonable deduction I could not confirm from the repo alone. Every code card is collapsed by default — expand what you want to read.
       </div>
 
       <!-- 1 -->
@@ -275,6 +279,10 @@
         <div class="shead"><span class="sn">01</span><h2>Scope &amp; ownership model</h2></div>
         <p>This reference describes the complete CI infrastructure for a GPU stack release pipeline where <strong>firmware, kernel driver, and the ROCm compute runtime must be validated together</strong> across a fleet of GPU products. It is deliberately high-ownership: one platform engineer designs the architecture, provisions everything as code with Terraform, secures every layer (encryption, signing, audit logging), and owns reliability targets — a &gt;95% nightly pass-rate and a &lt;24h mean-time-to-detect on regressions.</p>
         <p>The AMD role is explicit that <strong>nobody else on the team is currently focused on CI</strong> — so this is about setting direction and shipping the automation everything else depends on, not maintaining someone else's system.</p>
+
+        <h4 class="mini">A note on what is modeled and what is real</h4>
+        <p>The architecture in §2, §4, §6 and §7 is a <span class="pill">modeled</span> design: directly-provisioned EC2 runners, instance profiles, CloudHSM signing, an LKG manifest. It is one coherent, defensible way to build this, and I stand behind it. But TheRock is open source, so I don't have to guess at the alternative — I can read it. Where the real system made a different call, I show both and argue the tradeoff rather than quietly retrofitting my design to match.</p>
+        <p>The single biggest divergence: <strong>my model provisions EC2 instances and registers them as runners; TheRock runs Actions Runner Controller scale sets on Kubernetes and gets an ephemeral pod per job.</strong> Neither is wrong. They optimize for different things, and §2 lays out which pressures push you toward each. A platform engineer who can only defend one of the two isn't doing architecture — they're doing preference.</p>
 
         <h4 class="mini">Three core responsibilities</h4>
         <div class="grid4">
@@ -307,11 +315,11 @@ flowchart TD
   A["Source repos<br/>compiler · runtime · math-libs · ml-libs · firmware"] --> B{Trigger}
   B -->|Pull request| C["Pre-submit<br/>&lt;10 min SLA"]
   B -->|Nightly cron| D["Nightly integration<br/>full super-build"]
-  C --> E["Self-hosted runners<br/>EC2 · Linux + Windows · private subnets"]
+  C --> E["Build runners (modeled)<br/>AMD EPYC c6a/c7a · Linux + Windows"]
   D --> E
-  E --> F["Firmware / driver build<br/>EC2 · ccache + DVC caches"]
+  E --> F["Firmware / driver build<br/>sccache · remote cache"]
   E --> G["ROCm super-build<br/>CMake + Ninja · gfx families"]
-  E --> H["HITL validation<br/>bare-metal AMD Instinct lab"]
+  E --> H["HITL pools<br/>Instinct MI300X gfx942 · Radeon RX 7900 XTX gfx1100"]
   F --> I[("Artifacts<br/>S3 · KMS · versioned · immutable")]
   G --> I
   H --> I
@@ -329,12 +337,71 @@ flowchart TD
           <li><strong>Real AMD Instinct silicon</strong> for hardware-in-the-loop, which lives in a bare-metal lab, not a cloud instance.</li>
         </ul>
         <div class="note"><span class="tag">JD alignment</span>This is exactly the "runner provisioning problem" the role calls out: standard cloud runners can't build firmware, so the work is provisioning self-hosted runners that handle NFS, signing pipelines, network permissions — and coordinating with IT on the real constraints.</div>
+
+        <h3>In the wild: ROCm/TheRock — how runners are actually provisioned</h3>
+        <div class="note blue"><span class="tag">Reading the labels</span>Everything above this heading is my <span class="pill">modeled</span> design. Everything under an <strong>"In the wild: ROCm/TheRock"</strong> heading is a reading of the <a href="https://github.com/ROCm/TheRock" target="_blank" rel="noopener">public, MIT-licensed ROCm/TheRock repository</a>, <strong>analyzed as of July 2026 on <code>main</code></strong>. I have no insider knowledge of AMD's infrastructure; everything here is what the repo itself shows. Inside these sections, <span class="pill pass">confirmed</span> marks something the repo demonstrates directly and <span class="pill run">inferred</span> marks a reasonable deduction I could <em>not</em> verify from the repo alone. The distinction is not decoration — one of these I'd bet a design on, the other I'd go ask a maintainer about.</div>
+
+        <p>TheRock does not register EC2 instances directly as GitHub Actions runners. It uses <strong><a href="https://github.com/actions/actions-runner-controller" target="_blank" rel="noopener">Actions Runner Controller</a> (ARC) scale sets on Kubernetes</strong> <span class="pill pass">confirmed</span>. A listener pod watches the Actions job queue for its scale set; when a job is dispatched, ARC creates an <strong>ephemeral runner pod</strong> that executes exactly one job and is then destroyed. The evidence is in the repo's own operational documentation: runners live in an <code>arc-runners</code> namespace, and the documented way to inspect a running build is <code>kubectl exec</code> into the runner pod, not <code>ssh</code> into a host. For the <strong>Windows</strong> fleet, the backing cluster is <strong>AKS</strong> <span class="pill pass">confirmed</span>.</p>
+
+        <p>For <strong>Linux</strong>, I'd expect the equivalent on AWS — likely <strong>EKS</strong> — by parallel construction with the Windows fleet, but I want to be scrupulous here: <strong>I did not find an explicit <code>EKS</code> string in the repo</strong> <span class="pill run">inferred</span>. Treat it as a hypothesis, not a finding.</p>
+
+        <p>One layer further down, the honest answer is <strong>I don't know, and neither does the repo</strong>. TheRock is the <em>workload</em> repository — it contains no runner infrastructure-as-code. Cluster and node configuration live somewhere else entirely. So whether the node layer uses Karpenter, the Cluster Autoscaler, or plain managed node groups, and whether it runs spot or on-demand, is <strong>unconfirmed</strong> <span class="pill run">inferred</span>. What I <em>can</em> say architecturally is the part people miss when they skim ARC: <em>the virtual machines don't disappear.</em> They move. The ASG-equivalent elasticity that my model places at the runner layer, an ARC design places at the Kubernetes node layer — and the runner becomes a pod scheduled onto it.</p>
+
+        <div class="diagram">
+          <div class="cap">Figure 2 — Runner provisioning: modeled EC2 vs. ARC-on-Kubernetes in the wild</div>
+          <pre class="mermaid">
+flowchart LR
+  Q["GitHub Actions<br/>job queued"]
+
+  subgraph MOD["MODELED — directly-provisioned EC2"]
+    M1["Long-lived EC2 runner<br/>AMD EPYC · private subnet"] --> M2["Instance profile<br/>attached IAM role"]
+    M1 --> M3["Persistent ccache volume<br/>survives across jobs"]
+  end
+
+  subgraph ACT["IN THE WILD — ARC scale set on Kubernetes"]
+    A1["ARC listener<br/>namespace: arc-runners"] --> A2["Ephemeral runner POD<br/>one job, then destroyed"]
+    A2 --> A3["Windows: AKS<br/>confirmed"]
+    A2 --> A4["Linux: AWS k8s, likely EKS<br/>INFERRED"]
+    A3 --> A5["Node layer + autoscaling<br/>UNCONFIRMED — lives in a separate infra repo"]
+    A4 --> A5
+    A2 --> A6["Actions OIDC token<br/>sts:AssumeRoleWithWebIdentity"]
+    A2 --> A7["bazel-remote cache server<br/>in-cluster · NOT Bazel the build system"]
+  end
+
+  Q --> M1
+  Q --> A1
+          </pre>
+        </div>
+
+        <h4 class="mini">The tradeoff, stated honestly</h4>
+        <div class="tbl-scroll">
+        <table class="tbl">
+          <thead><tr><th>Dimension</th><th>Directly-provisioned EC2 <span class="pill">modeled</span></th><th>ARC on Kubernetes <span class="pill pass">in the wild</span></th></tr></thead>
+          <tbody>
+            <tr><td><strong>Job isolation</strong></td><td>Weak by default. Jobs share a host; a poisoned <code>~/.cache</code> or a leaked <code>/tmp</code> file can cross job boundaries. Needs deliberate cleanup.</td><td><strong>Strong.</strong> Pod per job, destroyed on completion. Cross-job contamination is structurally prevented rather than policed.</td></tr>
+            <tr><td><strong>Elasticity</strong></td><td>Coarse. Scaling means booting an instance and registering a runner — minutes.</td><td><strong>Two-tier.</strong> Pods schedule in seconds onto warm nodes; nodes scale underneath on their own clock.</td></tr>
+            <tr><td><strong>Cache locality</strong></td><td><strong>Better by default.</strong> A persistent EBS ccache volume rides with the instance. Warm cache is the resting state.</td><td>Cold by construction — an ephemeral pod inherits nothing. Which is precisely <em>why</em> a shared remote cache exists here (§5c). The constraint produced the better long-run design.</td></tr>
+            <tr><td><strong>Operational surface</strong></td><td><strong>Small.</strong> EC2, an autoscaling group, cloud-init. Any infra engineer can debug it.</td><td>Larger. You own a Kubernetes cluster, a controller, and its upgrade cadence — justified when you already run Kubernetes, expensive when you don't.</td></tr>
+            <tr><td><strong>Multi-OS</strong></td><td>Uniform model, separate AMIs.</td><td>Windows on AKS <span class="pill pass">confirmed</span>; Linux on an AWS equivalent <span class="pill run">inferred</span>. Two control planes is a real cost, and also the pragmatic way to get first-class Windows runners.</td></tr>
+            <tr><td><strong>AMD Instinct GPU tier</strong></td><td colspan="2">Orthogonal to both. MI-series test pools are their own hardware story — see §8.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="note blue"><span class="tag">My read</span>These optimize for different things, and the ARC choice is the right one <em>for this repo</em>. TheRock is a public project accepting pull requests from untrusted forks. In that setting, per-job isolation stops being a hygiene nicety and becomes the security boundary — and an ephemeral pod gives it to you structurally, rather than by remembering to clean <code>/tmp</code>. My EC2 model is the one I'd reach for on a private repo with a trusted contributor set, where the operational surface of a Kubernetes cluster buys you little. <strong>The right answer is a function of your threat model, not your taste.</strong> Worth noticing, too: accepting the ephemeral pod <em>forces</em> a shared remote cache, which is the better architecture anyway. Constraints breed good design more reliably than preferences do.</div>
       </section>
 
       <!-- 3  NEW: grounded in TheRock -->
       <section id="s3">
-        <div class="shead"><span class="sn">03</span><h2>Grounded in ROCm/TheRock — what AMD runs today</h2></div>
-        <p>This isn't a hypothetical. AMD's unified GPU-stack build system, <a href="https://github.com/ROCm/TheRock" target="_blank" rel="noopener">ROCm/TheRock</a> ("The HIP Environment and ROCm Kit"), is public. It's a <strong>CMake super-project</strong> that assembles the compiler toolchain, HIP/OpenCL/core runtime, math libraries, ML libraries (MIOpen), communication libraries (RCCL), and profilers into one coherent build — the same "full recipe" the role is about. Below is what the repo actually does, and where I'd plug in.</p>
+        <div class="shead"><span class="sn">03</span><h2>In the wild: what ROCm/TheRock runs today</h2></div>
+        <p>This isn't a hypothetical. AMD's unified GPU-stack build system, <a href="https://github.com/ROCm/TheRock" target="_blank" rel="noopener">ROCm/TheRock</a> ("The HIP Environment and ROCm Kit"), is a public, MIT-licensed repository. It's a <strong>CMake superbuild</strong> in C++/HIP that assembles the compiler toolchain, HIP/OpenCL/core runtime, math libraries, ML libraries (MIOpen), communication libraries (RCCL), and profilers into one coherent build — the same "full recipe" this post is about.</p>
+
+        <div class="note blue"><span class="tag">Provenance and shelf-life</span>Everything in this section is read from the public repository, <strong>analyzed as of July 2026 on <code>main</code></strong>. I have no insider knowledge of AMD's infrastructure, and I've written none of the snippets in this post by copying theirs — the code cards are my own illustrative reconstructions of the <em>patterns</em>, not excerpts. The repo is also <strong>mid-migration</strong>: a <code>multi_arch_*</code> path is actively superseding an older one, so file counts and structure will drift. Read this as a snapshot, not a permanent fact. <span class="pill pass">confirmed</span> = the repo shows it directly; <span class="pill run">inferred</span> = my deduction, which I could not verify from the repo alone.</div>
+
+        <h4 class="mini">What this stack gets right</h4>
+        <p>Start here, because it's the honest headline: <strong>this is a well-run CI system.</strong> It authenticates to AWS with OIDC role assumption and no long-lived keys. It pins every third-party action to a commit SHA. It generates its build matrix as code instead of hand-maintaining a combinatorial explosion of YAML. It has already factored 38 of its 54 workflows into reusable <code>workflow_call</code> units. It runs a shared remote build cache. It layers gitleaks, CodeQL, Dependabot and a dedicated security pre-commit hook set. Each of those is a decision I've watched well-funded commercial teams fail to make. The sections below are about <em>where a system this mature goes next</em> — not about anything being wrong.</p>
+
+        <div class="note"><span class="tag">The detail that governs everything downstream</span>The superbuild does not run in a <code>docker build</code>. It runs <em>inside</em> a manylinux container invoked with <code>docker run</code> / <code>podman run</code> <span class="pill pass">confirmed</span>. That single fact governs the whole caching strategy: because the compile is not a Docker layer, <strong>BuildKit's layer cache cannot touch it</strong>, and compiler caching has to be solved separately with sccache/ccache. It also means the container image is a mostly-static input that <em>is</em> an excellent fit for BuildKit. Two different caching problems wearing the same word. §5 and §10 pull them apart, because conflating them is how buildx gets adopted for the wrong reason and then blamed for not delivering.</div>
 
         <h4 class="mini">The real workflows (from the repo's own status badges)</h4>
         <div class="tbl-scroll">
@@ -358,9 +425,9 @@ flowchart TD
           <thead><tr><th>What TheRock does today</th><th>Why it matters for CI ownership</th><th>What I'd own / bring</th></tr></thead>
           <tbody>
             <tr>
-              <td><strong>ccache with <code>--offload-compress</code></strong> for AMDGPU device code (via <code>setup_ccache.py</code>), plus <strong>DVC</strong> caching of pre-compiled MIOpen kernels.</td>
-              <td>On a full super-build, cache hit-rate <em>is</em> the nightly wall-clock. Cold caches turn a nightly into a multi-hour job.</td>
-              <td>Treat <strong>cache hit-rate as a first-class SLO</strong>: persistent ccache volumes on self-hosted runners, a shared DVC remote on S3, and dashboards that alarm on hit-rate regressions.</td>
+              <td><strong>sccache/ccache backed by a <code>bazel-remote</code> cache server running in-cluster</strong> <span class="pill pass">confirmed</span>, plus <strong>DVC</strong> caching of pre-compiled MIOpen kernels and <code>--offload-compress</code> for AMDGPU device code.</td>
+              <td>On a full superbuild, cache hit-rate <em>is</em> the nightly wall-clock. Because ARC runner pods are ephemeral (§2), a local-disk cache dies with the pod — the shared remote isn't an optimization, it's load-bearing. Note: <code>bazel-remote</code> here is a <em>remote-cache server</em> speaking the HTTP/gRPC cache protocol. <strong>Nobody is using Bazel-the-build-system.</strong> The name misleads.</td>
+              <td>Treat <strong>cache hit-rate as a first-class SLO</strong>, exported as a metric per job rather than read out of logs. Alarm on hit-rate regression, not just wall-clock — a hit-rate cliff predicts a slow nightly hours before the nightly is slow.</td>
             </tr>
             <tr>
               <td><strong>Multi-distro Linux + native Windows</strong> (VS 2022, PowerShell); Python 84% / CMake 11% of the tree.</td>
@@ -390,7 +457,37 @@ flowchart TD
           </tbody>
         </table>
         </div>
-        <div class="note green"><span class="tag">The through-line</span>TheRock is Python-first, CMake/Ninja, cache-sensitive, multi-OS, multi-arch, dashboard-driven, and already AI-in-the-loop. That is my exact toolbox — Python as primary language, multi-cloud IaC, GitHub Actions <em>and</em> GitLab CI, GPU provisioning, and agentic MCP tooling. I'd be productive against this stack in week one, not month three.</div>
+        <h3>The orchestration layer is a shadow build system</h3>
+        <p>This is the finding that reframed the whole analysis for me. Count the code <span class="pill pass">confirmed</span>:</p>
+
+        <div class="stats" style="margin:22px 0">
+          <div class="stat"><div class="n">~12,350</div><div class="l">Lines of Python glue in <code>build_tools/github_actions/</code></div></div>
+          <div class="stat"><div class="n">46</div><div class="l">Scripts in that one directory</div></div>
+          <div class="stat"><div class="n">54</div><div class="l">Workflow files</div></div>
+          <div class="stat"><div class="n">~9,480</div><div class="l">Lines of YAML across them</div></div>
+          <div class="stat"><div class="n">38</div><div class="l">Reusable (<code>workflow_call</code>)</div></div>
+        </div>
+
+        <p>Those 46 Python scripts <strong>generate JSON build configurations that GitHub Actions consumes as matrices via <code>fromJSON()</code></strong> <span class="pill pass">confirmed</span>. Which GPU families build on which OS, against which Python versions, producing which artifacts, on which trigger — none of that is expressed in YAML. YAML is the <em>output format</em>. Python is the build system, and GitHub Actions is an executor of whatever JSON it is handed.</p>
+
+        <p>Let me be precise, because "12,000 lines of Python in CI" reads like an accusation and it isn't one. <strong>This layer exists because it has to.</strong> The native Actions matrix is a static cartesian product; the moment your build topology depends on the event type, the changed paths, the release channel, and a per-family capability table, the native matrix is simply not expressive enough. Every mature Actions monorepo grows this layer. TheRock's is large because its build topology is large. Config-as-code here is the <em>right call</em>, and the team made it before most would have.</p>
+
+        <p>The forward-looking opportunity is that a component this load-bearing has outgrown the tooling of a script. Four things it would get if it were treated as the product it has become:</p>
+        <ul>
+          <li><strong>A typed contract.</strong> The JSON crossing into <code>fromJSON()</code> is an untyped dict on the Python side and an untyped expression on the YAML side. A renamed key surfaces at 3am in the nightly rather than at review time.</li>
+          <li><strong>Local reproduction.</strong> Today a contributor answers "what will CI do with my PR?" by pushing and watching. A <code>--dry-run</code> mode would collapse that loop to sub-second — most valuable precisely when the change <em>is</em> to the matrix generator.</li>
+          <li><strong>Unit tests on the generator.</strong> The logic that decides what gets built is among the least-covered code in the repo. That inversion is worth correcting on its own.</li>
+          <li><strong>An explicit trust boundary.</strong> <code>fromJSON()</code> over a string produced by an upstream job is a data/code seam. It holds today because the inputs are internal and the authors are careful — but it's the kind of seam that rewards being made structural rather than cultural.</li>
+        </ul>
+
+        <div class="note"><span class="tag">The leverage point</span>Nothing else in this post moves the needle as much as <strong>hardening this Python layer into a product</strong> — typed models for the build-config contract, unit tests over the generator, and a <code>--dry-run</code>/<code>--event-file</code> mode. It is unglamorous, it ships in weeks rather than quarters, it introduces no vendor and no migration, and it turns the most consequential part of the system into the most inspectable. Concrete shape in §5(a); ROI argument in §10.</div>
+
+        <h4 class="mini">Incrementality: most of the way to content-addressing</h4>
+        <p>TheRock shards the superbuild into stages and reuses prior output via <code>prebuilt_stages</code> + a <code>baseline_run_id</code>, coordinated by <code>artifact_manager.py</code> against a declared <code>BUILD_TOPOLOGY.toml</code> <span class="pill pass">confirmed</span>. Notice what that is: a working, pragmatic implementation of <strong>staged incremental builds</strong> — the outcome Bazel is usually adopted to obtain — built without adopting Bazel.</p>
+        <p>The remaining gap is <code>baseline_run_id</code>: a human picks which prior CI run to inherit artifacts from. That's a cache key chosen by a person. It works, and it carries the failure mode you'd predict — choose a stale baseline and lower stages silently go unrebuilt.</p>
+        <p>The reflex is "so migrate to Bazel." I'd argue the opposite, and §10 makes the full case. The short version: <strong>the topology is already declared</strong> in <code>BUILD_TOPOLOGY.toml</code>. Deriving the stage set from that graph plus a diff needs a graph traversal, not a new build system. The goal isn't a different tool — it's to stop asking a human for the cache key.</p>
+
+        <div class="note green"><span class="tag">The through-line</span>TheRock is Python-first, CMake/Ninja, cache-sensitive, multi-OS, multi-arch, dashboard-driven, ARC-on-Kubernetes, OIDC-federated, and already AI-in-the-loop. That is my exact toolbox — Python as primary language, multi-cloud IaC, Kubernetes runner fleets, GitHub Actions <em>and</em> GitLab CI, GPU provisioning, and agentic MCP tooling. I'd be productive against this stack in week one, not month three.</div>
       </section>
 
       <!-- 4 -->
@@ -527,11 +624,14 @@ resource "aws_iam_instance_profile" "runner_profile" {
 
         <details class="code">
           <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg><span class="fname">runners.tf</span><span class="fdesc">Right-sized build runners on EC2 — GPU validation is bare-metal AMD Instinct, not cloud</span><span class="lang">hcl</span></summary>
-          <div class="body"><pre><code class="language-hcl"># Firmware builder (compute-optimized, encrypted EBS, ccache volume)
+          <div class="body"><pre><code class="language-hcl"># Firmware builder (compute-optimized AMD EPYC, encrypted EBS, ccache volume)
+# c6a = 3rd-gen AMD EPYC (Milan). Keeping the build fleet on EPYC keeps the
+# host platform consistent with the AMD target platform. Compare current
+# on-demand pricing for your region before committing to a family.
 resource "aws_instance" "firmware_builder" {
   count                  = var.runner_count["firmware"] # 3 instances
   ami                    = data.aws_ami.ubuntu_lts.id
-  instance_type          = "c6i.2xlarge"
+  instance_type          = "c6a.2xlarge"
   iam_instance_profile   = aws_iam_instance_profile.runner_profile.name
   subnet_id              = aws_subnet.runners_private[count.index % 2].id
   vpc_security_group_ids = [aws_security_group.runners.id]
@@ -553,9 +653,11 @@ resource "aws_instance" "firmware_builder" {
 }
 
 # ROCm super-build runner (CMake + Ninja + ccache, gfx-family matrix)
+# c7a = 4th-gen AMD EPYC (Genoa). The super-build is embarrassingly parallel
+# at the Ninja layer, so core count is the dominant lever on wall-clock.
 resource "aws_instance" "rocm_builder" {
   count         = var.runner_count["rocm"] # 2 instances
-  instance_type = "c6i.4xlarge"
+  instance_type = "c7a.4xlarge"
   root_block_device {
     volume_type = "gp3"
     volume_size = 300
@@ -564,11 +666,28 @@ resource "aws_instance" "rocm_builder" {
   }
 }
 
-# NOTE: GPU hardware-in-the-loop runs on SELF-HOSTED bare-metal AMD Instinct
-# hosts in the hardware lab (MI300X / MI250X / MI210 ...), registered as
-# GitHub Actions self-hosted runners. AMD firmware/driver validation cannot
-# run on a cloud NVIDIA instance — the silicon must be AMD. These hosts are
-# provisioned via config-management (Ansible), not Terraform/EC2.
+# ---------------------------------------------------------------------------
+# GPU TIER -- read this before looking for a GPU instance_type below.
+#
+# There is no aws_instance for the GPU tier, and that is deliberate.
+# AMD Instinct MI-series accelerators have NO standard AWS EC2 instance
+# family. There is no EC2 SKU to select. Do not model one.
+#
+# ROCm compute validation therefore runs on one of three places, and this
+# module registers them as GitHub Actions self-hosted runners rather than
+# creating them:
+#
+#   (a) Self-hosted BARE-METAL / on-prem Instinct nodes.
+#       Provisioned via config management (Ansible), not Terraform.
+#   (b) Azure ND MI300X v5 VMs. MI300X *is* cloud-available -- on Azure,
+#       not on AWS. Worth saying plainly: this tier is not bare-metal-only.
+#   (c) AMD Developer Cloud (MI300X / MI325X). The most on-brand option.
+#       Availability and SKU mix may change; verify before committing.
+#
+# Deliberately NOT used: the g4ad / Radeon Pro V520 family. It is a
+# graphics/workstation part, not a supported ROCm compute target. Using it
+# as a compute-CI runner would produce results that mean nothing.
+# ---------------------------------------------------------------------------
 resource "aws_ssm_parameter" "instinct_runner_registration_token" {
   name  = "/rocm-ci/instinct-lab/runner-token"
   type  = "SecureString"
@@ -597,9 +716,10 @@ resource "aws_security_group" "runners" {
         </details>
 
         <ul>
-          <li><strong>Compute-optimized builders</strong> — firmware/ROCm builds are CPU- and I/O-bound; larger EBS holds the ccache and Ninja build trees.</li>
+          <li><strong>Compute-optimized AMD EPYC builders</strong> — firmware/ROCm builds are CPU- and I/O-bound, not GPU-bound; <code>c6a</code>/<code>c7a</code> (EPYC Milan/Genoa) keep the build fleet on the same vendor ISA as the target platform, and larger EBS holds the ccache and Ninja build trees.</li>
           <li><strong>gp3 + encrypted</strong> — customer-managed KMS keys on every volume; ~20% cheaper than gp2 at a 3,000-IOPS baseline.</li>
-          <li><strong>GPU validation is bare-metal</strong> — AMD Instinct hosts in the lab, registered as self-hosted runners; provisioned via Ansible, coordinated with IT.</li>
+          <li><strong>The GPU tier is not EC2</strong> — AMD Instinct MI-series has no standard AWS EC2 instance family, so there is nothing to select. Validation runs on self-hosted bare-metal Instinct nodes, on <strong>Azure ND MI300X v5</strong> VMs, or on <strong>AMD Developer Cloud</strong> — registered as self-hosted runners, provisioned via Ansible rather than Terraform. Details in §8.</li>
+          <li><strong>Not <code>g4ad</code></strong> — the Radeon Pro V520 is a graphics/workstation part, not a supported ROCm compute target. It's the tempting wrong answer to "which AWS instance has an AMD GPU," and a compute-CI result from it would mean nothing.</li>
           <li><strong>Auto-shutdown</strong> — idle cloud runners terminated after 30 min via Lambda; baseline builders on Reserved Instances (40–50% savings).</li>
         </ul>
       </section>
@@ -702,21 +822,52 @@ jobs:
 
   hardware-validation:
     needs: build-all-components
-    runs-on: [self-hosted, instinct]        # bare-metal AMD Instinct lab
+    # Bare-metal AMD Instinct lab. MI-series is not an EC2 instance family --
+    # these are physical hosts registered as self-hosted runners.
+    runs-on: [self-hosted, "${{ matrix.runner_label }}"]
     strategy:
       matrix:
-        gpu: [MI300X, MI250X, MI210, MI100]
+        include:
+          # --- CDNA data-center accelerators (AMD Instinct) ---
+          - gpu: MI355X            # CDNA4
+            gfx: gfx950
+            runner_label: instinct-mi355x
+          - gpu: MI300X            # CDNA3
+            gfx: gfx942
+            runner_label: instinct-mi300x
+          - gpu: MI325X            # CDNA3
+            gfx: gfx942
+            runner_label: instinct-mi325x
+          - gpu: MI250X            # CDNA2
+            gfx: gfx90a
+            runner_label: instinct-mi250x
+          - gpu: MI210             # CDNA2
+            gfx: gfx90a
+            runner_label: instinct-mi210
+          # --- RDNA workstation / consumer (AMD Radeon) ---
+          - gpu: RadeonPRO_W7900   # RDNA3
+            gfx: gfx1100
+            runner_label: radeon-w7900
+          - gpu: RX7900XTX         # RDNA3
+            gfx: gfx1100
+            runner_label: radeon-rx7900xtx
+          - gpu: RX9070            # RDNA4
+            gfx: gfx1201
+            runner_label: radeon-rx9070
       max-parallel: 2
-      fail-fast: false                       # one family's failure ≠ block all
+      fail-fast: false                       # one family's failure != block all
     steps:
       - name: Flash firmware to GPU
         run: |
           python3 scripts/gpu_firmware_update.py \
             --gpu-model ${{ matrix.gpu }} \
-            --firmware ./artifacts/firmware.bin --verify
+            --gfx-target ${{ matrix.gfx }} \
+            --firmware ./artifacts/firmware-${{ matrix.gfx }}.bin --verify
       - name: Run GPU validation
         run: |
-          python3 test_harness.py --gpu-model ${{ matrix.gpu }} \
+          python3 test_harness.py \
+            --gpu-model ${{ matrix.gpu }} \
+            --gfx-target ${{ matrix.gfx }} \
             --output junit-${{ matrix.gpu }}.xml
       - uses: actions/upload-artifact@v4
         with: { name: hw-test-${{ matrix.gpu }}, path: junit-*.xml }
@@ -743,15 +894,396 @@ jobs:
           git commit -m "Update LKG: ${{ needs.build-all-components.outputs.firmware-digest }}"
           git push origin lkg-main</code></pre></div>
         </details>
-        <div class="note"><span class="tag">Design note</span><code>fail-fast: false</code> on the gfx-family matrix is deliberate — it mirrors TheRock's per-family releases, so a regression isolated to one architecture still lets the healthy families promote. The LKG job only runs on full green.</div>
+        <div class="note"><span class="tag">Design note</span><code>fail-fast: false</code> on the gfx-family matrix is deliberate — it mirrors TheRock's per-family releases, so a regression isolated to one architecture still lets the healthy families promote. The LKG job only runs on full green. Note that every entry carries its <code>gfx</code> target explicitly: MI300X and MI325X both compile to <code>gfx942</code>, so a green on one is <em>not</em> a green on the other at the hardware layer, even though they share a code object.</div>
+
+        <h3>(a) Dynamic matrices: when Python becomes the build system</h3>
+        <p>The workflows above use a static matrix, which is honest for a document but doesn't survive contact with a real build topology. TheRock's answer — ~12,350 lines of Python emitting JSON into <code>fromJSON()</code> (§3) — is the answer essentially every large Actions repo converges on. Here is the pattern, reduced to its skeleton.</p>
+
+        <details class="code">
+          <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg><span class="fname">.github/workflows/ci_dynamic_matrix.yml</span><span class="fdesc">A configure job generates JSON; downstream jobs fan out via fromJSON()</span><span class="lang">yaml</span></summary>
+          <div class="body"><pre><code class="language-yaml">name: CI (dynamic matrix)
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # The real build system: Python decides what gets built.
+  configure:
+    runs-on: ubuntu-24.04
+    outputs:
+      build-matrix: ${{ steps.gen.outputs.build-matrix }}
+      any-builds:   ${{ steps.gen.outputs.any-builds }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Generate build configuration
+        id: gen
+        run: |
+          python3 build_tools/github_actions/fetch_build_configurations.py \
+            --event-name "${{ github.event_name }}" \
+            --base-ref   "${{ github.event.pull_request.base.sha }}" \
+            --github-output "$GITHUB_OUTPUT"
+
+  build:
+    needs: configure
+    if: needs.configure.outputs.any-builds == 'true'
+    strategy:
+      fail-fast: false
+      # The string-injection boundary. Everything upstream of this line is
+      # untyped, and everything downstream trusts it completely.
+      matrix:
+        include: ${{ fromJSON(needs.configure.outputs.build-matrix) }}
+    uses: ./.github/workflows/build_linux_packages.yml
+    with:
+      amdgpu_family: ${{ matrix.amdgpu_family }}
+      runner_label:  ${{ matrix.runner_label }}
+    secrets: inherit</code></pre></div>
+        </details>
+
+        <p>Two things are true at once. This is <strong>the correct pattern</strong> — a static YAML matrix genuinely cannot express "build <code>gfx942</code> and <code>gfx1100</code> on Linux, <code>gfx1100</code> only on Windows, skip everything if only docs changed." And it is <strong>the part of the system with the most consequence and the least scaffolding</strong>: an untyped dict on one side of <code>fromJSON()</code>, an untyped expression on the other, and no way to inspect the result without pushing a commit. Those two facts aren't in tension — the pattern earned its place, and now it's earned some tooling.</p>
+
+        <h4 class="mini">Hardening it: type the contract, then make it runnable offline</h4>
+        <p>The fix is not a rewrite. It's giving the contract a name and a test.</p>
+
+        <details class="code">
+          <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg><span class="fname">build_tools/github_actions/build_config.py</span><span class="fdesc">Typed models for the JSON matrix contract + a --dry-run reproducer</span><span class="lang">python</span></summary>
+          <div class="body"><pre><code class="language-python">#!/usr/bin/env python3
+"""Typed contract for the JSON build matrix consumed by fromJSON()."""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+from typing import Literal
+
+from pydantic import BaseModel, Field, ValidationError
+
+Platform = Literal["linux", "windows"]
+
+
+class BuildEntry(BaseModel):
+    """One row of the GitHub Actions matrix. Renaming a field here is a
+    type error at review time instead of a 3am nightly failure."""
+
+    model_config = {"extra": "forbid", "frozen": True}
+
+    amdgpu_family: str = Field(pattern=r"^gfx[0-9a-z]+$")
+    platform: Platform
+    runner_label: str
+    test_runs_on: str | None = None
+    build_python_wheels: bool = False
+
+
+class BuildMatrix(BaseModel):
+    entries: tuple[BuildEntry, ...] = ()
+
+    def to_actions_json(self) -> str:
+        # Compact separators: this string is interpolated into YAML.
+        return json.dumps(
+            [e.model_dump(exclude_none=True) for e in self.entries],
+            separators=(",", ":"),
+        )
+
+
+def compute_matrix(event_name: str, changed_paths: list[str]) -> BuildMatrix:
+    """Pure function: (event, diff) -> matrix. No I/O, so it unit-tests."""
+    if all(p.startswith("docs/") for p in changed_paths) and changed_paths:
+        return BuildMatrix()  # docs-only PR: build nothing
+
+    entries = [
+        BuildEntry(
+            amdgpu_family="gfx942",
+            platform="linux",
+            runner_label="linux-build-epyc",
+            test_runs_on="instinct-mi300x",
+        ),
+        BuildEntry(
+            amdgpu_family="gfx1100",
+            platform="linux",
+            runner_label="linux-build-epyc",
+            test_runs_on="radeon-rx7900xtx",
+        ),
+    ]
+    if event_name != "pull_request":
+        entries.append(
+            BuildEntry(
+                amdgpu_family="gfx1100",
+                platform="windows",
+                runner_label="windows-build-arc",
+                build_python_wheels=True,
+            )
+        )
+    return BuildMatrix(entries=tuple(entries))
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--event-name", required=True)
+    ap.add_argument("--changed-path", action="append", default=[])
+    ap.add_argument("--github-output", help="Path to $GITHUB_OUTPUT")
+    ap.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Print the matrix a contributor's event would produce, locally.",
+    )
+    args = ap.parse_args()
+
+    try:
+        matrix = compute_matrix(args.event_name, args.changed_path)
+    except ValidationError as exc:
+        print(f"invalid build configuration:\n{exc}", file=sys.stderr)
+        return 1
+
+    payload = matrix.to_actions_json()
+
+    if args.dry_run or not args.github_output:
+        # "What will CI do with my PR?" -- answerable without pushing.
+        print(json.dumps(json.loads(payload), indent=2))
+        return 0
+
+    with open(args.github_output, "a", encoding="utf-8") as fh:
+        fh.write(f"build-matrix={payload}\n")
+        fh.write(f"any-builds={str(bool(matrix.entries)).lower()}\n")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())</code></pre></div>
+        </details>
+
+        <div class="note green"><span class="tag">Why this is the highest-ROI change in the whole post</span>It costs a few weeks. It makes the matrix generator unit-testable (<code>compute_matrix</code> is a pure function of event and diff), it turns key renames into review-time type errors, and <code>--dry-run</code> hands every contributor the one thing CI never gives them: the ability to answer <em>"what will this do?"</em> before pushing. No new build system. No new vendor. No migration.</div>
+
+        <h3>(b) Reusable workflows: ~9 files, ~2,500 lines, one idea</h3>
+        <p>Credit first: <strong>38 of the 54 workflows are already <code>workflow_call</code>-reusable</strong> <span class="pill pass">confirmed</span>. The team knows this technique and applies it. The consolidation opportunity is a specific residue, not a habit.</p>
+        <p>Across the release surface sit roughly nine near-identical workflow files — the cartesian product of framework × OS × release channel, each largely a copy of the last with a few strings changed, totaling around 2,500 lines expressing one idea <span class="pill pass">confirmed</span>. YAML has no functions, so copy-paste <em>is</em> its abstraction mechanism, and drift follows: a retry fixed in the Linux nightly wheel workflow doesn't reach the Windows RC one. (This is also exactly the area the in-flight <code>multi_arch_*</code> migration is reshaping, so the specific file count is a July-2026 reading, not a stable number.)</p>
+
+        <details class="code">
+          <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg><span class="fname">.github/workflows/release_wheels.yml</span><span class="fdesc">One parameterized reusable workflow replaces nine copies</span><span class="lang">yaml</span></summary>
+          <div class="body"><pre><code class="language-yaml">name: Release wheels (parameterized)
+
+on:
+  workflow_call:
+    inputs:
+      framework:
+        description: 'torch | jax | triton'
+        type: string
+        required: true
+      platform:
+        description: 'linux | windows'
+        type: string
+        required: true
+      channel:
+        description: 'nightly | rc | stable'
+        type: string
+        required: true
+      amdgpu_family:
+        type: string
+        required: true
+    secrets:
+      AWS_ROLE_ARN:
+        required: true
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build-wheel:
+    runs-on: ${{ inputs.platform == 'windows' && 'windows-arc' || 'linux-arc' }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Resolve release target
+        id: target
+        shell: bash
+        run: |
+          case "${{ inputs.channel }}" in
+            nightly) bucket=therock-nightly-python ;;
+            rc)      bucket=therock-rc-python ;;
+            stable)  bucket=therock-stable-python ;;
+            *) echo "::error::unknown channel"; exit 1 ;;
+          esac
+          echo "bucket=$bucket" >> "$GITHUB_OUTPUT"
+
+      - name: Build wheel
+        shell: bash
+        run: |
+          python3 build_tools/build_wheel.py \
+            --framework "${{ inputs.framework }}" \
+            --amdgpu-family "${{ inputs.amdgpu_family }}"
+
+      # Per-release-type role. nightly cannot write to the stable bucket.
+      - uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-2
+
+      - name: Publish
+        shell: bash
+        run: aws s3 cp dist/ "s3://${{ steps.target.outputs.bucket }}/" --recursive</code></pre></div>
+        </details>
+
+        <div class="note"><span class="tag">Callers get boring, which is the point</span>The nine files collapse to nine <em>matrix rows</em> in one caller. A retry fix lands once. The measurable outcome — workflow-file count and total YAML lines — is in the KPI table (§12), because "we reduced duplication" without a number is a feeling, not an engineering result.</div>
+
+        <h3>(c) Remote compiler caching: sccache against bazel-remote</h3>
+        <p>Recall the two facts that make this necessary: the superbuild runs inside a container via <code>docker run</code>, not as Docker layers (§3), and ARC runner pods are destroyed after one job (§2). So there is no layer cache to hit and no local disk that survives. The compiler cache <em>must</em> be a network service.</p>
+        <p>TheRock's answer is <strong>sccache/ccache pointed at a <code>bazel-remote</code> server running in-cluster</strong> <span class="pill pass">confirmed</span>. Worth saying once, clearly: this is <code>bazel-remote</code> the <em>cache daemon</em>, which speaks the standard HTTP and gRPC remote-cache protocols. It implies nothing about using Bazel to build anything. The name reliably misleads — I've seen engineers spot it in a config file and conclude a Bazel migration is underway. It isn't, and §10 explains why it shouldn't be.</p>
+
+        <div class="note"><span class="tag">Keep the compiler-caching claim measured</span>Compiler caching for <strong>HIP device code is genuinely harder than for host C++</strong>, and I'd resist quoting a hit-rate target for <code>hipcc</code> that I hadn't measured on the actual tree. Multi-architecture offload bundles, embedded target IDs, and toolchain-version sensitivity all shrink the set of cacheable compilations, and the effective hit-rate on device code can sit well below what the same cache achieves on host objects. <code>--offload-compress</code> helps the artifact size, not the key stability. The right move is to instrument first (§10) and set the SLO from data — not to assume the host-code number generalizes.</div>
+
+        <details class="code">
+          <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg><span class="fname">.github/workflows/_sccache_steps.yml</span><span class="fdesc">Point sccache at the in-cluster cache; export hit-rate as a real metric</span><span class="lang">yaml</span></summary>
+          <div class="body"><pre><code class="language-yaml">      # bazel-remote speaks WebDAV/HTTP; sccache speaks it natively.
+      # In-cluster DNS -- the cache never leaves the VPC.
+      - name: Configure sccache
+        shell: bash
+        run: |
+          {
+            echo "SCCACHE_WEBDAV_ENDPOINT=http://bazel-remote.cache.svc.cluster.local:8080"
+            echo "SCCACHE_WEBDAV_KEY_PREFIX=therock/${{ inputs.amdgpu_family }}"
+            echo "CMAKE_C_COMPILER_LAUNCHER=sccache"
+            echo "CMAKE_CXX_COMPILER_LAUNCHER=sccache"
+          } >> "$GITHUB_ENV"
+
+      - name: Zero sccache counters
+        shell: bash
+        run: sccache --zero-stats
+
+      - name: Build superbuild inside manylinux container
+        shell: bash
+        run: |
+          # NOTE: docker RUN, not docker BUILD. The compile is not a layer.
+          docker run --rm \
+            --volume "$PWD:/work" \
+            --workdir /work \
+            --env SCCACHE_WEBDAV_ENDPOINT \
+            --env SCCACHE_WEBDAV_KEY_PREFIX \
+            --env CMAKE_C_COMPILER_LAUNCHER \
+            --env CMAKE_CXX_COMPILER_LAUNCHER \
+            --network host \
+            "$BUILD_IMAGE" \
+            ./build_tools/build_superbuild.sh \
+              -DTHEROCK_AMDGPU_FAMILIES=${{ inputs.amdgpu_family }}
+
+      # Hit-rate is an SLO (KPI table, sec 12). Emit it, don't grep logs for it.
+      - name: Export sccache hit-rate
+        if: always()
+        shell: bash
+        run: |
+          sccache --show-stats --stats-format=json > sccache-stats.json
+          hits=$(jq '.stats.cache_hits.counts.total // 0' sccache-stats.json)
+          misses=$(jq '.stats.cache_misses.counts.total // 0' sccache-stats.json)
+          total=$(( hits + misses ))
+          if [ "$total" -gt 0 ]; then
+            rate=$(awk "BEGIN{printf \"%.2f\", ($hits/$total)*100}")
+          else
+            rate="0.00"
+          fi
+          echo "sccache hit-rate: ${rate}% (${hits}/${total})"
+          echo "SCCACHE_HIT_RATE=${rate}" >> "$GITHUB_ENV"
+          echo "### sccache hit-rate: ${rate}%" >> "$GITHUB_STEP_SUMMARY"</code></pre></div>
+        </details>
+
+        <h3>(d) buildx / BuildKit for the container-image layer</h3>
+        <p>Here is the cleanest available win, and it is available precisely <em>because</em> the compile happens in <code>docker run</code>. The build <strong>image</strong> — manylinux base, dnf packages, pip requirements, toolchain — is a separate artifact with a completely different change cadence from the C++ it hosts. It changes when someone touches <code>requirements.txt</code>. That is a layer-caching problem, and BuildKit is the tool for it.</p>
+        <p>These are complementary layers, not competing tools. <strong>BuildKit caches the environment; sccache caches the compilation.</strong> "buildx vs. sccache" is a category error — and an expensive one, because it leads teams to adopt buildx expecting a faster C++ compile, measure no change, and conclude the tool doesn't work.</p>
+
+        <details class="code">
+          <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg><span class="fname">dockerfiles/build_manylinux_x86_64.Dockerfile</span><span class="fdesc">Cache mounts for dnf and pip — package downloads survive across builds</span><span class="lang">dockerfile</span></summary>
+          <div class="body"><pre><code class="language-dockerfile"># syntax=docker/dockerfile:1.7
+FROM quay.io/pypa/manylinux_2_28_x86_64 AS toolchain
+
+# keepcache=1 makes dnf actually populate the mounted cache dir.
+# sharing=locked serializes concurrent builds writing the same cache.
+RUN --mount=type=cache,target=/var/cache/dnf,sharing=locked \
+    dnf install -y --setopt=keepcache=1 \
+        ninja-build \
+        ccache \
+        git-lfs \
+        libdrm-devel \
+    && dnf clean expire-cache
+
+COPY requirements.txt /tmp/requirements.txt
+
+# The pip wheel cache persists across image builds. On a requirements.txt
+# bump, only the changed wheels are re-downloaded.
+RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
+    python3 -m pip install --requirement /tmp/requirements.txt
+
+# sccache is a build-time dependency of the *inner* compile, so it belongs
+# in the image rather than being fetched on every CI job.
+ARG SCCACHE_VERSION=0.8.2
+RUN --mount=type=cache,target=/root/.cache/sccache-dl,sharing=locked \
+    curl --silent --show-error --fail --location \
+      "https://github.com/mozilla/sccache/releases/download/v${SCCACHE_VERSION}/sccache-v${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz" \
+      --output /root/.cache/sccache-dl/sccache.tar.gz \
+    && tar --extract --gzip --file /root/.cache/sccache-dl/sccache.tar.gz \
+         --directory /usr/local/bin --strip-components=1 --wildcards '*/sccache' \
+    && chmod +x /usr/local/bin/sccache
+
+ENTRYPOINT ["/bin/bash", "-lc"]</code></pre></div>
+        </details>
+
+        <details class="code">
+          <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg><span class="fname">.github/workflows/_build_image.yml</span><span class="fdesc">Registry-backed cache with mode=max — cross-runner, survives ephemeral pods</span><span class="lang">yaml</span></summary>
+          <div class="body"><pre><code class="language-yaml">      - uses: docker/setup-buildx-action@988b5a0280414f521da01fcc63a27aeeb4b104db # v3.6.1
+
+      - uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # mode=max caches intermediate layers, not just the final one -- which
+      # is what makes a requirements.txt bump cheap instead of a full rebuild.
+      # Registry-backed (not type=gha, not local): an ephemeral ARC pod has no
+      # local layer cache to reuse, so the cache must live off-node.
+      - name: Build and push build image
+        uses: docker/build-push-action@5cd11c3a4ced054e52742c5fd54dca954e0edd85 # v6.7.0
+        with:
+          context: .
+          file: dockerfiles/build_manylinux_x86_64.Dockerfile
+          push: true
+          tags: ghcr.io/rocm/therock-build:${{ github.sha }}
+          cache-from: type=registry,ref=ghcr.io/rocm/therock-build:buildcache
+          cache-to: type=registry,ref=ghcr.io/rocm/therock-build:buildcache,mode=max
+          provenance: true
+          sbom: true</code></pre></div>
+        </details>
+
+        <p>Equivalent as a raw command, for the local-reproduction path:</p>
+
+        <details class="code">
+          <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg><span class="fname">build_tools/build_image.sh</span><span class="fdesc">Same cache semantics, runnable on a laptop</span><span class="lang">bash</span></summary>
+          <div class="body"><pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+
+REGISTRY="${REGISTRY:-ghcr.io/rocm}"
+IMAGE="${REGISTRY}/therock-build"
+TAG="${TAG:-$(git rev-parse --short HEAD)}"
+
+docker buildx build \
+  --file dockerfiles/build_manylinux_x86_64.Dockerfile \
+  --tag "${IMAGE}:${TAG}" \
+  --cache-from "type=registry,ref=${IMAGE}:buildcache" \
+  --cache-to   "type=registry,ref=${IMAGE}:buildcache,mode=max" \
+  --push \
+  .</code></pre></div>
+        </details>
+
+        <div class="note green"><span class="tag">Verdict, previewed</span><strong>Adopt buildx now.</strong> It is a contained change to the image layer, it does not touch the CMake superbuild, it needs no migration, and <code>mode=max</code> + <code>RUN --mount=type=cache</code> turn a dependency bump from a full image rebuild into a delta. The full ROI argument, alongside the calls on BuildKite and Bazel, is §10.</div>
       </section>
 
       <!-- 6 -->
       <section id="s6">
-        <div class="shead"><span class="sn">06</span><h2>DevOps security &amp; code signing</h2></div>
+        <div class="shead"><span class="sn">06</span><h2>DevOps security: OIDC federation &amp; code signing</h2></div>
         <p><strong>Security is not optional.</strong> Firmware signing via CloudHSM (key never leaves hardware), SBOM generation, vulnerability scanning, and complete audit trails.</p>
         <div class="diagram">
-          <div class="cap">Figure 2 — Firmware signing &amp; provenance pipeline</div>
+          <div class="cap">Figure 3 — Firmware signing &amp; provenance pipeline</div>
           <pre class="mermaid">
 flowchart LR
   A["Build on isolated<br/>runner"] --> B["SHA-256 hash"]
@@ -858,11 +1390,105 @@ aws s3 cp firmware-sbom.json \
 # - Consumer verifies the signature before loading
 # - Unsigned modules rejected by UEFI firmware</code></pre></div>
         </details>
+
+        <h3>In the wild: OIDC federation — and why it beats my own instance-profile design</h3>
+        <p>My §4 model authenticates runners with an <strong>EC2 instance profile</strong> and pulls signing material from <strong>Secrets Manager</strong> <span class="pill">modeled</span>. TheRock uses <strong>GitHub Actions OIDC role assumption — workflow-level <code>role-to-assume</code>, no long-lived AWS keys</strong> — with <strong>per-release-type IAM roles and per-release-type S3 buckets</strong> <span class="pill pass">confirmed</span>. Theirs is the better design, and it's worth saying so plainly rather than quietly redrawing my diagram to match.</p>
+        <p>An instance profile is a credential bound to <em>a machine</em>. Every job landing on that machine inherits it, identically. The blast radius of a compromised job is "everything the runner may ever do," and the audit trail records that <code>rocm-ci-runner-role</code> did it — not <em>which workflow, on which ref, for which release channel</em>.</p>
+        <p>Actions OIDC binds the credential to <em>a workflow execution</em>. GitHub mints a short-lived JWT whose <code>sub</code> claim encodes the repository, the ref, and optionally the environment. AWS exchanges it for temporary credentials via <code>sts:AssumeRoleWithWebIdentity</code>. Nothing durable is stored anywhere, and the trust policy — not a runbook, not good intentions — is what prevents the nightly job from writing to the stable release bucket.</p>
+
+        <h4 class="mini">Two OIDC mechanisms, two layers — don't conflate them</h4>
+        <p>This trips people up constantly, and in an ARC-on-Kubernetes world (§2) <strong>both mechanisms are in play at once, at different layers</strong>:</p>
+        <div class="tbl-scroll">
+        <table class="tbl">
+          <thead><tr><th>Mechanism</th><th>Identity is bound to</th><th>Who mints the token</th><th>Use it for</th></tr></thead>
+          <tbody>
+            <tr><td><strong>GitHub Actions OIDC</strong><br><code>role-to-assume</code> in a workflow step</td><td>A <em>workflow execution</em> — repo, ref, environment</td><td>GitHub (<code>token.actions.githubusercontent.com</code>)</td><td>Publishing release artifacts, anything where "which workflow, on which ref" is the authorization question. <strong>This is what TheRock uses</strong> <span class="pill pass">confirmed</span>.</td></tr>
+            <tr><td><strong>EKS IRSA / EKS Pod Identity</strong></td><td>A <em>Kubernetes service account</em> on a pod</td><td>The EKS cluster's own OIDC provider (IRSA), or the Pod Identity agent</td><td>Infrastructure-plane access from pods — a cache server reading its S3 backing store, a controller reading SSM. Granted to the <em>pod</em>, not the job it happens to be running.</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p>The distinction matters operationally: if you grant an ARC runner pod broad S3 write access via IRSA, <strong>every job scheduled onto that pod inherits it</strong> — you've reinvented the instance profile's blast radius one abstraction layer up, while believing you'd modernized. Keep the pod's IRSA/Pod Identity role scoped to what the <em>runner infrastructure</em> needs (pull an image, reach the cache), and let the <em>workflow</em> assume its own role via Actions OIDC for anything the job needs. Right mechanism, right layer.</p>
+        <p>Note also how cleanly workload identity composes with ephemeral runners: an ARC pod has no durable machine identity worth binding a credential to. <strong>Ephemeral compute all but forces workload identity.</strong> Two independent design choices reinforcing each other — the mark of a coherent system rather than an accumulated one.</p>
+
+        <details class="code">
+          <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg><span class="fname">oidc.tf</span><span class="fdesc">Per-release-channel roles; the trust policy is the security boundary</span><span class="lang">hcl</span></summary>
+          <div class="body"><pre><code class="language-hcl"># GitHub's OIDC provider. Registered once per AWS account.
+resource "aws_iam_openid_connect_provider" "github" {
+  url             = "https://token.actions.githubusercontent.com"
+  client_id_list  = ["sts.amazonaws.com"]
+  thumbprint_list = ["6938fd4d98bab03faadb97b34396831e3780aea1"]
+}
+
+locals {
+  # One role and one bucket per release channel. A nightly build is
+  # cryptographically unable to publish a stable artifact.
+  release_channels = {
+    nightly = "therock-nightly-python"
+    rc      = "therock-rc-python"
+    stable  = "therock-stable-python"
+  }
+}
+
+resource "aws_iam_role" "release" {
+  for_each = local.release_channels
+  name     = "therock-release-${each.key}"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect    = "Allow"
+      Action    = "sts:AssumeRoleWithWebIdentity"
+      Principal = { Federated = aws_iam_openid_connect_provider.github.arn }
+      Condition = {
+        StringEquals = {
+          "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
+
+          # Bind to a GitHub *environment*, not just the repo. Environments
+          # carry required-reviewer rules, so "who may publish stable" becomes
+          # a GitHub protection rule enforced by an AWS trust policy.
+          #
+          # Never use StringLike with a trailing wildcard on `sub` here --
+          # `repo:ROCm/TheRock:*` would let ANY branch on a fork PR assume
+          # this role. That is the classic OIDC misconfiguration.
+          "token.actions.githubusercontent.com:sub" = "repo:ROCm/TheRock:environment:${each.key}"
+        }
+      }
+    }]
+  })
+}
+
+# Each role can write exactly one bucket.
+resource "aws_iam_role_policy" "release_publish" {
+  for_each = local.release_channels
+  name     = "publish-${each.key}"
+  role     = aws_iam_role.release[each.key].id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid      = "PutReleaseArtifacts"
+        Effect   = "Allow"
+        Action   = ["s3:PutObject", "s3:AbortMultipartUpload"]
+        Resource = "arn:aws:s3:::${each.value}/*"
+      },
+      {
+        Sid      = "ListOwnBucketOnly"
+        Effect   = "Allow"
+        Action   = "s3:ListBucket"
+        Resource = "arn:aws:s3:::${each.value}"
+      }
+    ]
+  })
+}</code></pre></div>
+        </details>
+
+        <div class="note"><span class="tag">Migration note, honestly stated</span>Instance profiles are not <em>wrong</em> — for a private repo with long-lived runners and no fork PRs, they are simpler and adequate. But OIDC is strictly better on audit granularity, needs zero secret rotation, and is a prerequisite once runners go ephemeral. If I were shipping my §4 design today, I'd cut the instance profile down to <code>ssm:*</code> for bootstrap and move every artifact-publishing action to OIDC. <strong>Where the real system is ahead of my model, I'd rather say so than quietly redraw the diagram.</strong></div>
       </section>
 
       <!-- 7 -->
       <section id="s7">
-        <div class="shead"><span class="sn">07</span><h2>Cloud security: encryption &amp; compliance</h2></div>
+        <div class="shead"><span class="sn">07</span><h2>Cloud security: encryption &amp; supply chain</h2></div>
         <p><strong>Encryption everywhere.</strong> At rest (KMS), in transit (TLS), with complete audit trails (CloudTrail). S3 artifacts, EBS volumes, EFS/NFS, and CloudWatch logs all use customer-managed keys — never the default AWS key.</p>
 
         <div class="codebar"><h4 class="mini" style="margin:0">Encryption, audit &amp; storage</h4><button class="expand" data-scope="s7">Expand all ▸</button></div>
@@ -956,6 +1582,78 @@ resource "aws_s3_bucket_lifecycle_configuration" "rocm_artifacts" {
   }
 }</code></pre></div>
         </details>
+
+        <h3>Supply-chain posture: what TheRock already layers</h3>
+        <p>Credit where it's due. TheRock's supply-chain controls are <strong>better than most commercial CI I've audited</strong> <span class="pill pass">confirmed</span>, and they're layered rather than stacked — each control catches a class the others structurally cannot.</p>
+
+        <div class="tbl-scroll">
+        <table class="tbl">
+          <thead><tr><th>Control</th><th>Catches</th><th>Structurally cannot catch</th></tr></thead>
+          <tbody>
+            <tr><td><strong>SHA-pinned actions</strong> — every <code>uses:</code> pinned to a full commit SHA, never a mutable tag</td><td>A compromised upstream action force-pushing a malicious <code>v4</code> tag. This is the <code>tj-actions/changed-files</code> attack, and pinning is the only thing that stops it.</td><td>A malicious commit that was <em>always</em> at that SHA.</td></tr>
+            <tr><td><strong>Dependabot, grouped, weekly</strong></td><td>Pinned SHAs going stale — the cost of pinning. Grouping means one reviewable PR instead of forty.</td><td>Anything in the week between runs; malicious code in a legitimate release.</td></tr>
+            <tr><td><strong>gitleaks</strong> — PR-delta scan <em>and</em> a weekly full-history scan</td><td>Both halves matter. The delta scan blocks the new secret; the full-history scan finds the one committed in 2021 that everyone forgot. Most teams run only the first.</td><td>A secret that never touched the repo (leaked via logs, artifacts).</td></tr>
+            <tr><td><strong>CodeQL</strong></td><td>Semantic vulnerabilities in first-party C++/Python — injection, memory safety, taint flow.</td><td>Anything in the workflow YAML. CodeQL does not model Actions expression injection.</td></tr>
+            <tr><td><strong><code>pre-commit</code> + a dedicated <code>pre_commit_security</code> hook set</strong></td><td>Shift-left: the failure lands on the contributor's laptop, not the nightly. Separating the security hooks means they can't be casually skipped with the formatting ones.</td><td>Anything a contributor bypasses with <code>--no-verify</code>. It's a convenience, not a gate.</td></tr>
+            <tr><td><strong>Least-privilege <code>permissions:</code> blocks</strong> per workflow</td><td>Token blast radius. A read-only <code>GITHUB_TOKEN</code> can't push tags even if the job is compromised.</td><td>Anything granted. <code>id-token: write</code> is still a real capability.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h4 class="mini">The gap: nothing statically analyzes the workflows themselves</h4>
+        <p>Look down the "cannot catch" column. CodeQL covers the C++ and the Python. Nothing covers the ~9,480 lines of YAML — which is exactly where §5's <code>fromJSON()</code> string-injection boundary lives, and exactly where the most dangerous Actions misconfigurations hide: <code>pull_request_target</code> checking out untrusted code, <code>${{ github.event.* }}</code> interpolated straight into a <code>run:</code> shell block, over-broad OIDC <code>sub</code> claims.</p>
+        <p>Two tools close this, they cost an afternoon each, and they are additive to CodeQL rather than redundant with it:</p>
+        <ul>
+          <li><strong><code>actionlint</code></strong> — correctness. Catches invalid expression syntax, unknown contexts, bad <code>runs-on</code> labels, and shellcheck findings <em>inside</em> <code>run:</code> blocks. It would have caught most YAML bugs I've watched teams debug via push-and-pray.</li>
+          <li><strong><code>zizmor</code></strong> — security. Purpose-built Actions static analysis: template-injection sinks, dangerous <code>pull_request_target</code> patterns, unpinned actions, excessive permissions, credential persistence.</li>
+        </ul>
+
+        <details class="code">
+          <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg><span class="fname">.github/workflows/lint_workflows.yml</span><span class="fdesc">actionlint + zizmor — the missing layer, as a required check</span><span class="lang">yaml</span></summary>
+          <div class="body"><pre><code class="language-yaml">name: Lint workflows
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+      - '.github/actions/**'
+  schedule:
+    - cron: '0 4 * * 1'   # weekly full sweep, mirrors the gitleaks cadence
+
+permissions:
+  contents: read
+
+jobs:
+  actionlint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Run actionlint
+        run: |
+          bash <(curl -fsSL https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+          ./actionlint -color -shellcheck=
+
+  zizmor:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      security-events: write   # upload SARIF to the Security tab
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Run zizmor
+        run: |
+          pipx run zizmor --format sarif . > zizmor.sarif
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: github/codeql-action/upload-sarif@f09c1c0a94de965c15400f5634aa42fac8fb8f88 # v3.27.5
+        with:
+          sarif_file: zizmor.sarif
+          category: zizmor</code></pre></div>
+        </details>
+
+        <div class="note blue"><span class="tag">Layering, not checklisting</span>The point of six controls is not six checkmarks. It's that each one's blind spot is another one's specialty. Pinning creates staleness, so Dependabot exists. Dependabot has a week-long window, so review exists. CodeQL can't see YAML, so zizmor exists. <strong>If you can't say what a control cannot catch, you don't know why you have it</strong> — and you'll delete the wrong one when it gets noisy.</div>
       </section>
 
       <!-- 8 -->
@@ -1025,13 +1723,31 @@ class GPUTestHarness:
             f.write(xml)</code></pre></div>
         </details>
 
-        <h4 class="mini">Coverage — AMD Instinct (CDNA) matrix</h4>
-        <ul>
-          <li><strong>CDNA 1</strong> — MI100 (still in customer fleets).</li>
-          <li><strong>CDNA 2</strong> — MI210, MI250X.</li>
-          <li><strong>CDNA 3</strong> — MI300X (data-center focus).</li>
-        </ul>
-        <p>The nightly matrix targets CDNA data-center SKUs because that's where firmware/driver/runtime regressions matter most for accelerated compute. Family selection is keyed on the same <code>gfx</code> targets TheRock uses (e.g. <code>gfx942</code> for MI300-class).</p>
+        <h4 class="mini">Coverage — every runner pool maps to a ROCm <code>gfx</code> target</h4>
+        <p>A runner pool that isn't pinned to a <code>gfx</code> target is a pool you can't reason about. This is the mapping the §5 matrix consumes:</p>
+
+        <div class="tbl-scroll">
+        <table class="tbl">
+          <thead><tr><th>Architecture</th><th>AMD SKU</th><th><code>gfx</code> target</th><th>Runner label</th><th>Where it runs</th></tr></thead>
+          <tbody>
+            <tr><td><strong>CDNA 4</strong></td><td>Instinct MI355X / MI350X</td><td><code>gfx950</code></td><td><code>instinct-mi355x</code></td><td>Bare-metal / on-prem lab</td></tr>
+            <tr><td><strong>CDNA 3</strong></td><td>Instinct MI300X</td><td><code>gfx942</code></td><td><code>instinct-mi300x</code></td><td>Bare-metal, <strong>Azure ND MI300X v5</strong>, or AMD Developer Cloud</td></tr>
+            <tr><td><strong>CDNA 3</strong></td><td>Instinct MI325X</td><td><code>gfx942</code></td><td><code>instinct-mi325x</code></td><td>Bare-metal or AMD Developer Cloud</td></tr>
+            <tr><td><strong>CDNA 2</strong></td><td>Instinct MI250X / MI250</td><td><code>gfx90a</code></td><td><code>instinct-mi250x</code></td><td>Bare-metal / on-prem lab</td></tr>
+            <tr><td><strong>CDNA 2</strong></td><td>Instinct MI210</td><td><code>gfx90a</code></td><td><code>instinct-mi210</code></td><td>Bare-metal / on-prem lab</td></tr>
+            <tr><td><strong>CDNA 1</strong></td><td>Instinct MI100 <em>(legacy tier)</em></td><td><code>gfx908</code></td><td><code>instinct-mi100</code></td><td>Bare-metal; kept only while customer fleets carry it</td></tr>
+            <tr><td><strong>RDNA 3</strong></td><td>Radeon PRO W7900</td><td><code>gfx1100</code></td><td><code>radeon-w7900</code></td><td>Bare-metal workstation</td></tr>
+            <tr><td><strong>RDNA 3</strong></td><td>Radeon RX 7900 XTX / XT</td><td><code>gfx1100</code></td><td><code>radeon-rx7900xtx</code></td><td>Bare-metal workstation</td></tr>
+            <tr><td><strong>RDNA 4</strong></td><td>Radeon RX 9070 / 9070 XT</td><td><code>gfx1201</code></td><td><code>radeon-rx9070</code></td><td>Bare-metal workstation</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="note"><span class="tag">Where AMD compute CI can actually run</span><strong>AMD Instinct MI-series has no standard AWS EC2 instance.</strong> That is the single most important hardware fact in this post, and it quietly invalidates a lot of architecture diagrams. But "bare-metal only" would be equally wrong: <strong>MI300X is cloud-available on Azure</strong> as <code>ND MI300X v5</code>, and <strong>AMD Developer Cloud</strong> offers MI300X/MI325X directly (the most on-brand option; availability and SKU mix move, so verify before you design around it). So the honest set is three: self-hosted bare-metal, Azure ND, AMD Developer Cloud.
+        <br><br>
+        What is <em>not</em> in that set: <code>g4ad</code> / Radeon Pro V520. It is the tempting answer to "which AWS instance has an AMD GPU," and it is a graphics/workstation part rather than a supported ROCm compute target. A green CI run on it would tell you nothing about ROCm compute correctness. I keep it out of §4 entirely rather than modeling it as an option.</div>
+
+        <div class="note blue"><span class="tag">Scope</span>Provider selection for the Instinct tier — bare-metal capex vs. Azure ND vs. Developer Cloud, and the queueing/reservation service each implies — is a genuinely separate design problem with its own cost model. It's a candidate companion post rather than something to expand here.</div>
       </section>
 
       <!-- 9 -->
@@ -1048,9 +1764,90 @@ class GPUTestHarness:
         <p>On the runner, <code>df -h /opt/rocm-tools</code> confirms it's unmounted. Check EFS health, verify the SG allows <code>2049/tcp</code> from the runner SG, and that mount targets exist in both AZs. Remount, then root-cause (AZ outage? SG change? timeout?) and update the runbook.</p>
       </section>
 
-      <!-- 10 -->
+      <!-- 10 NEW: modernization plan -->
       <section id="s10">
-        <div class="shead"><span class="sn">10</span><h2>12-week implementation roadmap</h2></div>
+        <div class="shead"><span class="sn">10</span><h2>Modernization plan: buildx, BuildKite, Bazel — an honest evaluation</h2></div>
+        <p>Three tools get proposed every time someone looks at a CI system this size. One of them I'd adopt this quarter. One I'd pilot before committing a dollar. One I'd actively argue against, and I'd keep arguing against it after being overruled.</p>
+        <p>The discipline that matters here is refusing to evaluate tools in the abstract. <strong>Every verdict below is a claim about <em>this</em> system's constraints</strong> — a CMake/HIP superbuild running inside containers via <code>docker run</code>, on ephemeral ARC pods, with a Python-generated matrix and a shared remote cache. Change those constraints and the verdicts change with them.</p>
+
+        <div class="tbl-scroll">
+        <table class="tbl">
+          <thead><tr><th>Tool</th><th>Verdict</th><th>Horizon</th><th>The one-line reason</th></tr></thead>
+          <tbody>
+            <tr><td><strong>buildx / BuildKit</strong></td><td><span class="pill pass">adopt now</span></td><td>Weeks</td><td>Fixes a real cost at the image layer, touches nothing else, and requires no migration.</td></tr>
+            <tr><td><strong>Type + test the Python orchestration</strong></td><td><span class="pill pass">adopt now</span></td><td>Weeks</td><td>Highest leverage change available. Not a tool purchase — a discipline.</td></tr>
+            <tr><td><strong>Topology-driven stage selection</strong></td><td><span class="pill pass">adopt now</span></td><td>Weeks</td><td>Kills manual <code>baseline_run_id</code> picking using a topology file that already exists.</td></tr>
+            <tr><td><strong>Merge queue, actionlint, zizmor, OTel</strong></td><td><span class="pill pass">adopt now</span></td><td>Days each</td><td>Cheap, additive, independently valuable. No coupling.</td></tr>
+            <tr><td><strong>BuildKite</strong></td><td><span class="pill run">evaluate</span></td><td>One-pipeline pilot</td><td>Its dynamic-pipeline model genuinely fits a Python-generated matrix. Decide on measured data, not on the demo.</td></tr>
+            <tr><td><strong>Bazel (superbuild migration)</strong></td><td><span class="pill fail">don't</span></td><td>—</td><td>Multi-quarter, high-risk, immature HIP toolchain support, and it solves a problem cheaper means already solve.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h3>buildx / BuildKit — adopt now, for the image layer only</h3>
+        <p>The technical case is in §5(d). The ROI case is this: the container image is rebuilt far more often than <code>requirements.txt</code> changes, and every one of those rebuilds re-downloads the same dnf and pip packages. <code>RUN --mount=type=cache</code> makes those downloads persist across builds. <code>--cache-to type=registry,mode=max</code> makes intermediate layers reusable across <em>runners</em> — which matters precisely because an ephemeral ARC pod has no local layer cache to inherit.</p>
+        <p>The trap to avoid is the framing "buildx will speed up our builds," followed by disappointment when the C++ superbuild takes exactly as long as before. It will. <strong>BuildKit cannot cache the compile, because the compile is not a Docker layer</strong> — it happens in <code>docker run</code>, after the image is built. sccache caches the compile. BuildKit caches the environment the compile runs in. Adopt buildx for what it does, and you get a clean win with no downside; adopt it expecting sccache's job, and you'll rip it out in a month having learned nothing.</p>
+        <div class="note green"><span class="tag">Risk</span>Low. The Dockerfile is additive (<code>--mount</code> directives are no-ops without BuildKit, and BuildKit is the default builder in modern Docker). Rollback is deleting two flags. Nothing about the CMake superbuild changes.</div>
+
+        <h3>Harden the Python orchestration into a real product — adopt now</h3>
+        <p>I'll restate the §3 finding because it's the thesis of this section: <strong>a 12,350-line Python layer that decides what the CI system builds is a build system.</strong> The question isn't whether to have it. The question is whether it gets the engineering rigor its blast radius deserves, or gets treated as scripts.</p>
+        <p>Three changes, in order, none of them exotic:</p>
+        <ol>
+          <li><strong>Type the contract.</strong> Pydantic or dataclass models for the JSON build-config that crosses into <code>fromJSON()</code> (§5a). This is the entire interface between the two halves of the CI system, and today it is an untyped dict. A typed model turns a renamed key from a 3am nightly failure into a red CI check on the PR that renamed it.</li>
+          <li><strong>Unit-test the generator.</strong> Once <code>compute_matrix(event, diff)</code> is a pure function, testing "docs-only PR builds nothing" and "a push to main adds the Windows wheel job" costs a few dozen lines. The most consequential logic in the system currently has the least coverage in the repo — that inversion is the bug.</li>
+          <li><strong>Ship <code>--dry-run</code> / <code>--event-file</code>.</strong> Let a contributor pipe a saved GitHub event payload in and print the matrix that would result. This collapses the iteration loop on matrix changes from push-and-wait to sub-second, and it makes the system <em>legible</em> — which is worth more than the speed.</li>
+        </ol>
+        <div class="note"><span class="tag">Why this beats every tool on this page</span>No vendor, no migration, no new runtime, no lock-in. It ships incrementally — you can type one config model this week. And it makes every subsequent decision cheaper, including the BuildKite evaluation below, because a typed, tested, locally-runnable matrix generator is exactly what you'd need to port <em>anywhere</em>. <strong>Do this first regardless of what you decide about everything else.</strong></div>
+
+        <h3>Automate stage selection from BUILD_TOPOLOGY.toml — adopt now</h3>
+        <p>Today: a human picks a <code>baseline_run_id</code>, and <code>artifact_manager.py</code> reuses <code>prebuilt_stages</code> from that run. That's a content-addressed incremental build with the content-addressing replaced by a person's judgment (§3).</p>
+        <p>But <code>BUILD_TOPOLOGY.toml</code> already declares the stage dependency graph. Given that graph plus the diff for a PR, the set of stages that must rebuild is <em>derivable</em>. Hash each stage's inputs — its sources, its declared upstream stages' output hashes, the toolchain version — and the baseline stops being a choice. It becomes a lookup.</p>
+        <p>This is 80% of what people want from Bazel, obtained by writing a graph traversal against a file that already exists. It is a few hundred lines of the Python from the previous section, it composes with the existing remote cache, and it requires migrating exactly nothing.</p>
+        <div class="note blue"><span class="tag">The general principle</span>When a team has built most of what a famous tool provides, the reflex is to adopt the famous tool. Usually the better move is to <strong>finish what they built</strong> — because the in-house version already encodes years of hard-won knowledge about the actual constraints, and the famous tool doesn't. Bazel does not know that this HIP device code needs <code>--offload-compress</code>. <code>BUILD_TOPOLOGY.toml</code> does.</div>
+
+        <h3>Cheap additive wins — adopt now</h3>
+        <ul>
+          <li><strong>GitHub merge queue.</strong> With a superbuild this expensive, "PR was green, main is red" is a multi-hour recovery. A merge queue tests the post-merge state before merging. It costs a settings change and some CI capacity, and it eliminates an entire failure class.</li>
+          <li><strong><code>actionlint</code> + <code>zizmor</code>.</strong> Static analysis for the ~9,480 lines of YAML that CodeQL structurally cannot see (§7). An afternoon each.</li>
+          <li><strong>OpenTelemetry export of step timings and sccache hit-rate.</strong> Right now "why was the nightly slow" is answered by reading logs. Emit spans per stage and a hit-rate gauge per job, and it's answered by a query. This is the prerequisite for every performance claim anyone will want to make later — <strong>including the BuildKite evaluation.</strong> You cannot pilot your way to a data-driven decision without the data pipeline first.</li>
+        </ul>
+
+        <h3>BuildKite — evaluate, don't pre-commit</h3>
+        <p>The fit is real, and I want to state the strongest version of the case before I complicate it.</p>
+        <p>TheRock generates its build matrix in Python and hands it to Actions as a JSON string through <code>fromJSON()</code>. That works, but it's a workaround for a missing primitive. BuildKite's native model is <strong><code>buildkite-agent pipeline upload</code></strong>: a step runs, emits pipeline YAML/JSON on stdout, and the agent splices those steps into the running build. Dynamic pipeline generation isn't a hack there — it's the documented, intended mechanism. Everything the Python layer currently does by string-injection, it would do by design, and the <code>fromJSON()</code> data/code seam disappears with it.</p>
+
+        <div class="note blue"><span class="tag">A precision I've seen people get wrong — including me, in an earlier draft</span>It's tempting to say "BuildKite means giving up Kubernetes runners, because their Elastic CI Stack is EC2 + ASG." That's half true and the wrong half. The <strong>reference</strong> Elastic CI Stack is indeed EC2 + Auto Scaling Groups — but BuildKite agents also run on Kubernetes via <strong><code>agent-stack-k8s</code></strong>, which schedules a pod per job in a way that maps closely onto the ARC model. <strong>Moving to BuildKite is not a forced move to EC2/ASG.</strong> You can keep the ephemeral-pod runner architecture and change only the orchestrator. That makes the evaluation <em>cheaper</em> and more honest than the version of this argument I first wrote down.</div>
+
+        <div class="tbl-scroll">
+        <table class="tbl">
+          <thead><tr><th>What you gain</th><th>What you pay</th></tr></thead>
+          <tbody>
+            <tr><td>Dynamic pipelines as a first-class primitive; no <code>fromJSON()</code> string injection.</td><td>A second CI system to operate throughout a migration that will not be short.</td></tr>
+            <tr><td>Better fan-out/fan-in ergonomics for a matrix shaped like this one.</td><td>Losing GitHub-native PR integration, required checks, and merge queue.</td></tr>
+            <tr><td>Per-step retry and concurrency-gate semantics that Actions lacks.</td><td>Per-seat licensing, against $0 for Actions on a public repository.</td></tr>
+            <tr><td>Agent model maps cleanly onto bare-metal Instinct hosts (§8), and onto Kubernetes via <code>agent-stack-k8s</code> — so the §2 runner architecture can survive intact.</td><td>Re-homing OIDC, secrets, and the supply-chain controls of §7 onto a different platform's primitives.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="note"><span class="tag">How I'd actually decide</span>Pilot one pipeline — the release-wheels workflow from §5(b), since it's self-contained and already parameterized. Instrument both paths with the OpenTelemetry work above. Run them in parallel for a quarter. Compare three numbers: p50/p95 pipeline wall-clock, engineer-hours spent on CI plumbing, and the count of CI-only failures. <strong>Then decide.</strong> If the numbers don't separate, the answer is no — the migration cost is certain, and the benefit was supposed to be obvious. A tool that needs a careful argument to beat the incumbent is a tool you don't need yet.</div>
+
+        <h3>Bazel — don't migrate the superbuild</h3>
+        <p>I'll be direct, because hedging here does nobody a favor. <strong>Migrating TheRock's CMake/HIP superbuild to Bazel would be a multi-quarter project with a materially negative return on investment, and I'd argue against it.</strong></p>
+        <ol>
+          <li><strong>HIP toolchain support is immature.</strong> Bazel's C++ rules assume a toolchain shape that HIP device compilation — multi-architecture fat binaries, <code>gfx</code>-target offloading, <code>--offload-compress</code> — does not fit without substantial custom rule authoring. You would be writing and then <em>maintaining</em> a HIP toolchain for Bazel. That is a project in itself, and it is not the project you were funded for.</li>
+          <li><strong>The superbuild is the accumulated knowledge.</strong> Thousands of lines of CMake encode which components build in what order, with which flags, on which platform, patched how. A migration doesn't preserve that; it re-derives it, under deadline, with the original authors unavailable. Every subtle flag that gets dropped becomes a silent correctness bug on one <code>gfx</code> target.</li>
+          <li><strong>The payoff is already reachable.</strong> The reason to want Bazel here is incrementality. But incrementality is obtainable from <code>BUILD_TOPOLOGY.toml</code> + the existing remote cache (see above), at a few hundred lines and near-zero risk. <strong>You do not need to change build systems to get a correct cache key.</strong></li>
+          <li><strong>The cache is already there.</strong> The <code>bazel-remote</code> server is running <em>today</em>, serving sccache over a standard protocol, with no Bazel in sight. The most cited benefit of Bazel — remote caching — has been decoupled from Bazel for years. That decoupling is precisely why this system works.</li>
+        </ol>
+        <p>Where Bazel <em>is</em> the right call: <strong>greenfield leaf tooling.</strong> A new Python/Go CLI, a new test-harness service, anything with no legacy build and no HIP device code. Hermetic builds and remote execution are genuinely excellent there. Use it where it wins; don't drag a decade of CMake through it to feel modern.</p>
+
+        <div class="note green"><span class="tag">The pattern to take away</span>Two of these six verdicts are "do the boring thing to code you already own." One is "adopt a tool that does exactly one thing well and nothing else." One is "run an experiment and let it decide." One is "no, and here's the four-point argument." <strong>That distribution is what an honest tooling evaluation looks like.</strong> A modernization plan where every candidate tool gets adopted isn't a plan — it's a shopping list, and someone else will maintain it.</div>
+      </section>
+
+      <!-- 11 -->
+      <section id="s11">
+        <div class="shead"><span class="sn">11</span><h2>12-week implementation roadmap</h2></div>
         <div class="tbl-scroll">
         <table class="tbl">
           <thead><tr><th>Phase</th><th>Weeks</th><th>Delivered</th></tr></thead>
@@ -1065,31 +1862,39 @@ class GPUTestHarness:
         </div>
       </section>
 
-      <!-- 11 -->
-      <section id="s11">
-        <div class="shead"><span class="sn">11</span><h2>Key performance indicators</h2></div>
+      <!-- 12 -->
+      <section id="s12">
+        <div class="shead"><span class="sn">12</span><h2>Key performance indicators</h2></div>
+        <p>These targets are <strong>aspirational and illustrative</strong> — the scoreboard I’d stand up, not measurements taken from anyone’s live system. The cache-hit numbers especially are placeholders, to be replaced by a measured baseline in month one, for the reason given in §5(c): HIP device-code caching does not behave like host C++.</p>
         <div class="tbl-scroll">
         <table class="tbl">
-          <thead><tr><th>Metric</th><th>Target</th></tr></thead>
+          <thead><tr><th>Metric</th><th>Target</th><th>Why this is the number that matters</th></tr></thead>
           <tbody>
-            <tr><td>Pre-submit feedback time</td><td>&lt; 10 minutes</td></tr>
-            <tr><td>Nightly pass-rate</td><td>&gt; 95%</td></tr>
-            <tr><td>ccache hit-rate (nightly)</td><td>&gt; 80%</td></tr>
-            <tr><td>GPU-family coverage</td><td>gfx9 → gfx12 (CDNA + RDNA data-center)</td></tr>
-            <tr><td>Release production time</td><td>&lt; 1 hour</td></tr>
-            <tr><td>Mean time to detect regression</td><td>&lt; 24 hours</td></tr>
-            <tr><td>Artifact traceability</td><td>100% with SBOM + pinned-source provenance</td></tr>
-            <tr><td>Infrastructure drift</td><td>0% (Terraform-detected)</td></tr>
-            <tr><td>Encryption coverage</td><td>100% at rest + in transit</td></tr>
+            <tr><td>Pre-submit feedback time</td><td>&lt; 10 minutes</td><td>Past this, engineers context-switch and stop reading CI.</td></tr>
+            <tr><td>Nightly pass-rate</td><td>&gt; 95%</td><td>Below this, red stops being a signal and becomes background noise.</td></tr>
+            <tr><td>Remote cache hit-rate — <strong>host C++</strong></td><td>&gt; 80% <em>(illustrative)</em></td><td>Direct lever on nightly wall-clock. Emitted per job as a metric (§5c), not grepped out of logs.</td></tr>
+            <tr><td>Remote cache hit-rate — <strong>HIP device code</strong></td><td>Measure first, <em>then</em> set the target</td><td>Deliberately unset. Offload bundles and target-ID sensitivity make the host-code number a bad prior; naming a figure here would be inventing a metric.</td></tr>
+            <tr><td>Image-build cache reuse (buildx <code>mode=max</code>)</td><td>&gt; 90% of layers reused on a no-op rebuild</td><td>Proves the registry cache is genuinely hit across ephemeral runners rather than silently missing.</td></tr>
+            <tr><td>Workflow file count</td><td>54 → &lt; 45 <em>(illustrative)</em></td><td>Consolidation (§5b) has to show up as a number, or it’s a feeling.</td></tr>
+            <tr><td>Total workflow YAML lines</td><td>~9,480 → &lt; 7,500 <em>(illustrative)</em></td><td>Same. Confirms duplication was removed, not relocated into the caller.</td></tr>
+            <tr><td>CI-config local reproducibility</td><td>100% of matrix decisions reproducible offline via <code>--dry-run</code></td><td>“What will CI do with my PR?” answerable without pushing (§5a). The legibility metric.</td></tr>
+            <tr><td>Orchestration-layer test coverage</td><td>&gt; 80% on the matrix generator</td><td>The code deciding <em>what gets built</em> shouldn’t be the least-tested code in the tree.</td></tr>
+            <tr><td>Workflow static analysis</td><td>0 high-severity <code>zizmor</code> findings; <code>actionlint</code> clean</td><td>Closes the one gap CodeQL structurally cannot cover (§7).</td></tr>
+            <tr><td>GPU-family coverage</td><td><code>gfx908</code> → <code>gfx1201</code> (CDNA 1–4 + RDNA 3–4)</td><td>Every pool pinned to a <code>gfx</code> target (§8). An unpinned pool is an untestable claim.</td></tr>
+            <tr><td>Release production time</td><td>&lt; 1 hour</td><td>On-demand releases stop being events and become a command.</td></tr>
+            <tr><td>Mean time to detect regression</td><td>&lt; 24 hours</td><td>One nightly cycle. Longer, and the bisect range spans a full workday of commits.</td></tr>
+            <tr><td>Artifact traceability</td><td>100% with SBOM + pinned-source provenance</td><td>Every shipped byte traceable to a source SHA and a signing event.</td></tr>
+            <tr><td>Infrastructure drift</td><td>0% (Terraform-detected)</td><td>Drift is the silent precondition of every “but it worked yesterday.”</td></tr>
+            <tr><td>Encryption coverage</td><td>100% at rest + in transit</td><td>Non-negotiable, and nearly free once it’s the default.</td></tr>
           </tbody>
         </table>
         </div>
       </section>
 
-      <!-- 12 -->
-      <section id="s12">
-        <div class="shead"><span class="sn">12</span><h2>AI-assisted engineering: building this faster</h2></div>
-        <p>Every layer above is high-volume automation — Terraform modules, runner provisioning, Actions workflows, signing glue, CloudTrail queries, runbooks. That's exactly the surface where an engineer paired with AI coding agents moves several times faster. TheRock's own repo ships a <code>CLAUDE.md</code>, so this isn't a foreign idea to the team — it's how they already work.</p>
+      <!-- 13 -->
+      <section id="s13">
+        <div class="shead"><span class="sn">13</span><h2>AI-assisted engineering: building this faster</h2></div>
+        <p>Every layer above is high-volume automation — Terraform modules, runner provisioning, Actions workflows, signing glue, CloudTrail queries, runbooks. That's exactly the surface where an engineer paired with AI coding agents moves several times faster. The public TheRock repository includes a <code>CLAUDE.md</code> at its root, so agentic tooling is evidently already part of the contributor workflow rather than something I'd be importing.</p>
         <div class="tbl-scroll">
         <table class="tbl">
           <thead><tr><th>CI / infra task</th><th>How an agent accelerates it</th><th>Human ownership</th></tr></thead>
@@ -1098,6 +1903,8 @@ class GPUTestHarness:
             <tr><td>Actions workflows</td><td>Generates matrix builds, reusable templates, cache config across the stack.</td><td>Validate gates, secrets handling, runner labels.</td></tr>
             <tr><td>Runner provisioning</td><td>Writes cloud-init/PowerShell, NFS + ccache setup, auto-shutdown logic.</td><td>Confirm network isolation and signing boundaries.</td></tr>
             <tr><td>Signing &amp; SBOM glue</td><td>Drafts sign → attest → publish scripting and SBOM steps.</td><td>Verify the key never leaves the HSM; audit the trust chain.</td></tr>
+            <tr><td><strong>CI config / orchestration layer</strong> (§5a)</td><td>Drafts the typed <code>pydantic</code> models for the build-config contract, then writes the unit tests that pin <code>compute_matrix(event, diff)</code> — table-driven cases are exactly the tedium agents are good at, and coverage on a pure function is mechanically checkable.</td><td>Own the <em>semantics</em>: which families build on which trigger is a product decision, not a generated one. I review the matrix a <code>--dry-run</code> emits against what I intended, and no agent output reaches the <code>fromJSON()</code> boundary unreviewed.</td></tr>
+            <tr><td><strong>buildx / Dockerfile cache tuning</strong> (§5d)</td><td>Proposes <code>RUN --mount=type=cache</code> placements, layer ordering to maximize reuse, and <code>--cache-to/from</code> wiring; iterates fast against a measurable target (layer-reuse %).</td><td>Verify no secret is baked into a layer and that cache mounts can't leak between builds. Confirm the reuse number is real — an agent optimizing a metric will happily produce a cache that always "hits" and never helps.</td></tr>
             <tr><td>Failure triage</td><td>Summarizes CI logs, correlates flaky failures, proposes the likely root cause.</td><td>Reproduce, decide the fix, update the runbook.</td></tr>
           </tbody>
         </table>
@@ -1106,10 +1913,10 @@ class GPUTestHarness:
         <p>I build with this daily: <a href="https://github.com/schundu007/camora" target="_blank" rel="noopener">Camora</a> is a self-hosted platform spanning GitHub Actions, Buildkite, and Bazel with GPU provisioning/scheduling and an MCP architecture that orchestrates coding agents — the same draft-then-verify loop, in production.</p>
       </section>
 
-      <!-- 13 NEW: fit + plan -->
-      <section id="s13">
-        <div class="shead"><span class="sn">13</span><h2>Why I'm the fit — and my first 90 days</h2></div>
-        <p>The role wants one engineer to own GPU-stack CI end-to-end: stand up nightly integration builds, solve the self-hosted runner-provisioning problem, keep the infrastructure AWS-aligned, and set direction rather than maintain someone else's system. That's the work I've been doing for years, on the exact toolchain TheRock uses.</p>
+      <!-- 14 -->
+      <section id="s14">
+        <div class="shead"><span class="sn">14</span><h2>Why I'm the fit — and my first 90 days</h2></div>
+        <p>The role wants one engineer to own GPU-stack CI end-to-end: stand up nightly integration builds, solve the self-hosted runner-provisioning problem, keep the infrastructure AWS-aligned, and set direction rather than maintain someone else's system. That's the work I've been doing for years — and, as §2–§7 show, on the same toolchain this stack is built from.</p>
 
         <div class="tbl-scroll">
         <table class="tbl">
@@ -1121,7 +1928,7 @@ class GPUTestHarness:
             <tr><td>Complex infra: NFS, signing, network permissions</td><td>Firmware-build pipelines, HSM/KMS signing, private-subnet runner isolation, IAM least-privilege — designed here in §4–§7.</td></tr>
             <tr><td>AWS-aligned (EC2 runners, IAM, networking)</td><td>Production Terraform for OSDU on AWS: modular, multi-account EC2/IAM/VPC provisioning at global scale.</td></tr>
             <tr><td>Agentic AI as a force multiplier</td><td>Co-founder of an agentic-AI/MCP platform; I drive coding agents daily behind review — matching TheRock's own <code>CLAUDE.md</code> workflow.</td></tr>
-            <tr><td>Trunk-health, shift-left, ROCm-aligned</td><td>Open-source CI/build work incl. <a href="https://www.sudhakarchundu.org/blog/NVIDIA_RAPIDS_ADI.html" target="_blank" rel="noopener">NVIDIA RAPIDS ADI</a> (CI/build infra) and a HUD-style dashboard, <a href="https://gitpulser.vercel.app/dashboard" target="_blank" rel="noopener">GitPulser</a>.</td></tr>
+            <tr><td>Trunk-health, shift-left, dashboard-driven</td><td>Open-source CI/build infrastructure work, plus a HUD-style trunk-health dashboard I built and run: <a href="https://gitpulser.vercel.app/dashboard" target="_blank" rel="noopener">GitPulser</a> (nightly pipelines, multi-arch builds, dependency-graph automation).</td></tr>
           </tbody>
         </table>
         </div>
@@ -1132,33 +1939,33 @@ class GPUTestHarness:
             <div class="ph">Days 0–30 · Land &amp; ship green</div>
             <h4>Nightly, running</h4>
             <ul>
-              <li>Read TheRock/rockrel CI end-to-end; map current runner topology and cache state with the team.</li>
+              <li>Read the CI end-to-end; confirm with the team what my §2–§3 reading of the public repo got right, and what it got wrong.</li>
               <li>Stand up (or stabilize) a <strong>nightly integration build</strong> with result reporting — the stated first priority.</li>
-              <li>Baseline the metrics that matter: nightly pass-rate, wall-clock, ccache hit-rate.</li>
-              <li>Quick win: fix the highest-frequency flaky failure and document the runbook.</li>
+              <li>Baseline the metrics that matter, separating <strong>host-C++ from HIP device-code cache hit-rate</strong> before promising either (§12).</li>
+              <li>Quick win: land <code>actionlint</code> + <code>zizmor</code> (§7) and fix the highest-frequency flaky failure, with the runbook.</li>
             </ul>
           </div>
           <div class="phase">
             <div class="ph">Days 30–60 · Runners &amp; LKG</div>
             <h4>Solve provisioning</h4>
             <ul>
-              <li>Provision <strong>self-hosted runners</strong> as code — NFS mounts, signing access, network permissions — with IT on the real constraints.</li>
+              <li>Harden the orchestration layer: <strong>typed build-config contract, unit tests, <code>--dry-run</code></strong> (§5a). The single biggest lever, and it ships incrementally.</li>
+              <li>Adopt <strong>buildx with a registry-backed cache</strong> for the image layer (§5d) — contained, low-risk, measurable.</li>
               <li>Ship <strong>LKG manifest promotion</strong>: build-once, test-separately, promote-on-green, with pinned-source provenance.</li>
-              <li>Make ccache/DVC caches persistent and observable; drive nightly wall-clock down.</li>
             </ul>
           </div>
           <div class="phase">
             <div class="ph">Days 60–90 · AWS-align &amp; harden</div>
             <h4>Consistent &amp; owned</h4>
             <ul>
-              <li>Converge runner infra toward the <strong>AWS-hosted direction</strong> — EC2 runners, IAM, networking — so nothing is rebuilt later.</li>
-              <li>Extend the <strong>HUD</strong> for at-a-glance trunk health across gfx families.</li>
-              <li>Runbooks for the top 10 failure modes; monthly cost report per runner type.</li>
+              <li>Automate <strong>stage selection from <code>BUILD_TOPOLOGY.toml</code></strong> (§10) — retire the manual <code>baseline_run_id</code>, keeping the existing remote cache and adopting no new build system.</li>
+              <li>Export <strong>OpenTelemetry</strong> step timings and cache hit-rate, then run the one-pipeline <strong>BuildKite pilot</strong> against real numbers rather than a demo.</li>
+              <li>Extend the <strong>HUD</strong> for at-a-glance trunk health across <code>gfx</code> families; runbooks for the top 10 failure modes.</li>
               <li>Hand every engineer a <strong>trusted LKG baseline</strong> they can build from on demand.</li>
             </ul>
           </div>
         </div>
-        <div class="note green"><span class="tag">Bottom line</span>This is high-ownership work with direct customer impact — producing validated, complete GPU-stack recipes on demand instead of assembling them by hand. It's the shape of work I've done across IBM, Trackonomy, and OSDU, on the exact Python-first, CMake/Ninja, cache-sensitive, multi-arch stack AMD runs in the open. I'd own it from week one.</div>
+        <div class="note green"><span class="tag">Bottom line</span>This is high-ownership work with direct customer impact — producing validated, complete GPU-stack recipes on demand instead of assembling them by hand. It's the shape of work I've done across IBM, Trackonomy, and OSDU, on the same Python-first, CMake/Ninja, cache-sensitive, multi-arch ground AMD builds on in the open. Note what the plan above does <em>not</em> contain: a migration. The highest-value first year here is spent making an already-good system legible, testable and measurable — not replacing it. I'd own it from week one.</div>
       </section>
 
       <p class="backtop"><a href="#top">↑ Back to top</a> · <a href="https://www.sudhakarchundu.org/blog/">← Blog</a></p>
