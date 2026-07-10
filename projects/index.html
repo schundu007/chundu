@@ -11,14 +11,14 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Achievements | Sudhakar Chundu</title>
-    <meta name="description" content="Achievements by Sudhakar Chundu - Enterprise projects, conference talks, and technical publications on cloud infrastructure, AI/ML platforms, and SRE practices.">
+    <title>Projects | Sudhakar Chundu</title>
+    <meta name="description" content="Projects by Sudhakar Chundu - Enterprise projects, conference talks, technical publications, and blog articles on cloud infrastructure, AI/ML platforms, and SRE practices.">
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/style.css?v=5">
+    <link rel="stylesheet" href="../assets/css/style.css?v=6">
     <!-- Theme JS (load early to prevent flash) -->
     <script src="../assets/js/theme.js"></script>
 
@@ -43,6 +43,47 @@
             .panel-head { flex-wrap: wrap; }
             .panel-meta { white-space: normal; }
         }
+
+        /* Blog ledger (merged from /blog/) */
+        .blog-filters { display: flex; flex-wrap: wrap; gap: 0.375rem; margin-bottom: 1rem; }
+        .filter-btn { padding: 0.2rem 0.6rem; background: var(--bg-tertiary); border: 1px solid transparent; border-radius: var(--radius-sm); color: var(--text-secondary); font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500; cursor: pointer; transition: var(--transition-fast); }
+        .filter-btn .count { opacity: 0.55; margin-left: 0.4em; }
+        .filter-btn:hover { color: var(--text-primary); }
+        .filter-btn.active { background: var(--accent-highlight, var(--accent-blue)); color: var(--bg-primary); font-weight: 700; }
+        .filter-btn:focus-visible { outline: 2px solid var(--accent-highlight, var(--accent-blue)); outline-offset: 2px; }
+        .featured-post, .post-row { display: grid; grid-template-columns: 130px 1fr; gap: 1.25rem; border-top: 1px solid var(--bg-tertiary); }
+        .entry-meta { display: flex; flex-direction: column; align-items: flex-start; gap: 0.375rem; font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); padding-top: 0.125rem; }
+        .entry-flag { color: var(--accent-highlight, var(--accent-blue)); font-weight: 700; }
+        .entry-category { font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.375rem; }
+        .featured-post { padding: 0.875rem 0; }
+        .featured-content h3 { font-size: 1rem; font-weight: 700; line-height: 1.35; margin-bottom: 0.5rem; }
+        .featured-content h3 a { color: var(--text-primary); text-decoration: none; transition: var(--transition-fast); }
+        .featured-content h3 a:hover { color: var(--accent-highlight, var(--accent-blue)); }
+        .featured-content .post-excerpt { color: var(--text-secondary); font-size: 0.8125rem; line-height: 1.55; max-width: 72ch; margin-bottom: 0.75rem; }
+        .read-link { display: inline-flex; align-items: center; gap: 0.375rem; color: var(--accent-highlight, var(--accent-blue)); font-weight: 600; font-size: 0.8125rem; text-decoration: none; }
+        .read-link i { font-size: 0.6875rem; }
+        .read-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+        .index-label { font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin: 1.25rem 0 0.5rem; }
+        .post-row { position: relative; padding: 0.875rem 0; }
+        .post-index .post-row:last-child { border-bottom: 1px solid var(--bg-tertiary); }
+        .post-row h3 { font-size: 0.9375rem; font-weight: 600; line-height: 1.4; margin-bottom: 0.375rem; transition: var(--transition-fast); }
+        .post-row h3 a { color: var(--text-primary); text-decoration: none; }
+        .post-row h3 a::after { content: ''; position: absolute; inset: 0; }
+        .post-row:hover h3 { color: var(--accent-highlight, var(--accent-blue)); }
+        .post-row .post-excerpt { color: var(--text-secondary); font-size: 0.8125rem; line-height: 1.55; max-width: 72ch; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .post-row .row-arrow { position: absolute; right: 0; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.75rem; opacity: 0; transition: var(--transition-fast); }
+        .post-row:hover .row-arrow { opacity: 1; color: var(--accent-highlight, var(--accent-blue)); }
+        .empty-state { border-top: 1px solid var(--bg-tertiary); border-bottom: 1px solid var(--bg-tertiary); padding: 1.25rem 0; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); }
+        .empty-state button { background: none; border: none; padding: 0; font: inherit; color: var(--accent-highlight, var(--accent-blue)); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+        .blog-outro { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem 2rem; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--bg-tertiary); }
+        .blog-outro h3 { font-size: 0.9375rem; font-weight: 600; margin-bottom: 0.25rem; }
+        .blog-outro p { color: var(--text-muted); font-size: 0.8125rem; margin: 0; }
+        @media (max-width: 768px) {
+            .featured-post, .post-row { grid-template-columns: 1fr; gap: 0.5rem; }
+            .entry-meta { flex-direction: row; flex-wrap: wrap; gap: 0.25rem 1rem; padding-top: 0; }
+            .post-row .row-arrow { display: none; }
+            .blog-outro { flex-direction: column; align-items: flex-start; }
+        }
     </style>
 </head>
 <body>
@@ -59,8 +100,7 @@
             <ul class="nav-links">
                 <li><a href="../">Overview</a></li>
                 <li><a href="../about/">About</a></li>
-                <li><a href="../blog/">Blog</a></li>
-                <li><a href="./" class="active">Achievements</a></li>
+                <li><a href="./" class="active">Projects</a></li>
                 <li><a href="../opensource/">Open Source</a></li>
                 <div class="nav-social">
                     <a href="https://github.com/schundu007" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
@@ -85,8 +125,8 @@
     <main class="main-content">
         <!-- Page Header -->
         <header class="page-header">
-            <h1>Achievements</h1>
-            <p>Enterprise projects, conference talks, and technical publications across cloud infrastructure, performance engineering, and SRE practice.</p>
+            <h1>Projects</h1>
+            <p>Enterprise projects, conference talks, publications, and blog articles across cloud infrastructure, performance engineering, and SRE practice.</p>
         </header>
 
         <!-- Enterprise Projects -->
@@ -470,6 +510,139 @@
             </div>
         </section>
 
+        <!-- Blog (merged from /blog/) -->
+        <section class="section" id="blog">
+            <div class="section-header">
+                <span class="section-label">Blog</span>
+                <h2>Engineering Blog</h2>
+                <p>Deep-dive engineering references on DevOps, SRE, platform engineering, and GPU infrastructure.</p>
+            </div>
+
+            <!-- Category Filters -->
+            <div class="blog-filters" role="group" aria-label="Filter posts by category">
+                <button class="filter-btn active" data-filter="all" aria-pressed="true">All Posts <span class="count">06</span></button>
+                <button class="filter-btn" data-filter="gcp" aria-pressed="false">GCP <span class="count">01</span></button>
+                <button class="filter-btn" data-filter="devops" aria-pressed="false">DevOps / CI <span class="count">01</span></button>
+                <button class="filter-btn" data-filter="gpu" aria-pressed="false">GPU / ML Infra <span class="count">03</span></button>
+                <button class="filter-btn" data-filter="mobile" aria-pressed="false">Mobile DevOps <span class="count">01</span></button>
+            </div>
+
+            <!-- Featured Post -->
+            <article class="featured-post" data-category="gcp">
+                <div class="entry-meta">
+                    <span class="entry-flag"><i class="fas fa-star" aria-hidden="true"></i> Featured</span>
+                    <span>Mar 03 2026</span>
+                    <span>45 min read</span>
+                    <span>6 parts</span>
+                </div>
+                <div class="featured-content">
+                    <p class="entry-category">GCP Architecture</p>
+                    <h3><a href="../blog/gcp-design-problems-solutions.html">GCP Design Problems and Solutions: 42 Scenarios with Architecture Diagrams</a></h3>
+                    <p class="post-excerpt">
+                        A comprehensive deep dive into GCP cloud infrastructure design covering TPUs, GPUs, GKE,
+                        Kubernetes autoscaling, networking, security, Terraform, CI/CD pipelines, and real-world
+                        consulting scenarios with detailed Mermaid architecture diagrams.
+                    </p>
+                    <a href="../blog/gcp-design-problems-solutions.html" class="read-link">Read the deep dive <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                </div>
+            </article>
+
+            <!-- Post Index -->
+            <p class="index-label" id="index-label">Index / 05 entries</p>
+            <div class="post-index">
+                <article class="post-row" data-category="devops">
+                    <div class="entry-meta">
+                        <span>Jul 2026</span>
+                        <span>40 min read</span>
+                    </div>
+                    <div>
+                        <p class="entry-category">DevOps / Cloud Security / AI</p>
+                        <h3><a href="../blog/AMD_GPU_CI_Infrastructure.html">Owning CI for AMD's Unified GPU Stack</a></h3>
+                        <p class="post-excerpt">
+                            An end-to-end CI infrastructure reference for AMD's firmware, kernel driver, and ROCm release pipeline, grounded in what ROCm/TheRock runs in the open today: Terraform IaC, self-hosted GitHub Actions runners, HSM firmware signing, and hardware-in-the-loop validation on real AMD Instinct silicon.
+                        </p>
+                    </div>
+                    <i class="fas fa-arrow-right row-arrow" aria-hidden="true"></i>
+                </article>
+
+                <article class="post-row" data-category="gpu">
+                    <div class="entry-meta">
+                        <span>Jun 2026</span>
+                        <span>45 min read</span>
+                    </div>
+                    <div>
+                        <p class="entry-category">MLOps / LLMOps</p>
+                        <h3><a href="../blog/MLOps_LLMOps_Reference_Paper.html">MLOps &amp; LLMOps: Unified Governance for Industrial AI</a></h3>
+                        <p class="post-excerpt">
+                            IEEE reference architecture paper unifying classic ML and generative AI under one governance plane: drift taxonomy, RAG vs. agentic patterns, evaluator bias correction, and edge-aware continuous delivery for manufacturing environments.
+                        </p>
+                    </div>
+                    <i class="fas fa-arrow-right row-arrow" aria-hidden="true"></i>
+                </article>
+
+                <article class="post-row" data-category="mobile">
+                    <div class="entry-meta">
+                        <span>Jun 2026</span>
+                        <span>55 min read</span>
+                    </div>
+                    <div>
+                        <p class="entry-category">Mobile DevOps</p>
+                        <h3><a href="../blog/iOS_Release_Engineering.html">iOS Release Engineering: End-to-End Deployment Architecture</a></h3>
+                        <p class="post-excerpt">
+                            Enterprise iOS CI/CD reference: build pipelines on macOS agents, Fastlane match code signing automation, multi-environment xcconfig promotion, TestFlight staged rollouts, App Store Connect API integration, feature flags, and production rollback runbooks.
+                        </p>
+                    </div>
+                    <i class="fas fa-arrow-right row-arrow" aria-hidden="true"></i>
+                </article>
+
+                <article class="post-row" data-category="gpu">
+                    <div class="entry-meta">
+                        <span>May 2026</span>
+                        <span>75 min read</span>
+                    </div>
+                    <div>
+                        <p class="entry-category">Robotics / CI-CD</p>
+                        <h3><a href="../blog/NVIDIA_Isaac_ROS_DevOps.html">NVIDIA Isaac ROS DevOps Engineering Deep Dive</a></h3>
+                        <p class="post-excerpt">
+                            Comprehensive technical reference for Isaac ROS CI/CD: ROS 2 Humble/Jazzy build systems, NITROS acceleration, multi-arch Docker pipelines, NGC image publishing, and 41 IsaacLab audit findings with remediation patterns.
+                        </p>
+                    </div>
+                    <i class="fas fa-arrow-right row-arrow" aria-hidden="true"></i>
+                </article>
+
+                <article class="post-row" data-category="gpu">
+                    <div class="entry-meta">
+                        <span>Mar 2026</span>
+                        <span>60 min read</span>
+                    </div>
+                    <div>
+                        <p class="entry-category">GPU / ML Infra</p>
+                        <h3><a href="../blog/NVIDIA_RAPIDS_ADI.html">NVIDIA RAPIDS Engineering Deep Dive</a></h3>
+                        <p class="post-excerpt">
+                            Comprehensive technical reference for NVIDIA RAPIDS, GPU-accelerated data science and analytics. Covers cuDF, cuML, cuGraph, packaging, CUDA internals, and real-world GPU infrastructure engineering.
+                        </p>
+                    </div>
+                    <i class="fas fa-arrow-right row-arrow" aria-hidden="true"></i>
+                </article>
+            </div>
+
+            <!-- Empty filter state -->
+            <div class="empty-state" hidden>
+                No posts in this category yet. <button type="button" id="reset-filter">View all posts</button>
+            </div>
+
+            <!-- Outro -->
+            <div class="blog-outro">
+                <div>
+                    <h3>New posts land here first.</h3>
+                    <p>Longer essays and cross-posts are on Medium.</p>
+                </div>
+                <a href="https://medium.com/@schundu" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+                    <i class="fab fa-medium" aria-hidden="true"></i> Follow on Medium
+                </a>
+            </div>
+        </section>
+
         <!-- Comments Section -->
         <div id="comments-container"></div>
     </main>
@@ -480,8 +653,8 @@
             <span class="footer-logo">Sudhakar Chundu</span>
             <div class="footer-links">
                 <a href="../#resume">Resume</a>
-                <a href="../blog/">Blog</a>
-                <a href="./">Achievements</a>
+                <a href="#blog">Blog</a>
+                <a href="./">Projects</a>
                 <a href="../contact/">Contact</a>
             </div>
             <div class="footer-social">
@@ -514,6 +687,42 @@
                 navLinks.classList.remove('active');
             });
         });
+
+        // Blog category filter (merged from /blog/)
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const entries = document.querySelectorAll('.featured-post, .post-row');
+        const indexLabel = document.getElementById('index-label');
+        const emptyState = document.querySelector('.empty-state');
+
+        function applyFilter(filter) {
+            filterBtns.forEach(b => {
+                const active = b.dataset.filter === filter;
+                b.classList.toggle('active', active);
+                b.setAttribute('aria-pressed', String(active));
+            });
+
+            let visibleRows = 0;
+            let anyVisible = false;
+
+            entries.forEach(entry => {
+                const show = filter === 'all' || entry.dataset.category === filter;
+                entry.style.display = show ? '' : 'none';
+                if (show) {
+                    anyVisible = true;
+                    if (entry.classList.contains('post-row')) visibleRows++;
+                }
+            });
+
+            indexLabel.textContent = 'Index / ' + String(visibleRows).padStart(2, '0') + (visibleRows === 1 ? ' entry' : ' entries');
+            indexLabel.style.display = visibleRows > 0 ? '' : 'none';
+            emptyState.hidden = anyVisible;
+        }
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
+        });
+
+        document.getElementById('reset-filter').addEventListener('click', () => applyFilter('all'));
     </script>
     <!-- Neural Network Background -->
     <script src="../assets/js/neural-bg.js"></script>

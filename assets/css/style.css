@@ -279,6 +279,8 @@
 }
 
 html {
+    /* 13px root: global ~81% scale-down of all rem-based sizes */
+    font-size: 81.25%;
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -290,7 +292,7 @@ body {
     color: var(--text-primary);
     line-height: 1.55;
     letter-spacing: 0.01em;
-    font-size: 15px;
+    font-size: 1rem;
     font-optical-sizing: auto;
     min-height: 100vh;
     overflow-x: hidden;
@@ -563,12 +565,12 @@ nav {
 
 /* ===== PAGE HEADER ===== */
 .page-header {
-    padding: 18px 24px;
+    padding: 14px 16px;
     text-align: left;
     position: relative;
     background: var(--bg-card);
     border-radius: var(--radius-md);
-    margin: 72px 0 12px;
+    margin: 68px 0 10px;
     border: 1px solid var(--bg-tertiary);
     overflow: hidden;
 }
@@ -594,10 +596,10 @@ nav {
 
 /* ===== SECTIONS (LinkedIn-style stacked cards) ===== */
 .section {
-    padding: 18px 24px;
+    padding: 14px 16px;
     background: var(--bg-card);
     border-radius: var(--radius-md);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     border: 1px solid var(--bg-tertiary);
     position: relative;
     overflow: hidden;
