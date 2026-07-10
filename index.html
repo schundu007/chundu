@@ -349,47 +349,6 @@
             color: var(--accent-blue);
         }
 
-        /* Company strip */
-        .companies-strip {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
-            gap: 0.5rem;
-            margin-top: 0.75rem;
-        }
-
-        .company-logo-link {
-            background: transparent;
-            border: none;
-            border-radius: var(--radius-sm);
-            padding: 0.5rem 0.625rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition-fast);
-            text-decoration: none;
-        }
-
-        .company-logo-link:hover {
-            background: rgba(63, 185, 80, 0.06);
-        }
-
-        .company-logo-link img {
-            max-width: 62px;
-            max-height: 22px;
-            object-fit: contain;
-            opacity: 0.8;
-            transition: opacity var(--transition-fast);
-        }
-
-        .company-logo-link:hover img {
-            opacity: 1;
-        }
-
-        .company-logo-link:focus-visible {
-            outline: 2px solid var(--accent-highlight);
-            outline-offset: 2px;
-        }
-
         @media (max-width: 560px) {
             .identity {
                 margin-top: 64px;
@@ -690,33 +649,6 @@
             </div>
         </section>
 
-        <!-- Target companies -->
-        <section class="section" id="companies" aria-labelledby="companies-title">
-            <div class="section-header">
-                <span class="section-label">Next Chapter</span>
-                <h2 id="companies-title">Companies I Admire</h2>
-            </div>
-            <div class="companies-strip">
-                <a href="https://www.nvidia.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/nvidia.png" alt="NVIDIA" loading="lazy"></a>
-                <a href="https://careers.google.com" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/google.png" alt="Google" loading="lazy"></a>
-                <a href="https://www.metacareers.com" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/meta.png" alt="Meta" loading="lazy"></a>
-                <a href="https://www.amazon.jobs" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/amazon.png" alt="Amazon" loading="lazy"></a>
-                <a href="https://careers.microsoft.com" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/microsoft.png" alt="Microsoft" loading="lazy"></a>
-                <a href="https://openai.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/openai.png" alt="OpenAI" loading="lazy"></a>
-                <a href="https://www.apple.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/apple.png" alt="Apple" loading="lazy"></a>
-                <a href="https://cerebras.net/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/cerebras.png" alt="Cerebras" loading="lazy"></a>
-                <a href="https://groq.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/groq.png" alt="Groq" loading="lazy"></a>
-                <a href="https://scale.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/scaleai.png" alt="Scale AI" loading="lazy"></a>
-                <a href="https://www.oracle.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/oracle.png" alt="Oracle" loading="lazy"></a>
-                <a href="https://www.cisco.com/c/en/us/about/careers.html" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/cisco.png" alt="Cisco" loading="lazy"></a>
-                <a href="https://www.salesforce.com/company/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/salesforce.png" alt="Salesforce" loading="lazy"></a>
-                <a href="https://www.intuit.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/intuit.png" alt="Intuit" loading="lazy"></a>
-                <a href="https://www.visa.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/visa.png" alt="Visa" loading="lazy"></a>
-                <a href="https://www.jpmorgan.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/jpmorgan.png" alt="JPMorgan Chase" loading="lazy"></a>
-                <a href="https://corporate.walmart.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/walmart.png" alt="Walmart" loading="lazy"></a>
-                <a href="https://www.capitalone.com/tech/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/capitalone.png" alt="Capital One" loading="lazy"></a>
-            </div>
-        </section>
     </main>
 
     <!-- Footer -->
