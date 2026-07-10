@@ -353,7 +353,7 @@
         <div class="who">Sudhakar Chundu</div>
         <div class="role">Platform / CI &amp; Build-Infrastructure Engineer</div>
       </div>
-      <div class="meta">Revised July 2026<br>14 sections · 3 diagrams<br>~60 min read</div>
+      <div class="meta">Revised July 2026<br>14 sections · 7 diagrams<br>~60 min read</div>
     </div>
 
     <div class="stats">
@@ -602,6 +602,23 @@ flowchart LR
 
         <p>Those 46 Python scripts <strong>generate JSON build configurations that GitHub Actions consumes as matrices via <code>fromJSON()</code></strong> <span class="pill pass">confirmed</span>. Which GPU families build on which OS, against which Python versions, producing which artifacts, on which trigger — none of that is expressed in YAML. YAML is the <em>output format</em>. Python is the build system, and GitHub Actions is an executor of whatever JSON it is handed.</p>
 
+        <div class="diagram">
+          <div class="cap">Figure 3 — The orchestration layer: Python is the build system, YAML is its output</div>
+          <pre class="mermaid">
+flowchart TD
+  EV["GitHub event<br/>push · pull_request · schedule"] --&gt; PY["build_tools/github_actions<br/>46 Python scripts · ~12,350 lines"]
+  TOP["BUILD_TOPOLOGY.toml<br/>declared stage graph"] --&gt; PY
+  PY --&gt; JS["JSON build config<br/>untyped dict"]
+  JS --&gt; FJ{{"fromJSON()<br/>string injection"}}
+  FJ --&gt; MX["Actions matrix<br/>gfx family × OS × channel"]
+  MX --&gt; DR["docker run manylinux<br/>CMake superbuild"]
+  DR --&gt; ART[("Artifacts")]
+
+  JS -.-&gt; G1["no typed contract:<br/>a renamed key fails at 3am,<br/>not at review"]
+  FJ -.-&gt; G2["no local reproduction:<br/>what will CI do?<br/>push and watch"]
+          </pre>
+        </div>
+
         <p>Let me be precise, because "12,000 lines of Python in CI" reads like an accusation and it isn't one. <strong>This layer exists because it has to.</strong> The native Actions matrix is a static cartesian product; the moment your build topology depends on the event type, the changed paths, the release channel, and a per-family capability table, the native matrix is simply not expressive enough. Every mature Actions monorepo grows this layer. TheRock's is large because its build topology is large. Config-as-code here is the <em>right call</em>, and the team made it before most would have.</p>
 
         <p>The forward-looking opportunity is that a component this load-bearing has outgrown the tooling of a script. Four things it would get if it were treated as the product it has become:</p>
@@ -618,6 +635,28 @@ flowchart LR
         <p>TheRock shards the superbuild into stages and reuses prior output via <code>prebuilt_stages</code> + a <code>baseline_run_id</code>, coordinated by <code>artifact_manager.py</code> against a declared <code>BUILD_TOPOLOGY.toml</code> <span class="pill pass">confirmed</span>. Notice what that is: a working, pragmatic implementation of <strong>staged incremental builds</strong> — the outcome Bazel is usually adopted to obtain — built without adopting Bazel.</p>
         <p>The remaining gap is <code>baseline_run_id</code>: a human picks which prior CI run to inherit artifacts from. That's a cache key chosen by a person. It works, and it carries the failure mode you'd predict — choose a stale baseline and lower stages silently go unrebuilt.</p>
         <p>The reflex is "so migrate to Bazel." I'd argue the opposite, and §10 makes the full case. The short version: <strong>the topology is already declared</strong> in <code>BUILD_TOPOLOGY.toml</code>. Deriving the stage set from that graph plus a diff needs a graph traversal, not a new build system. The goal isn't a different tool — it's to stop asking a human for the cache key.</p>
+
+        <div class="diagram">
+          <div class="cap">Figure 4 — Incrementality: a human cache key today, a derived one tomorrow</div>
+          <pre class="mermaid">
+flowchart LR
+  subgraph NOW["TODAY — a person chooses the cache key"]
+    H["engineer picks<br/>baseline_run_id"] --&gt; AM["artifact_manager.py"]
+    AM --&gt; PS["prebuilt_stages reused"]
+    PS --&gt; RK["stale baseline:<br/>lower stages silently<br/>never rebuilt"]
+  end
+
+  subgraph NEXT["PROPOSED — derive it from the graph you already declared"]
+    DF["git diff"] --&gt; TR["traverse BUILD_TOPOLOGY.toml"]
+    TV["toolchain version"] --&gt; TR
+    TR --&gt; HS["hash each stage's inputs<br/>content-addressed key"]
+    HS --&gt; SEL["stage set derived<br/>no human in the loop"]
+    SEL --&gt; RC[("existing remote cache")]
+  end
+
+  NOW -.-&gt;|"no new build system required"| NEXT
+          </pre>
+        </div>
 
         <div class="note green"><span class="tag">The through-line</span>TheRock is Python-first, CMake/Ninja, cache-sensitive, multi-OS, multi-arch, dashboard-driven, ARC-on-Kubernetes, OIDC-federated, and already AI-in-the-loop. That is my exact toolbox — Python as primary language, multi-cloud IaC, Kubernetes runner fleets, GitHub Actions <em>and</em> GitLab CI, GPU provisioning, and agentic MCP tooling. I'd be productive against this stack in week one, not month three.</div>
       </section>
@@ -1430,6 +1469,30 @@ docker buildx build \
   .</code></pre></div>
         </details>
 
+        <div class="diagram">
+          <div class="cap">Figure 5 — Two caches, two problems: BuildKit caches the environment, ccache caches the compile</div>
+          <pre class="mermaid">
+flowchart TD
+  DF["Dockerfile<br/>manylinux · dnf · pip"] --&gt; BX["docker buildx build<br/>BuildKit"]
+  BX --&gt; REG[("registry layer cache<br/>mode=max")]
+  REG --&gt; BX
+  BX --&gt; IMG["build image"]
+
+  IMG --&gt; DR["docker run<br/>the compile happens HERE"]
+  SRC["C++ / HIP sources"] --&gt; DR
+  DR --&gt; CC["ccache launcher<br/>C · CXX · HIP"]
+  CC --&gt; OBJ["object files"]
+  OBJ --&gt; SB["superbuild output"]
+
+  TRU["trusted ref"] --&gt;|"read-write"| BR[("bazel-remote<br/>in-cluster · layout=bazel")]
+  FRK["untrusted fork PR"] -.-&gt;|"read-only=true"| BR
+  CC --&gt; BR
+
+  BX -.-&gt; NOTE["BuildKit's layer cache<br/>CANNOT reach past docker run"]
+  NOTE -.-&gt; DR
+          </pre>
+        </div>
+
         <div class="note green"><span class="tag">Verdict, previewed</span><strong>Adopt buildx now.</strong> It is a contained change to the image layer, it does not touch the CMake superbuild, it needs no migration, and <code>mode=max</code> + <code>RUN --mount=type=cache</code> turn a dependency bump from a full image rebuild into a delta. The full ROI argument, alongside the calls on BuildKite and Bazel, is §10.</div>
       </section>
 
@@ -1438,7 +1501,7 @@ docker buildx build \
         <div class="shead"><span class="sn">06</span><h2>DevOps security: OIDC federation &amp; code signing</h2></div>
         <p><strong>Security is not optional.</strong> Firmware signing via CloudHSM (key never leaves hardware), SBOM generation, vulnerability scanning, and complete audit trails.</p>
         <div class="diagram">
-          <div class="cap">Figure 3 — Firmware signing &amp; provenance pipeline</div>
+          <div class="cap">Figure 6 — Firmware signing &amp; provenance pipeline</div>
           <pre class="mermaid">
 flowchart LR
   A["Build on isolated<br/>runner"] --> B["SHA-256 hash"]
@@ -2148,6 +2211,37 @@ class GPUTestHarness:
         </table>
         </div>
         <p>The rule compresses to one sentence: <strong>if a step emits a signature, an attestation, or a verified-provenance claim — or is irreversible — it stays human-gated and deterministic.</strong> Everything upstream of that line is fair game, and that is where nearly all the toil lives anyway.</p>
+
+        <div class="diagram">
+          <div class="cap">Figure 7 — AI belongs strictly upstream of every trust boundary</div>
+          <pre class="mermaid">
+flowchart LR
+  subgraph UP["UPSTREAM — AI drafts, humans decide"]
+    A1["draft Terraform,<br/>workflows, typed configs"]
+    A2["summarize a failed<br/>build log to 5 bullets"]
+    A3["triage flaky tests,<br/>propose dependency bumps"]
+    A4["suggest a fix for<br/>a CodeQL alert"]
+  end
+
+  TB{{"TRUST BOUNDARY"}}
+
+  subgraph DOWN["DOWNSTREAM — deterministic and human-gated, always"]
+    D1["HSM / KMS signing"]
+    D2["merge to a protected branch"]
+    D3["promote to a signed<br/>release channel"]
+    D4["verify a signature<br/>or provenance claim"]
+  end
+
+  A1 --&gt; TB
+  A2 --&gt; TB
+  A3 --&gt; TB
+  A4 --&gt; TB
+  TB --&gt; D1
+  TB --&gt; D2
+  TB --&gt; D3
+  TB --&gt; D4
+          </pre>
+        </div>
 
         <div class="note blue"><span class="tag">Discount the hype</span>One category deserves scepticism: <strong>"AI-powered build-cache and build-graph optimization."</strong> The real speedups in this space — remote caching, remote execution, correct action graphs — are <em>deterministic content-addressed hashing and dependency analysis</em>. They are excellent, and they are not machine learning. ML-predicted build-graph optimization is not a proven category today. Adopt the caching; do not pay a premium for the adjective.</div>
         <p>I build with this daily: <a href="https://github.com/schundu007/camora" target="_blank" rel="noopener">Camora</a> is a self-hosted platform spanning GitHub Actions, Buildkite, and Bazel with GPU provisioning/scheduling and an MCP architecture that orchestrates coding agents — the same draft-then-verify loop, in production.</p>
