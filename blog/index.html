@@ -18,35 +18,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/style.css?v=2">
+    <link rel="stylesheet" href="../assets/css/style.css?v=3">
     <!-- Theme JS (load early to prevent flash) -->
     <script src="../assets/js/theme.js"></script>
     <style>
-        /* Blog Page Specific Styles — "Signal Board" post index */
+        /* Blog index — rule-separated post ledger (compact enterprise) */
 
-        .blog-container {
-            max-width: 1100px;
-        }
-
-        /* Category Filter */
+        /* Category filter — compact mono tag chips */
         .blog-filters {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: clamp(2.5rem, 5vw, 4rem);
+            gap: 0.375rem;
+            margin-bottom: 1.5rem;
         }
 
         .filter-btn {
-            padding: 0.45rem 0.9rem;
-            background: transparent;
-            border: 1px solid var(--bg-tertiary);
-            border-radius: var(--radius-full);
-            color: var(--text-muted);
+            padding: 0.2rem 0.6rem;
+            background: var(--bg-tertiary);
+            border: 1px solid transparent;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
             font-family: var(--font-mono);
-            font-size: 0.72rem;
+            font-size: 0.6875rem;
             font-weight: 500;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
             cursor: pointer;
             transition: var(--transition-fast);
         }
@@ -58,18 +52,16 @@
 
         .filter-btn:hover {
             color: var(--text-primary);
-            border-color: var(--text-muted);
         }
 
         .filter-btn.active {
-            background: var(--accent-highlight);
-            border-color: var(--accent-highlight);
+            background: var(--accent-highlight, var(--accent-blue));
             color: var(--bg-primary);
             font-weight: 700;
         }
 
         .filter-btn:focus-visible {
-            outline: 2px solid var(--accent-highlight);
+            outline: 2px solid var(--accent-highlight, var(--accent-blue));
             outline-offset: 2px;
         }
 
@@ -77,8 +69,8 @@
         .featured-post,
         .post-row {
             display: grid;
-            grid-template-columns: 170px 1fr;
-            gap: clamp(1.5rem, 4vw, 3.5rem);
+            grid-template-columns: 150px 1fr;
+            gap: 1.5rem;
             border-top: 1px solid var(--bg-tertiary);
         }
 
@@ -86,43 +78,41 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 0.7rem;
+            gap: 0.375rem;
             font-family: var(--font-mono);
-            font-size: 0.72rem;
+            font-size: 0.6875rem;
             font-weight: 500;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
             color: var(--text-muted);
-            padding-top: 0.35rem;
+            padding-top: 0.125rem;
         }
 
         .entry-flag {
-            color: var(--accent-highlight);
+            color: var(--accent-highlight, var(--accent-blue));
             font-weight: 700;
         }
 
         .entry-category {
             font-family: var(--font-mono);
-            font-size: 0.72rem;
+            font-size: 0.6875rem;
             font-weight: 500;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
             color: var(--text-muted);
-            margin-bottom: 0.85rem;
+            margin-bottom: 0.375rem;
         }
 
         /* Featured entry */
         .featured-post {
-            padding: clamp(2.25rem, 5vw, 3.5rem) 0;
+            padding: 1rem 0;
         }
 
         .featured-content h2 {
-            font-family: var(--font-display);
-            font-size: clamp(1.6rem, 3vw, 2.35rem);
+            font-size: 1.125rem;
             font-weight: 700;
-            line-height: 1.22;
-            letter-spacing: -0.025em;
-            margin-bottom: 1.25rem;
+            line-height: 1.35;
+            margin-bottom: 0.5rem;
         }
 
         .featured-content h2 a {
@@ -132,55 +122,50 @@
         }
 
         .featured-content h2 a:hover {
-            color: var(--accent-highlight);
+            color: var(--accent-highlight, var(--accent-blue));
         }
 
         .featured-content .post-excerpt {
             color: var(--text-secondary);
-            font-size: 1rem;
-            line-height: 1.7;
-            max-width: 65ch;
-            margin-bottom: 1.75rem;
+            font-size: 0.8125rem;
+            line-height: 1.55;
+            max-width: 72ch;
+            margin-bottom: 0.75rem;
         }
 
         .read-link {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            color: var(--text-primary);
+            gap: 0.375rem;
+            color: var(--accent-highlight, var(--accent-blue));
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.8125rem;
             text-decoration: none;
-            transition: var(--transition-fast);
         }
 
         .read-link i {
-            font-size: 0.8rem;
-            transition: transform var(--transition-fast);
+            font-size: 0.6875rem;
         }
 
         .read-link:hover {
-            color: var(--accent-highlight);
-        }
-
-        .read-link:hover i {
-            transform: translateX(4px);
+            text-decoration: underline;
+            text-underline-offset: 3px;
         }
 
         /* Post index */
         .index-label {
             font-family: var(--font-mono);
-            font-size: 0.72rem;
+            font-size: 0.6875rem;
             font-weight: 500;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
             color: var(--text-muted);
-            margin: clamp(2.5rem, 5vw, 4rem) 0 1.25rem;
+            margin: 1.5rem 0 0.5rem;
         }
 
         .post-row {
             position: relative;
-            padding: clamp(1.75rem, 3.5vw, 2.5rem) 0;
+            padding: 1rem 0;
         }
 
         .post-index .post-row:last-child {
@@ -188,12 +173,10 @@
         }
 
         .post-row h3 {
-            font-family: var(--font-display);
-            font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+            font-size: 0.9375rem;
             font-weight: 600;
-            line-height: 1.32;
-            letter-spacing: -0.015em;
-            margin-bottom: 0.75rem;
+            line-height: 1.4;
+            margin-bottom: 0.375rem;
             transition: var(--transition-fast);
         }
 
@@ -210,14 +193,14 @@
         }
 
         .post-row:hover h3 {
-            color: var(--accent-highlight);
+            color: var(--accent-highlight, var(--accent-blue));
         }
 
         .post-row .post-excerpt {
             color: var(--text-secondary);
-            font-size: 0.925rem;
-            line-height: 1.65;
-            max-width: 65ch;
+            font-size: 0.8125rem;
+            line-height: 1.55;
+            max-width: 72ch;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -230,25 +213,23 @@
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             opacity: 0;
             transition: var(--transition-fast);
         }
 
         .post-row:hover .row-arrow {
             opacity: 1;
-            color: var(--accent-highlight);
-            transform: translateY(-50%) translateX(2px);
+            color: var(--accent-highlight, var(--accent-blue));
         }
 
         /* Empty filter state */
         .empty-state {
             border-top: 1px solid var(--bg-tertiary);
             border-bottom: 1px solid var(--bg-tertiary);
-            padding: 3rem 0;
+            padding: 1.5rem 0;
             font-family: var(--font-mono);
-            font-size: 0.8rem;
-            letter-spacing: 0.05em;
+            font-size: 0.75rem;
             color: var(--text-muted);
         }
 
@@ -257,7 +238,7 @@
             border: none;
             padding: 0;
             font: inherit;
-            color: var(--accent-highlight);
+            color: var(--accent-highlight, var(--accent-blue));
             cursor: pointer;
             text-decoration: underline;
             text-underline-offset: 3px;
@@ -269,50 +250,22 @@
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 1.5rem 3rem;
-            margin-top: clamp(3.5rem, 7vw, 5.5rem);
-            padding-top: 2.5rem;
+            gap: 1rem 2rem;
+            margin-top: 2rem;
+            padding-top: 1.25rem;
             border-top: 1px solid var(--bg-tertiary);
         }
 
         .blog-outro h3 {
-            font-family: var(--font-display);
-            font-size: 1.25rem;
+            font-size: 0.9375rem;
             font-weight: 600;
-            letter-spacing: -0.015em;
-            margin-bottom: 0.35rem;
+            margin-bottom: 0.25rem;
         }
 
         .blog-outro p {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.8125rem;
             margin: 0;
-        }
-
-        /* Entrance + filter motion */
-        @keyframes rise {
-            from {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (prefers-reduced-motion: no-preference) {
-            .featured-post,
-            .post-row,
-            .blog-outro {
-                animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
-            }
-
-            .post-row:nth-child(2) { animation-delay: 0.05s; }
-            .post-row:nth-child(3) { animation-delay: 0.1s; }
-            .post-row:nth-child(4) { animation-delay: 0.15s; }
-            .post-row:nth-child(5) { animation-delay: 0.2s; }
-            .post-row:nth-child(6) { animation-delay: 0.25s; }
         }
 
         /* Responsive */
@@ -320,13 +273,13 @@
             .featured-post,
             .post-row {
                 grid-template-columns: 1fr;
-                gap: 1rem;
+                gap: 0.5rem;
             }
 
             .entry-meta {
                 flex-direction: row;
                 flex-wrap: wrap;
-                gap: 0.5rem 1.25rem;
+                gap: 0.25rem 1rem;
                 padding-top: 0;
             }
 
@@ -353,6 +306,7 @@
                 Sudhakar Chundu
             </a>
             <ul class="nav-links">
+                <li><a href="../">Overview</a></li>
                 <li><a href="../about/">About</a></li>
                 <li><a href="../resume/">Resume</a></li>
                 <li><a href="./" class="active">Blog</a></li>
@@ -381,13 +335,13 @@
     <main class="main-content">
         <!-- Page Header -->
         <header class="page-header">
-            <h1>Technical <span>Blog</span></h1>
-            <p>Insights on DevOps, SRE, Platform Engineering, and Cloud Infrastructure</p>
+            <h1>Blog</h1>
+            <p>Deep-dive engineering references on DevOps, SRE, platform engineering, and GPU infrastructure.</p>
         </header>
 
         <!-- Blog Content -->
         <section class="section">
-            <div class="container blog-container">
+            <div class="container">
                 <!-- Category Filters -->
                 <div class="blog-filters" role="group" aria-label="Filter posts by category">
                     <button class="filter-btn active" data-filter="all" aria-pressed="true">All Posts <span class="count">06</span></button>
@@ -520,8 +474,8 @@
         <div class="footer-content">
             <span class="footer-logo">Sudhakar Chundu</span>
             <div class="footer-links">
-                <a href="../">Home</a>
                 <a href="../resume/">Resume</a>
+                <a href="./">Blog</a>
                 <a href="../projects/">Achievements</a>
                 <a href="../contact/">Contact</a>
             </div>
@@ -531,7 +485,7 @@
                 <a href="https://medium.com/@schundu" target="_blank"><i class="fab fa-medium"></i></a>
             </div>
         </div>
-        <p>&copy; 2025 Sudhakar Chundu. All rights reserved.</p>
+        <p>&copy; 2026 Sudhakar Chundu. All rights reserved.</p>
     </footer>
 
     <!-- Firebase SDK -->
@@ -562,7 +516,6 @@
         const entries = document.querySelectorAll('.featured-post, .post-row');
         const indexLabel = document.getElementById('index-label');
         const emptyState = document.querySelector('.empty-state');
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         function applyFilter(filter) {
             filterBtns.forEach(b => {
@@ -580,11 +533,6 @@
                 if (show) {
                     anyVisible = true;
                     if (entry.classList.contains('post-row')) visibleRows++;
-                    if (!prefersReducedMotion) {
-                        entry.style.animation = 'none';
-                        void entry.offsetWidth;
-                        entry.style.animation = 'rise 0.35s cubic-bezier(0.22, 1, 0.36, 1)';
-                    }
                 }
             });
 

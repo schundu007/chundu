@@ -21,7 +21,7 @@
     <script src="../assets/js/theme.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link rel="stylesheet" href="../assets/css/style.css?v=2">
+    <link rel="stylesheet" href="../assets/css/style.css?v=3">
     <!-- docx library for Word document generation -->
     <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
@@ -547,9 +547,9 @@
             overflow-x: hidden;
         }
 
-        /* Full Screen Jobs Page - Hide nav */
-        nav {
-            display: none !important;
+        /* Compact enterprise: shared fixed nav (56px) stays visible */
+        body {
+            padding-top: 56px;
         }
 
         /* Hide neural background for cleaner look */
@@ -563,14 +563,10 @@
             padding: 0;
             margin: 0;
             background: var(--bg-primary);
-            min-height: 100vh;
+            min-height: calc(100vh - 56px);
         }
 
         .page-header {
-            display: none !important;
-        }
-
-        footer {
             display: none !important;
         }
 
@@ -611,7 +607,7 @@
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--glass-border);
             position: sticky;
-            top: 0;
+            top: 56px;
             z-index: 100;
         }
 
@@ -2541,19 +2537,19 @@
     <canvas id="neural-bg"></canvas>
 
     <!-- Password Protection Overlay -->
-    <div id="password-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0a0a0f 0%, #111118 100%); z-index: 99999; display: flex; align-items: center; justify-content: center;">
-        <div style="background: #18181f; padding: 40px; border-radius: 12px; text-align: center; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);">
-            <i class="fas fa-lock" style="font-size: 48px; color: #3b82f6; margin-bottom: 20px;"></i>
-            <h2 style="margin: 0 0 10px; color: #ffffff;">Private Page</h2>
-            <p style="color: #a1a1aa; margin-bottom: 20px;">This page is restricted. Enter password to continue.</p>
+    <div id="password-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-primary, #0a0a0f); z-index: 99999; display: flex; align-items: center; justify-content: center;">
+        <div style="background: var(--bg-secondary, #111118); padding: 28px 32px; border-radius: 10px; text-align: center; max-width: 380px; width: 90%; border: 1px solid var(--bg-tertiary, #18181f);">
+            <i class="fas fa-lock" style="font-size: 24px; color: #5b9cf8; margin-bottom: 14px;"></i>
+            <h2 style="margin: 0 0 8px; font-size: 1.125rem; color: var(--text-primary, #ffffff);">Private Page</h2>
+            <p style="color: var(--text-secondary, #a1a1aa); font-size: 0.875rem; margin-bottom: 18px;">This page is restricted. Enter password to continue.</p>
             <input type="password" id="password-input" placeholder="Enter password"
-                   style="width: 100%; padding: 12px 16px; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; font-size: 16px; margin-bottom: 15px; box-sizing: border-box; background: #111118; color: #ffffff;"
+                   style="width: 100%; padding: 10px 14px; border: 1px solid var(--bg-tertiary, #18181f); border-radius: 8px; font-size: 15px; margin-bottom: 12px; box-sizing: border-box; background: var(--bg-primary, #0a0a0f); color: var(--text-primary, #ffffff);"
                    onkeypress="if(event.key==='Enter') checkPassword()">
             <button onclick="checkPassword()"
-                    style="width: 100%; padding: 12px; background: #3b82f6; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: 600;">
+                    style="width: 100%; height: 36px; padding: 0 12px; background: #5b9cf8; color: white; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; font-weight: 600;">
                 Unlock
             </button>
-            <p id="password-error" style="color: #f87171; margin-top: 15px; display: none;">Incorrect password</p>
+            <p id="password-error" style="color: #f87171; margin-top: 12px; font-size: 0.875rem; display: none;">Incorrect password</p>
         </div>
     </div>
 
@@ -2589,19 +2585,21 @@
         }
     </script>
 
-    <!-- Simple Navigation -->
-    <nav style="background: #111827; border-bottom: none;">
-        <div class="nav-container" style="justify-content: space-between;">
-            <a href="../" class="logo" style="color: white;">
-                <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i>
-                Back to Portfolio
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="../" class="logo">
+                <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu" class="logo-icon">
+                Sudhakar Chundu
             </a>
-            <div style="display: flex; align-items: center; gap: 1rem;">
-                <span style="color: rgba(255,255,255,0.7); font-size: 0.85rem;">
-                    <i class="fas fa-briefcase" style="color: var(--primary); margin-right: 0.5rem;"></i>
-                    Job Listings Dashboard
-                </span>
-            </div>
+            <ul class="nav-links">
+                <li><a href="../">Overview</a></li>
+                <li><a href="../about/">About</a></li>
+                <li><a href="../resume/">Resume</a></li>
+                <li><a href="../blog/">Blog</a></li>
+                <li><a href="../projects/">Achievements</a></li>
+                <li><a href="../opensource/">Open Source</a></li>
+            </ul>
         </div>
     </nav>
 
@@ -3181,13 +3179,15 @@
     </div>
 
     <!-- Footer -->
-    <footer style="padding: 1.5rem 2rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-            <a href="../" style="color: white; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;">
-                <i class="fas fa-arrow-left"></i> Back to Portfolio
-            </a>
-            <p style="opacity: 0.6; font-size: 0.8rem; margin: 0;">&copy; 2025 Sudhakar Chundu. Private job listings dashboard.</p>
+    <footer>
+        <div class="footer-content">
+            <span class="footer-logo">Sudhakar Chundu</span>
+            <div class="footer-links">
+                <a href="../">Home</a>
+                <a href="../resume/">Resume</a>
+            </div>
         </div>
+        <p>&copy; 2025 Sudhakar Chundu. Private job listings dashboard.</p>
     </footer>
 
     <script>

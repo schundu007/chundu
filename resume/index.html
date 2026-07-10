@@ -22,7 +22,7 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/style.css?v=2">
+    <link rel="stylesheet" href="../assets/css/style.css?v=3">
     <!-- Theme JS (load early to prevent flash) -->
     <script src="../assets/js/theme.js"></script>
 
@@ -32,136 +32,75 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <style>
-        /* Resume Page Specific Styles */
-        .resume-hero {
-            padding: 120px 2rem 60px;
-            background: linear-gradient(135deg, rgba(91, 156, 248, 0.1) 0%, rgba(91, 156, 248, 0.1) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .resume-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(91, 156, 248, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 50%, rgba(91, 156, 248, 0.15) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .resume-hero .container {
-            width: 80%; max-width: 1920px;
-            margin: 0 auto;
+        /* Resume page-specific styles */
+        .page-header-row {
             display: flex;
+            align-items: flex-end;
             justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .resume-hero-content h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-
-        .resume-hero-content p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-
-        .resume-actions {
-            display: flex;
             gap: 1rem;
             flex-wrap: wrap;
         }
 
-        .resume-actions .btn {
-            padding: 0.875rem 1.5rem;
-            font-size: 0.95rem;
-        }
-
-        /* Document Viewer */
-        .document-viewer {
-            background: var(--bg-card);
-            border: none;
-            border-radius: var(--radius-xl);
-            margin: 2rem auto;
-            width: 80%; max-width: 1920px;
-            overflow: hidden;
-            
-        }
-
-        .viewer-header {
+        .resume-actions {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.5rem;
-            background: rgba(0, 0, 0, 0.3);
-            border-bottom: 1px solid var(--glass-border);
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            padding-bottom: 0.25rem;
+        }
+
+        /* Document viewer */
+        .document-viewer {
+            margin: 20px 0 0;
         }
 
         .viewer-tabs {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.375rem;
         }
 
-        .viewer-tab {
-            padding: 0.6rem 1.25rem;
-            border: none;
-            background: transparent;
-            border-radius: var(--radius-md);
-            font-size: 0.875rem;
-            cursor: pointer;
-            display: flex;
+        .viewer-tab,
+        .viewer-close {
+            display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: var(--transition-normal);
+            gap: 0.4rem;
+            padding: 0.3rem 0.7rem;
+            border: 1px solid var(--bg-tertiary);
+            background: transparent;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
             color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-fast);
         }
 
         .viewer-tab:hover {
-            border-color: var(--accent-blue);
             color: var(--accent-blue);
+            border-color: rgba(91, 156, 248, 0.35);
         }
 
         .viewer-tab.active {
-            background: #5b9cf8;
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
             color: #09090b;
-            border-color: transparent;
         }
 
         .viewer-close {
-            padding: 0.6rem 1.25rem;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            background: transparent;
-            border-radius: var(--radius-md);
-            font-size: 0.875rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
             color: #ef4444;
-            transition: var(--transition-normal);
+            border-color: rgba(239, 68, 68, 0.3);
         }
 
         .viewer-close:hover {
             background: #ef4444;
-            color: white;
             border-color: #ef4444;
+            color: #ffffff;
         }
 
         .viewer-content {
-            height: 80vh;
-            min-height: 600px;
+            height: 72vh;
+            min-height: 420px;
             position: relative;
-            background: rgba(0, 0, 0, 0.2);
+            background: var(--bg-secondary);
         }
 
         .viewer-content iframe {
@@ -169,7 +108,6 @@
             height: 100%;
             border: none;
             opacity: 0;
-            transition: opacity 0.3s ease;
         }
 
         .viewer-content iframe.loaded {
@@ -182,103 +120,90 @@
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 1rem;
-            color: var(--accent-blue);
-        }
-
-        .viewer-loading i {
-            font-size: 2.5rem;
+            gap: 0.5rem;
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
         }
 
         .viewer-footer {
-            padding: 1rem 1.5rem;
-            background: rgba(0, 0, 0, 0.3);
-            border-top: 1px solid var(--glass-border);
-            text-align: center;
+            padding: 0.625rem 1rem;
+            border-top: 1px solid var(--bg-tertiary);
         }
 
-        /* Auth Gate Overlay */
+        /* Auth gate (sign-in prompt over the viewer) */
         .auth-gate {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(10, 10, 15, 0.95);
+            inset: 0;
+            background: var(--bg-primary);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            padding: 2rem;
+            padding: 1.5rem;
             z-index: 10;
         }
 
-        .auth-gate i.lock-icon {
-            font-size: 4rem;
-            color: var(--accent-blue);
-            margin-bottom: 1.5rem;
-            opacity: 0.8;
-        }
-
-        .auth-gate h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.75rem;
-            color: var(--text-primary);
-        }
-
-        .auth-gate p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            max-width: 400px;
-        }
-
-        /* Resume Content Section */
-        .resume-content-wrapper {
-            max-width: 80%;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        .resume-card {
+        .auth-gate-box {
+            max-width: 380px;
             background: var(--bg-card);
-            border: none;
-            border-radius: var(--radius-xl);
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            
+            border: 1px solid var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            padding: 1.125rem 1.25rem;
         }
 
-        /* Resume Header */
-        .resume-header {
-            text-align: center;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--glass-border);
-            margin-bottom: 2rem;
+        .auth-gate-box h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.375rem;
         }
 
-        .resume-header h1 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
+        .auth-gate-box h3 i {
+            color: var(--accent-blue);
+            font-size: 0.8125rem;
+        }
+
+        .auth-gate-box p {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+            margin-bottom: 0.875rem;
+        }
+
+        /* Resume document */
+        .resume-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            padding: 24px 0 16px;
+            border-bottom: 1px solid var(--bg-tertiary);
+        }
+
+        .resume-head h2 {
+            margin-bottom: 0.25rem;
+        }
+
+        .resume-role {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            margin: 0;
         }
 
         .resume-contact {
             display: flex;
-            justify-content: center;
             flex-wrap: wrap;
-            gap: 1.5rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+            gap: 0.375rem 1.125rem;
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
         }
 
         .resume-contact a {
             color: var(--text-secondary);
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.35rem;
             transition: var(--transition-fast);
         }
 
@@ -286,494 +211,150 @@
             color: var(--accent-blue);
         }
 
-        /* Resume Sections */
-        .resume-section {
-            margin-bottom: 2.5rem;
-        }
-
-        .resume-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .resume-section-title {
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
+        .resume-contact i {
             color: var(--accent-blue);
-            margin-bottom: 1.25rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 2px solid var(--accent-blue);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 0.625rem;
+        }
+
+        .resume-section {
+            margin: 28px 0;
+        }
+
+        .resume-section .section-label {
+            margin-bottom: 0.75rem;
         }
 
         .summary-text {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            font-size: 0.95rem;
-        }
-
-        /* Skills Grid */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        .skill-category {
-            background: rgba(91, 156, 248, 0.08);
-            border: 1px solid rgba(91, 156, 248, 0.15);
-            padding: 1rem 1.25rem;
-            border-radius: var(--radius-md);
-        }
-
-        .skill-category h4 {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .skill-category p {
             font-size: 0.875rem;
             color: var(--text-secondary);
             line-height: 1.6;
+            max-width: 82ch;
         }
 
-        /* Skills Table Format */
+        /* Tight bullet lists */
+        .resume-bullets {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .resume-bullets li {
+            position: relative;
+            padding-left: 0.875rem;
+            margin-bottom: 0.375rem;
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        .resume-bullets li:last-child {
+            margin-bottom: 0;
+        }
+
+        .resume-bullets li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.55em;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+        }
+
+        /* Experience ledger extensions */
+        .ledger-title .company {
+            color: var(--accent-blue);
+            font-weight: 500;
+        }
+
+        .ledger-note {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin: 0.125rem 0 0;
+        }
+
+        .ledger-row .resume-bullets {
+            margin-top: 0.5rem;
+        }
+
+        .ledger-subrole {
+            margin-top: 0.875rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--bg-tertiary);
+        }
+
+        .ledger-subrole-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.25rem;
+        }
+
+        .ledger-subrole-head h4 {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .ledger-subrole-head span {
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            color: var(--text-muted);
+        }
+
+        /* Skills / certifications */
         .skills-table-container {
             overflow-x: auto;
         }
 
-        .skills-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            background: var(--bg-card);
-            border: none;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-        }
-
-        .skills-table th,
-        .skills-table td {
-            padding: 1rem 1.25rem;
-            text-align: left;
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .skills-table th {
-            background: rgba(91, 156, 248, 0.1);
-            font-weight: 600;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--accent-blue);
-        }
-
-        .skills-table td {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            vertical-align: top;
-        }
-
-        .skills-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .skills-table tr:hover td {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .skills-table .category-label {
-            font-weight: 600;
-            color: var(--text-primary);
-            white-space: nowrap;
-            width: 180px;
-        }
-
-        /* Experience */
-        .experience-item {
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .experience-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .experience-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 0.75rem;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .experience-title h3 {
-            font-size: 1.1rem;
-            color: var(--text-primary);
-            margin-bottom: 0.25rem;
-        }
-
-        .experience-title .company {
-            color: var(--accent-blue);
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-
-        .experience-date {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            font-weight: 500;
-            white-space: nowrap;
-        }
-
-        .experience-bullets {
-            list-style: none;
-            padding: 0;
-        }
-
-        .experience-bullets li {
-            position: relative;
-            padding-left: 1.25rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        .experience-bullets li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.6rem;
-            width: 6px;
-            height: 6px;
-            background: var(--accent-blue);
-            border-radius: 50%;
-        }
-
-        /* Sub-roles */
-        .sub-role {
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background: rgba(91, 156, 248, 0.04);
-            border: 1px solid rgba(91, 156, 248, 0.1);
-            border-radius: var(--radius-md);
-        }
-
-        .sub-role-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .sub-role-header h4 {
-            font-size: 1rem;
-            color: var(--text-primary);
-            margin: 0;
-        }
-
-        .sub-role-header span {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        /* Metrics Grid */
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-        }
-
-        .metric-item {
-            background: rgba(91, 156, 248, 0.1);
-            padding: 1.25rem;
-            border-radius: var(--radius-md);
-            text-align: center;
-            border: none;
-            transition: var(--transition-normal);
-        }
-
-        .metric-item:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-2px);
-        }
-
-        .metric-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent-blue);
-            line-height: 1;
-            margin-bottom: 0.35rem;
-            font-family: var(--font-mono);
-        }
-
-        .metric-label {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        /* LinkedIn Card */
-        .linkedin-card {
-            background: linear-gradient(135deg, rgba(91, 156, 248, 0.1) 0%, rgba(91, 156, 248, 0.1) 100%);
-            border: none;
-            border-radius: var(--radius-xl);
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .linkedin-card-header {
-            display: flex;
-            align-items: center;
-            gap: 1.25rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .linkedin-card-photo {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid var(--accent-blue);
-            object-fit: cover;
-        }
-
-        .linkedin-card-info h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.25rem;
-            color: var(--text-primary);
-        }
-
-        .linkedin-card-info .headline {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-        }
-
-        .linkedin-card-info .location {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .linkedin-highlights {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .linkedin-highlight {
-            background: var(--bg-card);
-            padding: 1rem;
-            border-radius: var(--radius-md);
-            text-align: center;
-            border: none;
-        }
-
-        .linkedin-highlight .value {
-            font-size: 1.35rem;
-            font-weight: 700;
-            color: var(--accent-blue);
-            line-height: 1;
-            margin-bottom: 0.3rem;
-        }
-
-        .linkedin-highlight .label {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-        }
-
-        .linkedin-skills {
+        .tag-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
+            gap: 0.375rem;
         }
 
-        .linkedin-skill {
-            background: var(--bg-card);
-            color: var(--text-secondary);
-            padding: 0.4rem 0.85rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            border: none;
-        }
-
-        .linkedin-card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .linkedin-tagline {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            font-style: italic;
-        }
-
-        .linkedin-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #0077b5;
-            color: white;
-            padding: 0.6rem 1.25rem;
-            border-radius: 25px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: var(--transition-normal);
-        }
-
-        .linkedin-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0, 119, 181, 0.4);
-            color: white;
-        }
-
-        /* Certifications */
-        .certifications-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-top: 1rem;
-        }
-
-        .cert-badge {
-            background: rgba(91, 156, 248, 0.1);
-            color: var(--text-secondary);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            border: none;
-        }
-
-        .cert-badge i {
-            color: var(--accent-blue);
-        }
-
-        /* Education */
         .education-item {
-            margin-bottom: 1rem;
+            margin-bottom: 0.875rem;
         }
 
         .education-item h3 {
-            font-size: 1rem;
-            margin-bottom: 0.25rem;
-            color: var(--text-primary);
+            margin-bottom: 0.125rem;
         }
 
         .education-item p {
+            font-size: 0.8125rem;
             color: var(--text-muted);
-            font-size: 0.9rem;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
-            .resume-hero {
-                padding: 100px 1rem 40px;
-            }
-
-            .resume-hero .container,
-            .document-viewer {
-                width: 100%;
-                padding-left: 1.25rem;
-                padding-right: 1.25rem;
-            }
-
-            .resume-hero .container {
-                flex-direction: column;
-                text-align: center;
-            }
-
             .resume-actions {
                 width: 100%;
-                flex-direction: column;
+                padding-bottom: 0;
             }
 
             .resume-actions .btn {
-                width: 100%;
+                flex: 1;
                 justify-content: center;
-            }
-
-            .resume-hero-content h1 {
-                font-size: 1.75rem;
-            }
-
-            .viewer-header {
-                flex-direction: column;
-                gap: 1rem;
             }
 
             .viewer-content {
                 height: 60vh;
-                min-height: 400px;
-            }
-
-            .skills-grid,
-            .metrics-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .linkedin-highlights {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .resume-content-wrapper {
-                max-width: 100%;
-                padding: 2rem 1.25rem;
-            }
-
-            .linkedin-card-footer {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-
-            .resume-card {
-                padding: 1.5rem;
-            }
-
-            .resume-contact {
-                flex-direction: column;
-                gap: 0.5rem;
+                min-height: 360px;
             }
         }
 
-        /* Print Styles */
         @media print {
-            nav, .resume-hero, footer, .linkedin-card, .document-viewer {
+            nav, footer, .page-header, .document-viewer {
                 display: none;
             }
+
             body {
                 background: white;
                 color: black;
-            }
-            .resume-card {
-                box-shadow: none;
-                border: none;
-                background: white;
             }
         }
     </style>
@@ -790,6 +371,7 @@
                 Sudhakar Chundu
             </a>
             <ul class="nav-links">
+                <li><a href="../">Overview</a></li>
                 <li><a href="../about/">About</a></li>
                 <li><a href="./" class="active">Resume</a></li>
                 <li><a href="../blog/">Blog</a></li>
@@ -816,12 +398,12 @@
     </nav>
 
     <main class="main-content">
-        <!-- Hero Section -->
-        <section class="resume-hero">
-            <div class="container">
-                <div class="resume-hero-content">
+        <!-- Page Header -->
+        <header class="page-header">
+            <div class="page-header-row">
+                <div>
                     <h1>Resume</h1>
-                    <p>Staff DevOps Engineer | SRE + GPU Infrastructure + Cloud Security | 18+ Years Hands-On</p>
+                    <p>Full work history, skills matrix, and downloadable resume / cover letter documents.</p>
                 </div>
                 <div class="resume-actions">
                     <button id="view-resume-btn" class="btn btn-primary" onclick="viewDocument('resume')">
@@ -834,11 +416,11 @@
                     </button>
                 </div>
             </div>
-        </section>
+        </header>
 
-        <!-- Document Viewer Section -->
-        <section id="document-viewer" class="document-viewer" style="display: none;">
-            <div class="viewer-header">
+        <!-- Document Viewer -->
+        <section id="document-viewer" class="panel document-viewer" style="display: none;">
+            <div class="panel-head">
                 <div class="viewer-tabs">
                     <button id="tab-resume" class="viewer-tab active" onclick="viewDocument('resume')">
                         <i class="fas fa-file-alt"></i> Resume
@@ -853,13 +435,14 @@
             </div>
             <div class="viewer-content">
                 <div id="auth-gate" class="auth-gate" style="display: none;">
-                    <i class="fas fa-lock lock-icon"></i>
-                    <h3>Sign in to View Resume</h3>
-                    <p>Sign in so I can see who's interested and follow up thoughtfully. Your email and view timestamp are logged — no spam, no third parties.</p>
-                    <button class="btn btn-primary" onclick="showLoginModal('Sign in to view resume')">
-                        <i class="fas fa-sign-in-alt"></i>
-                        Sign In
-                    </button>
+                    <div class="auth-gate-box">
+                        <h3><i class="fas fa-lock"></i> Sign in to view resume</h3>
+                        <p>Sign in so I can see who's interested and follow up thoughtfully. Your email and view timestamp are logged — no spam, no third parties.</p>
+                        <button class="btn btn-primary" onclick="showLoginModal('Sign in to view resume')">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Sign In
+                        </button>
+                    </div>
                 </div>
                 <div id="viewer-loading" class="viewer-loading">
                     <i class="fas fa-spinner fa-spin"></i>
@@ -875,370 +458,281 @@
             </div>
         </section>
 
-        <!-- Resume Content -->
-        <div class="resume-content-wrapper">
-            <!-- LinkedIn Card -->
-            <div class="linkedin-card">
-                <div class="linkedin-card-header">
-                    <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu" class="linkedin-card-photo">
-                    <div class="linkedin-card-info">
-                        <h3>Sudhakar Chundu</h3>
-                        <div class="headline">Senior Data Platform Engineer @ AT&T | Staff DevOps / SRE | GPU Infrastructure | Performance Engineering</div>
-                        <div class="location"><i class="fas fa-map-marker-alt"></i> San Francisco Bay Area</div>
-                    </div>
+        <!-- Resume Document -->
+        <header class="resume-head">
+            <div>
+                <h2>Sudhakar Chundu</h2>
+                <p class="resume-role">Staff DevOps Engineer / SRE — GPU Infrastructure &amp; Performance Engineering</p>
+            </div>
+            <div class="resume-contact">
+                <a href="https://maps.google.com/?q=San+Jose,+CA" target="_blank" rel="noopener noreferrer"><i class="fas fa-map-marker-alt"></i> San Jose, CA</a>
+                <a href="tel:+15136660099"><i class="fas fa-phone"></i> (513) 666-0099</a>
+                <a href="mailto:chundubabu@gmail.com"><i class="fas fa-envelope"></i> chundubabu@gmail.com</a>
+                <a href="https://www.linkedin.com/in/babucs" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                <a href="https://github.com/schundu007" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+        </header>
+
+        <!-- Professional Summary -->
+        <section class="resume-section">
+            <div class="section-label">Professional Summary</div>
+            <p class="summary-text">
+                Staff DevOps Engineer and <strong>Performance Engineering Specialist</strong> with 18+ years of hands-on experience across SRE, GPU infrastructure, systems performance, and platform engineering at enterprise scale. Primary on-call owner for production systems. Expert in GPU profiling (nvidia-smi, dcgm-exporter), Linux performance analysis (perf, strace, kernel tuning), Kubernetes, Slurm clusters, and multi-cloud architecture (AWS, Azure). Proven track record: improved GPU utilization 45%→78%, reduced p99 latency 40%, maintained 99.97% uptime. Active conference speaker at KubeCon, SREcon, and DevOps Days.
+            </p>
+        </section>
+
+        <!-- Key Metrics -->
+        <section class="resume-section">
+            <div class="section-label">Key Metrics</div>
+            <div class="kpi-strip">
+                <div class="kpi-cell">
+                    <div class="kpi-value">99.97%</div>
+                    <div class="kpi-label">Uptime ML Training/Inference</div>
                 </div>
-                <div class="linkedin-highlights">
-                    <div class="linkedin-highlight">
-                        <div class="value">18+</div>
-                        <div class="label">Years Hands-On</div>
-                    </div>
-                    <div class="linkedin-highlight">
-                        <div class="value">65+</div>
-                        <div class="label">GPUs Managed</div>
-                    </div>
-                    <div class="linkedin-highlight">
-                        <div class="value">99.99%</div>
-                        <div class="label">SLO Maintained</div>
-                    </div>
+                <div class="kpi-cell">
+                    <div class="kpi-value">45%→78%</div>
+                    <div class="kpi-label">GPU Utilization Improved</div>
                 </div>
-                <div class="linkedin-skills">
-                    <span class="linkedin-skill">Kubernetes</span>
-                    <span class="linkedin-skill">GPU/Slurm</span>
-                    <span class="linkedin-skill">Performance Engineering</span>
-                    <span class="linkedin-skill">Terraform</span>
-                    <span class="linkedin-skill">ArgoCD/Flux</span>
-                    <span class="linkedin-skill">nvidia-smi/dcgm</span>
-                    <span class="linkedin-skill">AWS/Azure</span>
-                    <span class="linkedin-skill">perf/strace</span>
+                <div class="kpi-cell">
+                    <div class="kpi-value">73%</div>
+                    <div class="kpi-label">Cloud Cost Reduction</div>
                 </div>
-                <div class="linkedin-card-footer">
-                    <span class="linkedin-tagline">"I keep critical services running and secure"</span>
-                    <a href="https://www.linkedin.com/in/babucs" target="_blank" class="linkedin-btn">
-                        <i class="fab fa-linkedin"></i> View Full Profile
-                    </a>
+                <div class="kpi-cell">
+                    <div class="kpi-value">60%</div>
+                    <div class="kpi-label">Queue Wait Time Reduced</div>
+                </div>
+                <div class="kpi-cell">
+                    <div class="kpi-value">40%</div>
+                    <div class="kpi-label">p99 Latency Reduction</div>
+                </div>
+                <div class="kpi-cell">
+                    <div class="kpi-value">95%</div>
+                    <div class="kpi-label">Databricks Job Failures Reduced</div>
                 </div>
             </div>
+        </section>
 
-            <div class="resume-card">
-                <!-- Resume Header -->
-                <header class="resume-header">
-                    <h1>SUDHAKAR CHUNDU</h1>
-                    <div class="resume-contact">
-                        <a href="https://maps.google.com/?q=San+Jose,+CA" target="_blank">
-                            <i class="fas fa-map-marker-alt"></i> San Jose, CA
-                        </a>
-                        <a href="tel:+15136660099">
-                            <i class="fas fa-phone"></i> (513) 666-0099
-                        </a>
-                        <a href="mailto:chundubabu@gmail.com">
-                            <i class="fas fa-envelope"></i> chundubabu@gmail.com
-                        </a>
-                        <a href="https://www.linkedin.com/in/babucs" target="_blank">
-                            <i class="fab fa-linkedin"></i> LinkedIn
-                        </a>
-                        <a href="https://github.com/schundu007" target="_blank">
-                            <i class="fab fa-github"></i> GitHub
-                        </a>
-                    </div>
-                </header>
+        <!-- Career Highlights -->
+        <section class="resume-section">
+            <div class="section-label">Career Highlights</div>
+            <ul class="resume-bullets">
+                <li><strong>Databricks Performance Crisis:</strong> Diagnosed and resolved critical Databricks cluster performance degradation affecting production ML pipelines; identified memory leak in driver node through JVM profiling, implemented fix reducing job failures by 95%</li>
+                <li><strong>Custom FinOps Platform:</strong> Built internal FinOps tools for real-time cloud cost visibility across AWS/Azure/OCI; automated rightsizing recommendations and spot instance management, driving 73% cost reduction ($10M→$2.7M annually)</li>
+                <li><strong>GPU Performance Engineering:</strong> Improved GPU utilization from 45% to 78% through CUDA profiling, fair-share scheduling optimization, and memory management tuning on 65-GPU Slurm cluster</li>
+                <li><strong>Latency Optimization:</strong> Reduced p99 API latency by 40% through kernel tuning, connection pooling optimization, and systematic profiling with perf/strace</li>
+                <li><strong>OSDU Platform Scale:</strong> Architected data platform processing exabytes of seismic data for ExxonMobil, Chevron, BP, Shell; 99.99% availability across multi-region GPU-accelerated K8s clusters</li>
+                <li><strong>ML Infrastructure Reliability:</strong> Maintained 99.97% uptime for ML training/inference workloads; reduced job queue wait times by 60% through capacity planning and scheduler optimization</li>
+            </ul>
+        </section>
 
-                <!-- Professional Summary -->
-                <section class="resume-section">
-                    <h2 class="resume-section-title">
-                        <i class="fas fa-user"></i>
-                        Professional Summary
-                    </h2>
-                    <p class="summary-text">
-                        Staff DevOps Engineer and <strong>Performance Engineering Specialist</strong> with 18+ years of hands-on experience across SRE, GPU infrastructure, systems performance, and platform engineering at enterprise scale. Primary on-call owner for production systems. Expert in GPU profiling (nvidia-smi, dcgm-exporter), Linux performance analysis (perf, strace, kernel tuning), Kubernetes, Slurm clusters, and multi-cloud architecture (AWS, Azure). Proven track record: improved GPU utilization 45%→78%, reduced p99 latency 40%, maintained 99.97% uptime. Active conference speaker at KubeCon, SREcon, and DevOps Days.
-                    </p>
-                </section>
+        <!-- Core Technical Skills -->
+        <section class="resume-section">
+            <div class="section-label">Core Technical Skills</div>
+            <div class="skills-table-container">
+                <table class="skills-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Technologies &amp; Tools</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="category-label">GPU/HPC Computing</td>
+                            <td>Slurm, Slinky, NVIDIA BCM/DGX, vcluster, CUDA, TensorRT, A100/V100/T4 scheduling, Triton Inference Server, vLLM</td>
+                        </tr>
+                        <tr>
+                            <td class="category-label">AI/ML Infrastructure</td>
+                            <td>PyTorch, Ray, Flyte, MLflow, Kubeflow, SageMaker, Azure ML, TorchServe, KServe, distributed training</td>
+                        </tr>
+                        <tr>
+                            <td class="category-label">Cloud Platforms</td>
+                            <td>AWS (EKS, EC2, SageMaker, EMR), Azure (AKS, APIM, ML), OCI</td>
+                        </tr>
+                        <tr>
+                            <td class="category-label">Big Data &amp; Streaming</td>
+                            <td>Databricks, Apache Spark, Flink, Kafka, Hadoop/HDFS, Hive, Trino, Airflow, Delta Lake, Kinesis</td>
+                        </tr>
+                        <tr>
+                            <td class="category-label">Container Orchestration</td>
+                            <td>Kubernetes (EKS/AKS), Docker, Helm, Istio Service Mesh, Karpenter, KEDA, ArgoCD, FluxCD</td>
+                        </tr>
+                        <tr>
+                            <td class="category-label">Infrastructure as Code</td>
+                            <td>Terraform (5+ modules), Ansible, ARM/Bicep, CloudFormation, Packer, GitOps, policy-as-code (OPA, Checkov)</td>
+                        </tr>
+                        <tr>
+                            <td class="category-label">Security &amp; Compliance</td>
+                            <td>SOC2, HIPAA, FedRAMP, ISO 27001, HITRUST, DevSecOps (Snyk, SonarQube), Vault, ZTNA</td>
+                        </tr>
+                        <tr>
+                            <td class="category-label">SRE &amp; Observability</td>
+                            <td>SLI/SLO/SLA, error budgets, chaos engineering, Prometheus, Grafana, Datadog, OpenTelemetry, AIOps</td>
+                        </tr>
+                        <tr>
+                            <td class="category-label">Systems Performance</td>
+                            <td>GPU profiling (nvidia-smi, dcgm-exporter, nvtop), Linux performance (perf, strace, ftrace), kernel tuning, p99 latency optimization, capacity planning</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
-                <!-- Career Highlights -->
-                <section class="resume-section">
-                    <h2 class="resume-section-title">
-                        <i class="fas fa-trophy"></i>
-                        Career Highlights
-                    </h2>
-                    <ul class="experience-bullets" style="margin-bottom: 1.5rem;">
-                        <li><strong>Databricks Performance Crisis:</strong> Diagnosed and resolved critical Databricks cluster performance degradation affecting production ML pipelines; identified memory leak in driver node through JVM profiling, implemented fix reducing job failures by 95%</li>
-                        <li><strong>Custom FinOps Platform:</strong> Built internal FinOps tools for real-time cloud cost visibility across AWS/Azure/OCI; automated rightsizing recommendations and spot instance management, driving 73% cost reduction ($10M→$2.7M annually)</li>
-                        <li><strong>GPU Performance Engineering:</strong> Improved GPU utilization from 45% to 78% through CUDA profiling, fair-share scheduling optimization, and memory management tuning on 65-GPU Slurm cluster</li>
-                        <li><strong>Latency Optimization:</strong> Reduced p99 API latency by 40% through kernel tuning, connection pooling optimization, and systematic profiling with perf/strace</li>
-                        <li><strong>OSDU Platform Scale:</strong> Architected data platform processing exabytes of seismic data for ExxonMobil, Chevron, BP, Shell; 99.99% availability across multi-region GPU-accelerated K8s clusters</li>
-                        <li><strong>ML Infrastructure Reliability:</strong> Maintained 99.97% uptime for ML training/inference workloads; reduced job queue wait times by 60% through capacity planning and scheduler optimization</li>
-                    </ul>
-                </section>
-
-                <!-- Key Metrics -->
-                <section class="resume-section">
-                    <h2 class="resume-section-title">
-                        <i class="fas fa-chart-bar"></i>
-                        Key Metrics
-                    </h2>
-                    <div class="metrics-grid">
-                        <div class="metric-item">
-                        <div class="metric-item">
-                            <div class="metric-value">99.97%</div>
-                            <div class="metric-label">Uptime ML Training/Inference</div>
-                        </div>
-                        <div class="metric-item">
-                            <div class="metric-value">45%→78%</div>
-                            <div class="metric-label">GPU Utilization Improved</div>
-                        </div>
-                    </div>
-                    <div class="metrics-grid" style="margin-top: 1rem;">
-                        <div class="metric-item">
-                            <div class="metric-value">60%</div>
-                            <div class="metric-label">Queue Wait Time Reduced</div>
-                        </div>
-                        <div class="metric-item">
-                            <div class="metric-value">40%</div>
-                            <div class="metric-label">p99 Latency Reduction</div>
-                        </div>
-                        <div class="metric-item">
-                            <div class="metric-value">95%</div>
-                            <div class="metric-label">Databricks Job Failures Reduced</div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Core Technical Skills -->
-                <section class="resume-section">
-                    <h2 class="resume-section-title">
-                        <i class="fas fa-cogs"></i>
-                        Core Technical Skills
-                    </h2>
-                    <div class="skills-table-container">
-                        <table class="skills-table">
-                            <thead>
-                                <tr>
-                                    <th>Category</th>
-                                    <th>Technologies & Tools</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="category-label">GPU/HPC Computing</td>
-                                    <td>Slurm, Slinky, NVIDIA BCM/DGX, vcluster, CUDA, TensorRT, A100/V100/T4 scheduling, Triton Inference Server, vLLM</td>
-                                </tr>
-                                <tr>
-                                    <td class="category-label">AI/ML Infrastructure</td>
-                                    <td>PyTorch, Ray, Flyte, MLflow, Kubeflow, SageMaker, Azure ML, TorchServe, KServe, distributed training</td>
-                                </tr>
-                                <tr>
-                                    <td class="category-label">Cloud Platforms</td>
-                                    <td>AWS (EKS, EC2, SageMaker, EMR), Azure (AKS, APIM, ML), OCI</td>
-                                </tr>
-                                <tr>
-                                    <td class="category-label">Big Data & Streaming</td>
-                                    <td>Databricks, Apache Spark, Flink, Kafka, Hadoop/HDFS, Hive, Trino, Airflow, Delta Lake, Kinesis</td>
-                                </tr>
-                                <tr>
-                                    <td class="category-label">Container Orchestration</td>
-                                    <td>Kubernetes (EKS/AKS), Docker, Helm, Istio Service Mesh, Karpenter, KEDA, ArgoCD, FluxCD</td>
-                                </tr>
-                                <tr>
-                                    <td class="category-label">Infrastructure as Code</td>
-                                    <td>Terraform (5+ modules), Ansible, ARM/Bicep, CloudFormation, Packer, GitOps, policy-as-code (OPA, Checkov)</td>
-                                </tr>
-                                <tr>
-                                    <td class="category-label">Security & Compliance</td>
-                                    <td>SOC2, HIPAA, FedRAMP, ISO 27001, HITRUST, DevSecOps (Snyk, SonarQube), Vault, ZTNA</td>
-                                </tr>
-                                <tr>
-                                    <td class="category-label">SRE & Observability</td>
-                                    <td>SLI/SLO/SLA, error budgets, chaos engineering, Prometheus, Grafana, Datadog, OpenTelemetry, AIOps</td>
-                                </tr>
-                                <tr>
-                                    <td class="category-label">Systems Performance</td>
-                                    <td>GPU profiling (nvidia-smi, dcgm-exporter, nvtop), Linux performance (perf, strace, ftrace), kernel tuning, p99 latency optimization, capacity planning</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-
-                <!-- Professional Experience -->
-                <section class="resume-section">
-                    <h2 class="resume-section-title">
-                        <i class="fas fa-briefcase"></i>
-                        Professional Experience
-                    </h2>
-
-                    <div class="experience-item">
-                        <div class="experience-header">
-                            <div class="experience-title">
-                                <h3>Senior Data Platform Engineer</h3>
-                                <span class="company">AT&T | San Jose, CA</span>
-                            </div>
-                            <span class="experience-date">Feb 2026 - Present</span>
-                        </div>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Building secure, enterprise-scale Azure data platform infrastructure supporting AT&T's AI/ML and analytics workloads.</p>
-                        <ul class="experience-bullets">
+        <!-- Professional Experience -->
+        <section class="resume-section">
+            <div class="section-label">Professional Experience</div>
+            <div class="panel">
+                <div class="ledger-row">
+                    <div class="ledger-meta">Feb 2026 –<br>Present</div>
+                    <div>
+                        <div class="ledger-title">Senior Data Platform Engineer — <span class="company">AT&amp;T</span> · San Jose, CA</div>
+                        <p class="ledger-note">Building secure, enterprise-scale Azure data platform infrastructure supporting AT&amp;T's AI/ML and analytics workloads.</p>
+                        <ul class="resume-bullets">
                             <li><strong>Data Lake Architecture:</strong> Architected ADLS Gen2 data lake with Private Endpoints, hub-and-spoke VNet integration, and Private DNS zones — eliminating public network exposure for petabyte-scale data.</li>
                             <li><strong>Databricks Platform:</strong> Built and owned Databricks platform (Jobs, Compute, Unity Catalog, Delta Lake) with SLI/SLO targets for job success rates, query latency, and cluster autoscaling; tuned Spark/Delta Lake reducing ETL runtimes 40%.</li>
                             <li><strong>Cloud Migration:</strong> Led Wave 1 cutover and Magritte source onboarding, integrating 50+ enterprise data sources with automated schema discovery and lineage tracking.</li>
-                            <li><strong>Identity & Governance:</strong> Implemented Entra ID conditional access, RBAC governance, and audit logging integrated with Unity Catalog; established access review processes and break-glass procedures.</li>
+                            <li><strong>Identity &amp; Governance:</strong> Implemented Entra ID conditional access, RBAC governance, and audit logging integrated with Unity Catalog; established access review processes and break-glass procedures.</li>
                             <li><strong>Performance Engineering:</strong> Resolved critical Databricks latency issue via systematic flame graph + strace + Wireshark profiling; identified 54 of 64 CPUs idle during workload execution and resolved root cause.</li>
                         </ul>
                     </div>
+                </div>
 
-                    <div class="experience-item">
-                        <div class="experience-header">
-                            <div class="experience-title">
-                                <h3>Staff DevOps Engineer / SRE</h3>
-                                <span class="company">Trackonomy Systems Inc | San Jose, CA</span>
-                            </div>
-                            <span class="experience-date">Oct 2023 - Jan 2026</span>
-                        </div>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Led infrastructure engineering team (6 members) serving 12+ enterprise clients across Pharma, Airlines, Government, Manufacturing, Healthcare, and IoT sectors globally across 8 countries.</p>
-                        <ul class="experience-bullets">
+                <div class="ledger-row">
+                    <div class="ledger-meta">Oct 2023 –<br>Jan 2026</div>
+                    <div>
+                        <div class="ledger-title">Staff DevOps Engineer / SRE — <span class="company">Trackonomy Systems Inc</span> · San Jose, CA</div>
+                        <p class="ledger-note">Led infrastructure engineering team (6 members) serving 12+ enterprise clients across Pharma, Airlines, Government, Manufacturing, Healthcare, and IoT sectors globally across 8 countries.</p>
+                        <ul class="resume-bullets">
                             <li><strong>Platform Architecture:</strong> Designed and built K8s microservices platform from ground up; migrated 40+ workloads from VMs, VMSS, Azure WebApps, Function Apps, and datacenter Java applications to containerized architecture. Redesigned multi-cloud architecture (AWS, Azure, GCP, OCI) reducing Azure resources from 8.7K to 1.1K (87% reduction).</li>
                             <li><strong>GPU Infrastructure:</strong> Designed, deployed, and operated Slurm-based GPU compute platform - 65 GPUs across 8 nodes using Slurm, Slinky (Slurm-on-Kubernetes), and NVIDIA BCM; achieved 99.97% uptime for ML training and inference workloads.</li>
                             <li><strong>Performance Engineering:</strong> Improved GPU utilization from 45% to 78%; optimized Slurm scheduling with fair-share algorithms reducing queue wait times 60%; resolved critical Databricks compute latency issue through systematic flame graph + strace + Wireshark profiling.</li>
                             <li><strong>Cloud FinOps:</strong> Reduced cloud costs 73% ($10M to $2.7M/year) through GPU optimization, fair-share scheduling, reserved instance planning, and vendor consolidation.</li>
-                            <li><strong>SRE & Incident Management:</strong> Led SRE L3 operations - root cause analysis, incident management, blameless postmortems, SLI/SLO definition, error budget tracking, 24x7 on-call rotations (&lt;15min response); reduced MTTR 60%. Implemented AIOps for predictive monitoring and anomaly detection.</li>
-                            <li><strong>DevSecOps & Compliance:</strong> Led SOC2 Type II, ISO 27001, HIPAA, FedRAMP, HITRUST compliance; implemented Trivy, Falco, OPA, Gitleaks, and HashiCorp Vault for GenAI/LLM platform security; achieved zero critical findings.</li>
-                            <li><strong>CI/CD & GitOps:</strong> Built CI/CD pipelines for 100+ applications using GitOps (ArgoCD, FluxCD), GitHub Actions, Jenkins; enabled 50+ daily zero-downtime deployments with blue-green/canary strategies; reduced deployment time 95% (days to 15 minutes).</li>
+                            <li><strong>SRE &amp; Incident Management:</strong> Led SRE L3 operations - root cause analysis, incident management, blameless postmortems, SLI/SLO definition, error budget tracking, 24x7 on-call rotations (&lt;15min response); reduced MTTR 60%. Implemented AIOps for predictive monitoring and anomaly detection.</li>
+                            <li><strong>DevSecOps &amp; Compliance:</strong> Led SOC2 Type II, ISO 27001, HIPAA, FedRAMP, HITRUST compliance; implemented Trivy, Falco, OPA, Gitleaks, and HashiCorp Vault for GenAI/LLM platform security; achieved zero critical findings.</li>
+                            <li><strong>CI/CD &amp; GitOps:</strong> Built CI/CD pipelines for 100+ applications using GitOps (ArgoCD, FluxCD), GitHub Actions, Jenkins; enabled 50+ daily zero-downtime deployments with blue-green/canary strategies; reduced deployment time 95% (days to 15 minutes).</li>
                             <li><strong>Observability:</strong> Unified 5 monitoring platforms into Datadog; built Prometheus/Grafana/OpenTelemetry observability stack with custom GPU exporters, distributed tracing, and intelligent alerting.</li>
                             <li><strong>Data Infrastructure:</strong> Built production real-time data processing with Apache Kafka and Apache Flink for stream processing with exactly-once semantics. Implemented Databricks platform (Jobs, Compute, Unity Catalog) with MLflow and Delta Lake.</li>
                         </ul>
                     </div>
+                </div>
 
-                    <div class="experience-item">
-                        <div class="experience-header">
-                            <div class="experience-title">
-                                <h3>Senior SRE / Cloud Architect - OSDU Data Platform</h3>
-                                <span class="company">Wipro Technologies | Seattle, WA & Redmond, WA</span>
-                            </div>
-                            <span class="experience-date">Feb 2020 - Oct 2023</span>
-                        </div>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Multi-tenant enterprise data platform for ExxonMobil, Chevron, BP, Shell.</p>
+                <div class="ledger-row">
+                    <div class="ledger-meta">Feb 2020 –<br>Oct 2023</div>
+                    <div>
+                        <div class="ledger-title">Senior SRE / Cloud Architect, OSDU Data Platform — <span class="company">Wipro Technologies</span> · Seattle &amp; Redmond, WA</div>
+                        <p class="ledger-note">Multi-tenant enterprise data platform for ExxonMobil, Chevron, BP, Shell.</p>
 
-                        <div class="sub-role">
-                            <div class="sub-role-header">
+                        <div class="ledger-subrole">
+                            <div class="ledger-subrole-head">
                                 <h4>SRE Lead - AWS (Contract via Tecra Systems through Wipro)</h4>
-                                <span>Mar 2022 - Oct 2023</span>
+                                <span>Mar 2022 – Oct 2023</span>
                             </div>
-                            <ul class="experience-bullets">
+                            <ul class="resume-bullets">
                                 <li><strong>Platform:</strong> Architected OSDU data platform processing exabytes of seismic data on GPU-accelerated Kubernetes clusters (EKS/Fargate) with Spark, Kafka, and Hadoop/HDFS.</li>
                                 <li><strong>Infrastructure:</strong> Delivered GPU cluster management at scale with Kubernetes, Istio, and KEDA, ensuring 99.95% availability for ML inference workloads across multi-region deployments.</li>
-                                <li><strong>IaC & GitOps:</strong> Created 5+ reusable Terraform modules (VPC, EKS, RDS, DynamoDB, S3, IAM) following AWS Well-Architected Framework; implemented GitOps (ArgoCD/FluxCD) with KEDA autoscaling; reduced deployment time 80%.</li>
+                                <li><strong>IaC &amp; GitOps:</strong> Created 5+ reusable Terraform modules (VPC, EKS, RDS, DynamoDB, S3, IAM) following AWS Well-Architected Framework; implemented GitOps (ArgoCD/FluxCD) with KEDA autoscaling; reduced deployment time 80%.</li>
                                 <li><strong>Observability:</strong> Built observability stack with Prometheus/Grafana/ELK and GPU metrics; created automation in Go/Python reducing manual operations 85%; designed DR with RPO &lt;1hr, RTO &lt;4hrs; led 24x7 on-call rotations.</li>
                             </ul>
                         </div>
 
-                        <div class="sub-role">
-                            <div class="sub-role-header">
+                        <div class="ledger-subrole">
+                            <div class="ledger-subrole-head">
                                 <h4>Cloud Infrastructure Engineer - Microsoft Azure (Full-Time with Wipro)</h4>
-                                <span>Feb 2020 - Mar 2022</span>
+                                <span>Feb 2020 – Mar 2022</span>
                             </div>
-                            <ul class="experience-bullets">
+                            <ul class="resume-bullets">
                                 <li>Engineered scalable AI infrastructure using Azure ML, AKS with GPU node pools, and ExpressRoute for hybrid connectivity to on-premise GPU clusters.</li>
                                 <li>Deployed 15+ microservices on AKS with Istio service mesh; built Azure DevOps pipelines with Terraform/Bicep IaC; achieved 99.9% availability.</li>
                                 <li>Delivered compliance-as-code achieving SOC 2, HIPAA, ISO 27001 certifications across multi-tenant environments.</li>
                             </ul>
                         </div>
                     </div>
+                </div>
 
-                    <div class="experience-item">
-                        <div class="experience-header">
-                            <div class="experience-title">
-                                <h3>Cloud Architect - Healthcare Infrastructure</h3>
-                                <span class="company">NTT Data Services | Hyderabad, India</span>
-                            </div>
-                            <span class="experience-date">Aug 2018 - Feb 2020</span>
-                        </div>
-                        <ul class="experience-bullets">
+                <div class="ledger-row">
+                    <div class="ledger-meta">Aug 2018 –<br>Feb 2020</div>
+                    <div>
+                        <div class="ledger-title">Cloud Architect, Healthcare Infrastructure — <span class="company">NTT Data Services</span> · Hyderabad, India</div>
+                        <ul class="resume-bullets">
                             <li><strong>Cloud Migration:</strong> Led cloud modernization for HIPAA/HITRUST-regulated AI/ML applications to AWS; implemented GPU-enabled EKS clusters with NFS-backed persistent storage.</li>
-                            <li><strong>Security & Compliance:</strong> Designed compliant ML pipeline with end-to-end encryption, audit logging, and secure model serving; managed $6M infrastructure budget.</li>
+                            <li><strong>Security &amp; Compliance:</strong> Designed compliant ML pipeline with end-to-end encryption, audit logging, and secure model serving; managed $6M infrastructure budget.</li>
                             <li><strong>DevOps:</strong> Implemented Jenkins/Ansible CI/CD pipelines; DevSecOps (HashiCorp Vault, SonarQube, OWASP); designed DR with business continuity planning.</li>
                         </ul>
                     </div>
+                </div>
 
-                    <div class="experience-item">
-                        <div class="experience-header">
-                            <div class="experience-title">
-                                <h3>Multi-Cloud Architect / Senior Infrastructure Engineer</h3>
-                                <span class="company">Tata Consultancy Services | Multiple Locations</span>
-                            </div>
-                            <span class="experience-date">May 2007 - Jun 2018</span>
-                        </div>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Progressive 11-year career across Fortune 500 clients in financial services, government, telecom, and manufacturing.</p>
+                <div class="ledger-row">
+                    <div class="ledger-meta">May 2007 –<br>Jun 2018</div>
+                    <div>
+                        <div class="ledger-title">Multi-Cloud Architect / Senior Infrastructure Engineer — <span class="company">Tata Consultancy Services</span> · Multiple Locations</div>
+                        <p class="ledger-note">Progressive 11-year career across Fortune 500 clients in financial services, government, telecom, and manufacturing.</p>
 
-                        <div class="sub-role">
-                            <div class="sub-role-header">
+                        <div class="ledger-subrole">
+                            <div class="ledger-subrole-head">
                                 <h4>Cloud Senior Engineer - CNA Insurance</h4>
-                                <span>May 2015 - Jun 2018</span>
+                                <span>May 2015 – Jun 2018</span>
                             </div>
-                            <ul class="experience-bullets">
+                            <ul class="resume-bullets">
                                 <li>Managed Kubernetes/Helm deployments on AWS; built reproducible K8s applications; automated provisioning with Ansible playbooks.</li>
                                 <li>Led cloud migrations to AWS, Azure, OpenStack; pioneered Docker/Kubernetes adoption (2013-2014); implemented CI/CD with Jenkins/Ansible.</li>
                             </ul>
                         </div>
 
-                        <div class="sub-role">
-                            <div class="sub-role-header">
+                        <div class="ledger-subrole">
+                            <div class="ledger-subrole-head">
                                 <h4>Solutions Architect - PwC</h4>
-                                <span>Jan 2011 - Apr 2015</span>
+                                <span>Jan 2011 – Apr 2015</span>
                             </div>
-                            <ul class="experience-bullets">
+                            <ul class="resume-bullets">
                                 <li>Led infrastructure deployments for 12+ facility buildouts including branch offices, call centers, and data centers; managed $15M+ annual budgets.</li>
                                 <li>Integrated Chef/Jenkins deployment pipelines; migrated VMware VMs to AWS (EC2, S3, ELB).</li>
                             </ul>
                         </div>
 
-                        <div class="sub-role">
-                            <div class="sub-role-header">
+                        <div class="ledger-subrole">
+                            <div class="ledger-subrole-head">
                                 <h4>Middleware Engineer - Verizon, Owens Corning</h4>
-                                <span>May 2007 - Jan 2011</span>
+                                <span>May 2007 – Jan 2011</span>
                             </div>
-                            <ul class="experience-bullets">
+                            <ul class="resume-bullets">
                                 <li>Deep Linux/Unix administration with WebSphere/WebLogic middleware; JVM optimization, clustering, and HA configurations.</li>
                                 <li>Managed large-scale production systems on bare-metal serving millions of users; led capacity planning, performance testing, and 24x7 L3 operations.</li>
                             </ul>
                         </div>
                     </div>
-                </section>
-
-                <!-- Education & Certifications -->
-                <section class="resume-section">
-                    <h2 class="resume-section-title">
-                        <i class="fas fa-graduation-cap"></i>
-                        Education & Certifications
-                    </h2>
-                    <div class="education-item">
-                        <h3>Bachelor of Engineering in Mechanical Engineering</h3>
-                        <p>Acharya Nagarjuna University</p>
-                    </div>
-                    <div class="certifications-list">
-                        <span class="cert-badge"><i class="fab fa-aws"></i> AWS Solutions Architect Professional</span>
-                        <span class="cert-badge"><i class="fab fa-microsoft"></i> Azure Solutions Architect Expert</span>
-                        <span class="cert-badge"><i class="fab fa-google"></i> Google Cloud Professional Cloud Architect</span>
-                        <span class="cert-badge"><i class="fab fa-aws"></i> AWS ML Specialty</span>
-                        <span class="cert-badge"><i class="fab fa-microsoft"></i> Azure AI Engineer</span>
-                        <span class="cert-badge"><i class="fas fa-microchip"></i> NVIDIA DLI Infrastructure</span>
-                        <span class="cert-badge"><i class="fas fa-dharmachakra"></i> CKA (Kubernetes)</span>
-                        <span class="cert-badge"><i class="fas fa-cube"></i> HashiCorp Terraform</span>
-                        <span class="cert-badge"><i class="fas fa-database"></i> Databricks Certified Data Engineer</span>
-                        <span class="cert-badge"><i class="fas fa-project-diagram"></i> TOGAF 9</span>
-                        <span class="cert-badge"><i class="fas fa-book"></i> ITIL v4</span>
-                    </div>
-                </section>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Education & Certifications -->
+        <section class="resume-section">
+            <div class="section-label">Education &amp; Certifications</div>
+            <div class="education-item">
+                <h3>Bachelor of Engineering in Mechanical Engineering</h3>
+                <p>Acharya Nagarjuna University</p>
+            </div>
+            <div class="tag-group">
+                <span class="tag">AWS Solutions Architect Professional</span>
+                <span class="tag">Azure Solutions Architect Expert</span>
+                <span class="tag">Google Cloud Professional Cloud Architect</span>
+                <span class="tag">AWS ML Specialty</span>
+                <span class="tag">Azure AI Engineer</span>
+                <span class="tag">NVIDIA DLI Infrastructure</span>
+                <span class="tag">CKA (Kubernetes)</span>
+                <span class="tag">HashiCorp Terraform</span>
+                <span class="tag">Databricks Certified Data Engineer</span>
+                <span class="tag">TOGAF 9</span>
+                <span class="tag">ITIL v4</span>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <div class="footer-brand">
-                <span class="footer-logo">Sudhakar Chundu</span>
-                <p>Staff DevOps Engineer | SRE | GPU Infrastructure</p>
-            </div>
+            <span class="footer-logo">Sudhakar Chundu</span>
             <div class="footer-links">
-                <a href="../">Home</a>
-                <a href="../about/">About</a>
+                <a href="./">Resume</a>
                 <a href="../blog/">Blog</a>
                 <a href="../projects/">Achievements</a>
                 <a href="../contact/">Contact</a>
@@ -1249,9 +743,7 @@
                 <a href="https://medium.sudhakarchundu.org/" target="_blank" rel="noopener noreferrer" title="Medium"><i class="fab fa-medium"></i></a>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 Sudhakar Chundu. All rights reserved.</p>
-        </div>
+        <p>&copy; 2026 Sudhakar Chundu. All rights reserved.</p>
     </footer>
 
     <!-- Firebase Config -->

@@ -24,7 +24,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-    <!-- Google Fonts - AI-optimized typography -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="assets/css/style.css?v=2">
+    <link rel="stylesheet" href="assets/css/style.css?v=3">
 
     <!-- Theme JS (load early to prevent flash) -->
     <script src="assets/js/theme.js"></script>
@@ -51,667 +51,261 @@
             will-change: transform;
         }
 
-        /* AI Hero Section */
-        .hero {
-            padding: 140px 2rem 100px;
-            position: relative;
-            overflow: hidden;
-            min-height: 100vh;
+        /* Identity header */
+        .identity {
+            padding: 84px 0 20px;
             display: flex;
-            align-items: center;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--gradient-mesh);
-            pointer-events: none;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 200px;
-            background: linear-gradient(to top, var(--bg-primary), transparent);
-            pointer-events: none;
-        }
-
-        .hero-container {
-            width: 88%;
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 340px;
-            gap: 5rem;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* AI Badge */
-        .ai-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(91, 156, 248, 0.1);
-            border: 1px solid rgba(91, 156, 248, 0.15);
-            border-radius: var(--radius-full);
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--accent-highlight);
-            margin-bottom: 1.5rem;
-            letter-spacing: 0.01em;
-        }
-
-        .ai-badge i {
-            font-size: 0.75rem;
-        }
-
-        .hero-content {
-            min-width: 0;
-        }
-
-        .hero-content h1 {
-            font-size: clamp(3rem, 5vw, 5rem);
-            line-height: 1.05;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            color: var(--text-primary);
-        }
-
-        .hero-role-line {
-            font-size: 1.05rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            letter-spacing: 0.01em;
-            margin-bottom: 2rem;
-            margin-top: 0;
-        }
-
-        /* Profile column */
-        .hero-profile {
-            display: flex;
-            flex-direction: column;
             align-items: center;
             gap: 1.25rem;
+            flex-wrap: wrap;
         }
 
-        .hero-photo {
-            width: 260px;
-            height: 260px;
+        .identity-photo {
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
             object-fit: cover;
             object-position: center top;
-            border: 2px solid rgba(91, 156, 248, 0.2);
-            display: block;
-        }
-
-        [data-theme="light"] .hero-photo {
-            border-color: rgba(0, 0, 0, 0.12);
-        }
-
-        .hero-credentials {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            width: 100%;
-        }
-
-        .hero-cred-chip {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.625rem 0.875rem;
-            background: var(--bg-card);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-md);
-            font-size: 0.78rem;
-            color: var(--text-secondary);
-            line-height: 1.3;
-        }
-
-        .hero-cred-chip i {
-            font-size: 0.75rem;
-            color: var(--accent-highlight);
+            border: 1px solid var(--bg-tertiary);
             flex-shrink: 0;
-            width: 14px;
-            text-align: center;
         }
 
-        .hero-cred-chip strong {
-            color: var(--text-primary);
-            font-family: var(--font-mono);
-            font-size: 0.82rem;
-            font-weight: 600;
+        .identity-main {
+            flex: 1;
+            min-width: 240px;
         }
 
-        .hero-subtitle {
-            font-size: 1.05rem;
-            color: var(--text-primary);
-            line-height: 1.8;
-            margin-bottom: 2rem;
-            max-width: 65ch;
-            opacity: 0.9;
+        .identity-main h1 {
+            margin-bottom: 0.125rem;
         }
 
-        .hero-subtitle strong {
-            color: var(--accent-highlight);
-            font-weight: 600;
-            opacity: 1;
-        }
-
-        .hero-facts {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 0.25rem 0;
-            margin-bottom: 2.5rem;
-            font-family: var(--font-mono);
-            font-size: 0.875rem;
-            font-variant-numeric: tabular-nums;
+        .identity-role {
+            font-size: 0.8125rem;
             color: var(--text-secondary);
         }
 
-        .hero-facts .fact-sep {
-            margin: 0 0.875rem;
-            color: var(--accent-highlight);
-            opacity: 0.4;
-            font-weight: 300;
-        }
-
-        .hero-facts strong {
+        .identity-role strong {
             color: var(--text-primary);
             font-weight: 600;
         }
 
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .cta-buttons .btn-primary {
-            background: var(--accent-highlight);
-            color: #ffffff;
-            border: none;
-            font-weight: 700;
-        }
-
-        .cta-buttons .btn-primary:hover {
-            transform: translateY(-2px);
-            background: #4f8ef7;
-            box-shadow: 0 4px 16px rgba(91, 156, 248, 0.3);
-        }
-
-        @media (max-width: 960px) {
-            .hero-container {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
-                width: 92%;
-            }
-            .hero-profile {
-                order: -1;
-                flex-direction: row;
-                align-items: flex-start;
-                gap: 1.5rem;
-            }
-            .hero-photo {
-                width: 120px;
-                height: 120px;
-                flex-shrink: 0;
-            }
-            .hero-credentials {
-                flex: 1;
-            }
-        }
-
-        @media (max-width: 560px) {
-            .hero-profile {
-                flex-direction: column;
-                align-items: center;
-            }
-            .hero-photo {
-                width: 140px;
-                height: 140px;
-            }
-        }
-
-        /* Testimonials */
-        .testimonials-section {
-            padding: 80px 2rem;
-            overflow: hidden;
-        }
-
-        .testimonials-wrapper {
-            overflow: hidden;
-            margin: 0 -2rem;
-            padding: 1rem 2rem;
-        }
-
-        .testimonials-track {
-            display: flex;
-            gap: 1.5rem;
-            animation: scroll-testimonials 60s linear infinite;
-            width: max-content;
-        }
-
-        .testimonials-track:hover {
-            animation-play-state: paused;
-        }
-
-        @keyframes scroll-testimonials {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .testimonial-card {
-            flex-shrink: 0;
-            width: 360px;
-            background: var(--bg-card);
-            border: none;
-            border-radius: var(--radius-lg);
-            padding: 1.5rem;
-            transition: var(--transition-normal);
-            box-shadow: var(--shadow-md);
-        }
-
-        .testimonial-card:hover {
-            box-shadow: var(--shadow-lg);
-        }
-
-        .testimonial-quote {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.7;
-            margin-bottom: 1.25rem;
-            font-style: italic;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .testimonial-avatar {
-            width: 44px;
-            height: 44px;
-            background: var(--accent-highlight);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #09090b;
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
-
-        .testimonial-info h4 {
-            font-size: 0.9rem;
-            margin-bottom: 0.15rem;
-        }
-
-        .testimonial-info p {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
-
-        .testimonial-company {
-            color: var(--accent-highlight) !important;
-        }
-
-        .linkedin-badge {
+        .identity-status {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            margin-top: 2rem;
-            padding: 0.625rem 1.25rem;
-            background: #0077b5;
-            border-radius: var(--radius-md);
-            color: white;
-            font-weight: 600;
-            font-size: 0.875rem;
-            text-decoration: none;
-            transition: var(--transition-normal);
+            gap: 0.375rem;
+            margin-top: 0.375rem;
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            color: var(--text-secondary);
         }
 
-        .linkedin-badge:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 119, 181, 0.35);
-            color: white;
+        .identity-status .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #34d399;
+            flex-shrink: 0;
         }
 
-        /* Experience Section */
-        .experience-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .experience-card {
-            background: var(--bg-card);
-            border: none;
-            border-radius: var(--radius-lg);
-            padding: 1.75rem;
-            transition: var(--transition-normal);
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-        }
-
-        .experience-card::before {
-            display: none;
-        }
-
-        .experience-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .experience-card:hover::before {
-            display: none;
-        }
-
-        .experience-header {
+        .identity-actions {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
+            gap: 0.625rem;
+            flex-wrap: wrap;
         }
 
-        .experience-card h3 {
-            font-size: 1.125rem;
-            margin-bottom: 0.25rem;
+        /* Dashboard grid */
+        .dash-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+            gap: 1rem;
+            align-items: start;
+            margin-top: 1rem;
         }
 
-        .experience-card .company {
-            color: var(--accent-highlight);
-            font-size: 0.9rem;
+        .dash-col {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            min-width: 0;
+        }
+
+        @media (max-width: 900px) {
+            .dash-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Experience ledger extras */
+        .ledger-company {
+            color: var(--accent-blue);
             font-weight: 500;
         }
 
-        .experience-date {
-            font-size: 0.75rem;
-            color: var(--accent-highlight);
+        .ledger-clients {
             font-family: var(--font-mono);
-            font-variant-numeric: tabular-nums;
-            padding: 0.25rem 0.75rem;
-            background: rgba(91, 156, 248, 0.08);
-            border-radius: var(--radius-full);
+            font-size: 0.6875rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Focus list */
+        .focus-list {
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        .focus-row {
+            display: flex;
+            gap: 0.625rem;
+            align-items: baseline;
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid var(--bg-tertiary);
+        }
+
+        .focus-row:last-child {
+            border-bottom: none;
+        }
+
+        .focus-row i {
+            font-size: 0.6875rem;
+            color: var(--accent-blue);
+            width: 14px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .focus-row .focus-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-primary);
             white-space: nowrap;
         }
 
-        .experience-bullets {
-            list-style: none;
-            padding: 0;
-            margin-bottom: 1rem;
-        }
-
-        .experience-bullets li {
-            position: relative;
-            padding-left: 1.25rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .experience-bullets li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.6em;
-            width: 6px;
-            height: 6px;
-            background: var(--accent-highlight);
-            border-radius: 50%;
-        }
-
-        .client-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .client-tag {
-            padding: 0.35rem 0.85rem;
-            background: rgba(91, 156, 248, 0.08);
-            border: none;
-            border-radius: var(--radius-full);
-            font-size: 0.75rem;
-            color: var(--accent-highlight);
-            font-weight: 500;
-        }
-
-        /* Skills Grid — varied sizing to break identical-card monotony */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 1.25rem;
-        }
-
-        /* Row 1: 2 large feature cards */
-        .skill-card:nth-child(1),
-        .skill-card:nth-child(2) {
-            grid-column: span 3;
-        }
-
-        /* Row 2: 3 compact cards */
-        .skill-card:nth-child(3),
-        .skill-card:nth-child(4),
-        .skill-card:nth-child(5) {
-            grid-column: span 2;
-        }
-
-        /* Row 3: 2 large cards again */
-        .skill-card:nth-child(6),
-        .skill-card:nth-child(7) {
-            grid-column: span 3;
-        }
-
-        .skill-card {
-            background: var(--bg-card);
-            border: none;
-            border-radius: var(--radius-lg);
-            padding: 1.5rem;
-            transition: var(--transition-normal);
-            box-shadow: var(--shadow-md);
-        }
-
-        /* Feature cards (rows 1 and 3) get more breathing room */
-        .skill-card:nth-child(1),
-        .skill-card:nth-child(2),
-        .skill-card:nth-child(6),
-        .skill-card:nth-child(7) {
-            padding: 2rem 2.25rem;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .skill-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(91, 156, 248, 0.1);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-            color: var(--accent-highlight);
-        }
-
-        .skill-card h3 {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .skill-card:nth-child(1) h3,
-        .skill-card:nth-child(2) h3,
-        .skill-card:nth-child(6) h3,
-        .skill-card:nth-child(7) h3 {
-            font-size: 1.125rem;
-        }
-
-        .skill-card p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .tech-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.35rem;
-        }
-
-        .tech-tag {
-            padding: 0.3rem 0.7rem;
-            background: var(--bg-tertiary);
-            border: none;
-            border-radius: var(--radius-sm);
-            font-size: 0.75rem;
-            color: var(--text-secondary);
+        .focus-row .focus-detail {
+            font-size: 0.71875rem;
+            color: var(--text-muted);
             font-family: var(--font-mono);
         }
 
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .skills-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .skill-card:nth-child(n) {
-                grid-column: span 1;
-                padding: 1.5rem;
-            }
-
-            .skill-card:nth-child(1) h3,
-            .skill-card:nth-child(2) h3,
-            .skill-card:nth-child(6) h3,
-            .skill-card:nth-child(7) h3 {
-                font-size: 1rem;
-            }
+        /* Quotes */
+        .quote-row {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--bg-tertiary);
         }
 
-        @media (max-width: 768px) {
-            .hero {
-                padding: 100px 1.5rem 60px;
-            }
-
-            .hero-content h1 {
-                font-size: 2rem;
-            }
-
-            .testimonial-card {
-                width: 300px;
-            }
-
-            .experience-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
+        .quote-row:last-child {
+            border-bottom: none;
         }
 
-        @media (max-width: 480px) {
-            .hero-facts {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 0.5rem;
-            }
-
-            .hero-facts .fact-sep {
-                display: none;
-            }
-
-            .hero-facts span:not(.fact-sep) {
-                background: rgba(91, 156, 248, 0.06);
-                border-radius: 6px;
-                padding: 0.375rem 0.625rem;
-                font-size: 0.8rem;
-            }
-
-            .cta-buttons .btn {
-                width: 100%;
-                justify-content: center;
-            }
+        .quote-text {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+            margin-bottom: 0.375rem;
         }
 
-        @media (max-height: 500px) and (orientation: landscape) {
-            .hero {
-                padding: 72px 1.5rem 40px;
-            }
+        .quote-attr {
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            color: var(--text-muted);
         }
 
-        /* Focus states */
-        .company-logo-link:focus-visible {
-            outline: 2px solid var(--accent-highlight);
-            outline-offset: 3px;
-            border-color: var(--accent-highlight);
+        .quote-attr strong {
+            color: var(--text-primary);
+            font-weight: 600;
         }
 
-        /* Reduced motion: testimonials fallback layout when animation is disabled */
-        @media (prefers-reduced-motion: reduce) {
-            .testimonials-track {
-                flex-wrap: wrap;
-                overflow-x: visible;
-            }
-        }
-
-        /* Companies grid */
-        .companies-grid {
+        /* Quick links */
+        .quicklinks {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-            gap: 1rem;
-            max-width: 960px;
-            margin: 2rem auto 0;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .quicklink {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--bg-tertiary);
+            transition: var(--transition-fast);
+        }
+
+        .quicklink:nth-child(odd) {
+            border-right: 1px solid var(--bg-tertiary);
+        }
+
+        .quicklink:nth-last-child(-n+2) {
+            border-bottom: none;
+        }
+
+        .quicklink:hover {
+            color: var(--accent-blue);
+            background: rgba(91, 156, 248, 0.04);
+        }
+
+        .quicklink i {
+            font-size: 0.6875rem;
+            width: 14px;
+            text-align: center;
+            color: var(--accent-blue);
+        }
+
+        /* Company strip */
+        .companies-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.75rem;
         }
 
         .company-logo-link {
             background: var(--bg-card);
-            border: 1px solid transparent;
-            border-radius: var(--radius-lg);
-            padding: 1.25rem 1rem;
+            border: 1px solid var(--bg-tertiary);
+            border-radius: var(--radius-sm);
+            padding: 0.625rem 0.75rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: var(--transition-normal);
+            transition: var(--transition-fast);
             text-decoration: none;
         }
 
         .company-logo-link:hover {
-            border-color: var(--accent-highlight);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
+            border-color: var(--accent-blue);
         }
 
         .company-logo-link img {
-            max-width: 76px;
-            max-height: 36px;
+            max-width: 62px;
+            max-height: 22px;
             object-fit: contain;
-            opacity: 0.85;
+            opacity: 0.8;
             transition: opacity var(--transition-fast);
         }
 
         .company-logo-link:hover img {
             opacity: 1;
+        }
+
+        .company-logo-link:focus-visible {
+            outline: 2px solid var(--accent-highlight);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 560px) {
+            .identity {
+                padding-top: 76px;
+            }
+
+            .identity-actions {
+                width: 100%;
+            }
+
+            .identity-actions .btn {
+                flex: 1;
+            }
         }
     </style>
 </head>
@@ -727,6 +321,7 @@
                 Sudhakar Chundu
             </a>
             <ul class="nav-links">
+                <li><a href="./" class="active">Overview</a></li>
                 <li><a href="about/">About</a></li>
                 <li><a href="resume/">Resume</a></li>
                 <li><a href="blog/">Blog</a></li>
@@ -753,417 +348,232 @@
     </nav>
 
     <main class="main-content">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-container">
-                <div class="hero-content">
-                    <div class="ai-badge">
-                        <i class="fas fa-server"></i>
-                        <span>Staff DevOps Engineer · SRE · GPU Infrastructure</span>
-                    </div>
-                    <h1>Sudhakar Chundu</h1>
-                    <p class="hero-role-line">18+ years hands-on · GPU Compute · SRE · Platform Engineering · FinOps</p>
-                    <p class="hero-subtitle">
-                        Staff DevOps Engineer / SRE with deep expertise in
-                        <strong>GPU infrastructure, cloud platform engineering, and site reliability</strong> —
-                        65-GPU bare-metal clusters, Kubernetes at scale, multi-cloud (AWS · Azure · GCP),
-                        and AIOps-driven observability. 99.97% uptime for ML/AI workloads.
-                    </p>
-                    <div class="hero-facts">
-                        <span><strong>18+ yrs</strong> hands-on</span>
-                        <span class="fact-sep">·</span>
-                        <span><strong>99.97%</strong> ML/AI uptime</span>
-                        <span class="fact-sep">·</span>
-                        <span><strong>73%</strong> cloud cost cut</span>
-                    </div>
-                    <div class="cta-buttons">
-                        <a href="resume/" class="btn btn-primary">
-                            <i class="fas fa-file-alt"></i>
-                            View Resume
-                        </a>
-                        <a href="https://www.linkedin.com/in/babucs" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
-                            <i class="fab fa-linkedin"></i>
-                            Connect on LinkedIn
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-profile">
-                    <img src="assets/images/profile.jpg" alt="Sudhakar Chundu" class="hero-photo" loading="eager">
-                    <div class="hero-credentials">
-                        <div class="hero-cred-chip">
-                            <i class="fas fa-microchip"></i>
-                            <span><strong>65 GPUs · Slurm · Kubernetes</strong> bare-metal</span>
-                        </div>
-                        <div class="hero-cred-chip">
-                            <i class="fas fa-cloud"></i>
-                            <span><strong>AWS · Azure · GCP</strong> multi-cloud</span>
-                        </div>
-                        <div class="hero-cred-chip">
-                            <i class="fas fa-shield-alt"></i>
-                            <span><strong>SOC2 · HIPAA · FedRAMP</strong> compliance</span>
-                        </div>
-                        <div class="hero-cred-chip">
-                            <i class="fas fa-chart-line"></i>
-                            <span><strong>SLI/SLO · Error Budgets · AIOps</strong></span>
-                        </div>
-                    </div>
-                </div>
+        <!-- Identity header -->
+        <header class="identity">
+            <img src="assets/images/profile.jpg" alt="Sudhakar Chundu" class="identity-photo" loading="eager">
+            <div class="identity-main">
+                <h1>Sudhakar Chundu</h1>
+                <p class="identity-role"><strong>Staff DevOps Engineer / SRE</strong> · GPU Infrastructure · Platform Engineering · FinOps</p>
+                <span class="identity-status"><span class="dot"></span>Open to staff-level IC roles · US-based</span>
             </div>
-        </section>
-
-        <!-- Testimonials Section -->
-        <section class="section testimonials-section" id="testimonials">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-label">Recommendations</span>
-                    <h2>What <span>Colleagues</span> Say</h2>
-                </div>
-            </div>
-            <div class="testimonials-wrapper">
-                <div class="testimonials-track">
-                    <div class="testimonial-card">
-                        <div class="testimonial-quote">
-                            "I had the opportunity to work closely with Chundu at Trackonomy, and he was someone I consistently trusted on our most critical cloud and AI initiatives. Chundu has a rare ability to combine deep technical expertise with clear, practical decision-making."
-                        </div>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">NP</div>
-                            <div class="testimonial-info">
-                                <h3>Nirali Patidar</h3>
-                                <p>Mission-Driven TPM Leader | AI/ML</p>
-                                <p class="testimonial-company">Former Atlassian, Cisco, Oracle</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="testimonial-quote">
-                            "Sudhakar always focused on impact. His approach in every project was to ask how it supports revenue and enhances competitive position. He always applied tech to business and knew how to rally teams from both sides."
-                        </div>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">MY</div>
-                            <div class="testimonial-info">
-                                <h3>Manal Yaqub</h3>
-                                <p>Startups @ Databricks</p>
-                                <p class="testimonial-company">Client Partner</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="testimonial-quote">
-                            "Sudhakar made a real difference in how we built and deployed software. He streamlined our development process with automation, improved our CI/CD pipelines, and introduced solid DevSecOps practices."
-                        </div>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">KR</div>
-                            <div class="testimonial-info">
-                                <h3>Kedar Rajwade</h3>
-                                <p>Director of Engineering</p>
-                                <p class="testimonial-company">Distributed Systems | Agentic AI</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="testimonial-quote">
-                            "Sudhakar was instrumental in establishing our comprehensive compliance and security posture. His expertise enabled Trackonomy to successfully complete our first SOC2 Type II audit."
-                        </div>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">KA</div>
-                            <div class="testimonial-info">
-                                <h3>Keith Abrams</h3>
-                                <p>General Counsel</p>
-                                <p class="testimonial-company">Trackonomy Systems</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="testimonial-quote">
-                            "Sudhakar has been instrumental in shaping a secure, scalable foundation for our AI-driven mobile stack. He designed Android CI/CD pipelines with DevSecOps tightly integrated."
-                        </div>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">DR</div>
-                            <div class="testimonial-info">
-                                <h3>Diwakar Reddy</h3>
-                                <p>Technical Lead | Mobile Engineering</p>
-                                <p class="testimonial-company">Industrial IoT | AI and ML</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="testimonial-quote">
-                            "From day one, Sudhakar impressed me with a rare combination of deep technical knowledge and thoughtful problem-solving. He architected our CI/CD pipelines reducing deployment time by 95%."
-                        </div>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">KV</div>
-                            <div class="testimonial-info">
-                                <h3>Kasi Viswanath</h3>
-                                <p>Senior DevOps Engineer</p>
-                                <p class="testimonial-company">Trackonomy Systems</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="testimonial-quote">
-                            "Sudhakar is a certified DevOps expert and an industry veteran. He developed seamless pipelines to enhance developer velocity and helped make the company cloud agnostic."
-                        </div>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">AP</div>
-                            <div class="testimonial-info">
-                                <h3>Abhijeet Purkar</h3>
-                                <p>Software and Data | CMU</p>
-                                <p class="testimonial-company">Gold Medalist OU</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="testimonial-quote">
-                            "Sudhakar is a highly knowledgeable engineer whom I worked with for multiple 'missions impossible', addressing fires that thanks to his quick thinking and action we were able to solve."
-                        </div>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">RA</div>
-                            <div class="testimonial-info">
-                                <h3>Raymundo Alatorre</h3>
-                                <p>Sr. Manager Automation & IIoT</p>
-                                <p class="testimonial-company">Flex</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div style="text-align: center;">
-                <a href="https://www.linkedin.com/in/babucs/details/recommendations/" target="_blank" rel="noopener noreferrer" class="linkedin-badge">
+            <div class="identity-actions">
+                <a href="resume/" class="btn btn-primary">
+                    <i class="fas fa-file-alt"></i>
+                    View Resume
+                </a>
+                <a href="https://www.linkedin.com/in/babucs" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-linkedin"></i>
-                    See all <strong>45+ recommendations</strong> on LinkedIn
-                    <i class="fas fa-arrow-right"></i>
+                    LinkedIn
                 </a>
             </div>
-        </section>
+        </header>
 
-        <!-- Experience Section -->
-        <section class="section" id="experience">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-label">Experience</span>
-                    <h2>Where I've <span>Made Impact</span></h2>
-                </div>
-                <div class="experience-grid">
-                    <div class="experience-card">
-                        <div class="experience-header">
-                            <div>
-                                <h3>Data Platform Administrator</h3>
-                                <p class="company">AT&T</p>
-                            </div>
-                            <span class="experience-date">Feb 2026 - Present</span>
-                        </div>
-                        <ul class="experience-bullets">
-                            <li>Owning CI/CD pipeline automation and IaC for multi-cloud data platform infrastructure at petabyte scale across AWS and Azure</li>
-                            <li>Designing Azure DevOps and AWS CodePipeline multi-stage pipelines with pre-merge validation, artifact publishing, and policy-as-code compliance (Checkov, tfsec)</li>
-                            <li>Authoring reusable Terraform IaC modules across AWS and Azure; enforcing GitOps-based drift detection and automated reconciliation</li>
-                            <li>Triaging and remediating CI/CD pipeline failures on Linux-based AWS EC2 and Azure agent pools; distinguishing infrastructure vs. application-layer failures</li>
-                        </ul>
-                        <div class="client-tags">
-                            <span class="client-tag">Azure DevOps</span>
-                            <span class="client-tag">AWS CodePipeline</span>
-                            <span class="client-tag">Terraform</span>
-                            <span class="client-tag">GitOps</span>
-                        </div>
-                    </div>
-                    <div class="experience-card">
-                        <div class="experience-header">
-                            <div>
-                                <h3>Lead Platform and DevOps Engineer</h3>
-                                <p class="company">Trackonomy Systems</p>
-                            </div>
-                            <span class="experience-date">Oct 2023 - Jan 2026</span>
-                        </div>
-                        <ul class="experience-bullets">
-                            <li>Built and operated CI/CD pipelines for 100+ applications using GitLab CI, GitHub Actions, Jenkins, ArgoCD, and Azure DevOps; 50+ daily zero-downtime deployments</li>
-                            <li>Managed multi-arch Docker builds across x86-64, AWS Graviton (ARM64), and GPU compute targets using QEMU-based cross-compilation and buildx</li>
-                            <li>Led platform engineering transformation reducing deployment cycle time 95% (days to 15 min); drove 73% cloud cost reduction ($10M→$2.7M/year)</li>
-                            <li>Triaged CI failures distinguishing infrastructure vs. product issues; reduced pipeline flakiness 80% through agent pool optimization and environment isolation</li>
-                        </ul>
-                        <div class="client-tags">
-                            <span class="client-tag">GitLab CI</span>
-                            <span class="client-tag">GitHub Actions</span>
-                            <span class="client-tag">Multi-arch Docker</span>
-                            <span class="client-tag">ArgoCD</span>
-                        </div>
-                    </div>
-                    <div class="experience-card">
-                        <div class="experience-header">
-                            <div>
-                                <h3>Senior SRE / Cloud Architect - OSDU Platform</h3>
-                                <p class="company">Wipro Technologies (AWS & Microsoft Azure)</p>
-                            </div>
-                            <span class="experience-date">Feb 2020 - Oct 2023</span>
-                        </div>
-                        <ul class="experience-bullets">
-                            <li>Architected OSDU data platform processing exabytes of seismic data on GPU-accelerated K8s clusters (EKS/AKS)</li>
-                            <li>Delivered GPU cluster management at scale with Kubernetes, Istio, and KEDA; 99.95% availability for ML inference</li>
-                            <li>Created 5+ Terraform modules; implemented GitOps (ArgoCD/FluxCD) reducing deployment time 80%</li>
-                            <li>Built observability stack with Prometheus/Grafana/ELK and GPU metrics; led 24x7 on-call rotations</li>
-                        </ul>
-                        <div class="client-tags">
-                            <span class="client-tag">ExxonMobil</span>
-                            <span class="client-tag">Chevron</span>
-                            <span class="client-tag">BP</span>
-                            <span class="client-tag">Shell</span>
-                        </div>
-                    </div>
-                    <div class="experience-card">
-                        <div class="experience-header">
-                            <div>
-                                <h3>Cloud Architect - Healthcare Infrastructure</h3>
-                                <p class="company">NTT Data Services</p>
-                            </div>
-                            <span class="experience-date">Aug 2018 - Feb 2020</span>
-                        </div>
-                        <ul class="experience-bullets">
-                            <li>Led cloud modernization for HIPAA/HITRUST-regulated AI/ML applications to AWS; GPU-enabled EKS clusters</li>
-                            <li>Implemented Jenkins/Ansible CI/CD pipelines; DevSecOps (HashiCorp Vault, SonarQube, OWASP)</li>
-                            <li>Managed $6M infrastructure budget; designed DR with business continuity planning</li>
-                        </ul>
-                        <div class="client-tags">
-                            <span class="client-tag">Harvard Pilgrim</span>
-                        </div>
-                    </div>
-                    <div class="experience-card">
-                        <div class="experience-header">
-                            <div>
-                                <h3>Multi-Cloud Architect / Senior Infrastructure Engineer</h3>
-                                <p class="company">Tata Consultancy Services</p>
-                            </div>
-                            <span class="experience-date">May 2007 - Jun 2018</span>
-                        </div>
-                        <ul class="experience-bullets">
-                            <li>Progressive 11-year career across Fortune 500 clients in financial services, government, telecom, and manufacturing</li>
-                            <li>Led cloud migrations to AWS, Azure, OpenStack; pioneered Docker/Kubernetes adoption (2013-2014)</li>
-                            <li>Led infrastructure deployments for 12+ facility buildouts; managed $15M+ annual budgets at PwC</li>
-                            <li>Deep Linux/Unix administration with WebSphere/WebLogic; production systems serving millions of users</li>
-                        </ul>
-                        <div class="client-tags">
-                            <span class="client-tag">CNA Insurance</span>
-                            <span class="client-tag">PwC</span>
-                            <span class="client-tag">Verizon</span>
-                            <span class="client-tag">Owens Corning</span>
-                        </div>
-                    </div>
-                </div>
+        <!-- KPI strip -->
+        <div class="kpi-strip" role="list">
+            <div class="kpi-cell" role="listitem">
+                <div class="kpi-value">18+ yrs</div>
+                <div class="kpi-label">Hands-on infrastructure</div>
             </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section class="section section-alt" id="expertise">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-label">How I Think</span>
-                    <h2>Engineering <span>Philosophy</span></h2>
-                </div>
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <div class="skill-icon"><i class="fas fa-heartbeat"></i></div>
-                        <h3>Production Reliability</h3>
-                        <p>SLOs aren't just metrics, they're promises to users. I design for 99.99%+ availability with graceful degradation and proactive alerting.</p>
-                        <div class="tech-tags">
-                            <span class="tech-tag">SLOs</span>
-                            <span class="tech-tag">Error Budgets</span>
-                            <span class="tech-tag">Observability</span>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon"><i class="fas fa-shield-alt"></i></div>
-                        <h3>CI/CD Safety</h3>
-                        <p>Deployments should be boring. I build pipelines with rollback automation, canary releases, and security scanning baked in.</p>
-                        <div class="tech-tags">
-                            <span class="tech-tag">GitOps</span>
-                            <span class="tech-tag">ArgoCD</span>
-                            <span class="tech-tag">Flux</span>
-                            <span class="tech-tag">Istio</span>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon"><i class="fas fa-fire-extinguisher"></i></div>
-                        <h3>Incident Response</h3>
-                        <p>Run incident command, author postmortems, track action items to closure. MTTR under 15 minutes for critical services.</p>
-                        <div class="tech-tags">
-                            <span class="tech-tag">On-Call</span>
-                            <span class="tech-tag">Postmortems</span>
-                            <span class="tech-tag">RCA</span>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon"><i class="fas fa-chart-line"></i></div>
-                        <h3>Observability</h3>
-                        <p>You can't fix what you can't see. Metrics, logs, and traces that actually help you understand system behavior.</p>
-                        <div class="tech-tags">
-                            <span class="tech-tag">Prometheus</span>
-                            <span class="tech-tag">Grafana</span>
-                            <span class="tech-tag">Datadog</span>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon"><i class="fas fa-robot"></i></div>
-                        <h3>Toil Reduction</h3>
-                        <p>If you're doing it twice, automate it. I've eliminated thousands of hours of manual work through platform engineering.</p>
-                        <div class="tech-tags">
-                            <span class="tech-tag">Automation</span>
-                            <span class="tech-tag">Self-Service</span>
-                            <span class="tech-tag">Platform</span>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon"><i class="fas fa-cloud"></i></div>
-                        <h3>Cloud Infrastructure</h3>
-                        <p>AWS, Azure, OCI. Right-size resources. Spot instances. Cost optimization that doesn't sacrifice reliability.</p>
-                        <div class="tech-tags">
-                            <span class="tech-tag">AWS</span>
-                            <span class="tech-tag">Azure</span>
-                            <span class="tech-tag">Kubernetes</span>
-                            <span class="tech-tag">Karpenter</span>
-                            <span class="tech-tag">KEDA</span>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-icon"><i class="fas fa-tachometer-alt"></i></div>
-                        <h3>Systems Performance</h3>
-                        <p>Deep performance analysis and optimization. GPU profiling, kernel tuning, and latency reduction that delivers measurable results.</p>
-                        <div class="tech-tags">
-                            <span class="tech-tag">perf</span>
-                            <span class="tech-tag">strace</span>
-                            <span class="tech-tag">nvidia-smi</span>
-                            <span class="tech-tag">dcgm</span>
-                            <span class="tech-tag">CUDA</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="kpi-cell" role="listitem">
+                <div class="kpi-value">99.97%</div>
+                <div class="kpi-label">Uptime, ML/AI workloads</div>
             </div>
-        </section>
+            <div class="kpi-cell" role="listitem">
+                <div class="kpi-value">73%</div>
+                <div class="kpi-label">Cloud cost cut ($10M → $2.7M/yr)</div>
+            </div>
+            <div class="kpi-cell" role="listitem">
+                <div class="kpi-value">65 GPUs</div>
+                <div class="kpi-label">Bare-metal · Slurm · Kubernetes</div>
+            </div>
+            <div class="kpi-cell" role="listitem">
+                <div class="kpi-value">50+/day</div>
+                <div class="kpi-label">Zero-downtime deployments</div>
+            </div>
+            <div class="kpi-cell" role="listitem">
+                <div class="kpi-value">45+</div>
+                <div class="kpi-label">LinkedIn recommendations</div>
+            </div>
+        </div>
 
-        <!-- Target Companies Section -->
-        <section class="section" id="companies">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-label">Next Chapter</span>
-                    <h2>Companies I <span>Admire</span></h2>
-                    <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Organizations where my expertise in GPU infrastructure, SRE, and platform engineering can drive the most impact.</p>
-                </div>
-                <div class="companies-grid">
-                    <a href="https://www.nvidia.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/nvidia.png" alt="NVIDIA" loading="lazy"></a>
-                    <a href="https://careers.google.com" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/google.png" alt="Google" loading="lazy"></a>
-                    <a href="https://www.metacareers.com" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/meta.png" alt="Meta" loading="lazy"></a>
-                    <a href="https://www.amazon.jobs" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/amazon.png" alt="Amazon" loading="lazy"></a>
-                    <a href="https://careers.microsoft.com" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/microsoft.png" alt="Microsoft" loading="lazy"></a>
-                    <a href="https://openai.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/openai.png" alt="OpenAI" loading="lazy"></a>
-                    <a href="https://www.apple.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/apple.png" alt="Apple" loading="lazy"></a>
-                    <a href="https://cerebras.net/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/cerebras.png" alt="Cerebras" loading="lazy"></a>
-                    <a href="https://groq.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/groq.png" alt="Groq" loading="lazy"></a>
-                    <a href="https://scale.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/scaleai.png" alt="Scale AI" loading="lazy"></a>
-                    <a href="https://www.oracle.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/oracle.png" alt="Oracle" loading="lazy"></a>
-                    <a href="https://www.cisco.com/c/en/us/about/careers.html" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/cisco.png" alt="Cisco" loading="lazy"></a>
-                    <a href="https://www.salesforce.com/company/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/salesforce.png" alt="Salesforce" loading="lazy"></a>
-                    <a href="https://www.intuit.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/intuit.png" alt="Intuit" loading="lazy"></a>
-                    <a href="https://www.visa.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/visa.png" alt="Visa" loading="lazy"></a>
-                    <a href="https://www.jpmorgan.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/jpmorgan.png" alt="JPMorgan Chase" loading="lazy"></a>
-                    <a href="https://corporate.walmart.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/walmart.png" alt="Walmart" loading="lazy"></a>
-                    <a href="https://www.capitalone.com/tech/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/capitalone.png" alt="Capital One" loading="lazy"></a>
-                </div>
+        <!-- Dashboard panels -->
+        <div class="dash-grid">
+            <!-- Left column: experience ledger -->
+            <div class="dash-col">
+                <section class="panel" aria-labelledby="exp-title">
+                    <div class="panel-head">
+                        <h2 id="exp-title">Experience</h2>
+                        <a href="resume/" class="panel-link">Full resume →</a>
+                    </div>
+                    <div class="ledger-row">
+                        <div class="ledger-meta">2026 – now</div>
+                        <div>
+                            <div class="ledger-title">Data Platform Administrator · <span class="ledger-company">AT&amp;T</span></div>
+                            <p class="ledger-sub">CI/CD automation and Terraform IaC for petabyte-scale multi-cloud data platforms; policy-as-code compliance (Checkov, tfsec) and GitOps drift reconciliation across AWS and Azure.</p>
+                            <div class="ledger-clients">Azure DevOps · AWS CodePipeline · Terraform · GitOps</div>
+                        </div>
+                    </div>
+                    <div class="ledger-row">
+                        <div class="ledger-meta">2023 – 2026</div>
+                        <div>
+                            <div class="ledger-title">Lead Platform &amp; DevOps Engineer · <span class="ledger-company">Trackonomy Systems</span></div>
+                            <p class="ledger-sub">CI/CD for 100+ applications, 50+ daily zero-downtime deployments; deployment cycle cut 95% (days to 15 min); cloud spend cut 73% ($10M → $2.7M/yr); multi-arch builds across x86-64, Graviton, and GPU targets.</p>
+                            <div class="ledger-clients">GitLab CI · GitHub Actions · ArgoCD · Multi-arch Docker</div>
+                        </div>
+                    </div>
+                    <div class="ledger-row">
+                        <div class="ledger-meta">2020 – 2023</div>
+                        <div>
+                            <div class="ledger-title">Senior SRE / Cloud Architect, OSDU · <span class="ledger-company">Wipro (AWS &amp; Azure)</span></div>
+                            <p class="ledger-sub">OSDU data platform processing exabytes of seismic data on GPU-accelerated EKS/AKS; 99.95% availability for ML inference; GitOps rollout cut deployment time 80%; 24x7 on-call.</p>
+                            <div class="ledger-clients">ExxonMobil · Chevron · BP · Shell</div>
+                        </div>
+                    </div>
+                    <div class="ledger-row">
+                        <div class="ledger-meta">2018 – 2020</div>
+                        <div>
+                            <div class="ledger-title">Cloud Architect, Healthcare · <span class="ledger-company">NTT Data Services</span></div>
+                            <p class="ledger-sub">HIPAA/HITRUST cloud modernization to AWS with GPU-enabled EKS; DevSecOps with Vault, SonarQube, OWASP; $6M infrastructure budget and DR design.</p>
+                            <div class="ledger-clients">Harvard Pilgrim</div>
+                        </div>
+                    </div>
+                    <div class="ledger-row">
+                        <div class="ledger-meta">2007 – 2018</div>
+                        <div>
+                            <div class="ledger-title">Multi-Cloud Architect / Sr. Infrastructure Engineer · <span class="ledger-company">Tata Consultancy Services</span></div>
+                            <p class="ledger-sub">11 years across Fortune 500 clients; early Docker/Kubernetes adoption (2013-14); 12+ facility buildouts and $15M+ annual budgets at PwC; production systems serving millions.</p>
+                            <div class="ledger-clients">CNA Insurance · PwC · Verizon · Owens Corning</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Recommendations -->
+                <section class="panel" aria-labelledby="rec-title">
+                    <div class="panel-head">
+                        <h2 id="rec-title">Recommendations</h2>
+                        <a href="https://www.linkedin.com/in/babucs/details/recommendations/" target="_blank" rel="noopener noreferrer" class="panel-link">All 45+ on LinkedIn →</a>
+                    </div>
+                    <div class="quote-row">
+                        <p class="quote-text">"A rare ability to combine deep technical expertise with clear, practical decision-making. Someone I consistently trusted on our most critical cloud and AI initiatives."</p>
+                        <p class="quote-attr"><strong>Nirali Patidar</strong> · TPM Leader, AI/ML · ex-Atlassian, Cisco, Oracle</p>
+                    </div>
+                    <div class="quote-row">
+                        <p class="quote-text">"He architected our CI/CD pipelines reducing deployment time by 95%. From day one, a rare combination of deep technical knowledge and thoughtful problem-solving."</p>
+                        <p class="quote-attr"><strong>Kasi Viswanath</strong> · Senior DevOps Engineer · Trackonomy</p>
+                    </div>
+                    <div class="quote-row">
+                        <p class="quote-text">"His expertise enabled Trackonomy to successfully complete our first SOC2 Type II audit. Instrumental in establishing our compliance and security posture."</p>
+                        <p class="quote-attr"><strong>Keith Abrams</strong> · General Counsel · Trackonomy Systems</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right column: focus, platforms, links -->
+            <div class="dash-col">
+                <section class="panel" aria-labelledby="focus-title">
+                    <div class="panel-head">
+                        <h2 id="focus-title">Focus Areas</h2>
+                    </div>
+                    <div class="focus-list">
+                        <div class="focus-row">
+                            <i class="fas fa-heartbeat"></i>
+                            <span class="focus-name">Reliability</span>
+                            <span class="focus-detail">SLOs · error budgets · 99.99%</span>
+                        </div>
+                        <div class="focus-row">
+                            <i class="fas fa-shield-alt"></i>
+                            <span class="focus-name">CI/CD Safety</span>
+                            <span class="focus-detail">GitOps · canary · rollback</span>
+                        </div>
+                        <div class="focus-row">
+                            <i class="fas fa-fire-extinguisher"></i>
+                            <span class="focus-name">Incident Response</span>
+                            <span class="focus-detail">MTTR &lt;15 min · postmortems</span>
+                        </div>
+                        <div class="focus-row">
+                            <i class="fas fa-chart-line"></i>
+                            <span class="focus-name">Observability</span>
+                            <span class="focus-detail">Prometheus · Grafana · Datadog</span>
+                        </div>
+                        <div class="focus-row">
+                            <i class="fas fa-robot"></i>
+                            <span class="focus-name">Toil Reduction</span>
+                            <span class="focus-detail">automation · self-service</span>
+                        </div>
+                        <div class="focus-row">
+                            <i class="fas fa-cloud"></i>
+                            <span class="focus-name">Cloud Infrastructure</span>
+                            <span class="focus-detail">AWS · Azure · GCP · K8s</span>
+                        </div>
+                        <div class="focus-row">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span class="focus-name">GPU Performance</span>
+                            <span class="focus-detail">CUDA · dcgm · kernel tuning</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="panel" aria-labelledby="cred-title">
+                    <div class="panel-head">
+                        <h2 id="cred-title">Platforms &amp; Compliance</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div style="display:flex;flex-wrap:wrap;gap:0.375rem;">
+                            <span class="tag">Kubernetes</span>
+                            <span class="tag">Slurm</span>
+                            <span class="tag">Terraform</span>
+                            <span class="tag">ArgoCD</span>
+                            <span class="tag">Istio</span>
+                            <span class="tag">KEDA</span>
+                            <span class="tag">Karpenter</span>
+                            <span class="tag">SOC2</span>
+                            <span class="tag">HIPAA</span>
+                            <span class="tag">FedRAMP</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="panel" aria-labelledby="links-title">
+                    <div class="panel-head">
+                        <h2 id="links-title">Explore</h2>
+                    </div>
+                    <div class="quicklinks">
+                        <a href="about/" class="quicklink"><i class="fas fa-user"></i>About</a>
+                        <a href="resume/" class="quicklink"><i class="fas fa-file-alt"></i>Resume</a>
+                        <a href="blog/" class="quicklink"><i class="fas fa-pen-nib"></i>Blog</a>
+                        <a href="projects/" class="quicklink"><i class="fas fa-trophy"></i>Achievements</a>
+                        <a href="opensource/" class="quicklink"><i class="fab fa-github"></i>Open Source</a>
+                        <a href="contact/" class="quicklink"><i class="fas fa-envelope"></i>Contact</a>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Target companies -->
+        <section class="section" id="companies" aria-labelledby="companies-title">
+            <div class="section-header">
+                <span class="section-label">Next Chapter</span>
+                <h2 id="companies-title">Companies I Admire</h2>
+            </div>
+            <div class="companies-strip">
+                <a href="https://www.nvidia.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/nvidia.png" alt="NVIDIA" loading="lazy"></a>
+                <a href="https://careers.google.com" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/google.png" alt="Google" loading="lazy"></a>
+                <a href="https://www.metacareers.com" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/meta.png" alt="Meta" loading="lazy"></a>
+                <a href="https://www.amazon.jobs" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/amazon.png" alt="Amazon" loading="lazy"></a>
+                <a href="https://careers.microsoft.com" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/microsoft.png" alt="Microsoft" loading="lazy"></a>
+                <a href="https://openai.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/openai.png" alt="OpenAI" loading="lazy"></a>
+                <a href="https://www.apple.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/apple.png" alt="Apple" loading="lazy"></a>
+                <a href="https://cerebras.net/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/cerebras.png" alt="Cerebras" loading="lazy"></a>
+                <a href="https://groq.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/groq.png" alt="Groq" loading="lazy"></a>
+                <a href="https://scale.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/scaleai.png" alt="Scale AI" loading="lazy"></a>
+                <a href="https://www.oracle.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/oracle.png" alt="Oracle" loading="lazy"></a>
+                <a href="https://www.cisco.com/c/en/us/about/careers.html" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/cisco.png" alt="Cisco" loading="lazy"></a>
+                <a href="https://www.salesforce.com/company/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/salesforce.png" alt="Salesforce" loading="lazy"></a>
+                <a href="https://www.intuit.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/intuit.png" alt="Intuit" loading="lazy"></a>
+                <a href="https://www.visa.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/visa.png" alt="Visa" loading="lazy"></a>
+                <a href="https://www.jpmorgan.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/jpmorgan.png" alt="JPMorgan Chase" loading="lazy"></a>
+                <a href="https://corporate.walmart.com/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/walmart.png" alt="Walmart" loading="lazy"></a>
+                <a href="https://www.capitalone.com/tech/careers" target="_blank" rel="noopener noreferrer" class="company-logo-link"><img src="assets/images/logos/capitalone.png" alt="Capital One" loading="lazy"></a>
             </div>
         </section>
     </main>
@@ -1184,9 +594,7 @@
                 <a href="https://medium.sudhakarchundu.org/" target="_blank"><i class="fab fa-medium"></i></a>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 2rem;">
-            <p>&copy; 2025 Sudhakar Chundu. All rights reserved.</p>
-        </div>
+        <p>&copy; 2026 Sudhakar Chundu. All rights reserved.</p>
     </footer>
 
     <!-- Firebase SDK -->
@@ -1213,25 +621,6 @@
                 navLinks.classList.remove('active');
             });
         });
-
-        // Clone testimonials for infinite scroll
-        const track = document.querySelector('.testimonials-track');
-        if (track) {
-            const cards = track.querySelectorAll('.testimonial-card');
-            cards.forEach(card => track.appendChild(card.cloneNode(true)));
-        }
-
-        // Scroll reveal animation
-        const revealElements = document.querySelectorAll('.reveal');
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        revealElements.forEach(el => revealObserver.observe(el));
     </script>
 
     <!-- Neural Network Animation -->

@@ -18,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/style.css?v=2">
+    <link rel="stylesheet" href="../assets/css/style.css?v=3">
     <!-- Theme JS (load early to prevent flash) -->
     <script src="../assets/js/theme.js"></script>
 
@@ -28,339 +28,20 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <style>
-        /* Projects Page Styles */
-        .projects-hero {
-            padding: 120px 2rem 60px;
-            text-align: center;
-            background: linear-gradient(135deg, rgba(91, 156, 248, 0.1) 0%, rgba(91, 156, 248, 0.1) 100%);
-            position: relative;
-        }
-
-        .projects-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 50%, rgba(91, 156, 248, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 50%, rgba(91, 156, 248, 0.15) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .projects-hero h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .projects-hero h1 span {
-            color: var(--accent-highlight);
-        }
-
-        .projects-hero p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .projects-container {
-            max-width: 80%;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        /* Project Card */
-        .project-card {
-            background: var(--bg-card);
-            border: none;
-            border-radius: var(--radius-xl);
-            overflow: hidden;
-            margin-bottom: 2rem;
-            
-            transition: var(--transition-normal);
-        }
-
-        .project-card:hover {
-            border-color: var(--accent-blue);
-            box-shadow: var(--glow-blue);
-        }
-
-        .project-header {
-            background: linear-gradient(135deg, rgba(91, 156, 248, 0.15) 0%, rgba(91, 156, 248, 0.15) 100%);
-            padding: 2rem;
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .project-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--bg-card);
-            padding: 0.4rem 0.85rem;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            border: none;
-        }
-
-        .project-badge i {
-            color: var(--accent-blue);
-        }
-
-        .project-title {
-            color: var(--text-primary);
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .project-title span {
-            color: var(--accent-highlight);
-        }
-
-        .project-subtitle {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            max-width: 600px;
-            line-height: 1.7;
-        }
-
-        .project-meta {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 1.25rem;
-            flex-wrap: wrap;
-        }
-
-        .project-meta-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-        }
-
-        .project-meta-item i {
-            color: var(--accent-blue);
-            font-size: 0.9rem;
-        }
-
-        .project-body {
-            padding: 2rem;
-        }
-
-        .project-section {
-            margin-bottom: 2rem;
-        }
-
-        .project-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .project-section-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .project-section-title i {
-            color: var(--accent-blue);
-            font-size: 0.9rem;
-        }
-
-        .project-description {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-
-        /* Highlights Grid */
-        .project-highlights {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 1rem;
-        }
-
-        .highlight-card {
-            background: rgba(91, 156, 248, 0.08);
-            border: 1px solid rgba(91, 156, 248, 0.15);
-            border-radius: var(--radius-md);
-            padding: 1.25rem;
-        }
-
-        .highlight-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent-blue);
-            font-family: var(--font-mono);
-            margin-bottom: 0.25rem;
-        }
-
-        .highlight-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        /* Tech Stack */
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .tech-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.4rem 0.75rem;
-            background: var(--bg-card);
-            border: none;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            transition: var(--transition-fast);
-        }
-
-        .tech-item:hover {
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
-        }
-
-        .tech-item img {
-            width: 16px;
-            height: 16px;
-            object-fit: contain;
-        }
-
-        /* Responsibility List */
-        .responsibility-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .responsibility-list li {
-            position: relative;
-            padding-left: 1.5rem;
-            margin-bottom: 0.75rem;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        .responsibility-list li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.6rem;
-            width: 6px;
-            height: 6px;
-            background: var(--accent-blue);
-            border-radius: 50%;
-        }
-
-        .responsibility-list li strong {
-            color: var(--text-primary);
-        }
-
-        /* Clients Grid */
-        .clients-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-        }
-
-        .client-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.5rem 1rem;
-            background: var(--bg-card);
-            border: none;
-            border-radius: var(--radius-md);
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            transition: var(--transition-fast);
-        }
-
-        .client-badge:hover {
-            border-color: var(--accent-blue);
-        }
-
-        .client-badge i {
-            color: var(--accent-blue);
-        }
-
-        /* Architecture Image */
-        .architecture-diagram img {
-            width: 100%;
-            border-radius: var(--radius-lg);
-            border: none;
-        }
-
-        .architecture-caption {
-            margin-top: 1rem;
-            font-size: 0.85rem;
-            text-align: center;
-            color: var(--text-muted);
-        }
-
-        .architecture-caption i {
-            color: var(--accent-blue);
-            margin-right: 0.5rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .projects-container {
-                max-width: 100%;
-                padding: 2rem 1.25rem;
-            }
-
-            .projects-hero {
-                padding: 100px 1rem 40px;
-            }
-
-            .projects-hero h1 {
-                font-size: 1.75rem;
-            }
-
-            .project-header {
-                padding: 1.5rem;
-            }
-
-            .project-title {
-                font-size: 1.35rem;
-            }
-
-            .project-body {
-                padding: 1.5rem;
-            }
-
-            .project-meta {
-                flex-direction: column;
-                gap: 0.75rem;
-            }
-
-            .project-highlights {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        /* Achievements page (compact) */
+        .panel-stack { display: grid; gap: 1rem; }
+        .panel-meta { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-muted); white-space: nowrap; }
+        .panel-body > p { font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.55; margin: 0 0 0.875rem; }
+        .panel-body .kpi-strip { margin-bottom: 0.875rem; }
+        .panel-body .ledger-row { padding-left: 0; padding-right: 0; }
+        .sub-label { font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin: 0.875rem 0 0.5rem; }
+        .row-tags { display: flex; flex-wrap: wrap; gap: 0.375rem; margin-top: 0.375rem; }
+        .arch { margin: 0 0 0.875rem; }
+        .arch img { width: 100%; max-width: 760px; display: block; border: 1px solid var(--bg-tertiary); border-radius: var(--radius-md); }
+        .arch figcaption { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-muted); margin-top: 0.375rem; }
+        @media (max-width: 640px) {
+            .panel-head { flex-wrap: wrap; }
+            .panel-meta { white-space: normal; }
         }
     </style>
 </head>
@@ -376,6 +57,7 @@
                 Sudhakar Chundu
             </a>
             <ul class="nav-links">
+                <li><a href="../">Overview</a></li>
                 <li><a href="../about/">About</a></li>
                 <li><a href="../resume/">Resume</a></li>
                 <li><a href="../blog/">Blog</a></li>
@@ -402,663 +84,405 @@
     </nav>
 
     <main class="main-content">
-        <!-- Hero Section -->
-        <section class="projects-hero">
-            <h1>Career <span>Achievements</span></h1>
-            <p>Enterprise projects, conference talks, and technical publications demonstrating expertise in cloud infrastructure, performance engineering, and SRE practices.</p>
+        <!-- Page Header -->
+        <header class="page-header">
+            <h1>Achievements</h1>
+            <p>Enterprise projects, conference talks, and technical publications across cloud infrastructure, performance engineering, and SRE practice.</p>
+        </header>
+
+        <!-- Enterprise Projects -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-label">Projects</span>
+                <h2>Enterprise Projects</h2>
+            </div>
+            <div class="panel-stack">
+                <!-- Trackonomy AI Platform -->
+                <article class="panel">
+                    <div class="panel-head">
+                        <h2>Enterprise AI/ML Platform</h2>
+                        <span class="panel-meta">Trackonomy · Oct 2023 – Jan 2026 · San Jose, CA</span>
+                    </div>
+                    <div class="panel-body">
+                        <p>As Staff DevOps Engineer / SRE, built and operate enterprise AI/ML platforms for healthcare, supply chain, airline, and government clients — deploying, training, and serving LLM/GenAI workloads at scale with enterprise security and compliance. Primary on-call owner for production systems: 99.99% SLO and zero critical security findings across SOC2, HIPAA, and FedRAMP frameworks.</p>
+                        <div class="kpi-strip">
+                            <div class="kpi-cell"><div class="kpi-value">73%</div><div class="kpi-label">Cost reduction ($10M → $2.7M)</div></div>
+                            <div class="kpi-cell"><div class="kpi-value">65</div><div class="kpi-label">GPU platform scale</div></div>
+                            <div class="kpi-cell"><div class="kpi-value">99.97%</div><div class="kpi-label">Uptime ML/AI</div></div>
+                            <div class="kpi-cell"><div class="kpi-value">45→78%</div><div class="kpi-label">GPU utilization</div></div>
+                        </div>
+                        <div class="kpi-strip">
+                            <div class="kpi-cell"><div class="kpi-value">40+</div><div class="kpi-label">Apps migrated</div></div>
+                            <div class="kpi-cell"><div class="kpi-value">-60%</div><div class="kpi-label">Job queue time</div></div>
+                            <div class="kpi-cell"><div class="kpi-value">-40%</div><div class="kpi-label">p99 latency</div></div>
+                            <div class="kpi-cell"><div class="kpi-value">4</div><div class="kpi-label">Compliance certs</div></div>
+                        </div>
+                        <figure class="arch">
+                            <img src="../assets/images/trackonomy-azure-architecture.png" alt="Trackonomy Azure Platform Architecture">
+                            <figcaption>Multi-tenant Azure platform — AKS, microservices, and enterprise security</figcaption>
+                        </figure>
+                        <div class="sub-label">Azure Infrastructure — Terraform IaC + ArgoCD GitOps</div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">AKS</div>
+                            <div><div class="ledger-title">Production-grade Azure Kubernetes Service</div><div class="ledger-sub">Node auto-scaling, availability zones, Azure CNI networking, and Istio service mesh.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">NETWORK</div>
+                            <div><div class="ledger-title">Hub-spoke VNet topology</div><div class="ledger-sub">Azure Firewall, NSGs, private endpoints, and Azure WAF for defense-in-depth security.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">IDENTITY</div>
+                            <div><div class="ledger-title">Azure AD integration</div><div class="ledger-sub">RBAC, Managed Identities, and Azure Key Vault with automatic rotation.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">DATA</div>
+                            <div><div class="ledger-title">Managed data services with private link</div><div class="ledger-sub">Azure PostgreSQL Flexible Server, Cosmos DB (multi-region), Azure Service Bus, and Event Hubs.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">OBSERVE</div>
+                            <div><div class="ledger-title">Observability stack</div><div class="ledger-sub">Prometheus/Grafana on AKS with Datadog integration and custom GPU dashboards.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">CI/CD</div>
+                            <div><div class="ledger-title">GitHub Actions to ArgoCD GitOps</div><div class="ledger-sub">Terraform state in Azure Storage with policy-as-code.</div></div>
+                        </div>
+                        <div class="sub-label">Key Responsibilities</div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">GPU 45→78%</div>
+                            <div><div class="ledger-title">65-GPU multi-tenant platform</div><div class="ledger-sub">Slurm, Kubernetes, and NVIDIA Triton for LLM/GenAI workloads; GPU utilization up from 45% to 78%, job queue wait times down 60%.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">-95% FAILS</div>
+                            <div><div class="ledger-title">Databricks performance crisis</div><div class="ledger-sub">Diagnosed critical cluster degradation hitting production ML pipelines; JVM profiling found a driver-node memory leak, cutting job failures by 95%.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">$10M→$2.7M</div>
+                            <div><div class="ledger-title">Custom FinOps platform</div><div class="ledger-sub">Internal tooling for real-time cost visibility across AWS/Azure/OCI; automated rightsizing and spot instance management drove 73% cost reduction annually.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">p99 -40%</div>
+                            <div><div class="ledger-title">Performance engineering</div><div class="ledger-sub">Kernel tuning, connection pooling, and systematic profiling with perf/strace; GPU profiling with nvidia-smi and dcgm-exporter.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">0 FINDINGS</div>
+                            <div><div class="ledger-title">Security &amp; compliance</div><div class="ledger-sub">SOC2, HIPAA, and FedRAMP compliance achieved with zero critical findings.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">TEAM 0→6</div>
+                            <div><div class="ledger-title">Team leadership</div><div class="ledger-sub">Built infrastructure team from 0 to 6 engineers with best practices and on-call rotations.</div></div>
+                        </div>
+                        <div class="sub-label">Industry Verticals</div>
+                        <div class="row-tags">
+                            <span class="tag">Healthcare</span>
+                            <span class="tag">Supply Chain</span>
+                            <span class="tag">Airline</span>
+                            <span class="tag">Government</span>
+                        </div>
+                        <div class="sub-label">Technology Stack</div>
+                        <div class="row-tags">
+                            <span class="tag">Azure</span>
+                            <span class="tag">AWS</span>
+                            <span class="tag">OCI</span>
+                            <span class="tag">Kubernetes</span>
+                            <span class="tag">Terraform</span>
+                            <span class="tag">ArgoCD</span>
+                            <span class="tag">Helm</span>
+                            <span class="tag">Docker</span>
+                            <span class="tag">GitHub Actions</span>
+                            <span class="tag">Prometheus</span>
+                            <span class="tag">Grafana</span>
+                            <span class="tag">Datadog</span>
+                            <span class="tag">NVIDIA GPU</span>
+                            <span class="tag">Slurm</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">MLflow</span>
+                            <span class="tag">Snyk</span>
+                            <span class="tag">Vault</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- OSDU Data Platform -->
+                <article class="panel">
+                    <div class="panel-head">
+                        <h2>OSDU Data Platform</h2>
+                        <span class="panel-meta">Wipro · Feb 2020 – Oct 2023 · Remote (Global)</span>
+                    </div>
+                    <div class="panel-body">
+                        <p>The Open Subsurface Data Universe (OSDU) is the industry-standard platform for managing subsurface and wells data in oil and gas. Led cloud architecture and infrastructure for OSDU R3 on AWS and Azure across multiple major energy clients — GPU-accelerated ingestion and ML training pipelines for petabyte-scale seismic data, multi-tenant landing zones, and DevSecOps practices for enterprise compliance.</p>
+                        <div class="kpi-strip">
+                            <div class="kpi-cell"><div class="kpi-value">5+</div><div class="kpi-label">Global enterprises</div></div>
+                            <div class="kpi-cell"><div class="kpi-value">PB</div><div class="kpi-label">Scale data processing</div></div>
+                            <div class="kpi-cell"><div class="kpi-value">-55%</div><div class="kpi-label">Downtime reduction</div></div>
+                            <div class="kpi-cell"><div class="kpi-value">2</div><div class="kpi-label">Clouds — AWS &amp; Azure</div></div>
+                        </div>
+                        <figure class="arch">
+                            <img src="../assets/images/osdu-azure-architecture.png" alt="OSDU Azure Architecture">
+                            <figcaption>Multi-tenant OSDU R3 deployment with AKS, Event Hubs, and Cosmos DB</figcaption>
+                        </figure>
+                        <div class="sub-label">AWS Infrastructure</div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">LANDING ZONE</div>
+                            <div><div class="ledger-sub">AWS Control Tower with multi-account strategy, SCPs, and AWS Organizations.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">EKS</div>
+                            <div><div class="ledger-sub">Production EKS with Karpenter, GPU node groups (p4d/p3), and Bottlerocket OS.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">DATA LAKE</div>
+                            <div><div class="ledger-sub">Petabyte-scale on S3 with Lake Formation, Glue ETL, and Athena analytics.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">STREAMING</div>
+                            <div><div class="ledger-sub">Amazon MSK (Kafka) and Kinesis for 10+ GB/s seismic data ingestion.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">SECURITY</div>
+                            <div><div class="ledger-sub">IAM Identity Center, Secrets Manager, GuardDuty, and Security Hub for FedRAMP.</div></div>
+                        </div>
+                        <div class="sub-label">Azure Infrastructure</div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">LANDING ZONE</div>
+                            <div><div class="ledger-sub">Enterprise-Scale with Management Groups and Azure Policy initiatives.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">AKS</div>
+                            <div><div class="ledger-sub">Multi-tier architecture with GPU node pools (NC/ND series) for ML training.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">DATA</div>
+                            <div><div class="ledger-sub">Cosmos DB multi-region, Event Hubs (Kafka), and ADLS Gen2.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">API</div>
+                            <div><div class="ledger-sub">Azure API Management with OAuth 2.0 and developer portal.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">CI/CD</div>
+                            <div><div class="ledger-sub">Azure DevOps pipelines with Terraform modules and compliance-as-code.</div></div>
+                        </div>
+                        <div class="sub-label">Enterprise Clients</div>
+                        <div class="row-tags">
+                            <span class="tag">ExxonMobil</span>
+                            <span class="tag">Chevron</span>
+                            <span class="tag">BP</span>
+                            <span class="tag">Shell</span>
+                            <span class="tag">TotalEnergies</span>
+                        </div>
+                        <div class="sub-label">Technology Stack</div>
+                        <div class="row-tags">
+                            <span class="tag">AWS</span>
+                            <span class="tag">Azure</span>
+                            <span class="tag">EKS/AKS</span>
+                            <span class="tag">Terraform</span>
+                            <span class="tag">Helm</span>
+                            <span class="tag">GitHub Actions</span>
+                            <span class="tag">Azure DevOps</span>
+                            <span class="tag">Docker</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Snyk</span>
+                            <span class="tag">Vault</span>
+                            <span class="tag">Prometheus</span>
+                            <span class="tag">Grafana</span>
+                            <span class="tag">PostgreSQL</span>
+                            <span class="tag">Apache Kafka</span>
+                            <span class="tag">NVIDIA GPU</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- TCS Enterprise Cloud Modernization -->
+                <article class="panel">
+                    <div class="panel-head">
+                        <h2>Enterprise Cloud Modernization</h2>
+                        <span class="panel-meta">Tata Consultancy Services · May 2007 – Feb 2020 · Multiple US Locations</span>
+                    </div>
+                    <div class="panel-body">
+                        <p>Progressive 13-year career across Fortune 500 clients in healthcare, government, telecom, and financial services — leading cloud infrastructure modernization in regulated industries, pioneering Docker and Kubernetes adoption (2013–2014), and driving multi-cloud migration strategies while managing $15M+ infrastructure budgets.</p>
+                        <div class="kpi-strip">
+                            <div class="kpi-cell"><div class="kpi-value">13</div><div class="kpi-label">Years progressive growth</div></div>
+                            <div class="kpi-cell"><div class="kpi-value">$15M+</div><div class="kpi-label">Budget managed</div></div>
+                            <div class="kpi-cell"><div class="kpi-value">20+</div><div class="kpi-label">Facility buildouts</div></div>
+                            <div class="kpi-cell"><div class="kpi-value">4</div><div class="kpi-label">Fortune 500 clients</div></div>
+                        </div>
+                        <div class="sub-label">Key Engagements</div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">2018–2020</div>
+                            <div><div class="ledger-title">Harvard Pilgrim Health Care</div><div class="ledger-sub">Cloud Architect for HIPAA/HITRUST-regulated AI/ML applications on AWS. GPU-enabled EKS clusters with NFS-backed persistent storage; Jenkins/Ansible CI/CD with DevSecOps (HashiCorp Vault, SonarQube, OWASP). Managed $6M infrastructure budget.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">2015–2018</div>
+                            <div><div class="ledger-title">CNA Insurance</div><div class="ledger-sub">Managed Kubernetes/Helm deployments on AWS; led cloud migrations to AWS, Azure, and OpenStack. Pioneered Docker/Kubernetes adoption across the organization; CI/CD with Jenkins/Ansible.</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">2011–2015</div>
+                            <div><div class="ledger-title">PwC</div><div class="ledger-sub">Solutions Architect for 20+ facility buildouts including branch offices, call centers, and data centers. Managed $15M+ annual budgets; integrated Chef/Jenkins deployment pipelines and migrated VMware VMs to AWS (EC2, S3, ELB).</div></div>
+                        </div>
+                        <div class="ledger-row">
+                            <div class="ledger-meta">2007–2011</div>
+                            <div><div class="ledger-title">Verizon &amp; Owens Corning</div><div class="ledger-sub">Deep Linux/Unix administration with WebSphere/WebLogic middleware. JVM optimization, clustering, and HA configurations; large-scale bare-metal production systems serving millions of users.</div></div>
+                        </div>
+                        <div class="sub-label">Enterprise Clients</div>
+                        <div class="row-tags">
+                            <span class="tag">Harvard Pilgrim Health Care</span>
+                            <span class="tag">CNA Insurance</span>
+                            <span class="tag">PricewaterhouseCoopers</span>
+                            <span class="tag">Verizon</span>
+                            <span class="tag">Owens Corning</span>
+                        </div>
+                        <div class="sub-label">Technology Stack</div>
+                        <div class="row-tags">
+                            <span class="tag">AWS</span>
+                            <span class="tag">Azure</span>
+                            <span class="tag">Kubernetes</span>
+                            <span class="tag">Docker</span>
+                            <span class="tag">Terraform</span>
+                            <span class="tag">Ansible</span>
+                            <span class="tag">Jenkins</span>
+                            <span class="tag">Helm</span>
+                            <span class="tag">Vault</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Bash</span>
+                            <span class="tag">WebSphere</span>
+                            <span class="tag">WebLogic</span>
+                            <span class="tag">Linux/Unix</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
         </section>
 
-        <!-- Projects Content -->
-        <div class="projects-container">
-            <!-- Trackonomy AI Platform -->
-            <article class="project-card">
-                <div class="project-header">
-                    <div class="project-badge">
-                        <i class="fas fa-brain"></i>
-                        AI/ML & Healthcare
-                    </div>
-                    <h2 class="project-title">Enterprise <span>AI/ML Platform</span></h2>
-                    <p class="project-subtitle">
-                        Built enterprise AI/ML platforms for healthcare, supply chain, airline, and government clients
-                        with 65-GPU multi-tenant infrastructure for LLM/GenAI workloads.
-                    </p>
-                    <div class="project-meta">
-                        <div class="project-meta-item">
-                            <i class="fas fa-building"></i>
-                            Trackonomy
-                        </div>
-                        <div class="project-meta-item">
-                            <i class="fas fa-calendar"></i>
-                            Oct 2023 - Jan 2026
-                        </div>
-                        <div class="project-meta-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            San Jose, CA
-                        </div>
+        <!-- Conference Talks -->
+        <section class="section" id="conferences">
+            <div class="section-header">
+                <span class="section-label">Speaking</span>
+                <h2>Conference Talks</h2>
+                <p>Sharing insights on cloud infrastructure, Kubernetes, GPU clusters, and site reliability engineering at industry events.</p>
+            </div>
+            <div class="panel">
+                <div class="ledger-row">
+                    <div class="ledger-meta">2025</div>
+                    <div>
+                        <div class="ledger-title">Scaling GPU Clusters for ML Workloads</div>
+                        <div class="ledger-sub">KubeCon NA 2025 — Best practices for managing large-scale GPU infrastructure on Kubernetes.</div>
+                        <div class="row-tags"><span class="tag">Kubernetes</span><span class="tag">GPU</span><span class="tag">ML</span></div>
                     </div>
                 </div>
-
-                <div class="project-body">
-                    <!-- Overview -->
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fas fa-info-circle"></i>
-                            Project Overview
-                        </h3>
-                        <p class="project-description">
-                            As Staff DevOps Engineer / SRE at Trackonomy, I built and operate enterprise-grade
-                            AI/ML platforms serving healthcare, supply chain, airline, and government clients. The platform
-                            enables organizations to deploy, train, and serve large language models (LLMs) and generative AI
-                            workloads at scale with enterprise security and compliance.
-                        </p>
-                        <p class="project-description">
-                            Primary on-call owner for production systems. Achieved 73% cloud cost reduction ($10M to $2.7M),
-                            99.99% SLO, and zero critical security findings across SOC2, HIPAA, and FedRAMP compliance frameworks.
-                        </p>
-                    </div>
-
-                    <!-- Architecture -->
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fas fa-sitemap"></i>
-                            Azure Platform Architecture
-                        </h3>
-                        <div class="architecture-diagram">
-                            <img src="../assets/images/trackonomy-azure-architecture.png" alt="Trackonomy Azure Platform Architecture">
-                        </div>
-                        <p class="architecture-caption">
-                            <i class="fas fa-diagram-project"></i>
-                            Multi-tenant Azure Platform - AKS, Microservices, and Enterprise Security
-                        </p>
-                    </div>
-
-                    <!-- Infrastructure -->
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fas fa-cloud"></i>
-                            Azure Infrastructure Provisioning
-                        </h3>
-                        <p class="project-description">
-                            Designed and provisioned enterprise-grade Azure infrastructure using Infrastructure as Code (Terraform)
-                            with GitOps workflows (ArgoCD) for consistent, repeatable deployments across environments.
-                        </p>
-                        <ul class="responsibility-list">
-                            <li><strong>AKS Cluster:</strong> Provisioned production-grade Azure Kubernetes Service with node auto-scaling, availability zones, Azure CNI networking, and Istio service mesh.</li>
-                            <li><strong>Network Architecture:</strong> Designed hub-spoke VNet topology with Azure Firewall, NSGs, private endpoints, and Azure WAF for defense-in-depth security.</li>
-                            <li><strong>Identity & Access:</strong> Implemented Azure AD integration with RBAC, Managed Identities, and Azure Key Vault with automatic rotation.</li>
-                            <li><strong>Data Services:</strong> Provisioned Azure PostgreSQL Flexible Server, Cosmos DB (multi-region), Azure Service Bus, and Event Hubs with private link.</li>
-                            <li><strong>Observability Stack:</strong> Deployed Prometheus/Grafana on AKS with Datadog integration and custom GPU dashboards.</li>
-                            <li><strong>CI/CD Pipeline:</strong> GitHub Actions to ArgoCD GitOps with Terraform state in Azure Storage and policy-as-code.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Key Metrics -->
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fas fa-chart-bar"></i>
-                            Key Achievements
-                        </h3>
-                        <div class="project-highlights">
-                            <div class="highlight-card">
-                                <div class="highlight-value">73%</div>
-                                <div class="highlight-label">Cost Reduction</div>
-                            </div>
-                            <div class="highlight-card">
-                                <div class="highlight-value">65 GPU</div>
-                                <div class="highlight-label">Platform Scale</div>
-                            </div>
-                            <div class="highlight-card">
-                                <div class="highlight-value">99.97%</div>
-                                <div class="highlight-label">Uptime ML/AI</div>
-                            </div>
-                            <div class="highlight-card">
-                                <div class="highlight-value">45%→78%</div>
-                                <div class="highlight-label">GPU Utilization</div>
-                            </div>
-                            <div class="highlight-card">
-                                <div class="highlight-value">40+</div>
-                                <div class="highlight-label">Apps Migrated</div>
-                            </div>
-                        </div>
-                        <div class="project-highlights" style="margin-top: 1rem;">
-                            <div class="highlight-card">
-                                <div class="highlight-value">60%</div>
-                                <div class="highlight-label">Queue Time Reduced</div>
-                            </div>
-                            <div class="highlight-card">
-                                <div class="highlight-value">40%</div>
-                                <div class="highlight-label">p99 Latency Cut</div>
-                            </div>
-                            <div class="highlight-card">
-                                <div class="highlight-value">4</div>
-                                <div class="highlight-label">Compliance Certs</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Industry Verticals -->
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fas fa-industry"></i>
-                            Industry Verticals
-                        </h3>
-                        <div class="clients-grid">
-                            <span class="client-badge"><i class="fas fa-hospital"></i>Healthcare</span>
-                            <span class="client-badge"><i class="fas fa-truck"></i>Supply Chain</span>
-                            <span class="client-badge"><i class="fas fa-plane"></i>Airline</span>
-                            <span class="client-badge"><i class="fas fa-landmark"></i>Government</span>
-                        </div>
-                    </div>
-
-                    <!-- Responsibilities -->
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fas fa-tasks"></i>
-                            Key Responsibilities
-                        </h3>
-                        <ul class="responsibility-list">
-                            <li><strong>GPU Infrastructure:</strong> Architected 65-GPU multi-tenant platform using Slurm, Kubernetes, and NVIDIA Triton for LLM/GenAI workloads. Improved GPU utilization from 45% to 78% and reduced job queue wait times by 60%.</li>
-                            <li><strong>Databricks Performance Crisis:</strong> Diagnosed and resolved critical Databricks cluster performance degradation affecting production ML pipelines; identified memory leak in driver node through JVM profiling, reducing job failures by 95%.</li>
-                            <li><strong>Custom FinOps Platform:</strong> Built internal FinOps tools for real-time cloud cost visibility across AWS/Azure/OCI; automated rightsizing and spot instance management, driving 73% cost reduction ($10M→$2.7M annually).</li>
-                            <li><strong>Performance Engineering:</strong> Reduced p99 latency by 40% through kernel tuning, connection pooling, and systematic profiling with perf/strace. GPU profiling with nvidia-smi and dcgm-exporter.</li>
-                            <li><strong>Security & Compliance:</strong> Achieved SOC2, HIPAA, and FedRAMP compliance with zero critical findings.</li>
-                            <li><strong>Team Leadership:</strong> Built infrastructure team from 0 to 6 engineers with best practices and on-call rotations.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Technology Stack -->
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fas fa-layer-group"></i>
-                            Technology Stack
-                        </h3>
-                        <div class="tech-stack">
-                            <span class="tech-item"><img src="../assets/icons/azure.svg" alt="Azure">Azure</span>
-                            <span class="tech-item"><img src="../assets/icons/aws.svg" alt="AWS">AWS</span>
-                            <span class="tech-item"><img src="../assets/icons/oracle.svg" alt="OCI">OCI</span>
-                            <span class="tech-item"><img src="../assets/icons/kubernetes.svg" alt="Kubernetes">Kubernetes</span>
-                            <span class="tech-item"><img src="../assets/icons/terraform.svg" alt="Terraform">Terraform</span>
-                            <span class="tech-item"><img src="../assets/icons/argocd.svg" alt="ArgoCD">ArgoCD</span>
-                            <span class="tech-item"><img src="../assets/icons/helm.svg" alt="Helm">Helm</span>
-                            <span class="tech-item"><img src="../assets/icons/docker.svg" alt="Docker">Docker</span>
-                            <span class="tech-item"><img src="../assets/icons/githubactions.svg" alt="GitHub Actions">GitHub Actions</span>
-                            <span class="tech-item"><img src="../assets/icons/prometheus.svg" alt="Prometheus">Prometheus</span>
-                            <span class="tech-item"><img src="../assets/icons/grafana.svg" alt="Grafana">Grafana</span>
-                            <span class="tech-item"><img src="../assets/icons/datadog.svg" alt="Datadog">Datadog</span>
-                            <span class="tech-item"><img src="../assets/icons/nvidia.svg" alt="NVIDIA">NVIDIA GPU</span>
-                            <span class="tech-item"><i class="fas fa-server" style="color:#76B900;"></i>Slurm</span>
-                            <span class="tech-item"><img src="../assets/icons/python.svg" alt="Python">Python</span>
-                            <span class="tech-item"><i class="fas fa-brain" style="color:#0194E2;"></i>MLflow</span>
-                            <span class="tech-item"><img src="../assets/icons/snyk.svg" alt="Snyk">Snyk</span>
-                            <span class="tech-item"><img src="../assets/icons/vault.svg" alt="Vault">Vault</span>
-                        </div>
+                <div class="ledger-row">
+                    <div class="ledger-meta">2025</div>
+                    <div>
+                        <div class="ledger-title">Achieving 99.99% Uptime at Scale</div>
+                        <div class="ledger-sub">SREcon 2025 — Maintaining high availability across multi-cloud GPU infrastructure.</div>
+                        <div class="row-tags"><span class="tag">SRE</span><span class="tag">HA</span><span class="tag">Multi-Cloud</span></div>
                     </div>
                 </div>
-            </article>
-
-            <!-- OSDU Project -->
-            <article class="project-card">
-                <div class="project-header">
-                    <div class="project-badge">
-                        <i class="fas fa-oil-well"></i>
-                        Energy & Oil/Gas
-                    </div>
-                    <h2 class="project-title">OSDU <span>Data Platform</span></h2>
-                    <p class="project-subtitle">
-                        Architected and deployed the Open Subsurface Data Universe (OSDU) R3 platform on AWS and Azure
-                        for major energy enterprises, enabling petabyte-scale seismic and subsurface data management.
-                    </p>
-                    <div class="project-meta">
-                        <div class="project-meta-item">
-                            <i class="fas fa-building"></i>
-                            Wipro
-                        </div>
-                        <div class="project-meta-item">
-                            <i class="fas fa-calendar"></i>
-                            Feb 2020 - Oct 2023
-                        </div>
-                        <div class="project-meta-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            Remote (Global)
-                        </div>
+                <div class="ledger-row">
+                    <div class="ledger-meta">2025</div>
+                    <div>
+                        <div class="ledger-title">Cost Optimization: Cloud Strategy</div>
+                        <div class="ledger-sub">Cloud Summit 2025 — Real-world strategies for reducing cloud costs while maintaining reliability.</div>
+                        <div class="row-tags"><span class="tag">FinOps</span><span class="tag">Cost</span><span class="tag">Cloud</span></div>
                     </div>
                 </div>
-
-                <div class="project-body">
-                    <!-- Overview -->
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fas fa-info-circle"></i>
-                            Project Overview
-                        </h3>
-                        <p class="project-description">
-                            The Open Subsurface Data Universe (OSDU) is an industry-standard data platform that enables
-                            oil and gas companies to manage, integrate, and leverage subsurface and wells data at scale.
-                            I led the cloud architecture and infrastructure implementation for OSDU R3 across multiple
-                            major energy clients.
-                        </p>
-                        <p class="project-description">
-                            Built GPU-accelerated data ingestion and ML training pipelines for petabyte-scale seismic data
-                            processing, designed multi-tenant landing zones, and implemented DevSecOps practices for enterprise compliance.
-                        </p>
-                    </div>
-
-                    <!-- Architecture -->
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fas fa-sitemap"></i>
-                            Architecture Overview
-                        </h3>
-                        <div class="architecture-diagram">
-                            <img src="../assets/images/osdu-azure-architecture.png" alt="OSDU Azure Architecture">
-                        </div>
-                        <p class="architecture-caption">
-                            <i class="fas fa-diagram-project"></i>
-                            Multi-tenant OSDU R3 deployment with AKS, Event Hubs, and Cosmos DB
-                        </p>
-                    </div>
-
-                    <!-- AWS Infrastructure -->
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fab fa-aws"></i>
-                            AWS Infrastructure
-                        </h3>
-                        <ul class="responsibility-list">
-                            <li><strong>Landing Zone:</strong> AWS Control Tower with multi-account strategy, SCPs, and AWS Organizations.</li>
-                            <li><strong>EKS Clusters:</strong> Production EKS with Karpenter, GPU node groups (p4d/p3), and Bottlerocket OS.</li>
-                            <li><strong>Data Lake:</strong> Petabyte-scale on S3 with Lake Formation, Glue ETL, and Athena analytics.</li>
-                            <li><strong>Streaming:</strong> Amazon MSK (Kafka) and Kinesis for 10+ GB/s seismic data ingestion.</li>
-                            <li><strong>Security:</strong> IAM Identity Center, Secrets Manager, GuardDuty, and Security Hub for FedRAMP.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Azure Infrastructure -->
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fab fa-microsoft"></i>
-                            Azure Infrastructure
-                        </h3>
-                        <ul class="responsibility-list">
-                            <li><strong>Landing Zone:</strong> Enterprise-Scale with Management Groups and Azure Policy initiatives.</li>
-                            <li><strong>AKS Clusters:</strong> Multi-tier architecture with GPU node pools (NC/ND series) for ML training.</li>
-                            <li><strong>Data Services:</strong> Cosmos DB multi-region, Event Hubs (Kafka), and ADLS Gen2.</li>
-                            <li><strong>API Layer:</strong> Azure API Management with OAuth 2.0 and developer portal.</li>
-                            <li><strong>CI/CD:</strong> Azure DevOps pipelines with Terraform modules and compliance-as-code.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Key Metrics -->
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fas fa-chart-bar"></i>
-                            Key Achievements
-                        </h3>
-                        <div class="project-highlights">
-                            <div class="highlight-card">
-                                <div class="highlight-value">5+</div>
-                                <div class="highlight-label">Global Enterprises</div>
-                            </div>
-                            <div class="highlight-card">
-                                <div class="highlight-value">PB-Scale</div>
-                                <div class="highlight-label">Data Processing</div>
-                            </div>
-                            <div class="highlight-card">
-                                <div class="highlight-value">55%</div>
-                                <div class="highlight-label">Downtime Reduction</div>
-                            </div>
-                            <div class="highlight-card">
-                                <div class="highlight-value">Multi-Cloud</div>
-                                <div class="highlight-label">AWS & Azure</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Clients -->
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fas fa-handshake"></i>
-                            Enterprise Clients
-                        </h3>
-                        <div class="clients-grid">
-                            <span class="client-badge"><i class="fas fa-building"></i>ExxonMobil</span>
-                            <span class="client-badge"><i class="fas fa-building"></i>Chevron</span>
-                            <span class="client-badge"><i class="fas fa-building"></i>BP</span>
-                            <span class="client-badge"><i class="fas fa-building"></i>Shell</span>
-                            <span class="client-badge"><i class="fas fa-building"></i>TotalEnergies</span>
-                        </div>
-                    </div>
-
-                    <!-- Technology Stack -->
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fas fa-layer-group"></i>
-                            Technology Stack
-                        </h3>
-                        <div class="tech-stack">
-                            <span class="tech-item"><img src="../assets/icons/aws.svg" alt="AWS">AWS</span>
-                            <span class="tech-item"><img src="../assets/icons/azure.svg" alt="Azure">Azure</span>
-                            <span class="tech-item"><img src="../assets/icons/kubernetes.svg" alt="Kubernetes">EKS/AKS</span>
-                            <span class="tech-item"><img src="../assets/icons/terraform.svg" alt="Terraform">Terraform</span>
-                            <span class="tech-item"><img src="../assets/icons/helm.svg" alt="Helm">Helm</span>
-                            <span class="tech-item"><img src="../assets/icons/githubactions.svg" alt="GitHub Actions">GitHub Actions</span>
-                            <span class="tech-item"><img src="../assets/icons/azuredevops.svg" alt="Azure DevOps">Azure DevOps</span>
-                            <span class="tech-item"><img src="../assets/icons/docker.svg" alt="Docker">Docker</span>
-                            <span class="tech-item"><img src="../assets/icons/python.svg" alt="Python">Python</span>
-                            <span class="tech-item"><img src="../assets/icons/snyk.svg" alt="Snyk">Snyk</span>
-                            <span class="tech-item"><img src="../assets/icons/vault.svg" alt="Vault">Vault</span>
-                            <span class="tech-item"><img src="../assets/icons/prometheus.svg" alt="Prometheus">Prometheus</span>
-                            <span class="tech-item"><img src="../assets/icons/grafana.svg" alt="Grafana">Grafana</span>
-                            <span class="tech-item"><i class="fas fa-database" style="color:#336791;"></i>PostgreSQL</span>
-                            <span class="tech-item"><i class="fas fa-stream" style="color:#231F20;"></i>Apache Kafka</span>
-                            <span class="tech-item"><img src="../assets/icons/nvidia.svg" alt="NVIDIA">NVIDIA GPU</span>
-                        </div>
+                <div class="ledger-row">
+                    <div class="ledger-meta">2024</div>
+                    <div>
+                        <div class="ledger-title">Terraform at Enterprise Scale</div>
+                        <div class="ledger-sub">HashiConf 2024 — Managing IaC across multiple cloud providers with modules and automation.</div>
+                        <div class="row-tags"><span class="tag">Terraform</span><span class="tag">IaC</span><span class="tag">Enterprise</span></div>
                     </div>
                 </div>
-            </article>
-
-            <!-- TCS Enterprise Projects -->
-            <article class="project-card">
-                <div class="project-header">
-                    <div class="project-badge">
-                        <i class="fas fa-building"></i>
-                        Fortune 500 Enterprise
-                    </div>
-                    <h2 class="project-title">Enterprise Cloud <span>Modernization</span></h2>
-                    <p class="project-subtitle">
-                        Progressive 13-year career across Fortune 500 clients in healthcare, government, telecom,
-                        and financial services — driving cloud migrations, Kubernetes adoption, and infrastructure modernization.
-                    </p>
-                    <div class="project-meta">
-                        <div class="project-meta-item">
-                            <i class="fas fa-building"></i>
-                            Tata Consultancy Services
-                        </div>
-                        <div class="project-meta-item">
-                            <i class="fas fa-calendar"></i>
-                            May 2007 - Feb 2020
-                        </div>
-                        <div class="project-meta-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            Multiple US Locations
-                        </div>
+                <div class="ledger-row">
+                    <div class="ledger-meta">2024</div>
+                    <div>
+                        <div class="ledger-title">GitOps for Multi-Cluster Kubernetes</div>
+                        <div class="ledger-sub">DevOps Days SV 2024 — Implementing GitOps workflows with ArgoCD for multi-cluster deployments.</div>
+                        <div class="row-tags"><span class="tag">GitOps</span><span class="tag">ArgoCD</span><span class="tag">CI/CD</span></div>
                     </div>
                 </div>
-
-                <div class="project-body">
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fas fa-info-circle"></i>
-                            Overview
-                        </h3>
-                        <p class="project-description">
-                            Led cloud infrastructure modernization initiatives for major enterprise clients across regulated
-                            industries. Pioneered Docker and Kubernetes adoption (2013-2014) and drove multi-cloud migration
-                            strategies while managing $15M+ infrastructure budgets.
-                        </p>
-                    </div>
-
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fas fa-tasks"></i>
-                            Key Engagements
-                        </h3>
-                        <ul class="responsibility-list">
-                            <li><strong>Harvard Pilgrim Health Care (2018-2020):</strong> Cloud Architect for HIPAA/HITRUST-regulated AI/ML applications on AWS. Implemented GPU-enabled EKS clusters with NFS-backed persistent storage. Jenkins/Ansible CI/CD with DevSecOps (HashiCorp Vault, SonarQube, OWASP). Managed $6M infrastructure budget.</li>
-                            <li><strong>CNA Insurance (2015-2018):</strong> Managed Kubernetes/Helm deployments on AWS. Led cloud migrations to AWS, Azure, and OpenStack. Pioneered Docker/Kubernetes adoption across the organization. Implemented CI/CD with Jenkins/Ansible.</li>
-                            <li><strong>PwC (2011-2015):</strong> Solutions Architect for 20+ facility buildouts including branch offices, call centers, and data centers. Managed $15M+ annual budgets. Integrated Chef/Jenkins deployment pipelines and migrated VMware VMs to AWS (EC2, S3, ELB).</li>
-                            <li><strong>Verizon & Owens Corning (2007-2011):</strong> Deep Linux/Unix administration with WebSphere/WebLogic middleware. JVM optimization, clustering, and HA configurations. Large-scale production systems on bare-metal serving millions of users.</li>
-                        </ul>
-                    </div>
-
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fas fa-chart-bar"></i>
-                            Key Achievements
-                        </h3>
-                        <div class="project-highlights">
-                            <div class="highlight-card">
-                                <div class="highlight-value">13</div>
-                                <div class="highlight-label">Years Progressive Growth</div>
-                            </div>
-                            <div class="highlight-card">
-                                <div class="highlight-value">$15M+</div>
-                                <div class="highlight-label">Budget Managed</div>
-                            </div>
-                            <div class="highlight-card">
-                                <div class="highlight-value">20+</div>
-                                <div class="highlight-label">Facility Buildouts</div>
-                            </div>
-                            <div class="highlight-card">
-                                <div class="highlight-value">4</div>
-                                <div class="highlight-label">Fortune 500 Clients</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fas fa-handshake"></i>
-                            Enterprise Clients
-                        </h3>
-                        <div class="clients-grid">
-                            <span class="client-badge"><i class="fas fa-hospital"></i>Harvard Pilgrim Health Care</span>
-                            <span class="client-badge"><i class="fas fa-shield-alt"></i>CNA Insurance</span>
-                            <span class="client-badge"><i class="fas fa-briefcase"></i>PricewaterhouseCoopers</span>
-                            <span class="client-badge"><i class="fas fa-phone"></i>Verizon</span>
-                            <span class="client-badge"><i class="fas fa-industry"></i>Owens Corning</span>
-                        </div>
-                    </div>
-
-                    <div class="project-section">
-                        <h3 class="project-section-title">
-                            <i class="fas fa-layer-group"></i>
-                            Technology Stack
-                        </h3>
-                        <div class="tech-stack">
-                            <span class="tech-item"><img src="../assets/icons/aws.svg" alt="AWS">AWS</span>
-                            <span class="tech-item"><img src="../assets/icons/azure.svg" alt="Azure">Azure</span>
-                            <span class="tech-item"><img src="../assets/icons/kubernetes.svg" alt="Kubernetes">Kubernetes</span>
-                            <span class="tech-item"><img src="../assets/icons/docker.svg" alt="Docker">Docker</span>
-                            <span class="tech-item"><img src="../assets/icons/terraform.svg" alt="Terraform">Terraform</span>
-                            <span class="tech-item"><img src="../assets/icons/ansible.svg" alt="Ansible">Ansible</span>
-                            <span class="tech-item"><img src="../assets/icons/jenkins.svg" alt="Jenkins">Jenkins</span>
-                            <span class="tech-item"><img src="../assets/icons/helm.svg" alt="Helm">Helm</span>
-                            <span class="tech-item"><img src="../assets/icons/vault.svg" alt="Vault">Vault</span>
-                            <span class="tech-item"><img src="../assets/icons/python.svg" alt="Python">Python</span>
-                            <span class="tech-item"><img src="../assets/icons/bash.svg" alt="Bash">Bash</span>
-                            <span class="tech-item"><i class="fas fa-server" style="color:#C74634;"></i>WebSphere</span>
-                            <span class="tech-item"><i class="fas fa-server" style="color:#D32F2F;"></i>WebLogic</span>
-                            <span class="tech-item"><i class="fab fa-linux" style="color:#FCC624;"></i>Linux/Unix</span>
-                        </div>
+                <div class="ledger-row">
+                    <div class="ledger-meta">2024</div>
+                    <div>
+                        <div class="ledger-title">Building Internal Developer Platforms</div>
+                        <div class="ledger-sub">Platform Eng 2024 — Creating self-service platforms for developer productivity.</div>
+                        <div class="row-tags"><span class="tag">Platform</span><span class="tag">DevEx</span><span class="tag">IDP</span></div>
                     </div>
                 </div>
-            </article>
+            </div>
+        </section>
 
-            <!-- Conferences Section -->
-            <article class="project-card" id="conferences">
-                <div class="project-header">
-                    <div class="project-badge">
-                        <i class="fas fa-microphone-alt"></i>
-                        Conference Talks
-                    </div>
-                    <h2 class="project-title">Conference <span>Speaking</span></h2>
-                    <p class="project-subtitle">
-                        Sharing insights on cloud infrastructure, Kubernetes, GPU clusters, and site reliability engineering at industry events.
-                    </p>
-                </div>
-
-                <div class="project-body">
-                    <div class="project-section">
-                        <div class="data-table-container">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 60px;"></th>
-                                        <th>Conference</th>
-                                        <th>Talk Title</th>
-                                        <th>Topics</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><img src="../assets/images/MLW.jpeg" alt="KubeCon" class="table-image"></td>
-                                        <td><span class="table-badge"><i class="fas fa-microphone-alt"></i> KubeCon NA 2025</span></td>
-                                        <td>
-                                            <div class="table-title">Scaling GPU Clusters for ML Workloads</div>
-                                            <div class="table-subtitle">Best practices for managing large-scale GPU infrastructure on Kubernetes</div>
-                                        </td>
-                                        <td><div class="table-tags"><span class="table-tag">Kubernetes</span><span class="table-tag">GPU</span><span class="table-tag">ML</span></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td><div class="table-icon"><i class="fas fa-server"></i></div></td>
-                                        <td><span class="table-badge"><i class="fas fa-microphone-alt"></i> SREcon 2025</span></td>
-                                        <td>
-                                            <div class="table-title">Achieving 99.99% Uptime at Scale</div>
-                                            <div class="table-subtitle">Maintaining high availability across multi-cloud GPU infrastructure</div>
-                                        </td>
-                                        <td><div class="table-tags"><span class="table-tag">SRE</span><span class="table-tag">HA</span><span class="table-tag">Multi-Cloud</span></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td><div class="table-icon"><i class="fas fa-cubes"></i></div></td>
-                                        <td><span class="table-badge"><i class="fas fa-microphone-alt"></i> HashiConf 2024</span></td>
-                                        <td>
-                                            <div class="table-title">Terraform at Enterprise Scale</div>
-                                            <div class="table-subtitle">Managing IaC across multiple cloud providers with modules and automation</div>
-                                        </td>
-                                        <td><div class="table-tags"><span class="table-tag">Terraform</span><span class="table-tag">IaC</span><span class="table-tag">Enterprise</span></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td><img src="../assets/images/DevOpsDays.jpeg" alt="DevOps Days" class="table-image"></td>
-                                        <td><span class="table-badge"><i class="fas fa-microphone-alt"></i> DevOps Days SV 2024</span></td>
-                                        <td>
-                                            <div class="table-title">GitOps for Multi-Cluster Kubernetes</div>
-                                            <div class="table-subtitle">Implementing GitOps workflows with ArgoCD for multi-cluster deployments</div>
-                                        </td>
-                                        <td><div class="table-tags"><span class="table-tag">GitOps</span><span class="table-tag">ArgoCD</span><span class="table-tag">CI/CD</span></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td><img src="../assets/images/CS.jpeg" alt="Cloud Summit" class="table-image"></td>
-                                        <td><span class="table-badge"><i class="fas fa-microphone-alt"></i> Cloud Summit 2025</span></td>
-                                        <td>
-                                            <div class="table-title">Cost Optimization: Cloud Strategy</div>
-                                            <div class="table-subtitle">Real-world strategies for reducing cloud costs while maintaining reliability</div>
-                                        </td>
-                                        <td><div class="table-tags"><span class="table-tag">FinOps</span><span class="table-tag">Cost</span><span class="table-tag">Cloud</span></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td><img src="../assets/images/PES.jpeg" alt="Platform Engineering Summit" class="table-image"></td>
-                                        <td><span class="table-badge"><i class="fas fa-microphone-alt"></i> Platform Eng 2024</span></td>
-                                        <td>
-                                            <div class="table-title">Building Internal Developer Platforms</div>
-                                            <div class="table-subtitle">Creating self-service platforms for developer productivity</div>
-                                        </td>
-                                        <td><div class="table-tags"><span class="table-tag">Platform</span><span class="table-tag">DevEx</span><span class="table-tag">IDP</span></div></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+        <!-- Publications -->
+        <section class="section" id="publications">
+            <div class="section-header">
+                <span class="section-label">Writing</span>
+                <h2>Technical Publications</h2>
+                <p>Articles, guides, and case studies on cloud infrastructure, DevOps, performance engineering, and reliability practices.</p>
+            </div>
+            <div class="panel">
+                <div class="ledger-row">
+                    <div class="ledger-meta">GUIDE</div>
+                    <div>
+                        <div class="ledger-title">Multi-Cloud Kubernetes Strategy</div>
+                        <div class="ledger-sub">Designing and implementing K8s clusters across AWS and Azure with unified management.</div>
+                        <div class="row-tags"><span class="tag">Kubernetes</span><span class="tag">Multi-Cloud</span><span class="tag">Architecture</span></div>
                     </div>
                 </div>
-            </article>
-
-            <!-- Publications Section -->
-            <article class="project-card" id="publications">
-                <div class="project-header">
-                    <div class="project-badge">
-                        <i class="fas fa-book"></i>
-                        Technical Writing
-                    </div>
-                    <h2 class="project-title">Technical <span>Publications</span></h2>
-                    <p class="project-subtitle">
-                        Articles, guides, and case studies on cloud infrastructure, DevOps, performance engineering, and reliability practices.
-                    </p>
-                </div>
-
-                <div class="project-body">
-                    <div class="project-section">
-                        <div class="data-table-container">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Type</th>
-                                        <th>Title</th>
-                                        <th>Topics</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><span class="table-badge"><i class="fas fa-book"></i> Guide</span></td>
-                                        <td>
-                                            <div class="table-title">Multi-Cloud Kubernetes Strategy</div>
-                                            <div class="table-subtitle">Designing and implementing K8s clusters across AWS and Azure with unified management</div>
-                                        </td>
-                                        <td><div class="table-tags"><span class="table-tag">Kubernetes</span><span class="table-tag">Multi-Cloud</span><span class="table-tag">Architecture</span></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="table-badge"><i class="fas fa-star"></i> Best Practice</span></td>
-                                        <td>
-                                            <div class="table-title">GPU Infrastructure for AI/ML</div>
-                                            <div class="table-subtitle">Building GPU clusters for ML workloads with optimal resource utilization</div>
-                                        </td>
-                                        <td><div class="table-tags"><span class="table-tag">GPU</span><span class="table-tag">ML</span><span class="table-tag">Performance</span></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="table-badge"><i class="fas fa-chart-line"></i> Case Study</span></td>
-                                        <td>
-                                            <div class="table-title">Zero-Downtime Migration to Kubernetes</div>
-                                            <div class="table-subtitle">Lessons from migrating legacy apps while maintaining 99.99% uptime SLAs</div>
-                                        </td>
-                                        <td><div class="table-tags"><span class="table-tag">Migration</span><span class="table-tag">Kubernetes</span><span class="table-tag">SRE</span></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="table-badge"><i class="fas fa-file-alt"></i> Article</span></td>
-                                        <td>
-                                            <div class="table-title">Terraform Modules at Scale</div>
-                                            <div class="table-subtitle">Designing reusable Terraform modules with versioning, testing, and documentation</div>
-                                        </td>
-                                        <td><div class="table-tags"><span class="table-tag">Terraform</span><span class="table-tag">IaC</span><span class="table-tag">Modules</span></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="table-badge"><i class="fas fa-tachometer-alt"></i> Performance</span></td>
-                                        <td>
-                                            <div class="table-title">GPU Profiling and Optimization</div>
-                                            <div class="table-subtitle">Using nvidia-smi, dcgm-exporter, and perf for GPU cluster performance tuning</div>
-                                        </td>
-                                        <td><div class="table-tags"><span class="table-tag">GPU</span><span class="table-tag">Performance</span><span class="table-tag">Profiling</span></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="table-badge"><i class="fas fa-shield-alt"></i> Security</span></td>
-                                        <td>
-                                            <div class="table-title">Zero Trust for Cloud Infrastructure</div>
-                                            <div class="table-subtitle">Implementing zero trust security with service mesh and identity management</div>
-                                        </td>
-                                        <td><div class="table-tags"><span class="table-tag">Security</span><span class="table-tag">Zero Trust</span><span class="table-tag">Istio</span></div></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                <div class="ledger-row">
+                    <div class="ledger-meta">BEST PRACTICE</div>
+                    <div>
+                        <div class="ledger-title">GPU Infrastructure for AI/ML</div>
+                        <div class="ledger-sub">Building GPU clusters for ML workloads with optimal resource utilization.</div>
+                        <div class="row-tags"><span class="tag">GPU</span><span class="tag">ML</span><span class="tag">Performance</span></div>
                     </div>
                 </div>
-            </article>
+                <div class="ledger-row">
+                    <div class="ledger-meta">CASE STUDY</div>
+                    <div>
+                        <div class="ledger-title">Zero-Downtime Migration to Kubernetes</div>
+                        <div class="ledger-sub">Lessons from migrating legacy apps while maintaining 99.99% uptime SLAs.</div>
+                        <div class="row-tags"><span class="tag">Migration</span><span class="tag">Kubernetes</span><span class="tag">SRE</span></div>
+                    </div>
+                </div>
+                <div class="ledger-row">
+                    <div class="ledger-meta">ARTICLE</div>
+                    <div>
+                        <div class="ledger-title">Terraform Modules at Scale</div>
+                        <div class="ledger-sub">Designing reusable Terraform modules with versioning, testing, and documentation.</div>
+                        <div class="row-tags"><span class="tag">Terraform</span><span class="tag">IaC</span><span class="tag">Modules</span></div>
+                    </div>
+                </div>
+                <div class="ledger-row">
+                    <div class="ledger-meta">PERFORMANCE</div>
+                    <div>
+                        <div class="ledger-title">GPU Profiling and Optimization</div>
+                        <div class="ledger-sub">Using nvidia-smi, dcgm-exporter, and perf for GPU cluster performance tuning.</div>
+                        <div class="row-tags"><span class="tag">GPU</span><span class="tag">Performance</span><span class="tag">Profiling</span></div>
+                    </div>
+                </div>
+                <div class="ledger-row">
+                    <div class="ledger-meta">SECURITY</div>
+                    <div>
+                        <div class="ledger-title">Zero Trust for Cloud Infrastructure</div>
+                        <div class="ledger-sub">Implementing zero trust security with service mesh and identity management.</div>
+                        <div class="row-tags"><span class="tag">Security</span><span class="tag">Zero Trust</span><span class="tag">Istio</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            <!-- Comments Section -->
-            <div id="comments-container"></div>
-        </div>
+        <!-- Comments Section -->
+        <div id="comments-container"></div>
     </main>
 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <div class="footer-brand">
-                <span class="footer-logo">Sudhakar Chundu</span>
-                <p>Staff DevOps Engineer | SRE | GPU Infrastructure | Performance Engineering</p>
-            </div>
+            <span class="footer-logo">Sudhakar Chundu</span>
             <div class="footer-links">
-                <a href="../">Home</a>
-                <a href="../about/">About</a>
-                <a href="../blog/">Blog</a>
                 <a href="../resume/">Resume</a>
+                <a href="../blog/">Blog</a>
+                <a href="./">Achievements</a>
                 <a href="../contact/">Contact</a>
             </div>
             <div class="footer-social">
@@ -1067,9 +491,7 @@
                 <a href="https://medium.sudhakarchundu.org/" target="_blank" rel="noopener noreferrer" title="Medium"><i class="fab fa-medium"></i></a>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 Sudhakar Chundu. All rights reserved.</p>
-        </div>
+        <p>&copy; 2026 Sudhakar Chundu. All rights reserved.</p>
     </footer>
 
     <!-- Firebase Config and Auth -->

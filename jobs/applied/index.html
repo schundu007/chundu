@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="../../assets/js/theme.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="../../assets/css/style.css?v=2">
+    <link rel="stylesheet" href="../../assets/css/style.css?v=3">
     <style>
         :root {
             --bg-primary: #0a0a0f;
@@ -42,10 +42,10 @@
             background: var(--bg-primary) !important;
             color: var(--text-primary);
             margin: 0;
-            padding: 0;
+            padding: 56px 0 0; /* clear the fixed 56px nav */
         }
 
-        nav, #neural-bg, .page-header, footer {
+        #neural-bg, .page-header, footer {
             display: none !important;
         }
 
@@ -54,7 +54,7 @@
             padding: 0;
             margin: 0;
             background: var(--bg-primary);
-            min-height: 100vh;
+            min-height: calc(100vh - 56px);
         }
 
         .applied-topbar {
@@ -65,7 +65,7 @@
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--glass-border);
             position: sticky;
-            top: 0;
+            top: 56px;
             z-index: 100;
         }
 
@@ -318,6 +318,24 @@
     </style>
 </head>
 <body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="../../" class="logo">
+                <img src="../../assets/images/profile.jpg" alt="Sudhakar Chundu" class="logo-icon">
+                Sudhakar Chundu
+            </a>
+            <ul class="nav-links">
+                <li><a href="../../">Overview</a></li>
+                <li><a href="../../about/">About</a></li>
+                <li><a href="../../resume/">Resume</a></li>
+                <li><a href="../../blog/">Blog</a></li>
+                <li><a href="../../projects/">Achievements</a></li>
+                <li><a href="../../opensource/">Open Source</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <main class="main-content">
         <!-- Top Bar -->
         <div class="applied-topbar">
