@@ -289,18 +289,6 @@
     color:var(--ember);margin-bottom:16px;opacity:.85}
   .mermaid{font-family:var(--mono)!important}
 
-  /* plan cards */
-  .plan{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
-  @media(max-width:820px){.plan{grid-template-columns:1fr}}
-  .phase{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
-    padding:22px;position:relative;overflow:hidden}
-  .phase::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad)}
-  .phase .ph{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--ember);font-weight:600}
-  .phase h4{font-family:var(--display);font-size:1.05rem;margin:8px 0 12px;font-weight:600;color:var(--ink)}
-  .phase ul{padding-left:18px;margin:0;font-size:13.8px}
-  .phase li{margin:8px 0}
-
   .foot{border-top:1px solid var(--line);padding:44px 0 64px;margin-top:24px;background:#05070A}
   .foot .wrap{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
   .foot .links{display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px;font-family:var(--mono)}
@@ -365,7 +353,7 @@
         <div class="who">Sudhakar Chundu</div>
         <div class="role">Platform / CI &amp; Build-Infrastructure Engineer</div>
       </div>
-      <div class="meta">Revised July 2026<br>14 sections · 3 diagrams<br>~65 min read</div>
+      <div class="meta">Revised July 2026<br>14 sections · 3 diagrams<br>~60 min read</div>
     </div>
 
     <div class="stats">
@@ -2167,8 +2155,8 @@ class GPUTestHarness:
 
       <!-- 14 -->
       <section id="s14">
-        <div class="shead"><span class="sn">14</span><h2>Why I'm the fit — and my first 90 days</h2></div>
-        <p>The role wants one engineer to own GPU-stack CI end-to-end: stand up nightly integration builds, solve the self-hosted runner-provisioning problem, keep the infrastructure AWS-aligned, and set direction rather than maintain someone else's system. That's the work I've been doing for years — and, as §2–§7 show, on the same toolchain this stack is built from.</p>
+        <div class="shead"><span class="sn">14</span><h2>Why I'm the fit</h2></div>
+        <p>The role wants one engineer to own GPU-stack CI end-to-end: stand up nightly integration builds, solve the self-hosted runner-provisioning problem, keep the infrastructure AWS-aligned, and set direction rather than maintain someone else's system. That's the work I've been doing for years — and, as §2–§7 show, on the same toolchain this stack is built from. The concrete first moves are already written down in §10; I'd start there.</p>
 
         <div class="tbl-scroll">
         <table class="tbl">
@@ -2185,39 +2173,7 @@ class GPUTestHarness:
         </table>
         </div>
 
-        <h3>The plan: own AMD CI in 90 days</h3>
-        <div class="plan">
-          <div class="phase">
-            <div class="ph">Days 0–30 · Land &amp; ship green</div>
-            <h4>Nightly, running</h4>
-            <ul>
-              <li>Read the CI end-to-end; confirm with the team what my §2–§3 reading of the public repo got right, and what it got wrong.</li>
-              <li>Stand up (or stabilize) a <strong>nightly integration build</strong> with result reporting — the stated first priority.</li>
-              <li>Baseline the metrics that matter, separating <strong>host-C++ from HIP device-code cache hit-rate</strong> before promising either (§12).</li>
-              <li>Quick win: land <code>actionlint</code> + <code>zizmor</code> (§7) and fix the highest-frequency flaky failure, with the runbook.</li>
-            </ul>
-          </div>
-          <div class="phase">
-            <div class="ph">Days 30–60 · Runners &amp; LKG</div>
-            <h4>Solve provisioning</h4>
-            <ul>
-              <li>Harden the orchestration layer: <strong>typed build-config contract, unit tests, <code>--dry-run</code></strong> (§5a). The single biggest lever, and it ships incrementally.</li>
-              <li>Adopt <strong>buildx with a registry-backed cache</strong> for the image layer (§5d) — contained, low-risk, measurable.</li>
-              <li>Ship <strong>LKG manifest promotion</strong>: build-once, test-separately, promote-on-green, with pinned-source provenance.</li>
-            </ul>
-          </div>
-          <div class="phase">
-            <div class="ph">Days 60–90 · AWS-align &amp; harden</div>
-            <h4>Consistent &amp; owned</h4>
-            <ul>
-              <li>Automate <strong>stage selection from <code>BUILD_TOPOLOGY.toml</code></strong> (§10) — retire the manual <code>baseline_run_id</code>, keeping the existing remote cache and adopting no new build system.</li>
-              <li>Export <strong>OpenTelemetry</strong> step timings and cache hit-rate, then run the one-pipeline <strong>BuildKite pilot</strong> against real numbers rather than a demo.</li>
-              <li>Extend the <strong>HUD</strong> for at-a-glance trunk health across <code>gfx</code> families; runbooks for the top 10 failure modes.</li>
-              <li>Hand every engineer a <strong>trusted LKG baseline</strong> they can build from on demand.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="note green"><span class="tag">Bottom line</span>This is high-ownership work with direct customer impact — producing validated, complete GPU-stack recipes on demand instead of assembling them by hand. It's the shape of work I've done across IBM, Trackonomy, and OSDU, on the same Python-first, CMake/Ninja, cache-sensitive, multi-arch ground AMD builds on in the open. Note what the plan above does <em>not</em> contain: a migration. The highest-value first year here is spent making an already-good system legible, testable and measurable — not replacing it. I'd own it from week one.</div>
+        <div class="note green"><span class="tag">Bottom line</span>This is high-ownership work with direct customer impact — producing validated, complete GPU-stack recipes on demand instead of assembling them by hand. It's the shape of work I've done across IBM, Trackonomy, and OSDU, on the same Python-first, CMake/Ninja, cache-sensitive, multi-arch ground AMD builds on in the open. Note what §10 does <em>not</em> recommend: a migration. The highest-value first year here is spent making an already-good system legible, testable and measurable — not replacing it. I'd own it from week one.</div>
       </section>
 
       <p class="backtop"><a href="#top">↑ Back to top</a> · <a href="https://www.sudhakarchundu.org/blog/">← Blog</a></p>
