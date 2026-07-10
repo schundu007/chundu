@@ -16,12 +16,12 @@
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <!-- Theme JS (load early to prevent flash) -->
     <script src="../assets/js/theme.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link rel="stylesheet" href="../assets/css/style.css?v=6">
+    <link rel="stylesheet" href="../assets/css/style.css?v=7">
     <!-- docx library for Word document generation -->
     <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
@@ -48,7 +48,7 @@
             --border: rgba(255, 255, 255, 0.1);
             --primary: #3b82f6;
             --primary-dark: #0a66c2;
-            --primary-light: rgba(91, 156, 248, 0.2);
+            --primary-light: rgba(63, 185, 80, 0.2);
             --radius: 8px;
             --radius-lg: 12px;
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
@@ -76,7 +76,7 @@
             --border: rgba(0, 0, 0, 0.1);
             --primary: #0a66c2;
             --primary-dark: #1d4ed8;
-            --primary-light: rgba(91, 156, 248, 0.15);
+            --primary-light: rgba(63, 185, 80, 0.15);
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
@@ -95,7 +95,7 @@
         }
 
         [data-theme="light"] .jobs-table tr:hover {
-            background: rgba(91, 156, 248, 0.04);
+            background: rgba(63, 185, 80, 0.04);
         }
 
         [data-theme="light"] .company-tag {
@@ -244,7 +244,7 @@
             font-weight: 600;
             color: var(--text-primary);
             border-bottom: 1px solid var(--glass-border);
-            background: linear-gradient(135deg, rgba(91, 156, 248, 0.1), rgba(91, 156, 248, 0.1));
+            background: linear-gradient(135deg, rgba(63, 185, 80, 0.1), rgba(63, 185, 80, 0.1));
         }
 
         .claude-modal-body {
@@ -323,7 +323,7 @@
 
         .claude-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(91, 156, 248, 0.4);
+            box-shadow: 0 4px 12px rgba(63, 185, 80, 0.4);
         }
 
         .resume-text {
@@ -362,7 +362,7 @@
 
         .ai-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 2px 8px rgba(91, 156, 248, 0.4);
+            box-shadow: 0 2px 8px rgba(63, 185, 80, 0.4);
         }
 
         .ai-btn.analyze { background: linear-gradient(135deg, #3b82f6, #0a66c2); }
@@ -428,7 +428,7 @@
         .settings-field select:focus {
             outline: none;
             border-color: #0957b0;
-            box-shadow: 0 0 0 3px rgba(91, 156, 248, 0.2);
+            box-shadow: 0 0 0 3px rgba(63, 185, 80, 0.2);
         }
 
         .settings-field small {
@@ -534,8 +534,8 @@
 
         .settings-status.info {
             display: block;
-            background: rgba(91, 156, 248, 0.1);
-            border: 1px solid rgba(91, 156, 248, 0.3);
+            background: rgba(63, 185, 80, 0.1);
+            border: 1px solid rgba(63, 185, 80, 0.3);
             color: #0957b0;
         }
 
@@ -590,7 +590,7 @@
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
             border-top: 3px solid #3b82f6 !important;
             padding: 1.5rem 1rem !important;
-            box-shadow: 0 -4px 20px rgba(91, 156, 248, 0.2) !important;
+            box-shadow: 0 -4px 20px rgba(63, 185, 80, 0.2) !important;
         }
 
         .doc-manager-section h3 {
@@ -1001,7 +1001,7 @@
         }
 
         .worktype-badge.hybrid {
-            background: rgba(91, 156, 248, 0.15);
+            background: rgba(63, 185, 80, 0.15);
             color: #3b82f6;
         }
 
@@ -1017,7 +1017,7 @@
         }
 
         .col-description:hover {
-            background: rgba(91, 156, 248, 0.05);
+            background: rgba(63, 185, 80, 0.05);
         }
 
         .col-apply {
@@ -1102,9 +1102,9 @@
         }
 
         .ats-good {
-            background: linear-gradient(135deg, rgba(91, 156, 248, 0.2), rgba(91, 156, 248, 0.1));
+            background: linear-gradient(135deg, rgba(63, 185, 80, 0.2), rgba(63, 185, 80, 0.1));
             color: #3b82f6;
-            border: 1px solid rgba(91, 156, 248, 0.3);
+            border: 1px solid rgba(63, 185, 80, 0.3);
         }
 
         .ats-fair {
@@ -1171,8 +1171,8 @@
         }
 
         .ats-tooltip-content .ats-keyword-tag {
-            background: rgba(91, 156, 248, 0.15);
-            color: #5b9cf8;
+            background: rgba(63, 185, 80, 0.15);
+            color: #3fb950;
             padding: 0.1rem 0.4rem;
             border-radius: 3px;
         }
@@ -1184,7 +1184,7 @@
 
         /* ATS Filter Highlight */
         .ats-filter-active {
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(91, 156, 248, 0.1)) !important;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(63, 185, 80, 0.1)) !important;
             border-color: #16a34a !important;
         }
 
@@ -1212,8 +1212,8 @@
         .priority-3 { background: rgba(10, 102, 194, 0.15); color: #0957b0; }
         .priority-4 { background: rgba(234, 179, 8, 0.15); color: #ca8a04; }
         .priority-5 { background: rgba(249, 115, 22, 0.12); color: #ea580c; }
-        .priority-6 { background: rgba(91, 156, 248, 0.12); color: #0a66c2; }
-        .priority-7 { background: rgba(91, 156, 248, 0.1); color: #3b82f6; }
+        .priority-6 { background: rgba(63, 185, 80, 0.12); color: #0a66c2; }
+        .priority-7 { background: rgba(63, 185, 80, 0.1); color: #3b82f6; }
         .priority-8 { background: rgba(236, 72, 153, 0.12); color: #db2777; }
         .priority-9 { background: rgba(168, 85, 247, 0.12); color: #a855f7; }
         .priority-10 { background: rgba(6, 182, 212, 0.12); color: #0891b2; }
@@ -1366,8 +1366,8 @@
 
         .jd-tag {
             padding: 0.35rem 0.75rem;
-            background: rgba(91, 156, 248, 0.1);
-            border: 1px solid rgba(91, 156, 248, 0.2);
+            background: rgba(63, 185, 80, 0.1);
+            border: 1px solid rgba(63, 185, 80, 0.2);
             border-radius: 50px;
             font-size: 0.75rem;
             color: var(--accent-blue);
@@ -1597,7 +1597,7 @@
         .backup-btn:hover {
             border-color: var(--primary);
             color: var(--primary);
-            background: rgba(91, 156, 248, 0.1);
+            background: rgba(63, 185, 80, 0.1);
         }
 
         .backup-btn i {
@@ -1889,7 +1889,7 @@
             border-color: var(--primary);
             color: var(--primary);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(91, 156, 248, 0.25);
+            box-shadow: 0 4px 12px rgba(63, 185, 80, 0.25);
         }
 
         .company-link-logo {
@@ -1919,7 +1919,7 @@
             gap: 0.5rem;
             padding: 0.6rem 1rem;
             border: 2px solid var(--primary);
-            background: rgba(91, 156, 248, 0.05);
+            background: rgba(63, 185, 80, 0.05);
             color: var(--primary);
             border-radius: var(--radius);
             font-size: 0.85rem;
@@ -2020,8 +2020,8 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.5rem 1rem;
-            background: rgba(91, 156, 248, 0.2);
-            color: #5b9cf8;
+            background: rgba(63, 185, 80, 0.2);
+            color: #3fb950;
             border-radius: 6px;
             font-size: 0.85rem;
         }
@@ -2371,7 +2371,7 @@
         .slideout-tab.active {
             color: var(--primary);
             border-bottom: 2px solid var(--primary);
-            background: rgba(91, 156, 248, 0.05);
+            background: rgba(63, 185, 80, 0.05);
         }
 
         .slideout-content {
@@ -2433,7 +2433,7 @@
         .panel-link:hover {
             border-color: var(--primary);
             color: var(--primary);
-            background: rgba(91, 156, 248, 0.1);
+            background: rgba(63, 185, 80, 0.1);
         }
 
         .panel-link img {
@@ -2492,7 +2492,7 @@
             border-radius: 8px 0 0 8px;
             cursor: pointer;
             z-index: 998;
-            box-shadow: -2px 0 15px rgba(91, 156, 248, 0.4);
+            box-shadow: -2px 0 15px rgba(63, 185, 80, 0.4);
             transition: all 0.2s;
             writing-mode: vertical-rl;
             text-orientation: mixed;
@@ -2500,7 +2500,7 @@
 
         .slideout-toggle:hover {
             padding-right: 0.75rem;
-            box-shadow: -4px 0 20px rgba(91, 156, 248, 0.6);
+            box-shadow: -4px 0 20px rgba(63, 185, 80, 0.6);
         }
 
         .slideout-toggle span {
@@ -2539,14 +2539,14 @@
     <!-- Password Protection Overlay -->
     <div id="password-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-primary, #0a0a0f); z-index: 99999; display: flex; align-items: center; justify-content: center;">
         <div style="background: var(--bg-secondary, #111118); padding: 28px 32px; border-radius: 10px; text-align: center; max-width: 380px; width: 90%; border: 1px solid var(--bg-tertiary, #18181f);">
-            <i class="fas fa-lock" style="font-size: 24px; color: #5b9cf8; margin-bottom: 14px;"></i>
+            <i class="fas fa-lock" style="font-size: 24px; color: #3fb950; margin-bottom: 14px;"></i>
             <h2 style="margin: 0 0 8px; font-size: 1.125rem; color: var(--text-primary, #ffffff);">Private Page</h2>
             <p style="color: var(--text-secondary, #a1a1aa); font-size: 0.875rem; margin-bottom: 18px;">This page is restricted. Enter password to continue.</p>
             <input type="password" id="password-input" placeholder="Enter password"
                    style="width: 100%; padding: 10px 14px; border: 1px solid var(--bg-tertiary, #18181f); border-radius: 8px; font-size: 15px; margin-bottom: 12px; box-sizing: border-box; background: var(--bg-primary, #0a0a0f); color: var(--text-primary, #ffffff);"
                    onkeypress="if(event.key==='Enter') checkPassword()">
             <button onclick="checkPassword()"
-                    style="width: 100%; height: 36px; padding: 0 12px; background: #5b9cf8; color: white; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; font-weight: 600;">
+                    style="width: 100%; height: 36px; padding: 0 12px; background: #3fb950; color: white; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; font-weight: 600;">
                 Unlock
             </button>
             <p id="password-error" style="color: #f87171; margin-top: 12px; font-size: 0.875rem; display: none;">Incorrect password</p>
@@ -2594,7 +2594,6 @@
             </a>
             <ul class="nav-links">
                 <li><a href="../">Overview</a></li>
-                <li><a href="../about/">About</a></li>
                 <li><a href="../projects/">Projects</a></li>
                 <li><a href="../opensource/">Open Source</a></li>
             </ul>
