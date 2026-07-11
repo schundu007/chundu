@@ -281,8 +281,8 @@
 }
 
 html {
-    /* 13px root: global ~81% scale-down of all rem-based sizes */
-    font-size: 81.25%;
+    /* 16px root: standard readable baseline for all rem-based sizes */
+    font-size: 100%;
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
