@@ -1,9 +1,14 @@
 {
   "resumes": [
     {
-      "name": "Sudhakar Chundu Master Resume",
-      "file": "Sudhakar_Chundu_Master_Resume.docx",
+      "name": "Sudhakar Chundu Master Resume (PDF)",
+      "file": "Sudhakar_Chundu_Master_Resume.pdf",
       "active": true
+    },
+    {
+      "name": "Sudhakar Chundu Master Resume (DOCX)",
+      "file": "Sudhakar_Chundu_Master_Resume.docx",
+      "active": false
     }
   ],
   "coverLetters": []
