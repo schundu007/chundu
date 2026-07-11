@@ -642,17 +642,6 @@ nav {
     margin-bottom: 0.375rem;
 }
 
-/* Universe-style numbered eyebrows */
-body {
-    counter-reset: sec;
-}
-
-.section-header .section-label::before {
-    counter-increment: sec;
-    content: counter(sec, decimal-leading-zero) " / ";
-    color: var(--text-muted);
-}
-
 .section-header {
     margin-bottom: 1.25rem;
     text-align: left;
@@ -1930,6 +1919,27 @@ button:focus-visible,
     font-weight: 600;
     color: var(--text-primary);
     line-height: 1.4;
+}
+
+/* Clickable ledger rows (Speaking / Publications → blog posts) */
+.ledger-row:has(a.ledger-link) {
+    position: relative;
+}
+
+.ledger-title a.ledger-link {
+    color: inherit;
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.ledger-title a.ledger-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+}
+
+.ledger-row:hover a.ledger-link {
+    color: var(--accent-highlight, var(--accent-blue));
 }
 
 .ledger-sub {
