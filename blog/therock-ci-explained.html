@@ -246,7 +246,11 @@
     padding:22px;margin:22px 0;overflow-x:auto}
   .diagram .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
     color:var(--ember);margin-bottom:16px;opacity:.85}
-  .mermaid{font-family:var(--mono)!important}
+  .mermaid{font-family:var(--mono)!important;min-width:0}
+  .diagram .mermaid{display:flex;justify-content:center}
+  .diagram .mermaid svg{max-width:none!important}
+  .mermaid .nodeLabel,.mermaid .edgeLabel,.mermaid span.nodeLabel{font-size:15.5px!important;color:#EEF4F9!important}
+  .mermaid .cluster .nodeLabel,.mermaid .cluster span{fill:#FF6B35!important;color:#FF6B35!important;font-weight:600!important}
 
   /* ============ guide components (token-remapped to reference) ============ */
   .flow-scroll{overflow-x:auto;padding:6px 0 14px;margin:0 -24px;padding-left:24px;padding-right:24px}
@@ -380,6 +384,19 @@
   .block p{font-size:15.5px}
   .pc li,.premise,.wh .w p,.mcard p,.fstep .ft{font-size:14.5px}
   .mcard .fit,.fstep .ff,.fpath{font-size:12.8px}
+  /* --- large + full-width pass --- */
+  :root{--maxw:1520px}
+  .wrap{padding-left:34px;padding-right:34px}
+  body{font-size:19px}
+  h1{max-width:none;font-size:clamp(2.1rem,4.6vw,3.2rem)}
+  h2{font-size:clamp(1.5rem,2.5vw,1.9rem)}
+  h3{font-size:1.45rem}
+  .lede{max-width:none;font-size:clamp(1.2rem,1.6vw,1.45rem)}
+  .sdesc{max-width:none;font-size:18px}
+  .block p{font-size:17.5px}
+  .cf-name,.note,.mod-intro p{font-size:18px}
+  .mcard p,.pc li,.premise,.wh .w p,.fstep .ft{font-size:16.5px}
+  .fpath,.mcard .fit,.fstep .ff{font-size:14.5px}
 </style>
 </head>
 <body>
@@ -965,15 +982,15 @@ def affected(changed_paths: list[str], topo: BuildTopology) -&gt; Affected:
     mermaid.initialize({
       startOnLoad: true, securityLevel: "loose",
       theme: "base",
-      flowchart: { curve: "basis", useMaxWidth: true },
+      flowchart: { curve: "basis", useMaxWidth: false, nodeSpacing: 42, rankSpacing: 54, padding: 12 },
       themeVariables: {
         darkMode: true,
-        fontFamily: "IBM Plex Mono, ui-monospace, monospace", fontSize: "13px",
+        fontFamily: "IBM Plex Mono, ui-monospace, monospace", fontSize: "16px",
         background: "#0D1218",
-        primaryColor: "#121A21", primaryTextColor: "#E8EFF5", primaryBorderColor: "#28353F",
-        secondaryColor: "#162029", tertiaryColor: "#0D1218",
-        lineColor: "#6B8090", textColor: "#E8EFF5",
-        clusterBkg: "#0A0F14", clusterBorder: "#FF6B35",
+        primaryColor: "#1E2C39", primaryTextColor: "#EEF4F9", primaryBorderColor: "#4B5E70",
+        secondaryColor: "#243543", tertiaryColor: "#0D1218",
+        lineColor: "#9AAEBD", textColor: "#EEF4F9",
+        clusterBkg: "#0B1119", clusterBorder: "#FF6B35",
         edgeLabelBackground: "#0D1218"
       }
     });
