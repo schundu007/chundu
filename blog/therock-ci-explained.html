@@ -34,7 +34,7 @@
     --pass:#2DD4A7; --run:#F0A429; --fail:#F0473E;
     --link:#5AB6F0;
 
-    --r:12px; --maxw:1100px;
+    --r:12px; --maxw:1340px;
     --glow:0 0 0 1px rgba(255,107,53,.10), 0 24px 60px -30px rgba(217,59,43,.55);
     --display:"Chakra Petch", "Space Grotesk", system-ui, sans-serif;
     --body:"IBM Plex Sans", system-ui, -apple-system, sans-serif;
@@ -53,7 +53,7 @@
   body{
     margin:0;background:var(--void);color:var(--ink);
     font-family:var(--body);
-    font-size:15px;line-height:1.6;letter-spacing:-.003em;
+    font-size:16.5px;line-height:1.62;letter-spacing:-.003em;
     -webkit-font-smoothing:antialiased;
   }
   /* ambient: faint circuit grid + one ember bloom behind the hero */
@@ -370,6 +370,16 @@
     .card,.toolcard,.mcard{transition:border-color .2s ease}
     .card:hover,.toolcard:hover,.mcard:hover{border-color:var(--line-2)}
   }
+  /* --- readability pass: wider container + larger type --- */
+  h1{font-size:clamp(1.7rem,3.4vw,2.3rem)}
+  h2{font-size:clamp(1.25rem,2vw,1.45rem)}
+  h3{font-size:1.2rem}
+  .lede{font-size:clamp(1rem,1.35vw,1.15rem)}
+  .sdesc{font-size:16.5px}
+  .note,.mod-intro p,.cf-name{font-size:16px}
+  .block p{font-size:15.5px}
+  .pc li,.premise,.wh .w p,.mcard p,.fstep .ft{font-size:14.5px}
+  .mcard .fit,.fstep .ff,.fpath{font-size:12.8px}
 </style>
 </head>
 <body>
