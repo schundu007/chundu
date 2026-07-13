@@ -2,11 +2,11 @@
 /**
  * render.mjs — build /trending-gitrepos/index.html.
  *
- * Styled to match the sudhakarchundu.org site: it loads the site's own
- * assets/css/style.css, fonts, nav, footer, neural-bg, and theme toggle, and
- * renders the repos with the site's native components (.section / .panel /
- * .ledger-row / .tag). Only a few page-specific helpers are added inline,
- * built on the site's CSS tokens.
+ * Enterprise dashboard styling on top of the sudhakarchundu.org design system:
+ * loads the site's assets/css/style.css (NVIDIA-green accent, dark/light themes,
+ * Mona Sans + JetBrains Mono), reuses its nav / footer / neural-bg / theme
+ * toggle and .kpi-* components, and adds a page-scoped card grid + velocity bars
+ * built entirely on the site's CSS tokens (so both themes stay correct).
  *
  * Run (called by fetch.mjs after each refresh):
  *   node trending-gitrepos/scripts/render.mjs
@@ -81,48 +81,134 @@ const FOOTER = `
         <p>&copy; 2026 Sudhakar Chundu. All rights reserved.</p>
     </footer>`;
 
+const STYLE = `
+    <style>
+        /* ============ Trending page — enterprise layout on site tokens ============ */
+        .main-content { max-width: 1360px; }
+
+        /* Hero */
+        .tg-hero { position: relative; }
+        .tg-hero h1 { font-size: 2.75rem; line-height: 1.05; letter-spacing: -0.03em; margin: 0 0 0.5rem; }
+        .tg-hero .tg-lead { font-size: 1.1rem; line-height: 1.6; color: var(--text-secondary); max-width: 72ch; margin: 0 0 1.5rem; }
+        .tg-hero .tg-lead strong { color: var(--text-primary); }
+        .tg-kpis { margin: 0 0 1.75rem; }
+        .tg-kpis .kpi-value { font-size: 1.6rem; }
+
+        /* Sticky category nav */
+        .tg-catnav {
+            position: sticky; top: 70px; z-index: 20;
+            display: flex; flex-wrap: wrap; gap: 0.5rem;
+            padding: 0.75rem 0; margin-bottom: 1.5rem;
+            background: var(--bg-primary); border-bottom: 1px solid var(--bg-tertiary);
+        }
+        .tg-catnav a {
+            display: inline-flex; align-items: center; gap: 0.45rem;
+            font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600;
+            padding: 0.4rem 0.85rem; border-radius: var(--radius-full);
+            color: var(--text-secondary); background: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary); text-decoration: none;
+            transition: var(--transition-fast);
+        }
+        .tg-catnav a:hover { color: var(--text-primary); border-color: var(--glass-border-hover); }
+        .tg-catnav a .n { font-size: 0.7rem; color: var(--text-muted); }
+
+        /* Category section */
+        .tg-section { margin-top: 2.75rem; }
+        .tg-sec-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.1rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--bg-tertiary); }
+        .tg-sec-head h2 { font-size: 1.6rem; letter-spacing: -0.02em; margin: 0; }
+        .tg-count { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--accent-highlight); background: rgba(118,185,0,0.12); padding: 0.15rem 0.55rem; border-radius: var(--radius-full); }
+        .tg-topics-line { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin-left: auto; }
+
+        /* Card grid */
+        .tg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 1.1rem; }
+        .tg-card {
+            display: flex; flex-direction: column; gap: 0.7rem;
+            background: var(--bg-card); border: 1px solid var(--bg-tertiary);
+            border-radius: var(--radius-lg); padding: 1.15rem 1.2rem;
+            box-shadow: var(--shadow-sm); transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+        }
+        .tg-card:hover { transform: translateY(-3px); border-color: var(--glass-border-hover); box-shadow: var(--shadow-md); }
+        .tg-card--lead { border-color: var(--accent-highlight); box-shadow: var(--glow-ai); }
+
+        .tg-card-top { display: flex; align-items: center; gap: 0.6rem; }
+        .tg-rank { display: inline-flex; align-items: center; justify-content: center; min-width: 2rem; height: 2rem; padding: 0 0.4rem; border-radius: var(--radius-md); font-family: var(--font-mono); font-size: 0.85rem; font-weight: 800; color: var(--text-secondary); background: var(--bg-secondary); border: 1px solid var(--bg-tertiary); }
+        .tg-card--lead .tg-rank { color: #0d1117; background: var(--gradient-primary); border-color: transparent; }
+        .tg-lang { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); display: inline-flex; align-items: center; gap: 0.35rem; }
+        .tg-lang.empty { visibility: hidden; }
+        .tg-updated { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); margin-left: auto; white-space: nowrap; }
+
+        .tg-name { font-size: 1.12rem; font-weight: 700; line-height: 1.3; color: var(--text-primary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.45rem; word-break: break-word; }
+        .tg-name:hover { color: var(--accent-highlight); }
+        .tg-name i { font-size: 0.7rem; opacity: 0.5; }
+        .tg-desc { font-size: 0.95rem; line-height: 1.55; color: var(--text-secondary); margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+        .tg-metrics { display: grid; grid-template-columns: auto 1fr; gap: 0.4rem 1.2rem; align-items: end; margin-top: auto; padding-top: 0.6rem; }
+        .tg-stars { font-family: var(--font-mono); font-size: 1.5rem; font-weight: 800; color: var(--text-primary); line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+        .tg-stars i { color: var(--accent-highlight); font-size: 1rem; margin-right: 0.2rem; }
+        .tg-stars .lab { display: block; font-size: 0.65rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 0.25rem; }
+        .tg-vel { min-width: 0; }
+        .tg-vel .val { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; color: var(--accent-highlight); font-variant-numeric: tabular-nums; }
+        .tg-vel .lab { font-size: 0.65rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-left: 0.4rem; }
+        .tg-bar { height: 6px; border-radius: var(--radius-full); background: var(--bg-tertiary); overflow: hidden; margin-top: 0.4rem; }
+        .tg-bar > span { display: block; height: 100%; border-radius: var(--radius-full); background: var(--gradient-primary); }
+
+        .tg-topics { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .tg-chip { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-secondary); background: var(--bg-secondary); border: 1px solid var(--bg-tertiary); padding: 0.15rem 0.55rem; border-radius: var(--radius-full); }
+
+        @media (max-width: 820px) {
+            .tg-hero h1 { font-size: 2.1rem; }
+            .tg-grid { grid-template-columns: 1fr; }
+            .tg-catnav { top: 0; }
+            .tg-topics-line { display: none; }
+        }
+    </style>`;
+
 export function renderHtml(data) {
   const updated = (data.generated_at || '').slice(0, 10);
+  const totalRepos = data.categories.reduce((a, c) => a + c.repos.length, 0);
 
   const catNav = data.categories
-    .map((c) => `<a class="tag" href="#${esc(c.key)}">${esc(c.title)}</a>`)
+    .map((c) => `<a href="#${esc(c.key)}">${esc(c.title)} <span class="n">${c.repos.length}</span></a>`)
     .join('');
 
   const sections = data.categories
     .map((cat) => {
-      const rows = cat.repos
+      const maxVel = Math.max(1, ...cat.repos.map((r) => r.velocity_per_month || 0));
+      const cards = cat.repos
         .map((r) => {
-          const tags = (r.topics || [])
+          const pct = Math.max(6, Math.round(((r.velocity_per_month || 0) / maxVel) * 100));
+          const chips = (r.topics || [])
             .slice(0, 5)
-            .map((t) => `<span class="tag">${esc(t)}</span>`)
+            .map((t) => `<span class="tg-chip">${esc(t)}</span>`)
             .join('');
-          const facts = [
-            `<span><i class="fas fa-bolt" aria-hidden="true"></i> ${fmt(r.velocity_per_month)} ★/mo</span>`,
-            r.language ? `<span><i class="fas fa-code" aria-hidden="true"></i> ${esc(r.language)}</span>` : '',
-            `<span><i class="fas fa-rotate" aria-hidden="true"></i> ${esc((r.pushed_at || '').slice(0, 10))}</span>`,
-          ].filter(Boolean).join('');
           return `
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#${r.rank}</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> ${fmt(r.stars)}</span>
+                <article class="tg-card${r.rank === 1 ? ' tg-card--lead' : ''}">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#${r.rank}</span>
+                        <span class="tg-lang${r.language ? '' : ' empty'}"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> ${esc(r.language) || '&nbsp;'}</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> ${esc((r.pushed_at || '').slice(0, 10))}</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="${esc(r.html_url)}" target="_blank" rel="noopener noreferrer">${esc(r.full_name)} <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">${esc(r.description) || '&mdash;'}</div>
-                        <div class="repo-facts">${facts}</div>
-                        ${tags ? `<div class="row-tags">${tags}</div>` : ''}
+                    <a class="tg-name" href="${esc(r.html_url)}" target="_blank" rel="noopener noreferrer">${esc(r.full_name)} <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">${esc(r.description) || '&mdash;'}</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>${fmt(r.stars)}<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">${fmt(r.velocity_per_month)}</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:${pct}%"></span></div>
+                        </div>
                     </div>
-                </div>`;
+                    ${chips ? `<div class="tg-topics">${chips}</div>` : ''}
+                </article>`;
         })
         .join('');
       return `
-        <section class="section" id="${esc(cat.key)}">
-            <div class="section-header">
+        <section class="tg-section" id="${esc(cat.key)}">
+            <div class="tg-sec-head">
                 <h2>${esc(cat.title)}</h2>
-                <p>Topics: ${cat.queried_topics.map((t) => `<code>${esc(t)}</code>`).join(', ')}</p>
+                <span class="tg-count">${cat.repos.length} repos</span>
+                <span class="tg-topics-line">${cat.queried_topics.map((t) => esc(t)).join(' · ')}</span>
             </div>
-            <div class="panel">${rows}
+            <div class="tg-grid">${cards}
             </div>
         </section>`;
     })
@@ -156,19 +242,7 @@ export function renderHtml(data) {
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-
-    <style>
-        /* Trending page — built on the site's own CSS tokens */
-        .cat-nav { display: flex; flex-wrap: wrap; gap: 0.375rem; margin: 0.75rem 0 0; }
-        .section-header p code { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-secondary); }
-        .repo-row .ledger-meta { display: flex; flex-direction: column; gap: 0.25rem; align-items: flex-start; }
-        .repo-rank { font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; color: var(--text-muted); }
-        .repo-stars { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--accent-highlight, var(--accent-blue)); white-space: nowrap; }
-        .ledger-title .ledger-link { display: inline-flex; align-items: center; gap: 0.4rem; }
-        .ledger-title .ledger-link i { font-size: 0.625rem; opacity: 0.55; }
-        .repo-facts { display: flex; flex-wrap: wrap; gap: 0.25rem 1.1rem; font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-muted); margin: 0.375rem 0 0.5rem; }
-        .repo-facts i { opacity: 0.7; margin-right: 0.15rem; }
-    </style>
+${STYLE}
 </head>
 <body>
     <!-- Neural Network Background -->
@@ -176,11 +250,18 @@ export function renderHtml(data) {
 ${NAV}
 
     <main class="main-content">
-        <header class="page-header">
+        <header class="page-header tg-hero">
             <h1>Trending GitHub Repos</h1>
-            <p>Top ${esc(data.top_n)} per category across DevOps, Platform Engineering, MLOps, SRE, LLMOps, and GPU infrastructure &mdash; ranked by <strong>star velocity</strong> (average stars gained per month over each repo's lifetime, so fast risers beat all-time giants). Auto-refreshed weekly &middot; last updated <strong>${esc(updated)}</strong>.</p>
-            <div class="cat-nav">${catNav}</div>
+            <p class="tg-lead">Top ${esc(data.top_n)} per category across DevOps, Platform Engineering, MLOps, SRE, LLMOps, and GPU infrastructure &mdash; ranked by <strong>star velocity</strong> (average stars gained per month over each repo's lifetime, so fast risers beat all-time giants).</p>
+            <div class="kpi-strip tg-kpis">
+                <div class="kpi-cell"><div class="kpi-value">${totalRepos}</div><div class="kpi-label">Repos tracked</div></div>
+                <div class="kpi-cell"><div class="kpi-value">${data.categories.length}</div><div class="kpi-label">Categories</div></div>
+                <div class="kpi-cell"><div class="kpi-value">&#9733;/mo</div><div class="kpi-label">Ranked by velocity</div></div>
+                <div class="kpi-cell"><div class="kpi-value">${esc(updated)}</div><div class="kpi-label">Last updated</div></div>
+            </div>
         </header>
+
+        <nav class="tg-catnav" aria-label="Categories">${catNav}</nav>
 ${sections}
     </main>
 ${FOOTER}

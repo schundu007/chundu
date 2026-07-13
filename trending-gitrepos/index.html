@@ -28,16 +28,84 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <style>
-        /* Trending page — built on the site's own CSS tokens */
-        .cat-nav { display: flex; flex-wrap: wrap; gap: 0.375rem; margin: 0.75rem 0 0; }
-        .section-header p code { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-secondary); }
-        .repo-row .ledger-meta { display: flex; flex-direction: column; gap: 0.25rem; align-items: flex-start; }
-        .repo-rank { font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; color: var(--text-muted); }
-        .repo-stars { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--accent-highlight, var(--accent-blue)); white-space: nowrap; }
-        .ledger-title .ledger-link { display: inline-flex; align-items: center; gap: 0.4rem; }
-        .ledger-title .ledger-link i { font-size: 0.625rem; opacity: 0.55; }
-        .repo-facts { display: flex; flex-wrap: wrap; gap: 0.25rem 1.1rem; font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-muted); margin: 0.375rem 0 0.5rem; }
-        .repo-facts i { opacity: 0.7; margin-right: 0.15rem; }
+        /* ============ Trending page — enterprise layout on site tokens ============ */
+        .main-content { max-width: 1360px; }
+
+        /* Hero */
+        .tg-hero { position: relative; }
+        .tg-hero h1 { font-size: 2.75rem; line-height: 1.05; letter-spacing: -0.03em; margin: 0 0 0.5rem; }
+        .tg-hero .tg-lead { font-size: 1.1rem; line-height: 1.6; color: var(--text-secondary); max-width: 72ch; margin: 0 0 1.5rem; }
+        .tg-hero .tg-lead strong { color: var(--text-primary); }
+        .tg-kpis { margin: 0 0 1.75rem; }
+        .tg-kpis .kpi-value { font-size: 1.6rem; }
+
+        /* Sticky category nav */
+        .tg-catnav {
+            position: sticky; top: 70px; z-index: 20;
+            display: flex; flex-wrap: wrap; gap: 0.5rem;
+            padding: 0.75rem 0; margin-bottom: 1.5rem;
+            background: var(--bg-primary); border-bottom: 1px solid var(--bg-tertiary);
+        }
+        .tg-catnav a {
+            display: inline-flex; align-items: center; gap: 0.45rem;
+            font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600;
+            padding: 0.4rem 0.85rem; border-radius: var(--radius-full);
+            color: var(--text-secondary); background: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary); text-decoration: none;
+            transition: var(--transition-fast);
+        }
+        .tg-catnav a:hover { color: var(--text-primary); border-color: var(--glass-border-hover); }
+        .tg-catnav a .n { font-size: 0.7rem; color: var(--text-muted); }
+
+        /* Category section */
+        .tg-section { margin-top: 2.75rem; }
+        .tg-sec-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.1rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--bg-tertiary); }
+        .tg-sec-head h2 { font-size: 1.6rem; letter-spacing: -0.02em; margin: 0; }
+        .tg-count { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--accent-highlight); background: rgba(118,185,0,0.12); padding: 0.15rem 0.55rem; border-radius: var(--radius-full); }
+        .tg-topics-line { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin-left: auto; }
+
+        /* Card grid */
+        .tg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 1.1rem; }
+        .tg-card {
+            display: flex; flex-direction: column; gap: 0.7rem;
+            background: var(--bg-card); border: 1px solid var(--bg-tertiary);
+            border-radius: var(--radius-lg); padding: 1.15rem 1.2rem;
+            box-shadow: var(--shadow-sm); transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+        }
+        .tg-card:hover { transform: translateY(-3px); border-color: var(--glass-border-hover); box-shadow: var(--shadow-md); }
+        .tg-card--lead { border-color: var(--accent-highlight); box-shadow: var(--glow-ai); }
+
+        .tg-card-top { display: flex; align-items: center; gap: 0.6rem; }
+        .tg-rank { display: inline-flex; align-items: center; justify-content: center; min-width: 2rem; height: 2rem; padding: 0 0.4rem; border-radius: var(--radius-md); font-family: var(--font-mono); font-size: 0.85rem; font-weight: 800; color: var(--text-secondary); background: var(--bg-secondary); border: 1px solid var(--bg-tertiary); }
+        .tg-card--lead .tg-rank { color: #0d1117; background: var(--gradient-primary); border-color: transparent; }
+        .tg-lang { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); display: inline-flex; align-items: center; gap: 0.35rem; }
+        .tg-lang.empty { visibility: hidden; }
+        .tg-updated { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); margin-left: auto; white-space: nowrap; }
+
+        .tg-name { font-size: 1.12rem; font-weight: 700; line-height: 1.3; color: var(--text-primary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.45rem; word-break: break-word; }
+        .tg-name:hover { color: var(--accent-highlight); }
+        .tg-name i { font-size: 0.7rem; opacity: 0.5; }
+        .tg-desc { font-size: 0.95rem; line-height: 1.55; color: var(--text-secondary); margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+        .tg-metrics { display: grid; grid-template-columns: auto 1fr; gap: 0.4rem 1.2rem; align-items: end; margin-top: auto; padding-top: 0.6rem; }
+        .tg-stars { font-family: var(--font-mono); font-size: 1.5rem; font-weight: 800; color: var(--text-primary); line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+        .tg-stars i { color: var(--accent-highlight); font-size: 1rem; margin-right: 0.2rem; }
+        .tg-stars .lab { display: block; font-size: 0.65rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 0.25rem; }
+        .tg-vel { min-width: 0; }
+        .tg-vel .val { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; color: var(--accent-highlight); font-variant-numeric: tabular-nums; }
+        .tg-vel .lab { font-size: 0.65rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-left: 0.4rem; }
+        .tg-bar { height: 6px; border-radius: var(--radius-full); background: var(--bg-tertiary); overflow: hidden; margin-top: 0.4rem; }
+        .tg-bar > span { display: block; height: 100%; border-radius: var(--radius-full); background: var(--gradient-primary); }
+
+        .tg-topics { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .tg-chip { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-secondary); background: var(--bg-secondary); border: 1px solid var(--bg-tertiary); padding: 0.15rem 0.55rem; border-radius: var(--radius-full); }
+
+        @media (max-width: 820px) {
+            .tg-hero h1 { font-size: 2.1rem; }
+            .tg-grid { grid-template-columns: 1fr; }
+            .tg-catnav { top: 0; }
+            .tg-topics-line { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -76,778 +144,1091 @@
     </nav>
 
     <main class="main-content">
-        <header class="page-header">
+        <header class="page-header tg-hero">
             <h1>Trending GitHub Repos</h1>
-            <p>Top 10 per category across DevOps, Platform Engineering, MLOps, SRE, LLMOps, and GPU infrastructure &mdash; ranked by <strong>star velocity</strong> (average stars gained per month over each repo's lifetime, so fast risers beat all-time giants). Auto-refreshed weekly &middot; last updated <strong>2026-07-13</strong>.</p>
-            <div class="cat-nav"><a class="tag" href="#devops">DevOps</a><a class="tag" href="#platform-engineering">Platform Engineering</a><a class="tag" href="#mlops-aiml-pipelines">MLOps / AIML Pipelines</a><a class="tag" href="#sre-observability">SRE / Observability</a><a class="tag" href="#ai-platform-llmops">AI Platform / LLMOps</a><a class="tag" href="#gpu-infra">GPU Stack / Infrastructure</a></div>
+            <p class="tg-lead">Top 10 per category across DevOps, Platform Engineering, MLOps, SRE, LLMOps, and GPU infrastructure &mdash; ranked by <strong>star velocity</strong> (average stars gained per month over each repo's lifetime, so fast risers beat all-time giants).</p>
+            <div class="kpi-strip tg-kpis">
+                <div class="kpi-cell"><div class="kpi-value">60</div><div class="kpi-label">Repos tracked</div></div>
+                <div class="kpi-cell"><div class="kpi-value">6</div><div class="kpi-label">Categories</div></div>
+                <div class="kpi-cell"><div class="kpi-value">&#9733;/mo</div><div class="kpi-label">Ranked by velocity</div></div>
+                <div class="kpi-cell"><div class="kpi-value">2026-07-13</div><div class="kpi-label">Last updated</div></div>
+            </div>
         </header>
 
-        <section class="section" id="devops">
-            <div class="section-header">
+        <nav class="tg-catnav" aria-label="Categories"><a href="#devops">DevOps <span class="n">10</span></a><a href="#platform-engineering">Platform Engineering <span class="n">10</span></a><a href="#mlops-aiml-pipelines">MLOps / AIML Pipelines <span class="n">10</span></a><a href="#sre-observability">SRE / Observability <span class="n">10</span></a><a href="#ai-platform-llmops">AI Platform / LLMOps <span class="n">10</span></a><a href="#gpu-infra">GPU Stack / Infrastructure <span class="n">10</span></a></nav>
+
+        <section class="tg-section" id="devops">
+            <div class="tg-sec-head">
                 <h2>DevOps</h2>
-                <p>Topics: <code>devops</code>, <code>gitops</code>, <code>infrastructure-as-code</code></p>
+                <span class="tg-count">10 repos</span>
+                <span class="tg-topics-line">devops · gitops · infrastructure-as-code</span>
             </div>
-            <div class="panel">
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#1</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 16,465</span>
+            <div class="tg-grid">
+                <article class="tg-card tg-card--lead">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#1</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Java</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-11</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/floci-io/floci" target="_blank" rel="noopener noreferrer">floci-io/floci <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Light, fluffy, and always free - The AWS Local Emulator alternative</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 3,454 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Java</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-11</span></div>
-                        <div class="row-tags"><span class="tag">aws</span><span class="tag">aws-emulation</span><span class="tag">devops</span><span class="tag">docker</span><span class="tag">ec2</span></div>
+                    <a class="tg-name" href="https://github.com/floci-io/floci" target="_blank" rel="noopener noreferrer">floci-io/floci <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Light, fluffy, and always free - The AWS Local Emulator alternative</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>16,465<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">3,454</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:100%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#2</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 18,217</span>
+                    <div class="tg-topics"><span class="tg-chip">aws</span><span class="tg-chip">aws-emulation</span><span class="tg-chip">devops</span><span class="tg-chip">docker</span><span class="tg-chip">ec2</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#2</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Go</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-06</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/pranshuparmar/witr" target="_blank" rel="noopener noreferrer">pranshuparmar/witr <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Why is this running?</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 2,712 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Go</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-06</span></div>
-                        <div class="row-tags"><span class="tag">cli</span><span class="tag">devops</span><span class="tag">freebsd</span><span class="tag">golang</span><span class="tag">linux</span></div>
+                    <a class="tg-name" href="https://github.com/pranshuparmar/witr" target="_blank" rel="noopener noreferrer">pranshuparmar/witr <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Why is this running?</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>18,217<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">2,712</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:79%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#3</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 35,608</span>
+                    <div class="tg-topics"><span class="tg-chip">cli</span><span class="tg-chip">devops</span><span class="tg-chip">freebsd</span><span class="tg-chip">golang</span><span class="tg-chip">linux</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#3</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> TypeScript</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/Dokploy/dokploy" target="_blank" rel="noopener noreferrer">Dokploy/dokploy <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Open Source Alternative to Vercel, Netlify and Heroku.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 1,330 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> TypeScript</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span></div>
-                        <div class="row-tags"><span class="tag">backend</span><span class="tag">backups</span><span class="tag">databases</span><span class="tag">deployment</span><span class="tag">devops</span></div>
+                    <a class="tg-name" href="https://github.com/Dokploy/dokploy" target="_blank" rel="noopener noreferrer">Dokploy/dokploy <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Open Source Alternative to Vercel, Netlify and Heroku.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>35,608<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">1,330</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:39%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#4</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 71,043</span>
+                    <div class="tg-topics"><span class="tg-chip">backend</span><span class="tg-chip">backups</span><span class="tg-chip">databases</span><span class="tg-chip">deployment</span><span class="tg-chip">devops</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#4</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Go</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/nektos/act" target="_blank" rel="noopener noreferrer">nektos/act <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Run your GitHub Actions locally 🚀</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 787 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Go</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span></div>
-                        <div class="row-tags"><span class="tag">ci</span><span class="tag">devops</span><span class="tag">github-actions</span><span class="tag">golang</span></div>
+                    <a class="tg-name" href="https://github.com/nektos/act" target="_blank" rel="noopener noreferrer">nektos/act <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Run your GitHub Actions locally 🚀</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>71,043<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">787</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:23%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#5</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 29,599</span>
+                    <div class="tg-topics"><span class="tg-chip">ci</span><span class="tg-chip">devops</span><span class="tg-chip">github-actions</span><span class="tg-chip">golang</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#5</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Shell</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-06-24</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/MichaelCade/90DaysOfDevOps" target="_blank" rel="noopener noreferrer">MichaelCade/90DaysOfDevOps <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">This repository started out as a learning in public project for myself and has now become a structured learning map for many in the community. We have 3 years under our belt covering all things DevOps, including Principles, Processes, Tooling and Use Cases surrounding this vast topic.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 543 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Shell</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-06-24</span></div>
-                        <div class="row-tags"><span class="tag">ansible</span><span class="tag">backup</span><span class="tag">containers</span><span class="tag">devops</span><span class="tag">iac</span></div>
+                    <a class="tg-name" href="https://github.com/MichaelCade/90DaysOfDevOps" target="_blank" rel="noopener noreferrer">MichaelCade/90DaysOfDevOps <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">This repository started out as a learning in public project for myself and has now become a structured learning map for many in the community. We have 3 years under our belt covering all things DevOps, including Principles, Processes, Tooling and Use Cases surrounding this vast topic.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>29,599<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">543</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:16%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#6</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 79,625</span>
+                    <div class="tg-topics"><span class="tg-chip">ansible</span><span class="tg-chip">backup</span><span class="tg-chip">containers</span><span class="tg-chip">devops</span><span class="tg-chip">iac</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#6</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Go</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/netdata/netdata" target="_blank" rel="noopener noreferrer">netdata/netdata <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">The fastest path to AI-powered full stack observability, even for lean teams.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 508 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Go</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span></div>
-                        <div class="row-tags"><span class="tag">ai</span><span class="tag">alerting</span><span class="tag">cncf</span><span class="tag">data-visualization</span><span class="tag">database</span></div>
+                    <a class="tg-name" href="https://github.com/netdata/netdata" target="_blank" rel="noopener noreferrer">netdata/netdata <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">The fastest path to AI-powered full stack observability, even for lean teams.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>79,625<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">508</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:15%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#7</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 56,801</span>
+                    <div class="tg-topics"><span class="tg-chip">ai</span><span class="tg-chip">alerting</span><span class="tg-chip">cncf</span><span class="tg-chip">data-visualization</span><span class="tg-chip">database</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#7</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Go</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/go-gitea/gitea" target="_blank" rel="noopener noreferrer">go-gitea/gitea <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Git with a cup of tea! Painless self-hosted all-in-one software development service, including Git hosting, code review, team collaboration, package registry and CI/CD</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 488 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Go</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span></div>
-                        <div class="row-tags"><span class="tag">bitbucket</span><span class="tag">cicd</span><span class="tag">devops</span><span class="tag">docker-registry-v2</span><span class="tag">git</span></div>
+                    <a class="tg-name" href="https://github.com/go-gitea/gitea" target="_blank" rel="noopener noreferrer">go-gitea/gitea <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Git with a cup of tea! Painless self-hosted all-in-one software development service, including Git hosting, code review, team collaboration, package registry and CI/CD</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>56,801<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">488</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:14%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#8</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 2,555</span>
+                    <div class="tg-topics"><span class="tg-chip">bitbucket</span><span class="tg-chip">cicd</span><span class="tg-chip">devops</span><span class="tg-chip">docker-registry-v2</span><span class="tg-chip">git</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#8</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Go</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/skyhook-io/radar" target="_blank" rel="noopener noreferrer">skyhook-io/radar <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">The missing open source Kubernetes UI. Topology, event timeline, and service traffic — plus resource browsing and Helm management.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 446 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Go</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span></div>
-                        <div class="row-tags"><span class="tag">argocd</span><span class="tag">cloud-native</span><span class="tag">gitops</span><span class="tag">helm</span><span class="tag">k8s</span></div>
+                    <a class="tg-name" href="https://github.com/skyhook-io/radar" target="_blank" rel="noopener noreferrer">skyhook-io/radar <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">The missing open source Kubernetes UI. Topology, event timeline, and service traffic — plus resource browsing and Helm management.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>2,555<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">446</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:13%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#9</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 19,869</span>
+                    <div class="tg-topics"><span class="tg-chip">argocd</span><span class="tg-chip">cloud-native</span><span class="tg-chip">gitops</span><span class="tg-chip">helm</span><span class="tg-chip">k8s</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#9</span>
+                        <span class="tg-lang empty"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> &nbsp;</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-06-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/milanm/DevOps-Roadmap" target="_blank" rel="noopener noreferrer">milanm/DevOps-Roadmap <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">DevOps Roadmap for 2026. with learning resources</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 445 ★/mo</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-06-13</span></div>
-                        <div class="row-tags"><span class="tag">aws</span><span class="tag">azure</span><span class="tag">computer-science</span><span class="tag">continous-delivery</span><span class="tag">continuous-integration</span></div>
+                    <a class="tg-name" href="https://github.com/milanm/DevOps-Roadmap" target="_blank" rel="noopener noreferrer">milanm/DevOps-Roadmap <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">DevOps Roadmap for 2026. with learning resources</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>19,869<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">445</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:13%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#10</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 36,890</span>
+                    <div class="tg-topics"><span class="tg-chip">aws</span><span class="tg-chip">azure</span><span class="tg-chip">computer-science</span><span class="tg-chip">continous-delivery</span><span class="tg-chip">continuous-integration</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#10</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Go</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/aquasecurity/trivy" target="_blank" rel="noopener noreferrer">aquasecurity/trivy <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Find vulnerabilities, misconfigurations, secrets, SBOM in containers, Kubernetes, code repositories, clouds and more</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 424 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Go</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span></div>
-                        <div class="row-tags"><span class="tag">containers</span><span class="tag">devsecops</span><span class="tag">docker</span><span class="tag">go</span><span class="tag">golang</span></div>
+                    <a class="tg-name" href="https://github.com/aquasecurity/trivy" target="_blank" rel="noopener noreferrer">aquasecurity/trivy <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Find vulnerabilities, misconfigurations, secrets, SBOM in containers, Kubernetes, code repositories, clouds and more</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>36,890<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">424</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:12%"></span></div>
+                        </div>
                     </div>
-                </div>
+                    <div class="tg-topics"><span class="tg-chip">containers</span><span class="tg-chip">devsecops</span><span class="tg-chip">docker</span><span class="tg-chip">go</span><span class="tg-chip">golang</span></div>
+                </article>
             </div>
         </section>
-        <section class="section" id="platform-engineering">
-            <div class="section-header">
+        <section class="tg-section" id="platform-engineering">
+            <div class="tg-sec-head">
                 <h2>Platform Engineering</h2>
-                <p>Topics: <code>platform-engineering</code>, <code>internal-developer-platform</code>, <code>backstage</code></p>
+                <span class="tg-count">10 repos</span>
+                <span class="tg-topics-line">platform-engineering · internal-developer-platform · backstage</span>
             </div>
-            <div class="panel">
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#1</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 33,833</span>
+            <div class="tg-grid">
+                <article class="tg-card tg-card--lead">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#1</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> TypeScript</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/backstage/backstage" target="_blank" rel="noopener noreferrer">backstage/backstage <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Backstage is an open framework for building developer portals</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 436 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> TypeScript</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span></div>
-                        <div class="row-tags"><span class="tag">backstage</span><span class="tag">cncf</span><span class="tag">developer-experience</span><span class="tag">developer-portal</span><span class="tag">dx</span></div>
+                    <a class="tg-name" href="https://github.com/backstage/backstage" target="_blank" rel="noopener noreferrer">backstage/backstage <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Backstage is an open framework for building developer portals</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>33,833<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">436</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:100%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#2</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 3,844</span>
+                    <div class="tg-topics"><span class="tg-chip">backstage</span><span class="tg-chip">cncf</span><span class="tg-chip">developer-experience</span><span class="tg-chip">developer-portal</span><span class="tg-chip">dx</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#2</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Go</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/superplanehq/superplane" target="_blank" rel="noopener noreferrer">superplanehq/superplane <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">The open source control plane for agentic engineering.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 271 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Go</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span></div>
-                        <div class="row-tags"><span class="tag">automation</span><span class="tag">control-plane</span><span class="tag">devops</span><span class="tag">event-driven</span><span class="tag">go</span></div>
+                    <a class="tg-name" href="https://github.com/superplanehq/superplane" target="_blank" rel="noopener noreferrer">superplanehq/superplane <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">The open source control plane for agentic engineering.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>3,844<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">271</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:62%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#3</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 11,218</span>
+                    <div class="tg-topics"><span class="tg-chip">automation</span><span class="tg-chip">control-plane</span><span class="tg-chip">devops</span><span class="tg-chip">event-driven</span><span class="tg-chip">go</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#3</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Go</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-09</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/loft-sh/vcluster" target="_blank" rel="noopener noreferrer">loft-sh/vcluster <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">vCluster - Create fully functional virtual Kubernetes clusters - Each vcluster runs inside a namespace of the underlying k8s cluster. It's cheaper than creating separate full-blown clusters and it offers better multi-tenancy and isolation than regular namespaces.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 178 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Go</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-09</span></div>
-                        <div class="row-tags"><span class="tag">cloud-native</span><span class="tag">helm</span><span class="tag">k3s</span><span class="tag">k8s</span><span class="tag">kubectl</span></div>
+                    <a class="tg-name" href="https://github.com/loft-sh/vcluster" target="_blank" rel="noopener noreferrer">loft-sh/vcluster <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">vCluster - Create fully functional virtual Kubernetes clusters - Each vcluster runs inside a namespace of the underlying k8s cluster. It's cheaper than creating separate full-blown clusters and it offers better multi-tenancy and isolation than regular namespaces.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>11,218<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">178</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:41%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#4</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 11,352</span>
+                    <div class="tg-topics"><span class="tg-chip">cloud-native</span><span class="tg-chip">helm</span><span class="tg-chip">k3s</span><span class="tg-chip">k8s</span><span class="tg-chip">kubectl</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#4</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> TypeScript</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/meshery/meshery" target="_blank" rel="noopener noreferrer">meshery/meshery <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Meshery, the cloud native manager</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 124 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> TypeScript</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span></div>
-                        <div class="row-tags"><span class="tag">cloud-native</span><span class="tag">cncf</span><span class="tag">control-plane</span><span class="tag">docker</span><span class="tag">gitops</span></div>
+                    <a class="tg-name" href="https://github.com/meshery/meshery" target="_blank" rel="noopener noreferrer">meshery/meshery <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Meshery, the cloud native manager</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>11,352<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">124</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:28%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#5</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 13,658</span>
+                    <div class="tg-topics"><span class="tg-chip">cloud-native</span><span class="tg-chip">cncf</span><span class="tg-chip">control-plane</span><span class="tg-chip">docker</span><span class="tg-chip">gitops</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#5</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> TypeScript</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/Unleash/unleash" target="_blank" rel="noopener noreferrer">Unleash/unleash <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Open-source feature management platform</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 97 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> TypeScript</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span></div>
-                        <div class="row-tags"><span class="tag">activation-strategies</span><span class="tag">collaboration</span><span class="tag">continuous-delivery</span><span class="tag">continuous-deployment</span><span class="tag">devops</span></div>
+                    <a class="tg-name" href="https://github.com/Unleash/unleash" target="_blank" rel="noopener noreferrer">Unleash/unleash <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Open-source feature management platform</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>13,658<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">97</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:22%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#6</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 757</span>
+                    <div class="tg-topics"><span class="tg-chip">activation-strategies</span><span class="tg-chip">collaboration</span><span class="tg-chip">continuous-delivery</span><span class="tg-chip">continuous-deployment</span><span class="tg-chip">devops</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#6</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Go</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-04</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/platform-engineering-labs/formae" target="_blank" rel="noopener noreferrer">platform-engineering-labs/formae <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Infrastructure-as-Code Platform Built for the Future</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 87 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Go</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-04</span></div>
-                        <div class="row-tags"><span class="tag">devops</span><span class="tag">iac</span><span class="tag">infrastructure-as-code</span><span class="tag">platform-engineering</span><span class="tag">sre</span></div>
+                    <a class="tg-name" href="https://github.com/platform-engineering-labs/formae" target="_blank" rel="noopener noreferrer">platform-engineering-labs/formae <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Infrastructure-as-Code Platform Built for the Future</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>757<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">87</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:20%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#7</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 4,347</span>
+                    <div class="tg-topics"><span class="tg-chip">devops</span><span class="tg-chip">iac</span><span class="tg-chip">infrastructure-as-code</span><span class="tg-chip">platform-engineering</span><span class="tg-chip">sre</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#7</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> TypeScript</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/kubero-dev/kubero" target="_blank" rel="noopener noreferrer">kubero-dev/kubero <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">A free and self-hosted PaaS alternative to Heroku / Netlify / Coolify / Vercel / Dokku / Portainer running on Kubernetes</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 87 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> TypeScript</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span></div>
-                        <div class="row-tags"><span class="tag">ci-cd</span><span class="tag">cloud</span><span class="tag">coolify</span><span class="tag">developer-tools</span><span class="tag">dokku</span></div>
+                    <a class="tg-name" href="https://github.com/kubero-dev/kubero" target="_blank" rel="noopener noreferrer">kubero-dev/kubero <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">A free and self-hosted PaaS alternative to Heroku / Netlify / Coolify / Vercel / Dokku / Portainer running on Kubernetes</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>4,347<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">87</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:20%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#8</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 1,217</span>
+                    <div class="tg-topics"><span class="tg-chip">ci-cd</span><span class="tg-chip">cloud</span><span class="tg-chip">coolify</span><span class="tg-chip">developer-tools</span><span class="tg-chip">dokku</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#8</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Go</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/openchoreo/openchoreo" target="_blank" rel="noopener noreferrer">openchoreo/openchoreo <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">OpenChoreo is a developer platform for Kubernetes</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 74 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Go</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span></div>
-                        <div class="row-tags"><span class="tag">developer-platform</span><span class="tag">hacktoberfest</span><span class="tag">internal-developer-platform</span><span class="tag">openchoreo</span></div>
+                    <a class="tg-name" href="https://github.com/openchoreo/openchoreo" target="_blank" rel="noopener noreferrer">openchoreo/openchoreo <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">OpenChoreo is a developer platform for Kubernetes</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>1,217<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">74</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:17%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#9</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 2,383</span>
+                    <div class="tg-topics"><span class="tg-chip">developer-platform</span><span class="tg-chip">hacktoberfest</span><span class="tg-chip">internal-developer-platform</span><span class="tg-chip">openchoreo</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#9</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Rust</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-06-19</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/kcl-lang/kcl" target="_blank" rel="noopener noreferrer">kcl-lang/kcl <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">KCL Programming Language Core and API (CNCF Sandbox Project). https://kcl-lang.io</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 47 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Rust</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-06-19</span></div>
-                        <div class="row-tags"><span class="tag">cloud-native</span><span class="tag">compiler</span><span class="tag">configuration</span><span class="tag">configuration-language</span><span class="tag">configuration-management</span></div>
+                    <a class="tg-name" href="https://github.com/kcl-lang/kcl" target="_blank" rel="noopener noreferrer">kcl-lang/kcl <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">KCL Programming Language Core and API (CNCF Sandbox Project). https://kcl-lang.io</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>2,383<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">47</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:11%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#10</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 1,386</span>
+                    <div class="tg-topics"><span class="tg-chip">cloud-native</span><span class="tg-chip">compiler</span><span class="tg-chip">configuration</span><span class="tg-chip">configuration-language</span><span class="tg-chip">configuration-management</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#10</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Go</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-06</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/kitops-ml/kitops" target="_blank" rel="noopener noreferrer">kitops-ml/kitops <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">An open source DevOps tool from the CNCF for packaging and versioning AI/ML models, datasets, code, and configuration into an OCI Artifact.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 47 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Go</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-06</span></div>
-                        <div class="row-tags"><span class="tag">ai</span><span class="tag">code</span><span class="tag">datasets</span><span class="tag">devops</span><span class="tag">devops-tools</span></div>
+                    <a class="tg-name" href="https://github.com/kitops-ml/kitops" target="_blank" rel="noopener noreferrer">kitops-ml/kitops <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">An open source DevOps tool from the CNCF for packaging and versioning AI/ML models, datasets, code, and configuration into an OCI Artifact.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>1,386<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">47</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:11%"></span></div>
+                        </div>
                     </div>
-                </div>
+                    <div class="tg-topics"><span class="tg-chip">ai</span><span class="tg-chip">code</span><span class="tg-chip">datasets</span><span class="tg-chip">devops</span><span class="tg-chip">devops-tools</span></div>
+                </article>
             </div>
         </section>
-        <section class="section" id="mlops-aiml-pipelines">
-            <div class="section-header">
+        <section class="tg-section" id="mlops-aiml-pipelines">
+            <div class="tg-sec-head">
                 <h2>MLOps / AIML Pipelines</h2>
-                <p>Topics: <code>mlops</code>, <code>ml-pipeline</code>, <code>machine-learning-operations</code></p>
+                <span class="tg-count">10 repos</span>
+                <span class="tg-topics-line">mlops · ml-pipeline · machine-learning-operations</span>
             </div>
-            <div class="panel">
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#1</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 20,965</span>
+            <div class="tg-grid">
+                <article class="tg-card tg-card--lead">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#1</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Jupyter Notebook</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-04</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/NirDiamant/agents-towards-production" target="_blank" rel="noopener noreferrer">NirDiamant/agents-towards-production <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">End-to-end, code-first tutorials for building production-grade GenAI agents. From prototype to enterprise deployment.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 1,630 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Jupyter Notebook</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-04</span></div>
-                        <div class="row-tags"><span class="tag">agent</span><span class="tag">agent-framework</span><span class="tag">agentic-ai</span><span class="tag">agents</span><span class="tag">ai-agents</span></div>
+                    <a class="tg-name" href="https://github.com/NirDiamant/agents-towards-production" target="_blank" rel="noopener noreferrer">NirDiamant/agents-towards-production <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">End-to-end, code-first tutorials for building production-grade GenAI agents. From prototype to enterprise deployment.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>20,965<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">1,630</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:100%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#2</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 17,381</span>
+                    <div class="tg-topics"><span class="tg-chip">agent</span><span class="tg-chip">agent-framework</span><span class="tg-chip">agentic-ai</span><span class="tg-chip">agents</span><span class="tg-chip">ai-agents</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#2</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Python</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-04-29</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/microsoft/agent-lightning" target="_blank" rel="noopener noreferrer">microsoft/agent-lightning <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">The absolute trainer to light up AI agents.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 1,357 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Python</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-04-29</span></div>
-                        <div class="row-tags"><span class="tag">agent</span><span class="tag">agentic-ai</span><span class="tag">llm</span><span class="tag">mlops</span><span class="tag">reinforcement-learning</span></div>
+                    <a class="tg-name" href="https://github.com/microsoft/agent-lightning" target="_blank" rel="noopener noreferrer">microsoft/agent-lightning <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">The absolute trainer to light up AI agents.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>17,381<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">1,357</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:83%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#3</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 33,223</span>
+                    <div class="tg-topics"><span class="tg-chip">agent</span><span class="tg-chip">agentic-ai</span><span class="tg-chip">llm</span><span class="tg-chip">mlops</span><span class="tg-chip">reinforcement-learning</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#3</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Rust</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/qdrant/qdrant" target="_blank" rel="noopener noreferrer">qdrant/qdrant <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Qdrant - High-performance, massive-scale Vector Database and Vector Search Engine for the next generation of AI. Also available in the cloud https://cloud.qdrant.io/</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 453 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Rust</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span></div>
-                        <div class="row-tags"><span class="tag">ai-search</span><span class="tag">ai-search-engine</span><span class="tag">embeddings-similarity</span><span class="tag">hnsw</span><span class="tag">hybrid-search</span></div>
+                    <a class="tg-name" href="https://github.com/qdrant/qdrant" target="_blank" rel="noopener noreferrer">qdrant/qdrant <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Qdrant - High-performance, massive-scale Vector Database and Vector Search Engine for the next generation of AI. Also available in the cloud https://cloud.qdrant.io/</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>33,223<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">453</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:28%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#4</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 6,518</span>
+                    <div class="tg-topics"><span class="tg-chip">ai-search</span><span class="tg-chip">ai-search-engine</span><span class="tg-chip">embeddings-similarity</span><span class="tg-chip">hnsw</span><span class="tg-chip">hybrid-search</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#4</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Python</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/GoogleCloudPlatform/agent-starter-pack" target="_blank" rel="noopener noreferrer">GoogleCloudPlatform/agent-starter-pack <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Ship AI Agents to Google Cloud in minutes, not months. Production-ready templates with built-in CI/CD, evaluation, and observability.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 376 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Python</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span></div>
-                        <div class="row-tags"><span class="tag">agents</span><span class="tag">gcp</span><span class="tag">gemini</span><span class="tag">genai-agents</span><span class="tag">generative-ai</span></div>
+                    <a class="tg-name" href="https://github.com/GoogleCloudPlatform/agent-starter-pack" target="_blank" rel="noopener noreferrer">GoogleCloudPlatform/agent-starter-pack <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Ship AI Agents to Google Cloud in minutes, not months. Production-ready templates with built-in CI/CD, evaluation, and observability.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>6,518<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">376</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:23%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#5</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 19,256</span>
+                    <div class="tg-topics"><span class="tg-chip">agents</span><span class="tg-chip">gcp</span><span class="tg-chip">gemini</span><span class="tg-chip">genai-agents</span><span class="tg-chip">generative-ai</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#5</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Python</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-06-21</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/Avaiga/taipy" target="_blank" rel="noopener noreferrer">Avaiga/taipy <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Turns Data and AI algorithms into production-ready web applications in no time.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 365 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Python</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-06-21</span></div>
-                        <div class="row-tags"><span class="tag">automation</span><span class="tag">data-engineering</span><span class="tag">data-integration</span><span class="tag">data-ops</span><span class="tag">data-visualization</span></div>
+                    <a class="tg-name" href="https://github.com/Avaiga/taipy" target="_blank" rel="noopener noreferrer">Avaiga/taipy <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Turns Data and AI algorithms into production-ready web applications in no time.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>19,256<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">365</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:22%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#6</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 46,099</span>
+                    <div class="tg-topics"><span class="tg-chip">automation</span><span class="tg-chip">data-engineering</span><span class="tg-chip">data-integration</span><span class="tg-chip">data-ops</span><span class="tg-chip">data-visualization</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#6</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Python</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/apache/airflow" target="_blank" rel="noopener noreferrer">apache/airflow <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Apache Airflow - A platform to programmatically author, schedule, and monitor workflows</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 342 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Python</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span></div>
-                        <div class="row-tags"><span class="tag">airflow</span><span class="tag">apache</span><span class="tag">apache-airflow</span><span class="tag">automation</span><span class="tag">dag</span></div>
+                    <a class="tg-name" href="https://github.com/apache/airflow" target="_blank" rel="noopener noreferrer">apache/airflow <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Apache Airflow - A platform to programmatically author, schedule, and monitor workflows</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>46,099<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">342</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:21%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#7</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 27,823</span>
+                    <div class="tg-topics"><span class="tg-chip">airflow</span><span class="tg-chip">apache</span><span class="tg-chip">apache-airflow</span><span class="tg-chip">automation</span><span class="tg-chip">dag</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#7</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> TypeScript</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/HumanSignal/label-studio" target="_blank" rel="noopener noreferrer">HumanSignal/label-studio <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Label Studio is a multi-type data labeling and annotation tool with standardized output format</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 328 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> TypeScript</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span></div>
-                        <div class="row-tags"><span class="tag">annotation</span><span class="tag">annotation-tool</span><span class="tag">annotations</span><span class="tag">boundingbox</span><span class="tag">computer-vision</span></div>
+                    <a class="tg-name" href="https://github.com/HumanSignal/label-studio" target="_blank" rel="noopener noreferrer">HumanSignal/label-studio <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Label Studio is a multi-type data labeling and annotation tool with standardized output format</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>27,823<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">328</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:20%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#8</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 12,393</span>
+                    <div class="tg-topics"><span class="tg-chip">annotation</span><span class="tg-chip">annotation-tool</span><span class="tg-chip">annotations</span><span class="tg-chip">boundingbox</span><span class="tg-chip">computer-vision</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#8</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Python</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-06-29</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/bentoml/OpenLLM" target="_blank" rel="noopener noreferrer">bentoml/OpenLLM <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Run any open-source LLMs, such as DeepSeek and Llama, as OpenAI compatible API endpoint in the cloud.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 319 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Python</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-06-29</span></div>
-                        <div class="row-tags"><span class="tag">bentoml</span><span class="tag">fine-tuning</span><span class="tag">llama</span><span class="tag">llama2</span><span class="tag">llama3-1</span></div>
+                    <a class="tg-name" href="https://github.com/bentoml/OpenLLM" target="_blank" rel="noopener noreferrer">bentoml/OpenLLM <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Run any open-source LLMs, such as DeepSeek and Llama, as OpenAI compatible API endpoint in the cloud.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>12,393<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">319</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:20%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#9</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 26,995</span>
+                    <div class="tg-topics"><span class="tg-chip">bentoml</span><span class="tg-chip">fine-tuning</span><span class="tg-chip">llama</span><span class="tg-chip">llama2</span><span class="tg-chip">llama3-1</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#9</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Python</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/mlflow/mlflow" target="_blank" rel="noopener noreferrer">mlflow/mlflow <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">The open source AI engineering platform for agents, LLMs, and ML models. MLflow enables teams of all sizes to debug, evaluate, monitor, and optimize production-quality AI applications while controlling costs and managing access to models and data.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 278 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Python</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span></div>
-                        <div class="row-tags"><span class="tag">agentops</span><span class="tag">agents</span><span class="tag">ai</span><span class="tag">ai-governance</span><span class="tag">apache-spark</span></div>
+                    <a class="tg-name" href="https://github.com/mlflow/mlflow" target="_blank" rel="noopener noreferrer">mlflow/mlflow <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">The open source AI engineering platform for agents, LLMs, and ML models. MLflow enables teams of all sizes to debug, evaluate, monitor, and optimize production-quality AI applications while controlling costs and managing access to models and data.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>26,995<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">278</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:17%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#10</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 14,943</span>
+                    <div class="tg-topics"><span class="tg-chip">agentops</span><span class="tg-chip">agents</span><span class="tg-chip">ai</span><span class="tg-chip">ai-governance</span><span class="tg-chip">apache-spark</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#10</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Jupyter Notebook</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-06-10</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/DataTalksClub/mlops-zoomcamp" target="_blank" rel="noopener noreferrer">DataTalksClub/mlops-zoomcamp <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Free MLOps course from DataTalks.Club</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 264 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Jupyter Notebook</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-06-10</span></div>
-                        <div class="row-tags"><span class="tag">machine-learning</span><span class="tag">mlops</span><span class="tag">model-deployment</span><span class="tag">model-monitoring</span><span class="tag">workflow-orchestration</span></div>
+                    <a class="tg-name" href="https://github.com/DataTalksClub/mlops-zoomcamp" target="_blank" rel="noopener noreferrer">DataTalksClub/mlops-zoomcamp <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Free MLOps course from DataTalks.Club</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>14,943<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">264</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:16%"></span></div>
+                        </div>
                     </div>
-                </div>
+                    <div class="tg-topics"><span class="tg-chip">machine-learning</span><span class="tg-chip">mlops</span><span class="tg-chip">model-deployment</span><span class="tg-chip">model-monitoring</span><span class="tg-chip">workflow-orchestration</span></div>
+                </article>
             </div>
         </section>
-        <section class="section" id="sre-observability">
-            <div class="section-header">
+        <section class="tg-section" id="sre-observability">
+            <div class="tg-sec-head">
                 <h2>SRE / Observability</h2>
-                <p>Topics: <code>sre</code>, <code>observability</code>, <code>site-reliability-engineering</code></p>
+                <span class="tg-count">10 repos</span>
+                <span class="tg-topics-line">sre · observability · site-reliability-engineering</span>
             </div>
-            <div class="panel">
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#1</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 8,629</span>
+            <div class="tg-grid">
+                <article class="tg-card tg-card--lead">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#1</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> TypeScript</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/getagentseal/codeburn" target="_blank" rel="noopener noreferrer">getagentseal/codeburn <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Free, local tool to track AI coding token usage and cost across 31 tools and agents (Claude Code, Cursor, Codex, Gemini and more), by model, project, and task. npx codeburn</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 2,909 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> TypeScript</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span></div>
-                        <div class="row-tags"><span class="tag">ai-coding</span><span class="tag">claude-code</span><span class="tag">cli</span><span class="tag">codex</span><span class="tag">cost-tracking</span></div>
+                    <a class="tg-name" href="https://github.com/getagentseal/codeburn" target="_blank" rel="noopener noreferrer">getagentseal/codeburn <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Free, local tool to track AI coding token usage and cost across 31 tools and agents (Claude Code, Cursor, Codex, Gemini and more), by model, project, and task. npx codeburn</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>8,629<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">2,909</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:100%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#2</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 18,217</span>
+                    <div class="tg-topics"><span class="tg-chip">ai-coding</span><span class="tg-chip">claude-code</span><span class="tg-chip">cli</span><span class="tg-chip">codex</span><span class="tg-chip">cost-tracking</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#2</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Go</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-06</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/pranshuparmar/witr" target="_blank" rel="noopener noreferrer">pranshuparmar/witr <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Why is this running?</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 2,712 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Go</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-06</span></div>
-                        <div class="row-tags"><span class="tag">cli</span><span class="tag">devops</span><span class="tag">freebsd</span><span class="tag">golang</span><span class="tag">linux</span></div>
+                    <a class="tg-name" href="https://github.com/pranshuparmar/witr" target="_blank" rel="noopener noreferrer">pranshuparmar/witr <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Why is this running?</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>18,217<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">2,712</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:93%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#3</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 20,965</span>
+                    <div class="tg-topics"><span class="tg-chip">cli</span><span class="tg-chip">devops</span><span class="tg-chip">freebsd</span><span class="tg-chip">golang</span><span class="tg-chip">linux</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#3</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Jupyter Notebook</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-04</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/NirDiamant/agents-towards-production" target="_blank" rel="noopener noreferrer">NirDiamant/agents-towards-production <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">End-to-end, code-first tutorials for building production-grade GenAI agents. From prototype to enterprise deployment.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 1,630 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Jupyter Notebook</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-04</span></div>
-                        <div class="row-tags"><span class="tag">agent</span><span class="tag">agent-framework</span><span class="tag">agentic-ai</span><span class="tag">agents</span><span class="tag">ai-agents</span></div>
+                    <a class="tg-name" href="https://github.com/NirDiamant/agents-towards-production" target="_blank" rel="noopener noreferrer">NirDiamant/agents-towards-production <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">End-to-end, code-first tutorials for building production-grade GenAI agents. From prototype to enterprise deployment.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>20,965<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">1,630</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:56%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#4</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 8,340</span>
+                    <div class="tg-topics"><span class="tg-chip">agent</span><span class="tg-chip">agent-framework</span><span class="tg-chip">agentic-ai</span><span class="tg-chip">agents</span><span class="tg-chip">ai-agents</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#4</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Python</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/Tracer-Cloud/opensre" target="_blank" rel="noopener noreferrer">Tracer-Cloud/opensre <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Build your own AI SRE agents. The open source toolkit for the AI era.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 1,401 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Python</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span></div>
-                        <div class="row-tags"><span class="tag">ai-sre</span><span class="tag">alerting</span><span class="tag">datadog</span><span class="tag">grafana</span><span class="tag">incident-management</span></div>
+                    <a class="tg-name" href="https://github.com/Tracer-Cloud/opensre" target="_blank" rel="noopener noreferrer">Tracer-Cloud/opensre <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Build your own AI SRE agents. The open source toolkit for the AI era.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>8,340<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">1,401</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:48%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#5</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 31,000</span>
+                    <div class="tg-topics"><span class="tg-chip">ai-sre</span><span class="tg-chip">alerting</span><span class="tg-chip">datadog</span><span class="tg-chip">grafana</span><span class="tg-chip">incident-management</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#5</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> TypeScript</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/langfuse/langfuse" target="_blank" rel="noopener noreferrer">langfuse/langfuse <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">🪢 Open source AI engineering platform: LLM evals, observability, metrics, prompt management, playground, datasets. Integrates with OpenTelemetry, LangChain, OpenAI SDK, LiteLLM, and more. 🍊YC W23</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 820 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> TypeScript</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span></div>
-                        <div class="row-tags"><span class="tag">analytics</span><span class="tag">autogen</span><span class="tag">evaluation</span><span class="tag">langchain</span><span class="tag">large-language-models</span></div>
+                    <a class="tg-name" href="https://github.com/langfuse/langfuse" target="_blank" rel="noopener noreferrer">langfuse/langfuse <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">🪢 Open source AI engineering platform: LLM evals, observability, metrics, prompt management, playground, datasets. Integrates with OpenTelemetry, LangChain, OpenAI SDK, LiteLLM, and more. 🍊YC W23</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>31,000<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">820</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:28%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#6</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 10,030</span>
+                    <div class="tg-topics"><span class="tg-chip">analytics</span><span class="tg-chip">autogen</span><span class="tg-chip">evaluation</span><span class="tg-chip">langchain</span><span class="tg-chip">large-language-models</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#6</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> TypeScript</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/VoltAgent/voltagent" target="_blank" rel="noopener noreferrer">VoltAgent/voltagent <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">AI Agent Engineering Platform built on an Open Source TypeScript AI Agent Framework</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 675 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> TypeScript</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span></div>
-                        <div class="row-tags"><span class="tag">agents</span><span class="tag">ai</span><span class="tag">ai-agents</span><span class="tag">ai-agents-framework</span><span class="tag">aiagentframework</span></div>
+                    <a class="tg-name" href="https://github.com/VoltAgent/voltagent" target="_blank" rel="noopener noreferrer">VoltAgent/voltagent <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">AI Agent Engineering Platform built on an Open Source TypeScript AI Agent Framework</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>10,030<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">675</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:23%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#7</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 79,625</span>
+                    <div class="tg-topics"><span class="tg-chip">agents</span><span class="tg-chip">ai</span><span class="tg-chip">ai-agents</span><span class="tg-chip">ai-agents-framework</span><span class="tg-chip">aiagentframework</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#7</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Go</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/netdata/netdata" target="_blank" rel="noopener noreferrer">netdata/netdata <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">The fastest path to AI-powered full stack observability, even for lean teams.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 508 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Go</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span></div>
-                        <div class="row-tags"><span class="tag">ai</span><span class="tag">alerting</span><span class="tag">cncf</span><span class="tag">data-visualization</span><span class="tag">database</span></div>
+                    <a class="tg-name" href="https://github.com/netdata/netdata" target="_blank" rel="noopener noreferrer">netdata/netdata <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">The fastest path to AI-powered full stack observability, even for lean teams.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>79,625<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">508</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:17%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#8</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 19,900</span>
+                    <div class="tg-topics"><span class="tg-chip">ai</span><span class="tg-chip">alerting</span><span class="tg-chip">cncf</span><span class="tg-chip">data-visualization</span><span class="tg-chip">database</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#8</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> TypeScript</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/openobserve/openobserve" target="_blank" rel="noopener noreferrer">openobserve/openobserve <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Open source observability platform for logs, metrics, traces, frontend monitoring, pipelines and LLM observability. A sophisticated, simple and highly performant alternative to Datadog, Splunk, and Elasticsearch with 140x lower storage costs and single binary deployment.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 482 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> TypeScript</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span></div>
-                        <div class="row-tags"><span class="tag">analytics</span><span class="tag">apm</span><span class="tag">datadog</span><span class="tag">elasticsearch</span><span class="tag">grafana</span></div>
+                    <a class="tg-name" href="https://github.com/openobserve/openobserve" target="_blank" rel="noopener noreferrer">openobserve/openobserve <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Open source observability platform for logs, metrics, traces, frontend monitoring, pipelines and LLM observability. A sophisticated, simple and highly performant alternative to Datadog, Splunk, and Elasticsearch with 140x lower storage costs and single binary deployment.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>19,900<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">482</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:17%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#9</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 19,869</span>
+                    <div class="tg-topics"><span class="tg-chip">analytics</span><span class="tg-chip">apm</span><span class="tg-chip">datadog</span><span class="tg-chip">elasticsearch</span><span class="tg-chip">grafana</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#9</span>
+                        <span class="tg-lang empty"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> &nbsp;</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-06-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/milanm/DevOps-Roadmap" target="_blank" rel="noopener noreferrer">milanm/DevOps-Roadmap <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">DevOps Roadmap for 2026. with learning resources</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 445 ★/mo</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-06-13</span></div>
-                        <div class="row-tags"><span class="tag">aws</span><span class="tag">azure</span><span class="tag">computer-science</span><span class="tag">continous-delivery</span><span class="tag">continuous-integration</span></div>
+                    <a class="tg-name" href="https://github.com/milanm/DevOps-Roadmap" target="_blank" rel="noopener noreferrer">milanm/DevOps-Roadmap <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">DevOps Roadmap for 2026. with learning resources</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>19,869<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">445</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:15%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#10</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 5,604</span>
+                    <div class="tg-topics"><span class="tg-chip">aws</span><span class="tg-chip">azure</span><span class="tg-chip">computer-science</span><span class="tg-chip">continous-delivery</span><span class="tg-chip">continuous-integration</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#10</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Go</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/coze-dev/coze-loop" target="_blank" rel="noopener noreferrer">coze-dev/coze-loop <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Next-generation AI Agent Optimization Platform: Cozeloop addresses challenges in AI agent development by providing full-lifecycle management capabilities from development, debugging, and evaluation to monitoring.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 444 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Go</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span></div>
-                        <div class="row-tags"><span class="tag">agent</span><span class="tag">agent-evaluation</span><span class="tag">agent-observability</span><span class="tag">agentops</span><span class="tag">ai</span></div>
+                    <a class="tg-name" href="https://github.com/coze-dev/coze-loop" target="_blank" rel="noopener noreferrer">coze-dev/coze-loop <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Next-generation AI Agent Optimization Platform: Cozeloop addresses challenges in AI agent development by providing full-lifecycle management capabilities from development, debugging, and evaluation to monitoring.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>5,604<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">444</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:15%"></span></div>
+                        </div>
                     </div>
-                </div>
+                    <div class="tg-topics"><span class="tg-chip">agent</span><span class="tg-chip">agent-evaluation</span><span class="tg-chip">agent-observability</span><span class="tg-chip">agentops</span><span class="tg-chip">ai</span></div>
+                </article>
             </div>
         </section>
-        <section class="section" id="ai-platform-llmops">
-            <div class="section-header">
+        <section class="tg-section" id="ai-platform-llmops">
+            <div class="tg-sec-head">
                 <h2>AI Platform / LLMOps</h2>
-                <p>Topics: <code>llmops</code>, <code>llm-ops</code>, <code>ai-infrastructure</code>, <code>llm-inference</code></p>
+                <span class="tg-count">10 repos</span>
+                <span class="tg-topics-line">llmops · llm-ops · ai-infrastructure · llm-inference</span>
             </div>
-            <div class="panel">
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#1</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 59,055</span>
+            <div class="tg-grid">
+                <article class="tg-card tg-card--lead">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#1</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Jupyter Notebook</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-05</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/pathwaycom/llm-app" target="_blank" rel="noopener noreferrer">pathwaycom/llm-app <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Ready-to-run cloud templates for RAG, AI pipelines, and enterprise search with live data. 🐳Docker-friendly.⚡Always in sync with Sharepoint, Google Drive, S3, Kafka, PostgreSQL, real-time data APIs, and more.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 1,649 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Jupyter Notebook</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-05</span></div>
-                        <div class="row-tags"><span class="tag">chatbot</span><span class="tag">hugging-face</span><span class="tag">llm</span><span class="tag">llm-local</span><span class="tag">llm-prompting</span></div>
+                    <a class="tg-name" href="https://github.com/pathwaycom/llm-app" target="_blank" rel="noopener noreferrer">pathwaycom/llm-app <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Ready-to-run cloud templates for RAG, AI pipelines, and enterprise search with live data. 🐳Docker-friendly.⚡Always in sync with Sharepoint, Google Drive, S3, Kafka, PostgreSQL, real-time data APIs, and more.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>59,055<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">1,649</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:100%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#2</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 53,376</span>
+                    <div class="tg-topics"><span class="tg-chip">chatbot</span><span class="tg-chip">hugging-face</span><span class="tg-chip">llm</span><span class="tg-chip">llm-local</span><span class="tg-chip">llm-prompting</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#2</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Python</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/BerriAI/litellm" target="_blank" rel="noopener noreferrer">BerriAI/litellm <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Python SDK, Proxy Server (AI Gateway) to call 100+ LLM APIs in OpenAI (or native) format, with cost tracking, guardrails, loadbalancing and logging. [Bedrock, Azure, OpenAI, VertexAI, Cohere, Anthropic, Sagemaker, HuggingFace, VLLM, NVIDIA NIM]</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 1,501 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Python</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span></div>
-                        <div class="row-tags"><span class="tag">ai-gateway</span><span class="tag">anthropic</span><span class="tag">azure-openai</span><span class="tag">bedrock</span><span class="tag">gateway</span></div>
+                    <a class="tg-name" href="https://github.com/BerriAI/litellm" target="_blank" rel="noopener noreferrer">BerriAI/litellm <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Python SDK, Proxy Server (AI Gateway) to call 100+ LLM APIs in OpenAI (or native) format, with cost tracking, guardrails, loadbalancing and logging. [Bedrock, Azure, OpenAI, VertexAI, Cohere, Anthropic, Sagemaker, HuggingFace, VLLM, NVIDIA NIM]</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>53,376<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">1,501</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:91%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#3</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 29,209</span>
+                    <div class="tg-topics"><span class="tg-chip">ai-gateway</span><span class="tg-chip">anthropic</span><span class="tg-chip">azure-openai</span><span class="tg-chip">bedrock</span><span class="tg-chip">gateway</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#3</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> TypeScript</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/ComposioHQ/composio" target="_blank" rel="noopener noreferrer">ComposioHQ/composio <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Composio powers 1000+ toolkits, tool search, context management, authentication, and a sandboxed workbench to help you build AI agents that turn intent into action.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 1,021 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> TypeScript</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span></div>
-                        <div class="row-tags"><span class="tag">agentic-ai</span><span class="tag">agents</span><span class="tag">ai</span><span class="tag">ai-agents</span><span class="tag">aiagents</span></div>
+                    <a class="tg-name" href="https://github.com/ComposioHQ/composio" target="_blank" rel="noopener noreferrer">ComposioHQ/composio <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Composio powers 1000+ toolkits, tool search, context management, authentication, and a sandboxed workbench to help you build AI agents that turn intent into action.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>29,209<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">1,021</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:62%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#4</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 3,989</span>
+                    <div class="tg-topics"><span class="tg-chip">agentic-ai</span><span class="tg-chip">agents</span><span class="tg-chip">ai</span><span class="tg-chip">ai-agents</span><span class="tg-chip">aiagents</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#4</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Java</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-09</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/iflytek/skillhub" target="_blank" rel="noopener noreferrer">iflytek/skillhub <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Self-hosted, open-source agent skill registry for enterprises. Publish &amp; version skill packages, govern with RBAC and audit logs, deploy   on-premise with Docker or Kubernetes.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 982 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Java</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-09</span></div>
-                        <div class="row-tags"><span class="tag">agent-framework</span><span class="tag">ai-agent</span><span class="tag">ai-governance</span><span class="tag">ai-infrastructure</span><span class="tag">ai-orchestration</span></div>
+                    <a class="tg-name" href="https://github.com/iflytek/skillhub" target="_blank" rel="noopener noreferrer">iflytek/skillhub <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Self-hosted, open-source agent skill registry for enterprises. Publish &amp; version skill packages, govern with RBAC and audit logs, deploy   on-premise with Docker or Kubernetes.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>3,989<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">982</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:60%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#5</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 8,615</span>
+                    <div class="tg-topics"><span class="tg-chip">agent-framework</span><span class="tg-chip">ai-agent</span><span class="tg-chip">ai-governance</span><span class="tg-chip">ai-infrastructure</span><span class="tg-chip">ai-orchestration</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#5</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Java</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/iflytek/astron-agent" target="_blank" rel="noopener noreferrer">iflytek/astron-agent <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Enterprise-grade, commercial-friendly agentic workflow platform for building next-generation SuperAgents.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 883 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Java</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span></div>
-                        <div class="row-tags"><span class="tag">agent</span><span class="tag">agentic-ai</span><span class="tag">agentic-workflow</span><span class="tag">ai</span><span class="tag">enterprise</span></div>
+                    <a class="tg-name" href="https://github.com/iflytek/astron-agent" target="_blank" rel="noopener noreferrer">iflytek/astron-agent <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Enterprise-grade, commercial-friendly agentic workflow platform for building next-generation SuperAgents.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>8,615<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">883</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:54%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#6</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 31,000</span>
+                    <div class="tg-topics"><span class="tg-chip">agent</span><span class="tg-chip">agentic-ai</span><span class="tg-chip">agentic-workflow</span><span class="tg-chip">ai</span><span class="tg-chip">enterprise</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#6</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> TypeScript</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/langfuse/langfuse" target="_blank" rel="noopener noreferrer">langfuse/langfuse <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">🪢 Open source AI engineering platform: LLM evals, observability, metrics, prompt management, playground, datasets. Integrates with OpenTelemetry, LangChain, OpenAI SDK, LiteLLM, and more. 🍊YC W23</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 820 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> TypeScript</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span></div>
-                        <div class="row-tags"><span class="tag">analytics</span><span class="tag">autogen</span><span class="tag">evaluation</span><span class="tag">langchain</span><span class="tag">large-language-models</span></div>
+                    <a class="tg-name" href="https://github.com/langfuse/langfuse" target="_blank" rel="noopener noreferrer">langfuse/langfuse <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">🪢 Open source AI engineering platform: LLM evals, observability, metrics, prompt management, playground, datasets. Integrates with OpenTelemetry, LangChain, OpenAI SDK, LiteLLM, and more. 🍊YC W23</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>31,000<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">820</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:50%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#7</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 803</span>
+                    <div class="tg-topics"><span class="tg-chip">analytics</span><span class="tg-chip">autogen</span><span class="tg-chip">evaluation</span><span class="tg-chip">langchain</span><span class="tg-chip">large-language-models</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#7</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Python</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/Tencent-Hunyuan/UniRL" target="_blank" rel="noopener noreferrer">Tencent-Hunyuan/UniRL <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">UniRL is a Framework for Unified Multimodal Model Reinforcement Learning</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 705 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Python</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-10</span></div>
-                        <div class="row-tags"><span class="tag">ai-infrastructure</span><span class="tag">reinforcement-learning</span><span class="tag">sglang</span><span class="tag">vllm</span></div>
+                    <a class="tg-name" href="https://github.com/Tencent-Hunyuan/UniRL" target="_blank" rel="noopener noreferrer">Tencent-Hunyuan/UniRL <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">UniRL is a Framework for Unified Multimodal Model Reinforcement Learning</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>803<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">705</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:43%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#8</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 24,708</span>
+                    <div class="tg-topics"><span class="tg-chip">ai-infrastructure</span><span class="tg-chip">reinforcement-learning</span><span class="tg-chip">sglang</span><span class="tg-chip">vllm</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#8</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> HTML</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-01</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/liguodongiot/llm-action" target="_blank" rel="noopener noreferrer">liguodongiot/llm-action <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">本项目旨在分享大模型相关技术原理以及实战经验（大模型工程化、大模型应用落地）</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 656 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> HTML</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-01</span></div>
-                        <div class="row-tags"><span class="tag">llm</span><span class="tag">llm-inference</span><span class="tag">llm-serving</span><span class="tag">llm-training</span><span class="tag">llmops</span></div>
+                    <a class="tg-name" href="https://github.com/liguodongiot/llm-action" target="_blank" rel="noopener noreferrer">liguodongiot/llm-action <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">本项目旨在分享大模型相关技术原理以及实战经验（大模型工程化、大模型应用落地）</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>24,708<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">656</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:40%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#9</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 23,181</span>
+                    <div class="tg-topics"><span class="tg-chip">llm</span><span class="tg-chip">llm-inference</span><span class="tg-chip">llm-serving</span><span class="tg-chip">llm-training</span><span class="tg-chip">llmops</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#9</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> TypeScript</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/promptfoo/promptfoo" target="_blank" rel="noopener noreferrer">promptfoo/promptfoo <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Test your prompts, agents, and RAGs. Red teaming/pentesting/vulnerability scanning for AI. Compare performance of GPT, Claude, Gemini, DeepSeek, and more. Simple declarative configs with command line and CI/CD integration.  Used by OpenAI and Anthropic.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 602 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> TypeScript</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span></div>
-                        <div class="row-tags"><span class="tag">ci</span><span class="tag">ci-cd</span><span class="tag">cicd</span><span class="tag">evaluation</span><span class="tag">evaluation-framework</span></div>
+                    <a class="tg-name" href="https://github.com/promptfoo/promptfoo" target="_blank" rel="noopener noreferrer">promptfoo/promptfoo <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Test your prompts, agents, and RAGs. Red teaming/pentesting/vulnerability scanning for AI. Compare performance of GPT, Claude, Gemini, DeepSeek, and more. Simple declarative configs with command line and CI/CD integration.  Used by OpenAI and Anthropic.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>23,181<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">602</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:37%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#10</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 4,349</span>
+                    <div class="tg-topics"><span class="tg-chip">ci</span><span class="tg-chip">ci-cd</span><span class="tg-chip">cicd</span><span class="tg-chip">evaluation</span><span class="tg-chip">evaluation-framework</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#10</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Rust</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/ruvnet/RuVector" target="_blank" rel="noopener noreferrer">ruvnet/RuVector <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">RuVector is a High Performance, Real-Time, Self-Learning Ai, Vector GNN, Memory DB built in Rust.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 561 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Rust</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span></div>
-                        <div class="row-tags"><span class="tag">ai</span><span class="tag">ai-ocr</span><span class="tag">attention-mechanism</span><span class="tag">gnn</span><span class="tag">gnn-model</span></div>
+                    <a class="tg-name" href="https://github.com/ruvnet/RuVector" target="_blank" rel="noopener noreferrer">ruvnet/RuVector <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">RuVector is a High Performance, Real-Time, Self-Learning Ai, Vector GNN, Memory DB built in Rust.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>4,349<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">561</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:34%"></span></div>
+                        </div>
                     </div>
-                </div>
+                    <div class="tg-topics"><span class="tg-chip">ai</span><span class="tg-chip">ai-ocr</span><span class="tg-chip">attention-mechanism</span><span class="tg-chip">gnn</span><span class="tg-chip">gnn-model</span></div>
+                </article>
             </div>
         </section>
-        <section class="section" id="gpu-infra">
-            <div class="section-header">
+        <section class="tg-section" id="gpu-infra">
+            <div class="tg-sec-head">
                 <h2>GPU Stack / Infrastructure</h2>
-                <p>Topics: <code>gpu</code>, <code>cuda</code>, <code>gpu-computing</code></p>
+                <span class="tg-count">10 repos</span>
+                <span class="tg-topics-line">gpu · cuda · gpu-computing</span>
             </div>
-            <div class="panel">
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#1</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 40,894</span>
+            <div class="tg-grid">
+                <article class="tg-card tg-card--lead">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#1</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> TypeScript</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/jamiepine/voicebox" target="_blank" rel="noopener noreferrer">jamiepine/voicebox <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">The open-source AI voice studio. Clone, dictate, create.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 7,379 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> TypeScript</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span></div>
-                        <div class="row-tags"><span class="tag">ai</span><span class="tag">cuda</span><span class="tag">mlx</span><span class="tag">qwen3-tts</span><span class="tag">qwen3-tts-ui</span></div>
+                    <a class="tg-name" href="https://github.com/jamiepine/voicebox" target="_blank" rel="noopener noreferrer">jamiepine/voicebox <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">The open-source AI voice studio. Clone, dictate, create.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>40,894<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">7,379</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:100%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#2</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 86,094</span>
+                    <div class="tg-topics"><span class="tg-chip">ai</span><span class="tg-chip">cuda</span><span class="tg-chip">mlx</span><span class="tg-chip">qwen3-tts</span><span class="tg-chip">qwen3-tts-ui</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#2</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Python</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/vllm-project/vllm" target="_blank" rel="noopener noreferrer">vllm-project/vllm <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">A high-throughput and memory-efficient inference and serving engine for LLMs</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 2,097 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Python</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span></div>
-                        <div class="row-tags"><span class="tag">amd</span><span class="tag">blackwell</span><span class="tag">cuda</span><span class="tag">deepseek</span><span class="tag">deepseek-v3</span></div>
+                    <a class="tg-name" href="https://github.com/vllm-project/vllm" target="_blank" rel="noopener noreferrer">vllm-project/vllm <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">A high-throughput and memory-efficient inference and serving engine for LLMs</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>86,094<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">2,097</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:28%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#3</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 5,771</span>
+                    <div class="tg-topics"><span class="tg-chip">amd</span><span class="tg-chip">blackwell</span><span class="tg-chip">cuda</span><span class="tg-chip">deepseek</span><span class="tg-chip">deepseek-v3</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#3</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Python</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-08</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/Andyyyy64/whichllm" target="_blank" rel="noopener noreferrer">Andyyyy64/whichllm <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Find the local LLM that actually runs and performs best on your hardware. Ranked by real, recency-aware benchmarks, not parameter count. One command, run it instantly.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 1,344 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Python</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-08</span></div>
-                        <div class="row-tags"><span class="tag">ai</span><span class="tag">apple-silicon</span><span class="tag">benchmarks</span><span class="tag">cli</span><span class="tag">command-line-tool</span></div>
+                    <a class="tg-name" href="https://github.com/Andyyyy64/whichllm" target="_blank" rel="noopener noreferrer">Andyyyy64/whichllm <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Find the local LLM that actually runs and performs best on your hardware. Ranked by real, recency-aware benchmarks, not parameter count. One command, run it instantly.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>5,771<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">1,344</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:18%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#4</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 30,226</span>
+                    <div class="tg-topics"><span class="tg-chip">ai</span><span class="tg-chip">apple-silicon</span><span class="tg-chip">benchmarks</span><span class="tg-chip">cli</span><span class="tg-chip">command-line-tool</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#4</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Python</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/sgl-project/sglang" target="_blank" rel="noopener noreferrer">sgl-project/sglang <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">SGLang is a high-performance serving framework for large language models and multimodal models.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 1,003 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Python</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span></div>
-                        <div class="row-tags"><span class="tag">attention</span><span class="tag">blackwell</span><span class="tag">cuda</span><span class="tag">deepseek</span><span class="tag">diffusion</span></div>
+                    <a class="tg-name" href="https://github.com/sgl-project/sglang" target="_blank" rel="noopener noreferrer">sgl-project/sglang <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">SGLang is a high-performance serving framework for large language models and multimodal models.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>30,226<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">1,003</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:14%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#5</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 101,783</span>
+                    <div class="tg-topics"><span class="tg-chip">attention</span><span class="tg-chip">blackwell</span><span class="tg-chip">cuda</span><span class="tg-chip">deepseek</span><span class="tg-chip">diffusion</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#5</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Python</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/pytorch/pytorch" target="_blank" rel="noopener noreferrer">pytorch/pytorch <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">Tensors and Dynamic neural networks in Python with strong GPU acceleration</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 856 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Python</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span></div>
-                        <div class="row-tags"><span class="tag">autograd</span><span class="tag">deep-learning</span><span class="tag">gpu</span><span class="tag">machine-learning</span><span class="tag">neural-network</span></div>
+                    <a class="tg-name" href="https://github.com/pytorch/pytorch" target="_blank" rel="noopener noreferrer">pytorch/pytorch <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">Tensors and Dynamic neural networks in Python with strong GPU acceleration</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>101,783<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">856</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:12%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#6</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 42,695</span>
+                    <div class="tg-topics"><span class="tg-chip">autograd</span><span class="tg-chip">deep-learning</span><span class="tg-chip">gpu</span><span class="tg-chip">machine-learning</span><span class="tg-chip">neural-network</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#6</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Python</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/deepspeedai/DeepSpeed" target="_blank" rel="noopener noreferrer">deepspeedai/DeepSpeed <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">DeepSpeed is a deep learning optimization library that makes distributed training and inference easy, efficient, and effective.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 550 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Python</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span></div>
-                        <div class="row-tags"><span class="tag">billion-parameters</span><span class="tag">compression</span><span class="tag">data-parallelism</span><span class="tag">deep-learning</span><span class="tag">gpu</span></div>
+                    <a class="tg-name" href="https://github.com/deepspeedai/DeepSpeed" target="_blank" rel="noopener noreferrer">deepspeedai/DeepSpeed <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">DeepSpeed is a deep learning optimization library that makes distributed training and inference easy, efficient, and effective.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>42,695<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">550</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:7%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#7</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 64,869</span>
+                    <div class="tg-topics"><span class="tg-chip">billion-parameters</span><span class="tg-chip">compression</span><span class="tg-chip">data-parallelism</span><span class="tg-chip">deep-learning</span><span class="tg-chip">gpu</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#7</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Rust</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-06-22</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/alacritty/alacritty" target="_blank" rel="noopener noreferrer">alacritty/alacritty <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">A cross-platform, OpenGL terminal emulator.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 520 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Rust</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-06-22</span></div>
-                        <div class="row-tags"><span class="tag">bsd</span><span class="tag">gpu</span><span class="tag">linux</span><span class="tag">macos</span><span class="tag">opengl</span></div>
+                    <a class="tg-name" href="https://github.com/alacritty/alacritty" target="_blank" rel="noopener noreferrer">alacritty/alacritty <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">A cross-platform, OpenGL terminal emulator.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>64,869<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">520</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:7%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#8</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 40,405</span>
+                    <div class="tg-topics"><span class="tg-chip">bsd</span><span class="tg-chip">gpu</span><span class="tg-chip">linux</span><span class="tg-chip">macos</span><span class="tg-chip">opengl</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#8</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Swift</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/exelban/stats" target="_blank" rel="noopener noreferrer">exelban/stats <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">macOS system monitor in your menu bar</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 473 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Swift</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-12</span></div>
-                        <div class="row-tags"><span class="tag">battery</span><span class="tag">bluetooth</span><span class="tag">clock</span><span class="tag">cpu</span><span class="tag">disk</span></div>
+                    <a class="tg-name" href="https://github.com/exelban/stats" target="_blank" rel="noopener noreferrer">exelban/stats <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">macOS system monitor in your menu bar</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>40,405<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">473</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:6%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#9</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 10,511</span>
+                    <div class="tg-topics"><span class="tg-chip">battery</span><span class="tg-chip">bluetooth</span><span class="tg-chip">clock</span><span class="tg-chip">cpu</span><span class="tg-chip">disk</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#9</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Python</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/LMCache/LMCache" target="_blank" rel="noopener noreferrer">LMCache/LMCache <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">LMCache: Supercharge Your LLM with the Fastest KV Cache Layer</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 413 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Python</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span></div>
-                        <div class="row-tags"><span class="tag">amd</span><span class="tag">cuda</span><span class="tag">fast</span><span class="tag">inference</span><span class="tag">kv-cache</span></div>
+                    <a class="tg-name" href="https://github.com/LMCache/LMCache" target="_blank" rel="noopener noreferrer">LMCache/LMCache <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">LMCache: Supercharge Your LLM with the Fastest KV Cache Layer</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>10,511<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">413</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:6%"></span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="ledger-row repo-row">
-                    <div class="ledger-meta">
-                        <span class="repo-rank">#10</span>
-                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> 14,105</span>
+                    <div class="tg-topics"><span class="tg-chip">amd</span><span class="tg-chip">cuda</span><span class="tg-chip">fast</span><span class="tg-chip">inference</span><span class="tg-chip">kv-cache</span></div>
+                </article>
+                <article class="tg-card">
+                    <div class="tg-card-top">
+                        <span class="tg-rank">#10</span>
+                        <span class="tg-lang"><i class="fas fa-circle" aria-hidden="true" style="font-size:0.5rem;color:var(--accent-highlight)"></i> Python</span>
+                        <span class="tg-updated"><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span>
                     </div>
-                    <div>
-                        <div class="ledger-title"><a class="ledger-link" href="https://github.com/NVIDIA/TensorRT-LLM" target="_blank" rel="noopener noreferrer">NVIDIA/TensorRT-LLM <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
-                        <div class="ledger-sub">TensorRT LLM provides users with an easy-to-use Python API to define Large Language Models (LLMs) and supports state-of-the-art optimizations to perform inference efficiently on NVIDIA GPUs. TensorRT LLM also contains components to create Python and C++ runtimes that orchestrate the inference execution in a performant way.</div>
-                        <div class="repo-facts"><span><i class="fas fa-bolt" aria-hidden="true"></i> 404 ★/mo</span><span><i class="fas fa-code" aria-hidden="true"></i> Python</span><span><i class="fas fa-rotate" aria-hidden="true"></i> 2026-07-13</span></div>
-                        <div class="row-tags"><span class="tag">blackwell</span><span class="tag">cuda</span><span class="tag">llm-serving</span><span class="tag">moe</span><span class="tag">pytorch</span></div>
+                    <a class="tg-name" href="https://github.com/NVIDIA/TensorRT-LLM" target="_blank" rel="noopener noreferrer">NVIDIA/TensorRT-LLM <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <p class="tg-desc">TensorRT LLM provides users with an easy-to-use Python API to define Large Language Models (LLMs) and supports state-of-the-art optimizations to perform inference efficiently on NVIDIA GPUs. TensorRT LLM also contains components to create Python and C++ runtimes that orchestrate the inference execution in a performant way.</p>
+                    <div class="tg-metrics">
+                        <div class="tg-stars"><i class="fas fa-star" aria-hidden="true"></i>14,105<span class="lab">stars</span></div>
+                        <div class="tg-vel">
+                            <span class="val">404</span><span class="lab">★ / month</span>
+                            <div class="tg-bar"><span style="width:6%"></span></div>
+                        </div>
                     </div>
-                </div>
+                    <div class="tg-topics"><span class="tg-chip">blackwell</span><span class="tg-chip">cuda</span><span class="tg-chip">llm-serving</span><span class="tg-chip">moe</span><span class="tg-chip">pytorch</span></div>
+                </article>
             </div>
         </section>
     </main>
