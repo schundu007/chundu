@@ -33,7 +33,7 @@ const LABELS = {
   capra: 'Capra',
   'git-dboard': 'IsaacLab DevOps Dashboard',
 };
-const IGNORE = new Set(['chundu']); // the site itself
+const IGNORE = new Set(['chundu', 'git-dboard']); // site itself; git-dboard superseded by GitPulser
 
 // Always present: on-site pages + apps whose repo is private (not in public API).
 const PINNED = [

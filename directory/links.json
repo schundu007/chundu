@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-13T06:25:33.667Z",
-  "count": 7,
+  "generated_at": "2026-07-13T06:42:04.993Z",
+  "count": 6,
   "entries": [
     {
       "name": "Trending GitHub Repos",
@@ -26,13 +26,6 @@
       "description": "Cariara Platform — Unified monorepo for Lumora + Ascend",
       "host": "camora.cariara.com",
       "ts": 1783918617000
-    },
-    {
-      "name": "IsaacLab DevOps Dashboard",
-      "url": "https://isaaclab-dashboard.vercel.app",
-      "description": "IsaacLab DevOps Dashboard — React + FastAPI platform for CI/CD monitoring, PR automation, nightly builds, infra, registry, and improvement planning for isaac-sim/IsaacLab",
-      "host": "isaaclab-dashboard.vercel.app",
-      "ts": 1783405051000
     },
     {
       "name": "Lumora",
