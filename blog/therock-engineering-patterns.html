@@ -102,6 +102,19 @@
   .foot .c{color:var(--muted);font-size:13px}
   .foot .links{display:flex;gap:18px;font-family:var(--mono);font-size:13px}
   .foot .links a{color:var(--ink-2)}
+
+  /* --- large + full-width pass (standardized with the rest of the series) --- */
+  :root{--maxw:1520px}
+  .wrap{padding-left:34px;padding-right:34px}
+  body{font-size:18.5px}
+  h1{max-width:none}
+  .lede{max-width:none;font-size:clamp(1.1rem,1.45vw,1.35rem)}
+  p{max-width:none}
+  ul{max-width:none}
+  .disc{font-size:15px}
+  .take,.note{font-size:15px}
+  .prob{font-size:12.5px}
+  @media(max-width:640px){.wrap{padding-left:20px;padding-right:20px}}
 </style>
 </head>
 <body>
