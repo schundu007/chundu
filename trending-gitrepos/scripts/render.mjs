@@ -142,7 +142,8 @@ export function renderBody(data) {
 </style>
   <div class="wrap">
     <header>
-      <h1>Trending Infrastructure &amp; Platform Projects</h1>
+      <h1>Trending GitHub Repos</h1>
+      <p class="sub">DevOps · Platform Engineering · MLOps · SRE · LLMOps · GPU Infra</p>
       <p class="sub">Top ${esc(data.top_n)} per category · last updated <strong>${esc(updated)}</strong></p>
       <p class="method">GitHub has no official trending API, so each category is computed from the GitHub Search API
       (topic filters, <code>stars:&gt;${esc(data.star_floor)}</code>, pushed within ${esc(data.pushed_within_days)} days,
@@ -157,7 +158,7 @@ export function renderBody(data) {
   </div>`;
 }
 
-export const TITLE = 'Trending Infra & Platform Projects';
+export const TITLE = 'Trending GitHub Repos';
 
 // Full standalone document for the repo file (openable via file://).
 export function renderHtml(data) {
