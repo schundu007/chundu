@@ -599,6 +599,8 @@ flowchart LR
           <div class="stat"><div class="n">38</div><div class="l">Reusable (<code>workflow_call</code>)</div></div>
         </div>
 
+        <p style="margin:2px 0 22px"><a href="/blog/therock-ci-explained.html" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-weight:600;color:var(--ember);text-decoration:none">⚙️&nbsp; Deep dive: a file-by-file guide to this shadow build system &amp; how to tame it →</a></p>
+
         <p>Those 46 Python scripts <strong>generate JSON build configurations that GitHub Actions consumes as matrices via <code>fromJSON()</code></strong> <span class="pill pass">confirmed</span>. Which GPU families build on which OS, against which Python versions, producing which artifacts, on which trigger — none of that is expressed in YAML. YAML is the <em>output format</em>. Python is the build system, and GitHub Actions is an executor of whatever JSON it is handed.</p>
 
         <div class="diagram">

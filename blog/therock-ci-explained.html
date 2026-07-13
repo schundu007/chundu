@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="author" content="Sudhakar Chundu" />
+<meta name="description" content="A file-by-file field guide to ROCm/TheRock CI — the ~46-script shadow build system that generates GitHub Actions matrices — plus an honest read on which tools (buildx, BuildKite, Bazel, Dagger, Argo, Nix and more) actually reduce the CI-file sprawl." />
+<link rel="icon" type="image/x-icon" href="../favicon.ico" />
+<title>TheRock CI, Explained — the shadow build system, file by file</title>
+<style>
+  :root{
+    --bg:#07090C; --panel:#0D1218; --panel2:#121A21; --raise:#182430;
+    --line:#1D2831; --line2:#2A3844;
+    --ink:#E8EFF5; --ink2:#A6B6C4; --muted:#6E8393;
+    --red:#D93B2B; --ember:#FF6B35;
+    --grad:linear-gradient(100deg,#D93B2B 0%,#FF6B35 100%);
+    --pro:#2DD4A7; --con:#F26158; --warn:#F0A429; --link:#5AB6F0;
+    --chip-py:#4C8BF5; --chip-yaml:#C97BE0; --chip-sh:#59C08A;
+    --r:14px; --maxw:1000px;
+    --display:"Chakra Petch","IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --body:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --shadow:0 20px 50px -30px rgba(217,59,43,.5);
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#F4F2EE; --panel:#FFFFFF; --panel2:#FAF7F2; --raise:#FFFFFF;
+      --line:#E5DFD5; --line2:#D7CEC1;
+      --ink:#1A1411; --ink2:#4C5661; --muted:#7C8792;
+      --pro:#0E9E7A; --con:#C6362B; --warn:#B67A10; --link:#1F6FD6;
+      --chip-py:#2C63C9; --chip-yaml:#9B47B8; --chip-sh:#2E9463;
+      --shadow:0 20px 44px -30px rgba(217,59,43,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#07090C; --panel:#0D1218; --panel2:#121A21; --raise:#182430;
+    --line:#1D2831; --line2:#2A3844;
+    --ink:#E8EFF5; --ink2:#A6B6C4; --muted:#6E8393;
+    --pro:#2DD4A7; --con:#F26158; --warn:#F0A429; --link:#5AB6F0;
+    --chip-py:#4C8BF5; --chip-yaml:#C97BE0; --chip-sh:#59C08A;
+    --shadow:0 20px 50px -30px rgba(217,59,43,.5);
+  }
+  :root[data-theme="light"]{
+    --bg:#F4F2EE; --panel:#FFFFFF; --panel2:#FAF7F2; --raise:#FFFFFF;
+    --line:#E5DFD5; --line2:#D7CEC1;
+    --ink:#1A1411; --ink2:#4C5661; --muted:#7C8792;
+    --pro:#0E9E7A; --con:#C6362B; --warn:#B67A10; --link:#1F6FD6;
+    --chip-py:#2C63C9; --chip-yaml:#9B47B8; --chip-sh:#2E9463;
+    --shadow:0 20px 44px -30px rgba(217,59,43,.35);
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
+    line-height:1.62;font-size:16px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+  a{color:var(--link);text-decoration:none}
+  a:hover{text-decoration:underline}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:4px}
+  code,.mono{font-family:var(--mono)}
+  ::selection{background:rgba(255,107,53,.28)}
+
+  header.top{padding:64px 0 30px;position:relative;overflow:hidden}
+  header.top::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(1100px 380px at 12% -8%,rgba(255,107,53,.10),transparent 60%);pointer-events:none}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ember);font-weight:600;margin:0 0 14px}
+  h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,5.4vw,52px);line-height:1.04;
+    letter-spacing:-.015em;margin:0 0 16px;text-wrap:balance}
+  h1 .amp{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{font-size:clamp(16px,2.1vw,19px);color:var(--ink2);max-width:66ch;margin:0 0 26px}
+  .lede strong{color:var(--ink);font-weight:600}
+
+  .stats{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 8px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px;min-width:104px}
+  .stat .n{font-family:var(--display);font-weight:700;font-size:23px;line-height:1;letter-spacing:-.01em;
+    font-variant-numeric:tabular-nums}
+  .stat .n.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat .l{font-size:11.5px;color:var(--muted);margin-top:6px;letter-spacing:.02em}
+
+  .provenance{margin-top:24px;font-size:13px;color:var(--muted);border-left:2px solid var(--line2);
+    padding:4px 0 4px 14px;max-width:70ch}
+  .provenance b{color:var(--ink2);font-weight:600}
+
+  section{padding:30px 0}
+  .shead{display:flex;align-items:baseline;gap:14px;margin:0 0 6px}
+  .shead .sn{font-family:var(--mono);font-size:12px;color:var(--ember);font-weight:600;letter-spacing:.1em}
+  .shead h2{font-family:var(--display);font-weight:700;font-size:clamp(21px,3vw,29px);letter-spacing:-.01em;margin:0}
+  .sdesc{color:var(--ink2);max-width:70ch;margin:0 0 22px;font-size:15.5px}
+
+  .flow-scroll{overflow-x:auto;padding:6px 0 14px;margin:0 -22px;padding-left:22px;padding-right:22px}
+  .flow{display:flex;align-items:stretch;gap:0;min-width:min-content}
+  .fstep{flex:0 0 auto;max-width:190px;background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;padding:12px 14px;position:relative}
+  .fstep .fk{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .fstep .ft{font-weight:600;font-size:13.5px;margin-top:3px;line-height:1.3}
+  .fstep .ff{font-family:var(--mono);font-size:11px;color:var(--link);margin-top:5px;word-break:break-word}
+  .farrow{flex:0 0 auto;align-self:center;color:var(--ember);font-size:18px;padding:0 8px;opacity:.8}
+  .fstep.accent{border-color:rgba(255,107,53,.4);box-shadow:inset 0 0 0 1px rgba(255,107,53,.12)}
+
+  .group{margin-top:34px}
+  .group-h{display:flex;align-items:center;gap:10px;margin:0 0 14px;padding-bottom:9px;
+    border-bottom:1px solid var(--line)}
+  .group-h .dot{width:9px;height:9px;border-radius:50%;background:var(--grad);flex:0 0 auto}
+  .group-h h3{font-family:var(--display);font-weight:700;font-size:16.5px;letter-spacing:.01em;margin:0}
+  .group-h .gcount{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-left:auto}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+    padding:20px 22px;margin-bottom:16px;position:relative}
+  .card::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:3px;border-radius:3px;
+    background:var(--grad);opacity:.9}
+  .card-h{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:4px}
+  .fname{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--ink)}
+  .chip{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+    padding:3px 8px;border-radius:6px;border:1px solid transparent}
+  .chip.py{color:var(--chip-py);border-color:color-mix(in srgb,var(--chip-py) 40%,transparent);
+    background:color-mix(in srgb,var(--chip-py) 12%,transparent)}
+  .chip.yaml{color:var(--chip-yaml);border-color:color-mix(in srgb,var(--chip-yaml) 40%,transparent);
+    background:color-mix(in srgb,var(--chip-yaml) 12%,transparent)}
+  .chip.sh{color:var(--chip-sh);border-color:color-mix(in srgb,var(--chip-sh) 40%,transparent);
+    background:color-mix(in srgb,var(--chip-sh) 12%,transparent)}
+  .lines{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-left:auto;
+    font-variant-numeric:tabular-nums}
+  .fpath{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin:0 0 14px;word-break:break-all}
+
+  .block{margin:11px 0}
+  .block .bl{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ember);font-weight:600;margin-bottom:3px}
+  .block p{margin:0;color:var(--ink2);font-size:14.5px}
+  .block p code{background:var(--panel2);border:1px solid var(--line);border-radius:4px;
+    padding:.5px 5px;font-size:12.5px;color:var(--ink);word-break:break-word}
+
+  .pc{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+  @media (max-width:640px){.pc{grid-template-columns:1fr}}
+  .pc .col{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:13px 15px}
+  .pc .col.pros{border-top:2px solid var(--pro)}
+  .pc .col.cons{border-top:2px solid var(--con)}
+  .pc .col h4{margin:0 0 9px;font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-family:var(--mono)}
+  .pc .col.pros h4{color:var(--pro)}
+  .pc .col.cons h4{color:var(--con)}
+  .pc ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+  .pc li{font-size:13.5px;color:var(--ink2);padding-left:17px;position:relative;line-height:1.5}
+  .pc .pros li::before{content:"+";position:absolute;left:0;color:var(--pro);font-weight:700}
+  .pc .cons li::before{content:"\2212";position:absolute;left:0;color:var(--con);font-weight:700}
+  .pc li code{font-family:var(--mono);font-size:12px;color:var(--ink);background:var(--bg);
+    border:1px solid var(--line);border-radius:4px;padding:0 4px}
+
+  .flag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;
+    letter-spacing:.06em;color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 45%,transparent);
+    background:color-mix(in srgb,var(--warn) 12%,transparent);border-radius:6px;padding:3px 8px;margin-top:2px}
+
+  .mod-intro{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+    padding:20px 22px;margin-bottom:20px;position:relative}
+  .mod-intro::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:linear-gradient(180deg,#4C8BF5,#22D3EE);border-radius:3px}
+  .mod-intro p{margin:0;color:var(--ink2);font-size:15px}
+  .mod-intro .split{margin-top:12px;display:flex;gap:12px;flex-wrap:wrap}
+  .mod-intro .split .s{flex:1 1 240px;background:var(--panel2);border:1px solid var(--line);
+    border-radius:10px;padding:11px 14px;font-size:13.5px;color:var(--ink2)}
+  .mod-intro .split .s b{color:var(--ink);display:block;margin-bottom:2px;font-size:12px;
+    font-family:var(--mono);letter-spacing:.04em}
+
+  .toolcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+    padding:20px 22px;margin-bottom:16px}
+  .toolcard .th{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+  .toolcard .tn{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:-.01em}
+  .verdict{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    padding:4px 11px;border-radius:20px;margin-left:auto}
+  .verdict.adopt{color:var(--pro);border:1px solid color-mix(in srgb,var(--pro) 50%,transparent);
+    background:color-mix(in srgb,var(--pro) 12%,transparent)}
+  .verdict.partial{color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 50%,transparent);
+    background:color-mix(in srgb,var(--warn) 12%,transparent)}
+  .verdict.skip{color:var(--con);border:1px solid color-mix(in srgb,var(--con) 50%,transparent);
+    background:color-mix(in srgb,var(--con) 12%,transparent)}
+  .verdict.watch{color:var(--link);border:1px solid color-mix(in srgb,var(--link) 50%,transparent);
+    background:color-mix(in srgb,var(--link) 12%,transparent)}
+  .premise{color:var(--muted);font-size:13.5px;font-style:italic;margin:2px 0 14px}
+  .wh{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:640px){.wh{grid-template-columns:1fr}}
+  .wh .w{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:13px 15px}
+  .wh .w.help{border-left:2px solid var(--pro)}
+  .wh .w.nohelp{border-left:2px solid var(--con)}
+  .wh .w .wl{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    margin-bottom:6px;font-weight:600}
+  .wh .w.help .wl{color:var(--pro)}
+  .wh .w.nohelp .wl{color:var(--con)}
+  .wh .w p{margin:0;font-size:13.5px;color:var(--ink2)}
+
+  .more-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+  @media (max-width:680px){.more-grid{grid-template-columns:1fr}}
+  .mcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 17px}
+  .mcard .mh{display:flex;align-items:center;gap:9px;margin-bottom:3px;flex-wrap:wrap}
+  .mcard .mn{font-family:var(--display);font-weight:700;font-size:15.5px}
+  .mcard .mcat{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);border:1px solid var(--line2);border-radius:5px;padding:2px 6px;margin-left:auto}
+  .mcard p{margin:6px 0 0;font-size:13.5px;color:var(--ink2)}
+  .mcard .fit{margin-top:8px;font-size:12.5px;color:var(--ink);font-family:var(--mono);
+    border-top:1px dashed var(--line);padding-top:8px}
+  .mcard .fit b{color:var(--ember);font-weight:600}
+
+  .rec{background:linear-gradient(135deg,color-mix(in srgb,var(--ember) 9%,var(--panel)),var(--panel));
+    border:1px solid color-mix(in srgb,var(--ember) 30%,var(--line));border-radius:var(--r);
+    padding:22px 24px;margin-top:20px;box-shadow:var(--shadow)}
+  .rec .rl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ember);font-weight:600;margin-bottom:8px}
+  .rec p{margin:0;color:var(--ink);font-size:15.5px;line-height:1.66}
+
+  footer{border-top:1px solid var(--line);margin-top:44px;padding:28px 0 60px;color:var(--muted);font-size:13px}
+  footer a{color:var(--link)}
+  footer .fl{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:12px}
+
+  .toggle{position:fixed;top:16px;right:16px;z-index:20;background:var(--panel);border:1px solid var(--line2);
+    color:var(--ink2);border-radius:20px;padding:7px 13px;font-family:var(--mono);font-size:11px;cursor:pointer;
+    letter-spacing:.05em}
+  .toggle:hover{border-color:var(--ember);color:var(--ink)}
+  @media (prefers-reduced-motion:no-preference){
+    .card,.toolcard,.mcard{transition:border-color .2s ease}
+    .card:hover,.toolcard:hover,.mcard:hover{border-color:var(--line2)}
+  }
+</style>
+</head>
+<body>
+<button class="toggle" id="themeToggle" aria-label="Toggle light or dark theme">◑ theme</button>
+
+<header class="top">
+  <div class="wrap">
+    <p class="eyebrow">ROCm / TheRock · CI internals</p>
+    <h1>The shadow build system, <span class="amp">explained</span></h1>
+    <p class="lede">TheRock's real build orchestrator isn't YAML — it's ~46 Python scripts that compute
+      GitHub Actions matrices at runtime and hand them to workflows as JSON. This is a field guide to the
+      files that matter: <strong>why each exists, what's inside, how it wires to the others, and where it's
+      strong or brittle</strong> — plus an honest read on which build/CI tools would actually cut the
+      file sprawl.</p>
+    <div class="stats" id="stats"></div>
+    <p class="provenance">Read from the public, MIT-licensed <a href="https://github.com/ROCm/TheRock" target="_blank" rel="noopener">ROCm/TheRock</a>
+      repo, <b>analyzed on <code>main</code> @ <code>f44bc6af</code> (July 2026)</b>. The repo is
+      mid-migration — a <code>multi_arch_*</code> path is superseding older code — so specifics drift.
+      Descriptions are grounded in the actual source; they are explanations, not excerpts.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <div class="shead"><span class="sn">01</span><h2>How a build gets decided</h2></div>
+    <p class="sdesc">Native Actions matrices are static YAML. TheRock's aren't — the job set is computed from
+      GPU family × OS × channel × trigger × changed files × PR labels. Follow one push through
+      the pipeline; each stop is a file documented below.</p>
+    <div class="flow-scroll"><div class="flow" id="flow"></div></div>
+  </section>
+
+  <section>
+    <div class="shead"><span class="sn">02</span><h2>The files, by role</h2></div>
+    <p class="sdesc">Twelve driver files carry ~90% of the understanding. Grouped by the job they do in the
+      pipeline above.</p>
+    <div id="groups"></div>
+  </section>
+
+  <section>
+    <div class="shead"><span class="sn">03</span><h2>Would a modern tool kill the sprawl?</h2></div>
+    <p class="sdesc">The honest question behind ~22k lines of CI code: would a modern tool remove the manual
+      work of maintaining it? Short answer — mostly no, because the sprawl is a config-generation problem,
+      not a build-speed one. Here's the per-tool read.</p>
+    <div id="modIntro"></div>
+    <div id="tools"></div>
+    <div id="rec"></div>
+  </section>
+
+  <section>
+    <div class="shead"><span class="sn">04</span><h2>Other tools worth knowing</h2></div>
+    <p class="sdesc">Beyond buildx / BuildKite / Bazel, these are the credible options in the same space —
+      grouped by which of the two problems they actually attack. Fit ratings are for <em>TheRock specifically</em>
+      (a k8s-hosted, CMake-from-source, multi-arch superbuild), not in general.</p>
+    <div id="more"></div>
+
+    <div class="mod-intro" style="margin-top:22px">
+      <p><b style="color:var(--ink)">Concretely — if TheRock adopted Dagger.</b> The decision logic doesn't
+        disappear; it moves from ~46 loose scripts + 54 fromJSON YAMLs into one typed module you can run on
+        your laptop. GitHub Actions shrinks to a thin trigger.</p>
+      <div class="split" style="margin-top:14px">
+        <div class="s"><b>Today</b>46 Python scripts serialize JSON → <code>GITHUB_OUTPUT</code>; 54 workflow
+          YAMLs re-parse it via <code>fromJSON()</code>. A matrix bug shows up at 3am in the nightly, not at
+          review. Answering “what will CI do with my PR?” means push-and-watch.</div>
+        <div class="s"><b>With Dagger</b>One module exposes <code>ci(event)</code> that returns the typed job
+          graph. <code>dagger call ci --event=pr.json</code> prints the exact matrix locally in seconds. The
+          workflow becomes a few lines that just invoke it.</div>
+      </div>
+      <p style="margin-top:14px;color:var(--ink2);font-size:14px"><b style="color:var(--pro)">Shrinks:</b>
+        most of the 54 orchestration YAMLs collapse to thin triggers; the <code>fromJSON</code>
+        string-injection seam vanishes; the generator becomes directly unit-testable and locally runnable.
+        &nbsp;<b style="color:var(--con)">Doesn't:</b> GPU-hardware runners are still required; the
+        decision logic still has to exist (now as typed code); and it's a real migration — best done
+        incrementally by first wrapping the existing scripts as Dagger functions, not a big-bang rewrite.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fl">
+      <a href="https://github.com/ROCm/TheRock" target="_blank" rel="noopener">ROCm/TheRock ↗</a>
+      <a href="https://github.com/ROCm/TheRock/tree/main/build_tools/github_actions" target="_blank" rel="noopener">build_tools/github_actions ↗</a>
+      <a href="/blog/therock-graph/" target="_blank" rel="noopener">Interactive architecture graph ↗</a>
+    </div>
+    A companion to “Owning CI for AMD's unified GPU stack.” File explanations generated from a static
+    analysis of the repo; the tool verdicts are an engineering opinion, not vendor guidance.
+  </div>
+</footer>
+
+<script type="application/json" id="data">
+{
+  "stats":[
+    {"n":"46","l":"CI Python scripts","grad":true},
+    {"n":"~12.4k","l":"lines of Python"},
+    {"n":"54","l":"workflow YAMLs"},
+    {"n":"~9.5k","l":"lines of YAML"},
+    {"n":"12","l":"files explained here","grad":true}
+  ],
+  "flow":[
+    {"k":"trigger","t":"GitHub event","f":"push · PR · schedule · dispatch"},
+    {"k":"filter","t":"Is CI even needed?","f":"configure_ci_path_filters.py","accent":true},
+    {"k":"scope","t":"Which stages rebuild","f":"stage_impact.py"},
+    {"k":"decide","t":"Compute the job set","f":"configure_multi_arch_ci.py","accent":true},
+    {"k":"lookup","t":"What hardware exists","f":"amdgpu_family_matrix.py"},
+    {"k":"emit","t":"JSON → GITHUB_OUTPUT","f":"setup_multi_arch.yml"},
+    {"k":"expand","t":"fromJSON() → matrix","f":"multi_arch_ci.yml","accent":true},
+    {"k":"fan-out","t":"Per-platform build/test","f":"multi_arch_ci_linux.yml"},
+    {"k":"test","t":"Build the test matrix","f":"fetch_test_configurations.py"},
+    {"k":"upload","t":"Logs + artifacts → S3","f":"post_build_upload.py"},
+    {"k":"promote","t":"Publish to release buckets","f":"publish_rocm_to_release_buckets.py"}
+  ],
+  "groups":[
+    {
+      "name":"Change detection — should we build, and how much?",
+      "files":[
+        {
+          "name":"configure_ci_path_filters.py","chip":"py","lines":298,
+          "path":"build_tools/github_actions/configure_ci_path_filters.py",
+          "why":"Provides the git + path-filtering primitives that decide whether a change set is CI-relevant, so docs-only or otherwise skippable commits don't trigger expensive builds while any edit to a CI workflow always does.",
+          "inside":"Public API: <code>get_git_commit_hash()</code> (fetches missing SHAs from a shallow checkout), <code>get_git_modified_paths()</code>, <code>get_git_submodule_paths()</code>, and <code>is_ci_run_required()</code>. It splits changed paths into <code>.github/workflows</code> vs everything else, matches CI workflow files against a hand-maintained allowlist, and glob-matches the rest against skippable patterns (<code>docs/*</code>, <code>*.md</code>, <code>dockerfiles/*</code>, <code>skills/*</code>). CI runs if any CI workflow file or any non-skippable path changed.",
+          "connects":"Imported by <code>configure_multi_arch_ci.py</code>, which calls it inside <code>GitContext.from_repo()</code> and <code>should_skip_ci()</code>. Shells out to <code>git</code> as its upstream input; a unit test verifies every workflow transitively called by <code>multi_arch_ci.yml</code> appears in the allowlist.",
+          "pros":["Small, focused, side-effect-light module with a clear public API","Conservative default — any workflow-file change forces CI — backed by a test-verified allowlist","Robust to shallow CI checkouts via on-demand fetch and graceful timeout fallbacks","Skippable patterns are well-commented on why each path is safe to ignore"],
+          "cons":["The CI-workflow allowlist is maintained by hand (the file itself flags a TODO to derive it), so new workflows can be forgotten","Subprocess/git coupling makes the core functions hard to unit-test without a real repo","Filename-only matching ignores directory — two workflows sharing a basename could collide","Timeout paths return None/empty which callers must read as 'run everything' — a subtle failure contract"]
+        },
+        {
+          "name":"stage_impact.py","chip":"py","lines":291,
+          "path":"build_tools/github_actions/stage_impact.py",
+          "why":"Finer-grained build-stage impact analysis: given changed paths/submodules it uses BUILD_TOPOLOGY metadata to compute which stages must rebuild vs. which can be copied/reused — enabling partial-rebuild CI instead of always building everything.",
+          "inside":"<code>StageImpactAnalyzer.analyze()</code> normalizes inputs, checks <code>_requires_full_ci()</code>, resolves each input to a <code>SourceSet</code>, maps source sets → artifact groups → build stages, then expands downstream consumer stages via a worklist over <code>artifact_deps</code>. Returns a frozen <code>StageImpactResult</code> (rebuild_stages, copy_stages, full_rebuild_required, reasons, unmatched_inputs).",
+          "connects":"Depends on <code>_therock_utils.build_topology</code> (BuildTopology, SourceSet, get_topology); its data source is <code>BUILD_TOPOLOGY.toml</code>. Appears to be forward-looking infra: not yet wired into <code>configure_multi_arch_ci.py</code>, which still marks per-stage prebuilt decisions as a TODO (#3399).",
+          "flag":"New / aspirational — no live consumer in the main pipeline yet",
+          "pros":["Deterministic, purely functional analyzer over injected topology — trivially unit-testable","Safety-first: unknown inputs or tooling/topology changes fall back to full rebuild","Correctly models transitive impact via downstream artifact-dependency expansion","Rich structured result (reasons, copy vs rebuild) gives good CI diagnostics"],
+          "cons":["Not yet consumed by the multi-arch pipeline, so its value is unrealized pending #3399","Conservative rules (whole <code>build_tools/</code>, <code>docs/</code> force full CI) will often defeat partial-rebuild gains","Correctness hinges entirely on BUILD_TOPOLOGY.toml completeness","Overlaps conceptually with configure_ci_path_filters.py — two parallel change-classification systems to keep consistent"]
+        }
+      ]
+    },
+    {
+      "name":"Matrix generation — the decision engine",
+      "files":[
+        {
+          "name":"configure_multi_arch_ci.py","chip":"py","lines":1343,
+          "path":"build_tools/github_actions/configure_multi_arch_ci.py",
+          "why":"The central decision engine for multi-arch CI: given a GitHub event it decides whether CI runs at all, which job groups run / skip / reuse-prebuilt, which GPU families build and test per platform, and emits the JSON build configs the workflow expands into matrices.",
+          "inside":"A 6-step pipeline of pure functions over frozen dataclasses. <code>CIInputs.from_environ()</code> parses the event; <code>GitContext.from_repo()</code> captures changed files/submodules; <code>should_skip_ci()</code> gates on <code>ci:skip</code> labels and docs-only diffs; <code>decide_jobs()</code> builds a <code>JobDecisions</code> DAG (per-stage RUN/PREBUILT/SKIP, and a test type of quick/standard/comprehensive/full); <code>select_targets()</code> maps trigger + PR labels (<code>gfx*</code>, <code>ci:run-all-archs</code>) to families; <code>expand_build_configs()</code> emits <code>BuildConfig</code> objects; <code>write_outputs()</code> serializes to <code>GITHUB_OUTPUT</code>.",
+          "connects":"Imports <code>amdgpu_family_matrix</code>, <code>configure_ci_path_filters</code>, and <code>_therock_utils.build_topology</code>, plus the pytorch/jax/rocm-python matrix generators and <code>github_actions_api</code>. Upstream inputs are the GitHub event + env set by <code>setup_multi_arch.yml</code>; downstream, its <code>*_build_config</code>/<code>enable_build_jobs</code>/<code>test_type</code> outputs are consumed via <code>fromJSON</code> by the <code>multi_arch_ci*.yml</code> workflows.",
+          "pros":["Clean pipeline: each step is a pure function of typed frozen dataclasses, testable with no env or git access","Rich trigger/label policy is centralized and documented in docstrings","Graceful degradation — falls back to an empty git context when no diff base exists","Per-family/per-variant nuance (ASAN sandbox runners, nightly-only, submodule-bump gating) handled explicitly"],
+          "cons":["1,343 lines with growing responsibilities; one function concentrates many special-case test-runner rules","Heavy TODO footprint (#3399 prebuilt decisions, #3433 test action not plumbed) plus a temporary MI455 family-override hack","Mid-migration — overlaps legacy single-arch paths, and some DAG features are aspirational","Stringly-typed workflow outputs and dict-shaped per-family info rather than validated schemas — downstream YAML coupling breaks easily"]
+        },
+        {
+          "name":"amdgpu_family_matrix.py","chip":"py","lines":504,
+          "path":"build_tools/github_actions/amdgpu_family_matrix.py",
+          "why":"The fallback registry of AMD GPU families — their per-platform test runners, gfx targets, build variants, and runner pools — so the engine knows what hardware/targets exist and where jobs run when the external therock-ci-config is unavailable.",
+          "inside":"Three nested dicts keyed by cadence — <code>presubmit</code> (PRs), <code>postsubmit</code> (push), <code>nightly</code> (schedule) — each family carrying <code>test-runs-on</code>, weighted <code>test-runs-on-labels</code>, <code>fetch-gfx-targets</code>, <code>build_variants</code>, and gating flags. <code>get_all_families_for_trigger_types()</code> merges cadences (preferring an external config); <code>select_build_runner()</code> / <code>select_weighted_label()</code> do weighted-random runner selection.",
+          "connects":"Consumed directly by <code>configure_multi_arch_ci.py</code> (select_targets, expand_build_configs) and by <code>fetch_test_configurations.py</code>. Optionally defers to <code>ROCm/therock-ci-config</code> via the <code>CI_CONFIG_PATH</code> env var; a companion test validates family-name uniqueness.",
+          "flag":"Legacy duplicate — a header warns changes must be mirrored in new_amdgpu_family_matrix.py",
+          "pros":["Single declarative source of truth for family/runner/variant metadata — easy to read and extend","External-config indirection lets runner labels change without code edits, with a local fallback","Weighted runner selection distributes load across heterogeneous machine pools cleanly","Extensive inline docs of every field and per-cadence semantic"],
+          "cons":["Mid-migration: a legacy twin of new_amdgpu_family_matrix.py, at risk of drift","Untyped nested dicts (no dataclasses/TypedDict) make schema errors silent until runtime","Module-level mutable state and random selection make deterministic testing harder","Blocks of disabled test-runs-on entries and TODO-tracked hardware caveats accumulate stale config"]
+        }
+      ]
+    },
+    {
+      "name":"Workflows — the YAML that consumes the JSON",
+      "files":[
+        {
+          "name":"setup_multi_arch.yml","chip":"yaml","lines":195,
+          "path":".github/workflows/setup_multi_arch.yml",
+          "why":"The reusable matrix/config generator: it turns raw CI inputs (GPU families, test labels, release type) into the structured build_config JSON and package versions that every downstream build/test job consumes via fromJSON.",
+          "inside":"A pure <code>workflow_call</code> reusable with a large typed input surface and matching outputs (<code>enable_build_jobs</code>, <code>linux/windows_build_config</code>, <code>test_type</code>, <code>rocm_package_version</code>, resolved ref). A single setup job checks out the repo (fetch-depth 2 for diffing) plus an optional therock-ci-config, runs <code>configure_multi_arch_ci.py</code> to emit the build_config JSON, then <code>compute_rocm_package_version.py</code> and (for external repos) <code>detect_external_repo_config.py</code>.",
+          "connects":"Called by <code>multi_arch_ci.yml</code>'s setup job. Its Python generators produce exactly the JSON that <code>multi_arch_ci_linux.yml</code>/<code>_windows.yml</code> unpack with <code>fromJSON(inputs.build_config)</code>. Emits a resolved commit SHA so all downstream jobs pin the same ref.",
+          "pros":["Centralizes all CI branching in Python, keeping YAML declarative","Emits a resolved commit SHA so the whole run is pinned even if the branch HEAD moves","Optional external_repo support lets rocm-libraries and others reuse TheRock CI","Separate deb/rpm/python version outputs cleanly feed native-package vs wheel jobs"],
+          "cons":["build_config is an opaque JSON blob — its schema lives implicitly in the Python, not the workflow","therock-ci-config checkout is continue-on-error, so a silently missing config can change behavior","Reads the event payload (GITHUB_EVENT_PATH) which may not match workflow_call inputs — a documented footgun","Single ubuntu runner is a serialization point; any script error blocks all build jobs"]
+        },
+        {
+          "name":"multi_arch_ci.yml","chip":"yaml","lines":156,
+          "path":".github/workflows/multi_arch_ci.yml",
+          "why":"Top-level pre-submit gate and orchestrator for the sharded multi-arch build/test pipeline. Its header notes it mirrors — and is the migration replacement for — the legacy ci.yml, which no longer exists in the tree.",
+          "inside":"Triggers on push, pull_request (labeled/opened/synchronize), and a rich workflow_dispatch (families, test labels, prebuilt stages, baseline_run_id). Concurrency cancels in-progress runs. Jobs: <code>setup</code> (calls setup_multi_arch.yml), <code>linux_build_and_test</code> and <code>windows_build_and_test</code> (each conditionally called via <code>fromJSON(needs.setup.outputs.*_build_config)</code>), <code>manifest_diff</code>, and an <code>always()</code>-running <code>ci_summary</code>.",
+          "connects":"Feeds its matrix entirely from <code>setup_multi_arch.yml</code>. Dispatches to reusable <code>multi_arch_ci_linux.yml</code> / <code>_windows.yml</code> and <code>manifest-diff.yml</code>. The ci_summary job runs <code>workflow_summary.py</code> with <code>toJSON(needs)</code> to gate overall pass/fail.",
+          "flag":"Staging/mirror workflow mid-migration — duplicates intent with the retired ci.yml",
+          "pros":["Clean separation: one setup job computes config, per-platform reusable workflows do the work","Skips whole platforms cheaply via empty build_config checks rather than spinning up runners","always() ci_summary gives one authoritative pass/fail even when children are skipped/failed","Flexible manual re-runs (prebuilt_stages + baseline_run_id) reuse prior artifacts"],
+          "cons":["Mid-migration mirror — duplicates the retired ci.yml naming/intent","Heavy reliance on fromJSON of stringly-typed build_config makes failures opaque if setup emits malformed JSON","PR runs only on labeled/opened/synchronize, so label-gated contributors may not trigger builds","Deep reusable-workflow nesting makes the true job graph hard to follow from this file alone"]
+        },
+        {
+          "name":"multi_arch_ci_linux.yml","chip":"yaml","lines":322,
+          "path":".github/workflows/multi_arch_ci_linux.yml",
+          "why":"Representative per-platform reusable workflow: given one Linux build_config JSON it runs the full Linux fan-out — optional prebuilt-stage copy, multi-arch build, artifact validation, per-family tests, native deb/rpm build + install tests, and Python/PyTorch wheel build + test.",
+          "inside":"<code>workflow_call</code>-only. Nearly every job unpacks <code>fromJSON(inputs.build_config).*</code> and is guarded by <code>!failure() &amp;&amp; !cancelled()</code>. Jobs include copy_prebuilt_stages, build_multi_arch_stages, validate_artifact_structure, a matrixed <code>test_artifacts_per_family</code> (matrix from <code>fromJSON(...).per_family_info</code>), native deb/rpm build + three distro install tests (Ubuntu/RHEL/SLES), and PyTorch wheel jobs.",
+          "connects":"Called by <code>multi_arch_ci.yml</code> with the JSON from setup. In turn calls many reusable workflows (build_portable_linux, test_artifacts, native package build/install, wheels) and directly invokes <code>build_tools/artifact_manager.py</code> for prebuilt-stage reuse.",
+          "pros":["Fully data-driven fan-out — build/test topology decided by the JSON, not hardcoded jobs","<code>fail-fast:false</code> matrices let one family or OS fail without killing siblings","Prebuilt-stage copy path enables fast iteration by reusing a baseline run's artifacts","Broad native-package install coverage (Ubuntu/RHEL/SLES) validates real distro installs"],
+          "cons":["Very long, with pervasive <code>fromJSON(inputs.build_config)</code> repetition — verbose and error-prone to edit","Chained <code>!failure()/!cancelled()</code> guards make effective run conditions hard to reason about","Tight coupling to the exact build_config schema — a setup change can silently skip jobs","PyTorch/kpack-split conditionals carry migration TODOs, signaling not-yet-stable logic"]
+        }
+      ]
+    },
+    {
+      "name":"Shared plumbing — API, tests, baselines",
+      "files":[
+        {
+          "name":"github_actions_api.py","chip":"py","lines":772,
+          "path":"build_tools/github_actions/github_actions_api.py",
+          "why":"The central, dependency-light (stdlib urllib only) shared library that gives every CI script one place to talk to the GitHub REST API and to emit GitHub Actions workflow commands — so auth, error handling, and env-file writing aren't reimplemented per script.",
+          "inside":"A <code>GitHubAPI</code> class auto-detects auth once (GITHUB_TOKEN → <code>gh</code> CLI → unauthenticated) and routes requests via urllib or subprocess, with rich errors for 403/rate-limit/404/timeout. A module singleton backs thin wrappers: <code>gha_query_workflow_run_by_id</code>, <code>gha_query_last_workflow_run</code>, <code>gha_resolve_git_ref</code>, <code>gha_fetch_file_contents</code>. Workflow-command helpers <code>gha_set_env</code>, <code>gha_add_to_path</code>, <code>gha_set_output</code> (heredoc multi-line handling), and <code>gha_append_step_summary</code> write to <code>$GITHUB_ENV</code>/<code>$GITHUB_PATH</code>/<code>$GITHUB_OUTPUT</code>/<code>$GITHUB_STEP_SUMMARY</code>.",
+          "connects":"The highest fan-in file in the CI layer — ~48 scripts import it (often <code>from github_actions_api import *</code>), including configure_multi_arch_ci, fetch_test_configurations, baseline_runs, post_build_upload, and build_tools/configure_stage.py. Talks outward to api.github.com and the gh CLI; writes the GHA env files.",
+          "pros":["Zero third-party deps (urllib/subprocess) — works in minimal CI containers and local dev alike","Graceful auth fallback lets the same scripts run in CI and on a laptop","Actionable errors distinguish rate limit / permissions / 404 / network / timeout via one error type","Correct GHA quirk handling: multiline heredoc outputs, warns instead of crashing when env vars are absent"],
+          "cons":["Author-flagged scope creep — <code>str2bool</code> and rocminfo GPU helpers admittedly don't belong here (TODOs to move)","REST helpers mostly fetch only the first page, so results can be silently truncated","<code>from … import *</code> across ~48 consumers pollutes namespaces and hides the true public surface","Process-lifetime auth caching means a token changing mid-run isn't re-detected"]
+        },
+        {
+          "name":"fetch_test_configurations.py","chip":"py","lines":954,
+          "path":"build_tools/github_actions/fetch_test_configurations.py",
+          "why":"Generates the CI test-job matrix from a single declarative source of truth, translating per-component settings plus environment inputs (platform, family selection, test type, labels) into the JSON the reusable test workflows consume.",
+          "inside":"A large <code>test_matrix</code> dict declares each component (sanity, hip-tests, rocblas, rccl, miopen, …) with <code>fetch_artifact_args</code>, timeouts, <code>test_script</code>, supported platforms, and per-platform <code>total_shards_dict</code>. <code>run()</code> reads env inputs, filters by platform / family exclusion / <code>test:</code> labels, expands shards into a 1-indexed array (collapsing to 1 for quick runs), special-cases Windows hip-tests, and emits <code>sanity_component</code> / <code>components</code> / <code>platform</code> via <code>gha_set_output</code>.",
+          "connects":"Invoked by reusable workflows <code>test_component.yml</code> and <code>test_artifacts.yml</code>, which fromJSON its outputs. Imports <code>github_actions_api</code> and <code>amdgpu_family_matrix</code> (weighted runner selection), and reaches into the repo-root <code>tests/</code> tree for extended matrices. Each job runs the referenced <code>test_executable_scripts/*.py</code>.",
+          "pros":["Declarative matrix co-locates sharding, timeouts, artifact flags, and platform support per component","Real-world CI knobs: per-family exclusions, multi-GPU gating, ASAN routing, weighted load-balancing, quick vs full sharding","Cleanly separates the mandatory sanity prerequisite from the rest of the matrix","Extended functional/benchmark tests are opt-in merges, keeping the default matrix small"],
+          "cons":["A single ~600-line dict is a hotspot — heavy churn, merge conflicts, and inconsistencies (Windows shard counts for Linux-only components)","Windows hip-tests handling is a bespoke branch inside the main loop — a second path to keep in sync","Relies on repo-root-relative paths and sys.path insertion, so it only works when run from the repo root","Correctness depends on stringly-typed env inputs with little validation"]
+        },
+        {
+          "name":"baseline_runs.py","chip":"py","lines":856,
+          "path":"build_tools/github_actions/baseline_runs.py",
+          "why":"Selects a previous successful workflow run whose prebuilt artifacts can be safely reused as a build baseline — avoiding redundant rebuilds while guarding against reusing incompatible binaries.",
+          "inside":"Frozen dataclasses each own one validation dimension: <code>ArtifactAvailability</code>, <code>WorkflowJobHealth</code>, <code>CommitCompatibility</code> (candidate is same/ancestor, not divergent), and <code>RunRecency</code>. <code>select_baseline_run()</code> iterates newest-first candidates and applies checks cheapest-first (local recency + ancestry, then a job-health API call, then artifact-backend listing), returning the first fully valid run or None. It deliberately treats 'unknown' ancestry (outside the history window) as unsafe.",
+          "connects":"Imports <code>gha_send_request</code> from github_actions_api, and pulls artifact infra from <code>artifact_manager</code>, <code>_therock_utils.artifact_backend</code> (S3Backend), and <code>_therock_utils.workflow_outputs</code>. Consumed so far only by its test — no production caller yet imports <code>select_baseline_run</code>.",
+          "flag":"New / not-yet-wired — only the test references it; intended to supply a CI baseline_run_id",
+          "pros":["Safety-first: refuses to reuse newer/divergent/unconfirmable runs, preventing mixed-binary corruption","Highly testable via injectable backend/fetcher seams and pure frozen-dataclass validators","Cheap-checks-before-expensive ordering minimizes GitHub API and S3 traffic","Structured results give clear, loggable skip reasons rather than opaque booleans"],
+          "cons":["Not yet on the live CI path (mid-migration new code)","Commit-ancestry accuracy is bounded by the caller-supplied history window — legit ancestors outside it are rejected","Artifact validation checks archive filename presence, not a full per-component manifest — a partial upload could pass","Does baseline artifact-reuse only — despite appearances, there's no flake/quarantine logic here"]
+        }
+      ]
+    },
+    {
+      "name":"Artifacts &amp; release — getting builds out",
+      "files":[
+        {
+          "name":"post_build_upload.py","chip":"py","lines":291,
+          "path":"build_tools/github_actions/post_build_upload.py",
+          "why":"Runs as the post-build CI step to archive logs and push build artifacts/logs/manifest to S3 — so results, including from failed builds, stay inspectable and linkable from the GitHub job summary.",
+          "inside":"An argparse CLI keyed on <code>--artifact-group</code>, <code>--build-dir</code>, <code>--run-id</code>, <code>--job-status</code>. Key functions archive ninja logs and zstd-compress verbose ccache logs (lazy <code>pyzstd</code> import), <code>upload_logs</code>/<code>upload_manifest</code> push to a run-scoped S3 layout, and <code>write_gha_build_summary</code> appends Logs/Observability/Artifacts/Manifest links — gating the Artifacts link on <code>job_status=='success'</code>. Supports <code>--dry-run</code> and <code>--output-dir</code> local staging.",
+          "connects":"Invoked from build workflows as a post-build step (given <code>--run-id</code>/<code>--job-status</code> from GitHub context). Uploads to the per-run S3 layout from <code>_therock_utils.workflow_outputs.WorkflowOutputRoot</code> via a storage backend; <code>generate_s3_index.py</code> later builds an index over the uploaded logs.",
+          "pros":["Always runs on failure paths too, so logs/artifacts survive cancelled or broken builds","zstd compression of verbose ccache logs with a lazy import avoids a hard dependency","<code>--dry-run</code> and <code>--output-dir</code> make the upload path testable without S3","Decouples S3 path logic into WorkflowOutputRoot rather than hardcoding buckets"],
+          "cons":["A missing <code>therock_manifest.json</code> raises and aborts the whole post-build step","The manifest path is hardcoded and brittle to layout changes","Credential/backend selection is implicit (env/CI), so misconfig surfaces only at upload time","No retry/backoff around directory uploads for transient S3 failures"]
+        },
+        {
+          "name":"publish_rocm_to_release_buckets.py","chip":"py","lines":283,
+          "path":"build_tools/github_actions/publish_rocm_to_release_buckets.py",
+          "why":"Promotes already-built ROCm release files from a run's artifacts bucket into durable release buckets (tarball / python / packages), keyed by release-type, so dev/nightly/prerelease consumers get stable download locations.",
+          "inside":"An argparse CLI requiring <code>--run-id</code> and <code>--release-type</code> (dev|nightly|prerelease) plus platform/variant flags. Three copy functions each call <code>backend.copy_directory</code>: tarballs → <code>v4/tarball</code>, python packages (kpack-split → <code>v4/whl</code> directly; legacy per-family → v3 staging + release), and native deb/rpm → dated paths for dev/nightly, fixed for prerelease. ASAN variant skips python packages; each function raises if zero files copied.",
+          "connects":"Called from release workflows (<code>multi_arch_release*.yml</code>) after builds upload artifacts. Source/dest buckets resolved by <code>_therock_utils.s3_buckets</code>; the source run located via <code>WorkflowOutputRoot.from_workflow_run</code>. Consumes native repos from <code>upload_package_repo.py</code>.",
+          "pros":["Single source of truth for dev/nightly/prerelease/asan bucket routing and versioned paths","Fails loudly when an expected artifact class is empty instead of silently publishing nothing","<code>--dry-run</code> prints the full copy plan for safe verification","Handles legacy per-family (v3) and new kpack-split (v4) layouts side by side"],
+          "cons":["Prerelease native-package copy overwrites existing repodata without merging, dropping earlier packages (explicit TODO)","Windows native packages are unsupported (guarded by platform check)","Carries mid-migration dual v3/v4 branching that increases surface area","No transactional guarantee across the three copy phases — a mid-run failure leaves a partial release"]
+        }
+      ]
+    }
+  ],
+  "modIntro":{
+    "text":"TheRock's file sprawl isn't caused by slow builds or by Docker — it's caused by dynamic build-matrix generation that native GitHub Actions syntax can't express. GHA matrices are static YAML, but TheRock computes jobs at runtime from (gfx family × OS × channel × trigger × changed-files × PR-labels × topology), so ~46 Python scripts emit JSON that workflows ingest via <code>fromJSON()</code>. Python is the real orchestrator; YAML is its serialized output.",
+    "split":[
+      {"b":"The sprawl problem","t":"Config generation — computing the job set. This is where the ~12k Python + ~9.5k YAML lines live."},
+      {"b":"The speed problem","t":"Build caching/execution — already solved by sccache/ccache against an in-cluster bazel-remote cache server."}
+    ],
+    "note":"Vendor pitches blur these two. Keep them separate: almost nothing that speeds builds reduces the file sprawl, and vice-versa."
+  },
+  "tools":[
+    {
+      "tool":"buildx / BuildKit","verdict":"partial","vlabel":"adopt narrowly",
+      "premise":"A modern Docker image builder with parallel DAG execution, mount caches, and registry-backed layer caching.",
+      "help":"Fits exactly one artifact here: the manylinux base image (a real Dockerfile). Building it with buildx + registry cache makes base-image rebuilds faster and deterministic, and digest-pinning (already done) pairs well.",
+      "nohelp":"The ROCm compile doesn't happen in <code>docker build</code> — it runs inside the pinned image via a <code>container:</code> job (docker-run). BuildKit can't cache that compile (sccache/ccache already does), and it touches nothing in the fromJSON matrix generation where the 22k lines actually live."
+    },
+    {
+      "tool":"BuildKite","verdict":"partial","vlabel":"best fit, high exit cost",
+      "premise":"A CI orchestrator whose defining feature is dynamic pipeline upload: a step prints a pipeline.yml to stdout and the agent splices those steps into the running build.",
+      "help":"The most direct structural match to the real pain. The same Python could emit a pipeline directly (<code>buildkite-agent pipeline upload</code>) instead of the awkward 'Python → JSON string → YAML re-parses via fromJSON' plumbing, letting several of the 54 orchestration YAMLs shrink or vanish. Builds already run on self-hosted k8s agents, so the agent model fits.",
+      "nohelp":"It doesn't delete the generator — the Python that decides jobs still exists; you'd only change the emission target. It's a paid product and a hard migration away from GitHub-native PR checks, required-checks, and CODEOWNERS. It does nothing for build speed."
+    },
+    {
+      "tool":"Bazel","verdict":"skip","vlabel":"non-starter here",
+      "premise":"A hermetic build system with a content-addressed action graph, remote caching, and remote execution.",
+      "help":"Conceptually it could subsume two things at once — the CMake superbuild AND the BUILD_TOPOLOGY.toml topology scripts — because Bazel derives the dependency graph natively and drives per-target invalidation from it. The one tool that attacks build-graph modeling and caching together.",
+      "nohelp":"The cost is enormous and mostly hypothetical: ROCm's upstream components are CMake/autotools (LLVM, HIP, rocBLAS), so Bazelifying means maintaining a parallel build against a moving upstream forever. The 'bazel-remote' already in the stack is only the cache protocol (ccache speaks <code>layout=bazel</code> to it) — no BUILD files, no foothold. It also doesn't generate GHA matrices, so the fromJSON sprawl remains."
+    }
+  ],
+  "rec":{
+    "text":"The highest-leverage move isn't a vendor swap — it's to stop treating the matrix generator as a pile of scripts and harden it into one typed, unit-tested, <code>--dry-run</code>-able product, which the codebase is already halfway toward (configure_multi_arch_ci.py is explicitly a 6-stage pipeline of pure functions over dataclasses). Consolidate the ~46 scripts behind one documented entrypoint with a validated JSON schema, golden-file tests over representative events (push / PR / schedule / dispatch × labels × changed-paths), and a local <code>--dry-run</code> that prints the exact matrix a given event would produce — so contributors validate matrix changes without pushing to CI. That cuts the real maintenance burden (debugging opaque fromJSON strings) far more cheaply and reversibly than any migration. Adopt buildx narrowly for the manylinux base image now; keep BuildKite on the shelf as the one credible alternative if matrix complexity keeps outgrowing GHA; treat Bazel as out of scope given the CMake/vendored-source reality."
+  },
+  "more":[
+    {"n":"Dagger","cat":"pipeline-as-code","fit":"strong","p":"Define CI pipelines in a real language (Go/Python/TS) that run identically locally and in CI, as a containerized DAG (BuildKit under the hood). Portable across CI backends.","why":"Directly attacks TheRock's two worst cons — <b>no local reproduction</b> and <b>untyped YAML plumbing</b>. You'd keep GitHub Actions as the trigger and move the orchestration logic into typed, testable, locally-runnable code."},
+    {"n":"Nix / Nix flakes","cat":"hermetic build","fit":"interesting","p":"A hermetic, content-addressed package manager/build system purpose-built for building software (esp. C/C++) from source with pinned inputs.","why":"Arguably a better philosophical fit than Bazel for a <b>build-a-whole-toolchain-from-source</b> project: it could make the superbuild reproducible and cacheable. But packaging LLVM/HIP/rocBLAS in Nix against moving upstreams is a large, ongoing lift — same class of cost as Bazel."},
+    {"n":"Argo Workflows / Tekton","cat":"k8s-native DAG","fit":"worth a look","p":"Kubernetes-native pipeline engines that express fan-out/DAGs as first-class objects and run each step as a pod.","why":"TheRock already runs on Kubernetes (ARC runners next to the cache). A k8s-native engine could express the gfx-family fan-out natively — a BuildKite-style dynamic-pipeline win <b>without leaving their own infra</b> — but it means owning a second control plane alongside GitHub."},
+    {"n":"GitLab CI / CircleCI","cat":"dynamic child pipelines","fit":"category peer","p":"Both support the same core trick as BuildKite: a setup job generates pipeline YAML that the platform then runs as a dynamic child/continuation pipeline.","why":"If the goal is 'generate the pipeline instead of fromJSON string-injection,' these are the mainstream managed alternatives to BuildKite. Same upside (native dynamic pipelines) and same downside (leaving GitHub-native PR gating)."},
+    {"n":"Depot","cat":"managed build/cache","fit":"narrow win","p":"Managed remote BuildKit + fast x86/Arm builders with persistent layer caches; a drop-in accelerator for container image builds.","why":"A low-risk, self-contained speed win for the <b>manylinux base image</b> specifically — the same niche as buildx, but managed. Touches neither the matrix sprawl nor the docker-run compile."},
+    {"n":"BuildBuddy / EngFlow","cat":"remote execution (RBE)","fit":"bazel-tied","p":"Remote Build Execution backends with a results UI and remote caching, primarily for Bazel (and Bazel-compatible) build graphs.","why":"Genuinely powerful for build speed — but they presuppose a Bazel/RBE-shaped build graph TheRock doesn't have. Relevant only <b>if</b> a Bazel migration ever happened, which the verdict above rules out."},
+    {"n":"Namespace / Blacksmith / WarpBuild","cat":"faster GHA runners","fit":"cost lever","p":"Drop-in faster GitHub Actions runners with built-in caching — change the <code>runs-on</code> label and keep every workflow as-is.","why":"The lowest-friction change in this whole list: cheaper/faster runs with zero refactor. But it's purely a <b>cost/speed</b> lever — it removes none of the ~22k lines and none of the matrix-generation complexity."},
+    {"n":"Buck2 / Pants","cat":"bazel-class systems","fit":"skip","p":"Buck2 (Meta) is a faster Starlark build system; Pants targets Python/JVM monorepos with dependency inference.","why":"Same fundamental blocker as Bazel — they'd need a parallel build definition for CMake/vendored ROCm sources. Buck2 is faster than Bazel but doesn't change the migration math; Pants isn't aimed at a C++ superbuild."}
+  ]
+}
+</script>
+
+<script>
+(function(){
+  var D = JSON.parse(document.getElementById("data").textContent);
+
+  document.getElementById("stats").innerHTML = D.stats.map(function(s){
+    return '<div class="stat"><div class="n'+(s.grad?' grad':'')+'">'+s.n+'</div><div class="l">'+s.l+'</div></div>';
+  }).join("");
+
+  document.getElementById("flow").innerHTML = D.flow.map(function(s,i){
+    var step='<div class="fstep'+(s.accent?' accent':'')+'"><div class="fk">'+s.k+'</div>'+
+      '<div class="ft">'+s.t+'</div><div class="ff">'+s.f+'</div></div>';
+    return (i>0?'<div class="farrow" aria-hidden="true">→</div>':'')+step;
+  }).join("");
+
+  document.getElementById("groups").innerHTML = D.groups.map(function(g){
+    var cards = g.files.map(function(f){
+      var pros = f.pros.map(function(p){return '<li>'+p+'</li>';}).join("");
+      var cons = f.cons.map(function(c){return '<li>'+c+'</li>';}).join("");
+      var flag = f.flag ? '<div class="flag">⚑ '+f.flag+'</div>' : '';
+      return '<div class="card">'+
+        '<div class="card-h"><span class="fname">'+f.name+'</span>'+
+          '<span class="chip '+f.chip+'">'+f.chip+'</span>'+
+          '<span class="lines">'+f.lines+' lines</span></div>'+
+        '<div class="fpath">'+f.path+'</div>'+
+        '<div class="block"><div class="bl">Why it exists</div><p>'+f.why+'</p></div>'+
+        '<div class="block"><div class="bl">What’s inside</div><p>'+f.inside+'</p></div>'+
+        '<div class="block"><div class="bl">Connects to</div><p>'+f.connects+'</p></div>'+
+        flag+
+        '<div class="pc"><div class="col pros"><h4>Strengths</h4><ul class="pros">'+pros+'</ul></div>'+
+        '<div class="col cons"><h4>Limitations</h4><ul class="cons">'+cons+'</ul></div></div>'+
+      '</div>';
+    }).join("");
+    return '<div class="group"><div class="group-h"><span class="dot"></span>'+
+      '<h3>'+g.name+'</h3><span class="gcount">'+g.files.length+' file'+(g.files.length>1?'s':'')+'</span></div>'+
+      cards+'</div>';
+  }).join("");
+
+  var mi = D.modIntro;
+  document.getElementById("modIntro").innerHTML =
+    '<div class="mod-intro"><p>'+mi.text+'</p><div class="split">'+
+    mi.split.map(function(s){return '<div class="s"><b>'+s.b+'</b>'+s.t+'</div>';}).join("")+
+    '</div><p style="margin-top:12px;color:var(--muted);font-size:13.5px">'+mi.note+'</p></div>';
+
+  document.getElementById("tools").innerHTML = D.tools.map(function(t){
+    return '<div class="toolcard"><div class="th"><span class="tn">'+t.tool+'</span>'+
+      '<span class="verdict '+t.verdict+'">'+t.verdict+' · '+t.vlabel+'</span></div>'+
+      '<p class="premise">'+t.premise+'</p>'+
+      '<div class="wh"><div class="w help"><div class="wl">Where it helps</div><p>'+t.help+'</p></div>'+
+      '<div class="w nohelp"><div class="wl">Where it doesn’t</div><p>'+t.nohelp+'</p></div></div></div>';
+  }).join("");
+
+  document.getElementById("rec").innerHTML =
+    '<div class="rec"><div class="rl">The pragmatic path</div><p>'+D.rec.text+'</p></div>';
+
+  document.getElementById("more").innerHTML = '<div class="more-grid">'+D.more.map(function(m){
+    return '<div class="mcard"><div class="mh"><span class="mn">'+m.n+'</span>'+
+      '<span class="mcat">'+m.cat+'</span></div><p>'+m.p+'</p>'+
+      '<div class="fit">Fit: '+m.fit+' — '+m.why+'</div></div>';
+  }).join("")+'</div>';
+
+  var root = document.documentElement;
+  document.getElementById("themeToggle").addEventListener("click", function(){
+    var cur = root.getAttribute("data-theme");
+    if(!cur){ cur = matchMedia("(prefers-color-scheme: dark)").matches ? "dark":"light"; }
+    root.setAttribute("data-theme", cur==="dark" ? "light":"dark");
+  });
+})();
+</script>
+</body>
+</html>
