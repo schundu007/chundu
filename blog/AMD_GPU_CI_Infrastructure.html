@@ -93,6 +93,19 @@
   .topnav a:hover{color:var(--ember);text-decoration:none}
   @media (max-width:900px){.topnav{display:none}}
 
+  /* ---------- series switcher (cross-page shortcuts) ---------- */
+  .series{position:sticky;top:58px;z-index:39;background:rgba(10,15,20,.82);
+    backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+  .series .wrap{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-height:44px;
+    padding-top:7px;padding-bottom:7px}
+  .series-k{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--muted);margin-right:6px}
+  .series a{font-family:var(--mono);font-size:12px;color:var(--ink-2);padding:5px 11px;border-radius:7px;
+    border:1px solid var(--line-2);background:var(--panel);transition:.15s;white-space:nowrap}
+  .series a:hover{color:var(--ink);border-color:var(--muted);text-decoration:none}
+  .series a.here{color:#0B0D10;background:var(--grad);border-color:transparent;font-weight:600}
+  @media(max-width:560px){.series-k{display:none}}
+
   /* ---------- hero ---------- */
   .hero{padding:42px 0 24px;border-bottom:1px solid var(--line)}
   .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;
@@ -312,6 +325,15 @@
       <a href="#s13">Why me</a>
       <a href="https://www.sudhakarchundu.org/">Home</a>
     </nav>
+  </div>
+</div>
+
+<div class="series">
+  <div class="wrap">
+    <span class="series-k">AMD GPU CI series</span>
+    <a class="here" aria-current="page">The article</a>
+    <a href="/blog/therock-ci-explained.html">File-by-file guide</a>
+    <a href="/blog/therock-graph/">Interactive graph</a>
   </div>
 </div>
 

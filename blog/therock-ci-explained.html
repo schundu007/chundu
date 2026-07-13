@@ -1,98 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GGNQHMGCLH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GGNQHMGCLH');
+</script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="author" content="Sudhakar Chundu" />
-<meta name="description" content="A file-by-file field guide to ROCm/TheRock CI — the ~46-script shadow build system — with adoptable-now alternatives to its current GitHub Actions practice (typed matrix generator, act, CUE, schema-at-the-seam) separated from bigger future bets (buildx, BuildKite, Bazel, Dagger)." />
-<link rel="icon" type="image/x-icon" href="../favicon.ico" />
 <title>TheRock CI, Explained — the shadow build system, file by file</title>
+<meta name="author" content="Sudhakar Chundu" />
+<meta name="description" content="A file-by-file field guide to ROCm/TheRock's real build orchestrator — the ~46 Python scripts that compute GitHub Actions matrices at runtime and hand them to workflows as JSON via fromJSON(). Why each file exists, what's inside, how it wires together, and an honest read on which build/CI tools (buildx, BuildKite, Bazel, Dagger, Nix, and more) would actually cut the file sprawl — plus six concrete implementation sketches for hardening the practice without a migration." />
+<link rel="icon" href="../favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
 <style>
   :root{
-    --bg:#07090C; --panel:#0D1218; --panel2:#121A21; --raise:#182430;
-    --line:#1D2831; --line2:#2A3844;
-    --ink:#E8EFF5; --ink2:#A6B6C4; --muted:#6E8393;
+    --void:#07090C; --panel:#0D1218; --panel-2:#121A21; --raise:#162029;
+    --code-bg:#05080B; --code-head:#0F161D;
+    --line:#1D2831; --line-2:#28353F;
+    --ink:#E8EFF5; --ink-2:#A3B4C2; --muted:#6B8090;
+
+    /* AMD ember — the brand axis */
     --red:#D93B2B; --ember:#FF6B35;
     --grad:linear-gradient(100deg,#D93B2B 0%,#FF6B35 100%);
-    --pro:#2DD4A7; --con:#F26158; --warn:#F0A429; --link:#5AB6F0;
-    --chip-py:#4C8BF5; --chip-yaml:#C97BE0; --chip-sh:#59C08A;
-    --r:14px; --maxw:1000px;
-    --display:"Chakra Petch","IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-    --body:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
-    --shadow:0 20px 50px -30px rgba(217,59,43,.5);
-  }
-  @media (prefers-color-scheme: light){
-    :root{
-      --bg:#F4F2EE; --panel:#FFFFFF; --panel2:#FAF7F2; --raise:#FFFFFF;
-      --line:#E5DFD5; --line2:#D7CEC1;
-      --ink:#1A1411; --ink2:#4C5661; --muted:#7C8792;
-      --pro:#0E9E7A; --con:#C6362B; --warn:#B67A10; --link:#1F6FD6;
-      --chip-py:#2C63C9; --chip-yaml:#9B47B8; --chip-sh:#2E9463;
-      --shadow:0 20px 44px -30px rgba(217,59,43,.35);
-    }
-  }
-  :root[data-theme="dark"]{
-    --bg:#07090C; --panel:#0D1218; --panel2:#121A21; --raise:#182430;
-    --line:#1D2831; --line2:#2A3844;
-    --ink:#E8EFF5; --ink2:#A6B6C4; --muted:#6E8393;
-    --pro:#2DD4A7; --con:#F26158; --warn:#F0A429; --link:#5AB6F0;
-    --chip-py:#4C8BF5; --chip-yaml:#C97BE0; --chip-sh:#59C08A;
-    --shadow:0 20px 50px -30px rgba(217,59,43,.5);
-  }
-  :root[data-theme="light"]{
-    --bg:#F4F2EE; --panel:#FFFFFF; --panel2:#FAF7F2; --raise:#FFFFFF;
-    --line:#E5DFD5; --line2:#D7CEC1;
-    --ink:#1A1411; --ink2:#4C5661; --muted:#7C8792;
-    --pro:#0E9E7A; --con:#C6362B; --warn:#B67A10; --link:#1F6FD6;
-    --chip-py:#2C63C9; --chip-yaml:#9B47B8; --chip-sh:#2E9463;
-    --shadow:0 20px 44px -30px rgba(217,59,43,.35);
-  }
 
+    /* build-status semantics — deliberately NOT the brand accent */
+    --pass:#2DD4A7; --run:#F0A429; --fail:#F0473E;
+    --link:#5AB6F0;
+
+    --r:12px; --maxw:1100px;
+    --glow:0 0 0 1px rgba(255,107,53,.10), 0 24px 60px -30px rgba(217,59,43,.55);
+    --display:"Chakra Petch", "Space Grotesk", system-ui, sans-serif;
+    --body:"IBM Plex Sans", system-ui, -apple-system, sans-serif;
+    --mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    /* supplemental — language chips + rec shadow (guide components) */
+    --chip-py:#4C8BF5; --chip-yaml:#C97BE0; --chip-sh:#59C08A;
+    --shadow:0 20px 50px -30px rgba(217,59,43,.5);
+  }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
-    line-height:1.62;font-size:16px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none!important;transition:none!important}
+  }
+  body{
+    margin:0;background:var(--void);color:var(--ink);
+    font-family:var(--body);
+    font-size:15px;line-height:1.6;letter-spacing:-.003em;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* ambient: faint circuit grid + one ember bloom behind the hero */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+    background-size:52px 52px;
+    mask-image:linear-gradient(180deg,#000 0%,transparent 78%);
+    -webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 78%);
+  }
+  body::after{
+    content:"";position:fixed;top:-30vh;left:50%;transform:translateX(-50%);
+    width:1100px;height:700px;z-index:-1;pointer-events:none;
+    background:radial-gradient(ellipse at center,rgba(217,59,43,.14),transparent 62%);
+    filter:blur(30px);
+  }
   a{color:var(--link);text-decoration:none}
-  a:hover{text-decoration:underline}
-  a:focus-visible,button:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:4px}
-  code,.mono{font-family:var(--mono)}
-  ::selection{background:rgba(255,107,53,.28)}
+  a:hover{text-decoration:underline;text-underline-offset:3px}
+  ::selection{background:var(--ember);color:#0B0D10}
+  :focus-visible{outline:2px solid var(--ember);outline-offset:2px;border-radius:3px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
 
-  header.top{padding:64px 0 30px;position:relative;overflow:hidden}
-  header.top::before{content:"";position:absolute;inset:0;background:
-    radial-gradient(1100px 380px at 12% -8%,rgba(255,107,53,.10),transparent 60%);pointer-events:none}
-  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
-    color:var(--ember);font-weight:600;margin:0 0 14px}
-  h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,5.4vw,52px);line-height:1.04;
-    letter-spacing:-.015em;margin:0 0 16px;text-wrap:balance}
+  /* ---------- reading progress ---------- */
+  .progress{position:fixed;top:0;left:0;height:2px;width:100%;z-index:60;
+    background:var(--grad);transform:scaleX(0);transform-origin:0 50%;
+    transition:transform .08s linear}
+
+  /* ---------- top bar ---------- */
+  .topbar{position:sticky;top:0;z-index:40;background:rgba(7,9,12,.78);
+    backdrop-filter:saturate(1.5) blur(12px);border-bottom:1px solid var(--line)}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+  .brand{font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.04em;
+    color:var(--ink);display:flex;gap:10px;align-items:center}
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--pass);
+    box-shadow:0 0 0 3px rgba(45,212,167,.14);animation:beat 2.4s ease-in-out infinite}
+  @keyframes beat{0%,100%{box-shadow:0 0 0 3px rgba(45,212,167,.14)}50%{box-shadow:0 0 0 6px rgba(45,212,167,.04)}}
+  .topnav{display:flex;gap:22px;font-size:13px;font-family:var(--mono)}
+  .topnav a{color:var(--muted);transition:color .15s}
+  .topnav a:hover{color:var(--ember);text-decoration:none}
+  @media (max-width:900px){.topnav{display:none}}
+
+  /* ---------- series switcher ---------- */
+  .series{position:sticky;top:58px;z-index:39;background:var(--panel);
+    border-bottom:1px solid var(--line)}
+  .series .wrap{display:flex;align-items:center;gap:14px;height:42px;overflow-x:auto;white-space:nowrap}
+  .series .wrap::-webkit-scrollbar{height:0}
+  .series .slabel{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--muted);flex:0 0 auto}
+  .series a{font-family:var(--mono);font-size:12px;color:var(--ink-2);flex:0 0 auto;
+    padding:4px 11px;border-radius:6px;border:1px solid transparent;transition:.15s}
+  .series a:hover{color:var(--ink);text-decoration:none;border-color:var(--line-2)}
+  .series a.active{color:var(--ember);border-color:rgba(255,107,53,.34);background:rgba(255,107,53,.08)}
+
+  /* ---------- hero ---------- */
+  .hero{padding:42px 0 24px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ember);font-weight:600;margin:0 0 20px;display:flex;align-items:center;gap:12px}
+  .eyebrow::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(255,107,53,.45),transparent);max-width:200px}
+  h1{font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,3vw,2rem);
+    line-height:1.02;letter-spacing:-.02em;margin:0 0 22px;max-width:22ch;color:#F4F8FB}
   h1 .amp{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .lede{font-size:clamp(16px,2.1vw,19px);color:var(--ink2);max-width:66ch;margin:0 0 26px}
-  .lede strong{color:var(--ink);font-weight:600}
+  .lede{font-size:clamp(.9rem,1.2vw,1rem);color:var(--ink-2);max-width:66ch;margin:0 0 24px;line-height:1.6}
+  .lede b{color:var(--ink);font-weight:600}
 
-  .stats{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 8px}
-  .stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px;min-width:104px}
-  .stat .n{font-family:var(--display);font-weight:700;font-size:23px;line-height:1;letter-spacing:-.01em;
+  .byline{display:flex;align-items:center;gap:14px;margin-top:36px}
+  .byline img{width:50px;height:50px;border-radius:50%;object-fit:cover;border:1px solid var(--line-2)}
+  .byline .who{font-weight:600;font-family:var(--display);letter-spacing:.01em}
+  .byline .role{font-size:13px;color:var(--muted)}
+
+  /* ---------- stat rail ---------- */
+  .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:40px 0 0}
+  .stat{background:var(--panel);padding:20px 18px;position:relative}
+  .stat::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:var(--grad);opacity:0;transition:opacity .3s}
+  .stat:hover::before{opacity:.8}
+  .stat .n{font-family:var(--mono);font-size:1.25rem;font-weight:600;letter-spacing:-.02em;color:var(--ink);
     font-variant-numeric:tabular-nums}
   .stat .n.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .stat .l{font-size:11.5px;color:var(--muted);margin-top:6px;letter-spacing:.02em}
+  .stat .l{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.4;font-family:var(--mono);letter-spacing:.02em}
+  .stat .l code{background:none;color:var(--ink-2);padding:0}
+  @media(max-width:820px){.stats{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:420px){.stats{grid-template-columns:1fr}}
 
-  .provenance{margin-top:24px;font-size:13px;color:var(--muted);border-left:2px solid var(--line2);
-    padding:4px 0 4px 14px;max-width:70ch}
-  .provenance b{color:var(--ink2);font-weight:600}
+  .provenance{margin-top:24px;font-size:13px;color:var(--muted);border-left:2px solid var(--line-2);
+    padding:4px 0 4px 14px;max-width:72ch;line-height:1.6}
+  .provenance b{color:var(--ink-2);font-weight:600}
 
-  section{padding:30px 0}
-  .shead{display:flex;align-items:baseline;gap:14px;margin:0 0 6px}
-  .shead .sn{font-family:var(--mono);font-size:12px;color:var(--ember);font-weight:600;letter-spacing:.1em}
-  .shead h2{font-family:var(--display);font-weight:700;font-size:clamp(21px,3vw,29px);letter-spacing:-.01em;margin:0}
-  .sdesc{color:var(--ink2);max-width:70ch;margin:0 0 22px;font-size:15.5px}
+  /* ---------- layout ---------- */
+  .shell{display:grid;grid-template-columns:250px 1fr;gap:52px;padding:32px 0 48px;align-items:start}
+  @media(max-width:980px){.shell{grid-template-columns:1fr;gap:0}}
+  .side{position:sticky;top:110px;align-self:start;max-height:calc(100vh - 132px);overflow-y:auto}
+  .side::-webkit-scrollbar{width:3px}.side::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:3px}
+  @media(max-width:980px){.side{display:none}}
+  .side h4{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ember);margin:22px 0 9px;font-weight:600;opacity:.75}
+  .side h4:first-child{margin-top:0}
+  .side a{display:block;font-size:13.5px;color:var(--muted);padding:6px 0 6px 14px;
+    border-left:1px solid var(--line-2);line-height:1.3;transition:color .15s,border-color .15s}
+  .side a:hover{color:var(--ink);text-decoration:none;border-left-color:var(--muted)}
+  .side a.active{color:var(--ink);border-left-color:var(--ember);font-weight:600}
+  .side a .sn{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-right:8px}
+  .side a.active .sn{color:var(--ember)}
 
-  .flow-scroll{overflow-x:auto;padding:6px 0 14px;margin:0 -22px;padding-left:22px;padding-right:22px}
+  /* ---------- sections ---------- */
+  main{min-width:0}
+  section{scroll-margin-top:110px;padding:26px 0 40px;border-bottom:1px solid var(--line)}
+  section:last-of-type{border-bottom:none}
+  .shead{display:flex;align-items:baseline;gap:16px;margin:0 0 14px;padding-bottom:14px;
+    border-bottom:1px solid var(--line);position:relative}
+  .shead::after{content:"";position:absolute;left:0;bottom:-1px;width:64px;height:1px;background:var(--grad)}
+  .shead .sn{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ember);padding-top:6px;letter-spacing:.06em}
+  h2{font-family:var(--display);font-weight:600;font-size:clamp(1.1rem,1.8vw,1.25rem);
+    letter-spacing:-.015em;margin:0;line-height:1.14;color:#F1F6FA}
+  h3{font-family:var(--display);font-weight:600;font-size:1.05rem;letter-spacing:-.008em;
+    margin:34px 0 12px;color:#EAF1F7}
+  h4.mini{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ember);margin:26px 0 12px;font-weight:600;opacity:.9}
+  p{margin:0 0 16px;color:var(--ink-2)}
+  .sdesc{color:var(--ink-2);max-width:72ch;margin:0 0 22px;font-size:15.5px}
+  strong{color:var(--ink);font-weight:600}
+  em{color:var(--ink-2)}
+  ul,ol{margin:0 0 18px;padding-left:22px;color:var(--ink-2)}
+  li{margin:8px 0}
+  li::marker{color:var(--ember);opacity:.7}
+  p code,li code{font-family:var(--mono);font-size:.86em;background:var(--panel-2);
+    border:1px solid var(--line);padding:1px 6px;border-radius:4px;color:#F0C9A8}
+
+  /* callouts */
+  .note{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    padding:16px 20px 16px 22px;margin:20px 0;font-size:15px;overflow:hidden;color:var(--ink-2)}
+  .note::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--grad)}
+  .note.blue::before{background:linear-gradient(180deg,#3B82F6,#22D3EE)}
+  .note.green::before{background:linear-gradient(180deg,#2DD4A7,#7DD956)}
+  .note .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+    font-weight:600;color:var(--ember);display:block;margin-bottom:7px}
+  .note.blue .tag{color:#5AB6F0} .note.green .tag{color:var(--pass)}
+
+  /* pills */
+  .pill{font-family:var(--mono);font-size:10.5px;font-weight:500;padding:3px 9px;border-radius:5px;
+    display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-2);
+    background:var(--panel-2);color:var(--ink-2);letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+  .pill.pass{color:var(--pass);border-color:rgba(45,212,167,.34);background:rgba(45,212,167,.08)}
+  .pill.run{color:var(--run);border-color:rgba(240,164,41,.34);background:rgba(240,164,41,.08)}
+  .pill.fail{color:var(--fail);border-color:rgba(240,71,62,.34);background:rgba(240,71,62,.08)}
+
+  /* ---------- collapsible code cards ---------- */
+  details.code{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    margin:18px 0;overflow:hidden}
+  details.code[open]{border-color:var(--line-2)}
+  details.code>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;
+    padding:14px 16px;user-select:none;background:var(--code-head);transition:background .15s}
+  details.code>summary:hover{background:#131C24}
+  details.code>summary::-webkit-details-marker{display:none}
+  .chev{flex:0 0 auto;width:16px;height:16px;color:var(--ember);transition:transform .2s ease}
+  details.code[open] .chev{transform:rotate(90deg)}
+  .fname{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--ink)}
+  .fdesc{font-size:12.5px;color:var(--muted);margin-left:2px;flex:1 1 auto;min-width:0;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  @media(max-width:620px){.fdesc{display:none}}
+  .lang{font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ember);border:1px solid rgba(255,107,53,.28);background:rgba(255,107,53,.07);
+    border-radius:4px;padding:3px 7px;flex:0 0 auto}
+  details.code .body{border-top:1px solid var(--line);position:relative}
+  details.code pre{margin:0!important;border-radius:0!important;background:var(--code-bg)!important;
+    padding:20px!important;font-size:12.8px;line-height:1.68;max-height:580px;overflow:auto}
+  details.code pre::-webkit-scrollbar{width:9px;height:9px}
+  details.code pre::-webkit-scrollbar-thumb{background:#22303B;border-radius:9px}
+  details.code pre code{font-family:var(--mono)!important;font-size:12.8px!important}
+  .copy{position:absolute;top:12px;right:12px;font-family:var(--mono);font-size:10.5px;
+    color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--line-2);
+    border-radius:6px;padding:5px 10px;cursor:pointer;transition:.15s;letter-spacing:.06em;text-transform:uppercase}
+  .copy:hover{background:rgba(255,107,53,.1);color:var(--ember);border-color:rgba(255,107,53,.4)}
+  .copy.ok{color:var(--pass);border-color:rgba(45,212,167,.5)}
+
+  .codebar{display:flex;align-items:center;gap:10px;margin:26px 0 6px}
+  .expand{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted);background:none;
+    border:1px solid var(--line-2);border-radius:6px;padding:6px 12px;cursor:pointer;
+    letter-spacing:.08em;text-transform:uppercase;transition:.15s}
+  .expand:hover{border-color:var(--ember);color:var(--ember)}
+
+  .foot{border-top:1px solid var(--line);padding:36px 0 40px;margin-top:24px;background:#05070A}
+  .foot .wrap{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
+  .foot .links{display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px;font-family:var(--mono)}
+  .foot .c{font-size:12.5px;color:var(--muted);font-family:var(--mono)}
+  .backtop{font-family:var(--mono);font-size:12px;margin-top:34px}
+
+  /* diagrams */
+  .diagram{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+    padding:22px;margin:22px 0;overflow-x:auto}
+  .diagram .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ember);margin-bottom:16px;opacity:.85}
+  .mermaid{font-family:var(--mono)!important}
+
+  /* ============ guide components (token-remapped to reference) ============ */
+  .flow-scroll{overflow-x:auto;padding:6px 0 14px;margin:0 -24px;padding-left:24px;padding-right:24px}
   .flow{display:flex;align-items:stretch;gap:0;min-width:min-content}
   .fstep{flex:0 0 auto;max-width:190px;background:var(--panel);border:1px solid var(--line);
     border-radius:12px;padding:12px 14px;position:relative}
   .fstep .fk{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-  .fstep .ft{font-weight:600;font-size:13.5px;margin-top:3px;line-height:1.3}
+  .fstep .ft{font-weight:600;font-size:13.5px;margin-top:3px;line-height:1.3;color:var(--ink)}
   .fstep .ff{font-family:var(--mono);font-size:11px;color:var(--link);margin-top:5px;word-break:break-word}
   .farrow{flex:0 0 auto;align-self:center;color:var(--ember);font-size:18px;padding:0 8px;opacity:.8}
   .fstep.accent{border-color:rgba(255,107,53,.4);box-shadow:inset 0 0 0 1px rgba(255,107,53,.12)}
@@ -109,7 +271,7 @@
   .card::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:3px;border-radius:3px;
     background:var(--grad);opacity:.9}
   .card-h{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:4px}
-  .fname{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--ink)}
+  .cf-name{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--ink)}
   .chip{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
     padding:3px 8px;border-radius:6px;border:1px solid transparent}
   .chip.py{color:var(--chip-py);border-color:color-mix(in srgb,var(--chip-py) 40%,transparent);
@@ -125,74 +287,74 @@
   .block{margin:11px 0}
   .block .bl{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
     color:var(--ember);font-weight:600;margin-bottom:3px}
-  .block p{margin:0;color:var(--ink2);font-size:14.5px}
-  .block p code{background:var(--panel2);border:1px solid var(--line);border-radius:4px;
+  .block p{margin:0;color:var(--ink-2);font-size:14.5px}
+  .block p code{background:var(--panel-2);border:1px solid var(--line);border-radius:4px;
     padding:.5px 5px;font-size:12.5px;color:var(--ink);word-break:break-word}
 
   .pc{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
   @media (max-width:640px){.pc{grid-template-columns:1fr}}
-  .pc .col{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:13px 15px}
-  .pc .col.pros{border-top:2px solid var(--pro)}
-  .pc .col.cons{border-top:2px solid var(--con)}
+  .pc .col{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:13px 15px}
+  .pc .col.pros{border-top:2px solid var(--pass)}
+  .pc .col.cons{border-top:2px solid var(--fail)}
   .pc .col h4{margin:0 0 9px;font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-family:var(--mono)}
-  .pc .col.pros h4{color:var(--pro)}
-  .pc .col.cons h4{color:var(--con)}
+  .pc .col.pros h4{color:var(--pass)}
+  .pc .col.cons h4{color:var(--fail)}
   .pc ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
-  .pc li{font-size:13.5px;color:var(--ink2);padding-left:17px;position:relative;line-height:1.5}
-  .pc .pros li::before{content:"+";position:absolute;left:0;color:var(--pro);font-weight:700}
-  .pc .cons li::before{content:"\2212";position:absolute;left:0;color:var(--con);font-weight:700}
-  .pc li code{font-family:var(--mono);font-size:12px;color:var(--ink);background:var(--bg);
+  .pc li{font-size:13.5px;color:var(--ink-2);padding-left:17px;position:relative;line-height:1.5}
+  .pc .pros li::before{content:"+";position:absolute;left:0;color:var(--pass);font-weight:700}
+  .pc .cons li::before{content:"\2212";position:absolute;left:0;color:var(--fail);font-weight:700}
+  .pc li code{font-family:var(--mono);font-size:12px;color:var(--ink);background:var(--void);
     border:1px solid var(--line);border-radius:4px;padding:0 4px}
 
   .flag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;
-    letter-spacing:.06em;color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 45%,transparent);
-    background:color-mix(in srgb,var(--warn) 12%,transparent);border-radius:6px;padding:3px 8px;margin-top:2px}
+    letter-spacing:.06em;color:var(--run);border:1px solid color-mix(in srgb,var(--run) 45%,transparent);
+    background:color-mix(in srgb,var(--run) 12%,transparent);border-radius:6px;padding:3px 8px;margin-top:2px}
 
   .mod-intro{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
     padding:20px 22px;margin-bottom:20px;position:relative}
   .mod-intro::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
     background:linear-gradient(180deg,#4C8BF5,#22D3EE);border-radius:3px}
-  .mod-intro p{margin:0;color:var(--ink2);font-size:15px}
+  .mod-intro p{margin:0;color:var(--ink-2);font-size:15px}
   .mod-intro .split{margin-top:12px;display:flex;gap:12px;flex-wrap:wrap}
-  .mod-intro .split .s{flex:1 1 240px;background:var(--panel2);border:1px solid var(--line);
-    border-radius:10px;padding:11px 14px;font-size:13.5px;color:var(--ink2)}
+  .mod-intro .split .s{flex:1 1 240px;background:var(--panel-2);border:1px solid var(--line);
+    border-radius:10px;padding:11px 14px;font-size:13.5px;color:var(--ink-2)}
   .mod-intro .split .s b{color:var(--ink);display:block;margin-bottom:2px;font-size:12px;
     font-family:var(--mono);letter-spacing:.04em}
 
   .toolcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
     padding:20px 22px;margin-bottom:16px}
   .toolcard .th{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px}
-  .toolcard .tn{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:-.01em}
+  .toolcard .tn{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:-.01em;color:var(--ink)}
   .verdict{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
     padding:4px 11px;border-radius:20px;margin-left:auto}
-  .verdict.adopt{color:var(--pro);border:1px solid color-mix(in srgb,var(--pro) 50%,transparent);
-    background:color-mix(in srgb,var(--pro) 12%,transparent)}
-  .verdict.partial{color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 50%,transparent);
-    background:color-mix(in srgb,var(--warn) 12%,transparent)}
-  .verdict.skip{color:var(--con);border:1px solid color-mix(in srgb,var(--con) 50%,transparent);
-    background:color-mix(in srgb,var(--con) 12%,transparent)}
+  .verdict.adopt{color:var(--pass);border:1px solid color-mix(in srgb,var(--pass) 50%,transparent);
+    background:color-mix(in srgb,var(--pass) 12%,transparent)}
+  .verdict.partial{color:var(--run);border:1px solid color-mix(in srgb,var(--run) 50%,transparent);
+    background:color-mix(in srgb,var(--run) 12%,transparent)}
+  .verdict.skip{color:var(--fail);border:1px solid color-mix(in srgb,var(--fail) 50%,transparent);
+    background:color-mix(in srgb,var(--fail) 12%,transparent)}
   .verdict.watch{color:var(--link);border:1px solid color-mix(in srgb,var(--link) 50%,transparent);
     background:color-mix(in srgb,var(--link) 12%,transparent)}
   .premise{color:var(--muted);font-size:13.5px;font-style:italic;margin:2px 0 14px}
   .wh{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   @media (max-width:640px){.wh{grid-template-columns:1fr}}
-  .wh .w{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:13px 15px}
-  .wh .w.help{border-left:2px solid var(--pro)}
-  .wh .w.nohelp{border-left:2px solid var(--con)}
+  .wh .w{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:13px 15px}
+  .wh .w.help{border-left:2px solid var(--pass)}
+  .wh .w.nohelp{border-left:2px solid var(--fail)}
   .wh .w .wl{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
     margin-bottom:6px;font-weight:600}
-  .wh .w.help .wl{color:var(--pro)}
-  .wh .w.nohelp .wl{color:var(--con)}
-  .wh .w p{margin:0;font-size:13.5px;color:var(--ink2)}
+  .wh .w.help .wl{color:var(--pass)}
+  .wh .w.nohelp .wl{color:var(--fail)}
+  .wh .w p{margin:0;font-size:13.5px;color:var(--ink-2)}
 
   .more-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
   @media (max-width:680px){.more-grid{grid-template-columns:1fr}}
   .mcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 17px}
   .mcard .mh{display:flex;align-items:center;gap:9px;margin-bottom:3px;flex-wrap:wrap}
-  .mcard .mn{font-family:var(--display);font-weight:700;font-size:15.5px}
+  .mcard .mn{font-family:var(--display);font-weight:700;font-size:15.5px;color:var(--ink)}
   .mcard .mcat{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--muted);border:1px solid var(--line2);border-radius:5px;padding:2px 6px;margin-left:auto}
-  .mcard p{margin:6px 0 0;font-size:13.5px;color:var(--ink2)}
+    color:var(--muted);border:1px solid var(--line-2);border-radius:5px;padding:2px 6px;margin-left:auto}
+  .mcard p{margin:6px 0 0;font-size:13.5px;color:var(--ink-2)}
   .mcard .fit{margin-top:8px;font-size:12.5px;color:var(--ink);font-family:var(--mono);
     border-top:1px dashed var(--line);padding-top:8px}
   .mcard .fit b{color:var(--ember);font-weight:600}
@@ -204,116 +366,304 @@
     color:var(--ember);font-weight:600;margin-bottom:8px}
   .rec p{margin:0;color:var(--ink);font-size:15.5px;line-height:1.66}
 
-  footer{border-top:1px solid var(--line);margin-top:44px;padding:28px 0 60px;color:var(--muted);font-size:13px}
-  footer a{color:var(--link)}
-  footer .fl{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:12px}
-
-  .toggle{position:fixed;top:16px;right:16px;z-index:20;background:var(--panel);border:1px solid var(--line2);
-    color:var(--ink2);border-radius:20px;padding:7px 13px;font-family:var(--mono);font-size:11px;cursor:pointer;
-    letter-spacing:.05em}
-  .toggle:hover{border-color:var(--ember);color:var(--ink)}
   @media (prefers-reduced-motion:no-preference){
     .card,.toolcard,.mcard{transition:border-color .2s ease}
-    .card:hover,.toolcard:hover,.mcard:hover{border-color:var(--line2)}
+    .card:hover,.toolcard:hover,.mcard:hover{border-color:var(--line-2)}
   }
 </style>
 </head>
 <body>
-<button class="toggle" id="themeToggle" aria-label="Toggle light or dark theme">◑ theme</button>
+<div class="progress" id="progress" aria-hidden="true"></div>
 
-<header class="top">
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span>schundu · therock-ci</div>
+    <nav class="topnav">
+      <a href="#s1">Pipeline</a>
+      <a href="#s2">Files</a>
+      <a href="#s3">Fix</a>
+      <a href="#s4">Bigger bets</a>
+      <a href="#s5">More tools</a>
+      <a href="https://www.sudhakarchundu.org/">Home</a>
+    </nav>
+  </div>
+</div>
+
+<div class="series">
+  <div class="wrap">
+    <span class="slabel">AMD GPU CI series</span>
+    <a href="/blog/AMD_GPU_CI_Infrastructure.html">The article</a>
+    <a href="/blog/therock-ci-explained.html" class="active" aria-current="page">File-by-file guide</a>
+    <a href="/blog/therock-graph/">Interactive graph</a>
+  </div>
+</div>
+
+<header class="hero">
   <div class="wrap">
     <p class="eyebrow">ROCm / TheRock · CI internals</p>
-    <h1>The shadow build system, <span class="amp">explained</span></h1>
+    <h1>The shadow build system, <span class="amp">explained</span> — file by file</h1>
     <p class="lede">TheRock's real build orchestrator isn't YAML — it's ~46 Python scripts that compute
       GitHub Actions matrices at runtime and hand them to workflows as JSON. This is a field guide to the
-      files that matter: <strong>why each exists, what's inside, how it wires to the others, and where it's
-      strong or brittle</strong> — plus an honest read on which build/CI tools would actually cut the
-      file sprawl.</p>
+      files that matter: <b>why each exists, what's inside, how it wires to the others, and where it's
+      strong or brittle</b> — plus an honest read on which build/CI tools would actually cut the file sprawl.</p>
+
     <div class="stats" id="stats"></div>
-    <p class="provenance">Read from the public, MIT-licensed <a href="https://github.com/ROCm/TheRock" target="_blank" rel="noopener">ROCm/TheRock</a>
-      repo, <b>analyzed on <code>main</code> @ <code>f44bc6af</code> (July 2026)</b>. The repo is
-      mid-migration — a <code>multi_arch_*</code> path is superseding older code — so specifics drift.
-      Descriptions are grounded in the actual source; they are explanations, not excerpts.</p>
+
+    <p class="provenance">Read from the public, MIT-licensed
+      <a href="https://github.com/ROCm/TheRock" target="_blank" rel="noopener">ROCm/TheRock</a> repo,
+      <b>analyzed on <code>main</code> @ <code>f44bc6af</code> (July 2026)</b>. The repo is mid-migration —
+      a <code>multi_arch_*</code> path is superseding older code — so specifics drift. Descriptions are
+      grounded in the actual source; they are explanations, not excerpts.</p>
+
+    <div class="byline">
+      <img src="https://www.sudhakarchundu.org/assets/images/profile.jpg" alt="Sudhakar Chundu" onerror="this.style.display='none'"/>
+      <div>
+        <div class="who">Sudhakar Chundu</div>
+        <div class="role">Platform / CI &amp; Build-Infrastructure Engineer</div>
+      </div>
+    </div>
   </div>
 </header>
 
-<main class="wrap">
+<div class="wrap">
+  <div class="shell">
+    <!-- SIDE NAV -->
+    <aside class="side">
+      <nav id="toc">
+        <h4>The system</h4>
+        <a href="#s1"><span class="sn">01</span>How a build gets decided</a>
+        <a href="#s2"><span class="sn">02</span>The files, by role</a>
+        <h4>What to do about it</h4>
+        <a href="#s3"><span class="sn">03</span>Fix the current practice</a>
+        <a href="#s4"><span class="sn">04</span>The bigger bets</a>
+        <a href="#s5"><span class="sn">05</span>Other tools worth knowing</a>
+      </nav>
+    </aside>
 
-  <section>
-    <div class="shead"><span class="sn">01</span><h2>How a build gets decided</h2></div>
-    <p class="sdesc">Native Actions matrices are static YAML. TheRock's aren't — the job set is computed from
-      GPU family × OS × channel × trigger × changed files × PR labels. Follow one push through
-      the pipeline; each stop is a file documented below.</p>
-    <div class="flow-scroll"><div class="flow" id="flow"></div></div>
-  </section>
+    <!-- MAIN -->
+    <main>
 
-  <section>
-    <div class="shead"><span class="sn">02</span><h2>The files, by role</h2></div>
-    <p class="sdesc">Twelve driver files carry ~90% of the understanding. Grouped by the job they do in the
-      pipeline above.</p>
-    <div id="groups"></div>
-  </section>
+      <section id="s1">
+        <div class="shead"><span class="sn">01</span><h2>How a build gets decided</h2></div>
+        <p class="sdesc">Native Actions matrices are static YAML. TheRock's aren't — the job set is computed from
+          GPU family × OS × channel × trigger × changed files × PR labels. Follow one push through
+          the pipeline; each stop is a file documented below.</p>
+        <div class="flow-scroll"><div class="flow" id="flow"></div></div>
 
-  <section>
-    <div class="shead"><span class="sn">03</span><h2>Fix the current practice — no migration</h2></div>
-    <p class="sdesc">The most useful alternative to today's ~46 scripts + 54 fromJSON YAMLs isn't a new
-      vendor — it's hardening the practice you already have. Every option below is <strong>adoptable now</strong>,
-      stays 100% on GitHub Actions, and needs no big migration. Start here, before the bigger bets in §04.</p>
-    <div id="now"></div>
-  </section>
+        <div class="diagram">
+          <div class="cap">Figure — the end-to-end multi-arch CI workflow (event → matrix → fan-out → release)</div>
+          <pre class="mermaid">
+flowchart TD
+  EV["GitHub event<br/>push · pull_request · schedule · workflow_dispatch"]
+  EV --> SETUP["setup_multi_arch.yml<br/>reusable workflow_call"]
+  subgraph GEN["Matrix generation · Python (setup job)"]
+    direction TB
+    PF["configure_ci_path_filters.py<br/>is CI required?"]
+    SI["stage_impact.py<br/>which stages rebuild"]
+    FAM["amdgpu_family_matrix.py<br/>families × runners × gfx"]
+    CFG["configure_multi_arch_ci.py<br/>6-stage decision pipeline"]
+    VER["compute_rocm_package_version.py"]
+    PF --> CFG
+    SI --> CFG
+    FAM --> CFG
+  end
+  SETUP --> GEN
+  CFG --> OUT["build_config JSON<br/>→ GITHUB_OUTPUT"]
+  VER --> OUT
+  OUT --> CI["multi_arch_ci.yml<br/>top-level gate · fromJSON()"]
+  CI -->|enable_linux| LNX["multi_arch_ci_linux.yml"]
+  CI -->|enable_windows| WIN["multi_arch_ci_windows.yml"]
+  subgraph LINUX["Per-platform fan-out · Linux (matrix, fail-fast:false)"]
+    direction TB
+    PRE["copy_prebuilt_stages<br/>artifact_manager.py"]
+    BLD["build_multi_arch_stages<br/>docker run manylinux · CMake superbuild"]
+    TST["test_artifacts_per_family<br/>fetch_test_configurations.py"]
+    PKG["native deb/rpm + install<br/>Ubuntu · RHEL · SLES"]
+    WHL["python + pytorch wheels"]
+    PRE --> BLD
+    BLD --> TST
+    BLD --> PKG
+    BLD --> WHL
+  end
+  LNX --> LINUX
+  BLD --> UP["post_build_upload.py<br/>logs + artifacts → S3"]
+  UP --> REL["publish_rocm_to_release_buckets.py<br/>dev · nightly · prerelease buckets"]
+  CI --> SUM["ci_summary · always()<br/>workflow_summary.py"]
+  TST --> SUM
+  PKG --> SUM
+  WHL --> SUM
+  WIN --> SUM
+          </pre>
+        </div>
+      </section>
 
-  <section>
-    <div class="shead"><span class="sn">04</span><h2>The bigger bets: buildx, BuildKite, Bazel</h2></div>
-    <p class="sdesc">The heavier, more future-facing options. The honest question: would a bigger tool remove
-      the manual work? Mostly no — the sprawl is a config-generation problem, not a build-speed one. Here's
-      the per-tool read.</p>
-    <div id="modIntro"></div>
-    <div id="tools"></div>
-    <div id="rec"></div>
-  </section>
+      <section id="s2">
+        <div class="shead"><span class="sn">02</span><h2>The files, by role</h2></div>
+        <p class="sdesc">Twelve driver files carry ~90% of the understanding. Grouped by the job they do in the
+          pipeline above.</p>
+        <div id="groups"></div>
+      </section>
 
-  <section>
-    <div class="shead"><span class="sn">05</span><h2>Other tools worth knowing</h2></div>
-    <p class="sdesc">Beyond buildx / BuildKite / Bazel, these are the credible options in the same space —
-      grouped by which of the two problems they actually attack. Fit ratings are for <em>TheRock specifically</em>
-      (a k8s-hosted, CMake-from-source, multi-arch superbuild), not in general.</p>
-    <div id="more"></div>
+      <section id="s3">
+        <div class="shead"><span class="sn">03</span><h2>Fix the current practice — no migration</h2></div>
+        <p class="sdesc">The most useful alternative to today's ~46 scripts + 54 fromJSON YAMLs isn't a new
+          vendor — it's hardening the practice you already have. Every option below is <strong>adoptable now</strong>,
+          stays 100% on GitHub Actions, and needs no big migration. Start here, before the bigger bets in §04.</p>
+        <div id="now"></div>
 
-    <div class="mod-intro" style="margin-top:22px">
-      <p><b style="color:var(--ink)">Concretely — if TheRock adopted Dagger.</b> The decision logic doesn't
-        disappear; it moves from ~46 loose scripts + 54 fromJSON YAMLs into one typed module you can run on
-        your laptop. GitHub Actions shrinks to a thin trigger.</p>
-      <div class="split" style="margin-top:14px">
-        <div class="s"><b>Today</b>46 Python scripts serialize JSON → <code>GITHUB_OUTPUT</code>; 54 workflow
-          YAMLs re-parse it via <code>fromJSON()</code>. A matrix bug shows up at 3am in the nightly, not at
-          review. Answering “what will CI do with my PR?” means push-and-watch.</div>
-        <div class="s"><b>With Dagger</b>One module exposes <code>ci(event)</code> that returns the typed job
-          graph. <code>dagger call ci --event=pr.json</code> prints the exact matrix locally in seconds. The
-          workflow becomes a few lines that just invoke it.</div>
-      </div>
-      <p style="margin-top:14px;color:var(--ink2);font-size:14px"><b style="color:var(--pro)">Shrinks:</b>
-        most of the 54 orchestration YAMLs collapse to thin triggers; the <code>fromJSON</code>
-        string-injection seam vanishes; the generator becomes directly unit-testable and locally runnable.
-        &nbsp;<b style="color:var(--con)">Doesn't:</b> GPU-hardware runners are still required; the
-        decision logic still has to exist (now as typed code); and it's a real migration — best done
-        incrementally by first wrapping the existing scripts as Dagger functions, not a big-bang rewrite.</p>
-    </div>
-  </section>
+        <div class="codebar"><h4 class="mini" style="margin:0">Implementation sketches</h4><button class="expand" data-scope="s3">Expand all ▸</button></div>
+        <div class="note"><span class="tag">Illustrative — not TheRock's real code</span>The six cards below are
+          illustrative reconstructions of the patterns above — a shape to argue from, not excerpts from the repo.
+          Every card is collapsed by default; expand what you want to read.</div>
 
-</main>
+        <details class="code">
+          <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg><span class="lang">python</span><span class="fname">One typed matrix generator</span><span class="fdesc">consolidate ~46 scripts behind one typed, validated entrypoint</span></summary>
+          <div class="body"><pre><code class="language-python"># build_tools/ci/config.py — one typed contract for the whole matrix
+from pydantic import BaseModel
+class FamilyBuild(BaseModel):
+    family: str; runs_on: list[str]; gfx_targets: list[str]; variant: str = "release"
+class BuildConfig(BaseModel):
+    enable_linux: bool; enable_windows: bool
+    linux: list[FamilyBuild]; windows: list[FamilyBuild]
+    test_type: str  # quick | standard | comprehensive | full
 
-<footer>
+# build_tools/ci/generate.py — single entrypoint (the 6-stage pipeline, now typed)
+def generate(event: Event) -&gt; BuildConfig: ...
+if __name__ == "__main__":
+    cfg = generate(Event.from_env())
+    gha_set_output("build_config", cfg.model_dump_json())</code></pre></div>
+        </details>
+
+        <details class="code">
+          <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg><span class="lang">bash</span><span class="fname">Run CI locally with act</span><span class="fdesc">reproduce the matrix decision without pushing</span></summary>
+          <div class="body"><pre><code class="language-bash"># what will CI actually do with this PR? — locally, before pushing
+gh extension install nektos/gh-act        # or: brew install act
+act pull_request \
+  --eventpath .github/fixtures/pr_gfx942.json \
+  -j setup                                # run just the matrix-generation job
+# Makefile shortcut:  make ci-dry EVENT=pr_gfx942
+ci-dry: ; act pull_request -e .github/fixtures/$(EVENT).json -j setup</code></pre></div>
+        </details>
+
+        <details class="code">
+          <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg><span class="lang">yaml</span><span class="fname">A schema at the fromJSON seam</span><span class="fdesc">type the Python→YAML handoff so drift fails fast</span></summary>
+          <div class="body"><pre><code class="language-yaml"># validate_build_config.py (run as a cheap step right after setup)
+#   cfg = BuildConfig.model_validate_json(os.environ["BUILD_CONFIG"])  # raises on a renamed/missing key
+- name: Validate build_config contract
+  run: python build_tools/ci/validate_build_config.py
+  env:
+    BUILD_CONFIG: ${{ needs.setup.outputs.linux_build_config }}
+# a renamed key now fails HERE, at review, not at 3am in the nightly</code></pre></div>
+        </details>
+
+        <details class="code">
+          <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg><span class="lang">cue</span><span class="fname">Typed config generation with CUE</span><span class="fdesc">generate + validate the YAML from a checked source of truth</span></summary>
+          <div class="body"><pre><code class="language-cue">// ci/schema.cue — one schema both validates AND generates
+#Family: { family: string, runs_on: [...string], gfx: [...string] }
+#BuildConfig: {
+    enable_linux: bool
+    linux: [...#Family]
+    test_type: "quick" | "standard" | "full"
+}
+// $ cue vet ci/build_config.json ci/schema.cue      # fail fast on drift
+// $ cue export ci/workflows.cue -e yaml &gt; .github/workflows/multi_arch_ci.yml</code></pre></div>
+        </details>
+
+        <details class="code">
+          <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg><span class="lang">yaml</span><span class="fname">A "generate-matrix" composite action</span><span class="fdesc">dedupe the matrix wiring repeated across 54 workflows</span></summary>
+          <div class="body"><pre><code class="language-yaml"># .github/actions/generate-matrix/action.yml
+name: generate-matrix
+outputs:
+  build_config: { value: ${{ steps.gen.outputs.build_config }} }
+runs:
+  using: composite
+  steps:
+    - id: gen
+      shell: bash
+      run: python -m build_tools.ci.generate
+# any workflow now just does:
+#   - uses: ./.github/actions/generate-matrix
+#     id: m
+#   - if: fromJSON(steps.m.outputs.build_config).enable_linux
+#     uses: ./.github/workflows/multi_arch_ci_linux.yml</code></pre></div>
+        </details>
+
+        <details class="code">
+          <summary><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg><span class="lang">python</span><span class="fname">One change-classification engine</span><span class="fdesc">collapse the two parallel change-detection systems into one</span></summary>
+          <div class="body"><pre><code class="language-python"># build_tools/ci/affected.py — one engine off BUILD_TOPOLOGY.toml
+from dataclasses import dataclass
+@dataclass(frozen=True)
+class Affected:
+    should_run_ci: bool
+    rebuild_stages: set[str]
+    copy_stages: set[str]
+def affected(changed_paths: list[str], topo: BuildTopology) -&gt; Affected:
+    # subsumes BOTH configure_ci_path_filters.is_ci_run_required()
+    # and stage_impact.analyze() — one source of truth, one result
+    ...</code></pre></div>
+        </details>
+      </section>
+
+      <section id="s4">
+        <div class="shead"><span class="sn">04</span><h2>The bigger bets: buildx · BuildKite · Bazel</h2></div>
+        <p class="sdesc">The heavier, more future-facing options. The honest question: would a bigger tool remove
+          the manual work? Mostly no — the sprawl is a config-generation problem, not a build-speed one. Here's
+          the per-tool read.</p>
+        <div id="modIntro"></div>
+        <div id="tools"></div>
+        <div id="rec"></div>
+      </section>
+
+      <section id="s5">
+        <div class="shead"><span class="sn">05</span><h2>Other tools worth knowing</h2></div>
+        <p class="sdesc">Beyond buildx / BuildKite / Bazel, these are the credible options in the same space —
+          grouped by which of the two problems they actually attack. Fit ratings are for <em>TheRock specifically</em>
+          (a k8s-hosted, CMake-from-source, multi-arch superbuild), not in general.</p>
+        <div id="more"></div>
+
+        <div class="mod-intro" style="margin-top:22px">
+          <p><b style="color:var(--ink)">Concretely — if TheRock adopted Dagger.</b> The decision logic doesn't
+            disappear; it moves from ~46 loose scripts + 54 fromJSON YAMLs into one typed module you can run on
+            your laptop. GitHub Actions shrinks to a thin trigger.</p>
+          <div class="split" style="margin-top:14px">
+            <div class="s"><b>Today</b>46 Python scripts serialize JSON → <code>GITHUB_OUTPUT</code>; 54 workflow
+              YAMLs re-parse it via <code>fromJSON()</code>. A matrix bug shows up at 3am in the nightly, not at
+              review. Answering “what will CI do with my PR?” means push-and-watch.</div>
+            <div class="s"><b>With Dagger</b>One module exposes <code>ci(event)</code> that returns the typed job
+              graph. <code>dagger call ci --event=pr.json</code> prints the exact matrix locally in seconds. The
+              workflow becomes a few lines that just invoke it.</div>
+          </div>
+          <p style="margin-top:14px;color:var(--ink-2);font-size:14px"><b style="color:var(--pass)">Shrinks:</b>
+            most of the 54 orchestration YAMLs collapse to thin triggers; the <code>fromJSON</code>
+            string-injection seam vanishes; the generator becomes directly unit-testable and locally runnable.
+            &nbsp;<b style="color:var(--fail)">Doesn't:</b> GPU-hardware runners are still required; the
+            decision logic still has to exist (now as typed code); and it's a real migration — best done
+            incrementally by first wrapping the existing scripts as Dagger functions, not a big-bang rewrite.</p>
+        </div>
+      </section>
+
+      <p class="backtop"><a href="#top">↑ Back to top</a> · <a href="https://www.sudhakarchundu.org/projects/#blog">← Blog</a></p>
+    </main>
+  </div>
+</div>
+
+<footer class="foot">
   <div class="wrap">
-    <div class="fl">
+    <div>
+      <div style="font-family:var(--mono);font-weight:600">Sudhakar Chundu</div>
+      <div class="c">Platform / CI &amp; Build-Infrastructure Engineer · San Jose, CA</div>
+    </div>
+    <div class="links">
       <a href="https://github.com/ROCm/TheRock" target="_blank" rel="noopener">ROCm/TheRock ↗</a>
       <a href="https://github.com/ROCm/TheRock/tree/main/build_tools/github_actions" target="_blank" rel="noopener">build_tools/github_actions ↗</a>
-      <a href="/blog/therock-graph/" target="_blank" rel="noopener">Interactive architecture graph ↗</a>
+      <a href="/blog/therock-graph/" target="_blank" rel="noopener">Architecture graph ↗</a>
+      <a href="/blog/AMD_GPU_CI_Infrastructure.html">The article ↗</a>
     </div>
-    A companion to “Owning CI for AMD's unified GPU stack.” File explanations generated from a static
-    analysis of the repo; the tool verdicts are an engineering opinion, not vendor guidance.
   </div>
+  <div class="wrap" style="margin-top:16px"><span class="c">A companion to “Owning CI for AMD's unified GPU stack.” File explanations generated from a static analysis of the repo; the tool verdicts are an engineering opinion, not vendor guidance. © 2026 Sudhakar Chundu.</span></div>
 </footer>
+
+<span id="top"></span>
 
 <script type="application/json" id="data">
 {
@@ -548,7 +898,7 @@
       var cons = f.cons.map(function(c){return '<li>'+c+'</li>';}).join("");
       var flag = f.flag ? '<div class="flag">⚑ '+f.flag+'</div>' : '';
       return '<div class="card">'+
-        '<div class="card-h"><span class="fname">'+f.name+'</span>'+
+        '<div class="card-h"><span class="cf-name">'+f.name+'</span>'+
           '<span class="chip '+f.chip+'">'+f.chip+'</span>'+
           '<span class="lines">'+f.lines+' lines</span></div>'+
         '<div class="fpath">'+f.path+'</div>'+
@@ -593,14 +943,95 @@
       '<span class="mcat">'+m.cat+'</span></div><p>'+m.p+'</p>'+
       '<div class="fit">Fit: '+m.fit+' — '+m.why+'</div></div>';
   }).join("")+'</div>';
-
-  var root = document.documentElement;
-  document.getElementById("themeToggle").addEventListener("click", function(){
-    var cur = root.getAttribute("data-theme");
-    if(!cur){ cur = matchMedia("(prefers-color-scheme: dark)").matches ? "dark":"light"; }
-    root.setAttribute("data-theme", cur==="dark" ? "light":"dark");
-  });
 })();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script>
+  // Mermaid — dark palette matching the page tokens
+  try {
+    mermaid.initialize({
+      startOnLoad: true, securityLevel: "loose",
+      theme: "base",
+      flowchart: { curve: "basis", useMaxWidth: true },
+      themeVariables: {
+        darkMode: true,
+        fontFamily: "IBM Plex Mono, ui-monospace, monospace", fontSize: "13px",
+        background: "#0D1218",
+        primaryColor: "#121A21", primaryTextColor: "#E8EFF5", primaryBorderColor: "#28353F",
+        secondaryColor: "#162029", tertiaryColor: "#0D1218",
+        lineColor: "#6B8090", textColor: "#E8EFF5",
+        clusterBkg: "#0A0F14", clusterBorder: "#FF6B35",
+        edgeLabelBackground: "#0D1218"
+      }
+    });
+  } catch(e){}
+
+  // Prism autoloader path
+  if (window.Prism && Prism.plugins && Prism.plugins.autoloader) {
+    Prism.plugins.autoloader.languages_path = "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/";
+  }
+
+  // Copy buttons + Prism re-highlight on first open (perf: highlight lazily)
+  document.querySelectorAll("details.code").forEach(function(d){
+    var body = d.querySelector(".body");
+    var btn = document.createElement("button");
+    btn.className = "copy"; btn.type = "button"; btn.textContent = "copy";
+    body.appendChild(btn);
+    btn.addEventListener("click", function(e){
+      e.preventDefault();
+      var code = d.querySelector("code");
+      navigator.clipboard.writeText(code.innerText).then(function(){
+        btn.textContent = "copied ✓"; btn.classList.add("ok");
+        setTimeout(function(){ btn.textContent = "copy"; btn.classList.remove("ok"); }, 1400);
+      });
+    });
+    d.addEventListener("toggle", function(){
+      if (d.open && !d.dataset.hl && window.Prism){
+        Prism.highlightAllUnder(d); d.dataset.hl = "1";
+      }
+    });
+  });
+
+  // Expand/collapse all within a section scope
+  document.querySelectorAll(".expand").forEach(function(b){
+    b.addEventListener("click", function(){
+      var sec = document.getElementById(b.dataset.scope);
+      var cards = sec.querySelectorAll("details.code");
+      var anyClosed = Array.prototype.some.call(cards, function(c){ return !c.open; });
+      cards.forEach(function(c){ c.open = anyClosed; });
+      b.textContent = anyClosed ? "Collapse all ▾" : "Expand all ▸";
+    });
+  });
+
+  // Scrollspy for side nav
+  var links = Array.prototype.slice.call(document.querySelectorAll("#toc a"));
+  var map = {};
+  links.forEach(function(a){ map[a.getAttribute("href").slice(1)] = a; });
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (en.isIntersecting){
+        links.forEach(function(a){ a.classList.remove("active"); });
+        var a = map[en.target.id]; if (a) a.classList.add("active");
+      }
+    });
+  }, { rootMargin: "-20% 0px -70% 0px", threshold: 0 });
+  document.querySelectorAll("section[id]").forEach(function(s){ obs.observe(s); });
+
+  // ---------- reading progress ----------
+  (function(){
+    var bar = document.getElementById("progress");
+    if (!bar) return;
+    function onScroll(){
+      var h = document.documentElement;
+      var max = h.scrollHeight - h.clientHeight;
+      bar.style.transform = "scaleX(" + (max > 0 ? h.scrollTop / max : 0) + ")";
+    }
+    document.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  })();
 </script>
 </body>
 </html>
