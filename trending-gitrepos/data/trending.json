@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-13T05:05:18.203Z",
+  "generated_at": "2026-07-13T05:08:45.299Z",
   "methodology": "Computed from GitHub Search API per category (topic filters, stars:>300, pushed within 120 days, non-archived), ranked by average stars/month over the repo lifetime.",
   "star_floor": 300,
   "pushed_within_days": 120,
@@ -131,7 +131,7 @@
           "full_name": "go-gitea/gitea",
           "html_url": "https://github.com/go-gitea/gitea",
           "description": "Git with a cup of tea! Painless self-hosted all-in-one software development service, including Git hosting, code review, team collaboration, package registry and CI/CD",
-          "stars": 56800,
+          "stars": 56801,
           "velocity_per_month": 488,
           "language": "Go",
           "topics": [
@@ -615,7 +615,7 @@
           "full_name": "getagentseal/codeburn",
           "html_url": "https://github.com/getagentseal/codeburn",
           "description": "Free, local tool to track AI coding token usage and cost across 31 tools and agents (Claude Code, Cursor, Codex, Gemini and more), by model, project, and task. npx codeburn",
-          "stars": 8628,
+          "stars": 8629,
           "velocity_per_month": 2909,
           "language": "TypeScript",
           "topics": [
@@ -672,7 +672,7 @@
           "full_name": "Tracer-Cloud/opensre",
           "html_url": "https://github.com/Tracer-Cloud/opensre",
           "description": "Build your own AI SRE agents. The open source toolkit for the AI era.",
-          "stars": 8339,
+          "stars": 8340,
           "velocity_per_month": 1401,
           "language": "Python",
           "topics": [
@@ -691,8 +691,8 @@
           "full_name": "langfuse/langfuse",
           "html_url": "https://github.com/langfuse/langfuse",
           "description": "🪢 Open source AI engineering platform: LLM evals, observability, metrics, prompt management, playground, datasets. Integrates with OpenTelemetry, LangChain, OpenAI SDK, LiteLLM, and more. 🍊YC W23",
-          "stars": 30999,
-          "velocity_per_month": 819,
+          "stars": 31000,
+          "velocity_per_month": 820,
           "language": "TypeScript",
           "topics": [
             "analytics",
@@ -847,7 +847,7 @@
             "gateway",
             "langchain"
           ],
-          "pushed_at": "2026-07-13T05:03:16Z",
+          "pushed_at": "2026-07-13T05:06:05Z",
           "created_at": "2023-07-27T00:09:52Z"
         },
         {
@@ -912,8 +912,8 @@
           "full_name": "langfuse/langfuse",
           "html_url": "https://github.com/langfuse/langfuse",
           "description": "🪢 Open source AI engineering platform: LLM evals, observability, metrics, prompt management, playground, datasets. Integrates with OpenTelemetry, LangChain, OpenAI SDK, LiteLLM, and more. 🍊YC W23",
-          "stars": 30999,
-          "velocity_per_month": 819,
+          "stars": 31000,
+          "velocity_per_month": 820,
           "language": "TypeScript",
           "topics": [
             "analytics",
@@ -1015,8 +1015,8 @@
           "full_name": "jamiepine/voicebox",
           "html_url": "https://github.com/jamiepine/voicebox",
           "description": "The open-source AI voice studio. Clone, dictate, create.",
-          "stars": 40890,
-          "velocity_per_month": 7378,
+          "stars": 40894,
+          "velocity_per_month": 7379,
           "language": "TypeScript",
           "topics": [
             "ai",
@@ -1034,7 +1034,7 @@
           "full_name": "vllm-project/vllm",
           "html_url": "https://github.com/vllm-project/vllm",
           "description": "A high-throughput and memory-efficient inference and serving engine for LLMs",
-          "stars": 86092,
+          "stars": 86094,
           "velocity_per_month": 2097,
           "language": "Python",
           "topics": [
