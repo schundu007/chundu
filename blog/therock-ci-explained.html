@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="author" content="Sudhakar Chundu" />
-<meta name="description" content="A file-by-file field guide to ROCm/TheRock CI — the ~46-script shadow build system that generates GitHub Actions matrices — plus an honest read on which tools (buildx, BuildKite, Bazel, Dagger, Argo, Nix and more) actually reduce the CI-file sprawl." />
+<meta name="description" content="A file-by-file field guide to ROCm/TheRock CI — the ~46-script shadow build system — with adoptable-now alternatives to its current GitHub Actions practice (typed matrix generator, act, CUE, schema-at-the-seam) separated from bigger future bets (buildx, BuildKite, Bazel, Dagger)." />
 <link rel="icon" type="image/x-icon" href="../favicon.ico" />
 <title>TheRock CI, Explained — the shadow build system, file by file</title>
 <style>
@@ -256,17 +256,25 @@
   </section>
 
   <section>
-    <div class="shead"><span class="sn">03</span><h2>Would a modern tool kill the sprawl?</h2></div>
-    <p class="sdesc">The honest question behind ~22k lines of CI code: would a modern tool remove the manual
-      work of maintaining it? Short answer — mostly no, because the sprawl is a config-generation problem,
-      not a build-speed one. Here's the per-tool read.</p>
+    <div class="shead"><span class="sn">03</span><h2>Fix the current practice — no migration</h2></div>
+    <p class="sdesc">The most useful alternative to today's ~46 scripts + 54 fromJSON YAMLs isn't a new
+      vendor — it's hardening the practice you already have. Every option below is <strong>adoptable now</strong>,
+      stays 100% on GitHub Actions, and needs no big migration. Start here, before the bigger bets in §04.</p>
+    <div id="now"></div>
+  </section>
+
+  <section>
+    <div class="shead"><span class="sn">04</span><h2>The bigger bets: buildx, BuildKite, Bazel</h2></div>
+    <p class="sdesc">The heavier, more future-facing options. The honest question: would a bigger tool remove
+      the manual work? Mostly no — the sprawl is a config-generation problem, not a build-speed one. Here's
+      the per-tool read.</p>
     <div id="modIntro"></div>
     <div id="tools"></div>
     <div id="rec"></div>
   </section>
 
   <section>
-    <div class="shead"><span class="sn">04</span><h2>Other tools worth knowing</h2></div>
+    <div class="shead"><span class="sn">05</span><h2>Other tools worth knowing</h2></div>
     <p class="sdesc">Beyond buildx / BuildKite / Bazel, these are the credible options in the same space —
       grouped by which of the two problems they actually attack. Fit ratings are for <em>TheRock specifically</em>
       (a k8s-hosted, CMake-from-source, multi-arch superbuild), not in general.</p>
@@ -508,6 +516,14 @@
     {"n":"BuildBuddy / EngFlow","cat":"remote execution (RBE)","fit":"bazel-tied","p":"Remote Build Execution backends with a results UI and remote caching, primarily for Bazel (and Bazel-compatible) build graphs.","why":"Genuinely powerful for build speed — but they presuppose a Bazel/RBE-shaped build graph TheRock doesn't have. Relevant only <b>if</b> a Bazel migration ever happened, which the verdict above rules out."},
     {"n":"Namespace / Blacksmith / WarpBuild","cat":"faster GHA runners","fit":"cost lever","p":"Drop-in faster GitHub Actions runners with built-in caching — change the <code>runs-on</code> label and keep every workflow as-is.","why":"The lowest-friction change in this whole list: cheaper/faster runs with zero refactor. But it's purely a <b>cost/speed</b> lever — it removes none of the ~22k lines and none of the matrix-generation complexity."},
     {"n":"Buck2 / Pants","cat":"bazel-class systems","fit":"skip","p":"Buck2 (Meta) is a faster Starlark build system; Pants targets Python/JVM monorepos with dependency inference.","why":"Same fundamental blocker as Bazel — they'd need a parallel build definition for CMake/vendored ROCm sources. Buck2 is faster than Bazel but doesn't change the migration math; Pants isn't aimed at a C++ superbuild."}
+  ],
+  "now":[
+    {"n":"One typed matrix generator","cat":"medium · already half-done","p":"Consolidate the ~46 scripts behind one documented entrypoint with a Pydantic/dataclass-validated build_config schema, golden-file tests over representative events, and a <code>--dry-run --event-file=pr.json</code> mode that prints the exact matrix an event produces — locally, in seconds.","replaces":"the pile of loose scripts and the “debug an opaque fromJSON string at 3am” loop. configure_multi_arch_ci.py is already a pure-function pipeline, so this is mostly consolidation, not a rewrite."},
+    {"n":"act (nektos/act)","cat":"low · try today","p":"Run the actual workflows locally in Docker to answer “what will CI do with my PR?” before pushing anything.","replaces":"the push-and-watch feedback loop. Caveat: it won't run the real GPU builds, but it validates the orchestration and matrix logic — exactly the part that's currently un-reproducible."},
+    {"n":"A schema at the fromJSON seam","cat":"low–medium","p":"One Pydantic model that the Python emits and a cheap validation step checks before the YAML consumes it via <code>fromJSON()</code>.","replaces":"the stringly-typed JSON crossing from Python into YAML. A renamed key then fails at review, not in the 3am nightly."},
+    {"n":"Typed config generation — CUE / Jsonnet / ytt","cat":"medium · stays on GHA","p":"Generate the workflows and the build_config from a typed schema instead of hand-maintaining 54 YAMLs plus untyped Python dicts. CUE both validates and generates.","replaces":"hand-edited, unvalidated YAML. You keep GitHub Actions, but stop editing YAML by hand and start generating it from a checked source of truth."},
+    {"n":"Lean harder on reusable + composite actions","cat":"low · GHA-native","p":"You've already factored 38 of 54 workflows into <code>workflow_call</code> units. A single “generate-matrix” composite action plus more aggressive dedup shrinks most of the rest.","replaces":"the copy-pasted YAML across the remaining workflows — using only native GitHub Actions features you already rely on."},
+    {"n":"Merge the two change-classification systems","cat":"medium","p":"configure_ci_path_filters.py and stage_impact.py are two parallel “what changed / what to rebuild” engines. Collapse them into one topology-driven affected-graph off BUILD_TOPOLOGY.toml.","replaces":"the duplicated, drift-prone change logic — with a single source of truth you already maintain (the topology)."}
   ]
 }
 </script>
@@ -565,6 +581,12 @@
 
   document.getElementById("rec").innerHTML =
     '<div class="rec"><div class="rl">The pragmatic path</div><p>'+D.rec.text+'</p></div>';
+
+  document.getElementById("now").innerHTML = '<div class="more-grid">'+D.now.map(function(m){
+    return '<div class="mcard"><div class="mh"><span class="mn">'+m.n+'</span>'+
+      '<span class="mcat">'+m.cat+'</span></div><p>'+m.p+'</p>'+
+      '<div class="fit"><b>Replaces:</b> '+m.replaces+'</div></div>';
+  }).join("")+'</div>';
 
   document.getElementById("more").innerHTML = '<div class="more-grid">'+D.more.map(function(m){
     return '<div class="mcard"><div class="mh"><span class="mn">'+m.n+'</span>'+
