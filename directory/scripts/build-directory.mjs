@@ -38,7 +38,8 @@ const IGNORE = new Set(['chundu']); // the site itself
 // Always present: on-site pages + apps whose repo is private (not in public API).
 const PINNED = [
   { name: 'Trending GitHub Repos', url: '/trending-gitrepos/', description: 'Weekly-ranked trending repos across DevOps, Platform, MLOps, SRE, LLMOps, and GPU infra.', host: 'sudhakarchundu.org/trending-gitrepos' },
-  { name: 'Cariara', url: 'https://cariara.vercel.app', description: 'AI-powered job portal — discovery, matching, and auto-apply.', host: 'cariara.vercel.app' },
+  { name: 'Cariara', url: 'https://jobs.cariara.com', description: 'AI-powered job portal — discovery, matching, and auto-apply.', host: 'jobs.cariara.com' },
+  { name: 'GitPulser', url: 'https://gitpulser.vercel.app/dashboard', description: 'GitHub activity & PR pulse dashboard.', host: 'gitpulser.vercel.app/dashboard' },
 ];
 
 const titleCase = (n) => n.replace(/[-_]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
