@@ -1,0 +1,45 @@
+name: Refresh trending-gitrepos
+
+# Weekly rebuild of /trending-gitrepos/ only. GitHub has no official trending
+# API, so the list is computed from the Search API (see the script). This job
+# ONLY ever touches files under trending-gitrepos/ — the rest of the site is
+# never modified.
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'   # every Monday 09:00 UTC
+  workflow_dispatch: {}
+
+concurrency:
+  group: trending-gitrepos
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    name: Fetch, render & commit
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Fetch + render trending list
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node trending-gitrepos/scripts/fetch.mjs
+
+      - name: Commit if changed (trending-gitrepos/ only)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- trending-gitrepos/; then
+            echo "No changes to trending list."
+            exit 0
+          fi
+          git add trending-gitrepos/
+          git commit -m "chore(trending-gitrepos): weekly refresh"
+          git push
