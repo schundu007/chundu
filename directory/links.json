@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-13T05:42:23.075Z",
+  "generated_at": "2026-07-13T06:22:51.592Z",
   "count": 6,
   "entries": [
     {
@@ -16,9 +16,9 @@
     },
     {
       "name": "Camora",
-      "url": "https://camorafe.vercel.app",
+      "url": "https://camora.cariara.com",
       "description": "Cariara Platform — Unified monorepo for Lumora + Ascend",
-      "host": "camorafe.vercel.app",
+      "host": "camora.cariara.com",
       "ts": 1783918617000
     },
     {
@@ -30,16 +30,16 @@
     },
     {
       "name": "Lumora",
-      "url": "https://lumora-schundu007.vercel.app",
+      "url": "https://camora.cariara.com/lumora",
       "description": "Lumora - AI-powered interview assistant",
-      "host": "lumora-schundu007.vercel.app",
+      "host": "camora.cariara.com/lumora",
       "ts": 1779082751000
     },
     {
       "name": "Capra",
-      "url": "https://interview-coder-ten.vercel.app",
+      "url": "https://camora.cariara.com/capra",
       "description": "",
-      "host": "interview-coder-ten.vercel.app",
+      "host": "camora.cariara.com/capra",
       "ts": 1775432177000
     }
   ]

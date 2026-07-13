@@ -43,7 +43,12 @@ const PINNED = [
 
 const titleCase = (n) => n.replace(/[-_]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 const hostOf = (u) => {
-  try { return new URL(u).host.replace(/^www\./, ''); } catch { return String(u).replace(/^https?:\/\//, '').replace(/\/$/, ''); }
+  try {
+    const x = new URL(u);
+    return (x.host + (x.pathname !== '/' ? x.pathname : '')).replace(/^www\./, '').replace(/\/$/, '');
+  } catch {
+    return String(u).replace(/^https?:\/\//, '').replace(/\/$/, '');
+  }
 };
 
 async function fetchRepos() {
