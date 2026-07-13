@@ -96,10 +96,9 @@ const STYLE = `
 
         /* Sticky category nav */
         .tg-catnav {
-            position: sticky; top: 70px; z-index: 20;
             display: flex; flex-wrap: wrap; gap: 0.5rem;
-            padding: 0.75rem 0; margin-bottom: 1.5rem;
-            background: var(--bg-primary); border-bottom: 1px solid var(--bg-tertiary);
+            padding: 0.25rem 0 1rem; margin-bottom: 1.25rem;
+            border-bottom: 1px solid var(--bg-tertiary);
         }
         .tg-catnav a {
             display: inline-flex; align-items: center; gap: 0.45rem;
@@ -113,7 +112,7 @@ const STYLE = `
         .tg-catnav a .n { font-size: 0.7rem; color: var(--text-muted); }
 
         /* Category section */
-        .tg-section { margin-top: 2.75rem; }
+        .tg-section { margin-top: 2.75rem; scroll-margin-top: 90px; }
         .tg-sec-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.1rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--bg-tertiary); }
         .tg-sec-head h2 { font-size: 1.6rem; letter-spacing: -0.02em; margin: 0; }
         .tg-count { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--accent-highlight); background: rgba(118,185,0,0.12); padding: 0.15rem 0.55rem; border-radius: var(--radius-full); }
@@ -158,7 +157,6 @@ const STYLE = `
         @media (max-width: 820px) {
             .tg-hero h1 { font-size: 2.1rem; }
             .tg-grid { grid-template-columns: 1fr; }
-            .tg-catnav { top: 0; }
             .tg-topics-line { display: none; }
         }
     </style>`;
