@@ -391,9 +391,10 @@
   h1{max-width:none;font-size:clamp(2.1rem,4.6vw,3.2rem)}
   h2{font-size:clamp(1.5rem,2.5vw,1.9rem)}
   h3{font-size:1.45rem}
-  .lede{max-width:100ch;font-size:clamp(1.2rem,1.6vw,1.45rem)}
-  .sdesc{max-width:100ch;font-size:18px}
-  p{max-width:100ch}
+  .lede{max-width:none;font-size:clamp(1.2rem,1.6vw,1.45rem)}
+  .sdesc{max-width:none;font-size:18px}
+  p{max-width:none}
+  .provenance{max-width:none;font-size:15px}
   .block p{font-size:17.5px}
   .cf-name,.note,.mod-intro p{font-size:18px}
   .mcard p,.pc li,.premise,.wh .w p,.fstep .ft{font-size:16.5px}
@@ -412,6 +413,7 @@
       <a href="#s3">Fix</a>
       <a href="#s4">Bigger bets</a>
       <a href="#s5">More tools</a>
+      <a href="#s6">Live</a>
       <a href="https://www.sudhakarchundu.org/">Home</a>
     </nav>
   </div>
@@ -467,6 +469,7 @@
         <a href="#s3"><span class="sn">03</span>Fix the current practice</a>
         <a href="#s4"><span class="sn">04</span>The bigger bets</a>
         <a href="#s5"><span class="sn">05</span>Other tools worth knowing</a>
+        <a href="#s6"><span class="sn">06</span>Live dashboards</a>
       </nav>
     </aside>
 
@@ -673,6 +676,49 @@ def affected(changed_paths: list[str], topo: BuildTopology) -&gt; Affected:
       </section>
 
       <p class="backtop"><a href="#top">↑ Back to top</a> · <a href="https://www.sudhakarchundu.org/projects/#blog">← Blog</a></p>
+      <section id="s6">
+        <div class="shead"><span class="sn">06</span><h2>Live dashboards</h2></div>
+        <p class="sdesc">The three destinations from the series bar, embedded here so you can scan them
+          without leaving the page — the interactive architecture graph, the <a href="https://gitpulser.vercel.app/dashboard" target="_blank" rel="noopener">GitPulser</a>
+          CI-health dashboard, and TheRock's public project HUD. Switch tabs; each also opens full-screen.</p>
+        <style>
+          .embed{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--panel);margin-top:8px}
+          .embed-tabs{display:flex;align-items:center;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line);
+            background:var(--code-head);flex-wrap:wrap}
+          .etab{font-family:var(--mono);font-size:13px;color:var(--ink-2);background:var(--panel);
+            border:1px solid var(--line-2);border-radius:8px;padding:7px 14px;cursor:pointer;transition:.15s}
+          .etab:hover{color:var(--ink);border-color:var(--muted)}
+          .etab.active{color:#0B0D10;background:var(--grad);border-color:transparent;font-weight:600}
+          .etab-open{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--link);white-space:nowrap}
+          .embed-frame{position:relative;width:100%;height:76vh;min-height:540px;background:var(--void)}
+          .embed-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+        </style>
+        <div class="embed">
+          <div class="embed-tabs" role="tablist">
+            <button class="etab active" data-src="/blog/therock-graph/" role="tab" aria-selected="true">Interactive graph</button>
+            <button class="etab" data-src="https://gitpulser.vercel.app/dashboard" role="tab" aria-selected="false">GitPulser</button>
+            <button class="etab" data-src="https://therock-hud-dev.amd.com/" role="tab" aria-selected="false">TheRock HUD</button>
+            <a class="etab-open" id="embedOpen" href="/blog/therock-graph/" target="_blank" rel="noopener">Open full-screen ↗</a>
+          </div>
+          <div class="embed-frame">
+            <iframe id="embedFrame" title="Live dashboard" src="/blog/therock-graph/" loading="lazy" allow="fullscreen"></iframe>
+          </div>
+        </div>
+        <script>
+          (function(){
+            var frame=document.getElementById("embedFrame"), open=document.getElementById("embedOpen");
+            document.querySelectorAll(".etab").forEach(function(b){
+              b.addEventListener("click",function(){
+                document.querySelectorAll(".etab").forEach(function(x){x.classList.remove("active");x.setAttribute("aria-selected","false");});
+                b.classList.add("active"); b.setAttribute("aria-selected","true");
+                var src=b.getAttribute("data-src");
+                if(frame.getAttribute("src")!==src){ frame.setAttribute("src",src); }
+                open.setAttribute("href",src);
+              });
+            });
+          })();
+        </script>
+      </section>
     </main>
   </div>
 </div>
