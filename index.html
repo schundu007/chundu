@@ -653,11 +653,64 @@
                         <a href="projects/#blog" class="quicklink"><i class="fas fa-pen-nib"></i>Blog</a>
                         <a href="projects/" class="quicklink"><i class="fas fa-trophy"></i>Projects</a>
                         <a href="opensource/" class="quicklink"><i class="fab fa-github"></i>Open Source</a>
+                        <a href="#directory" class="quicklink"><i class="fas fa-rocket"></i>Live Apps</a>
                         <a href="contact/" class="quicklink"><i class="fas fa-envelope"></i>Contact</a>
                     </div>
                 </section>
             </div>
         </div>
+
+        <section class="section" id="directory" aria-labelledby="directory-title">
+            <div class="section-header">
+                <h2 id="directory-title">Live Apps &amp; Tools</h2>
+                <p>Products, demos, and tools I've shipped &mdash; auto-generated from my GitHub and refreshed weekly, so anything new shows up here on its own.</p>
+            </div>
+            <style>
+                #directory .dir-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+                #directory .dir-card { display: flex; flex-direction: column; gap: 0.5rem; padding: 1.1rem 1.2rem; background: var(--bg-card); border: 1px solid var(--bg-tertiary); border-radius: var(--radius-lg); text-decoration: none; box-shadow: var(--shadow-sm); transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast); }
+                #directory .dir-card:hover { transform: translateY(-3px); border-color: var(--glass-border-hover); box-shadow: var(--shadow-md); }
+                #directory .dir-card-top { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+                #directory .dir-name { font-size: 1.05rem; font-weight: 700; color: var(--text-primary); }
+                #directory .dir-card-top i { color: var(--text-muted); font-size: 0.75rem; }
+                #directory .dir-card:hover .dir-name { color: var(--accent-highlight); }
+                #directory .dir-desc { font-size: 0.85rem; line-height: 1.5; color: var(--text-secondary); margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+                #directory .dir-url { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); margin-top: auto; }
+            </style>
+            <div class="dir-grid">
+                <!-- DIRECTORY:START -->
+                <a class="dir-card" href="/trending-gitrepos/">
+                    <div class="dir-card-top"><span class="dir-name">Trending GitHub Repos</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
+                    <p class="dir-desc">Weekly-ranked trending repos across DevOps, Platform, MLOps, SRE, LLMOps, and GPU infra.</p>
+                    <span class="dir-url">sudhakarchundu.org/trending-gitrepos</span>
+                </a>
+                <a class="dir-card" href="https://cariara.vercel.app" target="_blank" rel="noopener noreferrer">
+                    <div class="dir-card-top"><span class="dir-name">Cariara</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
+                    <p class="dir-desc">AI-powered job portal — discovery, matching, and auto-apply.</p>
+                    <span class="dir-url">cariara.vercel.app</span>
+                </a>
+                <a class="dir-card" href="https://camorafe.vercel.app" target="_blank" rel="noopener noreferrer">
+                    <div class="dir-card-top"><span class="dir-name">Camora</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
+                    <p class="dir-desc">Cariara Platform — Unified monorepo for Lumora + Ascend</p>
+                    <span class="dir-url">camorafe.vercel.app</span>
+                </a>
+                <a class="dir-card" href="https://isaaclab-dashboard.vercel.app" target="_blank" rel="noopener noreferrer">
+                    <div class="dir-card-top"><span class="dir-name">IsaacLab DevOps Dashboard</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
+                    <p class="dir-desc">IsaacLab DevOps Dashboard — React + FastAPI platform for CI/CD monitoring, PR automation, nightly builds, infra, registry, and improvement planning for isaac-sim/IsaacLab</p>
+                    <span class="dir-url">isaaclab-dashboard.vercel.app</span>
+                </a>
+                <a class="dir-card" href="https://lumora-schundu007.vercel.app" target="_blank" rel="noopener noreferrer">
+                    <div class="dir-card-top"><span class="dir-name">Lumora</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
+                    <p class="dir-desc">Lumora - AI-powered interview assistant</p>
+                    <span class="dir-url">lumora-schundu007.vercel.app</span>
+                </a>
+                <a class="dir-card" href="https://interview-coder-ten.vercel.app" target="_blank" rel="noopener noreferrer">
+                    <div class="dir-card-top"><span class="dir-name">Capra</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
+                    
+                    <span class="dir-url">interview-coder-ten.vercel.app</span>
+                </a>
+                <!-- DIRECTORY:END -->
+            </div>
+        </section>
 
     </main>
 

@@ -1,0 +1,46 @@
+{
+  "generated_at": "2026-07-13T05:40:17.227Z",
+  "count": 6,
+  "entries": [
+    {
+      "name": "Trending GitHub Repos",
+      "url": "/trending-gitrepos/",
+      "description": "Weekly-ranked trending repos across DevOps, Platform, MLOps, SRE, LLMOps, and GPU infra.",
+      "host": "sudhakarchundu.org/trending-gitrepos"
+    },
+    {
+      "name": "Cariara",
+      "url": "https://cariara.vercel.app",
+      "description": "AI-powered job portal — discovery, matching, and auto-apply.",
+      "host": "cariara.vercel.app"
+    },
+    {
+      "name": "Camora",
+      "url": "https://camorafe.vercel.app",
+      "description": "Cariara Platform — Unified monorepo for Lumora + Ascend",
+      "host": "camorafe.vercel.app",
+      "ts": 1783918617000
+    },
+    {
+      "name": "IsaacLab DevOps Dashboard",
+      "url": "https://isaaclab-dashboard.vercel.app",
+      "description": "IsaacLab DevOps Dashboard — React + FastAPI platform for CI/CD monitoring, PR automation, nightly builds, infra, registry, and improvement planning for isaac-sim/IsaacLab",
+      "host": "isaaclab-dashboard.vercel.app",
+      "ts": 1783405051000
+    },
+    {
+      "name": "Lumora",
+      "url": "https://lumora-schundu007.vercel.app",
+      "description": "Lumora - AI-powered interview assistant",
+      "host": "lumora-schundu007.vercel.app",
+      "ts": 1779082751000
+    },
+    {
+      "name": "Capra",
+      "url": "https://interview-coder-ten.vercel.app",
+      "description": "",
+      "host": "interview-coder-ten.vercel.app",
+      "ts": 1775432177000
+    }
+  ]
+}

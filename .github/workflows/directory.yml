@@ -1,0 +1,44 @@
+name: Refresh Directory
+
+# Weekly rebuild of the homepage "Live Apps & Tools" directory. Auto-discovers
+# public non-fork repos with a homepage URL and injects them into index.html
+# between the DIRECTORY markers. Only that marked region + directory/ change.
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'   # every Monday 09:00 UTC
+  workflow_dispatch: {}
+
+concurrency:
+  group: directory
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    name: Build & commit directory
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+
+      - name: Rebuild directory
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node directory/scripts/build-directory.mjs
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- index.html directory/; then
+            echo "No changes to directory."
+            exit 0
+          fi
+          git add index.html directory/
+          git commit -m "chore(directory): weekly refresh of live apps"
+          git push
