@@ -413,7 +413,6 @@
       <a href="#s3">Fix</a>
       <a href="#s4">Bigger bets</a>
       <a href="#s5">More tools</a>
-      <a href="#s6">Live</a>
       <a href="https://www.sudhakarchundu.org/">Home</a>
     </nav>
   </div>
@@ -424,9 +423,9 @@
     <span class="slabel">AMD GPU CI series</span>
     <a href="/blog/AMD_GPU_CI_Infrastructure.html">The article</a>
     <a href="/blog/therock-ci-explained.html" class="active" aria-current="page">File-by-file guide</a>
-    <a href="/blog/therock-graph/">Interactive graph</a>
-    <a href="https://gitpulser.vercel.app/dashboard" target="_blank" rel="noopener">GitPulser ↗</a>
-    <a href="https://therock-hud-dev.amd.com/" target="_blank" rel="noopener">TheRock HUD ↗</a>
+    <a href="/blog/therock-graph/" data-embed>Interactive graph</a>
+    <a href="https://gitpulser.vercel.app/dashboard" target="_blank" rel="noopener" data-embed>GitPulser ↗</a>
+    <a href="https://therock-hud-dev.amd.com/" target="_blank" rel="noopener" data-embed>TheRock HUD ↗</a>
   </div>
 </div>
 
@@ -469,7 +468,6 @@
         <a href="#s3"><span class="sn">03</span>Fix the current practice</a>
         <a href="#s4"><span class="sn">04</span>The bigger bets</a>
         <a href="#s5"><span class="sn">05</span>Other tools worth knowing</a>
-        <a href="#s6"><span class="sn">06</span>Live dashboards</a>
       </nav>
     </aside>
 
@@ -676,49 +674,6 @@ def affected(changed_paths: list[str], topo: BuildTopology) -&gt; Affected:
       </section>
 
       <p class="backtop"><a href="#top">↑ Back to top</a> · <a href="https://www.sudhakarchundu.org/projects/#blog">← Blog</a></p>
-      <section id="s6">
-        <div class="shead"><span class="sn">06</span><h2>Live dashboards</h2></div>
-        <p class="sdesc">The three destinations from the series bar, embedded here so you can scan them
-          without leaving the page — the interactive architecture graph, the <a href="https://gitpulser.vercel.app/dashboard" target="_blank" rel="noopener">GitPulser</a>
-          CI-health dashboard, and TheRock's public project HUD. Switch tabs; each also opens full-screen.</p>
-        <style>
-          .embed{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--panel);margin-top:8px}
-          .embed-tabs{display:flex;align-items:center;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line);
-            background:var(--code-head);flex-wrap:wrap}
-          .etab{font-family:var(--mono);font-size:13px;color:var(--ink-2);background:var(--panel);
-            border:1px solid var(--line-2);border-radius:8px;padding:7px 14px;cursor:pointer;transition:.15s}
-          .etab:hover{color:var(--ink);border-color:var(--muted)}
-          .etab.active{color:#0B0D10;background:var(--grad);border-color:transparent;font-weight:600}
-          .etab-open{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--link);white-space:nowrap}
-          .embed-frame{position:relative;width:100%;height:76vh;min-height:540px;background:var(--void)}
-          .embed-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-        </style>
-        <div class="embed">
-          <div class="embed-tabs" role="tablist">
-            <button class="etab active" data-src="/blog/therock-graph/" role="tab" aria-selected="true">Interactive graph</button>
-            <button class="etab" data-src="https://gitpulser.vercel.app/dashboard" role="tab" aria-selected="false">GitPulser</button>
-            <button class="etab" data-src="https://therock-hud-dev.amd.com/" role="tab" aria-selected="false">TheRock HUD</button>
-            <a class="etab-open" id="embedOpen" href="/blog/therock-graph/" target="_blank" rel="noopener">Open full-screen ↗</a>
-          </div>
-          <div class="embed-frame">
-            <iframe id="embedFrame" title="Live dashboard" src="/blog/therock-graph/" loading="lazy" allow="fullscreen"></iframe>
-          </div>
-        </div>
-        <script>
-          (function(){
-            var frame=document.getElementById("embedFrame"), open=document.getElementById("embedOpen");
-            document.querySelectorAll(".etab").forEach(function(b){
-              b.addEventListener("click",function(){
-                document.querySelectorAll(".etab").forEach(function(x){x.classList.remove("active");x.setAttribute("aria-selected","false");});
-                b.classList.add("active"); b.setAttribute("aria-selected","true");
-                var src=b.getAttribute("data-src");
-                if(frame.getAttribute("src")!==src){ frame.setAttribute("src",src); }
-                open.setAttribute("href",src);
-              });
-            });
-          })();
-        </script>
-      </section>
     </main>
   </div>
 </div>
@@ -1108,6 +1063,47 @@ def affected(changed_paths: list[str], topo: BuildTopology) -&gt; Affected:
     document.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
   })();
+</script>
+<div class="embed-overlay" id="embedOverlay" hidden>
+  <div class="embed-modal" role="dialog" aria-modal="true" aria-label="Embedded dashboard">
+    <div class="embed-bar">
+      <span class="embed-title" id="embedTitle">Dashboard</span>
+      <a class="embed-open" id="embedOpen" target="_blank" rel="noopener">Open full-screen ↗</a>
+      <button class="embed-close" id="embedClose" type="button" aria-label="Close">✕</button>
+    </div>
+    <iframe class="embed-if" id="embedIf" title="Embedded dashboard" allow="fullscreen"></iframe>
+  </div>
+</div>
+<style>
+  .embed-overlay{position:fixed;inset:0;z-index:200;background:rgba(4,6,9,.74);backdrop-filter:blur(4px);
+    display:flex;align-items:center;justify-content:center;padding:2.5vh 2vw}
+  .embed-overlay[hidden]{display:none}
+  .embed-modal{width:96vw;max-width:1600px;height:92vh;background:var(--panel);border:1px solid var(--line-2);
+    border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 80px -20px rgba(0,0,0,.7)}
+  .embed-bar{display:flex;align-items:center;gap:14px;padding:10px 14px;border-bottom:1px solid var(--line);
+    background:var(--code-head,#0F161D)}
+  .embed-title{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--ink)}
+  .embed-open{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--link)}
+  .embed-close{font-family:var(--mono);font-size:15px;line-height:1;color:var(--ink-2);background:var(--panel);
+    border:1px solid var(--line-2);border-radius:8px;width:32px;height:32px;cursor:pointer;transition:.15s}
+  .embed-close:hover{color:#0B0D10;background:var(--grad);border-color:transparent}
+  .embed-if{flex:1;width:100%;border:0;background:var(--void)}
+</style>
+<script>
+(function(){
+  var ov=document.getElementById("embedOverlay"), ifr=document.getElementById("embedIf"),
+      tt=document.getElementById("embedTitle"), op=document.getElementById("embedOpen");
+  function openEmbed(src,label){ ifr.src=src; tt.textContent=label; op.href=src; ov.hidden=false;
+    document.body.style.overflow="hidden"; }
+  function closeEmbed(){ ov.hidden=true; ifr.src="about:blank"; document.body.style.overflow=""; }
+  document.querySelectorAll(".series a[data-embed]").forEach(function(a){
+    a.addEventListener("click",function(e){ e.preventDefault();
+      openEmbed(a.getAttribute("href"), a.textContent.replace(/[\u2197\s]+$/,"").trim()); });
+  });
+  document.getElementById("embedClose").addEventListener("click",closeEmbed);
+  ov.addEventListener("click",function(e){ if(e.target===ov) closeEmbed(); });
+  document.addEventListener("keydown",function(e){ if(e.key==="Escape"&&!ov.hidden) closeEmbed(); });
+})();
 </script>
 </body>
 </html>
