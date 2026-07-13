@@ -1,0 +1,1 @@
+{"path":"build_tools/packaging/linux/requirements.txt","language":"txt","content":"pyelftools\nboto3\njinja2\npyzstd\n","sizeBytes":31,"lineCount":5}

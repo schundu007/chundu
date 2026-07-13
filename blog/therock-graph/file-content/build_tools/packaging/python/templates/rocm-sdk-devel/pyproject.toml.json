@@ -1,0 +1,1 @@
+{"path":"build_tools/packaging/python/templates/rocm-sdk-devel/pyproject.toml","language":"toml","content":"[build-system]\nrequires = [\n  \"setuptools>=70.2.0\",\n]\nbuild-backend = \"setuptools.build_meta\"\n","sizeBytes":94,"lineCount":6}

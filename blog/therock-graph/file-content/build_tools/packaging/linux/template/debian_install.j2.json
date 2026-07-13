@@ -1,0 +1,1 @@
+{"path":"build_tools/packaging/linux/template/debian_install.j2","language":"j2","content":"{%- if has_regular_files %}\n.{{path}}/*  {{path}}\n{%- endif %}\n{%- if has_hidden_files %}\n.{{path}}/.[!.]*  {{path}}\n{%- endif %}\n","sizeBytes":130,"lineCount":7}

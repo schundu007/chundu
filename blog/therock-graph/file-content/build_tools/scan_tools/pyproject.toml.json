@@ -1,0 +1,1 @@
+{"path":"build_tools/scan_tools/pyproject.toml","language":"toml","content":"[tool.pytest.ini_options]\ntestpaths = [\n    \"github_actions/tests\",\n]\npython_files = [\"*_test.py\"]\naddopts = \"-ra\"\n","sizeBytes":115,"lineCount":7}

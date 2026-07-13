@@ -1,0 +1,1 @@
+{"path":"build_tools/packaging/python/templates/rocm-sdk-devel/MANIFEST.in","language":"in","content":"recursive-include src/* *.tar\nrecursive-include src/* *.tar.xz\n","sizeBytes":63,"lineCount":3}

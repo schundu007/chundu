@@ -1,0 +1,1 @@
+{"path":"build_tools/packaging/linux/template/debian_changelog.j2","language":"j2","content":"{{ package }} ({{ version }}) {{ distribution | default('UNRELEASED') }}; urgency={{ urgency | default('medium') }}\n\n{%- for change in changes %}\n  * {{ change }}\n{%- endfor %}\n\n -- {{ maintainer_name }} <{{ maintainer_email }}>  {{ date }}\n","sizeBytes":241,"lineCount":8}

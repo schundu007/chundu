@@ -1,0 +1,1 @@
+{"path":"build_tools/packaging/python/templates/rocm-profiler/pyproject.toml","language":"toml","content":"[build-system]\nrequires = [\"setuptools>=70.2.0\", \"wheel\"]\nbuild-backend = \"setuptools.build_meta\"\n","sizeBytes":98,"lineCount":4}

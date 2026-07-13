@@ -1,0 +1,1 @@
+{"path":"build_tools/packaging/python/templates/rocm-profiler/MANIFEST.in","language":"in","content":"recursive-include src *.py\nrecursive-include platform/* *\n","sizeBytes":58,"lineCount":3}

@@ -1,0 +1,1 @@
+{"path":"build_tools/packaging/requirements.txt","language":"txt","content":"boto3>=1.26.0\ninstaller==0.7.0\npackaging==25.0\npkginfo==1.12.1.2\nwheel==0.46.2\n","sizeBytes":79,"lineCount":6}

@@ -1,0 +1,1 @@
+{"path":"build_tools/hack/README.md","language":"markdown","content":"# Build Tools Hacks\n\nOne-off scripts intended to aid in the infrastructure management of TheRock.\nOnce more than a couple users are using these scripts they should graduate out\nof this directory into their own scripts directory which is more properly\nmaintained.\n","sizeBytes":263,"lineCount":7}

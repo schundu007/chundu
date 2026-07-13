@@ -1,0 +1,1 @@
+{"path":"build_tools/packaging/python/templates/rocm-profiler/src/rocm_profiler/__init__.py","language":"python","content":"# Copyright Advanced Micro Devices, Inc.\n# SPDX-License-Identifier: MIT\n\n\"\"\"ROCm profiler applications package.\"\"\"\n","sizeBytes":115,"lineCount":5}

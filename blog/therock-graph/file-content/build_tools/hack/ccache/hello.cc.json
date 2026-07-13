@@ -1,0 +1,1 @@
+{"path":"build_tools/hack/ccache/hello.cc","language":"cpp","content":"// This is dummy code just to verify compilation under ccache. It doesn't\n// matter what it does.\n#include <stdio.h>\n\nint main(int argc, char **argv) {\n  printf(\"Hello world!\\n\");\n  return 0;\n}\n","sizeBytes":194,"lineCount":9}
