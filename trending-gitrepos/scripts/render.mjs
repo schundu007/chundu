@@ -1,11 +1,15 @@
 #!/usr/bin/env node
 /**
- * render-html.mjs — build a standalone, self-contained HTML page from
- * data/trending.json. Openable directly in any browser (file:// or hosted),
- * theme-aware, every repo is a clickable link.
+ * render.mjs — build /trending-gitrepos/index.html.
  *
- * Run:  node scripts/trending-infra/render-html.mjs
- * (Called automatically by fetch-trending.mjs after each refresh.)
+ * Styled to match the sudhakarchundu.org site: it loads the site's own
+ * assets/css/style.css, fonts, nav, footer, neural-bg, and theme toggle, and
+ * renders the repos with the site's native components (.section / .panel /
+ * .ledger-row / .tag). Only a few page-specific helpers are added inline,
+ * built on the site's CSS tokens.
+ *
+ * Run (called by fetch.mjs after each refresh):
+ *   node trending-gitrepos/scripts/render.mjs
  */
 
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -23,171 +27,195 @@ const esc = (s) =>
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
-
 const fmt = (n) => Number(n).toLocaleString('en-US');
 
-// Body content only (title + inline style + page markup). Used directly by the
-// Artifact publisher (which supplies its own <!doctype>/<html>/<head>/<body>),
-// and wrapped by renderHtml() into a full standalone document for the repo file.
-export function renderBody(data) {
+// Nav + footer copied verbatim from the site's subpages so chrome is identical.
+const NAV = `
+    <nav>
+        <div class="nav-container">
+            <a href="../" class="logo">
+                <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu" class="logo-icon">
+                Sudhakar Chundu
+            </a>
+            <ul class="nav-links">
+                <li><a href="../">Overview</a></li>
+                <li><a href="../projects/">Projects</a></li>
+                <li><a href="../opensource/">Open Source</a></li>
+                <li><a href="./" class="active">Trending</a></li>
+                <div class="nav-social">
+                    <a href="https://github.com/schundu007" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/babucs/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
+                <div class="nav-auth">
+                    <button class="btn-signin" onclick="showLoginModal()">Sign In</button>
+                </div>
+            </ul>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>`;
+
+const FOOTER = `
+    <footer>
+        <div class="footer-content">
+            <span class="footer-logo">Sudhakar Chundu</span>
+            <div class="footer-links">
+                <a href="../#resume">Resume</a>
+                <a href="../projects/">Projects</a>
+                <a href="./">Trending</a>
+                <a href="../contact/">Contact</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/schundu007" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/babucs/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://schundu.medium.com/" target="_blank" rel="noopener noreferrer" title="Medium"><i class="fab fa-medium"></i></a>
+            </div>
+        </div>
+        <p>&copy; 2026 Sudhakar Chundu. All rights reserved.</p>
+    </footer>`;
+
+export function renderHtml(data) {
   const updated = (data.generated_at || '').slice(0, 10);
-  const nav = data.categories
-    .map((c) => `<a class="navchip" href="#${esc(c.key)}">${esc(c.title)}</a>`)
+
+  const catNav = data.categories
+    .map((c) => `<a class="tag" href="#${esc(c.key)}">${esc(c.title)}</a>`)
     .join('');
 
   const sections = data.categories
     .map((cat) => {
       const rows = cat.repos
         .map((r) => {
-          const topics = (r.topics || [])
-            .slice(0, 4)
-            .map((t) => `<span class="topic">${esc(t)}</span>`)
+          const tags = (r.topics || [])
+            .slice(0, 5)
+            .map((t) => `<span class="tag">${esc(t)}</span>`)
             .join('');
+          const facts = [
+            `<span><i class="fas fa-bolt" aria-hidden="true"></i> ${fmt(r.velocity_per_month)} ★/mo</span>`,
+            r.language ? `<span><i class="fas fa-code" aria-hidden="true"></i> ${esc(r.language)}</span>` : '',
+            `<span><i class="fas fa-rotate" aria-hidden="true"></i> ${esc((r.pushed_at || '').slice(0, 10))}</span>`,
+          ].filter(Boolean).join('');
           return `
-          <li class="repo">
-            <div class="rank">${r.rank}</div>
-            <div class="main">
-              <a class="name" href="${esc(r.html_url)}" target="_blank" rel="noopener noreferrer">${esc(r.full_name)}</a>
-              <p class="desc">${esc(r.description) || '<span class="muted">No description</span>'}</p>
-              <div class="topics">${topics}</div>
-            </div>
-            <div class="stats">
-              <span class="stat stars" title="Total stars">★ ${fmt(r.stars)}</span>
-              <span class="stat vel" title="Average stars gained per month (velocity)">${fmt(r.velocity_per_month)}/mo</span>
-              <span class="stat lang">${esc(r.language) || '—'}</span>
-              <span class="stat push" title="Last pushed">↻ ${esc((r.pushed_at || '').slice(0, 10))}</span>
-            </div>
-          </li>`;
+                <div class="ledger-row repo-row">
+                    <div class="ledger-meta">
+                        <span class="repo-rank">#${r.rank}</span>
+                        <span class="repo-stars"><i class="fas fa-star" aria-hidden="true"></i> ${fmt(r.stars)}</span>
+                    </div>
+                    <div>
+                        <div class="ledger-title"><a class="ledger-link" href="${esc(r.html_url)}" target="_blank" rel="noopener noreferrer">${esc(r.full_name)} <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>
+                        <div class="ledger-sub">${esc(r.description) || '&mdash;'}</div>
+                        <div class="repo-facts">${facts}</div>
+                        ${tags ? `<div class="row-tags">${tags}</div>` : ''}
+                    </div>
+                </div>`;
         })
         .join('');
       return `
-      <section id="${esc(cat.key)}" class="category">
-        <h2>${esc(cat.title)}</h2>
-        <p class="topics-line">Topics: ${cat.queried_topics.map((t) => `<code>${esc(t)}</code>`).join(' ')}</p>
-        <ol class="repos">${rows}</ol>
-      </section>`;
+        <section class="section" id="${esc(cat.key)}">
+            <div class="section-header">
+                <h2>${esc(cat.title)}</h2>
+                <p>Topics: ${cat.queried_topics.map((t) => `<code>${esc(t)}</code>`).join(', ')}</p>
+            </div>
+            <div class="panel">${rows}
+            </div>
+        </section>`;
     })
     .join('');
 
-  return `<style>
-  /* Light is the default; dark applies via OS preference AND the viewer's
-     explicit data-theme toggle, which must win in both directions. */
-  :root {
-    --bg:#f6f7f9; --panel:#ffffff; --ink:#0f1720; --muted:#5b6675; --line:#e6e9ee;
-    --accent:#0047AB; --accent-soft:#eaf0fb; --gold:#b8860b; --star:#e3a008;
-    --shadow:0 1px 3px rgba(16,24,40,.06),0 1px 2px rgba(16,24,40,.04);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg:#0b0f14; --panel:#141a22; --ink:#e8edf3; --muted:#9aa7b6; --line:#232c37;
-      --accent:#5b8def; --accent-soft:#16202e; --gold:#d4af37; --star:#f5c451;
-      --shadow:0 1px 3px rgba(0,0,0,.4);
-    }
-  }
-  :root[data-theme="light"] {
-    --bg:#f6f7f9; --panel:#ffffff; --ink:#0f1720; --muted:#5b6675; --line:#e6e9ee;
-    --accent:#0047AB; --accent-soft:#eaf0fb; --gold:#b8860b; --star:#e3a008;
-    --shadow:0 1px 3px rgba(16,24,40,.06),0 1px 2px rgba(16,24,40,.04);
-  }
-  :root[data-theme="dark"] {
-    --bg:#0b0f14; --panel:#141a22; --ink:#e8edf3; --muted:#9aa7b6; --line:#232c37;
-    --accent:#5b8def; --accent-soft:#16202e; --gold:#d4af37; --star:#f5c451;
-    --shadow:0 1px 3px rgba(0,0,0,.4);
-  }
-  * { box-sizing:border-box; }
-  body {
-    margin:0; background:var(--bg); color:var(--ink);
-    font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  }
-  a { color:var(--accent); text-decoration:none; }
-  a:hover { text-decoration:underline; }
-  .wrap { max-width:960px; margin:0 auto; padding:32px 20px 80px; }
-  header h1 { font-size:26px; margin:0 0 6px; letter-spacing:-.02em; }
-  .sub { color:var(--muted); margin:0 0 4px; }
-  .method { color:var(--muted); font-size:13px; margin:12px 0 0; padding:12px 14px;
-    background:var(--panel); border:1px solid var(--line); border-radius:10px; box-shadow:var(--shadow); }
-  nav { position:sticky; top:0; z-index:5; margin:20px 0 8px; padding:12px 0;
-    background:var(--bg); display:flex; flex-wrap:wrap; gap:8px; border-bottom:1px solid var(--line); }
-  .navchip { font-size:12.5px; font-weight:600; padding:6px 11px; border-radius:999px;
-    background:var(--accent-soft); color:var(--accent); border:1px solid var(--line); }
-  .navchip:hover { text-decoration:none; filter:brightness(.97); }
-  .category { margin-top:34px; }
-  .category h2 { font-size:19px; margin:0 0 2px; }
-  .topics-line { color:var(--muted); font-size:12.5px; margin:0 0 14px; }
-  .topics-line code, .method code { background:var(--accent-soft); color:var(--accent);
-    padding:1px 6px; border-radius:5px; font-size:12px; }
-  ol.repos { list-style:none; margin:0; padding:0; display:grid; gap:10px; }
-  .repo { display:grid; grid-template-columns:34px 1fr auto; gap:14px; align-items:start;
-    background:var(--panel); border:1px solid var(--line); border-radius:12px;
-    padding:14px 16px; box-shadow:var(--shadow); }
-  .rank { font-weight:700; font-size:15px; color:var(--muted); text-align:center; padding-top:2px; }
-  .main { min-width:0; }
-  .name { font-weight:650; font-size:15.5px; word-break:break-word; }
-  .desc { margin:4px 0 8px; color:var(--ink); opacity:.86; font-size:13.5px; }
-  .muted { color:var(--muted); }
-  .topics { display:flex; flex-wrap:wrap; gap:6px; }
-  .topic { font-size:11px; color:var(--muted); background:var(--bg);
-    border:1px solid var(--line); padding:1px 7px; border-radius:999px; }
-  .stats { display:flex; flex-direction:column; align-items:flex-end; gap:5px; white-space:nowrap;
-    font-variant-numeric:tabular-nums; }
-  .stat { font-size:12px; color:var(--muted); }
-  .stat.stars { color:var(--star); font-weight:650; font-size:13px; }
-  .stat.vel { color:var(--gold); font-weight:600; }
-  footer { margin-top:48px; color:var(--muted); font-size:12.5px; text-align:center; }
-  @media (max-width:600px) {
-    .repo { grid-template-columns:26px 1fr; }
-    .stats { grid-column:1 / -1; flex-direction:row; flex-wrap:wrap; align-items:center;
-      justify-content:flex-start; padding-left:40px; }
-  }
-</style>
-  <div class="wrap">
-    <header>
-      <h1>Trending GitHub Repos</h1>
-      <p class="sub">DevOps · Platform Engineering · MLOps · SRE · LLMOps · GPU Infra</p>
-      <p class="sub">Top ${esc(data.top_n)} per category · last updated <strong>${esc(updated)}</strong></p>
-      <p class="method">GitHub has no official trending API, so each category is computed from the GitHub Search API
-      (topic filters, <code>stars:&gt;${esc(data.star_floor)}</code>, pushed within ${esc(data.pushed_within_days)} days,
-      non-archived) and ranked by <strong>velocity</strong> — average stars gained per month over the repo's lifetime
-      — so fast-growing projects rank above all-time giants.</p>
-    </header>
-    <nav>${nav}</nav>
-    ${sections}
-    <footer>
-      Generated by <code>trending-gitrepos</code> · refreshed weekly via GitHub Actions.
-    </footer>
-  </div>`;
-}
-
-export const TITLE = 'Trending GitHub Repos';
-
-// Full standalone document for the repo file (openable via file://).
-export function renderHtml(data) {
-  return `<!doctype html>
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>${esc(TITLE)}</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GGNQHMGCLH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-GGNQHMGCLH');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending GitHub Repos | Sudhakar Chundu</title>
+    <meta name="description" content="Weekly-maintained top-10 trending GitHub repositories across DevOps, Platform Engineering, MLOps, SRE, LLMOps, and GPU infrastructure, ranked by star velocity.">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=12">
+    <!-- Theme JS (load early to prevent flash) -->
+    <script src="../assets/js/theme.js"></script>
+
+    <!-- Firebase SDK (for the shared Sign In button in the nav) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <style>
+        /* Trending page — built on the site's own CSS tokens */
+        .cat-nav { display: flex; flex-wrap: wrap; gap: 0.375rem; margin: 0.75rem 0 0; }
+        .section-header p code { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-secondary); }
+        .repo-row .ledger-meta { display: flex; flex-direction: column; gap: 0.25rem; align-items: flex-start; }
+        .repo-rank { font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; color: var(--text-muted); }
+        .repo-stars { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--accent-highlight, var(--accent-blue)); white-space: nowrap; }
+        .ledger-title .ledger-link { display: inline-flex; align-items: center; gap: 0.4rem; }
+        .ledger-title .ledger-link i { font-size: 0.625rem; opacity: 0.55; }
+        .repo-facts { display: flex; flex-wrap: wrap; gap: 0.25rem 1.1rem; font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-muted); margin: 0.375rem 0 0.5rem; }
+        .repo-facts i { opacity: 0.7; margin-right: 0.15rem; }
+    </style>
 </head>
 <body>
-${renderBody(data)}
+    <!-- Neural Network Background -->
+    <canvas id="neural-bg"></canvas>
+${NAV}
+
+    <main class="main-content">
+        <header class="page-header">
+            <h1>Trending GitHub Repos</h1>
+            <p>Top ${esc(data.top_n)} per category across DevOps, Platform Engineering, MLOps, SRE, LLMOps, and GPU infrastructure &mdash; ranked by <strong>star velocity</strong> (average stars gained per month over each repo's lifetime, so fast risers beat all-time giants). Auto-refreshed weekly &middot; last updated <strong>${esc(updated)}</strong>.</p>
+            <div class="cat-nav">${catNav}</div>
+        </header>
+${sections}
+    </main>
+${FOOTER}
+
+    <!-- Firebase Config and Auth (shared nav Sign In) -->
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+
+    <script>
+        // Mobile menu toggle (same behavior as the rest of the site)
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenuBtn.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+            navLinks.querySelectorAll('a').forEach((link) => {
+                link.addEventListener('click', () => {
+                    mobileMenuBtn.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+        }
+    </script>
+    <!-- Neural Network Background -->
+    <script src="../assets/js/neural-bg.js"></script>
 </body>
 </html>
 `;
 }
 
-// Run standalone: read the committed JSON and write output.
-//   default            -> full doc to docs/trending-infra.html
-//   --artifact <path>  -> body-only (+ <title>) for the Artifact publisher
+// CLI: read the committed JSON and write index.html.
 if (import.meta.url === `file://${process.argv[1]}`) {
   const data = JSON.parse(readFileSync(JSON_PATH, 'utf8'));
-  const artifactIdx = process.argv.indexOf('--artifact');
-  if (artifactIdx !== -1 && process.argv[artifactIdx + 1]) {
-    const out = process.argv[artifactIdx + 1];
-    writeFileSync(out, `<title>${esc(TITLE)}</title>\n${renderBody(data)}\n`);
-    console.error(`Wrote artifact body -> ${out}`);
-  } else {
-    writeFileSync(HTML_PATH, renderHtml(data));
-    console.error(`Wrote ${HTML_PATH}`);
-  }
+  writeFileSync(HTML_PATH, renderHtml(data));
+  console.error(`Wrote ${HTML_PATH}`);
 }
