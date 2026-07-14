@@ -242,14 +242,18 @@
   .backtop{font-family:var(--mono);font-size:12px;margin-top:34px}
 
   /* diagrams */
-  .diagram{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
-    padding:22px;margin:22px 0;overflow-x:auto}
+  .diagram{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+    padding:22px;margin:22px 0;overflow-x:auto;cursor:zoom-in}
   .diagram .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
     color:var(--ember);margin-bottom:16px;opacity:.85}
+  .diagram .zoom-hint{position:absolute;top:14px;right:16px;font-family:var(--mono);font-size:10px;
+    letter-spacing:.08em;color:var(--ink-2);border:1px solid var(--line-2);border-radius:6px;
+    padding:3px 8px;opacity:.6;pointer-events:none;transition:opacity .15s}
+  .diagram:hover .zoom-hint{opacity:1;color:var(--ink)}
   .mermaid{font-family:var(--mono)!important}
-  /* Render at intrinsic size and scroll inside .diagram; a flex parent here
-     shrinks the SVG width while its height attr stays fixed, squishing it. */
-  .diagram .mermaid svg{max-width:none!important;width:auto!important;height:auto!important}
+  /* Inline diagram is a fit-to-column preview; height:auto preserves aspect (no squish).
+     Click opens the full-size lightbox (see #dlgOverlay). */
+  .diagram .mermaid svg{max-width:100%!important;width:auto!important;height:auto!important}
   .mermaid .nodeLabel,.mermaid .edgeLabel,.mermaid span.nodeLabel{font-size:15.5px!important;color:#EEF4F9!important}
   .mermaid .cluster .nodeLabel,.mermaid .cluster span{fill:#FF6B35!important;color:#FF6B35!important;font-weight:600!important}
 
@@ -1105,6 +1109,43 @@ def affected(changed_paths: list[str], topo: BuildTopology) -&gt; Affected:
   document.getElementById("embedClose").addEventListener("click",closeEmbed);
   ov.addEventListener("click",function(e){ if(e.target===ov) closeEmbed(); });
   document.addEventListener("keydown",function(e){ if(e.key==="Escape"&&!ov.hidden) closeEmbed(); });
+})();
+</script>
+
+<!-- Diagram lightbox: click any .diagram to view it at full size -->
+<div class="dlg-overlay" id="dlgOverlay" hidden role="dialog" aria-modal="true" aria-label="Diagram, expanded">
+  <button class="dlg-close" id="dlgClose" type="button" aria-label="Close">✕</button>
+  <div class="dlg-stage" id="dlgStage"></div>
+</div>
+<style>
+  .dlg-overlay{position:fixed;inset:0;z-index:300;background:rgba(4,6,9,.92);backdrop-filter:blur(5px);
+    display:flex;overflow:auto;padding:4vh 3vw;cursor:zoom-out}
+  .dlg-overlay[hidden]{display:none}
+  .dlg-stage{margin:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    padding:20px;cursor:default}
+  .dlg-stage svg{display:block;max-width:calc(96vw - 44px)!important;width:auto!important;height:auto!important}
+  .dlg-close{position:fixed;top:18px;right:22px;z-index:310;font-family:var(--mono);font-size:16px;line-height:1;
+    color:var(--ink-2);background:var(--panel);border:1px solid var(--line-2);border-radius:8px;
+    width:36px;height:36px;cursor:pointer;transition:.15s}
+  .dlg-close:hover{color:#0B0D10;background:var(--grad);border-color:transparent}
+</style>
+<script>
+(function(){
+  var ov=document.getElementById("dlgOverlay"), stage=document.getElementById("dlgStage");
+  // Clone the whole .mermaid wrapper (not just the <svg>) so the ".mermaid …"
+  // label CSS still applies in the overlay — otherwise label widths mismatch and clip.
+  function openDlg(mermaidEl){ stage.innerHTML=""; stage.appendChild(mermaidEl.cloneNode(true));
+    ov.hidden=false; document.body.style.overflow="hidden"; }
+  function closeDlg(){ ov.hidden=true; stage.innerHTML=""; document.body.style.overflow=""; }
+  document.querySelectorAll(".diagram").forEach(function(d){
+    var m=d.querySelector(".mermaid"); if(!m) return;
+    var hint=document.createElement("span"); hint.className="zoom-hint"; hint.textContent="⤢ click to expand";
+    d.appendChild(hint);
+    d.addEventListener("click",function(){ openDlg(m); });
+  });
+  document.getElementById("dlgClose").addEventListener("click",closeDlg);
+  ov.addEventListener("click",function(e){ if(e.target===ov) closeDlg(); });
+  document.addEventListener("keydown",function(e){ if(e.key==="Escape"&&!ov.hidden) closeDlg(); });
 })();
 </script>
 </body>
