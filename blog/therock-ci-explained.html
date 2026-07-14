@@ -292,6 +292,8 @@
   .lines{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-left:auto;
     font-variant-numeric:tabular-nums}
   .fpath{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin:0 0 14px;word-break:break-all}
+  .fpath a{color:inherit;text-decoration:none;border-bottom:1px dotted currentColor;transition:color .15s}
+  .fpath a:hover{color:#CBD5E6;border-bottom-style:solid}
 
   .block{margin:11px 0}
   .block .bl{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
@@ -938,7 +940,7 @@ def affected(changed_paths: list[str], topo: BuildTopology) -&gt; Affected:
         '<div class="card-h"><span class="cf-name">'+f.name+'</span>'+
           '<span class="chip '+f.chip+'">'+f.chip+'</span>'+
           '<span class="lines">'+f.lines+' lines</span></div>'+
-        '<div class="fpath">'+f.path+'</div>'+
+        '<div class="fpath"><a href="https://github.com/ROCm/TheRock/blob/525d42aedc31f8b49f5f0415f4bda6273df76182/'+f.path+'" target="_blank" rel="noopener">'+f.path+' ↗</a></div>'+
         '<div class="block"><div class="bl">Why it exists</div><p>'+f.why+'</p></div>'+
         '<div class="block"><div class="bl">What’s inside</div><p>'+f.inside+'</p></div>'+
         '<div class="block"><div class="bl">Connects to</div><p>'+f.connects+'</p></div>'+

@@ -211,6 +211,9 @@
   li::marker{color:var(--ember);opacity:.7}
   p code,li code{font-family:var(--mono);font-size:.86em;background:var(--panel-2);
     border:1px solid var(--line);padding:1px 6px;border-radius:4px;color:#F0C9A8}
+  /* source-location links on inline code refs (verified against ROCm/TheRock) */
+  a.srclink{color:inherit;text-decoration:none;border-bottom:1px dotted rgba(240,201,168,.55)}
+  a.srclink:hover{color:#F8DCC2;border-bottom-color:#F8DCC2;border-bottom-style:solid}
 
   /* callouts */
   .note{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:12px;
@@ -578,14 +581,14 @@ flowchart LR
           <tbody>
             <tr><td><code>ci.yml</code></td><td>Pre-submit on push/PR — fast build health.</td><td><span class="pill pass">pre-submit gate</span></td></tr>
             <tr><td><code>ci_nightly.yml</code></td><td>Nightly integration of the full stack.</td><td><span class="pill run">nightly integration</span></td></tr>
-            <tr><td><code>multi_arch_ci.yml</code></td><td>Build/test across GPU families in one matrix.</td><td><span class="pill pass">multi-product</span></td></tr>
-            <tr><td><code>multi_arch_ci_asan.yml</code></td><td>AddressSanitizer variant — shift-left on memory bugs.</td><td><span class="pill pass">shift-left</span></td></tr>
-            <tr><td><code>rockrel/test_artifacts.yml</code></td><td>Tests built artifacts <em>separately</em> from the build.</td><td><span class="pill pass">build/test decoupled</span></td></tr>
-            <tr><td><code>rockrel/multi_arch_release.yml</code></td><td>Promotes validated artifacts to a release.</td><td><span class="pill pass">LKG / promotion</span></td></tr>
+            <tr><td><code><a href="https://github.com/ROCm/TheRock/blob/525d42aedc31f8b49f5f0415f4bda6273df76182/.github/workflows/multi_arch_ci.yml" target="_blank" rel="noopener" class="srclink">multi_arch_ci.yml</a></code></td><td>Build/test across GPU families in one matrix.</td><td><span class="pill pass">multi-product</span></td></tr>
+            <tr><td><code><a href="https://github.com/ROCm/TheRock/blob/525d42aedc31f8b49f5f0415f4bda6273df76182/.github/workflows/multi_arch_ci_asan.yml" target="_blank" rel="noopener" class="srclink">multi_arch_ci_asan.yml</a></code></td><td>AddressSanitizer variant — shift-left on memory bugs.</td><td><span class="pill pass">shift-left</span></td></tr>
+            <tr><td><code><a href="https://github.com/ROCm/TheRock/blob/525d42aedc31f8b49f5f0415f4bda6273df76182/.github/workflows/test_artifacts.yml" target="_blank" rel="noopener" class="srclink">rockrel/test_artifacts.yml</a></code></td><td>Tests built artifacts <em>separately</em> from the build.</td><td><span class="pill pass">build/test decoupled</span></td></tr>
+            <tr><td><code><a href="https://github.com/ROCm/TheRock/blob/525d42aedc31f8b49f5f0415f4bda6273df76182/.github/workflows/multi_arch_release.yml" target="_blank" rel="noopener" class="srclink">rockrel/multi_arch_release.yml</a></code></td><td>Promotes validated artifacts to a release.</td><td><span class="pill pass">LKG / promotion</span></td></tr>
           </tbody>
         </table>
         </div>
-        <p>The split between <code>TheRock</code> (build) and the <code>rockrel</code> release repo — with a dedicated <code>test_artifacts</code> stage — is precisely the <strong>build-once, test-separately, promote-on-green</strong> pattern that a Last-Known-Good manifest formalizes. My nightly workflow and LKG design are built around this shape, not against it.</p>
+        <p>The split between <code>TheRock</code> (build) and the <code><a href="https://github.com/ROCm/rockrel" target="_blank" rel="noopener" class="srclink">rockrel</a></code> release repo — with a dedicated <code>test_artifacts</code> stage — is precisely the <strong>build-once, test-separately, promote-on-green</strong> pattern that a Last-Known-Good manifest formalizes. My nightly workflow and LKG design are built around this shape, not against it.</p>
 
         <h4 class="mini">Super-valid points inferred from TheRock's actual mechanics</h4>
         <div class="tbl-scroll">
@@ -629,7 +632,7 @@ flowchart LR
         <p>This is the finding that reframed the whole analysis for me. Count the code:</p>
 
         <div class="stats" style="margin:22px 0">
-          <div class="stat"><div class="n">~12,350</div><div class="l">Lines of Python glue in <code>build_tools/github_actions/</code></div></div>
+          <div class="stat"><div class="n">~12,350</div><div class="l">Lines of Python glue in <code><a href="https://github.com/ROCm/TheRock/tree/525d42aedc31f8b49f5f0415f4bda6273df76182/build_tools/github_actions" target="_blank" rel="noopener" class="srclink">build_tools/github_actions/</a></code></div></div>
           <div class="stat"><div class="n">46</div><div class="l">Scripts in that one directory</div></div>
           <div class="stat"><div class="n">54</div><div class="l">Workflow files</div></div>
           <div class="stat"><div class="n">~9,480</div><div class="l">Lines of YAML across them</div></div>
@@ -660,7 +663,7 @@ flowchart TD
         <div class="note" style="display:flex;flex-wrap:wrap;align-items:center;gap:18px;justify-content:space-between">
           <div style="flex:1 1 300px;min-width:260px">
             <span class="tag">Interactive · explore the real graph</span>
-            Figure 3 is my hand-drawn schematic. This is the <strong>actual dependency graph</strong> I generated by statically analyzing that Python-plus-CMake layer on <code>main</code> — <strong>880 nodes</strong> across <strong>1,214 edges</strong>, folded into <strong>8 architectural layers</strong> (the CI / GitHub Actions orchestration layer alone is 107 files), with a <strong>10-step guided tour</strong> that walks the build flow from <code>fetch_sources.py</code> through the superbuild engine to packaging. Pan, search, filter by layer, and click any node for its summary.
+            Figure 3 is my hand-drawn schematic. This is the <strong>actual dependency graph</strong> I generated by statically analyzing that Python-plus-CMake layer on <code>main</code> — <strong>880 nodes</strong> across <strong>1,214 edges</strong>, folded into <strong>8 architectural layers</strong> (the CI / GitHub Actions orchestration layer alone is 107 files), with a <strong>10-step guided tour</strong> that walks the build flow from <code><a href="https://github.com/ROCm/TheRock/blob/525d42aedc31f8b49f5f0415f4bda6273df76182/build_tools/fetch_sources.py" target="_blank" rel="noopener" class="srclink">fetch_sources.py</a></code> through the superbuild engine to packaging. Pan, search, filter by layer, and click any node for its summary.
           </div>
           <a href="/blog/therock-graph/" target="_blank" rel="noopener"
              style="flex:0 0 auto;display:inline-flex;align-items:center;gap:9px;background:var(--grad);color:var(--void);font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.01em;padding:13px 20px;border-radius:10px;text-decoration:none;box-shadow:var(--glow)">
@@ -681,7 +684,7 @@ flowchart TD
         <div class="note"><span class="tag">The leverage point</span>Nothing else in this post moves the needle as much as <strong>hardening this Python layer into a product</strong> — typed models for the build-config contract, unit tests over the generator, and a <code>--dry-run</code>/<code>--event-file</code> mode. It is unglamorous, it ships in weeks rather than quarters, it introduces no vendor and no migration, and it turns the most consequential part of the system into the most inspectable. Concrete shape in the orchestration-hardening discussion; ROI argument in the modernization section.</div>
 
         <h4 class="mini">Incrementality: most of the way to content-addressing</h4>
-        <p>TheRock shards the superbuild into stages and reuses prior output via <code>prebuilt_stages</code> + a <code>baseline_run_id</code>, coordinated by <code>artifact_manager.py</code> against a declared <code>BUILD_TOPOLOGY.toml</code>. Notice what that is: a working, pragmatic implementation of <strong>staged incremental builds</strong> — the outcome Bazel is usually adopted to obtain — built without adopting Bazel.</p>
+        <p>TheRock shards the superbuild into stages and reuses prior output via <code>prebuilt_stages</code> + a <code>baseline_run_id</code>, coordinated by <code><a href="https://github.com/ROCm/TheRock/blob/525d42aedc31f8b49f5f0415f4bda6273df76182/build_tools/artifact_manager.py" target="_blank" rel="noopener" class="srclink">artifact_manager.py</a></code> against a declared <code><a href="https://github.com/ROCm/TheRock/blob/525d42aedc31f8b49f5f0415f4bda6273df76182/BUILD_TOPOLOGY.toml" target="_blank" rel="noopener" class="srclink">BUILD_TOPOLOGY.toml</a></code>. Notice what that is: a working, pragmatic implementation of <strong>staged incremental builds</strong> — the outcome Bazel is usually adopted to obtain — built without adopting Bazel.</p>
         <p>The remaining gap is <code>baseline_run_id</code>: a human picks which prior CI run to inherit artifacts from. That's a cache key chosen by a person. It works, and it carries the failure mode you'd predict — choose a stale baseline and lower stages silently go unrebuilt.</p>
         <p>The reflex is "so migrate to Bazel." I'd argue the opposite, and the modernization section makes the full case. The short version: <strong>the topology is already declared</strong> in <code>BUILD_TOPOLOGY.toml</code>. Deriving the stage set from that graph plus a diff needs a graph traversal, not a new build system. The goal isn't a different tool — it's to stop asking a human for the cache key.</p>
 
@@ -1753,7 +1756,7 @@ resource "aws_iam_role_policy" "release_publish" {
         </details>
 
         <h3>Provenance: keyless attestations <em>alongside</em> HSM signing, not instead of it</h3>
-        <p>the security section opened with CloudHSM and GPG. That was the complete answer in 2021; it is now half of one. Since the workflow already proves its identity with OIDC, that same identity can mint a <strong>Sigstore keyless signature</strong>: <code>actions/attest-build-provenance</code> requests a short-lived Fulcio certificate bound to the Actions OIDC token, signs an in-toto provenance statement, and logs it to the Rekor transparency log. Verification is <code>gh attestation verify</code>. Out of the box this lands <strong>SLSA v1.0 Build L2</strong>, and effectively L3 given a trusted control plane and non-forgeable identity.</p>
+        <p>the security section opened with CloudHSM and GPG. That was the complete answer in 2021; it is now half of one. Since the workflow already proves its identity with OIDC, that same identity can mint a <strong>Sigstore keyless signature</strong>: <code><a href="https://github.com/actions/attest-build-provenance" target="_blank" rel="noopener" class="srclink">actions/attest-build-provenance</a></code> requests a short-lived Fulcio certificate bound to the Actions OIDC token, signs an in-toto provenance statement, and logs it to the Rekor transparency log. Verification is <code>gh attestation verify</code>. Out of the box this lands <strong>SLSA v1.0 Build L2</strong>, and effectively L3 given a trusted control plane and non-forgeable identity.</p>
         <p>Here is the distinction that matters, and that vendors blur: <strong>keyless attestation does not replace HSM signing for firmware and kernel drivers.</strong> Secure Boot, WHQL and Authenticode require a signature chaining to a long-lived CA key held in an HSM or FIPS token. An ephemeral Fulcio identity cannot satisfy that — it is not a weaker version of the same thing, it is a different claim. Provenance says <em>"this artifact came from this build of this commit."</em> The driver signature says <em>"this vendor vouches for this binary, and UEFI should load it."</em> You need both sentences.</p>
 
         <details class="code">
@@ -1894,7 +1897,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "rocm_artifacts" {
         <table class="tbl">
           <thead><tr><th>Control</th><th>Catches</th><th>Structurally cannot catch</th></tr></thead>
           <tbody>
-            <tr><td><strong>SHA-pinned actions</strong> — every <code>uses:</code> pinned to a full commit SHA, never a mutable tag</td><td>A compromised upstream action force-pushing a malicious <code>v4</code> tag. This is the <code>tj-actions/changed-files</code> attack, and pinning is the only thing that stops it.</td><td>A malicious commit that was <em>always</em> at that SHA.</td></tr>
+            <tr><td><strong>SHA-pinned actions</strong> — every <code>uses:</code> pinned to a full commit SHA, never a mutable tag</td><td>A compromised upstream action force-pushing a malicious <code>v4</code> tag. This is the <code><a href="https://github.com/tj-actions/changed-files" target="_blank" rel="noopener" class="srclink">tj-actions/changed-files</a></code> attack, and pinning is the only thing that stops it.</td><td>A malicious commit that was <em>always</em> at that SHA.</td></tr>
             <tr><td><strong>Dependabot, grouped, weekly</strong></td><td>Pinned SHAs going stale — the cost of pinning. Grouping means one reviewable PR instead of forty.</td><td>Anything in the week between runs; malicious code in a legitimate release.</td></tr>
             <tr><td><strong>gitleaks</strong> — PR-delta scan <em>and</em> a weekly full-history scan</td><td>Both halves matter. The delta scan blocks the new secret; the full-history scan finds the one committed in 2021 that everyone forgot. Most teams run only the first.</td><td>A secret that never touched the repo (leaked via logs, artifacts).</td></tr>
             <tr><td><strong>CodeQL</strong></td><td>Semantic vulnerabilities in first-party C++/Python — injection, memory safety, taint flow.</td><td>Anything in the workflow YAML. CodeQL does not model Actions expression injection.</td></tr>
@@ -2223,7 +2226,7 @@ class GPUTestHarness:
             <tr><td><strong>buildx / Dockerfile cache tuning</strong> (the buildx discussion)</td><td>Proposes <code>RUN --mount=type=cache</code> placements, layer ordering to maximize reuse, and <code>--cache-to/from</code> wiring; iterates fast against a measurable target (layer-reuse %).</td><td>Verify no secret is baked into a layer and that cache mounts can't leak between builds. Confirm the reuse number is real — an agent optimizing a metric will happily produce a cache that always "hits" and never helps.</td></tr>
             <tr><td>Failure triage</td><td>Summarizes CI logs, correlates flaky failures, proposes the likely root cause.</td><td>Reproduce, decide the fix, update the runbook.</td></tr>
             <tr><td><strong>CodeQL alert remediation</strong></td><td><strong>Copilot Autofix</strong> proposes a concrete diff for a CodeQL finding with an explanation. Free on public repos. Since the supply-chain section already runs CodeQL, this is turning on a feature, not adopting a tool.</td><td>Accept or reject the diff. It is a <em>suggestion</em> by construction — a human commits it.</td></tr>
-            <tr><td><strong>Agents inside CI</strong></td><td>The official <code>anthropics/claude-code-action</code> runs Claude in a workflow — on <code>@claude</code> mention, or headless on PR-open / CI-failure to review, triage and label.</td><td>Never grant it write on a protected branch. The lower-level <code>claude-code-base-action</code> performs <em>no actor-permission checks</em>; the guardrails are yours to build.</td></tr>
+            <tr><td><strong>Agents inside CI</strong></td><td>The official <code><a href="https://github.com/anthropics/claude-code-action" target="_blank" rel="noopener" class="srclink">anthropics/claude-code-action</a></code> runs Claude in a workflow — on <code>@claude</code> mention, or headless on PR-open / CI-failure to review, triage and label.</td><td>Never grant it write on a protected branch. The lower-level <code>claude-code-base-action</code> performs <em>no actor-permission checks</em>; the guardrails are yours to build.</td></tr>
             <tr><td><strong>Flaky-test quarantine</strong></td><td>Detects flakes statistically and auto-quarantines them so they stop blocking the merge queue while data keeps accruing.</td><td>Own the quarantine budget. A growing quarantine list is a rotting test suite wearing a green check.</td></tr>
           </tbody>
         </table>
