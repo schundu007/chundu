@@ -1134,8 +1134,19 @@ def affected(changed_paths: list[str], topo: BuildTopology) -&gt; Affected:
   var ov=document.getElementById("dlgOverlay"), stage=document.getElementById("dlgStage");
   // Clone the whole .mermaid wrapper (not just the <svg>) so the ".mermaid …"
   // label CSS still applies in the overlay — otherwise label widths mismatch and clip.
-  function openDlg(mermaidEl){ stage.innerHTML=""; stage.appendChild(mermaidEl.cloneNode(true));
-    ov.hidden=false; document.body.style.overflow="hidden"; }
+  function openDlg(mermaidEl){
+    stage.innerHTML="";
+    var c=mermaidEl.cloneNode(true), svg=c.querySelector("svg");
+    if(svg){
+      // Normalize to intrinsic size: mermaid's useMaxWidth strips width/height and
+      // sets width=100% + max-width, which collapses to 0 in the flex overlay.
+      var vb=(svg.getAttribute("viewBox")||"0 0 0 0").split(/[\s,]+/).map(Number);
+      if(vb[2]&&vb[3]){ svg.setAttribute("width",vb[2]); svg.setAttribute("height",vb[3]); }
+      svg.style.maxWidth="none"; svg.style.width=""; svg.style.height="";
+    }
+    stage.appendChild(c);
+    ov.hidden=false; document.body.style.overflow="hidden";
+  }
   function closeDlg(){ ov.hidden=true; stage.innerHTML=""; document.body.style.overflow=""; }
   document.querySelectorAll(".diagram").forEach(function(d){
     var m=d.querySelector(".mermaid"); if(!m) return;
