@@ -1075,5 +1075,53 @@ graph TD
         });
     </script>
     <script src="../assets/js/neural-bg.js"></script>
+
+    <!-- Diagram lightbox: click any diagram to view it at full size -->
+    <div class="dlg-overlay" id="dlgOverlay" hidden role="dialog" aria-modal="true" aria-label="Diagram, expanded">
+      <button class="dlg-close" id="dlgClose" type="button" aria-label="Close">✕</button>
+      <div class="dlg-stage" id="dlgStage"></div>
+    </div>
+    <style>
+      .dlg-overlay{position:fixed;inset:0;z-index:9000;background:rgba(6,9,14,.93);backdrop-filter:blur(5px);
+        display:flex;overflow:auto;padding:4vh 3vw;cursor:zoom-out}
+      .dlg-overlay[hidden]{display:none}
+      .dlg-stage{margin:auto;background:#0d1117;border:1px solid #2a3142;border-radius:12px;padding:20px;cursor:default}
+      .dlg-stage svg{display:block;max-width:calc(96vw - 44px)!important;width:auto!important;height:auto!important}
+      .dlg-close{position:fixed;top:18px;right:22px;z-index:9010;font:600 16px/1 monospace;
+        color:#c9d3e0;background:#161c26;border:1px solid #2a3142;border-radius:8px;
+        width:36px;height:36px;cursor:pointer;transition:.15s}
+      .dlg-close:hover{color:#fff;background:#232b38;border-color:#3a4356}
+      .diagram-wrap{position:relative;cursor:zoom-in}
+      .diagram-wrap .zoom-hint{position:absolute;top:12px;right:14px;font:500 10px/1 monospace;letter-spacing:.06em;
+        color:#8b95a8;border:1px solid #2a3142;border-radius:6px;padding:4px 8px;background:rgba(13,17,23,.7);
+        opacity:.6;pointer-events:none;transition:opacity .15s}
+      .diagram-wrap:hover .zoom-hint{opacity:1;color:#c9d3e0}
+    </style>
+    <script>
+    (function(){
+      var ov=document.getElementById("dlgOverlay"), stage=document.getElementById("dlgStage");
+      function openDlg(mermaidEl){
+        stage.innerHTML="";
+        var c=mermaidEl.cloneNode(true), svg=c.querySelector("svg");
+        if(svg){
+          var vb=(svg.getAttribute("viewBox")||"0 0 0 0").split(/[\s,]+/).map(Number);
+          if(vb[2]&&vb[3]){ svg.setAttribute("width",vb[2]); svg.setAttribute("height",vb[3]); }
+          svg.style.maxWidth="none"; svg.style.width=""; svg.style.height="";
+        }
+        stage.appendChild(c);
+        ov.hidden=false; document.body.style.overflow="hidden";
+      }
+      function closeDlg(){ ov.hidden=true; stage.innerHTML=""; document.body.style.overflow=""; }
+      document.querySelectorAll(".diagram-wrap").forEach(function(d){
+        var m=d.querySelector(".mermaid"); if(!m) return;
+        var hint=document.createElement("span"); hint.className="zoom-hint"; hint.textContent="⤢ click to expand";
+        d.appendChild(hint);
+        d.addEventListener("click",function(){ openDlg(m); });
+      });
+      document.getElementById("dlgClose").addEventListener("click",closeDlg);
+      ov.addEventListener("click",function(e){ if(e.target===ov) closeDlg(); });
+      document.addEventListener("keydown",function(e){ if(e.key==="Escape"&&!ov.hidden) closeDlg(); });
+    })();
+    </script>
 </body>
 </html>
