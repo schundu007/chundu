@@ -246,9 +246,10 @@
     padding:22px;margin:22px 0;overflow-x:auto}
   .diagram .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
     color:var(--ember);margin-bottom:16px;opacity:.85}
-  .mermaid{font-family:var(--mono)!important;min-width:0}
-  .diagram .mermaid{display:flex;justify-content:center}
-  .diagram .mermaid svg{max-width:none!important}
+  .mermaid{font-family:var(--mono)!important}
+  /* Render at intrinsic size and scroll inside .diagram; a flex parent here
+     shrinks the SVG width while its height attr stays fixed, squishing it. */
+  .diagram .mermaid svg{max-width:none!important;width:auto!important;height:auto!important}
   .mermaid .nodeLabel,.mermaid .edgeLabel,.mermaid span.nodeLabel{font-size:15.5px!important;color:#EEF4F9!important}
   .mermaid .cluster .nodeLabel,.mermaid .cluster span{fill:#FF6B35!important;color:#FF6B35!important;font-weight:600!important}
 
