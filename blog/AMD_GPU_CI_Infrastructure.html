@@ -214,6 +214,11 @@
   /* source-location links on inline code refs (verified against ROCm/TheRock) */
   a.srclink{color:inherit;text-decoration:none;border-bottom:1px dotted rgba(240,201,168,.55)}
   a.srclink:hover{color:#F8DCC2;border-bottom-color:#F8DCC2;border-bottom-style:solid}
+  /* merged-PR reference badges (verified against ROCm/TheRock) */
+  a.prlink{font-family:var(--mono);font-size:.72em;font-weight:600;color:var(--ember);text-decoration:none;
+    border:1px solid var(--line-2);border-radius:5px;padding:1px 6px;margin-left:5px;white-space:nowrap;
+    vertical-align:baseline;transition:.15s}
+  a.prlink:hover{background:var(--ember);color:#0B0D10;border-color:transparent}
 
   /* callouts */
   .note{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:12px;
@@ -567,7 +572,7 @@ flowchart LR
         <div class="shead"><span class="sn">03</span><h2>What ROCm/TheRock runs today</h2></div>
         <p>This isn't a hypothetical. AMD's unified GPU-stack build system, <a href="https://github.com/ROCm/TheRock" target="_blank" rel="noopener">ROCm/TheRock</a> ("The HIP Environment and ROCm Kit"), is a public, MIT-licensed repository. It's a <strong>CMake superbuild</strong> in C++/HIP that assembles the compiler toolchain, HIP/OpenCL/core runtime, math libraries, ML libraries (MIOpen), communication libraries (RCCL), and profilers into one coherent build — the same "full recipe" this post is about.</p>
 
-        <div class="note blue"><span class="tag">A moving target</span>The repo is <strong>mid-migration</strong>: a <code>multi_arch_*</code> path is actively superseding an older one, so the file counts and structure below will drift. Read them as a July-2026 snapshot, not a permanent fact.</div>
+        <div class="note blue"><span class="tag">A moving target</span>The repo is <strong>mid-migration</strong>: a <code>multi_arch_*</code> path is actively superseding an older one, so the file counts and structure below will drift. Read them as a July-2026 snapshot, not a permanent fact. <em>Migration in flight:</em><a href="https://github.com/ROCm/TheRock/pull/3629" target="_blank" rel="noopener" class="prlink">PR&nbsp;#3629&nbsp;↗</a><a href="https://github.com/ROCm/TheRock/pull/5317" target="_blank" rel="noopener" class="prlink">PR&nbsp;#5317&nbsp;↗</a></div>
 
         <h4 class="mini">What this stack gets right</h4>
         <p>Start here, because it's the honest headline: <strong>this is a well-run CI system.</strong> It authenticates to AWS with OIDC role assumption and no long-lived keys. It pins every third-party action to a commit SHA. It generates its build matrix as code instead of hand-maintaining a combinatorial explosion of YAML. It has already factored 38 of its 54 workflows into reusable <code>workflow_call</code> units. It runs a shared remote build cache. It layers gitleaks, CodeQL, Dependabot and a dedicated security pre-commit hook set. Each of those is a decision I've watched well-funded commercial teams fail to make. The sections below are about <em>where a system this mature goes next</em> — not about anything being wrong.</p>
@@ -611,7 +616,7 @@ flowchart LR
               <td>Matrix strategy that fans out by <strong>gfx family</strong> with per-family LKG, so one family's red doesn't block the others' green.</td>
             </tr>
             <tr>
-              <td><strong>fetch_sources.py</strong> pulls pinned submodules (<code>rocm-libraries</code>, <code>rocm-systems</code>) + applies patches.</td>
+              <td><strong>fetch_sources.py</strong> pulls pinned submodules (<code>rocm-libraries</code>, <code>rocm-systems</code>) + applies patches.<a href="https://github.com/ROCm/TheRock/pull/4953" target="_blank" rel="noopener" class="prlink">PR&nbsp;#4953&nbsp;↗</a></td>
               <td>Reproducibility hinges on pinned, hermetic sources — drift here silently breaks nightly.</td>
               <td>Enforce <strong>pinned-submodule provenance</strong> in the LKG manifest; every promoted build records exact source SHAs.</td>
             </tr>
@@ -684,7 +689,7 @@ flowchart TD
         <div class="note"><span class="tag">The leverage point</span>Nothing else in this post moves the needle as much as <strong>hardening this Python layer into a product</strong> — typed models for the build-config contract, unit tests over the generator, and a <code>--dry-run</code>/<code>--event-file</code> mode. It is unglamorous, it ships in weeks rather than quarters, it introduces no vendor and no migration, and it turns the most consequential part of the system into the most inspectable. Concrete shape in the orchestration-hardening discussion; ROI argument in the modernization section.</div>
 
         <h4 class="mini">Incrementality: most of the way to content-addressing</h4>
-        <p>TheRock shards the superbuild into stages and reuses prior output via <code>prebuilt_stages</code> + a <code>baseline_run_id</code>, coordinated by <code><a href="https://github.com/ROCm/TheRock/blob/525d42aedc31f8b49f5f0415f4bda6273df76182/build_tools/artifact_manager.py" target="_blank" rel="noopener" class="srclink">artifact_manager.py</a></code> against a declared <code><a href="https://github.com/ROCm/TheRock/blob/525d42aedc31f8b49f5f0415f4bda6273df76182/BUILD_TOPOLOGY.toml" target="_blank" rel="noopener" class="srclink">BUILD_TOPOLOGY.toml</a></code>. Notice what that is: a working, pragmatic implementation of <strong>staged incremental builds</strong> — the outcome Bazel is usually adopted to obtain — built without adopting Bazel.</p>
+        <p>TheRock shards the superbuild into stages and reuses prior output via <code>prebuilt_stages</code> + a <code>baseline_run_id</code>, coordinated by <code><a href="https://github.com/ROCm/TheRock/blob/525d42aedc31f8b49f5f0415f4bda6273df76182/build_tools/artifact_manager.py" target="_blank" rel="noopener" class="srclink">artifact_manager.py</a></code> against a declared <code><a href="https://github.com/ROCm/TheRock/blob/525d42aedc31f8b49f5f0415f4bda6273df76182/BUILD_TOPOLOGY.toml" target="_blank" rel="noopener" class="srclink">BUILD_TOPOLOGY.toml</a></code><a href="https://github.com/ROCm/TheRock/pull/4362" target="_blank" rel="noopener" class="prlink">PR&nbsp;#4362&nbsp;↗</a>. Notice what that is: a working, pragmatic implementation of <strong>staged incremental builds</strong> — the outcome Bazel is usually adopted to obtain — built without adopting Bazel.</p>
         <p>The remaining gap is <code>baseline_run_id</code>: a human picks which prior CI run to inherit artifacts from. That's a cache key chosen by a person. It works, and it carries the failure mode you'd predict — choose a stale baseline and lower stages silently go unrebuilt.</p>
         <p>The reflex is "so migrate to Bazel." I'd argue the opposite, and the modernization section makes the full case. The short version: <strong>the topology is already declared</strong> in <code>BUILD_TOPOLOGY.toml</code>. Deriving the stage set from that graph plus a diff needs a graph traversal, not a new build system. The goal isn't a different tool — it's to stop asking a human for the cache key.</p>
 
@@ -1662,7 +1667,7 @@ aws s3 cp firmware-sbom.json \
         </details>
 
         <h3>OIDC federation — and why it beats my own instance-profile design</h3>
-        <p>My Terraform design authenticates runners with an <strong>EC2 instance profile</strong> and pulls signing material from <strong>Secrets Manager</strong>. TheRock uses <strong>GitHub Actions OIDC role assumption — workflow-level <code>role-to-assume</code>, no long-lived AWS keys</strong> — with <strong>per-release-type IAM roles and per-release-type S3 buckets</strong>. Theirs is the better design, and it's worth saying so plainly rather than quietly redrawing my diagram to match.</p>
+        <p>My Terraform design authenticates runners with an <strong>EC2 instance profile</strong> and pulls signing material from <strong>Secrets Manager</strong>. TheRock uses <strong>GitHub Actions OIDC role assumption — workflow-level <code>role-to-assume</code>, no long-lived AWS keys</strong> — with <strong>per-release-type IAM roles and per-release-type S3 buckets</strong><a href="https://github.com/ROCm/TheRock/pull/4408" target="_blank" rel="noopener" class="prlink">PR&nbsp;#4408&nbsp;↗</a>. Theirs is the better design, and it's worth saying so plainly rather than quietly redrawing my diagram to match.</p>
         <p>An instance profile is a credential bound to <em>a machine</em>. Every job landing on that machine inherits it, identically. The blast radius of a compromised job is "everything the runner may ever do," and the audit trail records that <code>rocm-ci-runner-role</code> did it — not <em>which workflow, on which ref, for which release channel</em>.</p>
         <p>Actions OIDC binds the credential to <em>a workflow execution</em>. GitHub mints a short-lived JWT whose <code>sub</code> claim encodes the repository, the ref, and optionally the environment. AWS exchanges it for temporary credentials via <code>sts:AssumeRoleWithWebIdentity</code>. Nothing durable is stored anywhere, and the trust policy — not a runbook, not good intentions — is what prevents the nightly job from writing to the stable release bucket.</p>
 
