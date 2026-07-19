@@ -6,8 +6,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-<title>Engineering patterns in a GPU superbuild's CI — ROCm/TheRock, de-identified</title>
-<meta name="description" content="Five reusable CI/build-engineering patterns demonstrated by the public, MIT-licensed ROCm/TheRock repository: centralizing CI across a superproject and its component repos, RFC-driven test-script migration to owning repos, monorepo patch-back / merge-sync, baseline reuse via a build-topology reverse index, and dynamic Actions matrices generated from Python. Patterns, not people." />
+<title>Five build lessons from a giant GPU project — explained in plain English</title>
+<meta name="description" content="Five ideas about building software, taken from AMD's open ROCm/TheRock project and explained in plain English: keep your build rules in one place, put tests next to the code they test, keep copies of code in step, reuse the last build instead of redoing it, and let a real program decide what to build. About the code, not the people." />
 <meta name="keywords" content="ROCm, TheRock, CI/CD, GitHub Actions, reusable workflows, dynamic matrix, fromJSON, monorepo, submodules, patch sync, subtree, CODEOWNERS, RFC, test migration, build topology, baseline reuse, ccache, sccache, Windows, WSL, revert discipline, superbuild, CMake" />
 <style>
   :root{
@@ -127,11 +127,11 @@
   <div class="wrap">
     <div class="brand"><span class="dot"></span>schundu · amd-gpu-ci</div>
     <nav class="topnav">
-      <a href="#p1">Centralize</a>
-      <a href="#p2">Test migration</a>
-      <a href="#p3">Patch-back</a>
-      <a href="#p4">Baseline reuse</a>
-      <a href="#p5">Dynamic matrix</a>
+      <a href="#p1">One place</a>
+      <a href="#p2">Move the tests</a>
+      <a href="#p3">Keep in step</a>
+      <a href="#p4">Reuse builds</a>
+      <a href="#p5">Use a program</a>
       <a href="https://www.sudhakarchundu.org/">Home</a>
     </nav>
   </div>
@@ -152,27 +152,27 @@
 
 <header class="hero">
   <div class="wrap">
-    <p class="eyebrow">CI / Build Engineering · Patterns, not people</p>
-    <h1>Five CI ideas worth borrowing from a giant GPU build</h1>
-    <p class="lede">Every time someone changes code on a big project, an automated system rebuilds it and re-runs the tests. That system is called <b>CI</b> (continuous integration). ROCm/TheRock is AMD's open-source project that builds the <b>entire GPU software stack</b> — the compiler, the runtime, the math and AI libraries — in one giant build, for many GPU models, on both Linux and Windows. Read the public code behind its CI and five smart, reusable ideas jump out. They aren't specific to AMD; you could use any of them on any large project that is split across many separate code repositories (<b>repos</b>). Here are the five, and the real problem each one solves.</p>
+    <p class="eyebrow">How big software gets built · About the code, not the people</p>
+    <h1>Five build lessons from a giant GPU project</h1>
+    <p class="lede">On a big software project, a robot does the building. Every time somebody changes the code, a computer builds the whole thing again and runs all the tests. People call this <b>CI</b>, short for continuous integration.<br><br>ROCm/TheRock is AMD's open project. It builds all of AMD's GPU software in one go — the compiler, the parts that run your program, and the maths and AI libraries. It does this for many models of GPU, on both Windows and Linux.<br><br>Read the code behind its CI and five good ideas jump out. None of them are only for AMD. You could use any of them on any big project whose code is split across many separate folders. Each of those folders is called a <b>repo</b>.<br><br>Here are the five, and the real problem each one fixes.</p>
     <div class="kicker">
-      <span><b>Source:</b> github.com/ROCm/TheRock</span>
-      <span><b>Scope:</b> superproject + component repos</span>
-      <span><b>Lens:</b> architecture &amp; approach</span>
+      <span><b>Where this comes from:</b> github.com/ROCm/TheRock</span>
+      <span><b>What it covers:</b> the main repo and its smaller ones</span>
+      <span><b>What it is about:</b> how the build is put together</span>
     </div>
     <div class="disc">
-      <span class="pill">de-identified</span> Everything below is drawn from the <b>public, MIT-licensed</b> ROCm/TheRock repository (and its sibling component repos), read on <code>main</code> in July 2026. It is about <b>engineering patterns and the code itself</b> — not about any individual contributor, and it carries no assessment of any person. No insider knowledge; the repo is the only source.
+      <span class="pill">no names</span> Everything below comes from the <b>public</b> ROCm/TheRock code, which anyone is free to read and reuse. I read it in July 2026. It is about <b>the code and the ideas in it</b> — not about any person who wrote it, and it says nothing good or bad about anybody. I had no inside information. The public code is my only source.
     </div>
   </div>
 </header>
 
 <div class="wrap">
   <div class="tldr">
-    <div class="c"><div class="n">01</div><div class="t">Keep build rules in one place, not copied everywhere</div></div>
-    <div class="c"><div class="n">02</div><div class="t">Put tests in the same repo as the code they test</div></div>
-    <div class="c"><div class="n">03</div><div class="t">Keep the big shared repo and its smaller copies in sync</div></div>
-    <div class="c"><div class="n">04</div><div class="t">Reuse an earlier build instead of redoing it</div></div>
-    <div class="c"><div class="n">05</div><div class="t">Let Python decide the build; YAML just prints it</div></div>
+    <div class="c"><div class="n">01</div><div class="t">Keep your build rules in one place</div></div>
+    <div class="c"><div class="n">02</div><div class="t">Put tests next to the code they test</div></div>
+    <div class="c"><div class="n">03</div><div class="t">Keep the big repo and its copies in step</div></div>
+    <div class="c"><div class="n">04</div><div class="t">Reuse the last build instead of redoing it</div></div>
+    <div class="c"><div class="n">05</div><div class="t">Let a real program decide what to build</div></div>
   </div>
 </div>
 
@@ -181,56 +181,63 @@
 
   <section id="p1">
     <div class="shead"><span class="sn">01</span><h2>Keep your build rules in one place — don't copy them everywhere</h2></div>
-    <p class="prob">Problem it solves — most projects copy the same build rules into every repo, and the copies slowly drift apart</p>
-    <p>A big main project (the <b>superproject</b>) and its smaller sub-projects (the <b>component repos</b>) all need to run the same checks whenever code changes: which GPU models to build for, on which operating system, with which Python versions, what to produce, and what should trigger it. That whole set of combinations is called the <b>build matrix</b>. The easy but wrong way is to copy the matrix and the build scripts into every repo — and then watch the copies go out of sync.</p>
-    <p><b>How TheRock does it:</b> it keeps <b>one copy</b> of the rules in the main project, and every sub-project simply <b>calls those shared rules</b> — on both Linux and Windows. Each sub-project only adds one tiny step that answers, "which project am I building right now?"</p>
-    <p>The clever part isn't the idea itself — it's <b>how they shipped it</b>. The git history tells a little story. Someone first made this change as one huge commit. It was undone (<b>reverted</b>) the very next day. Then it came back in small, bite-sized pieces that a reviewer could actually check one at a time: first just the tiny "which project am I?" detector, with its own tests; then a simple renaming clean-up; and only at the end the real rewiring of the build. The lesson is sitting right there in the commit history.</p>
-    <div class="note"><span class="tag">Why undoing it was the right call</span>Undoing the change wasn't an embarrassment — it's a healthy habit that big projects like LLVM recommend. If a reviewer spots a real problem <em>after</em> a change has already gone in, you undo it first and then discuss, instead of arguing to keep it. A single 2,000-line change is almost impossible to review once it has landed; five changes of 200–700 lines each are easy. Put simply: how much can break at once is something you plan for on purpose, not something you discover later.</div>
-    <div class="take"><b>The lesson:</b> keep one place that owns the build rules and let everyone share it — that stops the copies from drifting. But ship the change in <b>small steps</b> a reviewer can hold in their head, and treat "undo first, discuss later" as cheap insurance, not as failure.</div>
+    <p class="prob">The problem it fixes — most teams copy the same build rules into every repo, and the copies slowly drift apart</p>
+    <p>A big project has one main repo and several smaller ones. All of them have to run the same checks when the code changes. Which GPU models to build for. Which operating system. Which version of Python. What to make at the end. And what should set the whole thing off.</p>
+    <p>Put all those choices together in one list and you get what people call the <b>build matrix</b>.</p>
+    <p>The easy thing is to copy that list into every repo. It is also the wrong thing. Copies get edited one at a time. After a few months no two are quite the same, and nobody is sure which one is right.</p>
+    <p><b>How TheRock does it:</b> it keeps <b>one copy</b> of the rules, in the main repo. Every smaller repo just calls that one copy. This works the same way on Linux and on Windows. Each smaller repo adds only one little step of its own, which answers a single question: which project am I building right now?</p>
+    <p>Now the interesting bit — <b>how they made the change</b>. The history of the code tells a small story. Someone first did the whole thing in one huge change. The next day it was taken back out. (Taking a change back out is called a <b>revert</b>.) Then it came back in small pieces, one at a time, each small enough for another person to actually read. First the little "which project am I?" checker, with its own tests. Then a simple tidy-up of some names. The real rewiring came last.</p>
+    <div class="note"><span class="tag">Why taking it back out was the right call</span>Pulling the change out was not a telling-off. It is a normal habit, and big projects such as LLVM tell people to do it. If somebody spots a real problem <em>after</em> a change has gone in, you take it out first and talk about it after. That way nobody has to argue while the broken thing sits there.<br><br>One change of 2,000 lines is nearly impossible to check once it has landed. Five changes of 200 to 700 lines each are easy. So you decide up front how much is allowed to break at once. You don't find out the hard way later.</div>
+    <div class="take"><b>The lesson:</b> one place owns the build rules and everybody else borrows them. That stops the copies drifting apart. Make the change in <b>small steps</b> that another person can hold in their head. And treat "take it out first, talk about it after" as cheap insurance, not as failure.</div>
   </section>
 
   <section id="p2">
     <div class="shead"><span class="sn">02</span><h2>Move test scripts into the repo that owns the code</h2></div>
-    <p class="prob">Problem it solves — in most multi-repo projects the test scripts end up in one repo while the code they test lives in another</p>
-    <p>That split is awkward: a team that owns some code has to send its test changes to a <em>different</em> repo, the tests and the code can't change together in one go, and the "who must approve changes to this file" list (GitHub calls this <code>CODEOWNERS</code>) can't line up with the real owners.</p>
-    <p><b>How TheRock does it:</b> about 35 test scripts lived in the main project while the programs they test are built inside the separate <em>component</em> repos — so the move started with a written proposal, an <b>RFC</b>, a short design document the team reviews <em>before</em> anyone writes code. The proposal lists three ways to place the tests, with honest pros and cons, and picks the one that needs the <b>fewest approvals</b> to merge (one owner entry per repo, not one per sub-part). A bigger future clean-up is written down but left for later. The move itself follows a clear six-step checklist: list the files → copy them → tidy them up → point CI at the new spot → check everything still works → delete the old copies.</p>
-    <p>The subtle part is teaching each script <b>how to find its helper files</b>. An old script simply assumed "go up three folders" to reach the shared helpers — which breaks the instant you move it somewhere else. The fix makes a script work <b>both</b> ways: when it runs inside the big project, and when it runs on its own:</p>
+    <p class="prob">The problem it fixes — in most split-up projects the tests sit in one repo and the code they test sits in another</p>
+    <p>That split makes life hard. A team that owns some code has to send its test changes to somebody else's repo. The test and the code cannot change together in one go. And the list of people who must say yes to a change (GitHub calls this list <code>CODEOWNERS</code>) cannot match the people who really own the code.</p>
+    <p><b>How TheRock does it:</b> about 35 test scripts sat in the main repo, while the programs they test are built in the smaller repos. The move started with a written plan. This kind of plan is called an <b>RFC</b> — a short document the team reads and argues over <em>before</em> anyone writes any code.</p>
+    <p>The plan lists three ways to place the tests. It gives the good and bad points of each one, honestly. Then it picks the one that needs the <b>fewest people to say yes</b>: one owner listed per repo, rather than one per small part. A bigger tidy-up is written down and left for another day.</p>
+    <p>The move itself follows a six-step list: write down the files → copy them → tidy them → point CI at the new place → check nothing broke → delete the old copies.</p>
+    <p>The tricky part is teaching each script <b>how to find its helper files</b>. An old script simply assumed "go up three folders" to find the shared helpers. That breaks the moment you move it. The fix makes a script work <b>both</b> ways — when it runs inside the big project, and when it runs on its own:</p>
     <pre><code>THEROCK_DIR = Path(
     os.environ.get("THEROCK_DIR") or SCRIPT_DIR.parent.parent.parent
 ).resolve()</code></pre>
-    <p>...and one script had a subtle <b>ordering bug</b>: it tried to use a folder path before it had worked out what that path was, so two lines had to be swapped. You only catch that by really running the move, not just reading the code. There was also a false start — someone pointed CI at the new file locations too early. That was undone on purpose, because of a rule the team had written down in advance: you can't switch CI to the new paths until the sub-projects that carry those files have first been pulled into the main project.</p>
-    <div class="take"><b>The lesson:</b> tests belong with the code they check. Move them into the repo that actually builds the program, make sure the "who approves this" list still makes sense, and design one small "find my files" helper that works whether the script runs on its own or inside the big project — <em>before</em> you move a single file.</div>
+    <p>One script also had a small <b>order bug</b>. It used a folder path before it had worked out what that path was. Two lines had to swap places. You only find that by really doing the move, not by reading the code.</p>
+    <p>There was one false start too. Someone pointed CI at the new file places too early. That was taken back out on purpose, because of a rule the team had written down beforehand: you cannot point CI at the new places until the smaller repos holding those files have been pulled into the main one first.</p>
+    <div class="take"><b>The lesson:</b> tests belong next to the code they check. Move them into the repo that actually builds the program. Make sure the "who says yes to this" list still makes sense. And work out your small "how do I find my files" helper <em>before</em> you move a single file.</div>
   </section>
 
   <section id="p3">
-    <div class="shead"><span class="sn">03</span><h2>Keep the big shared repo and its smaller copies in sync — automatically</h2></div>
-    <p class="prob">Problem it solves — code lives in one big shared repo, but copies still have to flow out to smaller separate repos</p>
-    <p>When lots of libraries are pulled together into one big shared repository (a <b>monorepo</b>) but each library still needs its own separate public repo, you need tooling that keeps both in sync — with changes flowing in <b>both directions</b>. Doing it by hand means two repositories quietly drifting apart.</p>
-    <p><b>How TheRock does it:</b> its repos carry a "patch-back" system, built on GitHub Actions and git's copy-changes-between-repos features. What makes it real engineering is the messy real-world cases it deliberately handles:</p>
+    <div class="shead"><span class="sn">03</span><h2>Keep the big repo and its copies in step — automatically</h2></div>
+    <p class="prob">The problem it fixes — the code sits in one big shared repo, but copies still have to go out to smaller separate ones</p>
+    <p>Sometimes many libraries are kept together in one big repo. People call that a <b>monorepo</b>. But each library still needs a public repo of its own as well. So changes have to travel <b>both ways</b>, and something has to keep the two sides saying the same thing. Do it by hand and they quietly drift apart.</p>
+    <p><b>How TheRock does it:</b> its repos carry a "patch-back" system, built on GitHub Actions and on git's own tools for copying changes between repos. What makes it real work, rather than a toy, is the messy cases it deals with on purpose:</p>
     <ul>
-      <li><b>Different merge styles</b> (squash, rebase, or a plain merge) — how a change was combined into the source repo changes how you have to rebuild it for the copy, so the tool handles all three.</li>
-      <li><b>Changes that copy to nothing</b> — sometimes a change would leave the copy identical. The tool spots these "nothing to do" cases and skips them, instead of pushing an empty update.</li>
-      <li><b>Using <code>git am</code> instead of <code>git apply</code></b> — a small switch that keeps the original author's name and details, and <b>fails loudly</b> on a conflict instead of quietly applying the wrong thing.</li>
-      <li><b>File-by-file copying</b> and change detection, so new and moved files land correctly — plus a manual fallback for when the automatic method gets too slow.</li>
+      <li><b>Three ways of joining changes together</b> (squash, rebase, or a plain merge) — how a change was folded into the first repo changes how you have to rebuild it for the copy. The tool handles all three.</li>
+      <li><b>Changes that copy to nothing</b> — sometimes a change would leave the copy exactly as it already was. The tool spots that and does nothing, instead of pushing an empty update.</li>
+      <li><b>Using <code>git am</code> instead of <code>git apply</code></b> — a small swap. It keeps the name of whoever wrote the change, and it <b>stops loudly</b> when two changes clash, instead of quietly doing the wrong thing.</li>
+      <li><b>Copying file by file</b>, so new and moved files land in the right place — plus a way to do it by hand for when the automatic way gets too slow.</li>
     </ul>
-    <div class="note green"><span class="tag">Why it's hard</span>This looks like plumbing, but it's really about keeping <b>two copies of the truth in agreement</b>. The scary failure isn't a red "build failed" light — it's two repositories quietly disagreeing about the same file, with nobody noticing. Every extra branch in this code exists because some real merge, at some point, produced a wrong or empty copy.</div>
-    <div class="take"><b>The lesson:</b> if you copy code between repos, the <em>way</em> a change was merged (squash / rebase / merge) is the hard part. Plan for all three from the start, treat "nothing changed" as a normal case, and prefer tools that shout when something is wrong rather than fail quietly.</div>
+    <div class="note green"><span class="tag">Why this is hard</span>This looks like boring plumbing. It is really about keeping <b>two copies of the truth saying the same thing</b>. The frightening failure is not a red "build failed" light. It is two repos quietly disagreeing about the same file while nobody notices. Every extra branch in this code is there because some real merge, one day, made a wrong or empty copy.</div>
+    <div class="take"><b>The lesson:</b> if you copy code between repos, the <em>way</em> a change was joined in (squash, rebase or merge) is the hard part. Plan for all three from the start. Treat "nothing changed" as a normal thing that happens. And pick tools that shout when something is wrong rather than fail in silence.</div>
   </section>
 
   <section id="p4">
-    <div class="shead"><span class="sn">04</span><h2>Reuse an earlier build instead of rebuilding everything</h2></div>
-    <p class="prob">Problem it solves — CI keeps rebuilding things it already built in an earlier run</p>
-    <p>At this scale, the money question is: "what can I <b>avoid</b> rebuilding?" Most CI systems answer it badly — every push kicks off a full rebuild for every target, even when almost nothing changed.</p>
-    <p><b>How TheRock does it:</b> it adds helpers that build a lookup table (a <b>reverse index</b>) over the build's dependency map — it connects each finished output back to the inputs and jobs that made it. On top of that sits a <b>baseline picker</b> that chooses a good earlier run to reuse results from, and feeds that choice into the build. A run then works out which jobs are safe to reuse from that earlier run, and rebuilds only what actually changed.</p>
-    <p>It's the same idea as ordinary caching — "don't redo work you have already done" — but moved up a level: instead of reusing individual files, it reuses <b>whole build jobs</b>. The dependency map itself tells you how far a change can reach, so the cost of a CI run matches the size of your <b>change</b>, not the size of the whole project.</p>
-    <div class="take"><b>The lesson:</b> treat your build as a map you can ask questions of. Once every output points back to its inputs, "reuse the last good run and rebuild only what changed" becomes a simple lookup instead of a guess.</div>
+    <div class="shead"><span class="sn">04</span><h2>Reuse the last build instead of doing it all again</h2></div>
+    <p class="prob">The problem it fixes — CI keeps building things it already built last time</p>
+    <p>At this size, the question that costs real money is simple: what can I <b>avoid</b> building again? Most CI answers it badly. Every change starts a full rebuild of everything, even when almost nothing is different.</p>
+    <p><b>How TheRock does it:</b> a build knows which parts need which other parts. That is its map. TheRock adds helpers that turn the map around, so you can also ask it the opposite question: for this finished piece, what went into it, and which job made it? A turned-around map like this is called a <b>reverse index</b>.</p>
+    <p>On top of it sits a picker. It chooses a good earlier run to borrow results from, and hands that choice to the build. The run then works out which jobs are safe to borrow, and builds again only what really changed.</p>
+    <p>This is the same idea as ordinary caching — don't redo work you have already done — but one level up. Instead of reusing single files, it reuses <b>whole jobs</b>. And the map tells you how far a change can reach. So the cost of a run matches the size of your <b>change</b>, not the size of the project.</p>
+    <div class="take"><b>The lesson:</b> treat your build as a map you can ask questions of. Once every finished piece points back at what made it, "borrow the last good run and rebuild only what changed" becomes a simple look-up instead of a guess.</div>
   </section>
 
   <section id="p5">
-    <div class="shead"><span class="sn">05</span><h2>Generate the build matrix from tested code — let YAML just print it</h2></div>
-    <p class="prob">Problem it solves — hand-written build rules outgrow what YAML can express, and nobody can test them</p>
-    <p>Once your build has real "if this, then that" logic, YAML (the simple config format GitHub Actions uses) stops being a good home for it: a matrix typed out by hand can only be copy-pasted and hoped over.</p>
-    <p><b>How TheRock does it:</b> the build matrix — GPU model × operating system × Python version × output × trigger — is <b>not</b> typed out by hand at all. Instead, a large amount of <b>Python</b> in <code>build_tools/github_actions/</code> generates that list and hands it to GitHub Actions as JSON, through a function called <code>fromJSON()</code>. Put plainly: <b>Python is the brain</b> that decides what to build; YAML is just the printout; and GitHub Actions simply runs whatever list it is given:</p>
+    <div class="shead"><span class="sn">05</span><h2>Let a real program decide what to build — the config file just prints the answer</h2></div>
+    <p class="prob">The problem it fixes — hand-written build rules grow too clever for a config file, and nobody can test them</p>
+    <p>GitHub Actions is set up using a simple config format called <b>YAML</b>. YAML is fine for plain lists. It is bad at "if this, then that". And a list typed out by hand cannot be tested. It can only be copied and hoped over.</p>
+    <p><b>How TheRock does it:</b> the build matrix — GPU model × operating system × Python version × what to make × what sets it off — is <b>not</b> typed out by hand at all. A large amount of <b>Python</b> in <code>build_tools/github_actions/</code> works the list out and hands it over as JSON, through a function called <code>fromJSON()</code>.</p>
+    <p>Plainly: <b>Python is the brain</b> that decides what to build. YAML is just the paper it gets printed on. GitHub Actions runs whatever list it is handed:</p>
     <pre><code>configure:
   outputs:
     matrix: ${{ steps.gen.outputs.matrix }}
@@ -244,14 +251,16 @@ build:
   needs: configure
   strategy:
     matrix: ${{ fromJson(needs.configure.outputs.matrix) }}</code></pre>
-    <p>Why do it this way? <b>Testing.</b> A build list written in Python can have proper automated tests. Across all of TheRock's CI tooling the same habit shows up — new pieces arrive <em>together with</em> their tests. That is exactly what makes the small-steps-and-undo discipline from pattern 1 possible in the first place.</p>
-    <div class="take"><b>The lesson:</b> when your build needs "if this, then that" logic, treat your CI config as a real <b>program</b> — generate the JSON from tested code and hand it to the runner. YAML is a place to print results, not a place to put your thinking.</div>
+    <p>Why do it this way? <b>Because you can test it.</b> A build list written as a program can have real tests run against it. And the same habit shows up all through TheRock's CI tools: new pieces arrive <em>together with</em> their tests. That is what makes the small-steps-and-take-it-back-out habit from lesson 1 possible at all.</p>
+    <div class="take"><b>The lesson:</b> when your build needs "if this, then that" thinking, treat your CI setup as a real <b>program</b>. Work the list out in code you can test, then hand it over. A config file is a place to print an answer, not a place to keep your thinking.</div>
   </section>
 
   <section style="border-bottom:none">
-    <div class="shead"><span class="sn">+</span><h2>The through-line</h2></div>
-    <p>Under all five patterns is one simple attitude: <b>protect the main branch, and make every change easy to review.</b> Time limits are set thoughtfully instead of cranked to the maximum. Test jobs only start once the machine they will run on has been checked and is healthy. Windows and WSL (Windows' built-in Linux) builds run in two lanes at once — a strict lane that can block a release, and an "FYI only" lane — so a shaky new platform can't hold everyone else up. And undoing changes, even your own big ones, is treated as a normal, cheap tool rather than a defeat. None of this is glamorous. All of it is what keeps a build this big passing, day after day.</p>
-    <div class="note"><span class="tag">Read the source</span>Companion pieces in this series: the <a href="/blog/AMD_GPU_CI_Infrastructure.html">full CI infrastructure reference</a>, a <a href="/blog/therock-ci-explained.html">file-by-file guide</a> to the Python-plus-CMake layer, and an <a href="/blog/therock-graph/">interactive dependency graph</a> of the whole build.</div>
+    <div class="shead"><span class="sn">+</span><h2>What ties all five together</h2></div>
+    <p>Under all five is one simple attitude: <b>look after the main copy of the code, and make every change easy to read.</b></p>
+    <p>Time limits are set with thought, not just turned up to the highest number. Test jobs only start once the machine they will run on has been checked and found healthy. Windows builds run in two lanes at the same time — a strict lane that can hold up a release, and a "just so you know" lane — so a shaky new platform cannot block everybody else. And taking a change back out, even your own big one, is treated as a normal cheap tool rather than a defeat.</p>
+    <p>None of this is exciting. All of it is what keeps a build this big passing, day after day.</p>
+    <div class="note"><span class="tag">More on this</span>Other pieces in this series: the <a href="/blog/AMD_GPU_CI_Infrastructure.html">full write-up of the CI setup</a>, a <a href="/blog/therock-ci-explained.html">file-by-file guide</a> to the code underneath, and an <a href="/blog/therock-graph/">clickable map</a> of what the build needs to build.</div>
   </section>
 
 </div>
@@ -270,7 +279,7 @@ build:
       <a href="https://www.sudhakarchundu.org/" target="_blank" rel="noopener">Home</a>
     </div>
   </div>
-  <div class="wrap" style="margin-top:16px"><span class="c">© 2026 Sudhakar Chundu. Patterns observed in the public, MIT-licensed ROCm/TheRock repository.</span></div>
+  <div class="wrap" style="margin-top:16px"><span class="c">© 2026 Sudhakar Chundu. All of this comes from the public ROCm/TheRock code, which anyone is free to read.</span></div>
 </footer>
 
 <style>
