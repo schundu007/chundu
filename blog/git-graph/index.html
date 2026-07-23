@@ -308,6 +308,8 @@
         .then(function(r){return r.ok?renderAnalysis(r.data):noteErr(r)})}},
     {k:"analyze", cli:"understand", desc:"Analyze / refresh (incremental)", status:"live", input:"scope",
       run:function(ctx,v){return runAnalyze(ctx,v)}},
+    {k:"audit", cli:"understand-audit", desc:"Existing system vs best practices", status:"live", input:"none",
+      run:function(ctx,v){return req("/understand/audit",{method:"POST",body:JSON.stringify({owner:ctx.owner,repo:ctx.repo})}).then(function(r){return r.ok?renderAudit(r.data):noteErr(r)})}},
     {k:"chat", cli:"understand-chat", desc:"Ask about the codebase", status:"pending", input:"query",
       endpoint:"/understand/chat"},
     {k:"diff", cli:"understand-diff", desc:"Impact of current changes", status:"pending", input:"none",
@@ -397,6 +399,16 @@
     if(d.issues&&d.issues.length){h+='<h4>Issues</h4><ul>'+d.issues.map(function(i){return '<li><span class="sev '+esc(i.severity)+'">'+esc(i.severity)+'</span>'+esc(i.title)+' — '+esc(i.description)+(i.fix?'<br><span style="color:var(--ok)">fix:</span> '+esc(i.fix):'')+'</li>'}).join("")+'</ul>';}
     if(d.deep_dive&&d.deep_dive.length){h+='<h4>Deep dive</h4>'+d.deep_dive.map(function(q){return '<p><b>'+esc(q.q)+'</b><br>'+esc(q.a)+'</p>'}).join("");}
     return h||'<p class="note">Analyzed (no structured fields returned).</p>';
+  }
+  function renderAudit(d){
+    if(!d)return '<p class="note err">no data</p>';
+    var h='';
+    if(d.score!=null)h+='<h4>Best-practices score: <code>'+esc(d.score)+' / 100</code></h4>';
+    if(d.summary)h+='<p>'+esc(d.summary)+'</p>';
+    if(d.strengths&&d.strengths.length){h+='<h4>Strengths</h4><ul>'+d.strengths.map(function(s){return '<li>'+esc(s)+'</li>'}).join("")+'</ul>';}
+    if(d.gaps&&d.gaps.length){h+='<h4>Gaps &amp; recommendations</h4><ul>'+d.gaps.map(function(g){return '<li><span class="sev '+esc(g.severity)+'">'+esc(g.severity)+'</span><b>'+esc(g.area)+'</b> — '+esc(g.finding)+'<br><span style="color:var(--ok)">→</span> '+esc(g.recommendation)+(g.evidence&&g.evidence.length?'<br><span class="hint">'+g.evidence.map(esc).join(", ")+'</span>':'')+'</li>'}).join("")+'</ul>';}
+    if(d.quick_wins&&d.quick_wins.length){h+='<h4>Quick wins</h4><ul>'+d.quick_wins.map(function(s){return '<li>'+esc(s)+'</li>'}).join("")+'</ul>';}
+    return h||'<p class="note">No findings.</p>';
   }
   function noteErr(r){return '<p class="note err">✗ '+esc((r.data&&(r.data.detail||r.data.error))||("HTTP "+r.status))+(r.status===0?' — is the backend running & CORS-allowed?':'')+'</p>'}
   function pendingNote(cmd){return '<div class="note warn">The <code>/'+cmd.cli+'</code> endpoint (<code>'+cmd.endpoint+'</code>) isn\'t deployed yet.<br>It\'s Stage 2: port the ready-made <code>src/'+({chat:"context-builder",diff:"diff-analyzer",onboard:"onboard-builder",domain:"domain-analyzer",knowledge:"parse-knowledge-base"}[cmd.k]||cmd.k)+'</code> logic from Understand Anything into a GitPulser router. This UI is already wired to it.</div>'}
