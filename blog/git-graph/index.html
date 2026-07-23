@@ -143,8 +143,8 @@
   <div class="mh"><h3>Backend settings</h3><div class="x" data-close>✕</div></div>
   <div class="fld">
     <label>GitPulser API base URL</label>
-    <input id="apiUrl" placeholder="http://localhost:8000" />
-    <div class="hint">The deployed GitPulser backend (FastAPI). Stored locally in <code>gg:api_url</code>. Same default GitPulser uses.</div>
+    <input id="apiUrl" placeholder="https://gitpulser.up.railway.app" />
+    <div class="hint">The deployed GitPulser <b>backend API</b> — <code>https://gitpulser.up.railway.app</code> (Railway), <b>not</b> the Vercel frontend. Stored locally in <code>gg:api_url</code>.</div>
   </div>
   <div class="row">
     <button class="btn pri" id="saveApi">Save &amp; test</button>
@@ -187,7 +187,7 @@
 <script>
 (function(){
   "use strict";
-  var LS_API="gg:api_url", DEFAULT_API="http://localhost:8000";
+  var LS_API="gg:api_url", DEFAULT_API="https://gitpulser.up.railway.app";
   var $=function(s,r){return (r||document).querySelector(s)};
   var el=function(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
   var esc=function(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
