@@ -284,7 +284,7 @@
     var m=$("#addMsg");m.innerHTML='<div class="note"><span class="spin"></span> adding…</div>';
     req("/repos",{method:"POST",body:JSON.stringify(addBody())}).then(function(r){
       if(r.ok){m.innerHTML='<div class="note ok">✓ added</div>';setTimeout(function(){$("#addScrim").classList.remove("on");reload()},600);}
-      else m.innerHTML='<div class="note err">✗ '+esc((r.data&&r.data.detail)||("HTTP "+r.status))+(r.status===409?" (already added)":"")+'</div>';
+      else m.innerHTML='<div class="note err">✗ '+esc((r.data&&r.data.detail)||("HTTP "+r.status))+(r.status===409?" (already added)":"")+(r.status===0?'<br>Can\'t reach <code>'+esc(api())+'</code> — open ⚙ Settings and set <code>https://gitpulser.up.railway.app</code>.':"")+'</div>';
     });
   };
 
@@ -412,7 +412,11 @@
   document.querySelectorAll(".scrim").forEach(function(s){s.addEventListener("click",function(e){if(e.target===s)s.classList.remove("on")})});
   $("#reloadBtn").onclick=reload;
 
-  if(!localStorage.getItem(LS_API))localStorage.setItem(LS_API,DEFAULT_API);
+  // Self-heal: a stale/wrong saved URL (the Vercel frontend or localhost) can never
+  // reach the API, so overwrite it with the correct backend. Only a URL that isn't
+  // obviously wrong is kept.
+  var _saved=localStorage.getItem(LS_API);
+  if(!_saved||/vercel\.app|localhost|127\.0\.0\.1|:8000/i.test(_saved))localStorage.setItem(LS_API,DEFAULT_API);
   loadSeeds().then(reload);
 })();
 </script>
