@@ -1,0 +1,14 @@
+{
+  "seeds": [
+    {
+      "name": "TheRock (ROCm)",
+      "slug": "therock",
+      "owner": "ROCm",
+      "repo": "TheRock",
+      "source": "static",
+      "dataBase": "/blog/therock-graph/",
+      "description": "AMD ROCm build system — the HIP environment & ROCm kit. Pre-analyzed knowledge graph (880 nodes / 1214 edges).",
+      "hasGraph": true
+    }
+  ]
+}
