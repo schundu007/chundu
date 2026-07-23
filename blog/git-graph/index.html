@@ -251,10 +251,11 @@
       '<div>'+badges+'</div></div>'+
       '<div class="desc">'+(r.capabilities&&r.capabilities.languages?esc(r.capabilities.languages.join(" · ")):'<span style="color:var(--dim)">no graph generated yet — run <code>understand</code></span>')+'</div>';
     var acts=el("div","acts");
-    var open=el("button","btn sm","Open graph");
-    open.disabled=true;open.title="Graph generation endpoint not deployed yet (Stage 2)";
+    var open=el("button","btn pri sm","Open graph");
+    open.title="Open the generated graph (run Commands → /understand first if it's empty)";
+    open.onclick=function(){location.href="/blog/git-graph/viewer.html?base="+encodeURIComponent(api()+"/understand/data/"+r.owner+"/"+r.repo+"/")};
     acts.appendChild(open);
-    var cmd=el("button","btn pri sm","Commands");
+    var cmd=el("button","btn sm","Commands");
     cmd.onclick=function(){openCmd({name:r.name,owner:r.owner,repo:r.repo,id:r.id})};
     acts.appendChild(cmd);
     if(!r.is_active){var act=el("button","btn sm","Set active");act.onclick=function(){req("/repos/"+r.id+"/activate",{method:"POST"}).then(reload)};acts.appendChild(act);}
@@ -355,24 +356,21 @@
     };
   }
   function runAnalyze(ctx,v){
-    // Existing GitPulser behaviour: prewarm the analyzable files, then poll status.
-    return req("/proxy/tree?owner="+ctx.owner+"&repo="+ctx.repo).then(function(tr){
-      var paths=[];
-      if(tr.ok&&tr.data&&tr.data.tree){paths=tr.data.tree.filter(function(t){return t.type==="blob"}).map(function(t){return t.path});
-        if(v.scope)paths=paths.filter(function(p){return p.indexOf(v.scope)===0});}
-      return req("/analyze/prewarm",{method:"POST",body:JSON.stringify({owner:ctx.owner,repo:ctx.repo,paths:paths})}).then(function(){
-        return poll(ctx,0);
-      });
-    });
+    // Real graph generation on GitPulser: walk tree + summarise each file, build
+    // the file-level knowledge graph, store it, then poll until ready.
+    return req("/understand/generate",{method:"POST",body:JSON.stringify({owner:ctx.owner,repo:ctx.repo,scope:v.scope||undefined})})
+      .then(function(r){return r.ok?pollGen(ctx,0):noteErr(r)});
   }
-  function poll(ctx,n){
-    return req("/analyze/prewarm/status?owner="+ctx.owner+"&repo="+ctx.repo).then(function(r){
+  function pollGen(ctx,n){
+    return req("/understand/generate/status?owner="+ctx.owner+"&repo="+ctx.repo).then(function(r){
       var s=r.data||{};
-      var html='<h4>Analyzing '+esc(ctx.owner+"/"+ctx.repo)+'</h4>'+
-        '<p>'+(s.running?'<span class="spin"></span> ':'✓ ')+'done <code>'+(s.done||0)+'</code> / eligible <code>'+(s.eligible||0)+'</code>'+
-        (s.failed?' · failed <code>'+s.failed+'</code>':'')+(s.already_cached?' · cached <code>'+s.already_cached+'</code>':'')+'</p>'+
-        '<p class="hint">GitPulser currently prewarms Actions YAML per its billing discipline; the full graph pipeline is Stage&nbsp;2.</p>';
-      if(s.running&&n<40){$("#cmdOut").innerHTML=html;return new Promise(function(res){setTimeout(function(){res(poll(ctx,n+1))},2000)});}
+      var html='<h4>Generating graph · '+esc(ctx.owner+"/"+ctx.repo)+'</h4>'+
+        '<p>'+(s.running?'<span class="spin"></span> ':'✓ ')+'summarised <code>'+(s.done||0)+'</code> / <code>'+(s.total||0)+'</code> files'+
+        (s.failed?' · failed <code>'+s.failed+'</code>':'')+'</p>'+
+        (s.truncated?'<p class="hint">Capped at the first '+esc(s.total)+' files.</p>':'')+
+        (s.error?'<div class="note err">'+esc(s.error)+'</div>':'')+
+        (!s.running&&!s.error?'<div class="note ok">✓ graph ready — <code>'+(s.nodes||0)+'</code> nodes / <code>'+(s.edges||0)+'</code> edges. Close this, then click <b>Open graph</b>.</div>':'');
+      if(s.running&&n<180){$("#cmdOut").innerHTML=html;return new Promise(function(res){setTimeout(function(){res(pollGen(ctx,n+1))},2500)});}
       return html;
     });
   }
