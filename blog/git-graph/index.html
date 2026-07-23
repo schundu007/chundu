@@ -251,12 +251,24 @@
       '<div>'+badges+'</div></div>'+
       '<div class="desc">'+(r.capabilities&&r.capabilities.languages?esc(r.capabilities.languages.join(" · ")):'<span style="color:var(--dim)">no graph generated yet — run <code>understand</code></span>')+'</div>';
     var acts=el("div","acts");
-    var open=el("button","btn pri sm","Open graph");
-    open.title="Open the generated graph (run Commands → /understand first if it's empty)";
-    open.onclick=function(){location.href="/blog/git-graph/viewer.html?base="+encodeURIComponent(api()+"/understand/data/"+r.owner+"/"+r.repo+"/")};
+    var ctx={name:r.name,owner:r.owner,repo:r.repo,id:r.id};
+    var an=el("button","btn pri sm","Analyze");
+    an.title="Generate this repo's knowledge graph via /understand";
+    an.onclick=function(){openCmd(ctx,"analyze")};
+    acts.appendChild(an);
+    var open=el("button","btn sm","Open graph");
+    open.onclick=function(){
+      open.disabled=true;open.textContent="checking…";
+      req("/understand/generate/status?owner="+r.owner+"&repo="+r.repo).then(function(s){
+        open.disabled=false;open.textContent="Open graph";
+        if(s.ok&&s.data&&(s.data.existing||s.data.nodes)){
+          location.href="/blog/git-graph/viewer.html?base="+encodeURIComponent(api()+"/understand/data/"+r.owner+"/"+r.repo+"/");
+        }else{openCmd(ctx,"analyze");$("#cmdOut").innerHTML='<div class="note warn">No graph generated for <code>'+esc(r.slug)+'</code> yet. Run <code>/understand</code> below, then Open graph.</div>';}
+      });
+    };
     acts.appendChild(open);
     var cmd=el("button","btn sm","Commands");
-    cmd.onclick=function(){openCmd({name:r.name,owner:r.owner,repo:r.repo,id:r.id})};
+    cmd.onclick=function(){openCmd(ctx)};
     acts.appendChild(cmd);
     if(!r.is_active){var act=el("button","btn sm","Set active");act.onclick=function(){req("/repos/"+r.id+"/activate",{method:"POST"}).then(reload)};acts.appendChild(act);}
     var del=el("button","btn sm ghost","🗑");del.title="Remove";
@@ -309,18 +321,20 @@
     {k:"autoupdate", cli:"understand --auto-update", desc:"Re-graph on every commit", status:"info", input:"none"}
   ];
   var curCtx=null, curCmd=null;
-  function openCmd(ctx){
+  function openCmd(ctx,preselect){
     curCtx=ctx;curCmd=null;
     $("#cmdTitle").textContent=ctx.name+"  ·  commands";
-    var g=$("#cmdGrid");g.innerHTML="";
+    var g=$("#cmdGrid");g.innerHTML="";var pre=null;
     COMMANDS.forEach(function(cmd){
       var b=el("button","cmd");
       b.innerHTML='<div class="c1">/'+cmd.cli+'</div><div class="c2">'+cmd.desc+'</div><div class="st '+cmd.status+'">'+cmd.status+'</div>';
       b.onclick=function(){selectCmd(cmd,b)};g.appendChild(b);
+      if(preselect&&cmd.k===preselect)pre=[cmd,b];
     });
     $("#cmdInputs").innerHTML="";
     $("#cmdOut").innerHTML='<p style="color:var(--dim)">Pick a command above. <span class="mono" style="color:var(--info)">live</span> commands call GitPulser now; <span class="mono" style="color:var(--warn)">pending</span> commands need their Stage-2 endpoint.</p>';
     $("#cmdScrim").classList.add("on");
+    if(pre)selectCmd(pre[0],pre[1]);
   }
   function selectCmd(cmd,btn){
     curCmd=cmd;
