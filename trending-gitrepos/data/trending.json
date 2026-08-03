@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-27T12:11:41.550Z",
+  "generated_at": "2026-08-03T12:12:51.667Z",
   "methodology": "Computed from GitHub Search API per category (topic filters, stars:>300, pushed within 120 days, non-archived), ranked by average stars/month over the repo lifetime.",
   "star_floor": 300,
   "pushed_within_days": 120,
@@ -19,8 +19,8 @@
           "full_name": "floci-io/floci",
           "html_url": "https://github.com/floci-io/floci",
           "description": "Light, fluffy, and always free - The AWS Local Emulator alternative",
-          "stars": 17855,
-          "velocity_per_month": 3410,
+          "stars": 18126,
+          "velocity_per_month": 3316,
           "language": "Java",
           "topics": [
             "aws",
@@ -30,7 +30,7 @@
             "ec2",
             "ecs"
           ],
-          "pushed_at": "2026-07-27T04:39:12Z",
+          "pushed_at": "2026-08-02T02:05:20Z",
           "created_at": "2026-02-18T02:28:29Z"
         },
         {
@@ -38,8 +38,8 @@
           "full_name": "pranshuparmar/witr",
           "html_url": "https://github.com/pranshuparmar/witr",
           "description": "Why is this running? Trace any process, port, container, or file back to what started it - CLI + TUI.",
-          "stars": 18323,
-          "velocity_per_month": 2549,
+          "stars": 18539,
+          "velocity_per_month": 2499,
           "language": "Go",
           "topics": [
             "cli",
@@ -49,7 +49,7 @@
             "freebsd",
             "go"
           ],
-          "pushed_at": "2026-07-24T09:36:08Z",
+          "pushed_at": "2026-07-31T06:49:53Z",
           "created_at": "2025-12-20T17:26:59Z"
         },
         {
@@ -57,8 +57,8 @@
           "full_name": "Dokploy/dokploy",
           "html_url": "https://github.com/Dokploy/dokploy",
           "description": "Open Source Alternative to Vercel, Netlify and Heroku.",
-          "stars": 36113,
-          "velocity_per_month": 1326,
+          "stars": 36280,
+          "velocity_per_month": 1321,
           "language": "TypeScript",
           "topics": [
             "agents",
@@ -68,7 +68,7 @@
             "databases",
             "deployment"
           ],
-          "pushed_at": "2026-07-27T07:00:01Z",
+          "pushed_at": "2026-08-03T10:24:29Z",
           "created_at": "2024-04-19T07:49:30Z"
         },
         {
@@ -76,8 +76,8 @@
           "full_name": "nektos/act",
           "html_url": "https://github.com/nektos/act",
           "description": "Run your GitHub Actions locally 🚀",
-          "stars": 71218,
-          "velocity_per_month": 785,
+          "stars": 71309,
+          "velocity_per_month": 784,
           "language": "Go",
           "topics": [
             "ci",
@@ -85,7 +85,7 @@
             "github-actions",
             "golang"
           ],
-          "pushed_at": "2026-07-10T19:36:34Z",
+          "pushed_at": "2026-08-01T02:05:47Z",
           "created_at": "2019-01-02T19:53:43Z"
         },
         {
@@ -93,8 +93,8 @@
           "full_name": "MichaelCade/90DaysOfDevOps",
           "html_url": "https://github.com/MichaelCade/90DaysOfDevOps",
           "description": "This repository started out as a learning in public project for myself and has now become a structured learning map for many in the community. We have 3 years under our belt covering all things DevOps, including Principles, Processes, Tooling and Use Cases surrounding this vast topic.",
-          "stars": 29619,
-          "velocity_per_month": 539,
+          "stars": 29629,
+          "velocity_per_month": 537,
           "language": "Shell",
           "topics": [
             "ansible",
@@ -112,7 +112,7 @@
           "full_name": "netdata/netdata",
           "html_url": "https://github.com/netdata/netdata",
           "description": "The fastest path to AI-powered full stack observability, even for lean teams.",
-          "stars": 79872,
+          "stars": 79999,
           "velocity_per_month": 508,
           "language": "Go",
           "topics": [
@@ -123,7 +123,7 @@
             "database",
             "devops"
           ],
-          "pushed_at": "2026-07-27T11:57:44Z",
+          "pushed_at": "2026-08-03T12:10:00Z",
           "created_at": "2013-06-17T18:39:10Z"
         },
         {
@@ -131,8 +131,8 @@
           "full_name": "go-gitea/gitea",
           "html_url": "https://github.com/go-gitea/gitea",
           "description": "Git with a cup of tea! Painless self-hosted all-in-one software development service, including Git hosting, code review, team collaboration, package registry and CI/CD",
-          "stars": 57048,
-          "velocity_per_month": 488,
+          "stars": 57185,
+          "velocity_per_month": 489,
           "language": "Go",
           "topics": [
             "bitbucket",
@@ -142,7 +142,7 @@
             "git",
             "git-gui"
           ],
-          "pushed_at": "2026-07-27T10:48:44Z",
+          "pushed_at": "2026-08-03T10:54:43Z",
           "created_at": "2016-11-01T02:13:26Z"
         },
         {
@@ -150,8 +150,8 @@
           "full_name": "milanm/DevOps-Roadmap",
           "html_url": "https://github.com/milanm/DevOps-Roadmap",
           "description": "DevOps Roadmap for 2026. with learning resources",
-          "stars": 19959,
-          "velocity_per_month": 442,
+          "stars": 20075,
+          "velocity_per_month": 443,
           "language": "",
           "topics": [
             "aws",
@@ -166,29 +166,10 @@
         },
         {
           "rank": 9,
-          "full_name": "skyhook-io/radar",
-          "html_url": "https://github.com/skyhook-io/radar",
-          "description": "The missing open source Kubernetes UI. Topology, event timeline, and service traffic — plus resource browsing and Helm management.",
-          "stars": 2670,
-          "velocity_per_month": 431,
-          "language": "Go",
-          "topics": [
-            "argocd",
-            "cloud-native",
-            "gitops",
-            "helm",
-            "k8s",
-            "kubectl-plugin"
-          ],
-          "pushed_at": "2026-07-27T09:53:27Z",
-          "created_at": "2026-01-20T00:09:40Z"
-        },
-        {
-          "rank": 10,
           "full_name": "aquasecurity/trivy",
           "html_url": "https://github.com/aquasecurity/trivy",
           "description": "Find vulnerabilities, misconfigurations, secrets, SBOM in containers, Kubernetes, code repositories, clouds and more",
-          "stars": 37098,
+          "stars": 37221,
           "velocity_per_month": 424,
           "language": "Go",
           "topics": [
@@ -199,8 +180,27 @@
             "golang",
             "hacktoberfest"
           ],
-          "pushed_at": "2026-07-25T06:13:17Z",
+          "pushed_at": "2026-08-03T11:59:49Z",
           "created_at": "2019-04-11T01:01:07Z"
+        },
+        {
+          "rank": 10,
+          "full_name": "skyhook-io/radar",
+          "html_url": "https://github.com/skyhook-io/radar",
+          "description": "The missing open source Kubernetes UI. Topology, event timeline, and service traffic — plus resource browsing and Helm management.",
+          "stars": 2714,
+          "velocity_per_month": 423,
+          "language": "Go",
+          "topics": [
+            "argocd",
+            "cloud-native",
+            "gitops",
+            "helm",
+            "k8s",
+            "kubectl-plugin"
+          ],
+          "pushed_at": "2026-08-03T12:11:09Z",
+          "created_at": "2026-01-20T00:09:40Z"
         }
       ]
     },
@@ -218,8 +218,8 @@
           "full_name": "backstage/backstage",
           "html_url": "https://github.com/backstage/backstage",
           "description": "Backstage is an open framework for building developer portals",
-          "stars": 33957,
-          "velocity_per_month": 435,
+          "stars": 34008,
+          "velocity_per_month": 434,
           "language": "TypeScript",
           "topics": [
             "backstage",
@@ -229,7 +229,7 @@
             "dx",
             "hacktoberfest"
           ],
-          "pushed_at": "2026-07-27T11:54:40Z",
+          "pushed_at": "2026-08-03T12:11:19Z",
           "created_at": "2020-01-24T22:39:49Z"
         },
         {
@@ -237,8 +237,8 @@
           "full_name": "superplanehq/superplane",
           "html_url": "https://github.com/superplanehq/superplane",
           "description": "The open source control plane for agentic engineering.",
-          "stars": 4361,
-          "velocity_per_month": 298,
+          "stars": 4392,
+          "velocity_per_month": 295,
           "language": "Go",
           "topics": [
             "automation",
@@ -248,7 +248,7 @@
             "go",
             "kubernetes"
           ],
-          "pushed_at": "2026-07-27T11:28:30Z",
+          "pushed_at": "2026-08-03T11:43:01Z",
           "created_at": "2025-05-07T17:48:39Z"
         },
         {
@@ -256,8 +256,8 @@
           "full_name": "loft-sh/vcluster",
           "html_url": "https://github.com/loft-sh/vcluster",
           "description": "vCluster - Create fully functional virtual Kubernetes clusters - Each vcluster runs inside a namespace of the underlying k8s cluster. It's cheaper than creating separate full-blown clusters and it offers better multi-tenancy and isolation than regular namespaces.",
-          "stars": 11245,
-          "velocity_per_month": 177,
+          "stars": 11243,
+          "velocity_per_month": 176,
           "language": "Go",
           "topics": [
             "cloud-native",
@@ -267,7 +267,7 @@
             "kubectl",
             "kubernetes"
           ],
-          "pushed_at": "2026-07-24T17:35:42Z",
+          "pushed_at": "2026-08-03T12:01:48Z",
           "created_at": "2021-04-08T14:47:46Z"
         },
         {
@@ -275,7 +275,7 @@
           "full_name": "meshery/meshery",
           "html_url": "https://github.com/meshery/meshery",
           "description": "Meshery, the cloud native manager",
-          "stars": 11400,
+          "stars": 11423,
           "velocity_per_month": 123,
           "language": "TypeScript",
           "topics": [
@@ -286,7 +286,7 @@
             "gitops",
             "golang"
           ],
-          "pushed_at": "2026-07-27T04:26:52Z",
+          "pushed_at": "2026-08-03T10:59:58Z",
           "created_at": "2018-11-14T13:41:00Z"
         },
         {
@@ -294,8 +294,8 @@
           "full_name": "Unleash/unleash",
           "html_url": "https://github.com/Unleash/unleash",
           "description": "Open-source feature management platform",
-          "stars": 13693,
-          "velocity_per_month": 97,
+          "stars": 13711,
+          "velocity_per_month": 96,
           "language": "TypeScript",
           "topics": [
             "activation-strategies",
@@ -305,7 +305,7 @@
             "devops",
             "devtool"
           ],
-          "pushed_at": "2026-07-27T11:38:39Z",
+          "pushed_at": "2026-08-03T12:11:53Z",
           "created_at": "2014-09-29T12:50:46Z"
         },
         {
@@ -313,7 +313,7 @@
           "full_name": "kubero-dev/kubero",
           "html_url": "https://github.com/kubero-dev/kubero",
           "description": "A free and self-hosted PaaS alternative to Heroku / Netlify / Coolify / Vercel / Dokku / Portainer running on Kubernetes",
-          "stars": 4367,
+          "stars": 4374,
           "velocity_per_month": 87,
           "language": "TypeScript",
           "topics": [
@@ -324,7 +324,7 @@
             "dokku",
             "gitops"
           ],
-          "pushed_at": "2026-07-27T05:49:04Z",
+          "pushed_at": "2026-07-27T16:35:35Z",
           "created_at": "2022-05-17T14:42:13Z"
         },
         {
@@ -332,8 +332,8 @@
           "full_name": "platform-engineering-labs/formae",
           "html_url": "https://github.com/platform-engineering-labs/formae",
           "description": "Infrastructure-as-Code Platform Built for the Future",
-          "stars": 761,
-          "velocity_per_month": 83,
+          "stars": 764,
+          "velocity_per_month": 81,
           "language": "Go",
           "topics": [
             "devops",
@@ -342,16 +342,16 @@
             "platform-engineering",
             "sre"
           ],
-          "pushed_at": "2026-07-27T07:00:16Z",
+          "pushed_at": "2026-08-01T18:48:54Z",
           "created_at": "2025-10-22T00:00:55Z"
         },
         {
           "rank": 8,
           "full_name": "openchoreo/openchoreo",
           "html_url": "https://github.com/openchoreo/openchoreo",
-          "description": "OpenChoreo is a developer platform for Kubernetes",
-          "stars": 1269,
-          "velocity_per_month": 75,
+          "description": "OpenChoreo is an internal developer platform for Kubernetes",
+          "stars": 1307,
+          "velocity_per_month": 76,
           "language": "Go",
           "topics": [
             "developer-platform",
@@ -359,15 +359,15 @@
             "internal-developer-platform",
             "openchoreo"
           ],
-          "pushed_at": "2026-07-27T10:00:05Z",
+          "pushed_at": "2026-08-03T05:06:40Z",
           "created_at": "2025-02-28T14:34:35Z"
         },
         {
           "rank": 9,
           "full_name": "kubara-io/kubara",
           "html_url": "https://github.com/kubara-io/kubara",
-          "description": "Kubara is a single binary CLI tool written in Go providing a lightweight framework for bootstrapping Kubernetes platforms with production-proven best practices.",
-          "stars": 327,
+          "description": "kubara is a single binary CLI tool written in Go providing a lightweight framework for bootstrapping Kubernetes platforms with production-proven best practices.",
+          "stars": 340,
           "velocity_per_month": 60,
           "language": "Go",
           "topics": [
@@ -376,7 +376,7 @@
             "platform",
             "platform-engineering"
           ],
-          "pushed_at": "2026-07-27T08:44:13Z",
+          "pushed_at": "2026-08-03T11:57:56Z",
           "created_at": "2026-02-11T10:05:49Z"
         },
         {
@@ -384,7 +384,7 @@
           "full_name": "kcl-lang/kcl",
           "html_url": "https://github.com/kcl-lang/kcl",
           "description": "KCL Programming Language Core and API (CNCF Sandbox Project). https://kcl-lang.io",
-          "stars": 2388,
+          "stars": 2389,
           "velocity_per_month": 47,
           "language": "Rust",
           "topics": [
@@ -395,7 +395,7 @@
             "configuration-management",
             "devops"
           ],
-          "pushed_at": "2026-07-26T04:39:41Z",
+          "pushed_at": "2026-07-28T09:49:00Z",
           "created_at": "2022-05-05T07:02:26Z"
         }
       ]
@@ -414,8 +414,8 @@
           "full_name": "NirDiamant/agents-towards-production",
           "html_url": "https://github.com/NirDiamant/agents-towards-production",
           "description": "End-to-end, code-first tutorials for building production-grade GenAI agents. From prototype to enterprise deployment.",
-          "stars": 21185,
-          "velocity_per_month": 1589,
+          "stars": 21231,
+          "velocity_per_month": 1566,
           "language": "Jupyter Notebook",
           "topics": [
             "agent",
@@ -425,7 +425,7 @@
             "ai-agents",
             "deployment"
           ],
-          "pushed_at": "2026-07-14T18:50:31Z",
+          "pushed_at": "2026-07-31T21:07:09Z",
           "created_at": "2025-06-16T17:33:44Z"
         },
         {
@@ -433,8 +433,8 @@
           "full_name": "microsoft/agent-lightning",
           "html_url": "https://github.com/microsoft/agent-lightning",
           "description": "The absolute trainer to light up AI agents.",
-          "stars": 17427,
-          "velocity_per_month": 1312,
+          "stars": 17440,
+          "velocity_per_month": 1291,
           "language": "Python",
           "topics": [
             "agent",
@@ -448,10 +448,29 @@
         },
         {
           "rank": 3,
+          "full_name": "alvinreal/awesome-opensource-ai",
+          "html_url": "https://github.com/alvinreal/awesome-opensource-ai",
+          "description": "Curated list of the best truly open-source AI projects, models, tools, and infrastructure. Daily updated.",
+          "stars": 4408,
+          "velocity_per_month": 1018,
+          "language": "Python",
+          "topics": [
+            "agents",
+            "ai",
+            "artificial-intelligence",
+            "awesome",
+            "awesome-list",
+            "generative-ai"
+          ],
+          "pushed_at": "2026-08-03T09:11:53Z",
+          "created_at": "2026-03-24T15:58:22Z"
+        },
+        {
+          "rank": 4,
           "full_name": "qdrant/qdrant",
           "html_url": "https://github.com/qdrant/qdrant",
           "description": "Qdrant - High-performance, massive-scale Vector Database and Vector Search Engine for the next generation of AI. Also available in the cloud https://cloud.qdrant.io/",
-          "stars": 33608,
+          "stars": 33752,
           "velocity_per_month": 455,
           "language": "Rust",
           "topics": [
@@ -462,16 +481,16 @@
             "hybrid-search",
             "image-search"
           ],
-          "pushed_at": "2026-07-27T12:08:39Z",
+          "pushed_at": "2026-08-03T10:35:15Z",
           "created_at": "2020-05-30T21:37:01Z"
         },
         {
-          "rank": 4,
+          "rank": 5,
           "full_name": "GoogleCloudPlatform/agent-starter-pack",
           "html_url": "https://github.com/GoogleCloudPlatform/agent-starter-pack",
           "description": "Ship AI Agents to Google Cloud in minutes, not months. Production-ready templates with built-in CI/CD, evaluation, and observability.",
-          "stars": 6530,
-          "velocity_per_month": 367,
+          "stars": 6532,
+          "velocity_per_month": 362,
           "language": "Python",
           "topics": [
             "agents",
@@ -485,12 +504,12 @@
           "created_at": "2025-01-31T16:03:06Z"
         },
         {
-          "rank": 5,
+          "rank": 6,
           "full_name": "Avaiga/taipy",
           "html_url": "https://github.com/Avaiga/taipy",
           "description": "Turns Data and AI algorithms into production-ready web applications in no time.",
-          "stars": 19339,
-          "velocity_per_month": 363,
+          "stars": 19345,
+          "velocity_per_month": 362,
           "language": "Python",
           "topics": [
             "automation",
@@ -500,15 +519,15 @@
             "data-visualization",
             "datascience"
           ],
-          "pushed_at": "2026-07-27T10:09:58Z",
+          "pushed_at": "2026-08-02T05:25:22Z",
           "created_at": "2022-02-18T15:55:45Z"
         },
         {
-          "rank": 6,
+          "rank": 7,
           "full_name": "apache/airflow",
           "html_url": "https://github.com/apache/airflow",
           "description": "Apache Airflow - A platform to programmatically author, schedule, and monitor workflows",
-          "stars": 46274,
+          "stars": 46359,
           "velocity_per_month": 342,
           "language": "Python",
           "topics": [
@@ -519,16 +538,16 @@
             "dag",
             "data-engineering"
           ],
-          "pushed_at": "2026-07-27T11:54:01Z",
+          "pushed_at": "2026-08-03T12:09:52Z",
           "created_at": "2015-04-13T18:04:58Z"
         },
         {
-          "rank": 7,
+          "rank": 8,
           "full_name": "HumanSignal/label-studio",
           "html_url": "https://github.com/HumanSignal/label-studio",
           "description": "Label Studio is a multi-type data labeling and annotation tool with standardized output format",
-          "stars": 27927,
-          "velocity_per_month": 328,
+          "stars": 27973,
+          "velocity_per_month": 327,
           "language": "TypeScript",
           "topics": [
             "annotation",
@@ -538,16 +557,16 @@
             "computer-vision",
             "data-labeling"
           ],
-          "pushed_at": "2026-07-27T00:25:35Z",
+          "pushed_at": "2026-08-03T11:42:53Z",
           "created_at": "2019-06-19T02:00:44Z"
         },
         {
-          "rank": 8,
+          "rank": 9,
           "full_name": "bentoml/OpenLLM",
           "html_url": "https://github.com/bentoml/OpenLLM",
           "description": "Run any open-source LLMs, such as DeepSeek and Llama, as OpenAI compatible API endpoint in the cloud.",
-          "stars": 12400,
-          "velocity_per_month": 316,
+          "stars": 12454,
+          "velocity_per_month": 315,
           "language": "Python",
           "topics": [
             "bentoml",
@@ -557,15 +576,15 @@
             "llama3-1",
             "llama3-2"
           ],
-          "pushed_at": "2026-07-20T16:56:23Z",
+          "pushed_at": "2026-07-27T16:55:53Z",
           "created_at": "2023-04-19T00:27:52Z"
         },
         {
-          "rank": 9,
+          "rank": 10,
           "full_name": "mlflow/mlflow",
           "html_url": "https://github.com/mlflow/mlflow",
           "description": "The open source AI engineering platform for agents, LLMs, and ML models. MLflow enables teams of all sizes to debug, evaluate, monitor, and optimize production-quality AI applications while controlling costs and managing access to models and data.",
-          "stars": 27228,
+          "stars": 27342,
           "velocity_per_month": 279,
           "language": "Python",
           "topics": [
@@ -576,26 +595,8 @@
             "apache-spark",
             "evaluation"
           ],
-          "pushed_at": "2026-07-27T09:32:01Z",
+          "pushed_at": "2026-08-03T11:56:12Z",
           "created_at": "2018-06-05T16:05:58Z"
-        },
-        {
-          "rank": 10,
-          "full_name": "DataTalksClub/mlops-zoomcamp",
-          "html_url": "https://github.com/DataTalksClub/mlops-zoomcamp",
-          "description": "Free MLOps course from DataTalks.Club",
-          "stars": 15014,
-          "velocity_per_month": 263,
-          "language": "Jupyter Notebook",
-          "topics": [
-            "machine-learning",
-            "mlops",
-            "model-deployment",
-            "model-monitoring",
-            "workflow-orchestration"
-          ],
-          "pushed_at": "2026-06-10T11:14:57Z",
-          "created_at": "2021-10-21T09:35:28Z"
         }
       ]
     },
@@ -610,30 +611,11 @@
       "repos": [
         {
           "rank": 1,
-          "full_name": "getagentseal/codeburn",
-          "html_url": "https://github.com/getagentseal/codeburn",
-          "description": "Free, local tool to track AI coding token usage and cost across 31 tools and agents (Claude Code, Cursor, Codex, Gemini and more), by model, project, and task. npx codeburn",
-          "stars": 8959,
-          "velocity_per_month": 2608,
-          "language": "TypeScript",
-          "topics": [
-            "ai-coding",
-            "claude-code",
-            "cli",
-            "codex",
-            "cost-tracking",
-            "cursor-ide"
-          ],
-          "pushed_at": "2026-07-27T08:09:08Z",
-          "created_at": "2026-04-13T22:11:53Z"
-        },
-        {
-          "rank": 2,
           "full_name": "pranshuparmar/witr",
           "html_url": "https://github.com/pranshuparmar/witr",
           "description": "Why is this running? Trace any process, port, container, or file back to what started it - CLI + TUI.",
-          "stars": 18323,
-          "velocity_per_month": 2549,
+          "stars": 18539,
+          "velocity_per_month": 2499,
           "language": "Go",
           "topics": [
             "cli",
@@ -643,16 +625,35 @@
             "freebsd",
             "go"
           ],
-          "pushed_at": "2026-07-24T09:36:08Z",
+          "pushed_at": "2026-07-31T06:49:53Z",
           "created_at": "2025-12-20T17:26:59Z"
+        },
+        {
+          "rank": 2,
+          "full_name": "getagentseal/codeburn",
+          "html_url": "https://github.com/getagentseal/codeburn",
+          "description": "Free, local tool to track AI coding token usage and cost across 31 tools and agents (Claude Code, Cursor, Codex, Gemini and more), by model, project, and task. npx codeburn",
+          "stars": 9113,
+          "velocity_per_month": 2486,
+          "language": "TypeScript",
+          "topics": [
+            "ai-coding",
+            "claude-code",
+            "cli",
+            "codex",
+            "cost-tracking",
+            "cursor-ide"
+          ],
+          "pushed_at": "2026-08-01T23:19:04Z",
+          "created_at": "2026-04-13T22:11:53Z"
         },
         {
           "rank": 3,
           "full_name": "NirDiamant/agents-towards-production",
           "html_url": "https://github.com/NirDiamant/agents-towards-production",
           "description": "End-to-end, code-first tutorials for building production-grade GenAI agents. From prototype to enterprise deployment.",
-          "stars": 21185,
-          "velocity_per_month": 1589,
+          "stars": 21231,
+          "velocity_per_month": 1566,
           "language": "Jupyter Notebook",
           "topics": [
             "agent",
@@ -662,7 +663,7 @@
             "ai-agents",
             "deployment"
           ],
-          "pushed_at": "2026-07-14T18:50:31Z",
+          "pushed_at": "2026-07-31T21:07:09Z",
           "created_at": "2025-06-16T17:33:44Z"
         },
         {
@@ -670,8 +671,8 @@
           "full_name": "Tracer-Cloud/opensre",
           "html_url": "https://github.com/Tracer-Cloud/opensre",
           "description": "Build your own AI SRE agents. The open source toolkit for the AI era.",
-          "stars": 9314,
-          "velocity_per_month": 1450,
+          "stars": 9837,
+          "velocity_per_month": 1479,
           "language": "Python",
           "topics": [
             "ai-sre",
@@ -681,7 +682,7 @@
             "incident-management",
             "observability"
           ],
-          "pushed_at": "2026-07-27T11:56:56Z",
+          "pushed_at": "2026-08-03T11:57:45Z",
           "created_at": "2026-01-13T00:04:47Z"
         },
         {
@@ -689,8 +690,8 @@
           "full_name": "William-Lu-stack/Flawless",
           "html_url": "https://github.com/William-Lu-stack/Flawless",
           "description": "AI SRE AgenticOps for Kubernetes and cloud infrastructure.",
-          "stars": 853,
-          "velocity_per_month": 853,
+          "stars": 860,
+          "velocity_per_month": 860,
           "language": "Python",
           "topics": [
             "agenticops",
@@ -700,7 +701,7 @@
             "cloud",
             "cloud-native"
           ],
-          "pushed_at": "2026-07-27T08:53:21Z",
+          "pushed_at": "2026-08-03T10:01:44Z",
           "created_at": "2026-07-10T05:57:02Z"
         },
         {
@@ -708,8 +709,8 @@
           "full_name": "langfuse/langfuse",
           "html_url": "https://github.com/langfuse/langfuse",
           "description": "🪢 Open source AI engineering platform: LLM evals, observability, metrics, prompt management, playground, datasets. Integrates with OpenTelemetry, LangChain, OpenAI SDK, LiteLLM, and more. 🍊YC W23",
-          "stars": 31941,
-          "velocity_per_month": 834,
+          "stars": 32410,
+          "velocity_per_month": 841,
           "language": "TypeScript",
           "topics": [
             "analytics",
@@ -719,7 +720,7 @@
             "large-language-models",
             "llama-index"
           ],
-          "pushed_at": "2026-07-27T12:09:14Z",
+          "pushed_at": "2026-08-03T12:09:02Z",
           "created_at": "2023-05-18T17:47:09Z"
         },
         {
@@ -727,8 +728,8 @@
           "full_name": "VoltAgent/voltagent",
           "html_url": "https://github.com/VoltAgent/voltagent",
           "description": "AI Agent Engineering Platform built on an Open Source TypeScript AI Agent Framework",
-          "stars": 10190,
-          "velocity_per_month": 664,
+          "stars": 10264,
+          "velocity_per_month": 659,
           "language": "TypeScript",
           "topics": [
             "agents",
@@ -746,7 +747,7 @@
           "full_name": "netdata/netdata",
           "html_url": "https://github.com/netdata/netdata",
           "description": "The fastest path to AI-powered full stack observability, even for lean teams.",
-          "stars": 79872,
+          "stars": 79999,
           "velocity_per_month": 508,
           "language": "Go",
           "topics": [
@@ -757,7 +758,7 @@
             "database",
             "devops"
           ],
-          "pushed_at": "2026-07-27T11:57:44Z",
+          "pushed_at": "2026-08-03T12:10:00Z",
           "created_at": "2013-06-17T18:39:10Z"
         },
         {
@@ -765,8 +766,8 @@
           "full_name": "openobserve/openobserve",
           "html_url": "https://github.com/openobserve/openobserve",
           "description": "Open source observability platform for logs, metrics, traces, frontend monitoring, pipelines and LLM observability. A sophisticated, simple and highly performant alternative to Datadog, Splunk, and Elasticsearch with 140x lower storage costs and single binary deployment.",
-          "stars": 20402,
-          "velocity_per_month": 488,
+          "stars": 20523,
+          "velocity_per_month": 489,
           "language": "TypeScript",
           "topics": [
             "analytics",
@@ -776,7 +777,7 @@
             "grafana",
             "jaeger"
           ],
-          "pushed_at": "2026-07-27T12:07:59Z",
+          "pushed_at": "2026-08-03T12:12:14Z",
           "created_at": "2023-02-02T03:29:51Z"
         },
         {
@@ -784,8 +785,8 @@
           "full_name": "SigNoz/signoz",
           "html_url": "https://github.com/SigNoz/signoz",
           "description": "SigNoz is an open-source, OpenTelemetry-native observability platform for your team and their AI agents. Get logs, metrics, and traces in one tool with features like APM, distributed tracing, log management, infra monitoring, etc. Combined with SigNoz MCP and a native AI teammate (in SigNoz Cloud) it helps you build more resilient apps.",
-          "stars": 31683,
-          "velocity_per_month": 475,
+          "stars": 31765,
+          "velocity_per_month": 474,
           "language": "TypeScript",
           "topics": [
             "apm",
@@ -795,7 +796,7 @@
             "good-first-issue",
             "jaeger"
           ],
-          "pushed_at": "2026-07-27T11:52:55Z",
+          "pushed_at": "2026-08-03T12:11:02Z",
           "created_at": "2021-01-03T12:44:36Z"
         }
       ]
@@ -812,11 +813,30 @@
       "repos": [
         {
           "rank": 1,
+          "full_name": "drumih/turbo-fieldfare",
+          "html_url": "https://github.com/drumih/turbo-fieldfare",
+          "description": "Gemma 4 26B-A4B inference in ~2 GB of RAM on any M-series MacBook",
+          "stars": 4424,
+          "velocity_per_month": 4424,
+          "language": "Swift",
+          "topics": [
+            "apple-silicon",
+            "gemma",
+            "gemma4",
+            "gemma4-26b-a4b",
+            "gpgpu",
+            "llm"
+          ],
+          "pushed_at": "2026-08-03T08:19:40Z",
+          "created_at": "2026-07-17T15:57:54Z"
+        },
+        {
+          "rank": 2,
           "full_name": "pathwaycom/llm-app",
           "html_url": "https://github.com/pathwaycom/llm-app",
           "description": "Ready-to-run cloud templates for RAG, AI pipelines, and enterprise search with live data. 🐳Docker-friendly.⚡Always in sync with Sharepoint, Google Drive, S3, Kafka, PostgreSQL, real-time data APIs, and more.",
-          "stars": 58974,
-          "velocity_per_month": 1626,
+          "stars": 59129,
+          "velocity_per_month": 1620,
           "language": "Jupyter Notebook",
           "topics": [
             "chatbot",
@@ -830,12 +850,12 @@
           "created_at": "2023-07-19T08:43:37Z"
         },
         {
-          "rank": 2,
+          "rank": 3,
           "full_name": "BerriAI/litellm",
           "html_url": "https://github.com/BerriAI/litellm",
           "description": "The fastest, litest AI Gateway. Rust core with Python SDK. Call 100+ LLM APIs in OpenAI (or native) format with cost tracking, guardrails, load balancing, and logging [Bedrock, Azure, OpenAI, Anthropic, OpenAI, VertexAI, vLLM, Nvidia NIM]",
-          "stars": 54822,
-          "velocity_per_month": 1522,
+          "stars": 55424,
+          "velocity_per_month": 1529,
           "language": "Python",
           "topics": [
             "ai-gateway",
@@ -845,16 +865,16 @@
             "gateway",
             "langchain"
           ],
-          "pushed_at": "2026-07-27T11:59:14Z",
+          "pushed_at": "2026-08-03T06:51:27Z",
           "created_at": "2023-07-27T00:09:52Z"
         },
         {
-          "rank": 3,
+          "rank": 4,
           "full_name": "iflytek/skillhub",
           "html_url": "https://github.com/iflytek/skillhub",
           "description": "Self-hosted, open-source agent skill registry for enterprises. Publish & version skill packages, govern with RBAC and audit logs, deploy   on-premise with Docker or Kubernetes.",
-          "stars": 4918,
-          "velocity_per_month": 1085,
+          "stars": 4853,
+          "velocity_per_month": 1019,
           "language": "Java",
           "topics": [
             "agent-framework",
@@ -864,16 +884,16 @@
             "ai-orchestration",
             "audit-log"
           ],
-          "pushed_at": "2026-07-27T10:02:44Z",
+          "pushed_at": "2026-08-03T11:32:05Z",
           "created_at": "2026-03-11T12:17:05Z"
         },
         {
-          "rank": 4,
+          "rank": 5,
           "full_name": "ComposioHQ/composio",
           "html_url": "https://github.com/ComposioHQ/composio",
           "description": "Composio powers 1000+ toolkits, tool search, context management, authentication, and a sandboxed workbench to help you build AI agents that turn intent into action.",
-          "stars": 29403,
-          "velocity_per_month": 1011,
+          "stars": 29507,
+          "velocity_per_month": 1007,
           "language": "TypeScript",
           "topics": [
             "agentic-ai",
@@ -883,16 +903,16 @@
             "aiagents",
             "developer-tools"
           ],
-          "pushed_at": "2026-07-27T11:58:40Z",
+          "pushed_at": "2026-08-03T11:45:09Z",
           "created_at": "2024-02-23T13:58:27Z"
         },
         {
-          "rank": 5,
+          "rank": 6,
           "full_name": "iflytek/astron-agent",
           "html_url": "https://github.com/iflytek/astron-agent",
           "description": "Enterprise-grade, commercial-friendly agentic workflow platform for building next-generation SuperAgents.",
-          "stars": 9390,
-          "velocity_per_month": 919,
+          "stars": 9284,
+          "velocity_per_month": 888,
           "language": "Java",
           "topics": [
             "agent",
@@ -902,16 +922,16 @@
             "enterprise",
             "enterprise-automation"
           ],
-          "pushed_at": "2026-07-27T10:52:04Z",
+          "pushed_at": "2026-08-03T10:00:57Z",
           "created_at": "2025-09-19T08:46:01Z"
         },
         {
-          "rank": 6,
+          "rank": 7,
           "full_name": "langfuse/langfuse",
           "html_url": "https://github.com/langfuse/langfuse",
           "description": "🪢 Open source AI engineering platform: LLM evals, observability, metrics, prompt management, playground, datasets. Integrates with OpenTelemetry, LangChain, OpenAI SDK, LiteLLM, and more. 🍊YC W23",
-          "stars": 31941,
-          "velocity_per_month": 834,
+          "stars": 32410,
+          "velocity_per_month": 841,
           "language": "TypeScript",
           "topics": [
             "analytics",
@@ -921,16 +941,16 @@
             "large-language-models",
             "llama-index"
           ],
-          "pushed_at": "2026-07-27T12:09:14Z",
+          "pushed_at": "2026-08-03T12:09:02Z",
           "created_at": "2023-05-18T17:47:09Z"
         },
         {
-          "rank": 7,
+          "rank": 8,
           "full_name": "liguodongiot/llm-action",
           "html_url": "https://github.com/liguodongiot/llm-action",
           "description": "本项目旨在分享大模型相关技术原理以及实战经验（大模型工程化、大模型应用落地）",
-          "stars": 24808,
-          "velocity_per_month": 650,
+          "stars": 24849,
+          "velocity_per_month": 647,
           "language": "HTML",
           "topics": [
             "llm",
@@ -943,12 +963,12 @@
           "created_at": "2023-05-23T05:29:16Z"
         },
         {
-          "rank": 8,
+          "rank": 9,
           "full_name": "promptfoo/promptfoo",
           "html_url": "https://github.com/promptfoo/promptfoo",
           "description": "Test your prompts, agents, and RAGs. Red teaming/pentesting/vulnerability scanning for AI. Compare performance of GPT, Claude, Gemini, DeepSeek, and more. Simple declarative configs with command line and CI/CD integration.  Used by OpenAI and Anthropic.",
-          "stars": 23649,
-          "velocity_per_month": 607,
+          "stars": 23873,
+          "velocity_per_month": 609,
           "language": "TypeScript",
           "topics": [
             "ci",
@@ -958,16 +978,16 @@
             "evaluation-framework",
             "llm"
           ],
-          "pushed_at": "2026-07-27T09:52:47Z",
+          "pushed_at": "2026-08-03T01:02:23Z",
           "created_at": "2023-04-28T15:48:49Z"
         },
         {
-          "rank": 9,
+          "rank": 10,
           "full_name": "comet-ml/opik",
           "html_url": "https://github.com/comet-ml/opik",
           "description": "Debug, evaluate, and monitor your LLM applications, RAG systems, and agentic workflows with comprehensive tracing, automated evaluations, and production-ready dashboards.",
-          "stars": 20908,
-          "velocity_per_month": 542,
+          "stars": 21083,
+          "velocity_per_month": 543,
           "language": "Python",
           "topics": [
             "evaluation",
@@ -977,27 +997,8 @@
             "llama-index",
             "llm"
           ],
-          "pushed_at": "2026-07-27T11:59:19Z",
+          "pushed_at": "2026-08-03T11:52:59Z",
           "created_at": "2023-05-10T12:57:13Z"
-        },
-        {
-          "rank": 10,
-          "full_name": "ruvnet/RuVector",
-          "html_url": "https://github.com/ruvnet/RuVector",
-          "description": "RuVector is a High Performance, Real-Time, Self-Learning Ai, Vector GNN, Memory DB built in Rust.",
-          "stars": 4394,
-          "velocity_per_month": 534,
-          "language": "Rust",
-          "topics": [
-            "ai",
-            "ai-ocr",
-            "attention-mechanism",
-            "gnn",
-            "gnn-model",
-            "gnns"
-          ],
-          "pushed_at": "2026-07-27T07:41:19Z",
-          "created_at": "2025-11-19T06:10:23Z"
         }
       ]
     },
@@ -1015,8 +1016,8 @@
           "full_name": "jamiepine/voicebox",
           "html_url": "https://github.com/jamiepine/voicebox",
           "description": "The open-source AI voice studio. Clone, dictate, create.",
-          "stars": 46996,
-          "velocity_per_month": 7818,
+          "stars": 48389,
+          "velocity_per_month": 7753,
           "language": "TypeScript",
           "topics": [
             "ai",
@@ -1026,16 +1027,35 @@
             "qwen3-tts-ui",
             "voice-ai"
           ],
-          "pushed_at": "2026-07-27T07:06:55Z",
+          "pushed_at": "2026-07-28T02:20:57Z",
           "created_at": "2026-01-25T12:27:03Z"
         },
         {
           "rank": 2,
+          "full_name": "debpalash/OmniVoice-Studio",
+          "html_url": "https://github.com/debpalash/OmniVoice-Studio",
+          "description": "Local voice clone, video dubbing, dictation and audiobook maker. The open-source ElevenLabs alternative.",
+          "stars": 9457,
+          "velocity_per_month": 2490,
+          "language": "Python",
+          "topics": [
+            "ai",
+            "cuda",
+            "dubbing-voice",
+            "mlx",
+            "tts",
+            "voice-ai"
+          ],
+          "pushed_at": "2026-07-31T09:18:31Z",
+          "created_at": "2026-04-09T21:40:26Z"
+        },
+        {
+          "rank": 3,
           "full_name": "vllm-project/vllm",
           "html_url": "https://github.com/vllm-project/vllm",
           "description": "A high-throughput and memory-efficient inference and serving engine for LLMs",
-          "stars": 87299,
-          "velocity_per_month": 2102,
+          "stars": 88059,
+          "velocity_per_month": 2109,
           "language": "Python",
           "topics": [
             "amd",
@@ -1045,16 +1065,16 @@
             "deepseek-v3",
             "gpt"
           ],
-          "pushed_at": "2026-07-27T11:51:17Z",
+          "pushed_at": "2026-08-03T11:48:48Z",
           "created_at": "2023-02-09T11:23:20Z"
         },
         {
-          "rank": 3,
+          "rank": 4,
           "full_name": "Andyyyy64/whichllm",
           "html_url": "https://github.com/Andyyyy64/whichllm",
           "description": "Find the local LLM that actually runs and performs best on your hardware. Ranked by real, recency-aware benchmarks, not parameter count. One command, run it instantly.",
-          "stars": 6019,
-          "velocity_per_month": 1264,
+          "stars": 6111,
+          "velocity_per_month": 1224,
           "language": "Python",
           "topics": [
             "ai",
@@ -1064,16 +1084,16 @@
             "command-line-tool",
             "gguf"
           ],
-          "pushed_at": "2026-07-08T16:27:01Z",
+          "pushed_at": "2026-07-28T17:57:22Z",
           "created_at": "2026-03-04T13:16:00Z"
         },
         {
-          "rank": 4,
+          "rank": 5,
           "full_name": "sgl-project/sglang",
           "html_url": "https://github.com/sgl-project/sglang",
           "description": "SGLang is a high-performance serving framework for large language models and multimodal models.",
-          "stars": 30790,
-          "velocity_per_month": 1006,
+          "stars": 31151,
+          "velocity_per_month": 1011,
           "language": "Python",
           "topics": [
             "attention",
@@ -1083,15 +1103,15 @@
             "diffusion",
             "glm"
           ],
-          "pushed_at": "2026-07-27T11:19:38Z",
+          "pushed_at": "2026-08-03T11:56:08Z",
           "created_at": "2024-01-08T04:15:52Z"
         },
         {
-          "rank": 5,
+          "rank": 6,
           "full_name": "pytorch/pytorch",
           "html_url": "https://github.com/pytorch/pytorch",
           "description": "Tensors and Dynamic neural networks in Python with strong GPU acceleration",
-          "stars": 102006,
+          "stars": 102151,
           "velocity_per_month": 854,
           "language": "Python",
           "topics": [
@@ -1102,16 +1122,16 @@
             "neural-network",
             "numpy"
           ],
-          "pushed_at": "2026-07-27T11:45:48Z",
+          "pushed_at": "2026-08-03T12:03:27Z",
           "created_at": "2016-08-13T05:26:41Z"
         },
         {
-          "rank": 6,
+          "rank": 7,
           "full_name": "deepspeedai/DeepSpeed",
           "html_url": "https://github.com/deepspeedai/DeepSpeed",
           "description": "DeepSpeed is a deep learning optimization library that makes distributed training and inference easy, efficient, and effective.",
-          "stars": 42820,
-          "velocity_per_month": 548,
+          "stars": 42851,
+          "velocity_per_month": 547,
           "language": "Python",
           "topics": [
             "billion-parameters",
@@ -1121,15 +1141,15 @@
             "gpu",
             "inference"
           ],
-          "pushed_at": "2026-07-27T01:07:07Z",
+          "pushed_at": "2026-08-03T07:45:17Z",
           "created_at": "2020-01-23T18:35:18Z"
         },
         {
-          "rank": 7,
+          "rank": 8,
           "full_name": "alacritty/alacritty",
           "html_url": "https://github.com/alacritty/alacritty",
           "description": "A cross-platform, OpenGL terminal emulator.",
-          "stars": 65102,
+          "stars": 65222,
           "velocity_per_month": 520,
           "language": "Rust",
           "topics": [
@@ -1140,15 +1160,15 @@
             "opengl",
             "rust"
           ],
-          "pushed_at": "2026-07-14T03:43:13Z",
+          "pushed_at": "2026-08-03T08:50:06Z",
           "created_at": "2016-02-18T05:02:30Z"
         },
         {
-          "rank": 8,
+          "rank": 9,
           "full_name": "exelban/stats",
           "html_url": "https://github.com/exelban/stats",
           "description": "macOS system monitor in your menu bar",
-          "stars": 40804,
+          "stars": 40950,
           "velocity_per_month": 475,
           "language": "Swift",
           "topics": [
@@ -1159,15 +1179,15 @@
             "disk",
             "fans"
           ],
-          "pushed_at": "2026-07-22T18:44:27Z",
+          "pushed_at": "2026-08-02T11:59:01Z",
           "created_at": "2019-05-29T19:24:56Z"
         },
         {
-          "rank": 9,
+          "rank": 10,
           "full_name": "LMCache/LMCache",
           "html_url": "https://github.com/LMCache/LMCache",
           "description": "LMCache: Supercharge Your LLM with the Fastest KV Cache Layer",
-          "stars": 10906,
+          "stars": 10994,
           "velocity_per_month": 420,
           "language": "Python",
           "topics": [
@@ -1178,26 +1198,8 @@
             "kv-cache",
             "llm"
           ],
-          "pushed_at": "2026-07-27T10:49:16Z",
+          "pushed_at": "2026-08-03T11:02:01Z",
           "created_at": "2024-05-28T21:06:04Z"
-        },
-        {
-          "rank": 10,
-          "full_name": "NVIDIA/TensorRT-LLM",
-          "html_url": "https://github.com/NVIDIA/TensorRT-LLM",
-          "description": "TensorRT LLM provides users with an easy-to-use Python API to define Large Language Models (LLMs) and supports state-of-the-art optimizations to perform inference efficiently on NVIDIA GPUs. TensorRT LLM also contains components to create Python and C++ runtimes that orchestrate the inference execution in a performant way.",
-          "stars": 14228,
-          "velocity_per_month": 403,
-          "language": "Python",
-          "topics": [
-            "blackwell",
-            "cuda",
-            "llm-serving",
-            "moe",
-            "pytorch"
-          ],
-          "pushed_at": "2026-07-27T10:24:50Z",
-          "created_at": "2023-08-16T17:14:27Z"
         }
       ]
     }
