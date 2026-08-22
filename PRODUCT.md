@@ -1,4 +1,4 @@
-# Product-Test
+# Product
 
 ## Register
 
