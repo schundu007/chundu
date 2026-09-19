@@ -28,12 +28,12 @@ const esc = (s) =>
 
 // Friendly labels for known repos; anything else Title-cases the repo name.
 const LABELS = {
-  camora: 'Camora',
-  lumora: 'Lumora',
-  capra: 'Capra',
   'git-dboard': 'IsaacLab DevOps Dashboard',
 };
-const IGNORE = new Set(['chundu', 'git-dboard']); // site itself; git-dboard superseded by GitPulse
+// Excluded from the public directory: the site itself, superseded tools, and the
+// job-search / interview products (cariara, camora, lumora, capra) — a portfolio
+// should showcase engineering platforms, not job-hunting tooling.
+const IGNORE = new Set(['chundu', 'git-dboard', 'cariara', 'camora', 'lumora', 'capra']);
 
 // Always present: on-site pages + apps whose repo is private (not in public API).
 const PINNED = [
@@ -42,14 +42,11 @@ const PINNED = [
   { name: 'Terraform Studio', url: 'https://ts.cariara.com', description: 'Terraform resource discovery and import automation with drift detection.', host: 'ts.cariara.com' },
   { name: 'idman', url: 'https://idm.cariara.com', description: 'Identity manager — accounts, roles, and access in one place.', host: 'idm.cariara.com' },
   { name: 'Trending GitHub Repos', url: '/trending-gitrepos/', description: 'Weekly-ranked trending repos across DevOps, Platform, MLOps, SRE, LLMOps, and GPU infra.', host: 'sudhakarchundu.org/trending-gitrepos' },
-  { name: 'Cariara', url: 'https://jobs.cariara.com', description: 'AI-powered job portal — discovery, matching, and auto-apply.', host: 'jobs.cariara.com' },
 ];
 
 // Fallback descriptions for repos whose GitHub `description` field is empty,
 // so a card never renders without a one-liner.
-const DESCRIPTIONS = {
-  Capra: 'Cariara platform module — shared services on the Camora monorepo.',
-};
+const DESCRIPTIONS = {};
 
 const titleCase = (n) => n.replace(/[-_]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 const hostOf = (u) => {

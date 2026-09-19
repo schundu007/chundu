@@ -36,9 +36,9 @@ may re-frame titles per application; the site uses the *Canonical* column only.
 
 | Period | Employer | Canonical title | Location |
 | --- | --- | --- | --- |
-| Feb 2026 – present | **CloudScouts** (contract to IBM; delivering for the AT&T Chief Data Office on IBM watsonx) | Senior DevOps Engineer — Data Platform | Plano, TX (remote) |
+| Feb 2026 – present | **CloudScouts** — contracted to IBM; client **AT&T**, on IBM watsonx | **Platform & DevOps Architect** | Plano, TX (remote) |
 | Oct 2023 – Jan 2026 | Trackonomy Systems Inc | **Principal Cloud Architect** | San Jose, CA |
-| Feb 2020 – Oct 2023 | Wipro Technologies (OSDU — Azure as FTE, then AWS as contractor) | Senior DevOps Engineer — Cloud & SRE Architect | Hyderabad, India |
+| Feb 2020 – Oct 2023 | Wipro Technologies (OSDU — Azure as FTE, then AWS as contractor) | **Cloud & SRE Architect, OSDU Data Platform** | Hyderabad, India |
 | Aug 2018 – Feb 2020 | NTT Data Services | Cloud & DevOps Architect (Healthcare) | Hyderabad, India |
 | May 2007 – Jun 2018 | Tata Consultancy Services | Multi-Cloud Architect / Senior Infrastructure Engineer | Hyderabad, India + onsite FL, MD, OH |
 
@@ -141,17 +141,29 @@ Resume-declared, all verified HTTP 200 on 2026-09-18:
 | idman | https://idm.cariara.com | Identity manager |
 | Terraform Studio | https://ts.cariara.com | Resource discovery, import automation, drift detection |
 | Trending GitHub Repos | /trending-gitrepos/ | Weekly star-velocity ranking across DevOps/MLOps/SRE/GPU |
-| Cariara | https://jobs.cariara.com | AI job portal — discovery, matching, auto-apply |
 
-Currently on the site but **not** in the resume: `gitpulser.vercel.app/dashboard`
-(superseded by `gitpulse.cariara.com`), `camora.cariara.com`, `/lumora`, `/capra`
-(Capra has an empty description). Decide: promote to canonical with real descriptions,
-or drop. `directory/links.json` + `directory/scripts/build-directory.mjs` is the source.
+**Excluded by decision (2026-09-18):** Cariara (`jobs.cariara.com`), Camora, Lumora
+(AI interview assistant) and Capra are deliberately **kept off the portfolio** — a
+job portal and interview tooling signal job-hunting, not engineering capability.
+They are in the `IGNORE` set in `directory/scripts/build-directory.mjs`, so the weekly
+refresh will not re-add them. `gitpulser.vercel.app` is superseded by `gitpulse.cariara.com`.
 
 **cloudforge is the flagship differentiator** — an agentic MCP tool that writes and
-self-verifies infrastructure changes. It appears in five resumes and zero times on the site.
+self-verifies infrastructure changes. It leads the Live Apps directory and appears in
+the Open Source page and the experience ledger.
 
-## 7. Positioning tracks
+## 7. Naming rules
+
+- **Never write "AT&T Chief Data Office"** — the client is **AT&T**, full stop.
+  Always name the chain: *CloudScouts &rarr; contracted to IBM &rarr; client AT&T*.
+- **Site positioning headline: "Platform & DevOps Architect"** (decided 2026-09-18),
+  used in the hero, `<title>`, og tags, contact page, blog bylines and JSON-LD.
+  "Staff DevOps Engineer" is retained only as a search keyword in `<meta keywords>`.
+- **Titles must not dip below architect level** across the ledger — the progression
+  reads Architect &rarr; Principal &rarr; Architect &rarr; Architect &rarr; Architect.
+  The `~/Downloads/Misc` tailored resumes are left as-is by owner's instruction.
+
+## 8. Positioning tracks
 
 The `Consolidated_Resumes` sets define five reusable positioning tracks — use these as the
 frame for any new portfolio section:
@@ -162,7 +174,7 @@ frame for any new portfolio section:
 4. **Performance / HPC** — systems performance analysis, GPU optimisation, Linux kernel tuning, Slurm
 5. **Cloud Architect** — architecture, landing zones, reference patterns, governance
 
-## 8. Positioning
+## 9. Positioning
 
 - Target: Staff / Principal IC — DevOps, Platform Engineering, SRE, GPU-AI infrastructure
 - Bay Area (Milpitas) · open to Austin/Plano · full-time or contract

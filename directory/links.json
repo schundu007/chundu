@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-19T02:10:49.907Z",
-  "count": 9,
+  "generated_at": "2026-09-19T02:36:10.765Z",
+  "count": 5,
   "entries": [
     {
       "name": "CloudForge",
@@ -31,33 +31,6 @@
       "url": "/trending-gitrepos/",
       "description": "Weekly-ranked trending repos across DevOps, Platform, MLOps, SRE, LLMOps, and GPU infra.",
       "host": "sudhakarchundu.org/trending-gitrepos"
-    },
-    {
-      "name": "Cariara",
-      "url": "https://jobs.cariara.com",
-      "description": "AI-powered job portal — discovery, matching, and auto-apply.",
-      "host": "jobs.cariara.com"
-    },
-    {
-      "name": "Camora",
-      "url": "https://camora.cariara.com",
-      "description": "Cariara Platform — Unified monorepo for Lumora + Ascend",
-      "host": "camora.cariara.com",
-      "ts": 1789532204000
-    },
-    {
-      "name": "Lumora",
-      "url": "https://camora.cariara.com/lumora",
-      "description": "Lumora - AI-powered interview assistant",
-      "host": "camora.cariara.com/lumora",
-      "ts": 1779082751000
-    },
-    {
-      "name": "Capra",
-      "url": "https://camora.cariara.com/capra",
-      "description": "Cariara platform module — shared services on the Camora monorepo.",
-      "host": "camora.cariara.com/capra",
-      "ts": 1775432177000
     }
   ]
 }
