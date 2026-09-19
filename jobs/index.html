@@ -12,8 +12,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Listings | Sudhakar Chundu</title>
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Job Listings | Sudhakar Chundu">
+    <meta property="og:description" content="Live US job listings from top tech companies - Cloud Architect, Platform Engineering, DevOps & SRE roles. Bay Area, Texas, Florida, North Carolina.">
+    <meta property="og:url" content="https://www.sudhakarchundu.org/jobs/">
+    <meta property="og:site_name" content="Sudhakar Chundu">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Job Listings | Sudhakar Chundu">
+    <meta name="twitter:description" content="Live US job listings from top tech companies - Cloud Architect, Platform Engineering, DevOps & SRE roles. Bay Area, Texas, Florida, North Carolina.">
     <meta name="description" content="Live US job listings from top tech companies - Cloud Architect, Platform Engineering, DevOps & SRE roles. Bay Area, Texas, Florida, North Carolina.">
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -3727,15 +3736,15 @@
         // ============ USER PROFILE FOR COVER LETTER & RESUME ============
         const USER_PROFILE = {
             name: 'Sudhakar Chundu',
-            title: 'Staff DevOps Engineer / SRE',
+            title: 'Staff DevOps and Platform Engineering Leader',
             email: 'chundubabu@gmail.com',
-            phone: '(513) 666-0099',
-            linkedin: 'linkedin.com/in/babucs',
+            phone: '+1 (408) 409-6448',
+            linkedin: 'linkedin.com/in/schundu007',
             github: 'github.com/schundu007',
             website: 'sudhakarchundu.org',
-            location: 'San Jose, CA',
+            location: 'Milpitas, CA',
             yearsExperience: '18+',
-            summary: 'Staff DevOps Engineer with 18+ years of hands-on experience across SRE, GPU infrastructure, cloud security, and platform engineering at enterprise scale. Primary on-call owner for production systems. Expert in Kubernetes, Slurm GPU clusters, Terraform, and multi-cloud architecture (AWS, Azure). Proven track record maintaining 99.99% SLO, building 65+ GPU compute platforms, and achieving SOC2/HIPAA/FedRAMP compliance. Active conference speaker at KubeCon, SREcon, and DevOps Days.',
+            summary: 'Staff-level DevOps and platform engineering leader with 18+ years across SRE, GPU infrastructure, cloud security, and platform engineering at enterprise scale. Primary on-call owner for production systems. Expert in Kubernetes, Slurm GPU clusters, Terraform, and multi-cloud architecture (AWS, Azure). Proven track record holding 99.97% uptime, building and operating a 65-GPU compute platform across 8 bare-metal nodes, driving a 73% cloud cost reduction ($10M to $2.7M/yr), and achieving zero critical findings in SOC2/HIPAA/FedRAMP audits. 2,317+ commits to the OSDU Forum open-source platform. Conference speaker at KubeCon, SREcon, and DevOps Days.',
             keyMetrics: [
                 { value: '45→78%', label: 'GPU Utilization Improved' },
                 { value: '10M+', label: 'Users Served | 15+ Regions' },
@@ -3753,10 +3762,25 @@
             },
             experience: [
                 {
-                    title: 'Staff DevOps Engineer / SRE',
+                    title: 'Senior DevOps Engineer — Data Platform',
+                    company: 'CloudScouts (contract to IBM, for the AT&T Chief Data Office)',
+                    location: 'Plano, TX (remote)',
+                    dates: 'Feb 2026 – Present',
+                    bullets: [
+                        'Platform Ownership: Deliver the shared data and AI platform for the AT&T Chief Data Office on IBM watsonx; set the build, test, and release defaults other teams build against',
+                        'Azure Infrastructure: Automated ADLS Gen2 and Private Endpoint provisioning via Terraform modules with Private DNS zone integration, eliminating public network exposure',
+                        'CI/CD at Scale: Scaled shared pipelines to 6,000+ runs per day with 100x scale-out on self-hosted and ephemeral runner fleets, distributed test execution, and flaky-test reporting',
+                        'Databricks Delivery: Built CI/CD for Databricks (Jobs, Compute, Unity Catalog, Delta Lake) with Azure DevOps and GitHub Actions; codified workspace policies via GitOps',
+                        'Data Onboarding: Led Wave 1 migration cutover automation and Magritte source onboarding, standardizing ingestion of 50+ enterprise data sources with policy-as-code (OPA, Checkov, tfsec)',
+                        'Identity & Secrets: Integrated Entra ID identity, conditional access, and RBAC with Databricks workspaces; automated service principal lifecycle and secret rotation via HashiCorp Vault',
+                        'Agentic Tooling: Built cloudforge, an agentic infrastructure coding agent (Claude, MCP) that writes pipelines and Terraform, verifies them with dry runs, plan and policy tests, and retries before opening a reviewable pull request'
+                    ]
+                },
+                {
+                    title: 'Principal Cloud Architect',
                     company: 'Trackonomy Systems',
                     location: 'San Jose, CA',
-                    dates: 'Oct 2023 – Present',
+                    dates: 'Oct 2023 – Jan 2026',
                     bullets: [
                         'Platform Architecture: Designed and built K8s microservices platform from ground up; migrated 40+ workloads from VMs, VMSS, Azure WebApps, Function Apps, and datacenter Java applications to containerized architecture',
                         'Production Reliability: Primary on-call for Kubernetes clusters and GPU compute infrastructure; maintained 99.99% SLO for 18 months serving 12+ enterprise clients',
@@ -3768,9 +3792,9 @@
                     ]
                 },
                 {
-                    title: 'Senior SRE / Cloud Architect — ML Infrastructure',
+                    title: 'Senior DevOps Engineer — Cloud & SRE Architect, OSDU',
                     company: 'Wipro Technologies — OSDU Data Platform',
-                    location: 'Seattle, WA',
+                    location: 'Hyderabad, India',
                     dates: 'Feb 2020 – Oct 2023',
                     bullets: [
                         'Platform: Architected OSDU R3 data platform processing exabytes of seismic data on GPU-accelerated Kubernetes clusters (EKS/Fargate) with Docker, Spark, Kafka, and Hadoop/HDFS for ExxonMobil, Chevron, BP, Shell',
@@ -3781,10 +3805,21 @@
                     ]
                 },
                 {
+                    title: 'Cloud & DevOps Architect — Healthcare Infrastructure',
+                    company: 'NTT Data Services',
+                    location: 'Hyderabad, India',
+                    dates: 'Aug 2018 – Feb 2020',
+                    bullets: [
+                        'Regulated Cloud Migration: Led cloud modernization for HIPAA/HITRUST-regulated applications to AWS with GPU-enabled EKS clusters, end-to-end encryption, audit logging, and secure model serving',
+                        'DevSecOps: Built Jenkins/Ansible CI/CD with HashiCorp Vault, SonarQube, and OWASP scanning; designed disaster recovery with business continuity planning',
+                        'Compliance & Leadership: Delivered against HIPAA, HITRUST, PCI, GDPR, SOC2, and FedRAMP requirements; managed a $6M infrastructure budget and led a 5-person team'
+                    ]
+                },
+                {
                     title: 'Multi-Cloud Architect / Senior Infrastructure Engineer',
                     company: 'Tata Consultancy Services',
-                    location: 'Multiple Locations (Boston, Chicago, Dallas)',
-                    dates: 'May 2007 – Feb 2020',
+                    location: 'Hyderabad, India & onsite FL / MD / OH',
+                    dates: 'May 2007 – Jun 2018',
                     bullets: [
                         'Cloud Architect — Harvard Pilgrim Health Care (Jun 2018 – Feb 2020): Led cloud modernization for HIPAA/HITRUST-regulated AI/ML applications to AWS; implemented GPU-enabled EKS clusters with NFS-backed persistent storage; Jenkins/Ansible CI/CD pipelines; DevSecOps (HashiCorp Vault, SonarQube, OWASP); managed $6M infrastructure budget',
                         'Cloud Senior Engineer — CNA Insurance (May 2015 – Jun 2018): Managed Kubernetes/Helm deployments on AWS; built reproducible K8s applications; automated provisioning with Ansible playbooks; Led cloud migrations to AWS, Azure, OpenStack; pioneered Docker/Kubernetes adoption (2013-2014); implemented CI/CD with Jenkins/Ansible',

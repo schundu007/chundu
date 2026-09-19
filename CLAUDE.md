@@ -68,18 +68,35 @@ Copy `api/.env.example` to `api/.env` and configure:
 The frontend is a static HTML/CSS/JS site served via GitHub Pages. No build step or framework.
 
 **Main pages:**
-- `index.html` - Portfolio landing page with hero section, skills grid, experience timeline, company logos, and neural network animated background
+- `index.html` - Single-page overview: identity header, About, KPI strip, experience ledger, recommendations, resume panel, focus areas, and the auto-generated "Live Apps & Tools" directory
 - `404.html` - Custom 404 error page
-- `about/index.html` - About / professional background
-- `resume/index.html` - Resume display
-- `projects/index.html` - Achievements page
-- `opensource/index.html` - Open source contributions
-- `conferences/index.html` - Conference talks and events
-- `publications/index.html` - Publications
-- `contact/index.html` - Contact form
-- `blog/index.html` - Technical blog with category filters (Kubernetes, DevOps, SRE, GPU/ML, FinOps); links to Medium
+- `projects/index.html` - Enterprise projects, conference talks, publications, and the blog index (anchors: `#conferences`, `#publications`, `#blog`)
+- `opensource/index.html` - Upstream OSDU contributions, GitHub repos/gists (live API), and Medium articles
+- `contact/index.html` - Contact channels
+- `trending-gitrepos/index.html` - Weekly-refreshed trending repo rankings (generated)
+- `blog/*.html` - Standalone long-form engineering deep dives
 - `jobs/index.html` - Job listings page with `JobsAPI` client connecting to backend API (falls back to localStorage if API unavailable)
 - `jobs/applied/index.html` - Applied jobs tracker
+
+**Redirect stubs** (meta-refresh, kept for old inbound links — do not add content here):
+`about/` → `/#about`, `resume/` → `/#resume`, `profile/` → `/`,
+`blog/` → `/projects/#blog`, `conferences/` → `/projects/#conferences`,
+`publications/` → `/projects/#publications`
+
+**Content accuracy:** `PORTFOLIO_MASTER.md` at the repo root is the canonical fact
+sheet (roles, dates, metrics, certs, links) derived from the resumes. Any claim
+added to the site must match it; update that file first if a fact changes.
+
+**Generated content — edit the generator, not the output:**
+- `directory/scripts/build-directory.mjs` → writes `directory/links.json` and injects
+  the Live Apps cards into `index.html` between the `<!-- DIRECTORY:START/END -->` markers.
+  Pinned apps live in the `PINNED` array. Run:
+  `GITHUB_TOKEN=$(gh auth token) node directory/scripts/build-directory.mjs`
+- `trending-gitrepos/scripts/render.mjs` → renders `trending-gitrepos/index.html`.
+  Contains hard-coded social links; update them there too.
+
+**Site-wide files:** `favicon.ico`, `apple-touch-icon.png`, `robots.txt`, `sitemap.xml`
+(regenerate the sitemap when adding a page); JSON-LD `Person` schema lives in `index.html`.
 
 **Shared assets:**
 - `assets/css/style.css` - Global design system (~1,760 lines) using CSS custom properties; dark (default) and light themes with glassmorphism effects, gradient accents, and responsive breakpoints

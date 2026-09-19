@@ -12,9 +12,18 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>TheRock CI, Explained — the shadow build system, file by file</title>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="TheRock CI, Explained — the shadow build system, file by file">
+    <meta property="og:description" content="A file-by-file field guide to ROCm/TheRock's real build orchestrator — the ~46 Python scripts that compute GitHub Actions matrices at runtime and hand them to workflows as JSON via fromJSON(). Why each file exists, what's inside, how it wires together, and an honest read on which build/CI tools (buildx, BuildKite, Bazel, Dagger, Nix, and more) would actually cut the file sprawl — plus six concrete implementation sketches for hardening the practice without a migration.">
+    <meta property="og:url" content="https://www.sudhakarchundu.org/blog/therock-ci-explained.html">
+    <meta property="og:site_name" content="Sudhakar Chundu">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="TheRock CI, Explained — the shadow build system, file by file">
+    <meta name="twitter:description" content="A file-by-file field guide to ROCm/TheRock's real build orchestrator — the ~46 Python scripts that compute GitHub Actions matrices at runtime and hand them to workflows as JSON via fromJSON(). Why each file exists, what's inside, how it wires together, and an honest read on which build/CI tools (buildx, BuildKite, Bazel, Dagger, Nix, and more) would actually cut the file sprawl — plus six concrete implementation sketches for hardening the practice without a migration.">
 <meta name="author" content="Sudhakar Chundu" />
 <meta name="description" content="A file-by-file field guide to ROCm/TheRock's real build orchestrator — the ~46 Python scripts that compute GitHub Actions matrices at runtime and hand them to workflows as JSON via fromJSON(). Why each file exists, what's inside, how it wires together, and an honest read on which build/CI tools (buildx, BuildKite, Bazel, Dagger, Nix, and more) would actually cut the file sprawl — plus six concrete implementation sketches for hardening the practice without a migration." />
 <link rel="icon" href="../favicon.ico" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -434,7 +443,6 @@
     <a href="https://gitpulser.vercel.app/dashboard" target="_blank" rel="noopener" data-embed>GitPulser ↗</a>
     <a href="https://therock-hud-dev.amd.com/" target="_blank" rel="noopener" data-embed>TheRock HUD ↗</a>
     <a href="/blog/therock-engineering-patterns.html">Engineering patterns</a>
-    <a href="/blog/AMD-interview-prep.html?v=4" data-embed>Interview prep</a>
   </div>
 </div>
 

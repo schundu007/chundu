@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sudhakar Chundu — NVIDIA RAPIDS Engineering Deep Dive</title>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Sudhakar Chundu — NVIDIA RAPIDS Engineering Deep Dive">
+    <meta property="og:url" content="https://www.sudhakarchundu.org/blog/NVIDIA_RAPIDS_ADI.html">
+    <meta property="og:site_name" content="Sudhakar Chundu">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Sudhakar Chundu — NVIDIA RAPIDS Engineering Deep Dive">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -1485,7 +1491,7 @@ a[href]:not(.nav-link):not(.ep-link-card):not(.ep-article):not(.ep-full-btn):not
     </div>
 
     <!-- COLLEAGUES CAROUSEL -->
-    <div class="ep-stitle" style="margin-top:22px;">What Colleagues Say &nbsp;<a href="https://www.linkedin.com/in/babucs/details/recommendations/" target="_blank" rel="noopener" style="font-size:10px;font-family:var(--mono);color:#76B900;border-bottom:1px solid #c8e8a0;text-decoration:none;">View on LinkedIn ↗</a></div>
+    <div class="ep-stitle" style="margin-top:22px;">What Colleagues Say &nbsp;<a href="https://www.linkedin.com/in/schundu007/details/recommendations/" target="_blank" rel="noopener" style="font-size:10px;font-family:var(--mono);color:#76B900;border-bottom:1px solid #c8e8a0;text-decoration:none;">View on LinkedIn ↗</a></div>
     <div class="ep-recs-outer">
       <button class="ep-recs-btn ep-recs-prev" aria-label="Previous">&#8249;</button>
       <div class="ep-recs-viewport">
@@ -2980,11 +2986,11 @@ result = df.groupby("pickup_zone").agg({"fare_amount": "sum"})
     </tbody>
   </table></div>
 
-  <h3 class="sub">Connecting AT&T Infrastructure Experience to RAPIDS</h3>
+  <h3 class="sub">Why This Case Study Matters in Practice</h3>
   <ul class="blt">
-    <li>You have direct AT&T infrastructure experience as a contractor working on ADLS Gen2 storage — the same data layer feeding these benchmarked pipelines. You've seen the storage side; this case study is the GPU compute side of the same architecture.</li>
-    <li>AT&T's "simpler" conclusion (one cluster for everything) directly parallels your Trackonomy experience managing multi-tier infrastructure. Separate CPU and GPU cluster policies create real operational overhead.</li>
-    <li>The Parquet/Snappy vs Zstandard finding is directly relevant to build engineering: the GPU Parquet reader in cuDF must be built and tested for both. Knowing which compression a major enterprise actually benefits from is the domain knowledge a Sr Build Engineer should bring.</li>
+    <li>The ADLS Gen2 layer feeding these benchmarked pipelines is the same storage tier I build and operate on the AT&T Chief Data Office platform — this case study is the GPU compute side of an architecture whose storage side I work in daily.</li>
+    <li>AT&T's "simpler" conclusion — one cluster for everything — matches what I saw running multi-tier infrastructure at Trackonomy. Separate CPU and GPU cluster policies create real operational overhead for little gain.</li>
+    <li>The Parquet/Snappy vs Zstandard finding matters to build engineering: the GPU Parquet reader in cuDF has to be built and tested against both, and knowing which compression a major enterprise actually benefits from is the kind of domain knowledge that should shape those build matrices.</li>
   </ul>
 </section>
 <div class="part-header" id="part-e">

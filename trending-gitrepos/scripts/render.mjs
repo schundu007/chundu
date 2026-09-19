@@ -44,7 +44,7 @@ const NAV = `
                 <li><a href="./" class="active">Trending</a></li>
                 <div class="nav-social">
                     <a href="https://github.com/schundu007" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/babucs/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.linkedin.com/in/schundu007/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
                 </div>
                 <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
                     <i class="fas fa-moon"></i>
@@ -74,7 +74,7 @@ const FOOTER = `
             </div>
             <div class="footer-social">
                 <a href="https://github.com/schundu007" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/babucs/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.linkedin.com/in/schundu007/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
                 <a href="https://schundu.medium.com/" target="_blank" rel="noopener noreferrer" title="Medium"><i class="fab fa-medium"></i></a>
             </div>
         </div>

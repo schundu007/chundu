@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Personal interview preparation — not for indexing
+Disallow: /blog/AMD-interview-prep.html
+Disallow: /jobs/
+Disallow: /profile/
+
+Sitemap: https://www.sudhakarchundu.org/sitemap.xml

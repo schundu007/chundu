@@ -12,10 +12,19 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>AMD GPU Stack CI Infrastructure — Design Reference &amp; ROCm/TheRock Field Analysis | Sudhakar Chundu</title>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="AMD GPU Stack CI Infrastructure — Design Reference &amp; ROCm/TheRock Field Analysis | Sudhakar Chundu">
+    <meta property="og:description" content="An end-to-end CI infrastructure reference for AMD's unified GPU stack (firmware + kernel driver + ROCm), set against a field analysis of what ROCm/TheRock actually runs today — ARC runner scale sets on Kubernetes (EKS/AKS), ~12k lines of Python that generate GitHub Actions matrices via fromJSON, OIDC role assumption, ccache against an in-cluster bazel-remote, SLSA provenance via Sigstore keyless attestation, SHA-pinned supply-chain controls — plus an honest ROI verdict on buildx/BuildKit, BuildKite and Bazel, and where AI must not sit in a signing pipeline.">
+    <meta property="og:url" content="https://www.sudhakarchundu.org/blog/AMD_GPU_CI_Infrastructure.html">
+    <meta property="og:site_name" content="Sudhakar Chundu">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AMD GPU Stack CI Infrastructure — Design Reference &amp; ROCm/TheRock Field Analysis | Sudhakar Chundu">
+    <meta name="twitter:description" content="An end-to-end CI infrastructure reference for AMD's unified GPU stack (firmware + kernel driver + ROCm), set against a field analysis of what ROCm/TheRock actually runs today — ARC runner scale sets on Kubernetes (EKS/AKS), ~12k lines of Python that generate GitHub Actions matrices via fromJSON, OIDC role assumption, ccache against an in-cluster bazel-remote, SLSA provenance via Sigstore keyless attestation, SHA-pinned supply-chain controls — plus an honest ROI verdict on buildx/BuildKit, BuildKite and Bazel, and where AI must not sit in a signing pipeline.">
 <meta name="author" content="Sudhakar Chundu" />
 <meta name="description" content="An end-to-end CI infrastructure reference for AMD's unified GPU stack (firmware + kernel driver + ROCm), set against a field analysis of what ROCm/TheRock actually runs today — ARC runner scale sets on Kubernetes (EKS/AKS), ~12k lines of Python that generate GitHub Actions matrices via fromJSON, OIDC role assumption, ccache against an in-cluster bazel-remote, SLSA provenance via Sigstore keyless attestation, SHA-pinned supply-chain controls — plus an honest ROI verdict on buildx/BuildKit, BuildKite and Bazel, and where AI must not sit in a signing pipeline." />
 <meta name="keywords" content="AMD, AMD Instinct, MI300X, MI325X, Radeon, gfx targets, gfx942, gfx1100, ROCm, TheRock, CI/CD, GitHub Actions, Actions Runner Controller, ARC, Kubernetes, EKS, AKS, Karpenter, OIDC, IAM role assumption, buildx, BuildKit, registry cache, sccache, ccache, bazel-remote, remote build cache, BuildKite, dynamic pipelines, Bazel, Terraform, self-hosted runners, reusable workflows, dynamic matrix, gitleaks, CodeQL, actionlint, zizmor, poutine, pinact, Harden-Runner, Dependabot, SLSA, Sigstore, cosign, attest-build-provenance, Copilot Autofix, SBOM, firmware signing, HSM, KMS, hardware-in-the-loop, LKG, DevOps, Cloud Security" />
 <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -359,7 +368,6 @@
     <a href="https://gitpulser.vercel.app/dashboard" target="_blank" rel="noopener" data-embed>GitPulser ↗</a>
     <a href="https://therock-hud-dev.amd.com/" target="_blank" rel="noopener" data-embed>TheRock HUD ↗</a>
     <a href="/blog/therock-engineering-patterns.html">Engineering patterns</a>
-    <a href="/blog/AMD-interview-prep.html?v=4" data-embed>Interview prep</a>
   </div>
 </div>
 
@@ -2325,7 +2333,7 @@ flowchart LR
     </div>
     <div class="links">
       <a href="https://github.com/schundu007" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://www.linkedin.com/in/babucs/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.linkedin.com/in/schundu007/" target="_blank" rel="noopener">LinkedIn</a>
       <a href="https://schundu.medium.com" target="_blank" rel="noopener">Medium</a>
       <a href="https://www.sudhakarchundu.org/" target="_blank" rel="noopener">Home</a>
       <a href="https://www.sudhakarchundu.org/#resume" target="_blank" rel="noopener">Resume</a>

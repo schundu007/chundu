@@ -33,14 +33,23 @@ const LABELS = {
   capra: 'Capra',
   'git-dboard': 'IsaacLab DevOps Dashboard',
 };
-const IGNORE = new Set(['chundu', 'git-dboard']); // site itself; git-dboard superseded by GitPulser
+const IGNORE = new Set(['chundu', 'git-dboard']); // site itself; git-dboard superseded by GitPulse
 
 // Always present: on-site pages + apps whose repo is private (not in public API).
 const PINNED = [
+  { name: 'CloudForge', url: 'https://forc.cariara.com', description: 'Agentic infrastructure coding agent (Claude + MCP) — writes pipelines and Terraform, verifies them with dry runs, plan and policy tests, then opens a reviewable pull request.', host: 'forc.cariara.com' },
+  { name: 'GitPulse', url: 'https://gitpulse.cariara.com/dashboard', description: 'CI and DORA metrics dashboard — GitHub activity, PR pulse, and delivery health.', host: 'gitpulse.cariara.com/dashboard' },
+  { name: 'Terraform Studio', url: 'https://ts.cariara.com', description: 'Terraform resource discovery and import automation with drift detection.', host: 'ts.cariara.com' },
+  { name: 'idman', url: 'https://idm.cariara.com', description: 'Identity manager — accounts, roles, and access in one place.', host: 'idm.cariara.com' },
   { name: 'Trending GitHub Repos', url: '/trending-gitrepos/', description: 'Weekly-ranked trending repos across DevOps, Platform, MLOps, SRE, LLMOps, and GPU infra.', host: 'sudhakarchundu.org/trending-gitrepos' },
   { name: 'Cariara', url: 'https://jobs.cariara.com', description: 'AI-powered job portal — discovery, matching, and auto-apply.', host: 'jobs.cariara.com' },
-  { name: 'GitPulser', url: 'https://gitpulser.vercel.app/dashboard', description: 'GitHub activity & PR pulse dashboard.', host: 'gitpulser.vercel.app/dashboard' },
 ];
+
+// Fallback descriptions for repos whose GitHub `description` field is empty,
+// so a card never renders without a one-liner.
+const DESCRIPTIONS = {
+  Capra: 'Cariara platform module — shared services on the Camora monorepo.',
+};
 
 const titleCase = (n) => n.replace(/[-_]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 const hostOf = (u) => {
@@ -93,7 +102,7 @@ async function main() {
     .map((r) => ({
       name: LABELS[r.name] || titleCase(r.name),
       url: r.homepage,
-      description: (r.description || '').trim(),
+      description: (r.description || '').trim() || DESCRIPTIONS[LABELS[r.name] || titleCase(r.name)] || '',
       host: hostOf(r.homepage),
       ts: new Date(r.pushed_at).getTime(),
     }))

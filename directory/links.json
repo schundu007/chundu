@@ -1,7 +1,31 @@
 {
-  "generated_at": "2026-09-14T15:19:26.942Z",
-  "count": 6,
+  "generated_at": "2026-09-19T02:10:49.907Z",
+  "count": 9,
   "entries": [
+    {
+      "name": "CloudForge",
+      "url": "https://forc.cariara.com",
+      "description": "Agentic infrastructure coding agent (Claude + MCP) — writes pipelines and Terraform, verifies them with dry runs, plan and policy tests, then opens a reviewable pull request.",
+      "host": "forc.cariara.com"
+    },
+    {
+      "name": "GitPulse",
+      "url": "https://gitpulse.cariara.com/dashboard",
+      "description": "CI and DORA metrics dashboard — GitHub activity, PR pulse, and delivery health.",
+      "host": "gitpulse.cariara.com/dashboard"
+    },
+    {
+      "name": "Terraform Studio",
+      "url": "https://ts.cariara.com",
+      "description": "Terraform resource discovery and import automation with drift detection.",
+      "host": "ts.cariara.com"
+    },
+    {
+      "name": "idman",
+      "url": "https://idm.cariara.com",
+      "description": "Identity manager — accounts, roles, and access in one place.",
+      "host": "idm.cariara.com"
+    },
     {
       "name": "Trending GitHub Repos",
       "url": "/trending-gitrepos/",
@@ -15,17 +39,11 @@
       "host": "jobs.cariara.com"
     },
     {
-      "name": "GitPulser",
-      "url": "https://gitpulser.vercel.app/dashboard",
-      "description": "GitHub activity & PR pulse dashboard.",
-      "host": "gitpulser.vercel.app/dashboard"
-    },
-    {
       "name": "Camora",
       "url": "https://camora.cariara.com",
       "description": "Cariara Platform — Unified monorepo for Lumora + Ascend",
       "host": "camora.cariara.com",
-      "ts": 1789359725000
+      "ts": 1789532204000
     },
     {
       "name": "Lumora",
@@ -37,7 +55,7 @@
     {
       "name": "Capra",
       "url": "https://camora.cariara.com/capra",
-      "description": "",
+      "description": "Cariara platform module — shared services on the Camora monorepo.",
       "host": "camora.cariara.com/capra",
       "ts": 1775432177000
     }

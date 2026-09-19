@@ -7,6 +7,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <title>Five build lessons from a giant GPU project — explained in plain English</title>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Five build lessons from a giant GPU project — explained in plain English">
+    <meta property="og:description" content="Five ideas about building software, taken from AMD's open ROCm/TheRock project and explained in plain English: keep your build rules in one place, put tests next to the code they test, keep copies of code in step, reuse the last build instead of redoing it, and let a real program decide what to build. About the code, not the people.">
+    <meta property="og:url" content="https://www.sudhakarchundu.org/blog/therock-engineering-patterns.html">
+    <meta property="og:site_name" content="Sudhakar Chundu">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Five build lessons from a giant GPU project — explained in plain English">
+    <meta name="twitter:description" content="Five ideas about building software, taken from AMD's open ROCm/TheRock project and explained in plain English: keep your build rules in one place, put tests next to the code they test, keep copies of code in step, reuse the last build instead of redoing it, and let a real program decide what to build. About the code, not the people.">
 <meta name="description" content="Five ideas about building software, taken from AMD's open ROCm/TheRock project and explained in plain English: keep your build rules in one place, put tests next to the code they test, keep copies of code in step, reuse the last build instead of redoing it, and let a real program decide what to build. About the code, not the people." />
 <meta name="keywords" content="ROCm, TheRock, CI/CD, GitHub Actions, reusable workflows, dynamic matrix, fromJSON, monorepo, submodules, patch sync, subtree, CODEOWNERS, RFC, test migration, build topology, baseline reuse, ccache, sccache, Windows, WSL, revert discipline, superbuild, CMake" />
 <style>
@@ -146,7 +154,6 @@
     <a href="https://gitpulser.vercel.app/dashboard" target="_blank" rel="noopener" data-embed>GitPulser ↗</a>
     <a href="https://therock-hud-dev.amd.com/" target="_blank" rel="noopener" data-embed>TheRock HUD ↗</a>
     <a class="here" aria-current="page">Engineering patterns</a>
-    <a href="/blog/AMD-interview-prep.html?v=4" data-embed>Interview prep</a>
   </div>
 </div>
 
@@ -274,7 +281,7 @@ build:
     </div>
     <div class="links">
       <a href="https://github.com/schundu007" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://www.linkedin.com/in/babucs/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.linkedin.com/in/schundu007/" target="_blank" rel="noopener">LinkedIn</a>
       <a href="https://schundu.medium.com" target="_blank" rel="noopener">Medium</a>
       <a href="https://www.sudhakarchundu.org/" target="_blank" rel="noopener">Home</a>
     </div>
