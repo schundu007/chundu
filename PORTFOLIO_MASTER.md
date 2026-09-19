@@ -18,17 +18,19 @@ may re-frame titles per application; the site uses the *Canonical* column only.
 | Display name | Sudhakar Chundu (resumes head "SUDHAKAR CH") | — |
 | Resume headline | Staff DevOps and Platform Engineering Leader | master resume |
 | Location | Milpitas, CA (Bay Area); Austin, TX on relocation variants | 41/41 |
-| Email (canonical) | chundubabu@gmail.com | **decided 2026-09-18** |
+| Email (public / site) | chundubabu@gmail.com | both addresses in use; see note |
 | Phone | +1 (408) 409-6448 | **41/41 unanimous** |
 | LinkedIn | linkedin.com/in/schundu007 | **41/41 unanimous, zero `babucs`** |
 | GitHub | github.com/schundu007 | 41/41 |
 | Medium | schundu.medium.com (handle `@schundu`) | 41/41 |
 | ORCID | orcid.org/0009-0001-5038-5936 | **41/41** |
 
-> **Email decision (2026-09-18):** the resumes split `chundubabu@gmail.com` (16) vs
-> `subach2026@gmail.com` (15). **`chundubabu@gmail.com` is canonical** — use it on the
-> site, in the hosted resume, and in every tailored resume from here on. Retire
-> `subach2026@` so a recruiter never receives two addresses from you.
+> **Email (2026-09-18):** both addresses are in active use by design —
+> `chundubabu@gmail.com` (16 resumes) and `subach2026@gmail.com` (15). This is not a
+> discrepancy to fix. **`chundubabu@gmail.com` is the public, site-facing address**:
+> it is what the portfolio, the hosted resume, and the cover-letter generator use.
+> `subach2026@gmail.com` stays available for tailored resumes as you choose.
+> The only rule: one address per document, so a single recruiter never sees both.
 
 ## 2. Employment history
 
