@@ -96,7 +96,7 @@ Use these numbers verbatim; do not round, restate, or invent siblings.
 
 **Frequency check** (mentions across all 41 resumes — these are the load-bearing claims):
 65-GPU cluster 66 · 99.9x% uptime 168 · 73% cost reduction 89 · cloudforge 81 ·
-2,317 OSDU commits 66 · $8M savings 48 · 6,000+ pipeline runs/day 40 ·
+$8M savings 48 · 6,000+ pipeline runs/day 40 ·
 6-engineer team 33 · teams up to 14 → 28.
 
 ⚠️ Retired / unsupported numbers currently on the site: "13 years" at TCS,
@@ -122,13 +122,12 @@ The other four appear in **41/41**.
 
 | Project | Proof | On site? |
 | --- | --- | --- |
-| OSDU `infra-azure-provisioning` | **2,317+ commits**, community.opengroup.org | ❌ absent |
-| OSDU `terraform-deployment-aws` | same forum, AWS deployment | ❌ absent |
+| OSDU `infra-azure-provisioning` | Upstream contributor, community.opengroup.org | on Open Source page |
+| OSDU `terraform-deployment-aws` | same forum, AWS deployment | on Open Source page |
 | github.com/schundu007 | CI/CD automation, Terraform modules, git-dboard, cloudforge | live counters show `--` |
 
-The Open Source page currently renders `--` for repos / followers / gists / articles.
-2,317 commits to an Open Group platform is the single most verifiable credential in the
-whole portfolio and it is nowhere on the site.
+Upstream contribution to an Open Group platform is among the most verifiable
+credentials here — the repos are public.
 
 ## 6. Live apps — canonical list
 
@@ -154,6 +153,9 @@ the Open Source page and the experience ledger.
 
 ## 7. Naming rules
 
+- **Never publish a commit count for the OSDU repos.** The 2,317 figure was the
+  repos' combined total, not a personal attribution — removed 2026-09-18. Refer to
+  the work as upstream contribution and let the public repos speak.
 - **Never write "AT&T Chief Data Office"** — the client is **AT&T**, full stop.
   Always name the chain: *CloudScouts &rarr; contracted to IBM &rarr; client AT&T*.
 - **Site positioning headline: "Platform & DevOps Architect"** (decided 2026-09-18),
@@ -178,5 +180,5 @@ frame for any new portfolio section:
 
 - Target: Staff / Principal IC — DevOps, Platform Engineering, SRE, GPU-AI infrastructure
 - Bay Area (Milpitas) · open to Austin/Plano · full-time or contract
-- Differentiators, in order: 65-GPU bare-metal platform ownership · 2,317 OSDU commits ·
+- Differentiators, in order: 65-GPU bare-metal platform ownership · 
   $8M cost takeout · agentic infra tooling (cloudforge) · 18 years from Linux admin to GPU platforms
