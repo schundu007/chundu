@@ -549,14 +549,6 @@
                             <div class="github-stat-label">Repos</div>
                         </div>
                         <div class="github-stat">
-                            <div class="github-stat-value" id="followers-count">--</div>
-                            <div class="github-stat-label">Followers</div>
-                        </div>
-                        <div class="github-stat">
-                            <div class="github-stat-value" id="following-count">--</div>
-                            <div class="github-stat-label">Following</div>
-                        </div>
-                        <div class="github-stat">
                             <div class="github-stat-value" id="gists-count">--</div>
                             <div class="github-stat-label">Gists</div>
                         </div>
@@ -771,8 +763,6 @@
                 document.getElementById('github-name').textContent = data.name || GITHUB_USERNAME;
                 document.getElementById('github-bio').textContent = 'Building enterprise AI/ML platforms and multi-cloud infrastructure for healthcare, supply chain, airline, and government clients. Expert in GPU clusters, LLM/GenAI infrastructure, and platform engineering.';
                 document.getElementById('repo-count').textContent = data.public_repos;
-                document.getElementById('followers-count').textContent = data.followers;
-                document.getElementById('following-count').textContent = data.following;
                 document.getElementById('gists-count').textContent = data.public_gists;
             } catch (error) {
                 console.error('Error fetching GitHub profile:', error);
