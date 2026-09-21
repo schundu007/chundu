@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-19T02:36:10.765Z",
-  "count": 5,
+  "generated_at": "2026-09-21T15:24:13.590Z",
+  "count": 6,
   "entries": [
     {
       "name": "CloudForge",
@@ -31,6 +31,13 @@
       "url": "/trending-gitrepos/",
       "description": "Weekly-ranked trending repos across DevOps, Platform, MLOps, SRE, LLMOps, and GPU infra.",
       "host": "sudhakarchundu.org/trending-gitrepos"
+    },
+    {
+      "name": "Cloudforge",
+      "url": "https://forc.cariara.com",
+      "description": "",
+      "host": "forc.cariara.com",
+      "ts": 1789551861000
     }
   ]
 }
