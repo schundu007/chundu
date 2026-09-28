@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-21T15:24:13.590Z",
-  "count": 6,
+  "generated_at": "2026-09-28T17:06:22.940Z",
+  "count": 7,
   "entries": [
     {
       "name": "CloudForge",
@@ -38,6 +38,13 @@
       "description": "",
       "host": "forc.cariara.com",
       "ts": 1789551861000
+    },
+    {
+      "name": "Gitpulse",
+      "url": "https://gitpulse.cariara.com",
+      "description": "GIT DevOps Dashboard — React + FastAPI platform for CI/CD monitoring, PR automation, nightly builds, infra, registry, and improvement planning for isaac-sim/IsaacLab",
+      "host": "gitpulse.cariara.com",
+      "ts": 1789544505000
     }
   ]
 }
