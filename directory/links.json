@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-05T17:30:50.837Z",
-  "count": 7,
+  "generated_at": "2026-10-06T20:38:49.067Z",
+  "count": 5,
   "entries": [
     {
       "name": "CloudForge",
@@ -31,20 +31,6 @@
       "url": "/trending-gitrepos/",
       "description": "Weekly-ranked trending repos across DevOps, Platform, MLOps, SRE, LLMOps, and GPU infra.",
       "host": "sudhakarchundu.org/trending-gitrepos"
-    },
-    {
-      "name": "Cloudforge",
-      "url": "https://forc.cariara.com",
-      "description": "",
-      "host": "forc.cariara.com",
-      "ts": 1789551861000
-    },
-    {
-      "name": "Gitpulse",
-      "url": "https://gitpulse.cariara.com",
-      "description": "GIT DevOps Dashboard — React + FastAPI platform for CI/CD monitoring, PR automation, nightly builds, infra, registry, and improvement planning for isaac-sim/IsaacLab",
-      "host": "gitpulse.cariara.com",
-      "ts": 1789544505000
     }
   ]
 }
