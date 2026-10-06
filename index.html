@@ -503,7 +503,7 @@
             </div>
             <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.6;">
                 <p>18+ years across the full evolution of cloud computing — bare-metal data centers to multi-cloud Kubernetes to GPU-accelerated AI/ML platforms — for Fortune 500 clients (ExxonMobil, Chevron, BP, Shell, Harvard Pilgrim, CNA, PwC, Verizon, Owens Corning) at CloudScouts, Trackonomy, Wipro, NTT Data, and TCS.</p>
-                <p>Currently Platform and DevOps Architect at CloudScouts, contracted to IBM and working for the client AT&amp;T &mdash; architecting and delivering AT&amp;T&rsquo;s shared Azure data and AI platform on IBM watsonx (ADLS Gen2 with Private Endpoints, Databricks, Delta Lake, Unity Catalog). Previously built Trackonomy's GPU compute platform from the ground up — 65 GPUs on 8 bare-metal nodes with Slurm/Kubernetes at 99.97% uptime — while leading a team of 6. Performance engineering is the specialty: GPU utilization 45→78%, queue waits down 60%, p99 down 40%, via flame graph, strace, and Wireshark profiling. Primary on-call owner running SRE end to end: SLOs, error budgets, blameless postmortems, chaos engineering, AIOps. Certified AWS SA Professional, Azure SA Expert, GCP Professional Cloud Architect, CKA, and HashiCorp Terraform Associate. B.E. Mechanical Engineering, Acharya Nagarjuna University (2005).</p>
+                <p>Built Trackonomy's GPU compute platform from the ground up — 65 GPUs on 8 bare-metal nodes with Slurm/Kubernetes at 99.97% uptime — while leading a team of 6, and drove a 73% cloud cost reduction ($8M+ saved per year). Before that, architected the OSDU energy data platform on Azure and AWS for ExxonMobil, Chevron, BP and Shell, contributing the deployment code upstream; modernized HIPAA-regulated healthcare workloads at NTT Data; and spent eleven years at TCS going from Linux admin to multi-cloud architect, adopting Docker and Kubernetes early, in 2013&ndash;14. Currently a Platform &amp; DevOps Architect at CloudScouts. Performance engineering is the specialty: GPU utilization 45→78%, queue waits down 60%, p99 down 40%, via flame graph, strace, and Wireshark profiling. Primary on-call owner running SRE end to end: SLOs, error budgets, blameless postmortems, chaos engineering, AIOps. Certified AWS SA Professional, Azure SA Expert, GCP Professional Cloud Architect, CKA, and HashiCorp Terraform Associate. B.E. Mechanical Engineering, Acharya Nagarjuna University (2005).</p>
                 
             </div>
         </section>
@@ -536,6 +536,67 @@
             </div>
         </div>
 
+        <!-- Selected projects from earlier roles -->
+        <section class="section" id="highlights" aria-labelledby="highlights-title">
+            <div class="section-header">
+                <h2 id="highlights-title">Selected Projects</h2>
+                <p>Highlights from Trackonomy, Wipro, NTT Data and TCS.</p>
+            </div>
+            <style>
+                #highlights .hl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 1rem; }
+                #highlights .hl-card { display: flex; flex-direction: column; gap: 0.5rem; padding: 1.1rem 1.2rem; background: var(--bg-card); border: 1px solid var(--bg-tertiary); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); }
+                #highlights .hl-org { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+                #highlights .hl-metric { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 1.25rem; font-weight: 700; color: var(--accent-highlight); line-height: 1.2; }
+                #highlights .hl-name { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); }
+                #highlights .hl-desc { font-size: 0.8125rem; line-height: 1.5; color: var(--text-secondary); margin: 0; }
+                #highlights .hl-stack { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); margin-top: auto; }
+            </style>
+            <div class="hl-grid">
+                <article class="hl-card">
+                    <span class="hl-org">Trackonomy · 2023–2026</span>
+                    <span class="hl-metric">65 GPUs · 99.97%</span>
+                    <span class="hl-name">Bare-metal GPU training platform</span>
+                    <p class="hl-desc">Designed and ran an 8-node GPU cluster from scratch. Utilization went from 45% to 78%, queue waits fell 60% and p99 latency fell 40%.</p>
+                    <span class="hl-stack">Slurm · Slinky · NVIDIA BCM · Kubernetes</span>
+                </article>
+                <article class="hl-card">
+                    <span class="hl-org">Trackonomy · 2023–2026</span>
+                    <span class="hl-metric">−73% · $8M+/yr</span>
+                    <span class="hl-name">Cloud cost takeout</span>
+                    <p class="hl-desc">Cut infrastructure spend from $10M to $2.7M a year, with zero critical findings across SOC 2, HIPAA and FedRAMP.</p>
+                    <span class="hl-stack">FinOps · Terraform · Datadog</span>
+                </article>
+                <article class="hl-card">
+                    <span class="hl-org">Trackonomy · 2023–2026</span>
+                    <span class="hl-metric">Days → 15 min</span>
+                    <span class="hl-name">CI/CD for 100+ applications</span>
+                    <p class="hl-desc">GitOps delivery platform running 50+ zero-downtime deployments a day. Cycle time dropped 95%.</p>
+                    <span class="hl-stack">ArgoCD · Kubernetes · GitOps</span>
+                </article>
+                <article class="hl-card">
+                    <span class="hl-org">Wipro · OSDU · 2020–2023</span>
+                    <span class="hl-metric">99.95–99.99%</span>
+                    <span class="hl-name">OSDU energy data platform</span>
+                    <p class="hl-desc">Built the OSDU R3 platform on AKS and then EKS for ExxonMobil, Chevron, BP and Shell, with DR at RPO &lt;1h / RTO &lt;4h. The deployment code is contributed <a href="opensource/">upstream</a>.</p>
+                    <span class="hl-stack">Azure · AWS · Terraform · Kubernetes</span>
+                </article>
+                <article class="hl-card">
+                    <span class="hl-org">NTT Data · 2018–2020</span>
+                    <span class="hl-metric">HIPAA · HITRUST</span>
+                    <span class="hl-name">Healthcare cloud modernization</span>
+                    <p class="hl-desc">Moved regulated AI/ML workloads for Harvard Pilgrim to GPU-enabled EKS, with DevSecOps pipelines (Vault, SonarQube, OWASP) built into every release.</p>
+                    <span class="hl-stack">AWS EKS · Jenkins · Ansible · Vault</span>
+                </article>
+                <article class="hl-card">
+                    <span class="hl-org">TCS · 2007–2018</span>
+                    <span class="hl-metric">12+ buildouts</span>
+                    <span class="hl-name">Early container adoption &amp; cloud migration</span>
+                    <p class="hl-desc">Adopted Docker and Kubernetes early, in 2013&ndash;14, and led migrations to AWS, Azure and OpenStack for CNA, PwC, Verizon and Owens Corning, with teams of up to 14.</p>
+                    <span class="hl-stack">AWS · Azure · OpenStack · Docker</span>
+                </article>
+            </div>
+        </section>
+
         <!-- Dashboard panels -->
         <div class="dash-grid">
             <!-- Left column: experience ledger -->
@@ -549,8 +610,8 @@
                         <div class="ledger-meta">2026 – now</div>
                         <div>
                             <div class="ledger-title">Platform &amp; DevOps Architect · <span class="ledger-company">CloudScouts</span></div>
-                            <p class="ledger-sub">Architect and owner of the shared delivery platform for a petabyte-scale Azure data and AI estate. Scaled CI/CD to <strong>6,000+ pipeline runs/day</strong> with 100x runner scale-out; automated ADLS Gen2 and Private Endpoint provisioning in Terraform, eliminating public network exposure; standardized ingestion of <strong>50+ enterprise data sources</strong> under policy-as-code. Built <strong>cloudforge</strong>, an agentic infrastructure agent that writes, plan-tests and opens its own reviewable PRs.</p>
-                            <div class="ledger-clients">Contracted to IBM · Client: AT&amp;T · IBM watsonx · Azure DevOps · Databricks · Terraform</div>
+                            <p class="ledger-sub">Shared delivery platform for an Azure data and AI estate &mdash; CI/CD at <strong>6,000+ pipeline runs/day</strong>, Terraform-provisioned private networking, and <strong>50+ data sources</strong> under policy-as-code.</p>
+                            <div class="ledger-clients">Contracted to IBM · Client: AT&amp;T · Azure DevOps · Terraform</div>
                         </div>
                     </div>
                     <div class="ledger-row">
@@ -749,25 +810,25 @@
             </style>
             <div class="dir-grid">
                 <!-- DIRECTORY:START -->
-                <a class="dir-card" href="https://forc.cariara.com" target="_blank" rel="noopener noreferrer">
+                <a class="dir-card" href="https://cariara.com/tools/forc" target="_blank" rel="noopener noreferrer">
                     <div class="dir-card-top"><span class="dir-name">CloudForge</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
                     <p class="dir-desc">Agentic infrastructure coding agent (Claude + MCP) — writes pipelines and Terraform, verifies them with dry runs, plan and policy tests, then opens a reviewable pull request.</p>
-                    <span class="dir-url">forc.cariara.com</span>
+                    <span class="dir-url">cariara.com/tools/forc</span>
                 </a>
-                <a class="dir-card" href="https://gitpulse.cariara.com/dashboard" target="_blank" rel="noopener noreferrer">
+                <a class="dir-card" href="https://cariara.com/tools/gitpulse" target="_blank" rel="noopener noreferrer">
                     <div class="dir-card-top"><span class="dir-name">GitPulse</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
                     <p class="dir-desc">CI and DORA metrics dashboard — GitHub activity, PR pulse, and delivery health.</p>
-                    <span class="dir-url">gitpulse.cariara.com/dashboard</span>
+                    <span class="dir-url">cariara.com/tools/gitpulse</span>
                 </a>
-                <a class="dir-card" href="https://ts.cariara.com" target="_blank" rel="noopener noreferrer">
-                    <div class="dir-card-top"><span class="dir-name">Terraform Studio</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
+                <a class="dir-card" href="https://cariara.com/tools/ts" target="_blank" rel="noopener noreferrer">
+                    <div class="dir-card-top"><span class="dir-name">Toritch Studio</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
                     <p class="dir-desc">Terraform resource discovery and import automation with drift detection.</p>
-                    <span class="dir-url">ts.cariara.com</span>
+                    <span class="dir-url">cariara.com/tools/ts</span>
                 </a>
-                <a class="dir-card" href="https://idm.cariara.com" target="_blank" rel="noopener noreferrer">
+                <a class="dir-card" href="https://cariara.com/tools/idm" target="_blank" rel="noopener noreferrer">
                     <div class="dir-card-top"><span class="dir-name">idman</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
                     <p class="dir-desc">Identity manager — accounts, roles, and access in one place.</p>
-                    <span class="dir-url">idm.cariara.com</span>
+                    <span class="dir-url">cariara.com/tools/idm</span>
                 </a>
                 <a class="dir-card" href="/trending-gitrepos/">
                     <div class="dir-card-top"><span class="dir-name">Trending GitHub Repos</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
