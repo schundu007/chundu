@@ -131,21 +131,21 @@ credentials here — the repos are public.
 
 ## 6. Live apps — canonical list
 
-Resume-declared, all verified HTTP 200 on 2026-09-18:
+Resume-declared. Moved from per-tool subdomains (`forc.`, `gitpulse.`, `ts.`, `idm.cariara.com`, now retired) to `cariara.com/tools/*`; all verified HTTP 200 on 2026-10-06. Terraform Studio is now named Toritch Studio.
 
 | Tool | URL | One-liner |
 | --- | --- | --- |
-| CloudForge | https://forc.cariara.com | Agentic infra coding agent (Claude + MCP): writes pipelines and Terraform, verifies with dry-run/plan/policy tests, opens a reviewable PR |
-| GitPulse | https://gitpulse.cariara.com/dashboard | CI and DORA metrics dashboard |
-| idman | https://idm.cariara.com | Identity manager |
-| Terraform Studio | https://ts.cariara.com | Resource discovery, import automation, drift detection |
+| CloudForge | https://cariara.com/tools/forc | Agentic infra coding agent (Claude + MCP): writes pipelines and Terraform, verifies with dry-run/plan/policy tests, opens a reviewable PR |
+| GitPulse | https://cariara.com/tools/gitpulse | CI and DORA metrics dashboard |
+| idman | https://cariara.com/tools/idm | Identity manager |
+| Toritch Studio | https://cariara.com/tools/ts | Resource discovery, import automation, drift detection |
 | Trending GitHub Repos | /trending-gitrepos/ | Weekly star-velocity ranking across DevOps/MLOps/SRE/GPU |
 
 **Excluded by decision (2026-09-18):** Cariara (`jobs.cariara.com`), Camora, Lumora
 (AI interview assistant) and Capra are deliberately **kept off the portfolio** — a
 job portal and interview tooling signal job-hunting, not engineering capability.
 They are in the `IGNORE` set in `directory/scripts/build-directory.mjs`, so the weekly
-refresh will not re-add them. `gitpulser.vercel.app` is superseded by `gitpulse.cariara.com`.
+refresh will not re-add them. `gitpulser.vercel.app` is superseded by `cariara.com/tools/gitpulse`.
 
 **cloudforge is the flagship differentiator** — an agentic MCP tool that writes and
 self-verifies infrastructure changes. It leads the Live Apps directory and appears in

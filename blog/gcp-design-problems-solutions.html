@@ -1975,7 +1975,7 @@ graph TB
 graph LR
     POD["Pod with KSA<br/>(ml-training-ksa)"] --&gt; GKE_META["GKE Metadata Server<br/>(intercepts token requests)"]
     GKE_META --&gt; STS["Security Token Service<br/>(exchanges KSA token for GSA token)"]
-    STS --&gt; GSA["IAM Service Account<br/>(<a class="__cf_email__" data-cfemail="bed3d293caccdfd7d0d7d0d9fececcd1d4dbddca90d7dfd3" href="/cdn-cgi/l/email-protection">[email protected]</a>)"]
+    STS --&gt; GSA["IAM Service Account<br/>(ml-training@project.iam)"]
     GSA --&gt; GCS["Cloud Storage<br/>BigQuery<br/>Vertex AI"]
     </div>
 </div>
@@ -2690,7 +2690,7 @@ spec:
       syncRepo: https://github.com/org/k8s-config
       syncBranch: main
       secretType: gcpserviceaccount
-      gcpServiceAccountEmail: <a class="__cf_email__" data-cfemail="beddd1d0d8d7d993cdc7d0ddfececcd1d4dbddca90d7dfd390d9cddbccc8d7dddbdfddddd1cbd0ca90ddd1d3" href="/cdn-cgi/l/email-protection">[email protected]</a>
+      gcpServiceAccountEmail: config-sync@project.iam.gserviceaccount.com
       policyDir: clusters/ml-cluster</div>
 <h3>ArgoCD (Recommended for multi-cluster / multi-cloud)</h3>
 <p>ArgoCD provides a web UI with visual diff of desired vs actual state, supports the <strong>App-of-Apps</strong> pattern for managing hundreds of applications, and works across any Kubernetes cluster (not GKE-specific). Better choice when: you have multi-cloud clusters, need a visual management UI, or your team is already familiar with ArgoCD.</p>

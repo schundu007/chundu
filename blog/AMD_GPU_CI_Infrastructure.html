@@ -365,7 +365,7 @@
     <a class="here" aria-current="page">The article</a>
     <a href="/blog/therock-ci-explained.html">File-by-file guide</a>
     <a href="/blog/therock-graph/" data-embed>Interactive graph</a>
-    <a href="https://gitpulser.vercel.app/dashboard" target="_blank" rel="noopener" data-embed>GitPulser ↗</a>
+    <a href="https://cariara.com/tools/gitpulse" target="_blank" rel="noopener" data-embed>GitPulser ↗</a>
     <a href="https://therock-hud-dev.amd.com/" target="_blank" rel="noopener" data-embed>TheRock HUD ↗</a>
     <a href="/blog/therock-engineering-patterns.html">Engineering patterns</a>
   </div>
@@ -631,7 +631,7 @@ flowchart LR
             <tr>
               <td>A public <strong>project HUD</strong> at <code>therock-hud-dev.amd.com</code>.</td>
               <td>Trunk health only helps if it's visible; a HUD is how a team reads green/red at a glance.</td>
-              <td>I've already built this pattern — <a href="https://gitpulser.vercel.app/dashboard" target="_blank" rel="noopener">GitPulser</a>, a Git/CI health dashboard (nightly pipelines, multi-arch builds, dependency-graph automation). I can operate and extend a HUD from day one.</td>
+              <td>I've already built this pattern — <a href="https://cariara.com/tools/gitpulse" target="_blank" rel="noopener">GitPulser</a>, a Git/CI health dashboard (nightly pipelines, multi-arch builds, dependency-graph automation). I can operate and extend a HUD from day one.</td>
             </tr>
             <tr>
               <td>A <strong><code>CLAUDE.md</code></strong> in the repo root and <code>pre-commit</code> enabled.</td>
@@ -2294,7 +2294,7 @@ flowchart LR
         </div>
 
         <div class="note blue"><span class="tag">Discount the hype</span>One category deserves scepticism: <strong>"AI-powered build-cache and build-graph optimization."</strong> The real speedups in this space — remote caching, remote execution, correct action graphs — are <em>deterministic content-addressed hashing and dependency analysis</em>. They are excellent, and they are not machine learning. ML-predicted build-graph optimization is not a proven category today. Adopt the caching; do not pay a premium for the adjective.</div>
-        <p>I build with this daily: <a href="https://github.com/schundu007/camora" target="_blank" rel="noopener">Camora</a> is a self-hosted platform spanning GitHub Actions, Buildkite, and Bazel with GPU provisioning/scheduling and an MCP architecture that orchestrates coding agents — the same draft-then-verify loop, in production.</p>
+        <p>I build with this daily: Camora is a self-hosted platform spanning GitHub Actions, Buildkite, and Bazel with GPU provisioning/scheduling and an MCP architecture that orchestrates coding agents — the same draft-then-verify loop, in production.</p>
       </section>
 
       <!-- 13 -->
@@ -2312,7 +2312,7 @@ flowchart LR
             <tr><td>Complex infra: NFS, signing, network permissions</td><td>Firmware-build pipelines, HSM/KMS signing, private-subnet runner isolation, IAM least-privilege — designed across the infrastructure and security sections.</td></tr>
             <tr><td>AWS-aligned (EC2 runners, IAM, networking)</td><td>Production Terraform for OSDU on AWS: modular, multi-account EC2/IAM/VPC provisioning at global scale.</td></tr>
             <tr><td>Agentic AI as a force multiplier</td><td>Co-founder of an agentic-AI/MCP platform; I drive coding agents daily behind review — matching TheRock's own <code>CLAUDE.md</code> workflow.</td></tr>
-            <tr><td>Trunk-health, shift-left, dashboard-driven</td><td>Open-source CI/build infrastructure work, plus a HUD-style trunk-health dashboard I built and run: <a href="https://gitpulser.vercel.app/dashboard" target="_blank" rel="noopener">GitPulser</a> (nightly pipelines, multi-arch builds, dependency-graph automation).</td></tr>
+            <tr><td>Trunk-health, shift-left, dashboard-driven</td><td>Open-source CI/build infrastructure work, plus a HUD-style trunk-health dashboard I built and run: <a href="https://cariara.com/tools/gitpulse" target="_blank" rel="noopener">GitPulser</a> (nightly pipelines, multi-arch builds, dependency-graph automation).</td></tr>
           </tbody>
         </table>
         </div>

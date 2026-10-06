@@ -33,14 +33,15 @@ const LABELS = {
 // Excluded from the public directory: the site itself, superseded tools, and the
 // job-search / interview products (cariara, camora, lumora, capra) — a portfolio
 // should showcase engineering platforms, not job-hunting tooling.
-const IGNORE = new Set(['chundu', 'git-dboard', 'cariara', 'camora', 'lumora', 'capra']);
+// cloudforge and gitpulse are listed in PINNED with their cariara.com/tools URLs.
+const IGNORE = new Set(['chundu', 'git-dboard', 'cariara', 'camora', 'lumora', 'capra', 'cloudforge', 'gitpulse']);
 
 // Always present: on-site pages + apps whose repo is private (not in public API).
 const PINNED = [
-  { name: 'CloudForge', url: 'https://forc.cariara.com', description: 'Agentic infrastructure coding agent (Claude + MCP) — writes pipelines and Terraform, verifies them with dry runs, plan and policy tests, then opens a reviewable pull request.', host: 'forc.cariara.com' },
-  { name: 'GitPulse', url: 'https://gitpulse.cariara.com/dashboard', description: 'CI and DORA metrics dashboard — GitHub activity, PR pulse, and delivery health.', host: 'gitpulse.cariara.com/dashboard' },
-  { name: 'Terraform Studio', url: 'https://ts.cariara.com', description: 'Terraform resource discovery and import automation with drift detection.', host: 'ts.cariara.com' },
-  { name: 'idman', url: 'https://idm.cariara.com', description: 'Identity manager — accounts, roles, and access in one place.', host: 'idm.cariara.com' },
+  { name: 'CloudForge', url: 'https://cariara.com/tools/forc', description: 'Agentic infrastructure coding agent (Claude + MCP) — writes pipelines and Terraform, verifies them with dry runs, plan and policy tests, then opens a reviewable pull request.', host: 'cariara.com/tools/forc' },
+  { name: 'GitPulse', url: 'https://cariara.com/tools/gitpulse', description: 'CI and DORA metrics dashboard — GitHub activity, PR pulse, and delivery health.', host: 'cariara.com/tools/gitpulse' },
+  { name: 'Toritch Studio', url: 'https://cariara.com/tools/ts', description: 'Terraform resource discovery and import automation with drift detection.', host: 'cariara.com/tools/ts' },
+  { name: 'idman', url: 'https://cariara.com/tools/idm', description: 'Identity manager — accounts, roles, and access in one place.', host: 'cariara.com/tools/idm' },
   { name: 'Trending GitHub Repos', url: '/trending-gitrepos/', description: 'Weekly-ranked trending repos across DevOps, Platform, MLOps, SRE, LLMOps, and GPU infra.', host: 'sudhakarchundu.org/trending-gitrepos' },
 ];
 

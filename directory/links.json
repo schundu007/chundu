@@ -4,27 +4,27 @@
   "entries": [
     {
       "name": "CloudForge",
-      "url": "https://forc.cariara.com",
+      "url": "https://cariara.com/tools/forc",
       "description": "Agentic infrastructure coding agent (Claude + MCP) — writes pipelines and Terraform, verifies them with dry runs, plan and policy tests, then opens a reviewable pull request.",
-      "host": "forc.cariara.com"
+      "host": "cariara.com/tools/forc"
     },
     {
       "name": "GitPulse",
-      "url": "https://gitpulse.cariara.com/dashboard",
+      "url": "https://cariara.com/tools/gitpulse",
       "description": "CI and DORA metrics dashboard — GitHub activity, PR pulse, and delivery health.",
-      "host": "gitpulse.cariara.com/dashboard"
+      "host": "cariara.com/tools/gitpulse"
     },
     {
-      "name": "Terraform Studio",
-      "url": "https://ts.cariara.com",
+      "name": "Toritch Studio",
+      "url": "https://cariara.com/tools/ts",
       "description": "Terraform resource discovery and import automation with drift detection.",
-      "host": "ts.cariara.com"
+      "host": "cariara.com/tools/ts"
     },
     {
       "name": "idman",
-      "url": "https://idm.cariara.com",
+      "url": "https://cariara.com/tools/idm",
       "description": "Identity manager — accounts, roles, and access in one place.",
-      "host": "idm.cariara.com"
+      "host": "cariara.com/tools/idm"
     },
     {
       "name": "Trending GitHub Repos",
