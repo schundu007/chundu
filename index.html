@@ -28,7 +28,6 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -346,7 +345,7 @@
 
         .quicklink:hover {
             color: var(--accent-blue);
-            background: rgba(118, 185, 0, 0.04);
+            background: rgba(26, 115, 232, 0.04);
         }
 
         .quicklink i {
@@ -436,6 +435,9 @@
         ]
     }
     </script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/genz.css">
 </head>
 <body>
     <!-- Neural Network Background -->
@@ -494,54 +496,22 @@
             </div>
         </header>
 
-        <!-- Ticker strip -->
-        <div class="ticker" aria-hidden="true">DevOps<span class="sep">✦</span>SRE<span class="sep">✦</span>GPU Infrastructure<span class="sep">✦</span>FinOps<span class="sep">✦</span>Platform Engineering<span class="sep">✦</span>Kubernetes<span class="sep">✦</span>Multi-Cloud</div>
-
         <!-- About (merged from /about/) -->
         <section class="section" id="about" aria-labelledby="about-title">
             <div class="section-header">
                 <h2 id="about-title">About</h2>
             </div>
             <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.6;">
-                <p>18+ years across the full evolution of cloud computing — bare-metal data centers to multi-cloud Kubernetes to GPU-accelerated AI/ML platforms — for Fortune 500 clients (ExxonMobil, Chevron, BP, Shell, Harvard Pilgrim, CNA, PwC, Verizon, Owens Corning) at CloudScouts, Trackonomy, Wipro, NTT Data, and TCS.</p>
-                <p>Built Trackonomy's GPU compute platform from the ground up — 65 GPUs on 8 bare-metal nodes with Slurm/Kubernetes at 99.97% uptime — while leading a team of 6, and drove a 73% cloud cost reduction ($8M+ saved per year). Before that, architected the OSDU energy data platform on Azure and AWS for ExxonMobil, Chevron, BP and Shell, contributing the deployment code upstream; modernized HIPAA-regulated healthcare workloads at NTT Data; and spent eleven years at TCS going from Linux admin to multi-cloud architect, adopting Docker and Kubernetes early, in 2013&ndash;14. Currently a Platform &amp; DevOps Architect at CloudScouts. Performance engineering is the specialty: GPU utilization 45→78%, queue waits down 60%, p99 down 40%, via flame graph, strace, and Wireshark profiling. Primary on-call owner running SRE end to end: SLOs, error budgets, blameless postmortems, chaos engineering, AIOps. Certified AWS SA Professional, Azure SA Expert, GCP Professional Cloud Architect, CKA, and HashiCorp Terraform Associate. B.E. Mechanical Engineering, Acharya Nagarjuna University (2005).</p>
+                <p>18+ years across the full evolution of cloud computing — bare-metal data centers to multi-cloud Kubernetes to GPU-accelerated AI/ML platforms — for Fortune 500 clients in energy, healthcare, insurance and telecom. Currently a Platform &amp; DevOps Architect at CloudScouts.</p>
+                <p>Performance engineering is the specialty, profiled with flame graphs, strace and Wireshark. Primary on-call owner running SRE end to end: SLOs, error budgets, blameless postmortems, chaos engineering, AIOps. Certified AWS SA Professional, Azure SA Expert, GCP Professional Cloud Architect, CKA and HashiCorp Terraform Associate. B.E. Mechanical Engineering, Acharya Nagarjuna University (2005).</p>
                 
             </div>
         </section>
-
-        <!-- KPI strip -->
-        <div class="kpi-strip" role="list" style="margin-top: 12px;">
-            <div class="kpi-cell" role="listitem">
-                <div class="kpi-value">18+ yrs</div>
-                <div class="kpi-label">Hands-on infrastructure</div>
-            </div>
-            <div class="kpi-cell" role="listitem">
-                <div class="kpi-value">99.97%</div>
-                <div class="kpi-label">Uptime, ML/AI workloads</div>
-            </div>
-            <div class="kpi-cell" role="listitem">
-                <div class="kpi-value">45→78%</div>
-                <div class="kpi-label">GPU utilization improved</div>
-            </div>
-            <div class="kpi-cell" role="listitem">
-                <div class="kpi-value">65 GPUs</div>
-                <div class="kpi-label">Bare-metal · Slurm · Kubernetes</div>
-            </div>
-            <div class="kpi-cell" role="listitem">
-                <div class="kpi-value">50+/day</div>
-                <div class="kpi-label">Zero-downtime deployments</div>
-            </div>
-            <div class="kpi-cell" role="listitem">
-                <div class="kpi-value">12</div>
-                <div class="kpi-label">LinkedIn recommendations</div>
-            </div>
-        </div>
 
         <!-- Selected projects from earlier roles -->
         <section class="section" id="highlights" aria-labelledby="highlights-title">
             <div class="section-header">
                 <h2 id="highlights-title">Selected Projects</h2>
-                <p>Highlights from Trackonomy, Wipro, NTT Data and TCS.</p>
             </div>
             <style>
                 #highlights .hl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 1rem; }
@@ -552,47 +522,48 @@
                 #highlights .hl-desc { font-size: 0.8125rem; line-height: 1.5; color: var(--text-secondary); margin: 0; }
                 #highlights .hl-stack { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); margin-top: auto; }
             </style>
+            <p class="hl-group">Trackonomy · 2023–2026</p>
             <div class="hl-grid">
-                <article class="hl-card">
-                    <span class="hl-org">Trackonomy · 2023–2026</span>
-                    <span class="hl-metric">65 GPUs · 99.97%</span>
+                <article class="hl-card is-lead">
+                                        <span class="hl-metric">65 GPUs · 99.97%</span>
                     <span class="hl-name">Bare-metal GPU training platform</span>
                     <p class="hl-desc">Designed and ran an 8-node GPU cluster from scratch. Utilization went from 45% to 78%, queue waits fell 60% and p99 latency fell 40%.</p>
                     <span class="hl-stack">Slurm · Slinky · NVIDIA BCM · Kubernetes</span>
                 </article>
                 <article class="hl-card">
-                    <span class="hl-org">Trackonomy · 2023–2026</span>
-                    <span class="hl-metric">−73% · $8M+/yr</span>
+                                        <span class="hl-metric">−73% · $8M+/yr</span>
                     <span class="hl-name">Cloud cost takeout</span>
                     <p class="hl-desc">Cut infrastructure spend from $10M to $2.7M a year, with zero critical findings across SOC 2, HIPAA and FedRAMP.</p>
                     <span class="hl-stack">FinOps · Terraform · Datadog</span>
                 </article>
                 <article class="hl-card">
-                    <span class="hl-org">Trackonomy · 2023–2026</span>
-                    <span class="hl-metric">Days → 15 min</span>
+                                        <span class="hl-metric">Days → 15 min</span>
                     <span class="hl-name">CI/CD for 100+ applications</span>
                     <p class="hl-desc">GitOps delivery platform running 50+ zero-downtime deployments a day. Cycle time dropped 95%.</p>
                     <span class="hl-stack">ArgoCD · Kubernetes · GitOps</span>
                 </article>
+            </div>
+            <p class="hl-group">Earlier</p>
+            <div class="hl-grid">
                 <article class="hl-card">
                     <span class="hl-org">Wipro · OSDU · 2020–2023</span>
                     <span class="hl-metric">99.95–99.99%</span>
                     <span class="hl-name">OSDU energy data platform</span>
-                    <p class="hl-desc">Built the OSDU R3 platform on AKS and then EKS for ExxonMobil, Chevron, BP and Shell, with DR at RPO &lt;1h / RTO &lt;4h. The deployment code is contributed <a href="opensource/">upstream</a>.</p>
+                    <p class="hl-desc">Built the OSDU R3 platform on AKS and then EKS with DR at RPO &lt;1h / RTO &lt;4h. The deployment code is contributed <a href="opensource/">upstream</a>.</p>
                     <span class="hl-stack">Azure · AWS · Terraform · Kubernetes</span>
                 </article>
                 <article class="hl-card">
                     <span class="hl-org">NTT Data · 2018–2020</span>
                     <span class="hl-metric">HIPAA · HITRUST</span>
                     <span class="hl-name">Healthcare cloud modernization</span>
-                    <p class="hl-desc">Moved regulated AI/ML workloads for Harvard Pilgrim to GPU-enabled EKS, with DevSecOps pipelines (Vault, SonarQube, OWASP) built into every release.</p>
+                    <p class="hl-desc">Moved regulated AI/ML workloads to GPU-enabled EKS, with DevSecOps pipelines (Vault, SonarQube, OWASP) built into every release.</p>
                     <span class="hl-stack">AWS EKS · Jenkins · Ansible · Vault</span>
                 </article>
                 <article class="hl-card">
                     <span class="hl-org">TCS · 2007–2018</span>
                     <span class="hl-metric">12+ buildouts</span>
                     <span class="hl-name">Early container adoption &amp; cloud migration</span>
-                    <p class="hl-desc">Adopted Docker and Kubernetes early, in 2013&ndash;14, and led migrations to AWS, Azure and OpenStack for CNA, PwC, Verizon and Owens Corning, with teams of up to 14.</p>
+                    <p class="hl-desc">Adopted Docker and Kubernetes early, in 2013&ndash;14, and led migrations to AWS, Azure and OpenStack with teams of up to 14.</p>
                     <span class="hl-stack">AWS · Azure · OpenStack · Docker</span>
                 </article>
             </div>
@@ -605,7 +576,6 @@
                 <section class="panel" aria-labelledby="exp-title">
                     <div class="panel-head">
                         <h2 id="exp-title">Experience</h2>
-                        <a href="#resume" class="panel-link">Resume file →</a>
                     </div>
                     <div class="ledger-row">
                         <div class="ledger-meta">2026 – now</div>
@@ -619,15 +589,14 @@
                         <div class="ledger-meta">2023 – 2026</div>
                         <div>
                             <div class="ledger-title">Principal Cloud Architect · <span class="ledger-company">Trackonomy Systems</span></div>
-                            <p class="ledger-sub">Owned platform, reliability and cost for 200+ microservices serving <strong>12+ enterprise clients across 8 countries</strong>, leading a 6-engineer team. Designed and ran a <strong>65-GPU bare-metal training cluster</strong> on Slurm/Slinky/BCM &mdash; utilization <strong>45&rarr;78%</strong>, queue waits &minus;60%, <strong>99.97% uptime</strong>. CI/CD for 100+ apps at 50+ zero-downtime deploys/day, cycle time &minus;95% (days&rarr;15 min). Drove <strong>73% cloud cost reduction ($10M&rarr;$2.7M/yr, $8M+ saved)</strong> and zero critical findings across SOC2, HIPAA and FedRAMP.</p>
-                            <div class="ledger-clients">Slurm · NVIDIA BCM · Kubernetes · ArgoCD · Datadog · Terraform · FinOps</div>
-                        </div>
+                            <p class="ledger-sub">Owned platform, reliability and cost for 200+ microservices serving <strong>12+ enterprise clients across 8 countries</strong>, leading a 6-engineer team.</p>
+                            </div>
                     </div>
                     <div class="ledger-row">
                         <div class="ledger-meta">2020 – 2023</div>
                         <div>
                             <div class="ledger-title">Cloud &amp; SRE Architect, OSDU Data Platform · <span class="ledger-company">Wipro Technologies</span></div>
-                            <p class="ledger-sub">Architected the OSDU R3 data platform on GPU-accelerated AKS then EKS, processing <strong>exabytes of seismic data</strong> for four supermajors at <strong>99.95&ndash;99.99% ML-inference availability</strong>. Built 5+ reusable Terraform modules and multi-tenant landing zones, cutting deployment time 80%; owned DR (RPO &lt;1h / RTO &lt;4h) and 24x7 on-call. Contributed the deployment and provisioning code upstream to the OSDU Forum open-source repos alongside the global community.</p>
+                            <p class="ledger-sub">Processed <strong>exabytes of seismic data</strong> for four supermajors. Built 5+ reusable Terraform modules and multi-tenant landing zones, cutting deployment time 80%, and ran 24x7 on-call.</p>
                             <div class="ledger-clients">ExxonMobil · Chevron · BP · Shell</div>
                         </div>
                     </div>
@@ -635,7 +604,7 @@
                         <div class="ledger-meta">2018 – 2020</div>
                         <div>
                             <div class="ledger-title">Platform &amp; DevOps Architect, Healthcare · <span class="ledger-company">NTT Data Services</span></div>
-                            <p class="ledger-sub">Built the delivery platform for regulated healthcare workloads &mdash; <strong>Jenkins/Ansible CI/CD pipelines</strong> with DevSecOps controls (HashiCorp Vault secrets, SonarQube, OWASP) baked into every release. Led cloud modernization of HIPAA/HITRUST-regulated AI/ML applications onto AWS with <strong>GPU-enabled EKS and NFS-backed persistent storage</strong>, and a compliant ML pipeline with end-to-end encryption, audit logging and secure model serving. Architected the migration against <strong>HIPAA, HITRUST, PCI, GDPR, SOC2 and FedRAMP</strong>; designed and exercised DR and business-continuity plans. Led a <strong>5-engineer team</strong> and a <strong>$6M infrastructure budget</strong>.</p>
+                            <p class="ledger-sub">Built the delivery platform for regulated healthcare workloads on <strong>Jenkins/Ansible CI/CD pipelines</strong>. Added NFS-backed persistent storage and a compliant ML pipeline with end-to-end encryption, audit logging and secure model serving. Architected the migration against <strong>HIPAA, HITRUST, PCI, GDPR, SOC2 and FedRAMP</strong>; designed and exercised DR and business-continuity plans. Led a <strong>5-engineer team</strong> and a <strong>$6M infrastructure budget</strong>.</p>
                             <div class="ledger-clients">Harvard Pilgrim</div>
                         </div>
                     </div>
@@ -643,7 +612,7 @@
                         <div class="ledger-meta">2007 – 2018</div>
                         <div>
                             <div class="ledger-title">Multi-Cloud Architect / Sr. Infrastructure Engineer · <span class="ledger-company">Tata Consultancy Services</span></div>
-                            <p class="ledger-sub">Eleven-year progression from Linux/Unix administration to cloud architecture and infrastructure leadership across four Fortune 500 clients, <strong>leading teams of 4 to 14 engineers</strong>. Led migrations to AWS, Azure and OpenStack and <strong>pioneered Docker/Kubernetes adoption in 2013&ndash;14</strong>; 12+ facility buildouts and bare-metal production systems serving millions of users, with WebSphere/WebLogic middleware and JVM tuning underneath.</p>
+                            <p class="ledger-sub">Eleven-year progression from Linux/Unix administration to cloud architecture and infrastructure leadership across four Fortune 500 clients, running bare-metal production systems serving millions of users, with WebSphere/WebLogic middleware and JVM tuning underneath.</p>
                             <div class="ledger-clients">CNA Insurance · PwC · Verizon · Owens Corning</div>
                         </div>
                     </div>
@@ -676,17 +645,6 @@
                     <div class="panel-head">
                         <h2 id="resume-title">Resume</h2>
                         <span id="resume-meta" class="resume-meta">Bundled copy</span>
-                    </div>
-                    <div class="resume-file-row">
-                        <i class="fas fa-file-pdf"></i>
-                        <div class="resume-file-info">
-                            <span class="resume-file-name">Master Resume (.pdf)</span>
-                            <span class="resume-file-sub">Sudhakar Chundu · Staff DevOps and Platform Engineering Leader</span>
-                        </div>
-                        <a href="assets/resume/Sudhakar_Chundu_Master_Resume.pdf" class="btn btn-primary resume-download" download>
-                            <i class="fas fa-download"></i>
-                            Download
-                        </a>
                     </div>
                     <div class="resume-file-row">
                         <i class="fas fa-file-word"></i>
@@ -753,41 +711,6 @@
                             <span class="focus-name">GPU Performance</span>
                             <span class="focus-detail">CUDA · dcgm · kernel tuning</span>
                         </div>
-                    </div>
-                </section>
-
-                <section class="panel" aria-labelledby="cred-title">
-                    <div class="panel-head">
-                        <h2 id="cred-title">Platforms &amp; Compliance</h2>
-                    </div>
-                    <div class="panel-body">
-                        <div style="display:flex;flex-wrap:wrap;gap:0.375rem;">
-                            <span class="tag">Kubernetes</span>
-                            <span class="tag">Slurm</span>
-                            <span class="tag">Terraform</span>
-                            <span class="tag">ArgoCD</span>
-                            <span class="tag">Istio</span>
-                            <span class="tag">KEDA</span>
-                            <span class="tag">Karpenter</span>
-                            <span class="tag">SOC2</span>
-                            <span class="tag">HIPAA</span>
-                            <span class="tag">FedRAMP</span>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="panel" aria-labelledby="links-title">
-                    <div class="panel-head">
-                        <h2 id="links-title">Explore</h2>
-                    </div>
-                    <div class="quicklinks">
-                        <a href="#about" class="quicklink"><i class="fas fa-user"></i>About</a>
-                        <a href="projects/#publications" class="quicklink"><i class="fas fa-book"></i>Publications</a>
-                        <a href="projects/#blog" class="quicklink"><i class="fas fa-pen-nib"></i>Blog</a>
-                        <a href="projects/" class="quicklink"><i class="fas fa-trophy"></i>Projects</a>
-                        <a href="opensource/" class="quicklink"><i class="fab fa-github"></i>Open Source</a>
-                        <a href="#directory" class="quicklink"><i class="fas fa-rocket"></i>Live Apps</a>
-                        <a href="contact/" class="quicklink"><i class="fas fa-envelope"></i>Contact</a>
                     </div>
                 </section>
             </div>
@@ -977,6 +900,5 @@
     </script>
 
     <!-- Neural Network Animation -->
-    <script src="assets/js/neural-bg.js"></script>
 </body>
 </html>

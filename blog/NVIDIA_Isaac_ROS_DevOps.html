@@ -11,7 +11,6 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Sudhakar Chundu — NVIDIA Isaac ROS DevOps Reference">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GGNQHMGCLH"></script>
@@ -24,30 +23,29 @@
 
 <style>
 :root {
-  /* Brand */
-  --green:#76B900; --green-dk:#3d6200; --green-bg:#1a2800;
-  --green-mid:#5a9000;
-  /* Dark zinc palette — matches sudhakarchundu.org home */
-  --bg-base:#09090b; --bg-card:#18181b; --bg-card2:#1f1f22; --bg-ele:#27272a;
-  --dark:#e8e8e8; --mid:#a1a1aa; --light:#71717a; --faint:#3f3f46;
-  --white:#09090b; --off:#18181b;
-  --ink:#fafafa; --sub:#a1a1aa;
-  --bdr:#27272a; --bdr-strong:#3f3f46;
-  /* Code */
-  --code-bg:#1a1a1f; --code-fg:#7dd3a8;
-  /* Semantic tints — dark-mode versions */
-  --amber:#2a1f00; --amber-dk:#f59e0b;
-  --blue:#0a1929; --blue-dk:#60a5fa;
-  --teal:#001f18; --teal-dk:#34d399;
-  --purple:#130f2a; --purple-dk:#a78bfa;
-  --coral:#2a0d08; --coral-dk:#f87171;
-  /* Typescale */
-  --radius:6px; --radius-lg:10px;
-  --shadow:0 1px 4px rgba(0,0,0,.4);
-  --shadow-md:0 4px 16px rgba(0,0,0,.5);
-  --mono:'JetBrains Mono', 'Fira Code', monospace;
-  --display:'Sora', -apple-system, sans-serif;
-  --sans:'Sora', -apple-system, sans-serif;
+  /* the one accent: Google blue (was NVIDIA lime) */
+  --green:#1A73E8; --green-dk:#1F1F1F; --green-bg:#E8F0FE;
+  --green-mid:#1A73E8;
+  /* light surfaces */
+  --bg-base:transparent; --bg-card:#FFFFFF; --bg-card2:#F8FAFD; --bg-ele:#F0F4F9;
+  --dark:#1F1F1F; --mid:#444746; --light:#5E5E5E; --faint:#C4C7C5;
+  --white:#FFFFFF; --off:#F8FAFD;
+  --ink:#1F1F1F; --sub:#444746;
+  --bdr:#E1E3E1; --bdr-strong:#C4C7C5;
+  --code-bg:#F8FAFD; --code-fg:#1F1F1F;
+  /* status tints */
+  --amber:#FEF7E0; --amber-dk:#B06000;
+  --blue:#E8F0FE; --blue-dk:#1A73E8;
+  --teal:#E6F4EA; --teal-dk:#188038;
+  --purple:#E8F0FE; --purple-dk:#1A73E8;
+  --coral:#FCE8E6; --coral-dk:#C5221F;
+  --radius:20px; --radius-lg:24px;
+  --elev:0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
+  --shadow:none;
+  --shadow-md:var(--elev);
+  --mono:'Roboto Mono', ui-monospace, Menlo, monospace;
+  --display:'Google Sans', 'Roboto', system-ui, sans-serif;
+  --sans:'Google Sans', 'Roboto', system-ui, sans-serif;
 }
 
 *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
@@ -63,37 +61,37 @@ body {
 /* ── NAV ── */
 #nav {
   position:fixed; top:0; left:0; width:252px; height:100vh;
-  background:#0d0d0d; color:#ccc;
+  background:#F8FAFD; color:#5E5E5E;
   overflow-y:auto; z-index:100;
   padding:0 0 48px;
-  border-right:1px solid #1c1c1c;
-  scrollbar-width:thin; scrollbar-color:#2a2a2a transparent;
+  border-right:1px solid #E1E3E1;
+  scrollbar-width:thin; scrollbar-color:#F0F4F9 transparent;
 }
 #nav::-webkit-scrollbar { width:4px; }
 #nav::-webkit-scrollbar-track { background:transparent; }
-#nav::-webkit-scrollbar-thumb { background:#2a2a2a; border-radius:4px; }
-#nav::-webkit-scrollbar-thumb:hover { background:#3a3a3a; }
+#nav::-webkit-scrollbar-thumb { background:#F0F4F9; border-radius:4px; }
+#nav::-webkit-scrollbar-thumb:hover { background:#E1E3E1; }
 
 #nav-logo {
-  background:linear-gradient(135deg, #76b900 0%, #5a9000 100%);
+  background:linear-gradient(135deg, #1A73E8 0%, #1A73E8 100%);
   padding:22px 20px 18px;
   font-family:var(--display); font-size:14px; font-weight:700;
-  color:#fff; letter-spacing:.01em; line-height:1.35;
+  color:#FFFFFF; letter-spacing:.01em; line-height:1.35;
   position:relative; overflow:hidden;
 }
 #nav-logo::after {
   content:''; position:absolute; bottom:-20px; right:-20px;
   width:80px; height:80px; border-radius:50%;
-  background:rgba(255,255,255,.06);
+  background:rgba(60,64,67,0.036);
 }
 #nav-logo .nav-logo-sub {
   display:block; font-size:11px; font-weight:400;
-  color:rgba(255,255,255,.7); margin-top:3px;
+  color:#5E5E5E; margin-top:3px;
   font-family:var(--mono); letter-spacing:.03em;
 }
 #nav-logo .nav-logo-author {
   display:block; font-size:10px; font-style:italic;
-  color:rgba(255,255,255,.55); margin-top:2px;
+  color:#5E5E5E; margin-top:2px;
   font-family:var(--sans);
 }
 .nav-logo-links {
@@ -102,53 +100,53 @@ body {
 #nav-logo a {
   display:inline-block; font-size:10px; font-weight:600;
   padding:3px 10px; border-radius:3px;
-  background:rgba(0,0,0,0.25); color:rgba(255,255,255,.9);
-  text-decoration:none; border:1px solid rgba(255,255,255,0.25);
+  background:rgba(255,255,255,0.82); color:#444746;
+  text-decoration:none; border:1px solid rgba(60,64,67,0.18);
   transition:background .15s, border-color .15s, color .15s;
   letter-spacing:.03em; font-family:var(--mono);
 }
 #nav-logo a:hover {
-  background:rgba(0,0,0,0.45); border-color:rgba(255,255,255,0.6);
-  color:#fff;
+  background:rgba(255,255,255,0.82); border-color:rgba(60,64,67,0.18);
+  color:#FFFFFF;
 }
 .nav-search {
   padding:10px 14px 10px;
-  border-bottom:1px solid #1c1c1c;
+  border-bottom:1px solid #E1E3E1;
 }
 .nav-search input {
-  width:100%; background:#1a1a1a; border:1px solid #2a2a2a;
+  width:100%; background:#F0F4F9; border:1px solid #E1E3E1;
   border-radius:4px; padding:6px 10px;
-  font-family:var(--mono); font-size:11px; color:#bbb;
+  font-family:var(--mono); font-size:11px; color:#5E5E5E;
   outline:none; transition:border-color .15s;
 }
-.nav-search input::placeholder { color:#444; }
-.nav-search input:focus { border-color:#3d6200; }
+.nav-search input::placeholder { color:#444746; }
+.nav-search input:focus { border-color:#1A73E8; }
 .nav-section-group { margin-top:0; }
-.nav-section-group + .nav-section-group .nav-part { border-top:1px solid #1e1e1e; }
+.nav-section-group + .nav-section-group .nav-part { border-top:1px solid #E1E3E1; }
 .nav-part {
   padding:14px 20px 5px 20px;
   font-size:10px; letter-spacing:.10em; text-transform:uppercase;
-  color:#4a4a4a; font-weight:600; font-family:var(--mono);
+  color:#444746; font-weight:600; font-family:var(--mono);
 }
 .nav-part::before { display:none; }
 .nav-part-label { }
 .nav-link {
   display:flex; align-items:center; gap:0;
   padding:7px 16px 7px 20px;
-  font-size:12px; color:#777; text-decoration:none;
+  font-size:12px; color:#5E5E5E; text-decoration:none;
   border-left:2px solid transparent;
   transition:color .15s, border-color .15s, background .15s, padding-left .15s;
   font-family:var(--sans); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
   position:relative;
 }
 .nav-link:hover {
-  color:#e0e0e0; border-left-color:var(--green);
-  background:rgba(118,185,0,.07);
+  color:#FFFFFF; border-left-color:var(--green);
+  background:rgba(26,115,232,0.07);
   padding-left:22px;
 }
 .nav-link.active {
   color:var(--green); border-left-color:var(--green);
-  background:rgba(118,185,0,.1); font-weight:600;
+  background:rgba(26,115,232,0.1); font-weight:600;
   padding-left:22px;
 }
 .nav-link.active::after {
@@ -156,9 +154,9 @@ body {
   width:5px; height:5px; border-radius:50%; background:var(--green);
 }
 .nav-sub {
-  font-size:11px; color:#555; padding-left:30px;
+  font-size:11px; color:#444746; padding-left:30px;
 }
-.nav-sub:hover { color:#c0c0c0; }
+.nav-sub:hover { color:#5E5E5E; }
 .nav-sub.active { padding-left:32px; }
 
 /* ── MAIN ── */
@@ -166,7 +164,7 @@ body {
 
 /* ── HERO ── */
 #hero {
-  background:linear-gradient(135deg, #0f1a00 0%, #1a2d00 60%, #0d0d0f 100%);
+  background:linear-gradient(135deg, #F0F4F9 0%, #F0F4F9 60%, #F8FAFD 100%);
   border-bottom:3px solid var(--green);
   padding:38px 36px 30px;
   position:relative; overflow:hidden;
@@ -174,28 +172,28 @@ body {
 #hero::before {
   content:''; position:absolute; top:-40px; right:-60px;
   width:400px; height:400px; border-radius:50%;
-  background:rgba(118,185,0,.04);
+  background:rgba(26,115,232,0.04);
 }
 #hero h1 {
   font-family:var(--display); font-size:32px; font-weight:800;
-  color:#fafafa; line-height:1.1; max-width:720px;
+  color:#FFFFFF; line-height:1.1; max-width:720px;
   margin-left:auto; margin-right:auto;
   letter-spacing:-.02em;
 }
 #hero h1 em { font-style:normal; color:var(--green); }
 #hero p {
-  margin:14px auto 0; color:#a1a1aa;
+  margin:14px auto 0; color:#5E5E5E;
   font-size:14px; max-width:720px; font-family:var(--sans); font-weight:400;
 }
 .hero-sub {
-  margin:6px auto 0; color:#71717a;
+  margin:6px auto 0; color:#5E5E5E;
   font-size:12px; max-width:720px; font-family:var(--mono);
 }
 .hero-meta {
   margin:24px auto 0; max-width:720px; display:flex; gap:8px; flex-wrap:wrap;
 }
 .hero-tag {
-  background:rgba(118,185,0,.1); border:1px solid rgba(118,185,0,.3);
+  background:rgba(26,115,232,0.1); border:1px solid rgba(26,115,232,0.3);
   padding:4px 12px; border-radius:4px;
   font-size:11px; color:var(--green); font-weight:600;
   font-family:var(--mono);
@@ -244,8 +242,8 @@ h3.sub {
 .topic-badge {
   font-family:var(--mono); font-size:10px;
   padding:3px 10px; border-radius:4px;
-  border:1px solid rgba(118,185,0,.3); color:var(--green);
-  background:rgba(118,185,0,.08); margin-left:auto; flex-shrink:0;
+  border:1px solid rgba(26,115,232,0.3); color:var(--green);
+  background:rgba(26,115,232,0.08); margin-left:auto; flex-shrink:0;
   white-space:nowrap;
 }
 .topic-header {
@@ -316,7 +314,7 @@ code {
 }
 .warn-box strong { color:var(--amber-dk); }
 .note { padding:14px 18px; border-radius:var(--radius); margin:14px 0; font-size:13px; line-height:1.7; border-left:4px solid; }
-.note-g { background:var(--green-bg); border-color:var(--green); color:#a6d43a; }
+.note-g { background:var(--green-bg); border-color:var(--green); color:#1A73E8; }
 .note-a { background:var(--amber); border-color:var(--amber-dk); color:var(--amber-dk); }
 .note-c { background:var(--blue); border-color:var(--blue-dk); color:var(--blue-dk); }
 .note-r { background:var(--coral); border-color:var(--coral-dk); color:var(--coral-dk); }
@@ -356,16 +354,16 @@ code {
   box-shadow:var(--shadow); cursor:pointer;
   transition:border-color .12s, box-shadow .12s, transform .1s;
 }
-.toc-card:hover { border-color:var(--green); box-shadow:0 4px 16px rgba(118,185,0,.12); transform:translateY(-1px); }
+.toc-card:hover { border-color:var(--green); box-shadow:0 4px 16px rgba(26,115,232,0.12); transform:translateY(-1px); }
 .toc-card-part { font-size:9px; text-transform:uppercase; letter-spacing:.12em; color:var(--light); margin-bottom:3px; font-family:var(--mono); }
 .toc-card-title { font-size:14px; font-weight:700; color:var(--ink); }
 .toc-card-count { font-size:11px; color:var(--light); margin-top:3px; }
 
 /* ── CHIPS ── */
 .chip { padding:4px 12px; border-radius:3px; font-family:var(--mono); font-size:11px; border:1px solid; display:inline-block; margin:2px; }
-.chip-g { border-color:rgba(118,185,0,.4); color:var(--green); background:rgba(118,185,0,.08); }
-.chip-c { border-color:rgba(96,165,250,.4); color:var(--blue-dk); background:rgba(96,165,250,.06); }
-.chip-a { border-color:rgba(245,158,11,.4); color:var(--amber-dk); background:rgba(245,158,11,.06); }
+.chip-g { border-color:rgba(26,115,232,0.4); color:var(--green); background:rgba(26,115,232,0.08); }
+.chip-c { border-color:rgba(26,115,232,0.4); color:var(--blue-dk); background:rgba(26,115,232,0.06); }
+.chip-a { border-color:rgba(251,188,4,0.4); color:var(--amber-dk); background:rgba(251,188,4,0.06); }
 
 /* ── STATS STRIP ── */
 .stats-strip {
@@ -383,10 +381,10 @@ code {
 
 /* ── SEVERITY / ISSUE CARDS ── */
 .sev { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:4px; font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.05em; }
-.sev-crit { background:var(--coral); color:var(--coral-dk); border:1px solid rgba(248,113,113,.3); }
-.sev-high { background:var(--amber); color:var(--amber-dk); border:1px solid rgba(245,158,11,.3); }
-.sev-med  { background:var(--blue);  color:var(--blue-dk);  border:1px solid rgba(96,165,250,.3); }
-.sev-low  { background:var(--green-bg); color:var(--green); border:1px solid rgba(118,185,0,.3); }
+.sev-crit { background:var(--coral); color:var(--coral-dk); border:1px solid rgba(234,67,53,0.3); }
+.sev-high { background:var(--amber); color:var(--amber-dk); border:1px solid rgba(251,188,4,0.3); }
+.sev-med  { background:var(--blue);  color:var(--blue-dk);  border:1px solid rgba(26,115,232,0.3); }
+.sev-low  { background:var(--green-bg); color:var(--green); border:1px solid rgba(26,115,232,0.3); }
 .issue-card {
   background:var(--bg-card); border-radius:var(--radius); border:1px solid var(--bdr);
   padding:14px 18px; margin:8px 0; box-shadow:var(--shadow);
@@ -408,10 +406,10 @@ code {
 /* ── LINKS ── */
 a[href]:not(.nav-link):not(.toc-card) {
   color:var(--green); text-decoration:none;
-  border-bottom:1px solid rgba(118,185,0,.3);
+  border-bottom:1px solid rgba(26,115,232,0.3);
   transition:color .12s, border-color .12s;
 }
-a[href]:not(.nav-link):not(.toc-card):hover { color:#a6d43a; border-bottom-color:#a6d43a; }
+a[href]:not(.nav-link):not(.toc-card):hover { color:#1A73E8; border-bottom-color:#1A73E8; }
 
 /* ── BULLETS ── */
 ul.blt, ol.nblt { padding-left:22px; margin:10px 0; }
@@ -449,12 +447,108 @@ ul.blt li::marker { color:var(--green); }
 }
 
 [id] { scroll-margin-top:24px; }
+
+/* ===== Google, Gen-Z skin (light) ===== */
+body{background-color:#fff;color:#444746;
+  background-image:radial-gradient(52% 44% at 4% 0%,rgba(66,133,244,.13),transparent 72%),
+    radial-gradient(48% 42% at 98% 2%,rgba(234,67,53,.08),transparent 72%),
+    radial-gradient(50% 46% at 96% 100%,rgba(251,188,4,.12),transparent 72%),
+    radial-gradient(46% 42% at 2% 100%,rgba(52,168,83,.09),transparent 72%);
+  background-attachment:fixed;background-repeat:no-repeat;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;top:0;left:0;right:0;height:3px;z-index:1000;pointer-events:none;
+  background:linear-gradient(90deg,#4285F4 0 25%,#EA4335 25% 50%,#FBBC04 50% 75%,#34A853 75%)}
+::selection{background:#E8F0FE;color:#1F1F1F}
+h1,h2,h3,h4,h5{font-family:var(--display)}
+#nav{background:rgba(248,250,253,.92);color:#444746;border-right:1px solid #E1E3E1;padding-top:3px;scrollbar-color:#E1E3E1 transparent}
+#nav::-webkit-scrollbar-thumb{background:#E1E3E1}
+#nav-logo{background:transparent;color:#1F1F1F;font-weight:500;letter-spacing:-.01em;border-bottom:1px solid #E1E3E1}
+#nav-logo::after{display:none}
+#nav-logo:hover{filter:none}
+#nav-logo .nav-logo-sub,#nav-logo .nav-logo-author{color:#5E5E5E}
+#nav-logo a{background:#fff;color:#444746;border:1px solid #E1E3E1;border-radius:999px;font-weight:500;padding:4px 12px}
+#nav-logo a:hover{background:#F0F4F9;border-color:#E1E3E1;color:#1F1F1F}
+.nav-search{border-bottom:1px solid #E1E3E1}
+.nav-search input{background:#fff;border:1px solid #E1E3E1;border-radius:999px;color:#1F1F1F;padding:7px 14px}
+.nav-search input::placeholder{color:#5E5E5E}
+.nav-search input:focus{border-color:#1A73E8}
+.nav-section-group + .nav-section-group .nav-part{border-top:1px solid #E1E3E1}
+.nav-part{color:#5E5E5E;font-weight:500}
+.nav-link{color:#444746;border-left:0;margin-right:10px;border-radius:0 999px 999px 0}
+.nav-link:hover{color:#1F1F1F;background:#F0F4F9;padding-left:20px}
+.nav-link.active{color:#1A73E8;background:#E8F0FE;font-weight:500;padding-left:20px}
+.nav-link.active::after{background:#1A73E8}
+.nav-sub,.nav-sub:hover{color:#5E5E5E}
+#hero{background:transparent;border-bottom:1px solid #E1E3E1}
+#hero::before{display:none}
+#hero h1{font-family:var(--display);font-weight:500;color:#1F1F1F;font-size:clamp(40px,5vw,72px);line-height:1.04;letter-spacing:-.04em}
+#hero h1 em{color:#1F1F1F}
+#hero p{color:#444746}
+.hero-sub{color:#5E5E5E}
+.hero-tag{background:#fff;border:1px solid #E1E3E1;color:#444746;border-radius:999px;font-weight:500}
+.part-header{background:transparent;border-left:0}
+.part-num{color:#5E5E5E}
+.part-title{font-weight:500;font-size:clamp(24px,2.4vw,32px);letter-spacing:-.03em;color:#1F1F1F}
+.part-sub{color:#5E5E5E}
+h2.ch,h2.topic{font-weight:500;letter-spacing:-.02em;color:#1F1F1F;border-bottom:1px solid #E1E3E1}
+h2.ch span,h2.topic span{color:#5E5E5E}
+h3.sub{font-weight:500;border-left:0;padding-left:0;letter-spacing:-.01em;color:#1F1F1F}
+.topic-badge{border-radius:999px;border:1px solid #E1E3E1;color:#444746;background:#fff}
+table{border-radius:20px;box-shadow:none;border:1px solid #E1E3E1;background:#fff}
+thead th{background:#F8FAFD;color:#1F1F1F;font-weight:500}
+td.key{color:#1F1F1F;font-weight:500}
+td.mono{color:#1F1F1F}
+td.win{color:#188038;font-weight:500}
+td.warn{color:#B06000;font-weight:500}
+td.danger{color:#C5221F;font-weight:500}
+pre,.flow{background:#F8FAFD;border:1px solid #E1E3E1;border-radius:16px;color:#1F1F1F;box-shadow:none}
+code{background:#F0F4F9;color:#1F1F1F;border:1px solid #E1E3E1;border-radius:6px}
+pre code{border:0;background:transparent}
+.vbox{border:1px solid #E1E3E1;border-radius:20px;box-shadow:none;background:#fff}
+.warn-box{border:1px solid #FEEFC3;border-radius:20px;background:#FEF7E0;color:#1F1F1F}
+.warn-box strong{color:#B06000}
+.note{border:1px solid #E1E3E1;border-radius:20px;color:#1F1F1F}
+.note-g,.note-c{background:#E8F0FE;border-color:#D2E3FC;color:#1F1F1F}
+.note-a{background:#FEF7E0;border-color:#FEEFC3;color:#1F1F1F}
+.note-r{background:#FCE8E6;border-color:#FAD2CF;color:#1F1F1F}
+.exp-block{border:1px solid #E1E3E1;border-radius:20px;box-shadow:none;background:#fff}
+.exp-title{background:#F8FAFD;color:#1F1F1F;font-weight:500}
+.toc-card{border-radius:24px;box-shadow:none;border:1px solid #E1E3E1;background:#fff}
+.toc-card{color:#1F1F1F}
+.toc-card:hover{border-color:#E1E3E1;box-shadow:var(--elev);transform:none}
+.toc-card-title{font-weight:500}
+.chip,.chip-g,.chip-c,.chip-a{border-radius:999px;border:1px solid #E1E3E1;color:#444746;background:#fff}
+.stats-strip{border-radius:24px;box-shadow:none;background:#fff}
+.stat-n{color:#1F1F1F;font-family:var(--display);font-weight:500;font-size:24px;letter-spacing:-.02em}
+.stat-l{color:#5E5E5E}
+.sev{border-radius:999px;font-weight:500}
+.sev-crit{background:#FCE8E6;color:#C5221F;border:1px solid #FAD2CF}
+.sev-high{background:#FEF7E0;color:#B06000;border:1px solid #FEEFC3}
+.sev-med{background:#E8F0FE;color:#1A73E8;border:1px solid #D2E3FC}
+.sev-low{background:#E6F4EA;color:#188038;border:1px solid #CEEAD6}
+.issue-card{border-radius:20px;box-shadow:none;background:#fff}
+.issue-card-title,.phase-title,.exp-title{font-weight:500}
+.issue-metric{color:#C5221F;font-weight:500}
+.phase-block{border-radius:24px;box-shadow:none;background:#fff}
+.phase-num{color:#5E5E5E;font-weight:500}
+a[href]:not(.nav-link):not(.toc-card){color:#1A73E8;border-bottom:1px solid rgba(26,115,232,.3)}
+a[href]:not(.nav-link):not(.toc-card):hover{color:#1765CC;border-bottom-color:#1765CC}
+ul.blt li::marker{color:#5E5E5E}
+.fact-table td:first-child{color:#1F1F1F}
+/* code tokens: Google four + greys */
+.hljs{color:#1F1F1F;background:transparent}
+.hljs-comment,.hljs-quote,.hljs-meta{color:#5E5E5E;font-style:italic}
+.hljs-keyword,.hljs-selector-tag,.hljs-literal,.hljs-section,.hljs-name,.hljs-tag{color:#1A73E8}
+.hljs-string,.hljs-regexp,.hljs-addition,.hljs-attribute,.hljs-template-variable{color:#188038}
+.hljs-number,.hljs-symbol,.hljs-bullet,.hljs-variable,.hljs-built_in{color:#B06000}
+.hljs-title,.hljs-title.function_,.hljs-title.class_,.hljs-deletion,.hljs-type{color:#C5221F}
+.hljs-attr,.hljs-params,.hljs-property,.hljs-punctuation,.hljs-subst{color:#1F1F1F}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 <style>
   /* highlight.js: colorize tokens while keeping this page's code background */
   pre code.hljs { background: transparent; padding: 0; font: inherit; color: inherit; }
 </style>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/genz.css">
 </head>
 <body>
 
@@ -519,16 +613,12 @@ ul.blt li::marker { color:var(--green); }
 <section id="hero">
   <h1>NVIDIA Isaac ROS <em>DevOps</em></h1>
   <p style="font-size:15px; font-weight:600; opacity:.9;">Engineering Reference</p>
-  <p class="hero-sub">CI/CD &bull; Multi-Arch Build &bull; IsaacLab Audit &bull; ROS 2 Platform &bull; Registry &amp; NGC</p>
   <div class="hero-meta">
-    <span class="hero-tag">Isaac ROS</span>
     <span class="hero-tag">ROS 2 Humble/Jazzy</span>
     <span class="hero-tag">GitHub Actions</span>
     <span class="hero-tag">colcon</span>
-    <span class="hero-tag">NGC</span>
     <span class="hero-tag">Jetson Orin</span>
     <span class="hero-tag">CUDA</span>
-    <span class="hero-tag">multi-arch</span>
   </div>
 </section>
 
@@ -537,7 +627,6 @@ ul.blt li::marker { color:var(--green); }
   <div class="topic-header">
 
     <h2 class="topic" style="border-bottom:none; padding-bottom:0; margin-bottom:0;">Contents &amp; Scope</h2>
-    <span class="topic-badge">4 Parts · 41 Findings</span>
   </div>
 
   <p class="body">This guide is an engineering-grade DevOps reference for the NVIDIA Isaac robotics platform, written from the perspective of a CI/CD and platform engineer. It covers how the Isaac ecosystem is structured, how to design production-grade CI/CD pipelines for ROS 2 workspaces, a systematic audit of the public IsaacLab repository, and a complete technical reference for day-to-day operations.</p>
@@ -556,7 +645,7 @@ ul.blt li::marker { color:var(--green); }
     <a class="toc-card" href="#c1">
       <div class="toc-card-part">Part C</div>
       <div class="toc-card-title">IsaacLab Audit Findings</div>
-      <div class="toc-card-count">41 findings: Build · Image · Security · Correctness</div>
+      <div class="toc-card-count">Build · Image · Security · Correctness</div>
     </a>
     <a class="toc-card" href="#d1">
       <div class="toc-card-part">Part D</div>
@@ -860,88 +949,88 @@ ul.blt li::marker { color:var(--green); }
   <p class="body">The following diagram reflects the <em>actual</em> CI structure found in the public <a href="https://github.com/isaac-sim/IsaacLab" style="color:var(--accent-blue)">isaac-sim/IsaacLab</a> repository, based on direct analysis of all <code>.github/workflows/</code> YAML files and composite actions. The pipeline uses Docker buildx against an IsaacSim base image and pytest as the test runner — not the ROS 2 / colcon / vcstool stack typical of Isaac ROS. Key gaps vs. best practice are called out inline.</p>
 
   <div class="reveal" style="margin:14px 0;">
-    <svg viewBox="0 0 560 620" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:620px;display:block;margin:0 auto;font-family:'JetBrains Mono',monospace;">
+    <svg viewBox="0 0 560 620" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:620px;display:block;margin:0 auto;font-family:'Roboto Mono',monospace;">
       <defs>
         <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-          <path d="M0,0 L0,6 L8,3 z" fill="#76B900"/>
+          <path d="M0,0 L0,6 L8,3 z" fill="#1A73E8"/>
         </marker>
       </defs>
 
       <!-- ── Trigger label: PR opened ── -->
-      <text x="280" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#3d6200" font-family="'JetBrains Mono',monospace">PR opened</text>
+      <text x="280" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#1F1F1F" font-family="'Roboto Mono',monospace">PR opened</text>
 
       <!-- Arrow down to box 1 -->
-      <line x1="280" y1="28" x2="280" y2="52" stroke="#76B900" stroke-width="2" marker-end="url(#arr)"/>
+      <line x1="280" y1="28" x2="280" y2="52" stroke="#1A73E8" stroke-width="2" marker-end="url(#arr)"/>
 
       <!-- ── Box 1: PREMERGE VALIDATION ── -->
-      <rect x="20" y="54" width="520" height="186" rx="8" fill="#EBF5D4" stroke="#76B900" stroke-width="2"/>
+      <rect x="20" y="54" width="520" height="186" rx="8" fill="#E8F0FE" stroke="#1A73E8" stroke-width="2"/>
       <!-- Header bar -->
-      <rect x="20" y="54" width="520" height="36" rx="8" fill="#76B900"/>
-      <rect x="20" y="74" width="520" height="16" fill="#76B900"/>
-      <text x="36" y="76" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'JetBrains Mono',monospace">PREMERGE VALIDATION</text>
-      <text x="490" y="76" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'JetBrains Mono',monospace">trigger: pull_request</text>
+      <rect x="20" y="54" width="520" height="36" rx="8" fill="#1A73E8"/>
+      <rect x="20" y="74" width="520" height="16" fill="#1A73E8"/>
+      <text x="36" y="76" font-size="11" font-weight="700" fill="#FFFFFF" letter-spacing="0.08em" font-family="'Roboto Mono',monospace">PREMERGE VALIDATION</text>
+      <text x="490" y="76" font-size="9" fill="#FFFFFF" text-anchor="end" font-family="'Roboto Mono',monospace">trigger: pull_request</text>
 
       <!-- Items -->
-      <text x="44" y="112" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">docker buildx build --platform linux/amd64</text>
-      <text x="44" y="133" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">GHA cache type=gha (10 GB shared cap — low hit rate)</text>
-      <text x="44" y="154" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">/isaac-sim/python.sh -m pytest  (run-tests composite action)</text>
-      <text x="44" y="175" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">[self-hosted, gpu] runner — timeout-minutes: 180</text>
-      <text x="44" y="196" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">continue-on-error: true — failures do NOT block merge</text>
-      <text x="44" y="217" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">No path filter — README edit triggers full 3-hr GPU run</text>
+      <text x="44" y="112" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">docker buildx build --platform linux/amd64</text>
+      <text x="44" y="133" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">GHA cache type=gha (10 GB shared cap — low hit rate)</text>
+      <text x="44" y="154" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">/isaac-sim/python.sh -m pytest  (run-tests composite action)</text>
+      <text x="44" y="175" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">[self-hosted, gpu] runner — timeout-minutes: 180</text>
+      <text x="44" y="196" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">continue-on-error: true — failures do NOT block merge</text>
+      <text x="44" y="217" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">No path filter — README edit triggers full 3-hr GPU run</text>
 
       <!-- Bullet dots -->
-      <circle cx="34" cy="109" r="3" fill="#76B900"/>
-      <circle cx="34" cy="130" r="3" fill="#76B900"/>
-      <circle cx="34" cy="151" r="3" fill="#76B900"/>
-      <circle cx="34" cy="172" r="3" fill="#76B900"/>
-      <circle cx="34" cy="193" r="3" fill="#76B900"/>
-      <circle cx="34" cy="214" r="3" fill="#76B900"/>
+      <circle cx="34" cy="109" r="3" fill="#1A73E8"/>
+      <circle cx="34" cy="130" r="3" fill="#1A73E8"/>
+      <circle cx="34" cy="151" r="3" fill="#1A73E8"/>
+      <circle cx="34" cy="172" r="3" fill="#1A73E8"/>
+      <circle cx="34" cy="193" r="3" fill="#1A73E8"/>
+      <circle cx="34" cy="214" r="3" fill="#1A73E8"/>
 
       <!-- Arrow + label: merge to main -->
-      <line x1="280" y1="240" x2="280" y2="278" stroke="#76B900" stroke-width="2" marker-end="url(#arr)"/>
-      <rect x="200" y="248" width="160" height="20" rx="4" fill="#fff" stroke="#76B900" stroke-width="1.2"/>
-      <text x="280" y="262" text-anchor="middle" font-size="10.5" font-weight="600" fill="#3d6200" font-family="'JetBrains Mono',monospace">merge to main</text>
+      <line x1="280" y1="240" x2="280" y2="278" stroke="#1A73E8" stroke-width="2" marker-end="url(#arr)"/>
+      <rect x="200" y="248" width="160" height="20" rx="4" fill="#FFFFFF" stroke="#1A73E8" stroke-width="1.2"/>
+      <text x="280" y="262" text-anchor="middle" font-size="10.5" font-weight="600" fill="#1F1F1F" font-family="'Roboto Mono',monospace">merge to main</text>
 
       <!-- ── Box 2: POSTMERGE / NIGHTLY ── -->
-      <rect x="20" y="280" width="520" height="166" rx="8" fill="#EBF5D4" stroke="#76B900" stroke-width="2"/>
-      <rect x="20" y="280" width="520" height="36" rx="8" fill="#76B900"/>
-      <rect x="20" y="300" width="520" height="16" fill="#76B900"/>
-      <text x="36" y="302" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'JetBrains Mono',monospace">POSTMERGE / NIGHTLY</text>
-      <text x="490" y="302" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'JetBrains Mono',monospace">trigger: push to main / cron</text>
+      <rect x="20" y="280" width="520" height="166" rx="8" fill="#E8F0FE" stroke="#1A73E8" stroke-width="2"/>
+      <rect x="20" y="280" width="520" height="36" rx="8" fill="#1A73E8"/>
+      <rect x="20" y="300" width="520" height="16" fill="#1A73E8"/>
+      <text x="36" y="302" font-size="11" font-weight="700" fill="#FFFFFF" letter-spacing="0.08em" font-family="'Roboto Mono',monospace">POSTMERGE / NIGHTLY</text>
+      <text x="490" y="302" font-size="9" fill="#FFFFFF" text-anchor="end" font-family="'Roboto Mono',monospace">trigger: push to main / cron</text>
 
-      <text x="44" y="338" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">docker buildx: amd64 + arm64 via QEMU (no native Jetson)</text>
-      <text x="44" y="359" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">push to registry: docker.io/isaac-lab-base</text>
-      <text x="44" y="380" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">daily-compat.yml: IsaacSim 4.5.0, 5.0.0 (cron 0 4 * * *)</text>
-      <text x="44" y="401" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">nightly-changelog.yml: isaaclab-bot (cron 0 5 * * *)</text>
-      <text x="44" y="422" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">No Trivy, cosign, SBOM, or security scanning</text>
+      <text x="44" y="338" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">docker buildx: amd64 + arm64 via QEMU (no native Jetson)</text>
+      <text x="44" y="359" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">push to registry: docker.io/isaac-lab-base</text>
+      <text x="44" y="380" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">daily-compat.yml: IsaacSim 4.5.0, 5.0.0 (cron 0 4 * * *)</text>
+      <text x="44" y="401" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">nightly-changelog.yml: isaaclab-bot (cron 0 5 * * *)</text>
+      <text x="44" y="422" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">No Trivy, cosign, SBOM, or security scanning</text>
 
-      <circle cx="34" cy="335" r="3" fill="#76B900"/>
-      <circle cx="34" cy="356" r="3" fill="#76B900"/>
-      <circle cx="34" cy="377" r="3" fill="#76B900"/>
-      <circle cx="34" cy="398" r="3" fill="#76B900"/>
-      <circle cx="34" cy="419" r="3" fill="#76B900"/>
+      <circle cx="34" cy="335" r="3" fill="#1A73E8"/>
+      <circle cx="34" cy="356" r="3" fill="#1A73E8"/>
+      <circle cx="34" cy="377" r="3" fill="#1A73E8"/>
+      <circle cx="34" cy="398" r="3" fill="#1A73E8"/>
+      <circle cx="34" cy="419" r="3" fill="#1A73E8"/>
 
       <!-- Arrow + label: tag / release -->
-      <line x1="280" y1="446" x2="280" y2="484" stroke="#76B900" stroke-width="2" marker-end="url(#arr)"/>
-      <rect x="200" y="454" width="160" height="20" rx="4" fill="#fff" stroke="#76B900" stroke-width="1.2"/>
-      <text x="280" y="468" text-anchor="middle" font-size="10.5" font-weight="600" fill="#3d6200" font-family="'JetBrains Mono',monospace">nightly / release/**</text>
+      <line x1="280" y1="446" x2="280" y2="484" stroke="#1A73E8" stroke-width="2" marker-end="url(#arr)"/>
+      <rect x="200" y="454" width="160" height="20" rx="4" fill="#FFFFFF" stroke="#1A73E8" stroke-width="1.2"/>
+      <text x="280" y="468" text-anchor="middle" font-size="10.5" font-weight="600" fill="#1F1F1F" font-family="'Roboto Mono',monospace">nightly / release/**</text>
 
       <!-- ── Box 3: RELEASE PIPELINE ── -->
-      <rect x="20" y="486" width="520" height="126" rx="8" fill="#EBF5D4" stroke="#76B900" stroke-width="2"/>
-      <rect x="20" y="486" width="520" height="36" rx="8" fill="#76B900"/>
-      <rect x="20" y="506" width="520" height="16" fill="#76B900"/>
-      <text x="36" y="508" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'JetBrains Mono',monospace">RELEASE / CHANGELOG</text>
-      <text x="490" y="508" font-size="9" fill="rgba(255,255,255,0.8)" text-anchor="end" font-family="'JetBrains Mono',monospace">trigger: nightly / release/**</text>
+      <rect x="20" y="486" width="520" height="126" rx="8" fill="#E8F0FE" stroke="#1A73E8" stroke-width="2"/>
+      <rect x="20" y="486" width="520" height="36" rx="8" fill="#1A73E8"/>
+      <rect x="20" y="506" width="520" height="16" fill="#1A73E8"/>
+      <text x="36" y="508" font-size="11" font-weight="700" fill="#FFFFFF" letter-spacing="0.08em" font-family="'Roboto Mono',monospace">RELEASE / CHANGELOG</text>
+      <text x="490" y="508" font-size="9" fill="#FFFFFF" text-anchor="end" font-family="'Roboto Mono',monospace">trigger: nightly / release/**</text>
 
-      <text x="44" y="544" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">isaaclab-bot PR → GitHub Release from CHANGELOG.md</text>
-      <text x="44" y="565" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">release/** branch naming convention</text>
-      <text x="44" y="586" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">Base: nvcr.io/nvidia/isaac-sim:5.1.0 (floating tag, no digest)</text>
-      <text x="44" y="607" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">No cosign, SBOM, or SLSA provenance — SLSA Level 0</text>
+      <text x="44" y="544" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">isaaclab-bot PR → GitHub Release from CHANGELOG.md</text>
+      <text x="44" y="565" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">release/** branch naming convention</text>
+      <text x="44" y="586" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">Base: nvcr.io/nvidia/isaac-sim:5.1.0 (floating tag, no digest)</text>
+      <text x="44" y="607" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">No cosign, SBOM, or SLSA provenance — SLSA Level 0</text>
 
-      <circle cx="34" cy="541" r="3" fill="#76B900"/>
-      <circle cx="34" cy="562" r="3" fill="#76B900"/>
-      <circle cx="34" cy="583" r="3" fill="#76B900"/>
-      <circle cx="34" cy="604" r="3" fill="#76B900"/>
+      <circle cx="34" cy="541" r="3" fill="#1A73E8"/>
+      <circle cx="34" cy="562" r="3" fill="#1A73E8"/>
+      <circle cx="34" cy="583" r="3" fill="#1A73E8"/>
+      <circle cx="34" cy="604" r="3" fill="#1A73E8"/>
     </svg>
   </div>
 
@@ -1237,98 +1326,98 @@ colcon test --packages-above-and-dependencies $CHANGED_PKGS</pre>
 
   <!-- Complete CI + Promotion SVG Diagram -->
   <div class="reveal" style="margin:18px 0 24px;">
-    <svg viewBox="0 0 560 1100" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:640px;display:block;margin:0 auto;font-family:'JetBrains Mono',monospace;">
+    <svg viewBox="0 0 560 1100" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:640px;display:block;margin:0 auto;font-family:'Roboto Mono',monospace;">
       <defs>
-        <marker id="cg" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#76B900"/></marker>
-        <marker id="ca" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#c97d00"/></marker>
-        <marker id="cb" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#1a4a8a"/></marker>
-        <marker id="ct" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#085041"/></marker>
+        <marker id="cg" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#1A73E8"/></marker>
+        <marker id="ca" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#FBBC04"/></marker>
+        <marker id="cb" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#1A73E8"/></marker>
+        <marker id="ct" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#34A853"/></marker>
       </defs>
 
       <!-- trigger label -->
-      <text x="280" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#3d6200" font-family="'JetBrains Mono',monospace">PR opened</text>
-      <line x1="280" y1="28" x2="280" y2="50" stroke="#76B900" stroke-width="2" marker-end="url(#cg)"/>
+      <text x="280" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#1F1F1F" font-family="'Roboto Mono',monospace">PR opened</text>
+      <line x1="280" y1="28" x2="280" y2="50" stroke="#1A73E8" stroke-width="2" marker-end="url(#cg)"/>
 
       <!-- Box 1: PREMERGE CI -->
-      <rect x="20" y="52" width="520" height="194" rx="8" fill="#EBF5D4" stroke="#76B900" stroke-width="2"/>
-      <rect x="20" y="52" width="520" height="34"  rx="8" fill="#76B900"/>
-      <rect x="20" y="72"  width="520" height="14" fill="#76B900"/>
-      <text x="36" y="74" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'JetBrains Mono',monospace">PREMERGE CI</text>
-      <text x="530" y="74" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'JetBrains Mono',monospace">trigger: pull_request (not pull_request_target)</text>
-      <circle cx="36" cy="106" r="3" fill="#76B900"/><text x="46" y="109" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">path-filter: skip *.md, docs/, *.txt</text>
-      <circle cx="36" cy="127" r="3" fill="#76B900"/><text x="46" y="130" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release</text>
-      <circle cx="36" cy="148" r="3" fill="#76B900"/><text x="46" y="151" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">colcon test (affected packages only)</text>
-      <circle cx="36" cy="169" r="3" fill="#76B900"/><text x="46" y="172" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">ament_clang_format + cppcheck + flake8</text>
-      <circle cx="36" cy="190" r="3" fill="#76B900"/><text x="46" y="193" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">Trivy image scan + cosign verify</text>
-      <circle cx="36" cy="211" r="3" fill="#76B900"/><text x="46" y="214" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">GPU gate: quarantined self-hosted runner</text>
+      <rect x="20" y="52" width="520" height="194" rx="8" fill="#E8F0FE" stroke="#1A73E8" stroke-width="2"/>
+      <rect x="20" y="52" width="520" height="34"  rx="8" fill="#1A73E8"/>
+      <rect x="20" y="72"  width="520" height="14" fill="#1A73E8"/>
+      <text x="36" y="74" font-size="11" font-weight="700" fill="#FFFFFF" letter-spacing="0.08em" font-family="'Roboto Mono',monospace">PREMERGE CI</text>
+      <text x="530" y="74" font-size="9" fill="#FFFFFF" text-anchor="end" font-family="'Roboto Mono',monospace">trigger: pull_request (not pull_request_target)</text>
+      <circle cx="36" cy="106" r="3" fill="#1A73E8"/><text x="46" y="109" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">path-filter: skip *.md, docs/, *.txt</text>
+      <circle cx="36" cy="127" r="3" fill="#1A73E8"/><text x="46" y="130" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release</text>
+      <circle cx="36" cy="148" r="3" fill="#1A73E8"/><text x="46" y="151" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">colcon test (affected packages only)</text>
+      <circle cx="36" cy="169" r="3" fill="#1A73E8"/><text x="46" y="172" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">ament_clang_format + cppcheck + flake8</text>
+      <circle cx="36" cy="190" r="3" fill="#1A73E8"/><text x="46" y="193" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">Trivy image scan + cosign verify</text>
+      <circle cx="36" cy="211" r="3" fill="#1A73E8"/><text x="46" y="214" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">GPU gate: quarantined self-hosted runner</text>
 
       <!-- merge to main connector -->
-      <line x1="280" y1="246" x2="280" y2="284" stroke="#76B900" stroke-width="2" marker-end="url(#cg)"/>
-      <rect x="198" y="254" width="164" height="20" rx="4" fill="#fff" stroke="#76B900" stroke-width="1.3"/>
-      <text x="280" y="268" text-anchor="middle" font-size="10.5" font-weight="600" fill="#3d6200" font-family="'JetBrains Mono',monospace">merge to main</text>
+      <line x1="280" y1="246" x2="280" y2="284" stroke="#1A73E8" stroke-width="2" marker-end="url(#cg)"/>
+      <rect x="198" y="254" width="164" height="20" rx="4" fill="#FFFFFF" stroke="#1A73E8" stroke-width="1.3"/>
+      <text x="280" y="268" text-anchor="middle" font-size="10.5" font-weight="600" fill="#1F1F1F" font-family="'Roboto Mono',monospace">merge to main</text>
 
       <!-- Box 2: POSTMERGE BUILD -->
-      <rect x="20" y="286" width="520" height="194" rx="8" fill="#EBF5D4" stroke="#5a9000" stroke-width="2"/>
-      <rect x="20" y="286" width="520" height="34"  rx="8" fill="#5a9000"/>
-      <rect x="20" y="306" width="520" height="14" fill="#5a9000"/>
-      <text x="36" y="308" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'JetBrains Mono',monospace">POSTMERGE BUILD</text>
-      <text x="530" y="308" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'JetBrains Mono',monospace">trigger: push to main / cron</text>
-      <circle cx="36" cy="340" r="3" fill="#5a9000"/><text x="46" y="343" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">multi-arch buildx: amd64 + arm64 (native Jetson)</text>
-      <circle cx="36" cy="361" r="3" fill="#5a9000"/><text x="46" y="364" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">cosign sign — keyless OIDC via GitHub Actions</text>
-      <circle cx="36" cy="382" r="3" fill="#5a9000"/><text x="46" y="385" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">Trivy scan + SBOM draft generation (syft)</text>
-      <circle cx="36" cy="403" r="3" fill="#5a9000"/><text x="46" y="406" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">HIL smoke test on Jetson Orin</text>
-      <circle cx="36" cy="424" r="3" fill="#5a9000"/><text x="46" y="427" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">Prometheus metrics push + Grafana update</text>
-      <circle cx="36" cy="445" r="3" fill="#5a9000"/><text x="46" y="448" font-size="11.5" fill="#3d6200" font-family="'JetBrains Mono',monospace">Push signed image to DEV registry</text>
+      <rect x="20" y="286" width="520" height="194" rx="8" fill="#E8F0FE" stroke="#1A73E8" stroke-width="2"/>
+      <rect x="20" y="286" width="520" height="34"  rx="8" fill="#1A73E8"/>
+      <rect x="20" y="306" width="520" height="14" fill="#1A73E8"/>
+      <text x="36" y="308" font-size="11" font-weight="700" fill="#FFFFFF" letter-spacing="0.08em" font-family="'Roboto Mono',monospace">POSTMERGE BUILD</text>
+      <text x="530" y="308" font-size="9" fill="#FFFFFF" text-anchor="end" font-family="'Roboto Mono',monospace">trigger: push to main / cron</text>
+      <circle cx="36" cy="340" r="3" fill="#1A73E8"/><text x="46" y="343" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">multi-arch buildx: amd64 + arm64 (native Jetson)</text>
+      <circle cx="36" cy="361" r="3" fill="#1A73E8"/><text x="46" y="364" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">cosign sign — keyless OIDC via GitHub Actions</text>
+      <circle cx="36" cy="382" r="3" fill="#1A73E8"/><text x="46" y="385" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">Trivy scan + SBOM draft generation (syft)</text>
+      <circle cx="36" cy="403" r="3" fill="#1A73E8"/><text x="46" y="406" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">HIL smoke test on Jetson Orin</text>
+      <circle cx="36" cy="424" r="3" fill="#1A73E8"/><text x="46" y="427" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">Prometheus metrics push + Grafana update</text>
+      <circle cx="36" cy="445" r="3" fill="#1A73E8"/><text x="46" y="448" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">Push signed image to DEV registry</text>
 
       <!-- push signed image connector (dashed = conditional path) -->
-      <line x1="280" y1="480" x2="280" y2="518" stroke="#c97d00" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#ca)"/>
-      <rect x="178" y="488" width="204" height="20" rx="4" fill="#fff" stroke="#c97d00" stroke-width="1.3"/>
-      <text x="280" y="502" text-anchor="middle" font-size="10.5" font-weight="600" fill="#5a3800" font-family="'JetBrains Mono',monospace">push signed image to dev</text>
+      <line x1="280" y1="480" x2="280" y2="518" stroke="#FBBC04" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#ca)"/>
+      <rect x="178" y="488" width="204" height="20" rx="4" fill="#FFFFFF" stroke="#FBBC04" stroke-width="1.3"/>
+      <text x="280" y="502" text-anchor="middle" font-size="10.5" font-weight="600" fill="#1F1F1F" font-family="'Roboto Mono',monospace">push signed image to dev</text>
 
       <!-- Box 3: DEV REGISTRY -->
-      <rect x="20" y="520" width="520" height="170" rx="8" fill="#FFF3D0" stroke="#c97d00" stroke-width="2"/>
-      <rect x="20" y="520" width="520" height="34"  rx="8" fill="#c97d00"/>
-      <rect x="20" y="540" width="520" height="14" fill="#c97d00"/>
-      <text x="36" y="542" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'JetBrains Mono',monospace">DEV REGISTRY</text>
-      <text x="530" y="542" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'JetBrains Mono',monospace">every merge to main — 7-day retention</text>
-      <circle cx="36" cy="574" r="3" fill="#c97d00"/><text x="46" y="577" font-size="11.5" fill="#5a3800" font-family="'JetBrains Mono',monospace">nvcr.io/myorg/isaac-ros-dev:&lt;git-sha&gt;</text>
-      <circle cx="36" cy="595" r="3" fill="#c97d00"/><text x="46" y="598" font-size="11.5" fill="#5a3800" font-family="'JetBrains Mono',monospace">multi-arch manifest: amd64 + arm64</text>
-      <circle cx="36" cy="616" r="3" fill="#c97d00"/><text x="46" y="619" font-size="11.5" fill="#5a3800" font-family="'JetBrains Mono',monospace">cosign signed + Trivy vulnerability scanned</text>
-      <circle cx="36" cy="637" r="3" fill="#c97d00"/><text x="46" y="640" font-size="11.5" fill="#5a3800" font-family="'JetBrains Mono',monospace">SBOM draft attached (syft SPDX-JSON)</text>
-      <circle cx="36" cy="658" r="3" fill="#c97d00"/><text x="46" y="661" font-size="11.5" fill="#5a3800" font-family="'JetBrains Mono',monospace">ECR lifecycle policy: auto-expire at 7 days</text>
+      <rect x="20" y="520" width="520" height="170" rx="8" fill="#FEF7E0" stroke="#FBBC04" stroke-width="2"/>
+      <rect x="20" y="520" width="520" height="34"  rx="8" fill="#FBBC04"/>
+      <rect x="20" y="540" width="520" height="14" fill="#FBBC04"/>
+      <text x="36" y="542" font-size="11" font-weight="700" fill="#1F1F1F" letter-spacing="0.08em" font-family="'Roboto Mono',monospace">DEV REGISTRY</text>
+      <text x="530" y="542" font-size="9" fill="#1F1F1F" text-anchor="end" font-family="'Roboto Mono',monospace">every merge to main — 7-day retention</text>
+      <circle cx="36" cy="574" r="3" fill="#FBBC04"/><text x="46" y="577" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">nvcr.io/myorg/isaac-ros-dev:&lt;git-sha&gt;</text>
+      <circle cx="36" cy="595" r="3" fill="#FBBC04"/><text x="46" y="598" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">multi-arch manifest: amd64 + arm64</text>
+      <circle cx="36" cy="616" r="3" fill="#FBBC04"/><text x="46" y="619" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">cosign signed + Trivy vulnerability scanned</text>
+      <circle cx="36" cy="637" r="3" fill="#FBBC04"/><text x="46" y="640" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">SBOM draft attached (syft SPDX-JSON)</text>
+      <circle cx="36" cy="658" r="3" fill="#FBBC04"/><text x="46" y="661" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">ECR lifecycle policy: auto-expire at 7 days</text>
 
       <!-- rc tag connector -->
-      <line x1="280" y1="690" x2="280" y2="728" stroke="#1a4a8a" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#cb)"/>
-      <rect x="168" y="698" width="224" height="20" rx="4" fill="#fff" stroke="#1a4a8a" stroke-width="1.3"/>
-      <text x="280" y="712" text-anchor="middle" font-size="10.5" font-weight="600" fill="#0a3070" font-family="'JetBrains Mono',monospace">rc/* tag or workflow_dispatch</text>
+      <line x1="280" y1="690" x2="280" y2="728" stroke="#1A73E8" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#cb)"/>
+      <rect x="168" y="698" width="224" height="20" rx="4" fill="#FFFFFF" stroke="#1A73E8" stroke-width="1.3"/>
+      <text x="280" y="712" text-anchor="middle" font-size="10.5" font-weight="600" fill="#1A73E8" font-family="'Roboto Mono',monospace">rc/* tag or workflow_dispatch</text>
 
       <!-- Box 4: STAGING REGISTRY -->
-      <rect x="20" y="730" width="520" height="150" rx="8" fill="#E0EBFA" stroke="#1a4a8a" stroke-width="2"/>
-      <rect x="20" y="730" width="520" height="34"  rx="8" fill="#1a4a8a"/>
-      <rect x="20" y="750" width="520" height="14" fill="#1a4a8a"/>
-      <text x="36" y="752" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'JetBrains Mono',monospace">STAGING REGISTRY</text>
-      <text x="530" y="752" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'JetBrains Mono',monospace">rc/* tag push — 30-day retention</text>
-      <circle cx="36" cy="784" r="3" fill="#1a4a8a"/><text x="46" y="787" font-size="11.5" fill="#0a3070" font-family="'JetBrains Mono',monospace">nvcr.io/myorg/isaac-ros-staging:rc-&lt;sha&gt;</text>
-      <circle cx="36" cy="805" r="3" fill="#1a4a8a"/><text x="46" y="808" font-size="11.5" fill="#0a3070" font-family="'JetBrains Mono',monospace">full HIL validation suite on physical Jetson Orin</text>
-      <circle cx="36" cy="826" r="3" fill="#1a4a8a"/><text x="46" y="829" font-size="11.5" fill="#0a3070" font-family="'JetBrains Mono',monospace">cosign signature re-verified before promotion</text>
-      <circle cx="36" cy="847" r="3" fill="#1a4a8a"/><text x="46" y="850" font-size="11.5" fill="#0a3070" font-family="'JetBrains Mono',monospace">SBOM validated; provenance attestation drafted</text>
+      <rect x="20" y="730" width="520" height="150" rx="8" fill="#E8F0FE" stroke="#1A73E8" stroke-width="2"/>
+      <rect x="20" y="730" width="520" height="34"  rx="8" fill="#1A73E8"/>
+      <rect x="20" y="750" width="520" height="14" fill="#1A73E8"/>
+      <text x="36" y="752" font-size="11" font-weight="700" fill="#FFFFFF" letter-spacing="0.08em" font-family="'Roboto Mono',monospace">STAGING REGISTRY</text>
+      <text x="530" y="752" font-size="9" fill="#FFFFFF" text-anchor="end" font-family="'Roboto Mono',monospace">rc/* tag push — 30-day retention</text>
+      <circle cx="36" cy="784" r="3" fill="#1A73E8"/><text x="46" y="787" font-size="11.5" fill="#1A73E8" font-family="'Roboto Mono',monospace">nvcr.io/myorg/isaac-ros-staging:rc-&lt;sha&gt;</text>
+      <circle cx="36" cy="805" r="3" fill="#1A73E8"/><text x="46" y="808" font-size="11.5" fill="#1A73E8" font-family="'Roboto Mono',monospace">full HIL validation suite on physical Jetson Orin</text>
+      <circle cx="36" cy="826" r="3" fill="#1A73E8"/><text x="46" y="829" font-size="11.5" fill="#1A73E8" font-family="'Roboto Mono',monospace">cosign signature re-verified before promotion</text>
+      <circle cx="36" cy="847" r="3" fill="#1A73E8"/><text x="46" y="850" font-size="11.5" fill="#1A73E8" font-family="'Roboto Mono',monospace">SBOM validated; provenance attestation drafted</text>
 
       <!-- git tag + HIL pass connector -->
-      <line x1="280" y1="880" x2="280" y2="918" stroke="#085041" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#ct)"/>
-      <rect x="158" y="888" width="244" height="20" rx="4" fill="#fff" stroke="#085041" stroke-width="1.3"/>
-      <text x="280" y="902" text-anchor="middle" font-size="10.5" font-weight="600" fill="#085041" font-family="'JetBrains Mono',monospace">git tag vX.Y.Z + HIL pass</text>
+      <line x1="280" y1="880" x2="280" y2="918" stroke="#34A853" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#ct)"/>
+      <rect x="158" y="888" width="244" height="20" rx="4" fill="#FFFFFF" stroke="#34A853" stroke-width="1.3"/>
+      <text x="280" y="902" text-anchor="middle" font-size="10.5" font-weight="600" fill="#1F1F1F" font-family="'Roboto Mono',monospace">git tag vX.Y.Z + HIL pass</text>
 
       <!-- Box 5: NGC PRODUCTION -->
-      <rect x="20" y="920" width="520" height="168" rx="8" fill="#d8f5ea" stroke="#085041" stroke-width="2"/>
-      <rect x="20" y="920" width="520" height="34"  rx="8" fill="#085041"/>
-      <rect x="20" y="940" width="520" height="14" fill="#085041"/>
-      <text x="36" y="942" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.08em" font-family="'JetBrains Mono',monospace">NGC PRODUCTION</text>
-      <text x="530" y="942" font-size="9" fill="rgba(255,255,255,0.82)" text-anchor="end" font-family="'JetBrains Mono',monospace">trigger: git tag vX.Y.Z — permanent</text>
-      <circle cx="36" cy="974" r="3" fill="#085041"/><text x="46" y="977" font-size="11.5" fill="#085041" font-family="'JetBrains Mono',monospace">nvcr.io/nvidia/isaac/ros:vX.Y.Z</text>
-      <circle cx="36" cy="995" r="3" fill="#085041"/><text x="46" y="998" font-size="11.5" fill="#085041" font-family="'JetBrains Mono',monospace">SBOM attached + published (syft / SPDX-JSON)</text>
-      <circle cx="36" cy="1016" r="3" fill="#085041"/><text x="46" y="1019" font-size="11.5" fill="#085041" font-family="'JetBrains Mono',monospace">SLSA Level 3 provenance (cosign attest)</text>
-      <circle cx="36" cy="1037" r="3" fill="#085041"/><text x="46" y="1040" font-size="11.5" fill="#085041" font-family="'JetBrains Mono',monospace">NGC public registry — no retention TTL</text>
-      <circle cx="36" cy="1058" r="3" fill="#085041"/><text x="46" y="1061" font-size="11.5" fill="#085041" font-family="'JetBrains Mono',monospace">Automated changelog + GitHub Release created</text>
+      <rect x="20" y="920" width="520" height="168" rx="8" fill="#E6F4EA" stroke="#34A853" stroke-width="2"/>
+      <rect x="20" y="920" width="520" height="34"  rx="8" fill="#188038"/>
+      <rect x="20" y="940" width="520" height="14" fill="#188038"/>
+      <text x="36" y="942" font-size="11" font-weight="700" fill="#FFFFFF" letter-spacing="0.08em" font-family="'Roboto Mono',monospace">NGC PRODUCTION</text>
+      <text x="530" y="942" font-size="9" fill="#FFFFFF" text-anchor="end" font-family="'Roboto Mono',monospace">trigger: git tag vX.Y.Z — permanent</text>
+      <circle cx="36" cy="974" r="3" fill="#34A853"/><text x="46" y="977" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">nvcr.io/nvidia/isaac/ros:vX.Y.Z</text>
+      <circle cx="36" cy="995" r="3" fill="#34A853"/><text x="46" y="998" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">SBOM attached + published (syft / SPDX-JSON)</text>
+      <circle cx="36" cy="1016" r="3" fill="#34A853"/><text x="46" y="1019" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">SLSA Level 3 provenance (cosign attest)</text>
+      <circle cx="36" cy="1037" r="3" fill="#34A853"/><text x="46" y="1040" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">NGC public registry — no retention TTL</text>
+      <circle cx="36" cy="1058" r="3" fill="#34A853"/><text x="46" y="1061" font-size="11.5" fill="#1F1F1F" font-family="'Roboto Mono',monospace">Automated changelog + GitHub Release created</text>
     </svg>
   </div>
 
@@ -1336,7 +1425,7 @@ colcon test --packages-above-and-dependencies $CHANGED_PKGS</pre>
   <div class="phase-block reveal">
     <div class="phase-num">Stage 1 — Dev</div>
     <div class="phase-title">Postmerge Image Push</div>
-    <p style="font-size:13px; color:#555; line-height:1.65;">Every merge to main triggers a multi-arch build and pushes to the dev registry with a 7-day retention policy. These images are signed and scanned but not promoted.</p>
+    <p style="font-size:13px; color:#444746; line-height:1.65;">Every merge to main triggers a multi-arch build and pushes to the dev registry with a 7-day retention policy. These images are signed and scanned but not promoted.</p>
     <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;">
       <span class="chip chip-g">nvcr.io/myorg/isaac-ros-dev</span>
       <span class="chip chip-c">7-day retention</span>
@@ -1347,7 +1436,7 @@ colcon test --packages-above-and-dependencies $CHANGED_PKGS</pre>
   <div class="phase-block reveal">
     <div class="phase-num">Stage 2 — Staging</div>
     <div class="phase-title">Release Candidate Promotion</div>
-    <p style="font-size:13px; color:#555; line-height:1.65;">A release candidate is promoted from dev to staging by a manual workflow dispatch or a <code>rc/*</code> tag push. Staging images undergo hardware-in-loop validation on a physical Jetson Orin before being cleared for production.</p>
+    <p style="font-size:13px; color:#444746; line-height:1.65;">A release candidate is promoted from dev to staging by a manual workflow dispatch or a <code>rc/*</code> tag push. Staging images undergo hardware-in-loop validation on a physical Jetson Orin before being cleared for production.</p>
     <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;">
       <span class="chip chip-g">nvcr.io/myorg/isaac-ros-staging</span>
       <span class="chip chip-c">30-day retention</span>
@@ -1358,7 +1447,7 @@ colcon test --packages-above-and-dependencies $CHANGED_PKGS</pre>
   <div class="phase-block reveal">
     <div class="phase-num">Stage 3 — Production (NGC)</div>
     <div class="phase-title">NGC Publish</div>
-    <p style="font-size:13px; color:#555; line-height:1.65;">After staging validation, images are promoted to the NGC production registry. SBOM is attached, provenance attestation is recorded, and the release is permanent (no TTL).</p>
+    <p style="font-size:13px; color:#444746; line-height:1.65;">After staging validation, images are promoted to the NGC production registry. SBOM is attached, provenance attestation is recorded, and the release is permanent (no TTL).</p>
     <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;">
       <span class="chip chip-g">nvcr.io/nvidia/isaac/ros</span>
       <span class="chip chip-c">permanent</span>
@@ -1413,15 +1502,15 @@ cosign verify \
 
   <div class="stats-strip reveal">
     <div class="stat-item">
-      <span class="stat-n" style="color:#D85A30;">14</span>
+      <span class="stat-n" style="color:#B06000;">14</span>
       <span class="stat-l">CRIT findings</span>
     </div>
     <div class="stat-item">
-      <span class="stat-n" style="color:#c97d00;">12</span>
+      <span class="stat-n" style="color:#B06000;">12</span>
       <span class="stat-l">MED findings</span>
     </div>
     <div class="stat-item">
-      <span class="stat-n" style="color:#0a3070;">15</span>
+      <span class="stat-n" style="color:#1A73E8;">15</span>
       <span class="stat-l">LOW / INFO</span>
     </div>
     <div class="stat-item">
@@ -2346,74 +2435,74 @@ scrape_configs:
 /* ── Presentation slides: scoped to .pres-section wrapper ─────── */
 .pres-section {
   overflow-x: auto; max-width: 100%;
-  margin-top: 24px; border-radius: 8px;
-  background: #d8dbe3; padding: 24px;
+  margin-top: 24px; border-radius: 28px;
+  background: #F0F4F9; padding: 24px; border:1px solid #E1E3E1;
   display: flex; flex-direction: column; gap: 24px;
 }
 /* presentation variables */
-.pres-section { --ps-bg:#f0f2f5; --ps-card:#fff; --ps-dark:#0d0d0f; --ps-ink:#1a1a1e; --ps-sub:#4b4b52; --ps-rim:#c8cad0; --ps-rim2:#dde0e6; --ps-green:#5a9e00; --ps-green-b:#ecf5d8; --ps-blue:#1d59c4; --ps-blue-b:#dce8fb; --ps-red:#c9210e; --ps-red-b:#fce8e6; --ps-amber:#b35b00; --ps-amber-b:#fdf0dc; --ps-sans:'Sora',system-ui,sans-serif; --ps-mono:'JetBrains Mono',monospace; }
-.pres-section .slide { width:100%; max-width:1100px; margin:0 auto; padding:30px 46px 22px; background:var(--ps-bg); border-bottom:3px solid var(--ps-rim); position:relative; }
+.pres-section { --ps-bg:#FFFFFF; --ps-card:#FFFFFF; --ps-dark:#F8FAFD; --ps-ink:#1F1F1F; --ps-sub:#444746; --ps-rim:#E1E3E1; --ps-rim2:#F0F4F9; --ps-green:#188038; --ps-green-b:#E6F4EA; --ps-blue:#1A73E8; --ps-blue-b:#E8F0FE; --ps-red:#C5221F; --ps-red-b:#FCE8E6; --ps-amber:#B06000; --ps-amber-b:#FEF7E0; --ps-sans:'Google Sans','Roboto',system-ui,sans-serif; --ps-mono:'Roboto Mono',monospace; }
+.pres-section .slide { width:100%; max-width:1100px; margin:0 auto; padding:30px 46px 22px; background:var(--ps-bg); border-bottom:1px solid var(--ps-rim); position:relative; border-radius:20px; }
 .pres-section .slide:last-child { border-bottom:none; }
-.pres-section .snum { position:absolute; top:16px; right:28px; font:700 8.5px/1 var(--ps-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--ps-sub); }
-.pres-section .hd-strip { background:var(--ps-dark); margin:-30px -46px 18px; padding:16px 46px 14px; display:flex; align-items:flex-end; justify-content:space-between; }
-.pres-section .eyebrow { font:600 8px/1 var(--ps-sans); letter-spacing:.14em; text-transform:uppercase; color:#8a8a96; margin-bottom:4px; }
-.pres-section .title { font:900 21px/1.1 var(--ps-sans); letter-spacing:-.02em; color:#fff; }
-.pres-section .title em { font-style:normal; color:#a6d43a; }
-.pres-section .sub { margin-top:4px; font:400 9px/1.5 var(--ps-sans); color:#9a9aaa; max-width:580px; }
-.pres-section .tag { display:inline-flex; align-items:center; gap:6px; background:#ffffff0f; border:1px solid #ffffff22; padding:5px 10px; flex-shrink:0; }
-.pres-section .tag-dot { width:7px; height:7px; border-radius:50%; background:#a6d43a; box-shadow:0 0 5px #a6d43a; }
-.pres-section .tag span { font:700 9px/1 var(--ps-mono); letter-spacing:.07em; text-transform:uppercase; color:#9a9aaa; }
-.pres-section .badge { display:inline-flex; align-items:center; gap:4px; padding:2px 7px; font:700 8px/1 var(--ps-sans); letter-spacing:.1em; text-transform:uppercase; white-space:nowrap; border:1px solid transparent; }
-.pres-section .br { background:var(--ps-red-b); color:var(--ps-red); border-color:#f5bbb6; }
-.pres-section .ba { background:var(--ps-amber-b); color:var(--ps-amber); border-color:#f5d9aa; }
-.pres-section .bb { background:var(--ps-blue-b); color:var(--ps-blue); border-color:#b0c8f5; }
-.pres-section .bg { background:var(--ps-green-b); color:var(--ps-green); border-color:#bfdf7a; }
+.pres-section .snum { position:absolute; top:16px; right:28px; font:500 8.5px/1 var(--ps-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--ps-sub); }
+.pres-section .hd-strip { background:var(--ps-dark); border-bottom:1px solid var(--ps-rim); border-radius:20px 20px 0 0; margin:-30px -46px 18px; padding:16px 46px 14px; display:flex; align-items:flex-end; justify-content:space-between; }
+.pres-section .eyebrow { font:500 8px/1 var(--ps-sans); letter-spacing:.14em; text-transform:uppercase; color:#5E5E5E; margin-bottom:4px; }
+.pres-section .title { font:500 24px/1.1 var(--ps-sans); letter-spacing:-.03em; color:#1F1F1F; }
+.pres-section .title em { font-style:normal; color:#1F1F1F; }
+.pres-section .sub { margin-top:4px; font:400 9px/1.5 var(--ps-sans); color:#5E5E5E; max-width:580px; }
+.pres-section .tag { display:inline-flex; align-items:center; gap:6px; background:#fff; border:1px solid #E1E3E1; border-radius:999px; padding:5px 10px; flex-shrink:0; }
+.pres-section .tag-dot { width:7px; height:7px; border-radius:50%; background:#1A73E8;  }
+.pres-section .tag span { font:500 9px/1 var(--ps-mono); letter-spacing:.07em; text-transform:uppercase; color:#5E5E5E; }
+.pres-section .badge { display:inline-flex; align-items:center; gap:4px; padding:2px 7px; font:500 8px/1 var(--ps-sans); letter-spacing:.1em; text-transform:uppercase; white-space:nowrap; border:1px solid transparent; border-radius:999px; }
+.pres-section .br { background:var(--ps-red-b); color:var(--ps-red); border-color:#EA4335; }
+.pres-section .ba { background:var(--ps-amber-b); color:var(--ps-amber); border-color:#FBBC04; }
+.pres-section .bb { background:var(--ps-blue-b); color:var(--ps-blue); border-color:#1A73E8; }
+.pres-section .bg { background:var(--ps-green-b); color:var(--ps-green); border-color:#34A853; }
 .pres-section .bx { background:var(--ps-rim2); color:var(--ps-sub); border-color:var(--ps-rim); }
 .pres-section .dot { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
-.pres-section .sec { font:700 7.5px/1 var(--ps-sans); letter-spacing:.14em; text-transform:uppercase; color:var(--ps-sub); margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+.pres-section .sec { font:500 7.5px/1 var(--ps-sans); letter-spacing:.14em; text-transform:uppercase; color:var(--ps-sub); margin-bottom:8px; display:flex; align-items:center; gap:8px; }
 .pres-section .sec::after { content:''; flex:1; height:1px; background:var(--ps-rim2); }
 .pres-section .g2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
 .pres-section .g3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:9px; }
 .pres-section .g4 { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
-.pres-section .stat { background:var(--ps-card); border:2px solid var(--ps-rim); padding:10px 13px; }
-.pres-section .sv { font:900 28px/1 var(--ps-mono); letter-spacing:-.03em; }
-.pres-section .sl { font:700 7.5px/1 var(--ps-sans); letter-spacing:.09em; text-transform:uppercase; color:var(--ps-sub); margin:4px 0 3px; }
+.pres-section .stat { background:var(--ps-card); border:1px solid var(--ps-rim); padding:10px 13px; border-radius:20px; }
+.pres-section .sv { font:500 28px/1 var(--ps-mono); letter-spacing:-.03em; }
+.pres-section .sl { font:500 7.5px/1 var(--ps-sans); letter-spacing:.09em; text-transform:uppercase; color:var(--ps-sub); margin:4px 0 3px; }
 .pres-section .sn { font:400 8px/1.35 var(--ps-sans); color:var(--ps-sub); }
-.pres-section .ic { background:var(--ps-card); border:2px solid var(--ps-rim); padding:11px 13px; }
+.pres-section .ic { background:var(--ps-card); border:1px solid var(--ps-rim); padding:11px 13px; border-radius:20px; }
 .pres-section .ic + .ic { margin-top:8px; }
 .pres-section .ic-hd { display:flex; align-items:center; gap:7px; margin-bottom:6px; }
-.pres-section .ic-num { width:22px; height:22px; display:flex; align-items:center; justify-content:center; font:900 10px/1 var(--ps-mono); flex-shrink:0; border:2px solid currentColor; }
-.pres-section .ic-title { font:700 11px/1 var(--ps-sans); color:var(--ps-ink); flex:1; }
+.pres-section .ic-num { width:22px; height:22px; display:flex; align-items:center; justify-content:center; font:500 10px/1 var(--ps-mono); flex-shrink:0; border:1px solid currentColor; }
+.pres-section .ic-title { font:500 11px/1 var(--ps-sans); color:var(--ps-ink); flex:1; }
 .pres-section .bullet-list { list-style:none; display:flex; flex-direction:column; gap:4px; }
 .pres-section .bullet-list li { display:flex; align-items:flex-start; gap:8px; font:400 8.5px/1.45 var(--ps-sans); color:var(--ps-sub); }
 .pres-section .bullet-list li::before { content:''; width:4px; height:4px; background:var(--ps-rim); flex-shrink:0; margin-top:5px; }
-.pres-section .wf { background:var(--ps-card); border:2px solid var(--ps-rim); padding:12px 14px; }
-.pres-section .wf-name { font:700 9.5px/1 var(--ps-mono); color:var(--ps-ink); margin-bottom:8px; letter-spacing:.04em; }
+.pres-section .wf { background:var(--ps-card); border:1px solid var(--ps-rim); padding:12px 14px; border-radius:20px; }
+.pres-section .wf-name { font:500 9.5px/1 var(--ps-mono); color:var(--ps-ink); margin-bottom:8px; letter-spacing:.04em; }
 .pres-section .wf-stat { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
-.pres-section .wf-stat-lbl { font:600 8px/1 var(--ps-sans); color:var(--ps-sub); white-space:nowrap; }
+.pres-section .wf-stat-lbl { font:500 8px/1 var(--ps-sans); color:var(--ps-sub); white-space:nowrap; }
 .pres-section .wf-bar-bg { flex:1; height:6px; background:var(--ps-rim2); }
 .pres-section .wf-bar { height:6px; }
-.pres-section .wf-pct { font:700 11px/1 var(--ps-mono); min-width:44px; text-align:right; }
+.pres-section .wf-pct { font:500 11px/1 var(--ps-mono); min-width:44px; text-align:right; }
 .pres-section .wf-rows { display:flex; flex-direction:column; gap:5px; }
 .pres-section .wf-row { display:flex; align-items:flex-start; gap:7px; font:400 8px/1.4 var(--ps-sans); color:var(--ps-sub); }
 .pres-section .wf-row-dot { width:5px; height:5px; flex-shrink:0; margin-top:4px; }
-.pres-section .ref { background:var(--ps-card); border:2px solid var(--ps-rim); padding:8px 11px; }
-.pres-section .ref-id { font:700 9px/1 var(--ps-mono); margin-bottom:4px; }
-.pres-section .ref-title { font:600 8.5px/1.35 var(--ps-sans); color:var(--ps-ink); margin-bottom:2px; }
+.pres-section .ref { background:var(--ps-card); border:1px solid var(--ps-rim); padding:8px 11px; border-radius:20px; }
+.pres-section .ref-id { font:500 9px/1 var(--ps-mono); margin-bottom:4px; }
+.pres-section .ref-title { font:500 8.5px/1.35 var(--ps-sans); color:var(--ps-ink); margin-bottom:2px; }
 .pres-section .ref-note { font:400 7.5px/1.3 var(--ps-sans); color:var(--ps-sub); }
-.pres-section .phase { display:flex; gap:13px; background:var(--ps-card); border:2px solid var(--ps-rim); padding:11px 14px; }
+.pres-section .phase { display:flex; gap:13px; background:var(--ps-card); border:1px solid var(--ps-rim); padding:11px 14px; border-radius:20px; }
 .pres-section .phase + .phase { margin-top:7px; }
-.pres-section .pnum { width:26px; height:26px; display:flex; align-items:center; justify-content:center; font:900 11px/1 var(--ps-mono); flex-shrink:0; margin-top:1px; border:2px solid currentColor; }
+.pres-section .pnum { width:26px; height:26px; display:flex; align-items:center; justify-content:center; font:500 11px/1 var(--ps-mono); flex-shrink:0; margin-top:1px; border:1px solid currentColor; }
 .pres-section .pbody { flex:1; }
 .pres-section .phd { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
-.pres-section .ptitle { font:700 11px/1 var(--ps-sans); color:var(--ps-ink); }
-.pres-section .pwin { font:600 8px/1 var(--ps-mono); color:var(--ps-sub); background:var(--ps-rim2); border:1px solid var(--ps-rim); padding:2px 6px; }
+.pres-section .ptitle { font:500 11px/1 var(--ps-sans); color:var(--ps-ink); }
+.pres-section .pwin { font:500 8px/1 var(--ps-mono); color:var(--ps-sub); background:var(--ps-rim2); border:1px solid var(--ps-rim); padding:2px 8px; border-radius:999px; }
 .pres-section .pitems { display:grid; grid-template-columns:1fr 1fr; gap:4px 14px; }
 .pres-section .pi { display:flex; align-items:flex-start; gap:6px; font:400 8.5px/1.4 var(--ps-sans); color:var(--ps-sub); }
 .pres-section .pidot { width:5px; height:5px; flex-shrink:0; margin-top:5px; }
-.pres-section .foot { padding-top:8px; margin-top:14px; border-top:2px solid var(--ps-rim); display:flex; align-items:center; justify-content:space-between; }
+.pres-section .foot { padding-top:8px; margin-top:14px; border-top:1px solid var(--ps-rim); display:flex; align-items:center; justify-content:space-between; }
 .pres-section .fl { font:400 7.5px/1 var(--ps-mono); color:var(--ps-sub); letter-spacing:.03em; }
-.pres-section .fr { font:700 7.5px/1 var(--ps-sans); color:var(--ps-sub); letter-spacing:.07em; text-transform:uppercase; }
+.pres-section .fr { font:500 7.5px/1 var(--ps-sans); color:var(--ps-sub); letter-spacing:.07em; text-transform:uppercase; }
   </style>
 
   <div class="pres-section reveal">
@@ -2434,23 +2523,23 @@ scrape_configs:
 
   <!-- KPI strip -->
   <div class="g4" style="margin-bottom:14px;">
-    <div class="stat" style="border-color:#f5bbb6;border-left:4px solid var(--red);">
-      <div class="sv" style="color:var(--red);">16%</div>
+    <div class="stat" style="border-color:#EA4335;">
+      <div class="sv" style="color:#C5221F;">16%</div>
       <div class="sl">Postmerge CI Pass Rate</div>
       <div class="sn">84% failing — build-and-push-images accounts for 96% of all failures</div>
     </div>
-    <div class="stat" style="border-color:#f5bbb6;border-left:4px solid var(--red);">
-      <div class="sv" style="color:var(--red);">0%</div>
+    <div class="stat" style="border-color:#EA4335;">
+      <div class="sv" style="color:#C5221F;">0%</div>
       <div class="sl">Nightly Pass Rate</div>
       <div class="sn">daily-compatibility.yml at 0% for 14+ consecutive days straight</div>
     </div>
-    <div class="stat" style="border-color:#f5d9aa;border-left:4px solid var(--amber);">
-      <div class="sv" style="color:var(--amber);">70%</div>
+    <div class="stat" style="border-color:#FBBC04;">
+      <div class="sv" style="color:#B06000;">70%</div>
       <div class="sl">CI Checks Skipped</div>
       <div class="sn">33 check runs per PR — 70% skipped but GPU runners still spin up and bill</div>
     </div>
-    <div class="stat" style="border-color:#f5d9aa;border-left:4px solid var(--amber);">
-      <div class="sv" style="color:var(--amber);">49</div>
+    <div class="stat" style="border-color:#FBBC04;">
+      <div class="sv" style="color:#B06000;">49</div>
       <div class="sl">Open Install Issues</div>
       <div class="sn">33% of all 150 open issues are Docker / pip / installation failures</div>
     </div>
@@ -2460,11 +2549,11 @@ scrape_configs:
   <div class="sec">4 critical failure categories</div>
   <div class="g2">
     <div>
-      <div class="ic" style="border-color:#f5bbb6;border-left:4px solid var(--red);">
+      <div class="ic" style="border-color:#EA4335;">
         <div class="ic-hd">
-          <div class="ic-num" style="color:var(--red);">1</div>
+          <div class="ic-num" style="color:#C5221F;">1</div>
           <div class="ic-title">ECR Push Failures — Nightly Dead</div>
-          <span class="badge br"><span class="dot" style="background:var(--red);"></span>Critical</span>
+          <span class="badge br"><span class="dot" style="background:#EA4335;"></span>Critical</span>
         </div>
         <ul class="bullet-list">
           <li>OIDC token TTL exceeded during long GPU builds → credential expires mid-push to ECR</li>
@@ -2473,11 +2562,11 @@ scrape_configs:
           <li>Open fix PRs are pending merge</li>
         </ul>
       </div>
-      <div class="ic" style="border-color:#f5bbb6;border-left:4px solid var(--red);margin-top:8px;">
+      <div class="ic" style="border-color:#EA4335;margin-top:8px;">
         <div class="ic-hd">
-          <div class="ic-num" style="color:var(--red);">2</div>
+          <div class="ic-num" style="color:#C5221F;">2</div>
           <div class="ic-title">Blackwell GPU — Zero Support</div>
-          <span class="badge br"><span class="dot" style="background:var(--red);"></span>Critical</span>
+          <span class="badge br"><span class="dot" style="background:#EA4335;"></span>Critical</span>
         </div>
         <ul class="bullet-list">
           <li>RTX 5090 / 5070 Ti crashes — sm_120 (Blackwell) absent from CUDA arch list</li>
@@ -2488,11 +2577,11 @@ scrape_configs:
       </div>
     </div>
     <div>
-      <div class="ic" style="border-color:#f5d9aa;border-left:4px solid var(--amber);">
+      <div class="ic" style="border-color:#FBBC04;">
         <div class="ic-hd">
-          <div class="ic-num" style="color:var(--amber);">3</div>
+          <div class="ic-num" style="color:#B06000;">3</div>
           <div class="ic-title">Dependency Hell — 49 Open Issues</div>
-          <span class="badge ba"><span class="dot" style="background:var(--amber);"></span>High</span>
+          <span class="badge ba"><span class="dot" style="background:#FBBC04;"></span>High</span>
         </div>
         <ul class="bullet-list">
           <li>No single source of truth for dep versions — each package pins independently</li>
@@ -2501,11 +2590,11 @@ scrape_configs:
           <li>Open fix PRs are pending merge</li>
         </ul>
       </div>
-      <div class="ic" style="border-color:#f5d9aa;border-left:4px solid var(--amber);margin-top:8px;">
+      <div class="ic" style="border-color:#FBBC04;margin-top:8px;">
         <div class="ic-hd">
-          <div class="ic-num" style="color:var(--amber);">4</div>
+          <div class="ic-num" style="color:#B06000;">4</div>
           <div class="ic-title">Wasteful PR Matrix — 60% Redundant GPU</div>
-          <span class="badge ba"><span class="dot" style="background:var(--amber);"></span>High</span>
+          <span class="badge ba"><span class="dot" style="background:#FBBC04;"></span>High</span>
         </div>
         <ul class="bullet-list">
           <li>32% of open PRs are docs-only — all trigger A100-80GB GPU runners unnecessarily</li>
@@ -2537,55 +2626,55 @@ scrape_configs:
       <div class="sub">Mapped to specific workflow YAML files and confirmed GitHub issue numbers. Every item below is reproducible from the open issue tracker.</div>
     </div>
     <div class="tag">
-      <div class="tag-dot" style="background:#ff6b6b;box-shadow:0 0 5px #ff6b6b;"></div>
+      <div class="tag-dot" style="background:#EA4335;"></div>
       <span>.github/workflows</span>
     </div>
   </div>
 
   <div class="g3" style="margin-bottom:14px;">
 
-    <div class="wf" style="border-color:#f5bbb6;border-top:4px solid var(--red);">
+    <div class="wf" style="border-color:#EA4335;">
       <div class="wf-name">Post-Merge CI</div>
       <div class="wf-stat">
         <span class="wf-stat-lbl">Pass rate</span>
-        <div class="wf-bar-bg"><div class="wf-bar" style="width:16%;background:var(--red);"></div></div>
-        <span class="wf-pct" style="color:var(--red);">16%</span>
+        <div class="wf-bar-bg"><div class="wf-bar" style="width:16%;background:#EA4335;"></div></div>
+        <span class="wf-pct" style="color:#C5221F;">16%</span>
       </div>
       <div class="wf-rows">
-        <div class="wf-row"><div class="wf-row-dot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">build-and-push-images</strong> — OIDC token expires during multi-hour GPU build; 96% of failures trace here</span></div>
-        <div class="wf-row"><div class="wf-row-dot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">packaging==23.0 conflict</strong> — isaacsim-core pin breaks pip vendored module inside Docker container</span></div>
-        <div class="wf-row"><div class="wf-row-dot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">Silent source failures</strong> — isaaclab.sh exits 0 on conflict; CI marks green, job fails later</span></div>
-        <div class="wf-row"><div class="wf-row-dot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">Full 10-cell matrix</strong> — all 3 Isaac Sim × 4 extensions on every push; no post-merge vs PR split</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:#EA4335;"></div><span><strong style="color:var(--ink);">build-and-push-images</strong> — OIDC token expires during multi-hour GPU build; 96% of failures trace here</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:#EA4335;"></div><span><strong style="color:var(--ink);">packaging==23.0 conflict</strong> — isaacsim-core pin breaks pip vendored module inside Docker container</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:#EA4335;"></div><span><strong style="color:var(--ink);">Silent source failures</strong> — isaaclab.sh exits 0 on conflict; CI marks green, job fails later</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:#FBBC04;"></div><span><strong style="color:var(--ink);">Full 10-cell matrix</strong> — all 3 Isaac Sim × 4 extensions on every push; no post-merge vs PR split</span></div>
       </div>
     </div>
 
-    <div class="wf" style="border-color:#f5bbb6;border-top:4px solid var(--red);">
+    <div class="wf" style="border-color:#EA4335;">
       <div class="wf-name">Nightly Compatibility</div>
       <div class="wf-stat">
         <span class="wf-stat-lbl">Pass rate</span>
-        <div class="wf-bar-bg"><div class="wf-bar" style="width:0%;background:var(--red);"></div></div>
-        <span class="wf-pct" style="color:var(--red);">0% (14d)</span>
+        <div class="wf-bar-bg"><div class="wf-bar" style="width:0%;background:#EA4335;"></div></div>
+        <span class="wf-pct" style="color:#C5221F;">0% (14d)</span>
       </div>
       <div class="wf-rows">
-        <div class="wf-row"><div class="wf-row-dot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">ECR credential expiry</strong> — OIDC token issued at job start, expires before multi-hour GPU build finishes</span></div>
-        <div class="wf-row"><div class="wf-row-dot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">Matrix resolver bug</strong> — unknown INPUT_SIM_VERSIONS silently falls back to ALL versions; re-run → 12-job full matrix</span></div>
-        <div class="wf-row"><div class="wf-row-dot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">Output variable risk</strong> — Output variable unset — silently discards all 11 outputs; "tag not found" downstream</span></div>
-        <div class="wf-row"><div class="wf-row-dot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">Changelog deprecation</strong> — scheduled-workflow syntax deprecated, breaking nightly trigger</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:#EA4335;"></div><span><strong style="color:var(--ink);">ECR credential expiry</strong> — OIDC token issued at job start, expires before multi-hour GPU build finishes</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:#EA4335;"></div><span><strong style="color:var(--ink);">Matrix resolver bug</strong> — unknown INPUT_SIM_VERSIONS silently falls back to ALL versions; re-run → 12-job full matrix</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:#EA4335;"></div><span><strong style="color:var(--ink);">Output variable risk</strong> — Output variable unset — silently discards all 11 outputs; "tag not found" downstream</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:#FBBC04;"></div><span><strong style="color:var(--ink);">Changelog deprecation</strong> — scheduled-workflow syntax deprecated, breaking nightly trigger</span></div>
       </div>
     </div>
 
-    <div class="wf" style="border-color:#f5d9aa;border-top:4px solid var(--amber);">
+    <div class="wf" style="border-color:#FBBC04;">
       <div class="wf-name">PR Build Pipeline</div>
       <div class="wf-stat">
         <span class="wf-stat-lbl">Skipped checks</span>
-        <div class="wf-bar-bg"><div class="wf-bar" style="width:70%;background:var(--amber);"></div></div>
-        <span class="wf-pct" style="color:var(--amber);">70%</span>
+        <div class="wf-bar-bg"><div class="wf-bar" style="width:70%;background:#FBBC04;"></div></div>
+        <span class="wf-pct" style="color:#B06000;">70%</span>
       </div>
       <div class="wf-rows">
-        <div class="wf-row"><div class="wf-row-dot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">No PR classification</strong> — 32% of PRs are docs-only; still trigger A100-80GB runner; 23 of 33 checks skip immediately</span></div>
-        <div class="wf-row"><div class="wf-row-dot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">Full matrix on every PR</strong> — 3 Isaac Sim versions × 4 extensions; 60% of GPU work is redundant per PR</span></div>
-        <div class="wf-row"><div class="wf-row-dot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">Isaac Sim 6.0 gaps</strong> — compat breakages; old-version cells mask which version is actually broken</span></div>
-        <div class="wf-row"><div class="wf-row-dot" style="background:var(--blue);"></div><span><strong style="color:var(--ink);">No Blackwell runner</strong> — sm_120 absent from CUDA arch; RTX 5090 regressions never caught in CI</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:#FBBC04;"></div><span><strong style="color:var(--ink);">No PR classification</strong> — 32% of PRs are docs-only; still trigger A100-80GB runner; 23 of 33 checks skip immediately</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:#FBBC04;"></div><span><strong style="color:var(--ink);">Full matrix on every PR</strong> — 3 Isaac Sim versions × 4 extensions; 60% of GPU work is redundant per PR</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:#FBBC04;"></div><span><strong style="color:var(--ink);">Isaac Sim 6.0 gaps</strong> — compat breakages; old-version cells mask which version is actually broken</span></div>
+        <div class="wf-row"><div class="wf-row-dot" style="background:#1A73E8;"></div><span><strong style="color:var(--ink);">No Blackwell runner</strong> — sm_120 absent from CUDA arch; RTX 5090 regressions never caught in CI</span></div>
       </div>
     </div>
   </div>
@@ -2593,43 +2682,43 @@ scrape_configs:
   <!-- Issue references -->
   <div class="sec">Key Failure Areas — Confirmed by Analysis</div>
   <div class="g4">
-    <div class="ref" style="border-color:#f5bbb6;border-left:3px solid var(--red);">
-      <div class="ref-id" style="color:var(--red);">DEP CONFLICT</div>
+    <div class="ref" style="border-color:#EA4335;">
+      <div class="ref-id" style="color:#C5221F;">DEP CONFLICT</div>
       <div class="ref-title">packaging==23.0 pin conflict</div>
       <div class="ref-note">isaacsim-core conflicts with pip vendored module; breaks Docker pip install</div>
     </div>
-    <div class="ref" style="border-color:#f5bbb6;border-left:3px solid var(--red);">
-      <div class="ref-id" style="color:var(--red);">GPU ARCH</div>
+    <div class="ref" style="border-color:#EA4335;">
+      <div class="ref-id" style="color:#C5221F;">GPU ARCH</div>
       <div class="ref-title">NVRTC arch error — Blackwell</div>
       <div class="ref-note">sm_120 (RTX 5090) missing from CUDA arch list; NVRTC fails</div>
     </div>
-    <div class="ref" style="border-color:#f5bbb6;border-left:3px solid var(--red);">
-      <div class="ref-id" style="color:var(--red);">SILENT EXIT</div>
+    <div class="ref" style="border-color:#EA4335;">
+      <div class="ref-id" style="color:#C5221F;">SILENT EXIT</div>
       <div class="ref-title">Silent install failure</div>
       <div class="ref-note">isaaclab.sh --install exits 0 on dependency conflict; no error surfaced</div>
     </div>
-    <div class="ref" style="border-color:#f5bbb6;border-left:3px solid var(--red);">
-      <div class="ref-id" style="color:var(--red);">DOCKER PIP</div>
+    <div class="ref" style="border-color:#EA4335;">
+      <div class="ref-id" style="color:#C5221F;">DOCKER PIP</div>
       <div class="ref-title">Broken pip in Docker</div>
       <div class="ref-note">Missing vendored packaging module inside IsaacLab Docker image</div>
     </div>
-    <div class="ref" style="border-color:#f5d9aa;border-left:3px solid var(--amber);">
-      <div class="ref-id" style="color:var(--amber);">BUILD SILENT</div>
+    <div class="ref" style="border-color:#FBBC04;">
+      <div class="ref-id" style="color:#B06000;">BUILD SILENT</div>
       <div class="ref-title">Silent build from source</div>
       <div class="ref-note">Build step exits 0 despite source compile failure; CI marked green</div>
     </div>
-    <div class="ref" style="border-color:#f5d9aa;border-left:3px solid var(--amber);">
-      <div class="ref-id" style="color:var(--amber);">IS6 COMPAT</div>
+    <div class="ref" style="border-color:#FBBC04;">
+      <div class="ref-id" style="color:#B06000;">IS6 COMPAT</div>
       <div class="ref-title">Isaac Sim 6.0 compat</div>
       <div class="ref-note">API breakages with IS 6.0 not caught by current PR CI matrix</div>
     </div>
-    <div class="ref" style="border-color:#f5d9aa;border-left:3px solid var(--amber);">
-      <div class="ref-id" style="color:var(--amber);">MISSING PKG</div>
+    <div class="ref" style="border-color:#FBBC04;">
+      <div class="ref-id" style="color:#B06000;">MISSING PKG</div>
       <div class="ref-title">CloudXR missing in IS 6.0</div>
       <div class="ref-note">isaacsim.kit.xr.teleop.bridge not published in IS 6.0 pip index</div>
     </div>
-    <div class="ref" style="border-color:#b0c8f5;border-left:3px solid var(--blue);">
-      <div class="ref-id" style="color:var(--blue);">RAM LIMIT</div>
+    <div class="ref" style="border-color:#1A73E8;">
+      <div class="ref-id" style="color:#1A73E8;">RAM LIMIT</div>
       <div class="ref-title">Docker RAM overconsumption</div>
       <div class="ref-note">Isaac Sim overconsumes RAM; no --memory limits set in docker run flags</div>
     </div>
@@ -2655,13 +2744,13 @@ scrape_configs:
       <div class="sub">Ordered by impact-to-effort ratio. Phase 1 alone restores nightly CI and unblocks postmerge. Each phase maps directly to a root cause from Slide 1.</div>
     </div>
     <div class="tag">
-      <div class="tag-dot" style="background:#6ea8fe;box-shadow:0 0 5px #6ea8fe;"></div>
+      <div class="tag-dot" style="background:#1A73E8;"></div>
       <span>Roadmap&nbsp;2026</span>
     </div>
   </div>
 
-  <div class="phase" style="border-color:#f5bbb6;border-left:4px solid var(--red);">
-    <div class="pnum" style="color:var(--red);">1</div>
+  <div class="phase" style="border-color:#EA4335;">
+    <div class="pnum" style="color:#C5221F;">1</div>
     <div class="pbody">
       <div class="phd">
         <div class="ptitle">Fix ECR + Dependency Failures</div>
@@ -2669,18 +2758,18 @@ scrape_configs:
         <span class="badge br">Targets #1 + #3 — restores nightly to 100%</span>
       </div>
       <div class="pitems">
-        <div class="pi"><div class="pidot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">Rotate ECR OIDC credentials</strong> — fix IAM trust policy; add nick-fields/retry (3×, 60s) to ECR push step in postmerge-ci.yml</span></div>
-        <div class="pi"><div class="pidot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">Centralize dependency pins</strong> — single source of truth in a shared deps file; resolves packaging==23.0 conflict</span></div>
-        <div class="pi"><div class="pidot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">Fix isaaclab.sh exit codes</strong> — add post-install smoke test: python -c 'import isaaclab'; propagate real exit code</span></div>
-        <div class="pi"><div class="pidot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">Fix resolve-matrix.py fallback</strong> — unknown input → sys.exit(1), not silent all-matrix fallback in daily-compatibility</span></div>
-        <div class="pi"><div class="pidot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">Guard output variable in nightly script</strong> — fail fast in CI if unset; prevents silent /dev/null writes</span></div>
-        <div class="pi"><div class="pidot" style="background:var(--red);"></div><span><strong style="color:var(--ink);">Fix deprecated nightly trigger</strong> — scheduled-workflow syntax fix restoring daily-compatibility trigger</span></div>
+        <div class="pi"><div class="pidot" style="background:#EA4335;"></div><span><strong style="color:var(--ink);">Rotate ECR OIDC credentials</strong> — fix IAM trust policy; add nick-fields/retry (3×, 60s) to ECR push step in postmerge-ci.yml</span></div>
+        <div class="pi"><div class="pidot" style="background:#EA4335;"></div><span><strong style="color:var(--ink);">Centralize dependency pins</strong> — single source of truth in a shared deps file; resolves packaging==23.0 conflict</span></div>
+        <div class="pi"><div class="pidot" style="background:#EA4335;"></div><span><strong style="color:var(--ink);">Fix isaaclab.sh exit codes</strong> — add post-install smoke test: python -c 'import isaaclab'; propagate real exit code</span></div>
+        <div class="pi"><div class="pidot" style="background:#EA4335;"></div><span><strong style="color:var(--ink);">Fix resolve-matrix.py fallback</strong> — unknown input → sys.exit(1), not silent all-matrix fallback in daily-compatibility</span></div>
+        <div class="pi"><div class="pidot" style="background:#EA4335;"></div><span><strong style="color:var(--ink);">Guard output variable in nightly script</strong> — fail fast in CI if unset; prevents silent /dev/null writes</span></div>
+        <div class="pi"><div class="pidot" style="background:#EA4335;"></div><span><strong style="color:var(--ink);">Fix deprecated nightly trigger</strong> — scheduled-workflow syntax fix restoring daily-compatibility trigger</span></div>
       </div>
     </div>
   </div>
 
-  <div class="phase" style="border-color:#f5d9aa;border-left:4px solid var(--amber);">
-    <div class="pnum" style="color:var(--amber);">2</div>
+  <div class="phase" style="border-color:#FBBC04;">
+    <div class="pnum" style="color:#B06000;">2</div>
     <div class="pbody">
       <div class="phd">
         <div class="ptitle">Smart PR Gating — Eliminate GPU Waste</div>
@@ -2688,18 +2777,18 @@ scrape_configs:
         <span class="badge ba">Targets #4 — −60% GPU runner cost</span>
       </div>
       <div class="pitems">
-        <div class="pi"><div class="pidot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">Add dorny/paths-filter</strong> — classify PR as docs / tests / source / ci-config before any GPU runner is assigned</span></div>
-        <div class="pi"><div class="pidot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">Gate GPU matrix in PR build workflow</strong> — if: needs.classify.outputs.source == 'true'; docs PRs → ubuntu-latest only, no GPU</span></div>
-        <div class="pi"><div class="pidot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">Reduce PR matrix to 4 cells</strong> — latest Isaac Sim × 4 extensions on PRs; full 10-cell only on merge and nightly</span></div>
-        <div class="pi"><div class="pidot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">BuildKit cache mounts</strong> — --mount=type=cache,target=/root/.cache/pip; reorder Dockerfile: requirements first, source after</span></div>
-        <div class="pi"><div class="pidot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">Base image deduplication</strong> — build base once per Isaac Sim version; fan-out to 4 extensions in parallel from cache</span></div>
-        <div class="pi"><div class="pidot" style="background:var(--amber);"></div><span><strong style="color:var(--ink);">Add install test suite</strong> — conda/uv installation tests in CI; catch install regressions before reaching users</span></div>
+        <div class="pi"><div class="pidot" style="background:#FBBC04;"></div><span><strong style="color:var(--ink);">Add dorny/paths-filter</strong> — classify PR as docs / tests / source / ci-config before any GPU runner is assigned</span></div>
+        <div class="pi"><div class="pidot" style="background:#FBBC04;"></div><span><strong style="color:var(--ink);">Gate GPU matrix in PR build workflow</strong> — if: needs.classify.outputs.source == 'true'; docs PRs → ubuntu-latest only, no GPU</span></div>
+        <div class="pi"><div class="pidot" style="background:#FBBC04;"></div><span><strong style="color:var(--ink);">Reduce PR matrix to 4 cells</strong> — latest Isaac Sim × 4 extensions on PRs; full 10-cell only on merge and nightly</span></div>
+        <div class="pi"><div class="pidot" style="background:#FBBC04;"></div><span><strong style="color:var(--ink);">BuildKit cache mounts</strong> — --mount=type=cache,target=/root/.cache/pip; reorder Dockerfile: requirements first, source after</span></div>
+        <div class="pi"><div class="pidot" style="background:#FBBC04;"></div><span><strong style="color:var(--ink);">Base image deduplication</strong> — build base once per Isaac Sim version; fan-out to 4 extensions in parallel from cache</span></div>
+        <div class="pi"><div class="pidot" style="background:#FBBC04;"></div><span><strong style="color:var(--ink);">Add install test suite</strong> — conda/uv installation tests in CI; catch install regressions before reaching users</span></div>
       </div>
     </div>
   </div>
 
-  <div class="phase" style="border-color:#b0c8f5;border-left:4px solid var(--blue);">
-    <div class="pnum" style="color:var(--blue);">3</div>
+  <div class="phase" style="border-color:#1A73E8;">
+    <div class="pnum" style="color:#1A73E8;">3</div>
     <div class="pbody">
       <div class="phd">
         <div class="ptitle">Blackwell GPU Support + Elite Observability</div>
@@ -2707,12 +2796,12 @@ scrape_configs:
         <span class="badge bb">Targets #2 — unblocks RTX 5090 / 5070 Ti users</span>
       </div>
       <div class="pitems">
-        <div class="pi"><div class="pidot" style="background:var(--blue);"></div><span><strong style="color:var(--ink);">Add sm_90a + sm_120 to CUDA arch</strong> — fix NVRTC -arch error; update CMakeLists / setup.py for Blackwell</span></div>
-        <div class="pi"><div class="pidot" style="background:var(--blue);"></div><span><strong style="color:var(--ink);">Recompile TiledCamera kernel</strong> — add sm_120 target for GB202/GB203 silicon; resolves hang on RTX 5090</span></div>
-        <div class="pi"><div class="pidot" style="background:var(--blue);"></div><span><strong style="color:var(--ink);">Add Blackwell runner to nightly matrix</strong> — RTX 5090 (GB202) cell in daily-compatibility.yml from Week 8</span></div>
-        <div class="pi"><div class="pidot" style="background:var(--blue);"></div><span><strong style="color:var(--ink);">Resolve Isaac Sim 6.0 compat gaps</strong> — fix API breakages; make IS 6.0 the primary version in PR CI</span></div>
-        <div class="pi"><div class="pidot" style="background:var(--blue);"></div><span><strong style="color:var(--ink);">ECR push health check</strong> — hourly credential verification workflow; Slack alert on first failure before nightly runs</span></div>
-        <div class="pi"><div class="pidot" style="background:var(--blue);"></div><span><strong style="color:var(--ink);">DORA metrics baseline</strong> — track deployment freq, lead time, MTTR, CFR; target Elite band by end of Q3</span></div>
+        <div class="pi"><div class="pidot" style="background:#1A73E8;"></div><span><strong style="color:var(--ink);">Add sm_90a + sm_120 to CUDA arch</strong> — fix NVRTC -arch error; update CMakeLists / setup.py for Blackwell</span></div>
+        <div class="pi"><div class="pidot" style="background:#1A73E8;"></div><span><strong style="color:var(--ink);">Recompile TiledCamera kernel</strong> — add sm_120 target for GB202/GB203 silicon; resolves hang on RTX 5090</span></div>
+        <div class="pi"><div class="pidot" style="background:#1A73E8;"></div><span><strong style="color:var(--ink);">Add Blackwell runner to nightly matrix</strong> — RTX 5090 (GB202) cell in daily-compatibility.yml from Week 8</span></div>
+        <div class="pi"><div class="pidot" style="background:#1A73E8;"></div><span><strong style="color:var(--ink);">Resolve Isaac Sim 6.0 compat gaps</strong> — fix API breakages; make IS 6.0 the primary version in PR CI</span></div>
+        <div class="pi"><div class="pidot" style="background:#1A73E8;"></div><span><strong style="color:var(--ink);">ECR push health check</strong> — hourly credential verification workflow; Slack alert on first failure before nightly runs</span></div>
+        <div class="pi"><div class="pidot" style="background:#1A73E8;"></div><span><strong style="color:var(--ink);">DORA metrics baseline</strong> — track deployment freq, lead time, MTTR, CFR; target Elite band by end of Q3</span></div>
       </div>
     </div>
   </div>
@@ -2721,23 +2810,23 @@ scrape_configs:
   <div style="margin-top:12px;">
     <div class="sec">Expected outcomes after all 3 phases</div>
     <div class="g4">
-      <div class="stat" style="border-color:#bfdf7a;border-left:4px solid var(--green);">
-        <div class="sv" style="color:var(--green);">+80%</div>
+      <div class="stat" style="border-color:#1A73E8;">
+        <div class="sv" style="color:#188038;">+80%</div>
         <div class="sl">Postmerge Pass Rate</div>
         <div class="sn">ECR fix + retry logic → 16% → ~96%; Phase 1 alone achieves this</div>
       </div>
-      <div class="stat" style="border-color:#bfdf7a;border-left:4px solid var(--green);">
-        <div class="sv" style="color:var(--green);">100%</div>
+      <div class="stat" style="border-color:#1A73E8;">
+        <div class="sv" style="color:#188038;">100%</div>
         <div class="sl">Nightly Restored</div>
         <div class="sn">0% → daily green; credential fix + deprecation patch in Phase 1</div>
       </div>
-      <div class="stat" style="border-color:#bfdf7a;border-left:4px solid var(--green);">
-        <div class="sv" style="color:var(--green);">−60%</div>
+      <div class="stat" style="border-color:#1A73E8;">
+        <div class="sv" style="color:#188038;">−60%</div>
         <div class="sl">GPU Runner Cost</div>
         <div class="sn">Smart gating + matrix reduction; ~40 GPU-hours/week saved</div>
       </div>
-      <div class="stat" style="border-color:#bfdf7a;border-left:4px solid var(--green);">
-        <div class="sv" style="color:var(--green);">49→0</div>
+      <div class="stat" style="border-color:#1A73E8;">
+        <div class="sv" style="color:#188038;">49→0</div>
         <div class="sl">Install Issues</div>
         <div class="sn">Centralized pins + smoke tests close all open install issues</div>
       </div>

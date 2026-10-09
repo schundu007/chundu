@@ -24,307 +24,101 @@
     <link rel="icon" type="image/x-icon" href="../../favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="../../assets/js/theme.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../../assets/css/style.css?v=13">
     <style>
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #111118;
-            --bg-tertiary: #18181f;
-            --text-primary: #ffffff;
-            --text-secondary: #a1a1aa;
-            --text-muted: #71717a;
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --white: #ffffff;
-            --primary: #3b82f6;
-            --primary-dark: #2563eb;
-            --primary-light: rgba(59, 130, 246, 0.2);
-            --radius: 8px;
-            --radius-lg: 12px;
-            --applied-color: #f59e0b;
-        }
+        body { margin: 0; padding: 64px 0 0; }
+        #neural-bg, .page-header, footer { display: none !important; }
+        .main-content { max-width: 100%; padding: 0; margin: 0; min-height: calc(100vh - 64px); }
 
-        body {
-            background: var(--bg-primary) !important;
-            color: var(--text-primary);
-            margin: 0;
-            padding: 56px 0 0; /* clear the fixed 56px nav */
-        }
-
-        #neural-bg, .page-header, footer {
-            display: none !important;
-        }
-
-        .main-content {
-            max-width: 100%;
-            padding: 0;
-            margin: 0;
-            background: var(--bg-primary);
-            min-height: calc(100vh - 56px);
-        }
-
+        .applied-container { max-width: 1280px; margin: 0 auto; padding: 32px 24px 64px; }
         .applied-topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.75rem 1.5rem;
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--glass-border);
-            position: sticky;
-            top: 56px;
-            z-index: 100;
+            display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;
+            margin-bottom: 24px;
         }
-
         .applied-topbar-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            margin: 0; font-family: var(--gz-display); font-size: clamp(36px, 4.4vw, 56px); font-weight: 500;
+            letter-spacing: -0.04em; line-height: 1.02; color: var(--gz-ink);
         }
-
-        .applied-topbar-title i {
-            color: var(--applied-color);
-        }
-
-        .applied-topbar-title span {
-            color: var(--applied-color);
-        }
-
-        .topbar-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
+        .topbar-actions { display: flex; align-items: center; gap: 12px; }
         .back-link {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            text-decoration: none;
-            transition: color 0.2s;
-            padding: 0.5rem 1rem;
-            background: var(--bg-tertiary);
-            border-radius: var(--radius);
+            display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px;
+            border: 1px solid var(--gz-line); border-radius: 999px; background: var(--gz-canvas);
+            font-size: 14px; font-weight: 500; text-decoration: none;
+            transition: background .15s var(--gz-ease);
         }
+        html[data-theme] .back-link { color: var(--gz-ink); }
+        html[data-theme] .back-link:hover { background: var(--gz-surface-2); color: var(--gz-ink); }
 
-        .back-link:hover {
-            color: var(--primary);
-            background: var(--primary-light);
-        }
-
-        .applied-container {
-            width: 80%; max-width: 1920px;
-            margin: 0 auto;
-            padding: 1.5rem;
-        }
-
-        .applied-stats {
-            display: flex;
-            gap: 2rem;
-            margin-bottom: 1.5rem;
-            padding: 1rem 1.5rem;
-            background: var(--bg-secondary);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--glass-border);
-        }
-
+        .applied-stats { display: flex; flex-wrap: wrap; gap: 8px; margin-left: auto; }
         .stat-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
+            display: flex; flex-direction: row; align-items: baseline; gap: 8px;
+            padding: 10px 18px; border-radius: 999px; background: var(--gz-surface-2);
         }
-
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--applied-color);
+        html[data-theme] .applied-stats .stat-value {
+            font-size: 22px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; color: var(--gz-ink);
         }
-
-        .stat-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+        html[data-theme] .applied-stats .stat-label { font-size: 13.5px; color: var(--gz-text-3); }
+        .applied-topbar .topbar-actions { margin-left: 4px; }
 
         .applied-table-wrapper {
-            overflow-x: auto;
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius);
-            background: var(--bg-secondary);
+            overflow-x: auto; border: 1px solid var(--gz-line); border-radius: var(--gz-r);
+            background: var(--gz-canvas);
         }
-
-        .applied-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.8rem;
-        }
-
+        .applied-table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
         .applied-table th {
-            background: var(--bg-tertiary);
-            padding: 0.75rem 1rem;
-            text-align: left;
-            font-weight: 600;
-            font-size: 0.75rem;
-            color: var(--text-primary);
-            border-bottom: 1px solid var(--glass-border);
-            white-space: nowrap;
+            background: var(--gz-surface); padding: 14px 20px; text-align: left; font-weight: 500;
+            font-size: 13.5px; color: var(--gz-text-3); border-bottom: 1px solid var(--gz-line); white-space: nowrap;
         }
-
-        .applied-table td {
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid var(--glass-border);
-            vertical-align: middle;
-            color: var(--text-secondary);
-        }
-
-        .applied-table tr:hover {
-            background: var(--bg-tertiary);
-        }
-
-        .applied-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .role-title {
-            font-weight: 600;
-            color: var(--text-primary);
-            display: block;
-            font-size: 0.85rem;
-        }
-
-        .role-dept {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-        }
-
-        .company-name {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .company-logo {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
-            object-fit: contain;
-        }
-
-        .location-text {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            font-size: 0.75rem;
-        }
-
-        .location-text i {
-            color: var(--text-muted);
-            font-size: 0.65rem;
-        }
-
-        .applied-date {
-            font-size: 0.75rem;
-            color: var(--applied-color);
-        }
-
-        .action-btns {
-            display: flex;
-            gap: 0.5rem;
-        }
-
+        .applied-table td { padding: 14px 20px; border-bottom: 1px solid var(--gz-line); vertical-align: middle; color: var(--gz-text); }
+        .applied-table tbody tr:hover { background: var(--gz-surface); }
+        .applied-table tr:last-child td { border-bottom: none; }
+        .role-title { font-weight: 500; color: var(--gz-ink); display: block; font-size: 15.5px; }
+        .role-dept { font-size: 13px; color: var(--gz-text-3); }
+        .company-name { display: flex; align-items: center; gap: 10px; color: var(--gz-ink); }
+        .company-logo { width: 24px; height: 24px; border-radius: 50%; object-fit: contain; border: 1px solid var(--gz-line); background: #fff; }
+        .location-text { display: flex; align-items: center; gap: 6px; font-size: 14px; }
+        .location-text i { color: var(--gz-text-3); font-size: 12px; }
+        .applied-date { font-family: var(--gz-mono); font-size: 13px; color: var(--gz-text-3); }
+        .action-btns { display: flex; gap: 8px; align-items: center; }
         .view-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            padding: 0.4rem 0.75rem;
-            background: var(--primary);
-            color: var(--white);
-            border: none;
-            border-radius: var(--radius);
-            font-size: 0.7rem;
-            font-weight: 500;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.2s;
+            display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 16px;
+            background: var(--gz-blue); border: 0; border-radius: 999px;
+            font-size: 13.5px; font-weight: 500; cursor: pointer; text-decoration: none;
+            transition: background .15s var(--gz-ease), box-shadow .15s var(--gz-ease);
         }
-
-        .view-btn:hover {
-            background: var(--primary-dark);
-        }
-
+        html[data-theme] .view-btn, html[data-theme] .view-btn:visited { color: var(--gz-on-blue); }
+        html[data-theme] .view-btn:hover { background: var(--gz-blue-hover); color: var(--gz-on-blue); box-shadow: var(--gz-elev); }
+        .view-btn i { font-size: 11px; }
         .remove-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-            background: var(--bg-tertiary);
-            color: #ef4444;
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: all 0.2s;
+            display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px;
+            background: var(--gz-canvas); color: var(--gz-text-3); border: 1px solid var(--gz-line);
+            border-radius: 50%; cursor: pointer; transition: background .15s var(--gz-ease), color .15s var(--gz-ease);
         }
+        .remove-btn:hover { background: #FCE8E6; color: #C5221F; border-color: #FCE8E6; }
+        html[data-theme='dark'] .remove-btn:hover { background: rgba(242, 139, 130, .14); color: #F28B82; border-color: transparent; }
+        .remove-btn i { font-size: 13px; }
 
-        .remove-btn:hover {
-            background: #ef4444;
-            color: var(--white);
-            border-color: #ef4444;
-        }
-
-        .remove-btn i {
-            font-size: 0.7rem;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-muted);
-        }
-
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-
-        .empty-state h3 {
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .empty-state p {
-            margin-bottom: 1.5rem;
-        }
-
+        .empty-state { text-align: center; padding: 64px 24px; color: var(--gz-text-3); }
+        .empty-state i { font-size: 40px; margin-bottom: 16px; color: var(--gz-text-3); }
+        .empty-state h3 { color: var(--gz-ink); font-size: 22px; margin-bottom: 8px; }
+        .empty-state p { margin-bottom: 20px; color: var(--gz-text); }
         .empty-state a {
-            color: var(--primary);
-            text-decoration: none;
+            display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 22px; border-radius: 999px;
+            background: var(--gz-blue); text-decoration: none; font-weight: 500;
         }
-
-        .empty-state a:hover {
-            text-decoration: underline;
-        }
+        html[data-theme] .empty-state a { color: var(--gz-on-blue); }
+        html[data-theme] .empty-state a:hover { background: var(--gz-blue-hover); color: var(--gz-on-blue); }
+        .empty-state a i { font-size: 13px; margin: 0; color: inherit; }
 
         @media (max-width: 768px) {
-            .applied-container {
-                width: 100%;
-                padding: 1rem 1.25rem;
-            }
-            .applied-stats {
-                flex-wrap: wrap;
-                gap: 1rem;
-            }
+            .applied-container { padding: 24px 16px 48px; }
         }
     </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/genz.css">
 </head>
 <body>
     <!-- Navigation -->
@@ -344,33 +138,28 @@
     </nav>
 
     <main class="main-content">
-        <!-- Top Bar -->
-        <div class="applied-topbar">
-            <div class="applied-topbar-title">
-                <i class="fas fa-check-circle"></i>
-                <span>Applied Jobs</span>
-            </div>
-            <div class="topbar-actions">
-                <a href="../" class="back-link">
-                    <i class="fas fa-arrow-left"></i>
-                    Back to Jobs
-                </a>
-            </div>
-        </div>
-
         <div class="applied-container">
-            <!-- Stats -->
-            <div class="applied-stats">
-                <div class="stat-item">
-                    <span class="stat-value" id="total-applied">0</span>
-                    <span class="stat-label">Total Applied</span>
+            <!-- Top Bar -->
+            <div class="applied-topbar">
+                <h1 class="applied-topbar-title">Applied jobs</h1>
+                <!-- Stats -->
+                <div class="applied-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="total-applied">0</span>
+                        <span class="stat-label">Jobs</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="companies-count">0</span>
+                        <span class="stat-label">Companies</span>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-value" id="companies-count">0</span>
-                    <span class="stat-label">Companies</span>
+                <div class="topbar-actions">
+                    <a href="../" class="back-link">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Jobs
+                    </a>
                 </div>
             </div>
-
             <!-- Applied Jobs Table -->
             <div class="applied-table-wrapper">
                 <table class="applied-table">

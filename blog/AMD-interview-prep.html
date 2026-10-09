@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <title>AMD Interview Prep — All-in-one</title>
     <meta name="robots" content="noindex, nofollow, noarchive">
     <meta property="og:type" content="article">
@@ -15,27 +14,35 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="AMD Interview Prep — All-in-one">
 <style>
-  html,body{margin:0;height:100%;background:#07090C;font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  /* Google, Gen-Z shell: light bar, four-colour rule, the tabs as one segmented pill control. */
+  html,body{margin:0;height:100%;background:#FFFFFF;font-family:'Google Sans','Roboto',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
   body{display:flex;flex-direction:column}
-  .bar{flex:none;height:52px;display:flex;align-items:center;gap:6px;padding:0 12px;background:#0D1218;border-bottom:1px solid #1D2831;z-index:10;overflow-x:auto}
-  .brand{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:12px;color:#6B8090;font-weight:600;margin-right:10px;white-space:nowrap}
-  .tab{display:inline-flex;align-items:center;gap:7px;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:13px;color:#A3B4C2;background:transparent;border:1px solid #28353F;border-radius:8px;padding:7px 13px;cursor:pointer;white-space:nowrap;transition:.15s}
-  .tab svg{width:15px;height:15px;flex:none}
-  .tab:hover{color:#E8EFF5;border-color:#3a4a57}
-  .tab.active{color:#07090C;background:linear-gradient(100deg,#D93B2B,#FF6B35);border-color:transparent;font-weight:700}
+  .bar{flex:none;position:relative;min-height:64px;display:flex;align-items:center;gap:12px;padding:8px 16px;background:#FFFFFF;border-bottom:1px solid #E1E3E1;z-index:10;flex-wrap:wrap}
+  .bar::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,#4285F4 0 25%,#EA4335 25% 50%,#FBBC04 50% 75%,#34A853 75% 100%)}
+  .brand{font-size:15px;font-weight:500;color:#1F1F1F;letter-spacing:-.01em;margin-right:4px;white-space:nowrap}
+  .tabs{display:inline-flex;flex-wrap:wrap;gap:2px;padding:3px;border:1px solid #E1E3E1;border-radius:999px;background:#F0F4F9}
+  .tab{display:inline-flex;align-items:center;gap:7px;height:36px;font-family:inherit;font-size:14px;font-weight:500;color:#444746;background:transparent;border:0;border-radius:999px;padding:0 16px;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}
+  .tab svg{width:16px;height:16px;flex:none}
+  .tab:hover{color:#1F1F1F;background:rgba(31,31,31,.06)}
+  .tab.active{color:#FFFFFF;background:#1F1F1F}
+  .tab:focus-visible{outline:2px solid rgba(26,115,232,.4);outline-offset:2px}
   .frames{flex:1;position:relative;min-height:0}
-  .frm{position:absolute;inset:0;width:100%;height:100%;border:0;background:#07090C;display:none}
+  .frm{position:absolute;inset:0;width:100%;height:100%;border:0;background:#FFFFFF;display:none}
   .frm.active{display:block}
   @media print{.bar{display:none}.frames{position:static}.frm{display:block;position:static;height:auto;min-height:100vh;page-break-after:always}}
 </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/genz.css">
 </head>
 <body>
 <div class="bar">
   <span class="brand">AMD CI role · my interview prep</span>
-  <button class="tab active" data-k="jo" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.4"/><circle cx="6" cy="18" r="2.4"/><circle cx="18" cy="8" r="2.4"/><path d="M6 8.4v7.2M8.2 6.6c6 .3 7.8 1.4 7.8 5.4v2"/></svg><span>Joseph</span></button><button class="tab" data-k="ge" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v5.5L4.6 17.4A2 2 0 0 0 6.3 20.5h11.4a2 2 0 0 0 1.7-3.1L14 8.5V3"/><path d="M7.7 14h8.6"/></svg><span>Geo Min</span></button><button class="tab" data-k="sa" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l8.5 4.9v9.2L12 21.5l-8.5-4.9V7.4z"/><circle cx="12" cy="12" r="2.6"/><path d="M12 9.4V4.2M14.3 13.3l4.4 2.5M9.7 13.3l-4.4 2.5"/></svg><span>Sai</span></button><button class="tab" data-k="ut" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8l9 4.6-9 4.6-9-4.6z"/><path d="M3 12l9 4.6 9-4.6"/><path d="M3 16.6l9 4.6 9-4.6"/></svg><span>UnderTheRock</span></button><button class="tab" data-k="tp" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 6 3 12 8 18"/><polyline points="16 6 21 12 16 18"/></svg><span>Tech Prep</span></button><button class="tab" data-k="qa" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5z"/></svg><span>Q&amp;A</span></button>
+  <div class="tabs" role="tablist">  <button class="tab active" data-k="jo" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.4"/><circle cx="6" cy="18" r="2.4"/><circle cx="18" cy="8" r="2.4"/><path d="M6 8.4v7.2M8.2 6.6c6 .3 7.8 1.4 7.8 5.4v2"/></svg><span>Joseph</span></button><button class="tab" data-k="ge" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v5.5L4.6 17.4A2 2 0 0 0 6.3 20.5h11.4a2 2 0 0 0 1.7-3.1L14 8.5V3"/><path d="M7.7 14h8.6"/></svg><span>Geo Min</span></button><button class="tab" data-k="sa" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l8.5 4.9v9.2L12 21.5l-8.5-4.9V7.4z"/><circle cx="12" cy="12" r="2.6"/><path d="M12 9.4V4.2M14.3 13.3l4.4 2.5M9.7 13.3l-4.4 2.5"/></svg><span>Sai</span></button><button class="tab" data-k="ut" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8l9 4.6-9 4.6-9-4.6z"/><path d="M3 12l9 4.6 9-4.6"/><path d="M3 16.6l9 4.6 9-4.6"/></svg><span>UnderTheRock</span></button><button class="tab" data-k="tp" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 6 3 12 8 18"/><polyline points="16 6 21 12 16 18"/></svg><span>Tech Prep</span></button><button class="tab" data-k="qa" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5z"/></svg><span>Q&amp;A</span></button></div>
 </div>
 <div class="frames">
-  <iframe class="frm active" data-k="jo" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot; data-theme=&quot;dark&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;script&gt;document.addEventListener('click',function(e){var a=e.target.closest&amp;&amp;e.target.closest('a[href^=&quot;#&quot;]');if(!a)return;var h=a.getAttribute('href');if(!h)return;e.preventDefault();var id=decodeURIComponent(h.slice(1));var el=id?(document.getElementById(id)||document.querySelector('[name=&quot;'+id+'&quot;]')):null;if(el){el.scrollIntoView({behavior:'smooth',block:'start'});}else{window.scrollTo({top:0,behavior:'smooth'});}},true);&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;title&gt;Joseph Macaranas — Interviewer Profile · ROCm/TheRock&lt;/title&gt;
+  <iframe class="frm active" data-k="jo" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot; data-theme=&quot;light&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;script&gt;document.addEventListener(&#x27;click&#x27;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#x27;a[href^=&quot;#&quot;]&#x27;);if(!a)return;var h=a.getAttribute(&#x27;href&#x27;);if(!h)return;e.preventDefault();var id=decodeURIComponent(h.slice(1));var el=id?(document.getElementById(id)||document.querySelector(&#x27;[name=&quot;&#x27;+id+&#x27;&quot;]&#x27;)):null;if(el){el.scrollIntoView({behavior:&#x27;smooth&#x27;,block:&#x27;start&#x27;});}else{window.scrollTo({top:0,behavior:&#x27;smooth&#x27;});}},true);&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;title&gt;Joseph Macaranas — Interviewer Profile · ROCm/TheRock&lt;/title&gt;
 &lt;style&gt;
   :root{
     --ground:#f5f6f8; --surface:#ffffff; --surface-2:#fbfbfc;
@@ -310,7 +317,6 @@
       &lt;div class=&quot;mast-id&quot;&gt;
         &lt;div class=&quot;kicker-row&quot;&gt;
           &lt;span class=&quot;eyebrow&quot;&gt;Interviewer Profile&lt;/span&gt;
-          &lt;span class=&quot;badge&quot;&gt;My interviewer&lt;/span&gt;
         &lt;/div&gt;
         &lt;h1&gt;Joseph Macaranas&lt;/h1&gt;
         &lt;div class=&quot;handle&quot;&gt;@jayhawk-commits&lt;/div&gt;
@@ -330,8 +336,7 @@
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class=&quot;mast-foot&quot;&gt;
-      &lt;span&gt;INTERVIEWER · primary repo ROCm/TheRock · +6,480 / −3,828 lines&lt;/span&gt;
-      &lt;span&gt;ECOSYSTEM-WIDE · 270 PRs · 211 merged · 541 reviews across 3 repos&lt;/span&gt;
+      &lt;span&gt;primary repo ROCm/TheRock · +6,480 / −3,828 lines&lt;/span&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
@@ -341,7 +346,7 @@
       &lt;div class=&quot;big num&quot;&gt;2.5×&lt;/div&gt;
       &lt;div class=&quot;cap&quot;&gt;Reviews ÷ PRs&lt;/div&gt;
     &lt;/div&gt;
-    &lt;p&gt;&lt;b&gt;Read him as a maintainer, not a feature IC.&lt;/b&gt; In TheRock he gives &lt;b&gt;243 reviews&lt;/b&gt; against 96 PRs; &lt;b&gt;ecosystem-wide it&#x27;s 541 reviews across 3 repos&lt;/b&gt; — &lt;span class=&quot;muted&quot;&gt;the single most important signal in his footprint. He is a hub the team routes CI, test, and release changes through, and a gatekeeper for the health of &lt;span class=&quot;mono&quot;&gt;main&lt;/span&gt;. See §08 — TheRock is only a third of his real scope.&lt;/span&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;b&gt;Read him as a maintainer, not a feature IC.&lt;/b&gt; In TheRock he gives &lt;b&gt;243 reviews&lt;/b&gt; against 96 PRs — &lt;span class=&quot;muted&quot;&gt;the single most important signal in his footprint. He is a hub the team routes CI, test, and release changes through, and a gatekeeper for the health of &lt;span class=&quot;mono&quot;&gt;main&lt;/span&gt;. See §08 — TheRock is only a third of his real scope.&lt;/span&gt;&lt;/p&gt;
   &lt;/div&gt;
 
   &lt;!-- 01 ROLE &amp; DOMAIN --&gt;
@@ -993,7 +998,60 @@
 
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;style&gt;:root{--sans:&quot;IBM Plex Sans&quot;,system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,sans-serif;--mono:&quot;IBM Plex Mono&quot;,ui-monospace,SFMono-Regular,Menlo,monospace;--display:&quot;Chakra Petch&quot;,&quot;Space Grotesk&quot;,system-ui,sans-serif}h1,h2,h3{font-family:var(--display)!important}.wrap{max-width:1740px!important}.lead,.subline,.lede,.sub{max-width:none!important}.page{background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:52px 52px}&lt;/style&gt;&lt;/body&gt;&lt;/html&gt;" title="Joseph"></iframe><iframe class="frm" data-k="ge" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot; data-theme=&quot;dark&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;script&gt;document.addEventListener('click',function(e){var a=e.target.closest&amp;&amp;e.target.closest('a[href^=&quot;#&quot;]');if(!a)return;var h=a.getAttribute('href');if(!h)return;e.preventDefault();var id=decodeURIComponent(h.slice(1));var el=id?(document.getElementById(id)||document.querySelector('[name=&quot;'+id+'&quot;]')):null;if(el){el.scrollIntoView({behavior:'smooth',block:'start'});}else{window.scrollTo({top:0,behavior:'smooth'});}},true);&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;title&gt;Geo Min — Interviewer Profile · ROCm/TheRock&lt;/title&gt;
+&lt;style&gt;:root{--sans:&quot;IBM Plex Sans&quot;,system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,sans-serif;--mono:&quot;IBM Plex Mono&quot;,ui-monospace,SFMono-Regular,Menlo,monospace;--display:&quot;Chakra Petch&quot;,&quot;Space Grotesk&quot;,system-ui,sans-serif}h1,h2,h3{font-family:var(--display)!important}.wrap{max-width:1740px!important}.lead,.subline,.lede,.sub{max-width:none!important}.page{background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:52px 52px}&lt;/style&gt;&lt;style id=&quot;gz-skin&quot;&gt;/* Google, Gen-Z skin: Google&#x27;s four as accents only, ink/grey type, hairlines, big rounds, pills. */
+html:root[data-theme]{
+  --ground:#FFFFFF;--surface:#FFFFFF;--surface-2:#F8FAFD;--ink:#1F1F1F;--muted:#444746;--faint:#5E5E5E;
+  --hair:#E1E3E1;--hair-strong:#C4C7C5;--copper:#1A73E8;--copper-soft:#E8F0FE;--copper-ink:#1765CC;--slate:#1F1F1F;
+  --good:#188038;--warn:#B06000;--crit:#C5221F;--bar-track:#F0F4F9;--shadow:none;
+  --sans:&#x27;Google Sans&#x27;,&#x27;Roboto&#x27;,system-ui,sans-serif;--display:&#x27;Google Sans&#x27;,&#x27;Roboto&#x27;,system-ui,sans-serif;--mono:&#x27;Roboto Mono&#x27;,ui-monospace,monospace}
+html:root[data-theme=&quot;dark&quot;]{
+  --ground:#22272E;--surface:#2D333B;--surface-2:#373E47;--ink:#E6EDF3;--muted:#B6C2CF;--faint:#9DA9B6;
+  --hair:#444C56;--hair-strong:#545D68;--copper:#A8C7FA;--copper-soft:rgba(168,199,250,.14);--copper-ink:#D3E3FD;--slate:#373E47;
+  --good:#81C995;--warn:#FDD663;--crit:#F28B82;--bar-track:#373E47}
+html:root .page{background-color:var(--ground);background-image:
+  radial-gradient(52% 44% at 4% 0%,rgba(66,133,244,.13),transparent 72%),
+  radial-gradient(48% 42% at 98% 2%,rgba(234,67,53,.08),transparent 72%),
+  radial-gradient(50% 46% at 96% 100%,rgba(251,188,4,.12),transparent 72%),
+  radial-gradient(46% 42% at 2% 100%,rgba(52,168,83,.09),transparent 72%);
+  background-size:auto;background-attachment:fixed;background-repeat:no-repeat;color:var(--muted);letter-spacing:0}
+html:root .page h1,html:root .page h2,html:root .page h3{font-weight:500;letter-spacing:-.025em;color:var(--ink)}
+html:root .mast-id h1{font-size:clamp(40px,5.4vw,72px);line-height:1.02;letter-spacing:-.04em;font-weight:500}
+html:root .page b,html:root .page strong{font-weight:500!important}
+html:root .eyebrow,html:root .mi .k,html:root .chart-title,html:root .ratio .cap,html:root .card .tag,html:root .q .why em,
+html:root .dd-body h4,html:root .grp-h,html:root .fit h3,html:root .mast-foot,html:root .sec-head .idx{
+  font-family:var(--sans);letter-spacing:0;text-transform:none;font-weight:500}
+html:root .eyebrow{font-size:14px;color:var(--faint)}
+html:root .mi .k{font-size:12.5px;color:var(--faint)} html:root .mi .v{font-weight:500;color:var(--ink)}
+html:root .handle{color:var(--faint)}
+html:root .badge{border-radius:999px;font-family:var(--sans);letter-spacing:0;text-transform:none;font-weight:500;font-size:12.5px;background:#F0F4F9;color:var(--ink)}
+html:root .mast{border-radius:28px;box-shadow:none}
+html:root .mast-stats,html:root[data-theme=&quot;dark&quot;] .mast-stats{background:var(--slate)}
+html:root .stat .n{font-family:var(--sans);font-weight:500;letter-spacing:-.03em}
+html:root .stat .n .accent,html:root[data-theme] .stat .n .accent{color:#A8C7FA}
+html:root .mast-foot{font-size:13px}
+html:root .sec-head .idx{color:var(--copper)}
+html:root .thesis{border:1px solid var(--hair);border-radius:28px;box-shadow:none}
+html:root .ratio .big{font-family:var(--sans);font-weight:500;letter-spacing:-.03em;color:var(--ink)}
+html:root .card,html:root .chart,html:root .rows,html:root .q,html:root .fit .col,html:root .dd,html:root .apx,html:root .item{border-radius:20px;box-shadow:none}
+html:root .card .tag{color:var(--faint);font-size:13px}
+html:root .fit .col.str,html:root .fit .col.gap{border-top:1px solid var(--hair)}
+html:root .tl .bar{border-radius:6px 6px 0 0}
+html:root .hb .track,html:root .hb .fill{border-radius:999px}
+html:root .chip{border-radius:999px;box-shadow:none}
+html:root .chip .who{font-family:var(--sans);font-weight:500}
+html:root .chip .cnt{border-radius:999px;color:#fff}
+html:root[data-theme=&quot;dark&quot;] .chip .cnt{color:#062E6F}
+html:root .chip.bot .cnt,html:root[data-theme] .chip.bot .cnt{color:var(--ground)}
+html:root .q .qn{font-family:var(--sans);font-weight:500}
+html:root .q .qt,html:root .item .q{font-weight:500}
+html:root .item .q .mk{font-weight:500}
+html:root .pull{border:1px solid rgba(26,115,232,.22);border-radius:16px;background:var(--copper-soft);color:var(--ink)}
+html:root[data-theme=&quot;dark&quot;] .pull{color:var(--ink)}
+html:root .code{border-radius:16px;background:var(--surface-2)}
+html:root .apx&gt;summary{font-weight:500}
+html:root footer{font-family:var(--sans);font-size:13px}
+html:root ::selection{background:#E8F0FE;color:#1F1F1F}
+html:root .row .rk,html:root .grp-h,html:root .q .why em,html:root .q .qn,html:root .item .q .mk{color:var(--faint)}html:root .card .angle b{color:var(--ink)}&lt;/style&gt;&lt;/body&gt;&lt;/html&gt;" title="Joseph"></iframe><iframe class="frm" data-k="ge" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot; data-theme=&quot;light&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;script&gt;document.addEventListener(&#x27;click&#x27;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#x27;a[href^=&quot;#&quot;]&#x27;);if(!a)return;var h=a.getAttribute(&#x27;href&#x27;);if(!h)return;e.preventDefault();var id=decodeURIComponent(h.slice(1));var el=id?(document.getElementById(id)||document.querySelector(&#x27;[name=&quot;&#x27;+id+&#x27;&quot;]&#x27;)):null;if(el){el.scrollIntoView({behavior:&#x27;smooth&#x27;,block:&#x27;start&#x27;});}else{window.scrollTo({top:0,behavior:&#x27;smooth&#x27;});}},true);&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;title&gt;Geo Min — Interviewer Profile · ROCm/TheRock&lt;/title&gt;
 &lt;style&gt;
   :root{
     --ground:#f4f7f5; --surface:#ffffff; --surface-2:#fafcfb;
@@ -1206,7 +1264,7 @@
   &lt;div class=&quot;mast&quot;&gt;
     &lt;div class=&quot;mast-top&quot;&gt;
       &lt;div class=&quot;mast-id&quot;&gt;
-        &lt;div class=&quot;kicker-row&quot;&gt;&lt;span class=&quot;eyebrow&quot;&gt;Interviewer Profile&lt;/span&gt;&lt;span class=&quot;badge&quot;&gt;My interviewer&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;kicker-row&quot;&gt;&lt;span class=&quot;eyebrow&quot;&gt;Interviewer Profile&lt;/span&gt;&lt;/div&gt;
         &lt;h1&gt;Geo Min&lt;/h1&gt;
         &lt;div class=&quot;handle&quot;&gt;@geomin12 · work &amp;nbsp;/&amp;nbsp; @geomin76 · personal&lt;/div&gt;
         &lt;p class=&quot;subline&quot;&gt;Founding-era &lt;b&gt;CI &amp;amp; test-infrastructure engineer&lt;/b&gt; on ROCm/TheRock — the highest-volume contributor on the project and the owner of its test-execution layer.&lt;/p&gt;
@@ -1225,14 +1283,14 @@
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class=&quot;mast-foot&quot;&gt;
-      &lt;span&gt;INTERVIEWER · primary repo ROCm/TheRock&lt;/span&gt;
+      &lt;span&gt;primary repo ROCm/TheRock&lt;/span&gt;
       &lt;span&gt;ECOSYSTEM-WIDE · 571 PRs · 463 merged · 1,193 reviews across 3 repos&lt;/span&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
   &lt;div class=&quot;thesis&quot;&gt;
     &lt;div class=&quot;ratio&quot;&gt;&lt;div class=&quot;big num&quot;&gt;~2×&lt;/div&gt;&lt;div class=&quot;cap&quot;&gt;Joseph&#x27;s volume&lt;/div&gt;&lt;/div&gt;
-    &lt;p&gt;&lt;b&gt;He is the engine room.&lt;/b&gt; Where Joseph is the architect/gatekeeper, Geo is the &lt;b&gt;highest-throughput builder&lt;/b&gt; on TheRock — &lt;b&gt;571 PRs and 1,193 reviews&lt;/b&gt; ecosystem-wide, roughly double his closest peer. &lt;span class=&quot;muted&quot;&gt;He owns the test-execution layer (&lt;span class=&quot;mono&quot;&gt;test_executable_scripts/&lt;/span&gt;, 194 commits) and has been there since the project&#x27;s first weeks. Expect deep, hands-on command of how CI actually runs.&lt;/span&gt;&lt;/p&gt;
+    &lt;p&gt;&lt;b&gt;He is the engine room.&lt;/b&gt; Where Joseph is the architect/gatekeeper, Geo is the &lt;b&gt;highest-throughput builder&lt;/b&gt; on TheRock — ecosystem-wide, roughly double his closest peer. &lt;span class=&quot;muted&quot;&gt;He owns the test-execution layer (&lt;span class=&quot;mono&quot;&gt;test_executable_scripts/&lt;/span&gt;, 194 commits) and has been there since the project&#x27;s first weeks. Expect deep, hands-on command of how CI actually runs.&lt;/span&gt;&lt;/p&gt;
   &lt;/div&gt;
 
   &lt;!-- 01 DOMAIN --&gt;
@@ -2125,7 +2183,60 @@
 
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;style&gt;:root{--sans:&quot;IBM Plex Sans&quot;,system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,sans-serif;--mono:&quot;IBM Plex Mono&quot;,ui-monospace,SFMono-Regular,Menlo,monospace;--display:&quot;Chakra Petch&quot;,&quot;Space Grotesk&quot;,system-ui,sans-serif}h1,h2,h3{font-family:var(--display)!important}.wrap{max-width:1740px!important}.lead,.subline,.lede,.sub{max-width:none!important}.page{background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:52px 52px}&lt;/style&gt;&lt;/body&gt;&lt;/html&gt;" title="Geo Min"></iframe><iframe class="frm" data-k="sa" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot; data-theme=&quot;dark&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;script&gt;document.addEventListener('click',function(e){var a=e.target.closest&amp;&amp;e.target.closest('a[href^=&quot;#&quot;]');if(!a)return;var h=a.getAttribute('href');if(!h)return;e.preventDefault();var id=decodeURIComponent(h.slice(1));var el=id?(document.getElementById(id)||document.querySelector('[name=&quot;'+id+'&quot;]')):null;if(el){el.scrollIntoView({behavior:'smooth',block:'start'});}else{window.scrollTo({top:0,behavior:'smooth'});}},true);&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;title&gt;Sai Enduri — Interviewer Profile · ROCm CI&lt;/title&gt;
+&lt;style&gt;:root{--sans:&quot;IBM Plex Sans&quot;,system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,sans-serif;--mono:&quot;IBM Plex Mono&quot;,ui-monospace,SFMono-Regular,Menlo,monospace;--display:&quot;Chakra Petch&quot;,&quot;Space Grotesk&quot;,system-ui,sans-serif}h1,h2,h3{font-family:var(--display)!important}.wrap{max-width:1740px!important}.lead,.subline,.lede,.sub{max-width:none!important}.page{background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:52px 52px}&lt;/style&gt;&lt;style id=&quot;gz-skin&quot;&gt;/* Google, Gen-Z skin: Google&#x27;s four as accents only, ink/grey type, hairlines, big rounds, pills. */
+html:root[data-theme]{
+  --ground:#FFFFFF;--surface:#FFFFFF;--surface-2:#F8FAFD;--ink:#1F1F1F;--muted:#444746;--faint:#5E5E5E;
+  --hair:#E1E3E1;--hair-strong:#C4C7C5;--copper:#1A73E8;--copper-soft:#E8F0FE;--copper-ink:#1765CC;--slate:#1F1F1F;
+  --good:#188038;--warn:#B06000;--crit:#C5221F;--bar-track:#F0F4F9;--shadow:none;
+  --sans:&#x27;Google Sans&#x27;,&#x27;Roboto&#x27;,system-ui,sans-serif;--display:&#x27;Google Sans&#x27;,&#x27;Roboto&#x27;,system-ui,sans-serif;--mono:&#x27;Roboto Mono&#x27;,ui-monospace,monospace}
+html:root[data-theme=&quot;dark&quot;]{
+  --ground:#22272E;--surface:#2D333B;--surface-2:#373E47;--ink:#E6EDF3;--muted:#B6C2CF;--faint:#9DA9B6;
+  --hair:#444C56;--hair-strong:#545D68;--copper:#A8C7FA;--copper-soft:rgba(168,199,250,.14);--copper-ink:#D3E3FD;--slate:#373E47;
+  --good:#81C995;--warn:#FDD663;--crit:#F28B82;--bar-track:#373E47}
+html:root .page{background-color:var(--ground);background-image:
+  radial-gradient(52% 44% at 4% 0%,rgba(66,133,244,.13),transparent 72%),
+  radial-gradient(48% 42% at 98% 2%,rgba(234,67,53,.08),transparent 72%),
+  radial-gradient(50% 46% at 96% 100%,rgba(251,188,4,.12),transparent 72%),
+  radial-gradient(46% 42% at 2% 100%,rgba(52,168,83,.09),transparent 72%);
+  background-size:auto;background-attachment:fixed;background-repeat:no-repeat;color:var(--muted);letter-spacing:0}
+html:root .page h1,html:root .page h2,html:root .page h3{font-weight:500;letter-spacing:-.025em;color:var(--ink)}
+html:root .mast-id h1{font-size:clamp(40px,5.4vw,72px);line-height:1.02;letter-spacing:-.04em;font-weight:500}
+html:root .page b,html:root .page strong{font-weight:500!important}
+html:root .eyebrow,html:root .mi .k,html:root .chart-title,html:root .ratio .cap,html:root .card .tag,html:root .q .why em,
+html:root .dd-body h4,html:root .grp-h,html:root .fit h3,html:root .mast-foot,html:root .sec-head .idx{
+  font-family:var(--sans);letter-spacing:0;text-transform:none;font-weight:500}
+html:root .eyebrow{font-size:14px;color:var(--faint)}
+html:root .mi .k{font-size:12.5px;color:var(--faint)} html:root .mi .v{font-weight:500;color:var(--ink)}
+html:root .handle{color:var(--faint)}
+html:root .badge{border-radius:999px;font-family:var(--sans);letter-spacing:0;text-transform:none;font-weight:500;font-size:12.5px;background:#F0F4F9;color:var(--ink)}
+html:root .mast{border-radius:28px;box-shadow:none}
+html:root .mast-stats,html:root[data-theme=&quot;dark&quot;] .mast-stats{background:var(--slate)}
+html:root .stat .n{font-family:var(--sans);font-weight:500;letter-spacing:-.03em}
+html:root .stat .n .accent,html:root[data-theme] .stat .n .accent{color:#A8C7FA}
+html:root .mast-foot{font-size:13px}
+html:root .sec-head .idx{color:var(--copper)}
+html:root .thesis{border:1px solid var(--hair);border-radius:28px;box-shadow:none}
+html:root .ratio .big{font-family:var(--sans);font-weight:500;letter-spacing:-.03em;color:var(--ink)}
+html:root .card,html:root .chart,html:root .rows,html:root .q,html:root .fit .col,html:root .dd,html:root .apx,html:root .item{border-radius:20px;box-shadow:none}
+html:root .card .tag{color:var(--faint);font-size:13px}
+html:root .fit .col.str,html:root .fit .col.gap{border-top:1px solid var(--hair)}
+html:root .tl .bar{border-radius:6px 6px 0 0}
+html:root .hb .track,html:root .hb .fill{border-radius:999px}
+html:root .chip{border-radius:999px;box-shadow:none}
+html:root .chip .who{font-family:var(--sans);font-weight:500}
+html:root .chip .cnt{border-radius:999px;color:#fff}
+html:root[data-theme=&quot;dark&quot;] .chip .cnt{color:#062E6F}
+html:root .chip.bot .cnt,html:root[data-theme] .chip.bot .cnt{color:var(--ground)}
+html:root .q .qn{font-family:var(--sans);font-weight:500}
+html:root .q .qt,html:root .item .q{font-weight:500}
+html:root .item .q .mk{font-weight:500}
+html:root .pull{border:1px solid rgba(26,115,232,.22);border-radius:16px;background:var(--copper-soft);color:var(--ink)}
+html:root[data-theme=&quot;dark&quot;] .pull{color:var(--ink)}
+html:root .code{border-radius:16px;background:var(--surface-2)}
+html:root .apx&gt;summary{font-weight:500}
+html:root footer{font-family:var(--sans);font-size:13px}
+html:root ::selection{background:#E8F0FE;color:#1F1F1F}
+html:root .row .rk,html:root .grp-h,html:root .q .why em,html:root .q .qn,html:root .item .q .mk{color:var(--faint)}html:root .card .angle b{color:var(--ink)}&lt;/style&gt;&lt;/body&gt;&lt;/html&gt;" title="Geo Min"></iframe><iframe class="frm" data-k="sa" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot; data-theme=&quot;light&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;script&gt;document.addEventListener(&#x27;click&#x27;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#x27;a[href^=&quot;#&quot;]&#x27;);if(!a)return;var h=a.getAttribute(&#x27;href&#x27;);if(!h)return;e.preventDefault();var id=decodeURIComponent(h.slice(1));var el=id?(document.getElementById(id)||document.querySelector(&#x27;[name=&quot;&#x27;+id+&#x27;&quot;]&#x27;)):null;if(el){el.scrollIntoView({behavior:&#x27;smooth&#x27;,block:&#x27;start&#x27;});}else{window.scrollTo({top:0,behavior:&#x27;smooth&#x27;});}},true);&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;title&gt;Sai Enduri — Interviewer Profile · ROCm CI&lt;/title&gt;
 &lt;style&gt;
   :root{
     --ground:#f5f5fa;--surface:#ffffff;--surface-2:#fbfbfe;
@@ -2258,7 +2369,7 @@
   &lt;div class=&quot;mast&quot;&gt;
     &lt;div class=&quot;mast-top&quot;&gt;
       &lt;div class=&quot;mast-id&quot;&gt;
-        &lt;div class=&quot;kicker-row&quot;&gt;&lt;span class=&quot;eyebrow&quot;&gt;Interviewer Profile&lt;/span&gt;&lt;span class=&quot;badge&quot;&gt;My interviewer&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;kicker-row&quot;&gt;&lt;span class=&quot;eyebrow&quot;&gt;Interviewer Profile&lt;/span&gt;&lt;/div&gt;
         &lt;h1&gt;Sai Enduri&lt;/h1&gt;
         &lt;div class=&quot;handle&quot;&gt;@saienduri&lt;/div&gt;
         &lt;p class=&quot;subline&quot;&gt;&lt;b&gt;Kubernetes runner-fleet &amp;amp; GPU-CI engineer&lt;/b&gt; (from the nod.ai / IREE side). Of your three interviewers, his work is the &lt;b&gt;closest match to this job&lt;/b&gt;.&lt;/p&gt;
@@ -2277,13 +2388,13 @@
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class=&quot;mast-foot&quot;&gt;
-      &lt;span&gt;INTERVIEWER · works across the ML/CI ecosystem, not TheRock&lt;/span&gt;
-      &lt;span&gt;THE JD MATCH · ARC self-hosted runners on Kubernetes → cloud&lt;/span&gt;
+      &lt;span&gt;works across the ML/CI ecosystem, not TheRock&lt;/span&gt;
+      &lt;span&gt;ARC self-hosted runners on Kubernetes → cloud&lt;/span&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 
   &lt;div class=&quot;thesis&quot;&gt;
-    &lt;div class=&quot;ratio&quot;&gt;&lt;div class=&quot;big num&quot;&gt;the JD,&lt;br&gt;in a person&lt;/div&gt;&lt;div class=&quot;cap&quot;&gt;closest match&lt;/div&gt;&lt;/div&gt;
+    &lt;div class=&quot;ratio&quot;&gt;&lt;div class=&quot;big num&quot;&gt;the JD,&lt;br&gt;in a person&lt;/div&gt;&lt;/div&gt;
     &lt;p&gt;&lt;b&gt;Read him as the infrastructure-under-the-runners person.&lt;/b&gt; Where Joseph and Geo write GitHub Actions &lt;em&gt;workflows&lt;/em&gt;, Sai builds what they run on: &lt;b&gt;self-hosted runners on Kubernetes (ARC), GPU clusters, and AMD CI for ML frameworks&lt;/b&gt;. &lt;span class=&quot;muted&quot;&gt;He has literally stood up ARC on Azure Kubernetes, stress-tested MI300/MI325 runner capacity for PyTorch, and owns AMD CI for SGLang. This job — provision runners, validate on real hardware, move to cloud — is his day-to-day.&lt;/span&gt;&lt;/p&gt;
   &lt;/div&gt;
 
@@ -2454,7 +2565,60 @@
 
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;style&gt;:root{--sans:&quot;IBM Plex Sans&quot;,system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,sans-serif;--mono:&quot;IBM Plex Mono&quot;,ui-monospace,SFMono-Regular,Menlo,monospace;--display:&quot;Chakra Petch&quot;,&quot;Space Grotesk&quot;,system-ui,sans-serif}h1,h2,h3{font-family:var(--display)!important}.wrap{max-width:1740px!important}.lead,.subline,.lede,.sub{max-width:none!important}.page{background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:52px 52px}&lt;/style&gt;&lt;/body&gt;&lt;/html&gt;" title="Sai"></iframe><iframe class="frm" data-k="ut" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot; data-theme=&quot;dark&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;script&gt;document.addEventListener(&#x27;click&#x27;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#x27;a[href^=&quot;#&quot;]&#x27;);if(!a)return;var h=a.getAttribute(&#x27;href&#x27;);if(!h)return;e.preventDefault();var id=decodeURIComponent(h.slice(1));var el=id?(document.getElementById(id)||document.querySelector(&#x27;[name=&quot;&#x27;+id+&#x27;&quot;]&#x27;)):null;if(el){el.scrollIntoView({behavior:&#x27;smooth&#x27;,block:&#x27;start&#x27;});}else{window.scrollTo({top:0,behavior:&#x27;smooth&#x27;});}},true);&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;
+&lt;style&gt;:root{--sans:&quot;IBM Plex Sans&quot;,system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,sans-serif;--mono:&quot;IBM Plex Mono&quot;,ui-monospace,SFMono-Regular,Menlo,monospace;--display:&quot;Chakra Petch&quot;,&quot;Space Grotesk&quot;,system-ui,sans-serif}h1,h2,h3{font-family:var(--display)!important}.wrap{max-width:1740px!important}.lead,.subline,.lede,.sub{max-width:none!important}.page{background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:52px 52px}&lt;/style&gt;&lt;style id=&quot;gz-skin&quot;&gt;/* Google, Gen-Z skin: Google&#x27;s four as accents only, ink/grey type, hairlines, big rounds, pills. */
+html:root[data-theme]{
+  --ground:#FFFFFF;--surface:#FFFFFF;--surface-2:#F8FAFD;--ink:#1F1F1F;--muted:#444746;--faint:#5E5E5E;
+  --hair:#E1E3E1;--hair-strong:#C4C7C5;--copper:#1A73E8;--copper-soft:#E8F0FE;--copper-ink:#1765CC;--slate:#1F1F1F;
+  --good:#188038;--warn:#B06000;--crit:#C5221F;--bar-track:#F0F4F9;--shadow:none;
+  --sans:&#x27;Google Sans&#x27;,&#x27;Roboto&#x27;,system-ui,sans-serif;--display:&#x27;Google Sans&#x27;,&#x27;Roboto&#x27;,system-ui,sans-serif;--mono:&#x27;Roboto Mono&#x27;,ui-monospace,monospace}
+html:root[data-theme=&quot;dark&quot;]{
+  --ground:#22272E;--surface:#2D333B;--surface-2:#373E47;--ink:#E6EDF3;--muted:#B6C2CF;--faint:#9DA9B6;
+  --hair:#444C56;--hair-strong:#545D68;--copper:#A8C7FA;--copper-soft:rgba(168,199,250,.14);--copper-ink:#D3E3FD;--slate:#373E47;
+  --good:#81C995;--warn:#FDD663;--crit:#F28B82;--bar-track:#373E47}
+html:root .page{background-color:var(--ground);background-image:
+  radial-gradient(52% 44% at 4% 0%,rgba(66,133,244,.13),transparent 72%),
+  radial-gradient(48% 42% at 98% 2%,rgba(234,67,53,.08),transparent 72%),
+  radial-gradient(50% 46% at 96% 100%,rgba(251,188,4,.12),transparent 72%),
+  radial-gradient(46% 42% at 2% 100%,rgba(52,168,83,.09),transparent 72%);
+  background-size:auto;background-attachment:fixed;background-repeat:no-repeat;color:var(--muted);letter-spacing:0}
+html:root .page h1,html:root .page h2,html:root .page h3{font-weight:500;letter-spacing:-.025em;color:var(--ink)}
+html:root .mast-id h1{font-size:clamp(40px,5.4vw,72px);line-height:1.02;letter-spacing:-.04em;font-weight:500}
+html:root .page b,html:root .page strong{font-weight:500!important}
+html:root .eyebrow,html:root .mi .k,html:root .chart-title,html:root .ratio .cap,html:root .card .tag,html:root .q .why em,
+html:root .dd-body h4,html:root .grp-h,html:root .fit h3,html:root .mast-foot,html:root .sec-head .idx{
+  font-family:var(--sans);letter-spacing:0;text-transform:none;font-weight:500}
+html:root .eyebrow{font-size:14px;color:var(--faint)}
+html:root .mi .k{font-size:12.5px;color:var(--faint)} html:root .mi .v{font-weight:500;color:var(--ink)}
+html:root .handle{color:var(--faint)}
+html:root .badge{border-radius:999px;font-family:var(--sans);letter-spacing:0;text-transform:none;font-weight:500;font-size:12.5px;background:#F0F4F9;color:var(--ink)}
+html:root .mast{border-radius:28px;box-shadow:none}
+html:root .mast-stats,html:root[data-theme=&quot;dark&quot;] .mast-stats{background:var(--slate)}
+html:root .stat .n{font-family:var(--sans);font-weight:500;letter-spacing:-.03em}
+html:root .stat .n .accent,html:root[data-theme] .stat .n .accent{color:#A8C7FA}
+html:root .mast-foot{font-size:13px}
+html:root .sec-head .idx{color:var(--copper)}
+html:root .thesis{border:1px solid var(--hair);border-radius:28px;box-shadow:none}
+html:root .ratio .big{font-family:var(--sans);font-weight:500;letter-spacing:-.03em;color:var(--ink)}
+html:root .card,html:root .chart,html:root .rows,html:root .q,html:root .fit .col,html:root .dd,html:root .apx,html:root .item{border-radius:20px;box-shadow:none}
+html:root .card .tag{color:var(--faint);font-size:13px}
+html:root .fit .col.str,html:root .fit .col.gap{border-top:1px solid var(--hair)}
+html:root .tl .bar{border-radius:6px 6px 0 0}
+html:root .hb .track,html:root .hb .fill{border-radius:999px}
+html:root .chip{border-radius:999px;box-shadow:none}
+html:root .chip .who{font-family:var(--sans);font-weight:500}
+html:root .chip .cnt{border-radius:999px;color:#fff}
+html:root[data-theme=&quot;dark&quot;] .chip .cnt{color:#062E6F}
+html:root .chip.bot .cnt,html:root[data-theme] .chip.bot .cnt{color:var(--ground)}
+html:root .q .qn{font-family:var(--sans);font-weight:500}
+html:root .q .qt,html:root .item .q{font-weight:500}
+html:root .item .q .mk{font-weight:500}
+html:root .pull{border:1px solid rgba(26,115,232,.22);border-radius:16px;background:var(--copper-soft);color:var(--ink)}
+html:root[data-theme=&quot;dark&quot;] .pull{color:var(--ink)}
+html:root .code{border-radius:16px;background:var(--surface-2)}
+html:root .apx&gt;summary{font-weight:500}
+html:root footer{font-family:var(--sans);font-size:13px}
+html:root ::selection{background:#E8F0FE;color:#1F1F1F}
+html:root .row .rk,html:root .grp-h,html:root .q .why em,html:root .q .qn,html:root .item .q .mk{color:var(--faint)}html:root .card .angle b{color:var(--ink)}&lt;/style&gt;&lt;/body&gt;&lt;/html&gt;" title="Sai"></iframe><iframe class="frm" data-k="ut" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot; data-theme=&quot;light&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;script&gt;document.addEventListener(&#x27;click&#x27;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#x27;a[href^=&quot;#&quot;]&#x27;);if(!a)return;var h=a.getAttribute(&#x27;href&#x27;);if(!h)return;e.preventDefault();var id=decodeURIComponent(h.slice(1));var el=id?(document.getElementById(id)||document.querySelector(&#x27;[name=&quot;&#x27;+id+&#x27;&quot;]&#x27;)):null;if(el){el.scrollIntoView({behavior:&#x27;smooth&#x27;,block:&#x27;start&#x27;});}else{window.scrollTo({top:0,behavior:&#x27;smooth&#x27;});}},true);&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;style&gt;
   :root{
     --void:#07090C; --panel:#0D1218; --panel-2:#121A21; --raise:#162029;
     --code-bg:#05080B; --code-head:#0F161D;
@@ -2887,7 +3051,59 @@
 &lt;/section&gt;
 
 &lt;/div&gt;
-&lt;/body&gt;&lt;/html&gt;" title="UnderTheRock"></iframe><iframe class="frm" data-k="tp" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot; data-theme=&quot;dark&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;script&gt;document.addEventListener('click',function(e){var a=e.target.closest&amp;&amp;e.target.closest('a[href^=&quot;#&quot;]');if(!a)return;var h=a.getAttribute('href');if(!h)return;e.preventDefault();var id=decodeURIComponent(h.slice(1));var el=id?(document.getElementById(id)||document.querySelector('[name=&quot;'+id+'&quot;]')):null;if(el){el.scrollIntoView({behavior:'smooth',block:'start'});}else{window.scrollTo({top:0,behavior:'smooth'});}},true);&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;title&gt;AMD CI role — technical prep: workflow, architecture, questions &amp;amp; pain points&lt;/title&gt;
+&lt;style id=&quot;gz-skin&quot;&gt;/* Google, Gen-Z skin: Google&#x27;s four as accents only, ink/grey type, hairlines, big rounds, pills. */
+html:root{
+  --void:#FFFFFF;--panel:#FFFFFF;--panel-2:#F8FAFD;--raise:#F0F4F9;--code-bg:#F8FAFD;--code-head:#F0F4F9;
+  --line:#E1E3E1;--line-2:#E1E3E1;--ink:#1F1F1F;--ink-2:#444746;--muted:#5E5E5E;
+  --red:#EA4335;--ember:#1A73E8;--grad:linear-gradient(#1A73E8,#1A73E8);
+  --pass:#188038;--run:#B06000;--fail:#C5221F;--link:#1A73E8;--gpu:#5E5E5E;--r:20px;
+  --display:&#x27;Google Sans&#x27;,&#x27;Roboto&#x27;,system-ui,sans-serif;--body:&#x27;Google Sans&#x27;,&#x27;Roboto&#x27;,system-ui,sans-serif;--sans:&#x27;Google Sans&#x27;,&#x27;Roboto&#x27;,system-ui,sans-serif;--mono:&#x27;Roboto Mono&#x27;,ui-monospace,monospace}
+html:root body{background-color:#fff;background-image:
+  radial-gradient(52% 44% at 4% 0%,rgba(66,133,244,.13),transparent 72%),
+  radial-gradient(48% 42% at 98% 2%,rgba(234,67,53,.08),transparent 72%),
+  radial-gradient(50% 46% at 96% 100%,rgba(251,188,4,.12),transparent 72%),
+  radial-gradient(46% 42% at 2% 100%,rgba(52,168,83,.09),transparent 72%);
+  background-attachment:fixed;background-repeat:no-repeat;color:var(--ink-2);letter-spacing:0}
+html:root body::before,html:root body::after{display:none}
+html:root ::selection{background:#E8F0FE;color:#1F1F1F}
+html:root h1,html:root h2,html:root h3,html:root h4{font-weight:500;letter-spacing:-.025em;color:var(--ink)}
+html:root h1{font-size:clamp(40px,5.4vw,72px);line-height:1.02;letter-spacing:-.04em}
+html:root b,html:root strong{font-weight:500!important}
+html:root code{background:#F0F4F9;border:0;border-radius:6px;color:var(--ink)}
+html:root .cmd&gt;code,html:root .drill pre{color:var(--ink)}
+html:root .eyebrow,html:root .cap,html:root .stage .st-n,html:root .dcol .clbl,html:root .trig .cnd,html:root .layer .lname,
+html:root .qc .tag,html:root .row .rk,html:root .pdiv .pk,html:root .cm .cmh,html:root .drill .dh,html:root .infer .ih,html:root .jdq .src,
+html:root .tag,html:root .ph .pn,html:root .hud .hb .hn,html:root .subnav .k,html:root .subnav a,html:root .part,html:root h3.grp,
+html:root .item .q .badge,html:root .pain .who,html:root .sn{font-family:var(--display);letter-spacing:0;text-transform:none;font-weight:500}
+html:root .eyebrow,html:root .cap,html:root h3.grp,html:root .subnav .k,html:root .pain .who{color:var(--muted)}
+html:root .eyebrow{font-size:14px} html:root .cap{font-size:14px;opacity:1}
+html:root .eyebrow::after,html:root .pdiv .pk::after{background:var(--line)}
+html:root .stage,html:root .trig,html:root .layer,html:root .qc,html:root .rows,html:root .cm,html:root .cmd,html:root .drill,html:root .card,
+html:root .qbox,html:root .ph,html:root .hud .hb,html:root .diagram,html:root .item,html:root .own,html:root .gstep{border-radius:20px}
+html:root .box,html:root .jbox,html:root .clabel,html:root .cstep,html:root .own .ex,html:root .cmd&gt;code,html:root .cnode.ev{border-radius:14px}
+html:root .tag,html:root .ph .pn,html:root .ggate .gq,html:root .item .q .badge,html:root .subnav a{border-radius:999px}
+html:root .stage .st-t,html:root .trig .th .tn,html:root .qc .qt,html:root .pain h4,html:root .ph .pt,html:root .own h4,html:root .card h3,
+html:root .item .q,html:root .ggate .gq,html:root .cnode.ev,html:root .box,html:root .jbox,html:root .gstep,html:root .clabel,html:root .drill .dh{font-weight:500}
+html:root .pain{border:1px solid rgba(234,67,53,.3);border-radius:20px}
+html:root .infer{background:rgba(251,188,4,.12);border:1px solid rgba(251,188,4,.45);border-radius:20px}
+html:root .infer.ok{background:rgba(52,168,83,.08);border-color:rgba(52,168,83,.3)}
+html:root .jdq{border:1px solid var(--line);border-radius:20px}
+html:root .jdq.ver{border-color:rgba(52,168,83,.3)}
+html:root .ggate .gq{border-width:1px}
+html:root .item .why{border-left:1px solid var(--line)}
+html:root .jbox.lkg{background:#E8F0FE}
+html:root .trig.presub{border-color:rgba(52,168,83,.3)} html:root .trig.presub .th{background:rgba(52,168,83,.06)}
+html:root .trig.nightly{border-color:rgba(26,115,232,.3)} html:root .trig.nightly .th{background:rgba(26,115,232,.06)}
+html:root .card.warn{border-color:rgba(234,67,53,.35)} html:root .card.good{border-color:rgba(52,168,83,.35)}
+html:root .tag.ver{border-color:rgba(52,168,83,.4)} html:root .tag.jd{border-color:rgba(26,115,232,.4)} html:root .tag.inf{border-color:rgba(251,188,4,.5)}
+html:root .ph .pn{border-color:rgba(26,115,232,.35)}
+html:root .item .q .badge{background:#E8F0FE;color:#1A73E8}
+html:root .subnav{background:rgba(255,255,255,.86)}
+html:root .subnav a{background:#fff;color:var(--ink);border-color:var(--line)}
+html:root .subnav a:hover{background:#F0F4F9;border-color:var(--line)}
+html:root table.cmp th{font-weight:500}
+html:root footer{font-family:var(--display)}
+html:root .qc .tag,html:root .row .rk,html:root .stage .st-n,html:root .dcol .clbl,html:root .layer .lname,html:root .cm .cmh,html:root .drill .dh,html:root .pdiv .pk,html:root .part,html:root .item .q .mk{color:var(--muted)}html:root .qc .hint b,html:root .loopnote b,html:root .qbox .why em{color:var(--ink)}&lt;/style&gt;&lt;/body&gt;&lt;/html&gt;" title="UnderTheRock"></iframe><iframe class="frm" data-k="tp" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot; data-theme=&quot;light&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;script&gt;document.addEventListener(&#x27;click&#x27;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#x27;a[href^=&quot;#&quot;]&#x27;);if(!a)return;var h=a.getAttribute(&#x27;href&#x27;);if(!h)return;e.preventDefault();var id=decodeURIComponent(h.slice(1));var el=id?(document.getElementById(id)||document.querySelector(&#x27;[name=&quot;&#x27;+id+&#x27;&quot;]&#x27;)):null;if(el){el.scrollIntoView({behavior:&#x27;smooth&#x27;,block:&#x27;start&#x27;});}else{window.scrollTo({top:0,behavior:&#x27;smooth&#x27;});}},true);&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;title&gt;AMD CI role — technical prep: workflow, architecture, questions &amp;amp; pain points&lt;/title&gt;
 &lt;style&gt;
   :root{
     --void:#07090C; --panel:#0D1218; --panel-2:#121A21; --raise:#162029;
@@ -3086,248 +3302,248 @@
 &lt;!-- pr --&gt;
 &lt;g id=&quot;node1&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;pr&lt;/title&gt;
-&lt;path fill=&quot;#0d1218&quot; stroke=&quot;#a3b4c2&quot; d=&quot;M613.54,-881.5C613.54,-881.5 559.75,-881.5 559.75,-881.5 553.75,-881.5 547.75,-875.5 547.75,-869.5 547.75,-869.5 547.75,-857.5 547.75,-857.5 547.75,-851.5 553.75,-845.5 559.75,-845.5 559.75,-845.5 613.54,-845.5 613.54,-845.5 619.54,-845.5 625.54,-851.5 625.54,-857.5 625.54,-857.5 625.54,-869.5 625.54,-869.5 625.54,-875.5 619.54,-881.5 613.54,-881.5&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;586.64&quot; y=&quot;-859.05&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#e8eff5&quot;&gt;PR opened&lt;/text&gt;
+&lt;path fill=&quot;#FFFFFF&quot; stroke=&quot;#444746&quot; d=&quot;M613.54,-881.5C613.54,-881.5 559.75,-881.5 559.75,-881.5 553.75,-881.5 547.75,-875.5 547.75,-869.5 547.75,-869.5 547.75,-857.5 547.75,-857.5 547.75,-851.5 553.75,-845.5 559.75,-845.5 559.75,-845.5 613.54,-845.5 613.54,-845.5 619.54,-845.5 625.54,-851.5 625.54,-857.5 625.54,-857.5 625.54,-869.5 625.54,-869.5 625.54,-875.5 619.54,-881.5 613.54,-881.5&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;586.64&quot; y=&quot;-859.05&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#1F1F1F&quot;&gt;PR opened&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- pre --&gt;
 &lt;g id=&quot;node2&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;pre&lt;/title&gt;
-&lt;path fill=&quot;#0d1218&quot; stroke=&quot;#28353f&quot; d=&quot;M658.91,-820.5C658.91,-820.5 514.38,-820.5 514.38,-820.5 508.38,-820.5 502.38,-814.5 502.38,-808.5 502.38,-808.5 502.38,-796.5 502.38,-796.5 502.38,-790.5 508.38,-784.5 514.38,-784.5 514.38,-784.5 658.91,-784.5 658.91,-784.5 664.91,-784.5 670.91,-790.5 670.91,-796.5 670.91,-796.5 670.91,-808.5 670.91,-808.5 670.91,-814.5 664.91,-820.5 658.91,-820.5&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;586.64&quot; y=&quot;-798.05&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#e8eff5&quot;&gt;Pre&amp;#45;flight — lint · format · scan&lt;/text&gt;
+&lt;path fill=&quot;#FFFFFF&quot; stroke=&quot;#C4C7C5&quot; d=&quot;M658.91,-820.5C658.91,-820.5 514.38,-820.5 514.38,-820.5 508.38,-820.5 502.38,-814.5 502.38,-808.5 502.38,-808.5 502.38,-796.5 502.38,-796.5 502.38,-790.5 508.38,-784.5 514.38,-784.5 514.38,-784.5 658.91,-784.5 658.91,-784.5 664.91,-784.5 670.91,-790.5 670.91,-796.5 670.91,-796.5 670.91,-808.5 670.91,-808.5 670.91,-814.5 664.91,-820.5 658.91,-820.5&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;586.64&quot; y=&quot;-798.05&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#1F1F1F&quot;&gt;Pre&amp;#45;flight — lint · format · scan&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- pr&amp;#45;&amp;gt;pre --&gt;
 &lt;g id=&quot;edge1&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;pr&amp;#45;&amp;gt;pre&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;black&quot; stroke-width=&quot;1.3&quot; d=&quot;M586.64,-845.12C586.64,-840.24 586.64,-834.83 586.64,-829.56&quot;/&gt;
-&lt;polygon fill=&quot;black&quot; stroke=&quot;black&quot; stroke-width=&quot;1.3&quot; points=&quot;589.1,-829.93 586.65,-822.93 584.2,-829.93 589.1,-829.93&quot;/&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#5E5E5E&quot; stroke-width=&quot;1.3&quot; d=&quot;M586.64,-845.12C586.64,-840.24 586.64,-834.83 586.64,-829.56&quot;/&gt;
+&lt;polygon fill=&quot;#5E5E5E&quot; stroke=&quot;#5E5E5E&quot; stroke-width=&quot;1.3&quot; points=&quot;589.1,-829.93 586.65,-822.93 584.2,-829.93 589.1,-829.93&quot;/&gt;
 &lt;/g&gt;
 &lt;!-- g1 --&gt;
 &lt;g id=&quot;node3&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;g1&lt;/title&gt;
-&lt;path fill=&quot;#121a21&quot; stroke=&quot;#f0a429&quot; d=&quot;M574.88,-757.12C574.88,-757.12 509.56,-743.88 509.56,-743.88 503.68,-742.69 503.68,-740.31 509.56,-739.12 509.56,-739.12 574.88,-725.88 574.88,-725.88 580.76,-724.69 592.53,-724.69 598.41,-725.88 598.41,-725.88 663.73,-739.12 663.73,-739.12 669.61,-740.31 669.61,-742.69 663.73,-743.88 663.73,-743.88 598.41,-757.12 598.41,-757.12 592.53,-758.31 580.76,-758.31 574.88,-757.12&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;586.64&quot; y=&quot;-737.05&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#f0a429&quot;&gt;Checks pass?&lt;/text&gt;
+&lt;path fill=&quot;#F8FAFD&quot; stroke=&quot;#B06000&quot; d=&quot;M574.88,-757.12C574.88,-757.12 509.56,-743.88 509.56,-743.88 503.68,-742.69 503.68,-740.31 509.56,-739.12 509.56,-739.12 574.88,-725.88 574.88,-725.88 580.76,-724.69 592.53,-724.69 598.41,-725.88 598.41,-725.88 663.73,-739.12 663.73,-739.12 669.61,-740.31 669.61,-742.69 663.73,-743.88 663.73,-743.88 598.41,-757.12 598.41,-757.12 592.53,-758.31 580.76,-758.31 574.88,-757.12&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;586.64&quot; y=&quot;-737.05&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#B06000&quot;&gt;Checks pass?&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- pre&amp;#45;&amp;gt;g1 --&gt;
 &lt;g id=&quot;edge2&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;pre&amp;#45;&amp;gt;g1&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;black&quot; stroke-width=&quot;1.3&quot; d=&quot;M586.64,-784.12C586.64,-779.24 586.64,-773.83 586.64,-768.56&quot;/&gt;
-&lt;polygon fill=&quot;black&quot; stroke=&quot;black&quot; stroke-width=&quot;1.3&quot; points=&quot;589.1,-768.93 586.65,-761.93 584.2,-768.93 589.1,-768.93&quot;/&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#5E5E5E&quot; stroke-width=&quot;1.3&quot; d=&quot;M586.64,-784.12C586.64,-779.24 586.64,-773.83 586.64,-768.56&quot;/&gt;
+&lt;polygon fill=&quot;#5E5E5E&quot; stroke=&quot;#5E5E5E&quot; stroke-width=&quot;1.3&quot; points=&quot;589.1,-768.93 586.65,-761.93 584.2,-768.93 589.1,-768.93&quot;/&gt;
 &lt;/g&gt;
 &lt;!-- bld --&gt;
 &lt;g id=&quot;node4&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;bld&lt;/title&gt;
-&lt;path fill=&quot;#0d1218&quot; stroke=&quot;#28353f&quot; d=&quot;M581.91,-689.75C581.91,-689.75 431.38,-689.75 431.38,-689.75 425.38,-689.75 419.38,-683.75 419.38,-677.75 419.38,-677.75 419.38,-665.75 419.38,-665.75 419.38,-659.75 425.38,-653.75 431.38,-653.75 431.38,-653.75 581.91,-653.75 581.91,-653.75 587.91,-653.75 593.91,-659.75 593.91,-665.75 593.91,-665.75 593.91,-677.75 593.91,-677.75 593.91,-683.75 587.91,-689.75 581.91,-689.75&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;506.64&quot; y=&quot;-667.3&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#e8eff5&quot;&gt;Build — per&amp;#45;target lanes, cache&lt;/text&gt;
+&lt;path fill=&quot;#FFFFFF&quot; stroke=&quot;#C4C7C5&quot; d=&quot;M581.91,-689.75C581.91,-689.75 431.38,-689.75 431.38,-689.75 425.38,-689.75 419.38,-683.75 419.38,-677.75 419.38,-677.75 419.38,-665.75 419.38,-665.75 419.38,-659.75 425.38,-653.75 431.38,-653.75 431.38,-653.75 581.91,-653.75 581.91,-653.75 587.91,-653.75 593.91,-659.75 593.91,-665.75 593.91,-665.75 593.91,-677.75 593.91,-677.75 593.91,-683.75 587.91,-689.75 581.91,-689.75&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;506.64&quot; y=&quot;-667.3&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#1F1F1F&quot;&gt;Build — per&amp;#45;target lanes, cache&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- g1&amp;#45;&amp;gt;bld --&gt;
 &lt;g id=&quot;edge8&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;g1&amp;#45;&amp;gt;bld&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;#2dd4a7&quot; stroke-width=&quot;1.3&quot; d=&quot;M570.07,-726.46C559.66,-717.65 545.99,-706.07 534.01,-695.92&quot;/&gt;
-&lt;polygon fill=&quot;#2dd4a7&quot; stroke=&quot;#2dd4a7&quot; stroke-width=&quot;1.3&quot; points=&quot;535.61,-694.07 528.68,-691.41 532.44,-697.81 535.61,-694.07&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;558.56&quot; y=&quot;-702.95&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#2dd4a7&quot;&gt;yes&lt;/text&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#188038&quot; stroke-width=&quot;1.3&quot; d=&quot;M570.07,-726.46C559.66,-717.65 545.99,-706.07 534.01,-695.92&quot;/&gt;
+&lt;polygon fill=&quot;#188038&quot; stroke=&quot;#188038&quot; stroke-width=&quot;1.3&quot; points=&quot;535.61,-694.07 528.68,-691.41 532.44,-697.81 535.61,-694.07&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;558.56&quot; y=&quot;-702.95&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#188038&quot;&gt;yes&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- b1 --&gt;
 &lt;g id=&quot;node15&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;b1&lt;/title&gt;
-&lt;path fill=&quot;#160e0f&quot; stroke=&quot;#f0473e&quot; d=&quot;M696.66,-689.75C696.66,-689.75 634.62,-689.75 634.62,-689.75 628.62,-689.75 622.62,-683.75 622.62,-677.75 622.62,-677.75 622.62,-665.75 622.62,-665.75 622.62,-659.75 628.62,-653.75 634.62,-653.75 634.62,-653.75 696.66,-653.75 696.66,-653.75 702.66,-653.75 708.66,-659.75 708.66,-665.75 708.66,-665.75 708.66,-677.75 708.66,-677.75 708.66,-683.75 702.66,-689.75 696.66,-689.75&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;665.64&quot; y=&quot;-667.3&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#f0473e&quot;&gt;block PR · fix&lt;/text&gt;
+&lt;path fill=&quot;#FCE8E6&quot; stroke=&quot;#C5221F&quot; d=&quot;M696.66,-689.75C696.66,-689.75 634.62,-689.75 634.62,-689.75 628.62,-689.75 622.62,-683.75 622.62,-677.75 622.62,-677.75 622.62,-665.75 622.62,-665.75 622.62,-659.75 628.62,-653.75 634.62,-653.75 634.62,-653.75 696.66,-653.75 696.66,-653.75 702.66,-653.75 708.66,-659.75 708.66,-665.75 708.66,-665.75 708.66,-677.75 708.66,-677.75 708.66,-683.75 702.66,-689.75 696.66,-689.75&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;665.64&quot; y=&quot;-667.3&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#C5221F&quot;&gt;block PR · fix&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- g1&amp;#45;&amp;gt;b1 --&gt;
 &lt;g id=&quot;edge9&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;g1&amp;#45;&amp;gt;b1&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;#f0473e&quot; stroke-width=&quot;1.3&quot; d=&quot;M603.01,-726.46C613.29,-717.65 626.79,-706.07 638.63,-695.92&quot;/&gt;
-&lt;polygon fill=&quot;#f0473e&quot; stroke=&quot;#f0473e&quot; stroke-width=&quot;1.3&quot; points=&quot;640.15,-697.84 643.87,-691.42 636.96,-694.12 640.15,-697.84&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;636.12&quot; y=&quot;-702.95&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#f0473e&quot;&gt;no&lt;/text&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#C5221F&quot; stroke-width=&quot;1.3&quot; d=&quot;M603.01,-726.46C613.29,-717.65 626.79,-706.07 638.63,-695.92&quot;/&gt;
+&lt;polygon fill=&quot;#C5221F&quot; stroke=&quot;#C5221F&quot; stroke-width=&quot;1.3&quot; points=&quot;640.15,-697.84 643.87,-691.42 636.96,-694.12 640.15,-697.84&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;636.12&quot; y=&quot;-702.95&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#C5221F&quot;&gt;no&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- g2 --&gt;
 &lt;g id=&quot;node5&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;g2&lt;/title&gt;
-&lt;path fill=&quot;#121a21&quot; stroke=&quot;#f0a429&quot; d=&quot;M494.92,-626.18C494.92,-626.18 436.15,-613.32 436.15,-613.32 430.29,-612.03 430.29,-609.47 436.15,-608.18 436.15,-608.18 494.92,-595.32 494.92,-595.32 500.78,-594.03 512.51,-594.03 518.37,-595.32 518.37,-595.32 577.14,-608.18 577.14,-608.18 583,-609.47 583,-612.03 577.14,-613.32 577.14,-613.32 518.37,-626.18 518.37,-626.18 512.51,-627.47 500.78,-627.47 494.92,-626.18&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;506.64&quot; y=&quot;-606.3&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#f0a429&quot;&gt;Build green?&lt;/text&gt;
+&lt;path fill=&quot;#F8FAFD&quot; stroke=&quot;#B06000&quot; d=&quot;M494.92,-626.18C494.92,-626.18 436.15,-613.32 436.15,-613.32 430.29,-612.03 430.29,-609.47 436.15,-608.18 436.15,-608.18 494.92,-595.32 494.92,-595.32 500.78,-594.03 512.51,-594.03 518.37,-595.32 518.37,-595.32 577.14,-608.18 577.14,-608.18 583,-609.47 583,-612.03 577.14,-613.32 577.14,-613.32 518.37,-626.18 518.37,-626.18 512.51,-627.47 500.78,-627.47 494.92,-626.18&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;506.64&quot; y=&quot;-606.3&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#B06000&quot;&gt;Build green?&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- bld&amp;#45;&amp;gt;g2 --&gt;
 &lt;g id=&quot;edge3&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;bld&amp;#45;&amp;gt;g2&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;black&quot; stroke-width=&quot;1.3&quot; d=&quot;M506.64,-653.37C506.64,-648.49 506.64,-643.08 506.64,-637.81&quot;/&gt;
-&lt;polygon fill=&quot;black&quot; stroke=&quot;black&quot; stroke-width=&quot;1.3&quot; points=&quot;509.1,-638.18 506.65,-631.18 504.2,-638.18 509.1,-638.18&quot;/&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#5E5E5E&quot; stroke-width=&quot;1.3&quot; d=&quot;M506.64,-653.37C506.64,-648.49 506.64,-643.08 506.64,-637.81&quot;/&gt;
+&lt;polygon fill=&quot;#5E5E5E&quot; stroke=&quot;#5E5E5E&quot; stroke-width=&quot;1.3&quot; points=&quot;509.1,-638.18 506.65,-631.18 504.2,-638.18 509.1,-638.18&quot;/&gt;
 &lt;/g&gt;
 &lt;!-- smk --&gt;
 &lt;g id=&quot;node6&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;smk&lt;/title&gt;
-&lt;path fill=&quot;#0d1218&quot; stroke=&quot;#28353f&quot; d=&quot;M496.16,-559C496.16,-559 347.12,-559 347.12,-559 341.12,-559 335.12,-553 335.12,-547 335.12,-547 335.12,-535 335.12,-535 335.12,-529 341.12,-523 347.12,-523 347.12,-523 496.16,-523 496.16,-523 502.16,-523 508.16,-529 508.16,-535 508.16,-535 508.16,-547 508.16,-547 508.16,-553 502.16,-559 496.16,-559&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;421.64&quot; y=&quot;-536.55&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#e8eff5&quot;&gt;Smoke tests on GPU hardware&lt;/text&gt;
+&lt;path fill=&quot;#FFFFFF&quot; stroke=&quot;#C4C7C5&quot; d=&quot;M496.16,-559C496.16,-559 347.12,-559 347.12,-559 341.12,-559 335.12,-553 335.12,-547 335.12,-547 335.12,-535 335.12,-535 335.12,-529 341.12,-523 347.12,-523 347.12,-523 496.16,-523 496.16,-523 502.16,-523 508.16,-529 508.16,-535 508.16,-535 508.16,-547 508.16,-547 508.16,-553 502.16,-559 496.16,-559&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;421.64&quot; y=&quot;-536.55&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#1F1F1F&quot;&gt;Smoke tests on GPU hardware&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- g2&amp;#45;&amp;gt;smk --&gt;
 &lt;g id=&quot;edge10&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;g2&amp;#45;&amp;gt;smk&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;#2dd4a7&quot; stroke-width=&quot;1.3&quot; d=&quot;M489.44,-596.04C478.23,-587.1 463.32,-575.22 450.34,-564.87&quot;/&gt;
-&lt;polygon fill=&quot;#2dd4a7&quot; stroke=&quot;#2dd4a7&quot; stroke-width=&quot;1.3&quot; points=&quot;451.9,-562.98 444.9,-560.53 448.84,-566.81 451.9,-562.98&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;476.36&quot; y=&quot;-572.2&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#2dd4a7&quot;&gt;yes&lt;/text&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#188038&quot; stroke-width=&quot;1.3&quot; d=&quot;M489.44,-596.04C478.23,-587.1 463.32,-575.22 450.34,-564.87&quot;/&gt;
+&lt;polygon fill=&quot;#188038&quot; stroke=&quot;#188038&quot; stroke-width=&quot;1.3&quot; points=&quot;451.9,-562.98 444.9,-560.53 448.84,-566.81 451.9,-562.98&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;476.36&quot; y=&quot;-572.2&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#188038&quot;&gt;yes&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- b2 --&gt;
 &lt;g id=&quot;node16&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;b2&lt;/title&gt;
-&lt;path fill=&quot;#160e0f&quot; stroke=&quot;#f0473e&quot; d=&quot;M632.54,-559C632.54,-559 548.75,-559 548.75,-559 542.75,-559 536.75,-553 536.75,-547 536.75,-547 536.75,-535 536.75,-535 536.75,-529 542.75,-523 548.75,-523 548.75,-523 632.54,-523 632.54,-523 638.54,-523 644.54,-529 644.54,-535 644.54,-535 644.54,-547 644.54,-547 644.54,-553 638.54,-559 632.54,-559&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;590.64&quot; y=&quot;-536.55&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#f0473e&quot;&gt;red PR · revert/fix&lt;/text&gt;
+&lt;path fill=&quot;#FCE8E6&quot; stroke=&quot;#C5221F&quot; d=&quot;M632.54,-559C632.54,-559 548.75,-559 548.75,-559 542.75,-559 536.75,-553 536.75,-547 536.75,-547 536.75,-535 536.75,-535 536.75,-529 542.75,-523 548.75,-523 548.75,-523 632.54,-523 632.54,-523 638.54,-523 644.54,-529 644.54,-535 644.54,-535 644.54,-547 644.54,-547 644.54,-553 638.54,-559 632.54,-559&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;590.64&quot; y=&quot;-536.55&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#C5221F&quot;&gt;red PR · revert/fix&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- g2&amp;#45;&amp;gt;b2 --&gt;
 &lt;g id=&quot;edge11&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;g2&amp;#45;&amp;gt;b2&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;#f0473e&quot; stroke-width=&quot;1.3&quot; d=&quot;M523.64,-596.04C534.73,-587.1 549.46,-575.22 562.29,-564.87&quot;/&gt;
-&lt;polygon fill=&quot;#f0473e&quot; stroke=&quot;#f0473e&quot; stroke-width=&quot;1.3&quot; points=&quot;563.74,-566.84 567.66,-560.54 560.67,-563.03 563.74,-566.84&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;558.92&quot; y=&quot;-572.2&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#f0473e&quot;&gt;no&lt;/text&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#C5221F&quot; stroke-width=&quot;1.3&quot; d=&quot;M523.64,-596.04C534.73,-587.1 549.46,-575.22 562.29,-564.87&quot;/&gt;
+&lt;polygon fill=&quot;#C5221F&quot; stroke=&quot;#C5221F&quot; stroke-width=&quot;1.3&quot; points=&quot;563.74,-566.84 567.66,-560.54 560.67,-563.03 563.74,-566.84&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;558.92&quot; y=&quot;-572.2&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#C5221F&quot;&gt;no&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- g3 --&gt;
 &lt;g id=&quot;node7&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;g3&lt;/title&gt;
-&lt;path fill=&quot;#121a21&quot; stroke=&quot;#f0a429&quot; d=&quot;M409.95,-495.3C409.95,-495.3 355.53,-482.7 355.53,-482.7 349.69,-481.35 349.69,-478.65 355.53,-477.3 355.53,-477.3 409.95,-464.7 409.95,-464.7 415.8,-463.35 427.49,-463.35 433.34,-464.7 433.34,-464.7 487.76,-477.3 487.76,-477.3 493.6,-478.65 493.6,-481.35 487.76,-482.7 487.76,-482.7 433.34,-495.3 433.34,-495.3 427.49,-496.65 415.8,-496.65 409.95,-495.3&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;421.64&quot; y=&quot;-475.55&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#f0a429&quot;&gt;Tests pass?&lt;/text&gt;
+&lt;path fill=&quot;#F8FAFD&quot; stroke=&quot;#B06000&quot; d=&quot;M409.95,-495.3C409.95,-495.3 355.53,-482.7 355.53,-482.7 349.69,-481.35 349.69,-478.65 355.53,-477.3 355.53,-477.3 409.95,-464.7 409.95,-464.7 415.8,-463.35 427.49,-463.35 433.34,-464.7 433.34,-464.7 487.76,-477.3 487.76,-477.3 493.6,-478.65 493.6,-481.35 487.76,-482.7 487.76,-482.7 433.34,-495.3 433.34,-495.3 427.49,-496.65 415.8,-496.65 409.95,-495.3&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;421.64&quot; y=&quot;-475.55&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#B06000&quot;&gt;Tests pass?&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- smk&amp;#45;&amp;gt;g3 --&gt;
 &lt;g id=&quot;edge4&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;smk&amp;#45;&amp;gt;g3&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;black&quot; stroke-width=&quot;1.3&quot; d=&quot;M421.64,-522.62C421.64,-517.74 421.64,-512.33 421.64,-507.06&quot;/&gt;
-&lt;polygon fill=&quot;black&quot; stroke=&quot;black&quot; stroke-width=&quot;1.3&quot; points=&quot;424.1,-507.43 421.65,-500.43 419.2,-507.43 424.1,-507.43&quot;/&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#5E5E5E&quot; stroke-width=&quot;1.3&quot; d=&quot;M421.64,-522.62C421.64,-517.74 421.64,-512.33 421.64,-507.06&quot;/&gt;
+&lt;polygon fill=&quot;#5E5E5E&quot; stroke=&quot;#5E5E5E&quot; stroke-width=&quot;1.3&quot; points=&quot;424.1,-507.43 421.65,-500.43 419.2,-507.43 424.1,-507.43&quot;/&gt;
 &lt;/g&gt;
 &lt;!-- rev --&gt;
 &lt;g id=&quot;node8&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;rev&lt;/title&gt;
-&lt;path fill=&quot;#121a21&quot; stroke=&quot;#ff6b35&quot; d=&quot;M261.68,-427.29C261.68,-427.29 61.35,-411.21 61.35,-411.21 55.37,-410.73 55.37,-409.77 61.35,-409.29 61.35,-409.29 261.68,-393.21 261.68,-393.21 267.66,-392.73 279.63,-392.73 285.61,-393.21 285.61,-393.21 485.94,-409.29 485.94,-409.29 491.92,-409.77 491.92,-410.73 485.94,-411.21 485.94,-411.21 285.61,-427.29 285.61,-427.29 279.63,-427.77 267.66,-427.77 261.68,-427.29&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;273.64&quot; y=&quot;-405.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#ff6b35&quot;&gt;CODEOWNERS review + required checks&lt;/text&gt;
+&lt;path fill=&quot;#F8FAFD&quot; stroke=&quot;#1A73E8&quot; d=&quot;M261.68,-427.29C261.68,-427.29 61.35,-411.21 61.35,-411.21 55.37,-410.73 55.37,-409.77 61.35,-409.29 61.35,-409.29 261.68,-393.21 261.68,-393.21 267.66,-392.73 279.63,-392.73 285.61,-393.21 285.61,-393.21 485.94,-409.29 485.94,-409.29 491.92,-409.77 491.92,-410.73 485.94,-411.21 485.94,-411.21 285.61,-427.29 285.61,-427.29 279.63,-427.77 267.66,-427.77 261.68,-427.29&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;273.64&quot; y=&quot;-405.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#1A73E8&quot;&gt;CODEOWNERS review + required checks&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- g3&amp;#45;&amp;gt;rev --&gt;
 &lt;g id=&quot;edge12&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;g3&amp;#45;&amp;gt;rev&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;#2dd4a7&quot; stroke-width=&quot;1.3&quot; d=&quot;M396.54,-467.51C373.97,-457.17 340.41,-441.81 314.06,-429.75&quot;/&gt;
-&lt;polygon fill=&quot;#2dd4a7&quot; stroke=&quot;#2dd4a7&quot; stroke-width=&quot;1.3&quot; points=&quot;315.31,-427.63 307.93,-426.94 313.27,-432.08 315.31,-427.63&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;363.63&quot; y=&quot;-441.45&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#2dd4a7&quot;&gt;yes&lt;/text&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#188038&quot; stroke-width=&quot;1.3&quot; d=&quot;M396.54,-467.51C373.97,-457.17 340.41,-441.81 314.06,-429.75&quot;/&gt;
+&lt;polygon fill=&quot;#188038&quot; stroke=&quot;#188038&quot; stroke-width=&quot;1.3&quot; points=&quot;315.31,-427.63 307.93,-426.94 313.27,-432.08 315.31,-427.63&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;363.63&quot; y=&quot;-441.45&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#188038&quot;&gt;yes&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- b3 --&gt;
 &lt;g id=&quot;node17&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;b3&lt;/title&gt;
-&lt;path fill=&quot;#160e0f&quot; stroke=&quot;#f0473e&quot; d=&quot;M598.54,-428.25C598.54,-428.25 538.75,-428.25 538.75,-428.25 532.75,-428.25 526.75,-422.25 526.75,-416.25 526.75,-416.25 526.75,-404.25 526.75,-404.25 526.75,-398.25 532.75,-392.25 538.75,-392.25 538.75,-392.25 598.54,-392.25 598.54,-392.25 604.54,-392.25 610.54,-398.25 610.54,-404.25 610.54,-404.25 610.54,-416.25 610.54,-416.25 610.54,-422.25 604.54,-428.25 598.54,-428.25&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;568.64&quot; y=&quot;-405.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#f0473e&quot;&gt;block · triage&lt;/text&gt;
+&lt;path fill=&quot;#FCE8E6&quot; stroke=&quot;#C5221F&quot; d=&quot;M598.54,-428.25C598.54,-428.25 538.75,-428.25 538.75,-428.25 532.75,-428.25 526.75,-422.25 526.75,-416.25 526.75,-416.25 526.75,-404.25 526.75,-404.25 526.75,-398.25 532.75,-392.25 538.75,-392.25 538.75,-392.25 598.54,-392.25 598.54,-392.25 604.54,-392.25 610.54,-398.25 610.54,-404.25 610.54,-404.25 610.54,-416.25 610.54,-416.25 610.54,-422.25 604.54,-428.25 598.54,-428.25&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;568.64&quot; y=&quot;-405.8&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#C5221F&quot;&gt;block · triage&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- g3&amp;#45;&amp;gt;b3 --&gt;
 &lt;g id=&quot;edge13&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;g3&amp;#45;&amp;gt;b3&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;#f0473e&quot; stroke-width=&quot;1.3&quot; d=&quot;M446.92,-467.35C467.73,-457.76 497.78,-443.91 522.82,-432.37&quot;/&gt;
-&lt;polygon fill=&quot;#f0473e&quot; stroke=&quot;#f0473e&quot; stroke-width=&quot;1.3&quot; points=&quot;523.64,-434.69 528.97,-429.54 521.58,-430.24 523.64,-434.69&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;509.2&quot; y=&quot;-441.45&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#f0473e&quot;&gt;no&lt;/text&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#C5221F&quot; stroke-width=&quot;1.3&quot; d=&quot;M446.92,-467.35C467.73,-457.76 497.78,-443.91 522.82,-432.37&quot;/&gt;
+&lt;polygon fill=&quot;#C5221F&quot; stroke=&quot;#C5221F&quot; stroke-width=&quot;1.3&quot; points=&quot;523.64,-434.69 528.97,-429.54 521.58,-430.24 523.64,-434.69&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;509.2&quot; y=&quot;-441.45&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#C5221F&quot;&gt;no&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- mrg --&gt;
 &lt;g id=&quot;node9&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;mrg&lt;/title&gt;
-&lt;path fill=&quot;#0d1218&quot; stroke=&quot;#5ab6f0&quot; d=&quot;M264.16,-358.5C264.16,-358.5 127.12,-358.5 127.12,-358.5 121.13,-358.5 115.12,-352.5 115.12,-346.5 115.12,-346.5 115.12,-334.5 115.12,-334.5 115.12,-328.5 121.12,-322.5 127.12,-322.5 127.12,-322.5 264.16,-322.5 264.16,-322.5 270.16,-322.5 276.16,-328.5 276.16,-334.5 276.16,-334.5 276.16,-346.5 276.16,-346.5 276.16,-352.5 270.16,-358.5 264.16,-358.5&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;195.64&quot; y=&quot;-337.18&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#5ab6f0&quot;&gt;Merge to main → postsubmit&lt;/text&gt;
+&lt;path fill=&quot;#FFFFFF&quot; stroke=&quot;#1A73E8&quot; d=&quot;M264.16,-358.5C264.16,-358.5 127.12,-358.5 127.12,-358.5 121.13,-358.5 115.12,-352.5 115.12,-346.5 115.12,-346.5 115.12,-334.5 115.12,-334.5 115.12,-328.5 121.12,-322.5 127.12,-322.5 127.12,-322.5 264.16,-322.5 264.16,-322.5 270.16,-322.5 276.16,-328.5 276.16,-334.5 276.16,-334.5 276.16,-346.5 276.16,-346.5 276.16,-352.5 270.16,-358.5 264.16,-358.5&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;195.64&quot; y=&quot;-337.18&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#1A73E8&quot;&gt;Merge to main → postsubmit&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- rev&amp;#45;&amp;gt;mrg --&gt;
 &lt;g id=&quot;edge14&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;rev&amp;#45;&amp;gt;mrg&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;#2dd4a7&quot; stroke-width=&quot;1.3&quot; d=&quot;M255.55,-393.54C245.64,-384.93 233.17,-374.09 222.17,-364.54&quot;/&gt;
-&lt;polygon fill=&quot;#2dd4a7&quot; stroke=&quot;#2dd4a7&quot; stroke-width=&quot;1.3&quot; points=&quot;223.93,-362.82 217.04,-360.08 220.72,-366.52 223.93,-362.82&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;258.82&quot; y=&quot;-371.7&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#2dd4a7&quot;&gt;approved&lt;/text&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#188038&quot; stroke-width=&quot;1.3&quot; d=&quot;M255.55,-393.54C245.64,-384.93 233.17,-374.09 222.17,-364.54&quot;/&gt;
+&lt;polygon fill=&quot;#188038&quot; stroke=&quot;#188038&quot; stroke-width=&quot;1.3&quot; points=&quot;223.93,-362.82 217.04,-360.08 220.72,-366.52 223.93,-362.82&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;258.82&quot; y=&quot;-371.7&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#188038&quot;&gt;approved&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- wt --&gt;
 &lt;g id=&quot;node18&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;wt&lt;/title&gt;
-&lt;path fill=&quot;#160e0f&quot; stroke=&quot;#f0473e&quot; d=&quot;M386.04,-358.5C386.04,-358.5 317.25,-358.5 317.25,-358.5 311.25,-358.5 305.25,-352.5 305.25,-346.5 305.25,-346.5 305.25,-334.5 305.25,-334.5 305.25,-328.5 311.25,-322.5 317.25,-322.5 317.25,-322.5 386.04,-322.5 386.04,-322.5 392.04,-322.5 398.04,-328.5 398.04,-334.5 398.04,-334.5 398.04,-346.5 398.04,-346.5 398.04,-352.5 392.04,-358.5 386.04,-358.5&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;351.64&quot; y=&quot;-336.05&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#f0473e&quot;&gt;wait for review&lt;/text&gt;
+&lt;path fill=&quot;#FCE8E6&quot; stroke=&quot;#C5221F&quot; d=&quot;M386.04,-358.5C386.04,-358.5 317.25,-358.5 317.25,-358.5 311.25,-358.5 305.25,-352.5 305.25,-346.5 305.25,-346.5 305.25,-334.5 305.25,-334.5 305.25,-328.5 311.25,-322.5 317.25,-322.5 317.25,-322.5 386.04,-322.5 386.04,-322.5 392.04,-322.5 398.04,-328.5 398.04,-334.5 398.04,-334.5 398.04,-346.5 398.04,-346.5 398.04,-352.5 392.04,-358.5 386.04,-358.5&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;351.64&quot; y=&quot;-336.05&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#C5221F&quot;&gt;wait for review&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- rev&amp;#45;&amp;gt;wt --&gt;
 &lt;g id=&quot;edge15&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;rev&amp;#45;&amp;gt;wt&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;#f0473e&quot; stroke-width=&quot;1.3&quot; d=&quot;M291.74,-393.54C301.65,-384.93 314.12,-374.09 325.12,-364.54&quot;/&gt;
-&lt;polygon fill=&quot;#f0473e&quot; stroke=&quot;#f0473e&quot; stroke-width=&quot;1.3&quot; points=&quot;326.57,-366.52 330.25,-360.08 323.36,-362.82 326.57,-366.52&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;322.57&quot; y=&quot;-371.7&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#f0473e&quot;&gt;no&lt;/text&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#C5221F&quot; stroke-width=&quot;1.3&quot; d=&quot;M291.74,-393.54C301.65,-384.93 314.12,-374.09 325.12,-364.54&quot;/&gt;
+&lt;polygon fill=&quot;#C5221F&quot; stroke=&quot;#C5221F&quot; stroke-width=&quot;1.3&quot; points=&quot;326.57,-366.52 330.25,-360.08 323.36,-362.82 326.57,-366.52&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;322.57&quot; y=&quot;-371.7&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#C5221F&quot;&gt;no&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- ni --&gt;
 &lt;g id=&quot;node10&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;ni&lt;/title&gt;
-&lt;path fill=&quot;#0d1218&quot; stroke=&quot;#28353f&quot; d=&quot;M267.16,-297.5C267.16,-297.5 124.12,-297.5 124.12,-297.5 118.12,-297.5 112.12,-291.5 112.12,-285.5 112.12,-285.5 112.12,-273.5 112.12,-273.5 112.12,-267.5 118.12,-261.5 124.12,-261.5 124.12,-261.5 267.16,-261.5 267.16,-261.5 273.16,-261.5 279.16,-267.5 279.16,-273.5 279.16,-273.5 279.16,-285.5 279.16,-285.5 279.16,-291.5 273.16,-297.5 267.16,-297.5&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;195.64&quot; y=&quot;-275.05&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#e8eff5&quot;&gt;Nightly — full matrix · full suite&lt;/text&gt;
+&lt;path fill=&quot;#FFFFFF&quot; stroke=&quot;#C4C7C5&quot; d=&quot;M267.16,-297.5C267.16,-297.5 124.12,-297.5 124.12,-297.5 118.12,-297.5 112.12,-291.5 112.12,-285.5 112.12,-285.5 112.12,-273.5 112.12,-273.5 112.12,-267.5 118.12,-261.5 124.12,-261.5 124.12,-261.5 267.16,-261.5 267.16,-261.5 273.16,-261.5 279.16,-267.5 279.16,-273.5 279.16,-273.5 279.16,-285.5 279.16,-285.5 279.16,-291.5 273.16,-297.5 267.16,-297.5&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;195.64&quot; y=&quot;-275.05&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#1F1F1F&quot;&gt;Nightly — full matrix · full suite&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- mrg&amp;#45;&amp;gt;ni --&gt;
 &lt;g id=&quot;edge5&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;mrg&amp;#45;&amp;gt;ni&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;black&quot; stroke-width=&quot;1.3&quot; d=&quot;M195.64,-322.12C195.64,-317.24 195.64,-311.83 195.64,-306.56&quot;/&gt;
-&lt;polygon fill=&quot;black&quot; stroke=&quot;black&quot; stroke-width=&quot;1.3&quot; points=&quot;198.1,-306.93 195.65,-299.93 193.2,-306.93 198.1,-306.93&quot;/&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#5E5E5E&quot; stroke-width=&quot;1.3&quot; d=&quot;M195.64,-322.12C195.64,-317.24 195.64,-311.83 195.64,-306.56&quot;/&gt;
+&lt;polygon fill=&quot;#5E5E5E&quot; stroke=&quot;#5E5E5E&quot; stroke-width=&quot;1.3&quot; points=&quot;198.1,-306.93 195.65,-299.93 193.2,-306.93 198.1,-306.93&quot;/&gt;
 &lt;/g&gt;
 &lt;!-- g4 --&gt;
 &lt;g id=&quot;node11&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;g4&lt;/title&gt;
-&lt;path fill=&quot;#121a21&quot; stroke=&quot;#f0a429&quot; d=&quot;M184.02,-233.53C184.02,-233.53 136.83,-221.47 136.83,-221.47 131.01,-219.99 131.01,-217.01 136.83,-215.53 136.83,-215.53 184.02,-203.47 184.02,-203.47 189.83,-201.99 201.46,-201.99 207.27,-203.47 207.27,-203.47 254.46,-215.53 254.46,-215.53 260.28,-217.01 260.28,-219.99 254.46,-221.47 254.46,-221.47 207.27,-233.53 207.27,-233.53 201.46,-235.01 189.83,-235.01 184.02,-233.53&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;195.64&quot; y=&quot;-214.05&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#f0a429&quot;&gt;All green?&lt;/text&gt;
+&lt;path fill=&quot;#F8FAFD&quot; stroke=&quot;#B06000&quot; d=&quot;M184.02,-233.53C184.02,-233.53 136.83,-221.47 136.83,-221.47 131.01,-219.99 131.01,-217.01 136.83,-215.53 136.83,-215.53 184.02,-203.47 184.02,-203.47 189.83,-201.99 201.46,-201.99 207.27,-203.47 207.27,-203.47 254.46,-215.53 254.46,-215.53 260.28,-217.01 260.28,-219.99 254.46,-221.47 254.46,-221.47 207.27,-233.53 207.27,-233.53 201.46,-235.01 189.83,-235.01 184.02,-233.53&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;195.64&quot; y=&quot;-214.05&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#B06000&quot;&gt;All green?&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- ni&amp;#45;&amp;gt;g4 --&gt;
 &lt;g id=&quot;edge6&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;ni&amp;#45;&amp;gt;g4&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;black&quot; stroke-width=&quot;1.3&quot; d=&quot;M195.64,-261.12C195.64,-256.24 195.64,-250.83 195.64,-245.56&quot;/&gt;
-&lt;polygon fill=&quot;black&quot; stroke=&quot;black&quot; stroke-width=&quot;1.3&quot; points=&quot;198.1,-245.93 195.65,-238.93 193.2,-245.93 198.1,-245.93&quot;/&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#5E5E5E&quot; stroke-width=&quot;1.3&quot; d=&quot;M195.64,-261.12C195.64,-256.24 195.64,-250.83 195.64,-245.56&quot;/&gt;
+&lt;polygon fill=&quot;#5E5E5E&quot; stroke=&quot;#5E5E5E&quot; stroke-width=&quot;1.3&quot; points=&quot;198.1,-245.93 195.65,-238.93 193.2,-245.93 198.1,-245.93&quot;/&gt;
 &lt;/g&gt;
 &lt;!-- lkg --&gt;
 &lt;g id=&quot;node12&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;lkg&lt;/title&gt;
-&lt;path fill=&quot;#0d1218&quot; stroke=&quot;#ff6b35&quot; d=&quot;M177.91,-166.75C177.91,-166.75 69.38,-166.75 69.38,-166.75 63.38,-166.75 57.37,-160.75 57.37,-154.75 57.37,-154.75 57.37,-142.75 57.37,-142.75 57.37,-136.75 63.37,-130.75 69.37,-130.75 69.37,-130.75 177.91,-130.75 177.91,-130.75 183.91,-130.75 189.91,-136.75 189.91,-142.75 189.91,-142.75 189.91,-154.75 189.91,-154.75 189.91,-160.75 183.91,-166.75 177.91,-166.75&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;123.64&quot; y=&quot;-144.3&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#ff6b35&quot;&gt;Promote LKG manifest&lt;/text&gt;
+&lt;path fill=&quot;#FFFFFF&quot; stroke=&quot;#1A73E8&quot; d=&quot;M177.91,-166.75C177.91,-166.75 69.38,-166.75 69.38,-166.75 63.38,-166.75 57.37,-160.75 57.37,-154.75 57.37,-154.75 57.37,-142.75 57.37,-142.75 57.37,-136.75 63.37,-130.75 69.37,-130.75 69.37,-130.75 177.91,-130.75 177.91,-130.75 183.91,-130.75 189.91,-136.75 189.91,-142.75 189.91,-142.75 189.91,-154.75 189.91,-154.75 189.91,-160.75 183.91,-166.75 177.91,-166.75&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;123.64&quot; y=&quot;-144.3&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#1A73E8&quot;&gt;Promote LKG manifest&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- g4&amp;#45;&amp;gt;lkg --&gt;
 &lt;g id=&quot;edge16&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;g4&amp;#45;&amp;gt;lkg&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;#2dd4a7&quot; stroke-width=&quot;1.3&quot; d=&quot;M181.07,-203.79C171.75,-195.02 159.41,-183.41 148.56,-173.2&quot;/&gt;
-&lt;polygon fill=&quot;#2dd4a7&quot; stroke=&quot;#2dd4a7&quot; stroke-width=&quot;1.3&quot; points=&quot;150.25,-171.42 143.47,-168.41 146.89,-174.99 150.25,-171.42&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;171.08&quot; y=&quot;-179.95&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#2dd4a7&quot;&gt;yes&lt;/text&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#188038&quot; stroke-width=&quot;1.3&quot; d=&quot;M181.07,-203.79C171.75,-195.02 159.41,-183.41 148.56,-173.2&quot;/&gt;
+&lt;polygon fill=&quot;#188038&quot; stroke=&quot;#188038&quot; stroke-width=&quot;1.3&quot; points=&quot;150.25,-171.42 143.47,-168.41 146.89,-174.99 150.25,-171.42&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;171.08&quot; y=&quot;-179.95&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#188038&quot;&gt;yes&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- kp --&gt;
 &lt;g id=&quot;node19&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;kp&lt;/title&gt;
-&lt;path fill=&quot;#160e0f&quot; stroke=&quot;#f0473e&quot; d=&quot;M302.54,-166.75C302.54,-166.75 230.75,-166.75 230.75,-166.75 224.75,-166.75 218.75,-160.75 218.75,-154.75 218.75,-154.75 218.75,-142.75 218.75,-142.75 218.75,-136.75 224.75,-130.75 230.75,-130.75 230.75,-130.75 302.54,-130.75 302.54,-130.75 308.54,-130.75 314.54,-136.75 314.54,-142.75 314.54,-142.75 314.54,-154.75 314.54,-154.75 314.54,-160.75 308.54,-166.75 302.54,-166.75&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;266.64&quot; y=&quot;-144.3&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#f0473e&quot;&gt;keep prior LKG&lt;/text&gt;
+&lt;path fill=&quot;#FCE8E6&quot; stroke=&quot;#C5221F&quot; d=&quot;M302.54,-166.75C302.54,-166.75 230.75,-166.75 230.75,-166.75 224.75,-166.75 218.75,-160.75 218.75,-154.75 218.75,-154.75 218.75,-142.75 218.75,-142.75 218.75,-136.75 224.75,-130.75 230.75,-130.75 230.75,-130.75 302.54,-130.75 302.54,-130.75 308.54,-130.75 314.54,-136.75 314.54,-142.75 314.54,-142.75 314.54,-154.75 314.54,-154.75 314.54,-160.75 308.54,-166.75 302.54,-166.75&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;266.64&quot; y=&quot;-144.3&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#C5221F&quot;&gt;keep prior LKG&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- g4&amp;#45;&amp;gt;kp --&gt;
 &lt;g id=&quot;edge17&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;g4&amp;#45;&amp;gt;kp&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;#f0473e&quot; stroke-width=&quot;1.3&quot; d=&quot;M210.01,-203.79C219.21,-195.02 231.37,-183.41 242.07,-173.2&quot;/&gt;
-&lt;polygon fill=&quot;#f0473e&quot; stroke=&quot;#f0473e&quot; stroke-width=&quot;1.3&quot; points=&quot;243.71,-175.02 247.08,-168.42 240.33,-171.48 243.71,-175.02&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;240.65&quot; y=&quot;-179.95&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#f0473e&quot;&gt;no&lt;/text&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#C5221F&quot; stroke-width=&quot;1.3&quot; d=&quot;M210.01,-203.79C219.21,-195.02 231.37,-183.41 242.07,-173.2&quot;/&gt;
+&lt;polygon fill=&quot;#C5221F&quot; stroke=&quot;#C5221F&quot; stroke-width=&quot;1.3&quot; points=&quot;243.71,-175.02 247.08,-168.42 240.33,-171.48 243.71,-175.02&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;240.65&quot; y=&quot;-179.95&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#C5221F&quot;&gt;no&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- rel --&gt;
 &lt;g id=&quot;node13&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;rel&lt;/title&gt;
-&lt;path fill=&quot;#121a21&quot; stroke=&quot;#ff6b35&quot; d=&quot;M111.82,-103.72C111.82,-103.72 30.44,-89.78 30.44,-89.78 24.53,-88.76 24.53,-86.74 30.44,-85.72 30.44,-85.72 111.82,-71.78 111.82,-71.78 117.73,-70.76 129.56,-70.76 135.47,-71.78 135.47,-71.78 216.85,-85.72 216.85,-85.72 222.76,-86.74 222.76,-88.76 216.85,-89.78 216.85,-89.78 135.47,-103.72 135.47,-103.72 129.56,-104.74 117.73,-104.74 111.82,-103.72&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;123.64&quot; y=&quot;-83.3&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#ff6b35&quot;&gt;Release approval&lt;/text&gt;
+&lt;path fill=&quot;#F8FAFD&quot; stroke=&quot;#1A73E8&quot; d=&quot;M111.82,-103.72C111.82,-103.72 30.44,-89.78 30.44,-89.78 24.53,-88.76 24.53,-86.74 30.44,-85.72 30.44,-85.72 111.82,-71.78 111.82,-71.78 117.73,-70.76 129.56,-70.76 135.47,-71.78 135.47,-71.78 216.85,-85.72 216.85,-85.72 222.76,-86.74 222.76,-88.76 216.85,-89.78 216.85,-89.78 135.47,-103.72 135.47,-103.72 129.56,-104.74 117.73,-104.74 111.82,-103.72&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;123.64&quot; y=&quot;-83.3&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#1A73E8&quot;&gt;Release approval&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- lkg&amp;#45;&amp;gt;rel --&gt;
 &lt;g id=&quot;edge7&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;lkg&amp;#45;&amp;gt;rel&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;black&quot; stroke-width=&quot;1.3&quot; d=&quot;M123.64,-130.37C123.64,-125.49 123.64,-120.08 123.64,-114.81&quot;/&gt;
-&lt;polygon fill=&quot;black&quot; stroke=&quot;black&quot; stroke-width=&quot;1.3&quot; points=&quot;126.1,-115.18 123.65,-108.18 121.2,-115.18 126.1,-115.18&quot;/&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#5E5E5E&quot; stroke-width=&quot;1.3&quot; d=&quot;M123.64,-130.37C123.64,-125.49 123.64,-120.08 123.64,-114.81&quot;/&gt;
+&lt;polygon fill=&quot;#5E5E5E&quot; stroke=&quot;#5E5E5E&quot; stroke-width=&quot;1.3&quot; points=&quot;126.1,-115.18 123.65,-108.18 121.2,-115.18 126.1,-115.18&quot;/&gt;
 &lt;/g&gt;
 &lt;!-- shp --&gt;
 &lt;g id=&quot;node14&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;shp&lt;/title&gt;
-&lt;path fill=&quot;#0d1218&quot; stroke=&quot;#2dd4a7&quot; d=&quot;M115.29,-36C115.29,-36 12,-36 12,-36 6,-36 0,-30 0,-24 0,-24 0,-12 0,-12 0,-6 6,0 12,0 12,0 115.29,0 115.29,0 121.29,0 127.29,-6 127.29,-12 127.29,-12 127.29,-24 127.29,-24 127.29,-30 121.29,-36 115.29,-36&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;63.64&quot; y=&quot;-13.55&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#2dd4a7&quot;&gt;Ship customer bundle&lt;/text&gt;
+&lt;path fill=&quot;#FFFFFF&quot; stroke=&quot;#188038&quot; d=&quot;M115.29,-36C115.29,-36 12,-36 12,-36 6,-36 0,-30 0,-24 0,-24 0,-12 0,-12 0,-6 6,0 12,0 12,0 115.29,0 115.29,0 121.29,0 127.29,-6 127.29,-12 127.29,-12 127.29,-24 127.29,-24 127.29,-30 121.29,-36 115.29,-36&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;63.64&quot; y=&quot;-13.55&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#188038&quot;&gt;Ship customer bundle&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- rel&amp;#45;&amp;gt;shp --&gt;
 &lt;g id=&quot;edge18&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;rel&amp;#45;&amp;gt;shp&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;#2dd4a7&quot; stroke-width=&quot;1.3&quot; d=&quot;M110.33,-71.71C102.88,-63.31 93.43,-52.63 84.98,-43.09&quot;/&gt;
-&lt;polygon fill=&quot;#2dd4a7&quot; stroke=&quot;#2dd4a7&quot; stroke-width=&quot;1.3&quot; points=&quot;86.82,-41.48 80.35,-37.86 83.15,-44.72 86.82,-41.48&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;116.74&quot; y=&quot;-49.2&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#2dd4a7&quot;&gt;approved&lt;/text&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#188038&quot; stroke-width=&quot;1.3&quot; d=&quot;M110.33,-71.71C102.88,-63.31 93.43,-52.63 84.98,-43.09&quot;/&gt;
+&lt;polygon fill=&quot;#188038&quot; stroke=&quot;#188038&quot; stroke-width=&quot;1.3&quot; points=&quot;86.82,-41.48 80.35,-37.86 83.15,-44.72 86.82,-41.48&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;116.74&quot; y=&quot;-49.2&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#188038&quot;&gt;approved&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- hd --&gt;
 &lt;g id=&quot;node20&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;hd&lt;/title&gt;
-&lt;path fill=&quot;#160e0f&quot; stroke=&quot;#f0473e&quot; d=&quot;M198.64,-36C198.64,-36 168.64,-36 168.64,-36 162.64,-36 156.64,-30 156.64,-24 156.64,-24 156.64,-12 156.64,-12 156.64,-6 162.64,0 168.64,0 168.64,0 198.64,0 198.64,0 204.64,0 210.64,-6 210.64,-12 210.64,-12 210.64,-24 210.64,-24 210.64,-30 204.64,-36 198.64,-36&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;183.64&quot; y=&quot;-13.55&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#f0473e&quot;&gt;hold&lt;/text&gt;
+&lt;path fill=&quot;#FCE8E6&quot; stroke=&quot;#C5221F&quot; d=&quot;M198.64,-36C198.64,-36 168.64,-36 168.64,-36 162.64,-36 156.64,-30 156.64,-24 156.64,-24 156.64,-12 156.64,-12 156.64,-6 162.64,0 168.64,0 168.64,0 198.64,0 198.64,0 204.64,0 210.64,-6 210.64,-12 210.64,-12 210.64,-24 210.64,-24 210.64,-30 204.64,-36 198.64,-36&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;183.64&quot; y=&quot;-13.55&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#C5221F&quot;&gt;hold&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- rel&amp;#45;&amp;gt;hd --&gt;
 &lt;g id=&quot;edge19&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;rel&amp;#45;&amp;gt;hd&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;#f0473e&quot; stroke-width=&quot;1.3&quot; d=&quot;M136.96,-71.71C144.41,-63.31 153.86,-52.63 162.31,-43.09&quot;/&gt;
-&lt;polygon fill=&quot;#f0473e&quot; stroke=&quot;#f0473e&quot; stroke-width=&quot;1.3&quot; points=&quot;164.14,-44.72 166.94,-37.86 160.47,-41.48 164.14,-44.72&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;162.49&quot; y=&quot;-49.2&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#f0473e&quot;&gt;no&lt;/text&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#C5221F&quot; stroke-width=&quot;1.3&quot; d=&quot;M136.96,-71.71C144.41,-63.31 153.86,-52.63 162.31,-43.09&quot;/&gt;
+&lt;polygon fill=&quot;#C5221F&quot; stroke=&quot;#C5221F&quot; stroke-width=&quot;1.3&quot; points=&quot;164.14,-44.72 166.94,-37.86 160.47,-41.48 164.14,-44.72&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;162.49&quot; y=&quot;-49.2&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#C5221F&quot;&gt;no&lt;/text&gt;
 &lt;/g&gt;
 &lt;/g&gt;
 &lt;/svg&gt;
@@ -3449,74 +3665,74 @@
 &lt;!-- gh --&gt;
 &lt;g id=&quot;node1&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;gh&lt;/title&gt;
-&lt;path fill=&quot;#0d1218&quot; stroke=&quot;#ff6b35&quot; d=&quot;M575.18,-379C575.18,-379 316.25,-379 316.25,-379 310.25,-379 304.25,-373 304.25,-367 304.25,-367 304.25,-355 304.25,-355 304.25,-349 310.25,-343 316.25,-343 316.25,-343 575.18,-343 575.18,-343 581.18,-343 587.18,-349 587.18,-355 587.18,-355 587.18,-367 587.18,-367 587.18,-373 581.18,-379 575.18,-379&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;445.72&quot; y=&quot;-356.55&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#ff6b35&quot;&gt;GitHub &amp;#160;— &amp;#160;repo · Actions job queue · GHCR · OIDC&lt;/text&gt;
+&lt;path fill=&quot;#FFFFFF&quot; stroke=&quot;#1A73E8&quot; d=&quot;M575.18,-379C575.18,-379 316.25,-379 316.25,-379 310.25,-379 304.25,-373 304.25,-367 304.25,-367 304.25,-355 304.25,-355 304.25,-349 310.25,-343 316.25,-343 316.25,-343 575.18,-343 575.18,-343 581.18,-343 587.18,-349 587.18,-355 587.18,-355 587.18,-367 587.18,-367 587.18,-373 581.18,-379 575.18,-379&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;445.72&quot; y=&quot;-356.55&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#1A73E8&quot;&gt;GitHub &amp;#160;— &amp;#160;repo · Actions job queue · GHCR · OIDC&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- arc --&gt;
 &lt;g id=&quot;node2&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;arc&lt;/title&gt;
-&lt;path fill=&quot;#0d1218&quot; stroke=&quot;#28353f&quot; d=&quot;M605.93,-293.25C605.93,-293.25 285.5,-293.25 285.5,-293.25 279.5,-293.25 273.5,-287.25 273.5,-281.25 273.5,-281.25 273.5,-269.25 273.5,-269.25 273.5,-263.25 279.5,-257.25 285.5,-257.25 285.5,-257.25 605.93,-257.25 605.93,-257.25 611.93,-257.25 617.93,-263.25 617.93,-269.25 617.93,-269.25 617.93,-281.25 617.93,-281.25 617.93,-287.25 611.93,-293.25 605.93,-293.25&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;445.72&quot; y=&quot;-271.93&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#e8eff5&quot;&gt;ARC controller &amp;#160;— &amp;#160;listener → ephemeral runner pods · autoscale&lt;/text&gt;
+&lt;path fill=&quot;#FFFFFF&quot; stroke=&quot;#C4C7C5&quot; d=&quot;M605.93,-293.25C605.93,-293.25 285.5,-293.25 285.5,-293.25 279.5,-293.25 273.5,-287.25 273.5,-281.25 273.5,-281.25 273.5,-269.25 273.5,-269.25 273.5,-263.25 279.5,-257.25 285.5,-257.25 285.5,-257.25 605.93,-257.25 605.93,-257.25 611.93,-257.25 617.93,-263.25 617.93,-269.25 617.93,-269.25 617.93,-281.25 617.93,-281.25 617.93,-287.25 611.93,-293.25 605.93,-293.25&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;445.72&quot; y=&quot;-271.93&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#1F1F1F&quot;&gt;ARC controller &amp;#160;— &amp;#160;listener → ephemeral runner pods · autoscale&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- gh&amp;#45;&amp;gt;arc --&gt;
 &lt;g id=&quot;edge1&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;gh&amp;#45;&amp;gt;arc&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;#ff6b35&quot; stroke-width=&quot;1.5&quot; d=&quot;M445.72,-342.65C445.72,-331.42 445.72,-316.56 445.72,-303.74&quot;/&gt;
-&lt;polygon fill=&quot;#ff6b35&quot; stroke=&quot;#ff6b35&quot; stroke-width=&quot;1.5&quot; points=&quot;448.52,-303.85 445.72,-295.85 442.92,-303.85 448.52,-303.85&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;476.84&quot; y=&quot;-314.45&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#6b8090&quot;&gt;watches queue&lt;/text&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#1A73E8&quot; stroke-width=&quot;1.5&quot; d=&quot;M445.72,-342.65C445.72,-331.42 445.72,-316.56 445.72,-303.74&quot;/&gt;
+&lt;polygon fill=&quot;#1A73E8&quot; stroke=&quot;#1A73E8&quot; stroke-width=&quot;1.5&quot; points=&quot;448.52,-303.85 445.72,-295.85 442.92,-303.85 448.52,-303.85&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;476.84&quot; y=&quot;-314.45&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#5E5E5E&quot;&gt;watches queue&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- pod --&gt;
 &lt;g id=&quot;node3&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;pod&lt;/title&gt;
-&lt;path fill=&quot;#0d1218&quot; stroke=&quot;#28353f&quot; stroke-dasharray=&quot;5,2&quot; d=&quot;M643.06,-207.5C643.06,-207.5 248.38,-207.5 248.38,-207.5 242.38,-207.5 236.38,-201.5 236.38,-195.5 236.38,-195.5 236.38,-183.5 236.38,-183.5 236.38,-177.5 242.38,-171.5 248.38,-171.5 248.38,-171.5 643.06,-171.5 643.06,-171.5 649.06,-171.5 655.06,-177.5 655.06,-183.5 655.06,-183.5 655.06,-195.5 655.06,-195.5 655.06,-201.5 649.06,-207.5 643.06,-207.5&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;445.72&quot; y=&quot;-185.05&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#e8eff5&quot;&gt;Runner pod (ephemeral, one job) &amp;#160;— &amp;#160;runner + dind sidecar · NFS · signing client&lt;/text&gt;
+&lt;path fill=&quot;#FFFFFF&quot; stroke=&quot;#C4C7C5&quot; stroke-dasharray=&quot;5,2&quot; d=&quot;M643.06,-207.5C643.06,-207.5 248.38,-207.5 248.38,-207.5 242.38,-207.5 236.38,-201.5 236.38,-195.5 236.38,-195.5 236.38,-183.5 236.38,-183.5 236.38,-177.5 242.38,-171.5 248.38,-171.5 248.38,-171.5 643.06,-171.5 643.06,-171.5 649.06,-171.5 655.06,-177.5 655.06,-183.5 655.06,-183.5 655.06,-195.5 655.06,-195.5 655.06,-201.5 649.06,-207.5 643.06,-207.5&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;445.72&quot; y=&quot;-185.05&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#1F1F1F&quot;&gt;Runner pod (ephemeral, one job) &amp;#160;— &amp;#160;runner + dind sidecar · NFS · signing client&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- arc&amp;#45;&amp;gt;pod --&gt;
 &lt;g id=&quot;edge2&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;arc&amp;#45;&amp;gt;pod&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;#ff6b35&quot; stroke-width=&quot;1.5&quot; d=&quot;M445.72,-256.9C445.72,-245.67 445.72,-230.81 445.72,-217.99&quot;/&gt;
-&lt;polygon fill=&quot;#ff6b35&quot; stroke=&quot;#ff6b35&quot; stroke-width=&quot;1.5&quot; points=&quot;448.52,-218.1 445.72,-210.1 442.92,-218.1 448.52,-218.1&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;472.34&quot; y=&quot;-228.7&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#6b8090&quot;&gt;one pod / job&lt;/text&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#1A73E8&quot; stroke-width=&quot;1.5&quot; d=&quot;M445.72,-256.9C445.72,-245.67 445.72,-230.81 445.72,-217.99&quot;/&gt;
+&lt;polygon fill=&quot;#1A73E8&quot; stroke=&quot;#1A73E8&quot; stroke-width=&quot;1.5&quot; points=&quot;448.52,-218.1 445.72,-210.1 442.92,-218.1 448.52,-218.1&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;472.34&quot; y=&quot;-228.7&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#5E5E5E&quot;&gt;one pod / job&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- k8s --&gt;
 &lt;g id=&quot;node4&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;k8s&lt;/title&gt;
-&lt;path fill=&quot;#0d1218&quot; stroke=&quot;#28353f&quot; d=&quot;M657.68,-121.75C657.68,-121.75 233.75,-121.75 233.75,-121.75 227.75,-121.75 221.75,-115.75 221.75,-109.75 221.75,-109.75 221.75,-97.75 221.75,-97.75 221.75,-91.75 227.75,-85.75 233.75,-85.75 233.75,-85.75 657.68,-85.75 657.68,-85.75 663.68,-85.75 669.68,-91.75 669.68,-97.75 669.68,-97.75 669.68,-109.75 669.68,-109.75 669.68,-115.75 663.68,-121.75 657.68,-121.75&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;445.72&quot; y=&quot;-99.3&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#e8eff5&quot;&gt;Kubernetes (EKS / AKS) &amp;#160;— &amp;#160;cloud VM nodes · bare&amp;#45;metal GPU nodes · Windows pool&lt;/text&gt;
+&lt;path fill=&quot;#FFFFFF&quot; stroke=&quot;#C4C7C5&quot; d=&quot;M657.68,-121.75C657.68,-121.75 233.75,-121.75 233.75,-121.75 227.75,-121.75 221.75,-115.75 221.75,-109.75 221.75,-109.75 221.75,-97.75 221.75,-97.75 221.75,-91.75 227.75,-85.75 233.75,-85.75 233.75,-85.75 657.68,-85.75 657.68,-85.75 663.68,-85.75 669.68,-91.75 669.68,-97.75 669.68,-97.75 669.68,-109.75 669.68,-109.75 669.68,-115.75 663.68,-121.75 657.68,-121.75&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;445.72&quot; y=&quot;-99.3&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#1F1F1F&quot;&gt;Kubernetes (EKS / AKS) &amp;#160;— &amp;#160;cloud VM nodes · bare&amp;#45;metal GPU nodes · Windows pool&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- pod&amp;#45;&amp;gt;k8s --&gt;
 &lt;g id=&quot;edge3&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;pod&amp;#45;&amp;gt;k8s&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;#ff6b35&quot; stroke-width=&quot;1.5&quot; d=&quot;M445.72,-171.15C445.72,-159.92 445.72,-145.06 445.72,-132.24&quot;/&gt;
-&lt;polygon fill=&quot;#ff6b35&quot; stroke=&quot;#ff6b35&quot; stroke-width=&quot;1.5&quot; points=&quot;448.52,-132.35 445.72,-124.35 442.92,-132.35 448.52,-132.35&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;477.22&quot; y=&quot;-142.95&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#6b8090&quot;&gt;scheduled onto&lt;/text&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#1A73E8&quot; stroke-width=&quot;1.5&quot; d=&quot;M445.72,-171.15C445.72,-159.92 445.72,-145.06 445.72,-132.24&quot;/&gt;
+&lt;polygon fill=&quot;#1A73E8&quot; stroke=&quot;#1A73E8&quot; stroke-width=&quot;1.5&quot; points=&quot;448.52,-132.35 445.72,-124.35 442.92,-132.35 448.52,-132.35&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;477.22&quot; y=&quot;-142.95&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#5E5E5E&quot;&gt;scheduled onto&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- gpu --&gt;
 &lt;g id=&quot;node5&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;gpu&lt;/title&gt;
-&lt;path fill=&quot;#0d1218&quot; stroke=&quot;#b08bf0&quot; d=&quot;M401.43,-36C401.43,-36 12,-36 12,-36 6,-36 0,-30 0,-24 0,-24 0,-12 0,-12 0,-6 6,0 12,0 12,0 401.43,0 401.43,0 407.43,0 413.43,-6 413.43,-12 413.43,-12 413.43,-24 413.43,-24 413.43,-30 407.43,-36 401.43,-36&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;206.72&quot; y=&quot;-14.68&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#b08bf0&quot;&gt;GPU fleet &amp;#160;— &amp;#160;MI300 · MI325 · gfx942 · labeled by arch · metrics → Prometheus&lt;/text&gt;
+&lt;path fill=&quot;#FFFFFF&quot; stroke=&quot;#5E5E5E&quot; d=&quot;M401.43,-36C401.43,-36 12,-36 12,-36 6,-36 0,-30 0,-24 0,-24 0,-12 0,-12 0,-6 6,0 12,0 12,0 401.43,0 401.43,0 407.43,0 413.43,-6 413.43,-12 413.43,-12 413.43,-24 413.43,-24 413.43,-30 407.43,-36 401.43,-36&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;206.72&quot; y=&quot;-14.68&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#5E5E5E&quot;&gt;GPU fleet &amp;#160;— &amp;#160;MI300 · MI325 · gfx942 · labeled by arch · metrics → Prometheus&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- k8s&amp;#45;&amp;gt;gpu --&gt;
 &lt;g id=&quot;edge4&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;k8s&amp;#45;&amp;gt;gpu&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;#ff6b35&quot; stroke-width=&quot;1.5&quot; d=&quot;M395.9,-85.3C358.11,-72.05 306.03,-53.8 266.08,-39.8&quot;/&gt;
-&lt;polygon fill=&quot;#ff6b35&quot; stroke=&quot;#ff6b35&quot; stroke-width=&quot;1.5&quot; points=&quot;267.08,-37.19 258.6,-37.18 265.23,-42.47 267.08,-37.19&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;349.13&quot; y=&quot;-57.2&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#6b8090&quot;&gt;tests on&lt;/text&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#1A73E8&quot; stroke-width=&quot;1.5&quot; d=&quot;M395.9,-85.3C358.11,-72.05 306.03,-53.8 266.08,-39.8&quot;/&gt;
+&lt;polygon fill=&quot;#1A73E8&quot; stroke=&quot;#1A73E8&quot; stroke-width=&quot;1.5&quot; points=&quot;267.08,-37.19 258.6,-37.18 265.23,-42.47 267.08,-37.19&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;349.13&quot; y=&quot;-57.2&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#5E5E5E&quot;&gt;tests on&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- svc --&gt;
 &lt;g id=&quot;node6&quot; class=&quot;node&quot;&gt;
 &lt;title&gt;svc&lt;/title&gt;
-&lt;path fill=&quot;#0d1218&quot; stroke=&quot;#28353f&quot; d=&quot;M923.56,-36C923.56,-36 447.88,-36 447.88,-36 441.88,-36 435.88,-30 435.88,-24 435.88,-24 435.88,-12 435.88,-12 435.88,-6 441.88,0 447.88,0 447.88,0 923.56,0 923.56,0 929.56,0 935.56,-6 935.56,-12 935.56,-12 935.56,-24 935.56,-24 935.56,-30 929.56,-36 923.56,-36&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;685.72&quot; y=&quot;-13.55&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#e8eff5&quot;&gt;Platform services &amp;#160;— &amp;#160;remote cache · S3 · GHCR · signing (HSM/KMS) · IAM/OIDC · observability&lt;/text&gt;
+&lt;path fill=&quot;#FFFFFF&quot; stroke=&quot;#C4C7C5&quot; d=&quot;M923.56,-36C923.56,-36 447.88,-36 447.88,-36 441.88,-36 435.88,-30 435.88,-24 435.88,-24 435.88,-12 435.88,-12 435.88,-6 441.88,0 447.88,0 447.88,0 923.56,0 923.56,0 929.56,0 935.56,-6 935.56,-12 935.56,-12 935.56,-24 935.56,-24 935.56,-30 929.56,-36 923.56,-36&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;685.72&quot; y=&quot;-13.55&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;11.00&quot; fill=&quot;#1F1F1F&quot;&gt;Platform services &amp;#160;— &amp;#160;remote cache · S3 · GHCR · signing (HSM/KMS) · IAM/OIDC · observability&lt;/text&gt;
 &lt;/g&gt;
 &lt;!-- k8s&amp;#45;&amp;gt;svc --&gt;
 &lt;g id=&quot;edge5&quot; class=&quot;edge&quot;&gt;
 &lt;title&gt;k8s&amp;#45;&amp;gt;svc&lt;/title&gt;
-&lt;path fill=&quot;none&quot; stroke=&quot;#6b8090&quot; stroke-width=&quot;1.5&quot; stroke-dasharray=&quot;5,2&quot; d=&quot;M505.4,-81.92C542.24,-69.07 589.33,-52.63 626.15,-39.79&quot;/&gt;
-&lt;polygon fill=&quot;#6b8090&quot; stroke=&quot;#6b8090&quot; stroke-width=&quot;1.5&quot; points=&quot;504.51,-79.27 497.88,-84.55 506.35,-84.55 504.51,-79.27&quot;/&gt;
-&lt;polygon fill=&quot;#6b8090&quot; stroke=&quot;#6b8090&quot; stroke-width=&quot;1.5&quot; points=&quot;626.99,-42.46 633.62,-37.18 625.14,-37.17 626.99,-42.46&quot;/&gt;
-&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;587.16&quot; y=&quot;-57.2&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#6b8090&quot;&gt;shared&lt;/text&gt;
+&lt;path fill=&quot;none&quot; stroke=&quot;#5E5E5E&quot; stroke-width=&quot;1.5&quot; stroke-dasharray=&quot;5,2&quot; d=&quot;M505.4,-81.92C542.24,-69.07 589.33,-52.63 626.15,-39.79&quot;/&gt;
+&lt;polygon fill=&quot;#5E5E5E&quot; stroke=&quot;#5E5E5E&quot; stroke-width=&quot;1.5&quot; points=&quot;504.51,-79.27 497.88,-84.55 506.35,-84.55 504.51,-79.27&quot;/&gt;
+&lt;polygon fill=&quot;#5E5E5E&quot; stroke=&quot;#5E5E5E&quot; stroke-width=&quot;1.5&quot; points=&quot;626.99,-42.46 633.62,-37.18 625.14,-37.17 626.99,-42.46&quot;/&gt;
+&lt;text xml:space=&quot;preserve&quot; text-anchor=&quot;middle&quot; x=&quot;587.16&quot; y=&quot;-57.2&quot; font-family=&quot;Helvetica,sans-Serif&quot; font-size=&quot;9.00&quot; fill=&quot;#5E5E5E&quot;&gt;shared&lt;/text&gt;
 &lt;/g&gt;
 &lt;/g&gt;
 &lt;/svg&gt;
@@ -3734,7 +3950,59 @@ jobs:
     Rehearse: draw the four diagrams from memory, then talk through one coding and one design question out loud.
   &lt;/footer&gt;
 &lt;/div&gt;
-&lt;/body&gt;&lt;/html&gt;" title="Tech Prep"></iframe><iframe class="frm" data-k="qa" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot; data-theme=&quot;dark&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;script&gt;document.addEventListener('click',function(e){var a=e.target.closest&amp;&amp;e.target.closest('a[href^=&quot;#&quot;]');if(!a)return;var h=a.getAttribute('href');if(!h)return;e.preventDefault();var id=decodeURIComponent(h.slice(1));var el=id?(document.getElementById(id)||document.querySelector('[name=&quot;'+id+'&quot;]')):null;if(el){el.scrollIntoView({behavior:'smooth',block:'start'});}else{window.scrollTo({top:0,behavior:'smooth'});}},true);&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;title&gt;Interview Q&amp;amp;A — role-specific &amp;amp; general&lt;/title&gt;
+&lt;style id=&quot;gz-skin&quot;&gt;/* Google, Gen-Z skin: Google&#x27;s four as accents only, ink/grey type, hairlines, big rounds, pills. */
+html:root{
+  --void:#FFFFFF;--panel:#FFFFFF;--panel-2:#F8FAFD;--raise:#F0F4F9;--code-bg:#F8FAFD;--code-head:#F0F4F9;
+  --line:#E1E3E1;--line-2:#E1E3E1;--ink:#1F1F1F;--ink-2:#444746;--muted:#5E5E5E;
+  --red:#EA4335;--ember:#1A73E8;--grad:linear-gradient(#1A73E8,#1A73E8);
+  --pass:#188038;--run:#B06000;--fail:#C5221F;--link:#1A73E8;--gpu:#5E5E5E;--r:20px;
+  --display:&#x27;Google Sans&#x27;,&#x27;Roboto&#x27;,system-ui,sans-serif;--body:&#x27;Google Sans&#x27;,&#x27;Roboto&#x27;,system-ui,sans-serif;--sans:&#x27;Google Sans&#x27;,&#x27;Roboto&#x27;,system-ui,sans-serif;--mono:&#x27;Roboto Mono&#x27;,ui-monospace,monospace}
+html:root body{background-color:#fff;background-image:
+  radial-gradient(52% 44% at 4% 0%,rgba(66,133,244,.13),transparent 72%),
+  radial-gradient(48% 42% at 98% 2%,rgba(234,67,53,.08),transparent 72%),
+  radial-gradient(50% 46% at 96% 100%,rgba(251,188,4,.12),transparent 72%),
+  radial-gradient(46% 42% at 2% 100%,rgba(52,168,83,.09),transparent 72%);
+  background-attachment:fixed;background-repeat:no-repeat;color:var(--ink-2);letter-spacing:0}
+html:root body::before,html:root body::after{display:none}
+html:root ::selection{background:#E8F0FE;color:#1F1F1F}
+html:root h1,html:root h2,html:root h3,html:root h4{font-weight:500;letter-spacing:-.025em;color:var(--ink)}
+html:root h1{font-size:clamp(40px,5.4vw,72px);line-height:1.02;letter-spacing:-.04em}
+html:root b,html:root strong{font-weight:500!important}
+html:root code{background:#F0F4F9;border:0;border-radius:6px;color:var(--ink)}
+html:root .cmd&gt;code,html:root .drill pre{color:var(--ink)}
+html:root .eyebrow,html:root .cap,html:root .stage .st-n,html:root .dcol .clbl,html:root .trig .cnd,html:root .layer .lname,
+html:root .qc .tag,html:root .row .rk,html:root .pdiv .pk,html:root .cm .cmh,html:root .drill .dh,html:root .infer .ih,html:root .jdq .src,
+html:root .tag,html:root .ph .pn,html:root .hud .hb .hn,html:root .subnav .k,html:root .subnav a,html:root .part,html:root h3.grp,
+html:root .item .q .badge,html:root .pain .who,html:root .sn{font-family:var(--display);letter-spacing:0;text-transform:none;font-weight:500}
+html:root .eyebrow,html:root .cap,html:root h3.grp,html:root .subnav .k,html:root .pain .who{color:var(--muted)}
+html:root .eyebrow{font-size:14px} html:root .cap{font-size:14px;opacity:1}
+html:root .eyebrow::after,html:root .pdiv .pk::after{background:var(--line)}
+html:root .stage,html:root .trig,html:root .layer,html:root .qc,html:root .rows,html:root .cm,html:root .cmd,html:root .drill,html:root .card,
+html:root .qbox,html:root .ph,html:root .hud .hb,html:root .diagram,html:root .item,html:root .own,html:root .gstep{border-radius:20px}
+html:root .box,html:root .jbox,html:root .clabel,html:root .cstep,html:root .own .ex,html:root .cmd&gt;code,html:root .cnode.ev{border-radius:14px}
+html:root .tag,html:root .ph .pn,html:root .ggate .gq,html:root .item .q .badge,html:root .subnav a{border-radius:999px}
+html:root .stage .st-t,html:root .trig .th .tn,html:root .qc .qt,html:root .pain h4,html:root .ph .pt,html:root .own h4,html:root .card h3,
+html:root .item .q,html:root .ggate .gq,html:root .cnode.ev,html:root .box,html:root .jbox,html:root .gstep,html:root .clabel,html:root .drill .dh{font-weight:500}
+html:root .pain{border:1px solid rgba(234,67,53,.3);border-radius:20px}
+html:root .infer{background:rgba(251,188,4,.12);border:1px solid rgba(251,188,4,.45);border-radius:20px}
+html:root .infer.ok{background:rgba(52,168,83,.08);border-color:rgba(52,168,83,.3)}
+html:root .jdq{border:1px solid var(--line);border-radius:20px}
+html:root .jdq.ver{border-color:rgba(52,168,83,.3)}
+html:root .ggate .gq{border-width:1px}
+html:root .item .why{border-left:1px solid var(--line)}
+html:root .jbox.lkg{background:#E8F0FE}
+html:root .trig.presub{border-color:rgba(52,168,83,.3)} html:root .trig.presub .th{background:rgba(52,168,83,.06)}
+html:root .trig.nightly{border-color:rgba(26,115,232,.3)} html:root .trig.nightly .th{background:rgba(26,115,232,.06)}
+html:root .card.warn{border-color:rgba(234,67,53,.35)} html:root .card.good{border-color:rgba(52,168,83,.35)}
+html:root .tag.ver{border-color:rgba(52,168,83,.4)} html:root .tag.jd{border-color:rgba(26,115,232,.4)} html:root .tag.inf{border-color:rgba(251,188,4,.5)}
+html:root .ph .pn{border-color:rgba(26,115,232,.35)}
+html:root .item .q .badge{background:#E8F0FE;color:#1A73E8}
+html:root .subnav{background:rgba(255,255,255,.86)}
+html:root .subnav a{background:#fff;color:var(--ink);border-color:var(--line)}
+html:root .subnav a:hover{background:#F0F4F9;border-color:var(--line)}
+html:root table.cmp th{font-weight:500}
+html:root footer{font-family:var(--display)}
+html:root .qc .tag,html:root .row .rk,html:root .stage .st-n,html:root .dcol .clbl,html:root .layer .lname,html:root .cm .cmh,html:root .drill .dh,html:root .pdiv .pk,html:root .part,html:root .item .q .mk{color:var(--muted)}html:root .qc .hint b,html:root .loopnote b,html:root .qbox .why em{color:var(--ink)}&lt;/style&gt;&lt;/body&gt;&lt;/html&gt;" title="Tech Prep"></iframe><iframe class="frm" data-k="qa" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot; data-theme=&quot;light&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&amp;family=Roboto+Mono:wght@400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;script&gt;document.addEventListener(&#x27;click&#x27;,function(e){var a=e.target.closest&amp;&amp;e.target.closest(&#x27;a[href^=&quot;#&quot;]&#x27;);if(!a)return;var h=a.getAttribute(&#x27;href&#x27;);if(!h)return;e.preventDefault();var id=decodeURIComponent(h.slice(1));var el=id?(document.getElementById(id)||document.querySelector(&#x27;[name=&quot;&#x27;+id+&#x27;&quot;]&#x27;)):null;if(el){el.scrollIntoView({behavior:&#x27;smooth&#x27;,block:&#x27;start&#x27;});}else{window.scrollTo({top:0,behavior:&#x27;smooth&#x27;});}},true);&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;title&gt;Interview Q&amp;amp;A — role-specific &amp;amp; general&lt;/title&gt;
 &lt;style&gt;
   :root{
     --void:#07090C; --panel:#0D1218; --panel-2:#121A21; --raise:#162029;
@@ -3901,7 +4169,59 @@ jobs:
 
   &lt;footer&gt;Private prep · your answers, in your words · swap in your own real numbers.&lt;/footer&gt;
 &lt;/div&gt;
-&lt;/body&gt;&lt;/html&gt;" title="Q&amp;A"></iframe>
+&lt;style id=&quot;gz-skin&quot;&gt;/* Google, Gen-Z skin: Google&#x27;s four as accents only, ink/grey type, hairlines, big rounds, pills. */
+html:root{
+  --void:#FFFFFF;--panel:#FFFFFF;--panel-2:#F8FAFD;--raise:#F0F4F9;--code-bg:#F8FAFD;--code-head:#F0F4F9;
+  --line:#E1E3E1;--line-2:#E1E3E1;--ink:#1F1F1F;--ink-2:#444746;--muted:#5E5E5E;
+  --red:#EA4335;--ember:#1A73E8;--grad:linear-gradient(#1A73E8,#1A73E8);
+  --pass:#188038;--run:#B06000;--fail:#C5221F;--link:#1A73E8;--gpu:#5E5E5E;--r:20px;
+  --display:&#x27;Google Sans&#x27;,&#x27;Roboto&#x27;,system-ui,sans-serif;--body:&#x27;Google Sans&#x27;,&#x27;Roboto&#x27;,system-ui,sans-serif;--sans:&#x27;Google Sans&#x27;,&#x27;Roboto&#x27;,system-ui,sans-serif;--mono:&#x27;Roboto Mono&#x27;,ui-monospace,monospace}
+html:root body{background-color:#fff;background-image:
+  radial-gradient(52% 44% at 4% 0%,rgba(66,133,244,.13),transparent 72%),
+  radial-gradient(48% 42% at 98% 2%,rgba(234,67,53,.08),transparent 72%),
+  radial-gradient(50% 46% at 96% 100%,rgba(251,188,4,.12),transparent 72%),
+  radial-gradient(46% 42% at 2% 100%,rgba(52,168,83,.09),transparent 72%);
+  background-attachment:fixed;background-repeat:no-repeat;color:var(--ink-2);letter-spacing:0}
+html:root body::before,html:root body::after{display:none}
+html:root ::selection{background:#E8F0FE;color:#1F1F1F}
+html:root h1,html:root h2,html:root h3,html:root h4{font-weight:500;letter-spacing:-.025em;color:var(--ink)}
+html:root h1{font-size:clamp(40px,5.4vw,72px);line-height:1.02;letter-spacing:-.04em}
+html:root b,html:root strong{font-weight:500!important}
+html:root code{background:#F0F4F9;border:0;border-radius:6px;color:var(--ink)}
+html:root .cmd&gt;code,html:root .drill pre{color:var(--ink)}
+html:root .eyebrow,html:root .cap,html:root .stage .st-n,html:root .dcol .clbl,html:root .trig .cnd,html:root .layer .lname,
+html:root .qc .tag,html:root .row .rk,html:root .pdiv .pk,html:root .cm .cmh,html:root .drill .dh,html:root .infer .ih,html:root .jdq .src,
+html:root .tag,html:root .ph .pn,html:root .hud .hb .hn,html:root .subnav .k,html:root .subnav a,html:root .part,html:root h3.grp,
+html:root .item .q .badge,html:root .pain .who,html:root .sn{font-family:var(--display);letter-spacing:0;text-transform:none;font-weight:500}
+html:root .eyebrow,html:root .cap,html:root h3.grp,html:root .subnav .k,html:root .pain .who{color:var(--muted)}
+html:root .eyebrow{font-size:14px} html:root .cap{font-size:14px;opacity:1}
+html:root .eyebrow::after,html:root .pdiv .pk::after{background:var(--line)}
+html:root .stage,html:root .trig,html:root .layer,html:root .qc,html:root .rows,html:root .cm,html:root .cmd,html:root .drill,html:root .card,
+html:root .qbox,html:root .ph,html:root .hud .hb,html:root .diagram,html:root .item,html:root .own,html:root .gstep{border-radius:20px}
+html:root .box,html:root .jbox,html:root .clabel,html:root .cstep,html:root .own .ex,html:root .cmd&gt;code,html:root .cnode.ev{border-radius:14px}
+html:root .tag,html:root .ph .pn,html:root .ggate .gq,html:root .item .q .badge,html:root .subnav a{border-radius:999px}
+html:root .stage .st-t,html:root .trig .th .tn,html:root .qc .qt,html:root .pain h4,html:root .ph .pt,html:root .own h4,html:root .card h3,
+html:root .item .q,html:root .ggate .gq,html:root .cnode.ev,html:root .box,html:root .jbox,html:root .gstep,html:root .clabel,html:root .drill .dh{font-weight:500}
+html:root .pain{border:1px solid rgba(234,67,53,.3);border-radius:20px}
+html:root .infer{background:rgba(251,188,4,.12);border:1px solid rgba(251,188,4,.45);border-radius:20px}
+html:root .infer.ok{background:rgba(52,168,83,.08);border-color:rgba(52,168,83,.3)}
+html:root .jdq{border:1px solid var(--line);border-radius:20px}
+html:root .jdq.ver{border-color:rgba(52,168,83,.3)}
+html:root .ggate .gq{border-width:1px}
+html:root .item .why{border-left:1px solid var(--line)}
+html:root .jbox.lkg{background:#E8F0FE}
+html:root .trig.presub{border-color:rgba(52,168,83,.3)} html:root .trig.presub .th{background:rgba(52,168,83,.06)}
+html:root .trig.nightly{border-color:rgba(26,115,232,.3)} html:root .trig.nightly .th{background:rgba(26,115,232,.06)}
+html:root .card.warn{border-color:rgba(234,67,53,.35)} html:root .card.good{border-color:rgba(52,168,83,.35)}
+html:root .tag.ver{border-color:rgba(52,168,83,.4)} html:root .tag.jd{border-color:rgba(26,115,232,.4)} html:root .tag.inf{border-color:rgba(251,188,4,.5)}
+html:root .ph .pn{border-color:rgba(26,115,232,.35)}
+html:root .item .q .badge{background:#E8F0FE;color:#1A73E8}
+html:root .subnav{background:rgba(255,255,255,.86)}
+html:root .subnav a{background:#fff;color:var(--ink);border-color:var(--line)}
+html:root .subnav a:hover{background:#F0F4F9;border-color:var(--line)}
+html:root table.cmp th{font-weight:500}
+html:root footer{font-family:var(--display)}
+html:root .qc .tag,html:root .row .rk,html:root .stage .st-n,html:root .dcol .clbl,html:root .layer .lname,html:root .cm .cmh,html:root .drill .dh,html:root .pdiv .pk,html:root .part,html:root .item .q .mk{color:var(--muted)}html:root .qc .hint b,html:root .loopnote b,html:root .qbox .why em{color:var(--ink)}&lt;/style&gt;&lt;/body&gt;&lt;/html&gt;" title="Q&amp;A"></iframe>
 </div>
 <script>
   var bar=document.querySelector(".bar");

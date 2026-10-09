@@ -37,29 +37,129 @@
         } catch (e) {}
       })();
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
     <script type="module" crossorigin src="/blog/git-graph/assets/index-BnWbhqlq.js"></script>
     <link rel="modulepreload" crossorigin href="/blog/git-graph/assets/react-vendor-BVoutfaX.js">
     <link rel="modulepreload" crossorigin href="/blog/git-graph/assets/xyflow-CYMCcsWN.js">
     <link rel="modulepreload" crossorigin href="/blog/git-graph/assets/graph-layout-7tFr_anw.js">
     <link rel="stylesheet" crossorigin href="/blog/git-graph/assets/xyflow-BZV40eAE.css">
     <link rel="stylesheet" crossorigin href="/blog/git-graph/assets/index-DGU1uF8E.css">
-  </head>
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/genz.css">
+    <style id="gz-viewer">
+      /* Google, Gen-Z skin for the graph viewer. The app writes its theme onto <html style>,
+         so these overrides carry !important. Plain canvas (no glow); Google's four colours
+         only as graph series, status and the accent; ink and greys for all text. */
+      html[data-theme], html:not([data-theme]) {
+        --font-sans:'Google Sans','Roboto',system-ui,sans-serif !important;
+        --font-serif:'Google Sans','Roboto',system-ui,sans-serif !important;
+        --font-heading:'Google Sans','Roboto',system-ui,sans-serif !important;
+        --font-mono:'Roboto Mono',ui-monospace,monospace !important;
+        --radius-md:12px !important; --radius-lg:20px !important; --radius-xl:24px !important;
+      }
+      html[data-theme=dark], html:not([data-theme]) {
+        --color-root:#22272E !important; --color-surface:#2D333B !important; --color-elevated:#373E47 !important; --color-panel:#2D333B !important;
+        --color-text-primary:#E6EDF3 !important; --color-text-secondary:#B6C2CF !important; --color-text-muted:#9DA9B6 !important;
+        --color-accent:#A8C7FA !important; --color-accent-dim:#A8C7FA !important; --color-accent-bright:#D3E3FD !important;
+        --color-border-subtle:#444C56 !important; --color-border-medium:#545D68 !important;
+        --glass-bg:rgba(45,51,59,.96) !important; --glass-bg-heavy:#2D333B !important;
+        --glass-border:#444C56 !important; --glass-border-heavy:#545D68 !important;
+        --scrollbar-thumb:rgba(230,237,243,.18) !important; --scrollbar-thumb-hover:rgba(230,237,243,.32) !important;
+        --glow-accent:transparent !important; --glow-accent-strong:rgba(168,199,250,.35) !important; --glow-accent-pulse:rgba(168,199,250,.5) !important;
+        --color-edge:rgba(182,194,207,.32) !important; --color-edge-dim:rgba(182,194,207,.1) !important; --color-edge-dot:rgba(182,194,207,.18) !important;
+        --color-accent-overlay-bg:rgba(168,199,250,.08) !important; --color-accent-overlay-border:rgba(168,199,250,.3) !important;
+        --kbd-bg:#373E47 !important;
+        --color-node-file:#A8C7FA !important; --color-node-function:#81C995 !important; --color-node-class:#F28B82 !important;
+        --color-node-module:#FDD663 !important; --color-node-concept:#F28B82 !important; --color-node-config:#81C995 !important;
+        --color-node-document:#A8C7FA !important; --color-node-service:#F28B82 !important; --color-node-table:#81C995 !important;
+        --color-node-endpoint:#FDD663 !important; --color-node-pipeline:#F28B82 !important; --color-node-schema:#FDD663 !important;
+        --color-node-resource:#A8C7FA !important; --color-node-article:#A8C7FA !important; --color-node-entity:#F28B82 !important;
+        --color-node-topic:#FDD663 !important; --color-node-claim:#81C995 !important; --color-node-source:#9DA9B6 !important;
+        --color-diff-changed:#F28B82 !important; --color-diff-affected:#FDD663 !important; --color-diff-changed-dim:rgba(242,139,130,.25) !important;
+        --color-red-200:#F6AEA9 !important; --color-red-400:#F28B82 !important; --color-red-700:#EA4335 !important; --color-red-800:#C5221F !important; --color-red-900:#A50E0E !important;
+        --color-orange-300:#FDD663 !important; --color-orange-400:#FBBC04 !important;
+        --color-amber-200:#FDE293 !important; --color-amber-400:#FDD663 !important; --color-amber-500:#FBBC04 !important; --color-amber-700:#B06000 !important; --color-amber-800:#B06000 !important; --color-amber-900:#8A4A00 !important;
+        --color-yellow-400:#FDD663 !important; --color-green-400:#81C995 !important; --color-blue-400:#A8C7FA !important;
+      }
+      html[data-theme=light] {
+        --color-root:#FFFFFF !important; --color-surface:#F8FAFD !important; --color-elevated:#FFFFFF !important; --color-panel:#F8FAFD !important;
+        --color-text-primary:#1F1F1F !important; --color-text-secondary:#444746 !important; --color-text-muted:#5E5E5E !important;
+        --color-accent:#1A73E8 !important; --color-accent-dim:#1765CC !important; --color-accent-bright:#1A73E8 !important;
+        --color-border-subtle:#E1E3E1 !important; --color-border-medium:#C4C7C5 !important;
+        --glass-bg:rgba(255,255,255,.96) !important; --glass-bg-heavy:#FFFFFF !important;
+        --glass-border:#E1E3E1 !important; --glass-border-heavy:#C4C7C5 !important;
+        --scrollbar-thumb:rgba(31,31,31,.16) !important; --scrollbar-thumb-hover:rgba(31,31,31,.3) !important;
+        --glow-accent:transparent !important; --glow-accent-strong:rgba(26,115,232,.3) !important; --glow-accent-pulse:rgba(26,115,232,.45) !important;
+        --color-edge:rgba(68,71,70,.3) !important; --color-edge-dim:rgba(68,71,70,.08) !important; --color-edge-dot:rgba(68,71,70,.16) !important;
+        --color-accent-overlay-bg:rgba(26,115,232,.06) !important; --color-accent-overlay-border:rgba(26,115,232,.3) !important;
+        --kbd-bg:#F0F4F9 !important;
+        --color-node-file:#1A73E8 !important; --color-node-function:#34A853 !important; --color-node-class:#EA4335 !important;
+        --color-node-module:#FBBC04 !important; --color-node-concept:#EA4335 !important; --color-node-config:#34A853 !important;
+        --color-node-document:#1A73E8 !important; --color-node-service:#EA4335 !important; --color-node-table:#34A853 !important;
+        --color-node-endpoint:#FBBC04 !important; --color-node-pipeline:#EA4335 !important; --color-node-schema:#FBBC04 !important;
+        --color-node-resource:#1A73E8 !important; --color-node-article:#1A73E8 !important; --color-node-entity:#EA4335 !important;
+        --color-node-topic:#FBBC04 !important; --color-node-claim:#34A853 !important; --color-node-source:#5E5E5E !important;
+        --color-diff-changed:#EA4335 !important; --color-diff-affected:#FBBC04 !important; --color-diff-changed-dim:rgba(234,67,53,.25) !important;
+        --color-red-200:#C5221F !important; --color-red-400:#C5221F !important; --color-red-700:#EA4335 !important; --color-red-800:#FCE8E6 !important; --color-red-900:#FCE8E6 !important;
+        --color-orange-300:#B06000 !important; --color-orange-400:#B06000 !important;
+        --color-amber-200:#B06000 !important; --color-amber-400:#B06000 !important; --color-amber-500:#FBBC04 !important; --color-amber-700:#FBBC04 !important; --color-amber-800:#FEF7E0 !important; --color-amber-900:#FEF7E0 !important;
+        --color-yellow-400:#B06000 !important; --color-green-400:#188038 !important; --color-blue-400:#1A73E8 !important;
+      }
+      /* genz.css paints a glow on html[data-theme] body; a full-screen viewer keeps a plain canvas. */
+      html[data-theme] body { background-image:none !important; background-color:var(--color-root) !important; font-family:var(--font-sans) !important; }
+      .text-\[\#c97070\] { color:var(--color-red-400) !important; }
+      .border-\[\#c97070\]\/30 { border-color:rgba(234,67,53,.3) !important; }
+      .bg-\[\#c97070\]\/10 { background-color:rgba(234,67,53,.1) !important; }
+      .shadow-\[0_0_4px_rgba\(90\,158\,111\,0\.6\)\] { --tw-shadow:none !important; }
+      .warning-banner { color:#B06000 !important; background:rgba(251,188,4,.12) !important; border-color:rgba(251,188,4,.4) !important; }
+      /* Layer / edge colours the app writes inline: back to Google's four (+ grey). */
+      [style*="74, 124, 155"] { --gz-l:26,115,232; }
+      [style*="90, 158, 111"] { --gz-l:52,168,83; }
+      [style*="139, 111, 176"] { --gz-l:234,67,53; }
+      [style*="201, 160, 108"] { --gz-l:251,188,4; }
+      [style*="176, 122, 138"] { --gz-l:234,67,53; }
+      [style*="74, 155, 140"] { --gz-l:52,168,83; }
+      [style*="120, 130, 145"] { --gz-l:128,134,139; }
+      [style*="background-color: rgba(74, 124, 155"],[style*="background-color: rgba(90, 158, 111"],[style*="background-color: rgba(139, 111, 176"],
+      [style*="background-color: rgba(201, 160, 108"],[style*="background-color: rgba(176, 122, 138"],[style*="background-color: rgba(74, 155, 140"],
+      [style*="background-color: rgba(120, 130, 145"] { background-color:rgba(var(--gz-l),.1) !important; }
+      [style*="border-color: rgba(74, 124, 155"],[style*="border-color: rgba(90, 158, 111"],[style*="border-color: rgba(139, 111, 176"],
+      [style*="border-color: rgba(201, 160, 108"],[style*="border-color: rgba(176, 122, 138"],[style*="border-color: rgba(74, 155, 140"],
+      [style*="border-color: rgba(120, 130, 145"] { border-color:rgba(var(--gz-l),.45) !important; }
+      [style*="color: rgb(74, 124, 155)"],[style*="color: rgb(90, 158, 111)"],[style*="color: rgb(139, 111, 176)"],
+      [style*="color: rgb(201, 160, 108)"],[style*="color: rgb(176, 122, 138)"],[style*="color: rgb(74, 155, 140)"],
+      [style*="color: rgb(120, 130, 145)"] { color:var(--color-text-primary) !important; }
+      [style*="stroke: rgb(201, 112, 112)"] { stroke:var(--color-red-400) !important; }
+      /* Hard-coded gold in the app's inline edge/label styles. */
+      html { --color-gold:var(--color-accent) !important; }
+      [style*="stroke: rgba(212, 165, 116"] { stroke:var(--color-edge) !important; }
+      [style*="stroke: rgba(212, 165, 116, 0.08)"],[style*="stroke: rgba(212, 165, 116, 0.2)"] { stroke:var(--color-edge-dim) !important; }
+      [style*="stroke: rgba(212, 165, 116, 0.6)"],[style*="stroke: rgba(212, 165, 116, 0.8)"] { stroke:var(--color-accent) !important; }
+      line[stroke^="rgba(212,165,116"] { stroke:var(--color-edge) !important; }
+      [style*="background: rgba(212, 165, 116"],[style*="background-color: rgba(212, 165, 116"] { background:var(--color-accent-overlay-bg) !important; }
+      [style*="border-color: rgba(212, 165, 116"],[style*="border: 1px solid rgba(212, 165, 116"] { border-color:var(--color-border-medium) !important; }
+      [style*="fill: rgb(212, 165, 116)"],[style*="color: rgb(212, 165, 116)"] { fill:var(--color-accent) !important; color:var(--color-accent) !important; }
+      [style*="fill: rgb(163, 151, 135)"],.react-flow__edge-text { fill:var(--color-text-secondary) !important; }
+      .focus\:ring-\[rgba\(212\,165\,116\,0\.6\)\]:focus { --tw-ring-color:var(--glow-accent-strong) !important; }
+      [style*="background-color: rgb(74, 124, 155)"],[style*="background-color: rgb(90, 158, 111)"],[style*="background-color: rgb(139, 111, 176)"],
+      [style*="background-color: rgb(201, 160, 108)"],[style*="background-color: rgb(176, 122, 138)"],[style*="background-color: rgb(74, 155, 140)"],
+      [style*="background-color: rgb(120, 130, 145)"] { background-color:rgb(var(--gz-l)) !important; }
+      /* Shape: hairlines, pills for controls, no glow shadows. */
+      .react-flow__controls { border-radius:999px !important; overflow:hidden; box-shadow:none !important; border:1px solid var(--color-border-subtle) !important; }
+      .react-flow__minimap { border-radius:20px !important; overflow:hidden; border:1px solid var(--color-border-subtle) !important; }
+    </style>
+</head>
   <body>
     <div id="root"></div>
     <a href="/blog/git-graph/" id="gg-back" title="Back to git-graph projects">‹ git-graph projects</a>
     <style>
       #gg-back{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:9999;
-        font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.04em;
-        color:#A3B4C2;background:rgba(13,18,24,.85);backdrop-filter:blur(8px);
-        border:1px solid #28353F;border-radius:20px;padding:6px 14px;text-decoration:none;
-        box-shadow:0 6px 20px -8px rgba(0,0,0,.6)}
-      #gg-back:hover{color:#0B0D10;background:linear-gradient(100deg,#D93B2B,#FF6B35);border-color:transparent}
+        display:inline-flex;align-items:center;height:32px;padding:0 14px;
+        font-family:'Google Sans','Roboto',system-ui,sans-serif;font-size:13px;font-weight:500;
+        color:var(--color-text-primary,#1F1F1F);background:var(--color-elevated,#fff);
+        border:1px solid var(--color-border-subtle,#E1E3E1);border-radius:999px;text-decoration:none;
+        box-shadow:0 1px 2px 0 rgba(60,64,67,.3),0 1px 3px 1px rgba(60,64,67,.15)}
+      #gg-back:hover{color:var(--color-text-primary,#1F1F1F);background:var(--color-surface,#F8FAFD)}
     </style>
   </body>
 </html>

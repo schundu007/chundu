@@ -26,8 +26,6 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
 <style>
   :root{
     --void:#07090C; --panel:#0D1218; --panel-2:#121A21; --raise:#162029;
@@ -416,6 +414,207 @@
   .mcard p,.pc li,.premise,.wh .w p,.fstep .ft{font-size:16.5px}
   .fpath,.mcard .fit,.fstep .ff{font-size:14.5px}
 </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/genz.css">
+<style id="gz-skin">
+  /* ── Google, Gen-Z skin ──────────────────────────────────────────────
+     Light canvas with the still four-colour glow, ink and grey type, and
+     Google's four colours only as accents: links and the primary accent
+     (blue), status (green / yellow / red) and diagram series. Hairlines,
+     big rounds on panels, pills on every control. */
+  :root{
+    --void:#FFFFFF; --panel:#FFFFFF; --panel-2:#F8FAFD; --raise:#F0F4F9;
+    --code-bg:#F8FAFD; --code-head:#F0F4F9;
+    --line:#E1E3E1; --line-2:#E1E3E1;
+    --ink:#1F1F1F; --ink-2:#444746; --muted:#5E5E5E;
+    --red:#EA4335; --ember:#1A73E8;
+    --grad:linear-gradient(#1A73E8,#1A73E8);
+    --pass:#188038; --run:#B06000; --fail:#C5221F;
+    --link:#1A73E8;
+    --r:20px;
+    --glow:none; --shadow:none;
+    --elev:0 1px 2px 0 rgba(60,64,67,.3),0 1px 3px 1px rgba(60,64,67,.15);
+    --display:'Google Sans','Roboto',system-ui,sans-serif;
+    --body:'Google Sans','Roboto',system-ui,sans-serif;
+    --mono:'Roboto Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --chip-py:#1A73E8; --chip-yaml:#C5221F; --chip-sh:#188038;
+  }
+  body{
+    background-color:#fff;
+    background-image:
+      radial-gradient(52% 44% at 4% 0%,rgba(66,133,244,.13),transparent 72%),
+      radial-gradient(48% 42% at 98% 2%,rgba(234,67,53,.08),transparent 72%),
+      radial-gradient(50% 46% at 96% 100%,rgba(251,188,4,.12),transparent 72%),
+      radial-gradient(46% 42% at 2% 100%,rgba(52,168,83,.09),transparent 72%);
+    background-attachment:fixed;background-repeat:no-repeat;
+    color:var(--ink-2);letter-spacing:0;
+  }
+  body::before{inset:auto;top:0;left:0;right:0;height:3px;z-index:70;mask-image:none;-webkit-mask-image:none;
+    background:linear-gradient(90deg,#4285F4 0 25%,#EA4335 25% 50%,#FBBC04 50% 75%,#34A853 75% 100%)}
+  body::after{display:none}
+  ::selection{background:#E8F0FE;color:#1F1F1F}
+  :focus-visible{outline:2px solid rgba(26,115,232,.4);border-radius:6px}
+  .progress{top:3px;height:2px}
+
+  .topbar{top:3px;background:rgba(255,255,255,.86);backdrop-filter:saturate(1.4) blur(12px)}
+  .brand{font-family:var(--display);font-size:16px;font-weight:500;letter-spacing:-.01em}
+  .brand .dot{background:#34A853;box-shadow:0 0 0 3px rgba(52,168,83,.2);animation:none}
+  .topnav{gap:4px;font-family:var(--display);font-size:14px}
+  .topnav a{display:inline-flex;align-items:center;height:34px;padding:0 14px;border-radius:999px;color:var(--ink-2);font-weight:500}
+  .topnav a:hover{background:#F0F4F9;color:var(--ink)}
+
+  .series{top:61px;background:rgba(255,255,255,.86);backdrop-filter:saturate(1.4) blur(10px)}
+  .series .wrap{min-height:52px;height:auto;gap:6px}
+  .series-k,.series .slabel{font-family:var(--display);font-size:13px;letter-spacing:0;text-transform:none;font-weight:500;color:var(--muted)}
+  .series a{font-family:var(--display);font-size:13.5px;font-weight:500;color:var(--ink);height:34px;display:inline-flex;align-items:center;
+    padding:0 14px;border-radius:999px;border:1px solid var(--line);background:#fff}
+  .series a:hover{background:#F0F4F9;color:var(--ink);border-color:var(--line)}
+  .series a.here,.series a.active{color:#fff;background:#1F1F1F;border-color:#1F1F1F;font-weight:500}
+
+  .hero{padding:56px 0 32px}
+  .eyebrow{font-family:var(--display);font-size:14px;letter-spacing:0;text-transform:none;font-weight:500;color:var(--muted)}
+  .eyebrow::after{background:var(--line)}
+  h1{font-family:var(--display);font-weight:500;font-size:clamp(40px,5.4vw,72px);line-height:1.02;letter-spacing:-.04em;color:var(--ink)}
+  h1 .amp{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:inherit}
+  h2,h3{font-family:var(--display);font-weight:500;letter-spacing:-.02em;color:var(--ink)}
+  .lede{color:var(--ink-2)}
+  .lede b,p b,li b,strong{color:var(--ink);font-weight:500}
+  .kicker{font-family:var(--display);font-size:14px}
+  .kicker b{color:var(--ink);font-weight:500}
+  .disc{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:18px 22px}
+  .disc .pill{font-family:var(--display);border-radius:999px;background:#F0F4F9;border:0;color:var(--ink)}
+  .provenance{border-left:1px solid var(--line)}
+  .provenance b{color:var(--ink);font-weight:500}
+  .byline .who{font-weight:500}
+
+  .sn,.shead .sn{color:var(--ember);font-family:var(--mono);font-weight:500}
+  .prob{font-family:var(--display);font-size:14px;letter-spacing:0;text-transform:none;color:var(--muted)}
+  .shead::after{display:none}
+  h4.mini,.side h4{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:13px;font-weight:500;color:var(--muted);opacity:1}
+  .side a.active{color:var(--ink);border-left-color:var(--ember);font-weight:500}
+  .side a.active .sn{color:var(--ember)}
+  li::marker{color:var(--ember);opacity:1}
+  ul li::before{color:var(--ember)}
+
+  code,p code,li code{font-family:var(--mono);background:#F0F4F9;border:0;border-radius:6px;color:var(--ink)}
+  pre{background:#F8FAFD;border:1px solid var(--line);border-radius:16px}
+  pre code,pre[class*=language-] code{background:none;color:var(--ink)}
+
+  .take{background:#fff;border:1px solid var(--line);border-radius:var(--r)}
+  .take b{color:var(--ink)}
+  .note{background:rgba(26,115,232,.06);border:1px solid rgba(26,115,232,.2);border-radius:var(--r)}
+  .note::before{display:none}
+  .note .tag{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:13.5px;font-weight:500;color:#1A73E8}
+  .note.blue .tag{color:#1A73E8}
+  .note.green{background:rgba(52,168,83,.07);border-color:rgba(52,168,83,.25)}
+  .note.green .tag{color:#188038}
+
+  .tldr{gap:12px}
+  .tldr .c{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+  .tldr .c .n{color:var(--ember);font-weight:500}
+  .tldr .c .t{font-weight:500;font-size:15px}
+
+  .stats{gap:12px;background:none;border:0;border-radius:0;overflow:visible}
+  .stat{background:#F0F4F9;border-radius:var(--r);padding:18px 20px}
+  .stat::before{display:none}
+  .stat .n,.stat .n.grad{font-family:var(--display);font-size:clamp(26px,2.4vw,34px);font-weight:500;letter-spacing:-.035em;
+    background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--ink)}
+  .stat .l{font-family:var(--display);font-size:13px;letter-spacing:0;color:var(--muted)}
+
+  .pill{font-family:var(--display);letter-spacing:0;text-transform:none;border-radius:999px;font-size:12px;font-weight:500}
+  .pill.pass{color:#188038;border-color:rgba(52,168,83,.3);background:rgba(52,168,83,.08)}
+  .pill.run{color:#B06000;border-color:rgba(251,188,4,.4);background:rgba(251,188,4,.12)}
+  .pill.fail{color:#C5221F;border-color:rgba(234,67,53,.3);background:rgba(234,67,53,.08)}
+
+  details.code{border-radius:var(--r);background:#fff}
+  details.code>summary{background:#F8FAFD}
+  details.code>summary:hover{background:#F0F4F9}
+  .chev{color:var(--ember)}
+  .fname{font-weight:500}
+  .lang{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:12px;font-weight:500;border-radius:999px;
+    color:var(--ink);background:#F0F4F9;border:0;padding:3px 10px}
+  details.code pre{background:#F8FAFD!important;border:0!important}
+  details.code pre::-webkit-scrollbar-thumb{background:#C4C7C5}
+  .copy,.expand{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:12.5px;font-weight:500;border-radius:999px;
+    background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .copy:hover,.expand:hover{background:#F0F4F9;color:var(--ink);border-color:var(--line)}
+  .copy.ok{color:#188038;border-color:rgba(52,168,83,.4)}
+
+  .diagram{border-radius:var(--r);background:#fff}
+  .diagram .cap{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:14px;font-weight:500;color:var(--muted);opacity:1}
+  .diagram .zoom-hint{font-family:var(--display);letter-spacing:0;border-radius:999px;color:var(--ink);background:#fff}
+  .mermaid .nodeLabel,.mermaid .edgeLabel,.mermaid span.nodeLabel{color:#1F1F1F!important}
+  .mermaid .cluster .nodeLabel,.mermaid .cluster span{fill:#1F1F1F!important;color:#1F1F1F!important;font-weight:500!important}
+
+  .fstep{border-radius:var(--r)}
+  .fstep .fk{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:12.5px}
+  .fstep .ft{font-weight:500}
+  .farrow{color:var(--muted);opacity:1}
+  .fstep.accent{border-color:rgba(26,115,232,.4);box-shadow:none}
+
+  .group-h .dot{background:#1A73E8}
+  .group-h h3{font-weight:500}
+  .card{border-radius:var(--r)}
+  .card::before{display:none}
+  .cf-name{font-weight:500}
+  .fpath a:hover{color:var(--ink)}
+  .block .bl{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:13.5px;font-weight:500;color:var(--muted)}
+  .pc .col{border-radius:16px}
+  .pc .col.pros,.pc .col.cons{border-top:1px solid var(--line)}
+  .pc .col h4{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:14px;font-weight:500}
+  .pc .col.pros h4,.pc .pros li::before{color:#188038}
+  .pc .col.cons h4,.pc .cons li::before{color:#C5221F}
+  .pc li code{background:#F0F4F9;border:0}
+  .flag{font-family:var(--display);letter-spacing:0;border-radius:999px;color:#B06000;border-color:rgba(251,188,4,.45);background:rgba(251,188,4,.12)}
+  .mod-intro{border-radius:var(--r)}
+  .mod-intro::before{display:none}
+  .mod-intro .split .s{border-radius:16px}
+  .mod-intro .split .s b{font-family:var(--display);letter-spacing:0;font-weight:500;font-size:13.5px}
+  .toolcard,.mcard{border-radius:var(--r)}
+  .toolcard .tn,.mcard .mn{font-family:var(--display);font-weight:500}
+  .verdict{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:12.5px;font-weight:500;border-radius:999px}
+  .verdict.adopt{color:#188038;border-color:rgba(52,168,83,.4);background:rgba(52,168,83,.08)}
+  .verdict.partial{color:#B06000;border-color:rgba(251,188,4,.45);background:rgba(251,188,4,.12)}
+  .verdict.skip{color:#C5221F;border-color:rgba(234,67,53,.35);background:rgba(234,67,53,.08)}
+  .verdict.watch{color:#1A73E8;border-color:rgba(26,115,232,.35);background:#E8F0FE}
+  .wh .w{border-radius:16px}
+  .wh .w.help,.wh .w.nohelp{border-left:1px solid var(--line)}
+  .wh .w .wl{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:13.5px;font-weight:500}
+  .wh .w.help .wl{color:#188038}
+  .wh .w.nohelp .wl{color:#C5221F}
+  .mcard .mcat{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:12px;border-radius:999px;border:0;background:#F0F4F9;color:var(--ink);padding:3px 10px}
+  .mcard .fit{font-family:var(--display);border-top:1px solid var(--line)}
+  .mcard .fit b{color:var(--ink);font-weight:500}
+  .rec{background:#E8F0FE;border:1px solid rgba(26,115,232,.25);border-radius:var(--r);box-shadow:none}
+  .rec .rl{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:14px;font-weight:500;color:#1A73E8}
+
+  .foot{background:transparent}
+  .foot .links,.foot .c{font-family:var(--display)}
+  .foot .links a{color:var(--ink-2)}
+  .foot .links a:hover{color:var(--ink)}
+
+  /* Overlays (their own <style> blocks sit later in <body>, hence the html prefix). */
+  html .embed-overlay,html .dlg-overlay{background:rgba(31,31,31,.36);backdrop-filter:none}
+  html .embed-modal{border:1px solid var(--line);border-radius:28px;box-shadow:var(--elev);background:#fff}
+  html .embed-bar{background:#F8FAFD}
+  html .embed-title{font-family:var(--display);font-weight:500}
+  html .embed-open{font-family:var(--display);font-weight:500}
+  html .embed-close,html .dlg-close{border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink)}
+  html .embed-close:hover,html .dlg-close:hover{color:var(--ink);background:#F0F4F9;border-color:var(--line)}
+  html .embed-if{background:#fff}
+  html .embed-note{font-family:var(--display);background:#F8FAFD}
+  html .dlg-stage{border-radius:var(--r);background:#fff}
+
+  /* Prism tokens in Google's four */
+  .token.comment,.token.prolog,.token.doctype,.token.cdata{color:#5E5E5E;font-style:italic}
+  .token.punctuation,.token.operator{color:#444746}
+  .token.keyword,.token.atrule,.token.important,.token.selector,.token.tag{color:#1A73E8}
+  .token.string,.token.char,.token.attr-value,.token.inserted,.token.regex{color:#188038}
+  .token.number,.token.boolean,.token.constant,.token.symbol,.token.deleted{color:#C5221F}
+  .token.function,.token.class-name,.token.builtin,.token.property,.token.attr-name,.token.key{color:#B06000}
+  .token.variable,.token.parameter{color:#1F1F1F}
+</style>
 </head>
 <body>
 <div class="progress" id="progress" aria-hidden="true"></div>
@@ -450,7 +649,7 @@
   <div class="wrap">
     <p class="eyebrow">ROCm / TheRock · CI internals</p>
     <h1>The shadow build system, <span class="amp">explained</span> — file by file</h1>
-    <p class="lede">TheRock's real build orchestrator isn't YAML — it's ~46 Python scripts that compute
+    <p class="lede">TheRock's real build orchestrator isn't YAML — it's Python scripts that compute
       GitHub Actions matrices at runtime and hand them to workflows as JSON. This is a field guide to the
       files that matter: <b>why each exists, what's inside, how it wires to the others, and where it's
       strong or brittle</b> — plus an honest read on which build/CI tools would actually cut the file sprawl.</p>
@@ -698,7 +897,7 @@ def affected(changed_paths: list[str], topo: BuildTopology) -&gt; Affected:
 <footer class="foot">
   <div class="wrap">
     <div>
-      <div style="font-family:var(--mono);font-weight:600">Sudhakar Chundu</div>
+      <div style="font-family:var(--display);font-weight:500;color:var(--ink)">Sudhakar Chundu</div>
       <div class="c">Platform / CI &amp; Build-Infrastructure Engineer · San Jose, CA</div>
     </div>
     <div class="links">
@@ -947,7 +1146,6 @@ def affected(changed_paths: list[str], topo: BuildTopology) -&gt; Affected:
       var flag = f.flag ? '<div class="flag">⚑ '+f.flag+'</div>' : '';
       return '<div class="card">'+
         '<div class="card-h"><span class="cf-name">'+f.name+'</span>'+
-          '<span class="chip '+f.chip+'">'+f.chip+'</span>'+
           '<span class="lines">'+f.lines+' lines</span></div>'+
         '<div class="fpath"><a href="https://github.com/ROCm/TheRock/blob/525d42aedc31f8b49f5f0415f4bda6273df76182/'+f.path+'" target="_blank" rel="noopener">'+f.path+' ↗</a></div>'+
         '<div class="block"><div class="bl">Why it exists</div><p>'+f.why+'</p></div>'+
@@ -998,23 +1196,25 @@ def affected(changed_paths: list[str], topo: BuildTopology) -&gt; Affected:
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
 <script>
-  // Mermaid — dark palette matching the page tokens
+  // Mermaid — light Google palette; render once the web fonts are in so labels are measured right
   try {
     mermaid.initialize({
-      startOnLoad: true, securityLevel: "loose",
+      startOnLoad: false, securityLevel: "loose",
       theme: "base",
       flowchart: { curve: "basis", useMaxWidth: false, nodeSpacing: 42, rankSpacing: 54, padding: 12 },
       themeVariables: {
-        darkMode: true,
-        fontFamily: "IBM Plex Mono, ui-monospace, monospace", fontSize: "16px",
-        background: "#0D1218",
-        primaryColor: "#1E2C39", primaryTextColor: "#EEF4F9", primaryBorderColor: "#4B5E70",
-        secondaryColor: "#243543", tertiaryColor: "#0D1218",
-        lineColor: "#9AAEBD", textColor: "#EEF4F9",
-        clusterBkg: "#0B1119", clusterBorder: "#FF6B35",
-        edgeLabelBackground: "#0D1218"
+        darkMode: false,
+        fontFamily: "Google Sans, Roboto, system-ui, sans-serif", fontSize: "16px",
+        background: "#FFFFFF",
+        primaryColor: "#F8FAFD", primaryTextColor: "#1F1F1F", primaryBorderColor: "#C4C7C5",
+        secondaryColor: "#E8F0FE", tertiaryColor: "#FFFFFF",
+        lineColor: "#5E5E5E", textColor: "#1F1F1F",
+        clusterBkg: "#F0F4F9", clusterBorder: "#1A73E8",
+        edgeLabelBackground: "#FFFFFF"
       }
     });
+    var runMermaid = function(){ try { var r = mermaid.run({ querySelector: ".mermaid" }); if (r && r.catch) r.catch(function(){}); } catch(e){} };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(runMermaid); else runMermaid();
   } catch(e){}
 
   // Prism autoloader path

@@ -24,160 +24,154 @@
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css?v=13">
     <script src="../assets/js/theme.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <style>
+        html[data-theme] { --io-kw: #C5221F; --io-str: #188038; --io-fn: #1A73E8; --io-num: #B06000; --io-cmt: #5E5E5E;
+            --io-blue-t: #E8F0FE; --io-green-t: #E6F4EA; --io-yellow-t: #FEF7E0; --io-red-t: #FCE8E6; }
+        html[data-theme='dark'] { --io-kw: #F28B82; --io-str: #81C995; --io-fn: #A8C7FA; --io-num: #FDD663; --io-cmt: #9DA9B6;
+            --io-blue-t: rgba(168,199,250,.14); --io-green-t: rgba(129,201,149,.14); --io-yellow-t: rgba(253,214,99,.12); --io-red-t: rgba(242,139,130,.14); }
         .paper-hero {
-            background: var(--bg-card);
-            border-radius: var(--radius-xl);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-        .paper-hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 4px;
-            background: var(--gradient-primary);
+            background: var(--gz-canvas);
+            border: 1px solid var(--gz-line);
+            border-radius: var(--gz-r);
+            padding: 36px 40px;
+            margin-bottom: 16px;
         }
         .paper-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.4rem 1rem;
-            background: rgba(14, 165, 233, 0.15);
-            border: 1px solid rgba(14, 165, 233, 0.35);
-            border-radius: var(--radius-full);
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--accent-cyan);
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            margin-bottom: 1.5rem;
+            display: inline-flex; align-items: center; gap: 8px; height: 28px; padding: 0 12px;
+            background: var(--gz-surface-2); border-radius: 999px;
+            font-size: 13px; font-weight: 500; color: var(--gz-ink); margin-bottom: 20px;
         }
+        .paper-badge i { color: var(--gz-text-3); }
         .paper-title {
-            font-size: 2rem;
-            line-height: 1.25;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.75rem;
+            font-size: clamp(32px, 4vw, 48px); line-height: 1.08; letter-spacing: -0.035em;
+            font-weight: 500; color: var(--gz-ink); margin-bottom: 12px; text-wrap: balance;
         }
-        .paper-subtitle {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            font-weight: 400;
-            margin-bottom: 2rem;
-            line-height: 1.5;
-        }
+        .paper-subtitle { font-size: 18px; color: var(--gz-text); line-height: 1.55; margin-bottom: 28px; text-wrap: pretty; }
         .paper-meta-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--glass-border);
+            display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center;
+            margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--gz-line);
         }
-        .paper-author { display: flex; align-items: center; gap: 0.75rem; }
-        .paper-author img { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--glass-border); }
-        .paper-author-info strong { display: block; font-size: 0.95rem; color: var(--text-primary); }
-        .paper-author-info span { font-size: 0.8rem; color: var(--text-muted); }
-        .paper-stat { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--text-muted); }
-        .paper-stat i { color: var(--accent-blue); }
+        .paper-author { display: flex; align-items: center; gap: 12px; margin-right: 8px; }
+        .paper-author img { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--gz-line); }
+        .paper-author-info strong { display: block; font-size: 15px; font-weight: 500; color: var(--gz-ink); }
+        .paper-author-info span { font-size: 13px; color: var(--gz-text-3); }
+        .paper-stat {
+            display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 14px;
+            border-radius: 999px; background: var(--gz-surface-2); font-size: 13.5px; font-weight: 500; color: var(--gz-ink);
+        }
+        .paper-stat i { color: var(--gz-text-3); }
 
         .toc-card {
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            margin-bottom: 2.5rem;
-            border-left: 3px solid var(--accent-blue);
+            background: var(--gz-canvas); border: 1px solid var(--gz-line); border-radius: var(--gz-r);
+            padding: 28px 32px; margin-bottom: 16px;
         }
-        .toc-card h3 { font-size: 1rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem; }
-        .toc-list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.4rem 2rem; }
-        .toc-list li a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; padding: 0.25rem 0; transition: color 0.2s; }
-        .toc-list li a:hover { color: var(--accent-blue); }
-        .toc-num { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-blue); min-width: 1.5rem; }
+        .toc-card h3 { font-size: 22px; font-weight: 500; color: var(--gz-ink); margin-bottom: 14px; }
+        .toc-list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 4px 16px; }
+        .toc-list li a {
+            text-decoration: none; font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 10px;
+            min-height: 40px; padding: 0 14px; border-radius: 999px; transition: background .15s var(--gz-ease);
+        }
+        html[data-theme] .toc-list li a { color: var(--gz-ink); }
+        html[data-theme] .toc-list li a:hover { background: var(--gz-surface-2); color: var(--gz-ink); }
+        .toc-num { font-family: var(--gz-mono); font-size: 12.5px; color: var(--gz-text-3); min-width: 22px; }
 
         .content-section {
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            padding: 2.5rem;
-            margin-bottom: 2rem;
+            background: var(--gz-canvas); border: 1px solid var(--gz-line); border-radius: var(--gz-r);
+            padding: 36px 40px; margin-bottom: 16px; scroll-margin-top: 90px;
         }
-        .content-section h2 { font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
-        .section-icon { width: 36px; height: 36px; background: var(--gradient-primary); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1rem; color: white; flex-shrink: 0; }
-        .content-section h3 { font-size: 1.05rem; font-weight: 600; color: var(--accent-highlight); margin: 1.75rem 0 0.75rem; }
-        .content-section p { color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.6; margin-bottom: 1rem; }
-        .content-section ul, .content-section ol { color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.6; padding-left: 1.5rem; margin-bottom: 1rem; }
-        .content-section li { margin-bottom: 0.35rem; }
+        .content-section h2 {
+            font-size: clamp(24px, 2.4vw, 30px); font-weight: 500; letter-spacing: -0.025em; color: var(--gz-ink);
+            margin-bottom: 18px; display: flex; align-items: center; gap: 14px;
+        }
+        .section-icon {
+            width: 40px; height: 40px; background: var(--gz-surface-2); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--gz-ink); flex-shrink: 0;
+        }
+        .content-section h3 { font-size: 19px; font-weight: 500; color: var(--gz-ink); margin: 28px 0 10px; }
+        .content-section p { color: var(--gz-text); font-size: 16px; line-height: 1.7; margin-bottom: 14px; }
+        .content-section ul, .content-section ol { color: var(--gz-text); font-size: 16px; line-height: 1.7; padding-left: 24px; margin-bottom: 14px; }
+        .content-section li { margin-bottom: 6px; }
 
-        .diagram-wrap { background: rgba(0,0,0,0.25); border-radius: var(--radius-md); padding: 2rem 1.5rem; margin: 1.5rem 0; overflow-x: auto; }
-        .diagram-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.4rem; }
+        .diagram-wrap {
+            background: var(--gz-surface); border: 1px solid var(--gz-line); border-radius: var(--gz-r-md);
+            padding: 24px 20px; margin: 20px 0; overflow-x: auto;
+        }
+        .diagram-label { font-size: 13.5px; font-weight: 500; color: var(--gz-text-3); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
         .mermaid svg { max-width: 100%; height: auto; }
 
-        .code-block { background: #0d1117; border-radius: var(--radius-md); padding: 1.5rem; margin: 1.25rem 0; overflow-x: auto; position: relative; }
-        .code-block .code-lang { position: absolute; top: 0.6rem; right: 0.75rem; font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono); text-transform: uppercase; }
-        .code-block pre { margin: 0; font-family: var(--font-mono); font-size: 0.82rem; color: #e6edf3; line-height: 1.65; white-space: pre; }
-        .kw  { color: #ff7b72; }
-        .str { color: #a5d6ff; }
-        .cmt { color: #8b949e; }
-        .fn  { color: #d2a8ff; }
-        .num { color: #f2cc60; }
-        .var { color: #79c0ff; }
+        .code-block {
+            background: var(--gz-surface-2); border-radius: var(--gz-r-md); padding: 22px 24px;
+            margin: 18px 0; overflow-x: auto; position: relative;
+        }
+        .code-block .code-lang {
+            position: absolute; top: 10px; right: 12px; height: 24px; padding: 0 10px; display: inline-flex; align-items: center;
+            border-radius: 999px; background: var(--gz-canvas); font-size: 12px; color: var(--gz-text-3); font-family: var(--gz-mono);
+        }
+        .code-block pre { margin: 0; font-family: var(--gz-mono); font-size: 13.5px; color: var(--gz-ink); line-height: 1.65; white-space: pre; background: none; }
+        .kw  { color: var(--io-kw); }
+        .str { color: var(--io-str); }
+        .cmt { color: var(--io-cmt); }
+        .fn  { color: var(--io-fn); }
+        .num { color: var(--io-num); }
+        .var { color: var(--io-fn); }
 
-        .metric-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin: 1.25rem 0; }
-        .metric-card { background: rgba(14, 165, 233, 0.08); border: 1px solid rgba(14, 165, 233, 0.2); border-radius: var(--radius-md); padding: 1.25rem; text-align: center; }
-        .metric-card .metric-val { font-size: 1.25rem; font-weight: 700; color: var(--accent-cyan); font-family: var(--font-mono); }
-        .metric-card .metric-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.35rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 0; }
+        .metric-card { background: var(--gz-surface-2); border: 0; border-radius: var(--gz-r-md); padding: 18px 20px; }
+        .metric-card .metric-val { font-size: clamp(26px, 2.4vw, 32px); font-weight: 500; letter-spacing: -0.035em; line-height: 1.05; color: var(--gz-ink); font-family: var(--gz-display); }
+        .metric-card .metric-label { font-size: 13px; color: var(--gz-text-3); margin-top: 6px; }
 
-        .callout { border-radius: var(--radius-md); padding: 1.25rem 1.5rem; margin: 1.25rem 0; display: flex; gap: 0.85rem; }
-        .callout-warn { background: rgba(245, 158, 11, 0.1); border-left: 3px solid #f59e0b; }
-        .callout-info { background: rgba(14, 165, 233, 0.1); border-left: 3px solid var(--accent-blue); }
-        .callout-success { background: rgba(16, 185, 129, 0.1); border-left: 3px solid #10b981; }
-        .callout i { font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0; }
-        .callout-warn i { color: #f59e0b; }
-        .callout-info i { color: var(--accent-blue); }
-        .callout-success i { color: #10b981; }
-        .callout p { margin: 0; font-size: 0.9rem; color: var(--text-secondary); }
-        .callout strong { color: var(--text-primary); }
+        .callout { border-radius: var(--gz-r-md); padding: 18px 22px; margin: 18px 0; display: flex; gap: 14px; }
+        .callout-warn { background: var(--io-yellow-t); }
+        .callout-info { background: var(--io-blue-t); }
+        .callout-success { background: var(--io-green-t); }
+        .callout i { font-size: 17px; margin-top: 3px; flex-shrink: 0; }
+        .callout-warn i { color: var(--io-num); }
+        .callout-info i { color: var(--gz-blue); }
+        .callout-success i { color: var(--io-str); }
+        .callout p { margin: 0; font-size: 15px; color: var(--gz-text); }
+        .callout strong { color: var(--gz-ink); }
 
-        .data-table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: 0.875rem; }
-        .data-table th { background: rgba(14, 165, 233, 0.15); color: var(--accent-cyan); font-weight: 600; padding: 0.75rem 1rem; text-align: left; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        .data-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--glass-border); color: var(--text-secondary); vertical-align: top; }
-        .data-table tr:hover td { background: rgba(255,255,255,0.03); }
-        .badge-green { color: #10b981; font-weight: 600; }
-        .badge-yellow { color: #f59e0b; font-weight: 600; }
+        html[data-theme] .content-section .data-table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 18px 0; font-size: 14.5px; border: 1px solid var(--gz-line); border-radius: var(--gz-r-md); overflow: hidden; }
+        html[data-theme] .content-section .data-table th { background: var(--gz-surface); color: var(--gz-ink); font-weight: 500; padding: 12px 16px; text-align: left; font-size: 14px; text-transform: none; letter-spacing: 0; border-bottom: 1px solid var(--gz-line); }
+        html[data-theme] .content-section .data-table td { padding: 12px 16px; border-bottom: 1px solid var(--gz-line); color: var(--gz-text); vertical-align: top; }
+        html[data-theme] .content-section .data-table tr:last-child td { border-bottom: 0; }
+        html[data-theme] .content-section .data-table tr:hover td { background: var(--gz-surface); }
+        .badge-green { color: var(--io-str); font-weight: 500; }
+        .badge-yellow { color: var(--io-num); font-weight: 500; }
 
-        .phase-steps { display: flex; flex-direction: column; gap: 0; margin: 1.25rem 0; }
-        .phase-step { display: flex; gap: 1.25rem; position: relative; }
-        .phase-step:not(:last-child)::before { content: ''; position: absolute; left: 17px; top: 40px; bottom: -8px; width: 2px; background: var(--glass-border); }
-        .step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--gradient-primary); color: white; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.2rem; }
-        .step-body { padding-bottom: 1.5rem; flex: 1; }
-        .step-body h4 { font-size: 0.95rem; color: var(--text-primary); margin-bottom: 0.35rem; }
-        .step-body p { font-size: 0.875rem; color: var(--text-secondary); margin: 0; line-height: 1.6; }
+        .phase-steps { display: flex; flex-direction: column; gap: 0; margin: 18px 0; }
+        .phase-step { display: flex; gap: 18px; position: relative; }
+        .phase-step:not(:last-child)::before { content: ''; position: absolute; left: 17px; top: 42px; bottom: -6px; width: 1px; background: var(--gz-line); }
+        .step-num {
+            width: 36px; height: 36px; border-radius: 50%; background: var(--gz-ink); color: var(--gz-canvas);
+            font-weight: 500; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
+        }
+        .step-body { padding-bottom: 22px; flex: 1; }
+        .step-body h4 { font-size: 17px; font-weight: 500; color: var(--gz-ink); margin-bottom: 4px; }
+        .step-body p { font-size: 15px; color: var(--gz-text); margin: 0; line-height: 1.65; }
 
-        .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem; }
-        .breadcrumb a { color: var(--accent-blue); text-decoration: none; }
-        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb { display: flex; align-items: center; gap: 4px; font-size: 14px; color: var(--gz-text-3); margin: 96px 0 20px; }
+        .breadcrumb a { display: inline-flex; align-items: center; height: 32px; padding: 0 12px; border-radius: 999px; text-decoration: none; font-weight: 500; }
+        html[data-theme] .breadcrumb a { color: var(--gz-text); }
+        html[data-theme] .breadcrumb a:hover { background: var(--gz-surface-2); color: var(--gz-ink); }
+        .breadcrumb i { font-size: 11px; }
 
         @media (max-width: 768px) {
-            .paper-hero { padding: 1.75rem; }
-            .paper-title { font-size: 1.5rem; }
-            .content-section { padding: 1.5rem; }
+            .paper-hero, .content-section, .toc-card { padding: 24px 20px; }
             .toc-list { grid-template-columns: 1fr; }
             .metric-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
-        /* Force all Mermaid diagrams onto a dark canvas */
-        .mermaid { background: #0d1117; border-radius: 8px; padding: 1rem 0; display: block; }
+        .mermaid { background: transparent; padding: 8px 0; display: block; }
         .mermaid svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
     </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/genz.css">
 </head>
 <body>
     <canvas id="neural-bg"></canvas>
@@ -217,10 +211,8 @@
 
                 <nav class="breadcrumb">
                     <a href="../">Home</a>
-                    <i class="fas fa-chevron-right" style="font-size:0.7rem"></i>
+                    <i class="fas fa-chevron-right"></i>
                     <a href="./">Blog</a>
-                    <i class="fas fa-chevron-right" style="font-size:0.7rem"></i>
-                    <span>iOS Release Engineering</span>
                 </nav>
 
                 <!-- Hero -->
@@ -238,7 +230,6 @@
                         </div>
                         <div class="paper-stat"><i class="fas fa-calendar"></i> June 2026</div>
                         <div class="paper-stat"><i class="fas fa-clock"></i> 55 min read</div>
-                        <div class="paper-stat"><i class="fas fa-layer-group"></i> 8 Sections</div>
                         <div class="paper-stat"><i class="fas fa-project-diagram"></i> 12 Diagrams</div>
                     </div>
                     <div class="metric-grid">
@@ -267,7 +258,7 @@
 
                 <!-- TOC -->
                 <div class="toc-card">
-                    <h3><i class="fas fa-list"></i> Table of Contents</h3>
+                    <h3>Contents</h3>
                     <ul class="toc-list">
                         <li><a href="#s1"><span class="toc-num">01</span>Release Engineering Overview</a></li>
                         <li><a href="#s2"><span class="toc-num">02</span>CI/CD Pipeline Architecture</a></li>
@@ -306,7 +297,6 @@
                     <div class="diagram-wrap">
                         <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 1 — iOS Release Cadence (2-week sprint)</div>
                         <div class="mermaid">
-%%{init: {"theme": "dark"}}%%
 gantt
     title iOS Release Cadence
     dateFormat  YYYY-MM-DD
@@ -337,7 +327,6 @@ gantt
                     <div class="diagram-wrap">
                         <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 2 — Full Pipeline Architecture</div>
                         <div class="mermaid">
-%%{init: {"theme": "dark"}}%%
 flowchart TD
     PR[Pull Request / Merge to main] --> LINT[SwiftLint + SwiftFormat]
     LINT --> RESOLVE[SPM / CocoaPods Resolve]
@@ -365,7 +354,6 @@ flowchart TD
                     <div class="diagram-wrap">
                         <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 3 — Agent Pool Architecture</div>
                         <div class="mermaid">
-%%{init: {"theme": "dark"}}%%
 graph LR
     GH[GitHub Actions / Jenkins] --> POOL[Agent Pool Manager]
     POOL --> M1A[Mac mini M2\nAgent A]
@@ -459,7 +447,6 @@ graph LR
                     <div class="diagram-wrap">
                         <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 4 — Automated Code Signing Sequence</div>
                         <div class="mermaid">
-%%{init: {"theme": "dark"}}%%
 sequenceDiagram
     participant CI as CI Agent
     participant Match as Fastlane Match
@@ -667,7 +654,6 @@ sequenceDiagram
                     <div class="diagram-wrap">
                         <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 5 — Environment Promotion Flow</div>
                         <div class="mermaid">
-%%{init: {"theme": "dark"}}%%
 flowchart LR
     DEV["Dev\ncom.org.app.dev\nDebug config\nLocal API"]
     QA["QA\ncom.org.app.qa\nQA config\nStaging API"]
@@ -678,10 +664,10 @@ flowchart LR
     QA -->|"QA sign-off\nManual gate"| BETA
     BETA -->|"PM approval\nManual gate"| PROD
 
-    style DEV fill:#1e3a5f,stroke:#0ea5e9
-    style QA fill:#1e4a3f,stroke:#10b981
-    style BETA fill:#3a2a1e,stroke:#f59e0b
-    style PROD fill:#2a1e3a,stroke:#8b5cf6
+    style DEV fill:#E8F0FE,stroke:#1A73E8
+    style QA fill:#E6F4EA,stroke:#34A853
+    style BETA fill:#FEF7E0,stroke:#FBBC04
+    style PROD fill:#FCE8E6,stroke:#EA4335
                         </div>
                     </div>
 
@@ -733,7 +719,6 @@ flowchart LR
                     <div class="diagram-wrap">
                         <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 6 — TestFlight Distribution Architecture</div>
                         <div class="mermaid">
-%%{init: {"theme": "dark"}}%%
 graph TD
     BUILD[IPA Upload via ASC API] --> PROCESS[Apple Processing\n5 to 15 min]
     PROCESS --> INTERNAL{Internal Groups}
@@ -800,7 +785,6 @@ graph TD
                     <div class="diagram-wrap">
                         <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 7 — Feature Flag Rollout Architecture</div>
                         <div class="mermaid">
-%%{init: {"theme": "dark"}}%%
 flowchart TD
     APP[iOS App Launch] --> SDK[Feature Flag SDK\nLocal Cache]
     SDK --> EVAL{Evaluate Flag}
@@ -877,7 +861,6 @@ flowchart TD
                     <div class="diagram-wrap">
                         <div class="diagram-label"><i class="fas fa-project-diagram"></i> Figure 8 — Mobile Observability Architecture</div>
                         <div class="mermaid">
-%%{init: {"theme": "dark"}}%%
 graph TD
     APP[iOS App] --> CRASH[Crash Reporter\nFirebase Crashlytics / Sentry]
     APP --> APM[APM SDK\nNetwork latency / Frame rate / Memory]
@@ -977,7 +960,7 @@ graph TD
                     </div>
                 </div>
 
-                <div style="text-align:center;margin-top:3rem;">
+                <div style="text-align:center;margin-top:32px;">
                     <a href="./" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Blog</a>
                 </div>
 
@@ -1010,66 +993,62 @@ graph TD
     <script src="../assets/js/auth.js"></script>
 
     <script>
-        mermaid.initialize({
-            startOnLoad: true,
-            theme: 'dark',
-            themeVariables: {
-                darkMode: true,
-                background: '#0d1117',
-                mainBkg: '#161b22',
-                fontFamily: 'Sora, sans-serif',
-                fontSize: '14px',
-                /* general */
-                primaryColor: '#1e3a5f',
-                primaryTextColor: '#e2e8f0',
-                primaryBorderColor: '#0ea5e9',
-                lineColor: '#94a3b8',
-                secondaryColor: '#1e293b',
-                tertiaryColor: '#0f172a',
-                edgeLabelBackground: '#1e293b',
-                clusterBkg: '#1e293b',
-                clusterBorder: '#0ea5e9',
-                titleColor: '#e2e8f0',
-                nodeTextColor: '#e2e8f0',
-                /* sequence diagrams */
-                actorBkg: '#1e293b',
-                actorTextColor: '#e2e8f0',
-                actorBorder: '#0ea5e9',
-                actorLineColor: '#94a3b8',
-                signalColor: '#e2e8f0',
-                signalTextColor: '#e2e8f0',
-                labelBoxBkgColor: '#1e293b',
-                labelBoxBorderColor: '#0ea5e9',
-                labelTextColor: '#e2e8f0',
-                loopTextColor: '#e2e8f0',
-                noteBkgColor: '#1e3a5f',
-                noteTextColor: '#e2e8f0',
-                noteBorderColor: '#0ea5e9',
-                activationBkgColor: '#1d4ed8',
-                activationBorderColor: '#0ea5e9',
-                sequenceNumberColor: '#e2e8f0',
-                /* gantt charts */
-                gridColor: '#30363d',
-                section0: '#161b22',
-                section1: '#1c2433',
-                taskBkgColor: '#1e3a5f',
-                taskBorderColor: '#0ea5e9',
-                taskTextColor: '#e2e8f0',
-                taskTextLightColor: '#e2e8f0',
-                taskTextOutsideColor: '#cbd5e1',
-                taskTextClickableColor: '#38bdf8',
-                activeTaskBkgColor: '#0369a1',
-                activeTaskBorderColor: '#0ea5e9',
-                doneTaskBkgColor: '#1e4d3f',
-                doneTaskBorderColor: '#10b981',
-                critBkgColor: '#450a0a',
-                critBorderColor: '#ef4444',
-                todayLineColor: '#f59e0b',
-            },
-            flowchart: { curve: 'basis', padding: 20 },
-            sequence: { actorMargin: 60, useMaxWidth: true },
-            gantt: { axisFormat: '%m/%d' }
-        });
+        (function () {
+            var LIGHT = {
+                background: '#FFFFFF', mainBkg: '#E8F0FE', fontFamily: "'Google Sans', Roboto, sans-serif", fontSize: '14px',
+                primaryColor: '#E8F0FE', primaryTextColor: '#1F1F1F', primaryBorderColor: '#1A73E8', lineColor: '#5E5E5E',
+                secondaryColor: '#F0F4F9', tertiaryColor: '#F8FAFD', edgeLabelBackground: '#FFFFFF',
+                clusterBkg: '#F8FAFD', clusterBorder: '#E1E3E1', titleColor: '#1F1F1F', nodeTextColor: '#1F1F1F', textColor: '#1F1F1F',
+                actorBkg: '#E8F0FE', actorTextColor: '#1F1F1F', actorBorder: '#1A73E8', actorLineColor: '#5E5E5E',
+                signalColor: '#444746', signalTextColor: '#1F1F1F', labelBoxBkgColor: '#F0F4F9', labelBoxBorderColor: '#E1E3E1',
+                labelTextColor: '#1F1F1F', loopTextColor: '#1F1F1F', noteBkgColor: '#FEF7E0', noteTextColor: '#1F1F1F',
+                noteBorderColor: '#FBBC04', activationBkgColor: '#D2E3FC', activationBorderColor: '#1A73E8', sequenceNumberColor: '#FFFFFF',
+                gridColor: '#E1E3E1', section0: '#F8FAFD', section1: '#FFFFFF', section2: '#F8FAFD', section3: '#FFFFFF',
+                taskBkgColor: '#D2E3FC', taskBorderColor: '#1A73E8', taskTextColor: '#1F1F1F', taskTextLightColor: '#1F1F1F',
+                taskTextDarkColor: '#1F1F1F', taskTextOutsideColor: '#444746', taskTextClickableColor: '#1A73E8',
+                activeTaskBkgColor: '#AECBFA', activeTaskBorderColor: '#1A73E8', doneTaskBkgColor: '#CEEAD6', doneTaskBorderColor: '#34A853',
+                critBkgColor: '#FAD2CF', critBorderColor: '#EA4335', todayLineColor: '#FBBC04'
+            };
+            var DARK = {
+                background: '#2D333B', mainBkg: '#2F3D52', fontFamily: "'Google Sans', Roboto, sans-serif", fontSize: '14px',
+                primaryColor: '#2F3D52', primaryTextColor: '#E6EDF3', primaryBorderColor: '#A8C7FA', lineColor: '#9DA9B6',
+                secondaryColor: '#373E47', tertiaryColor: '#2D333B', edgeLabelBackground: '#2D333B',
+                clusterBkg: '#2D333B', clusterBorder: '#444C56', titleColor: '#E6EDF3', nodeTextColor: '#E6EDF3', textColor: '#E6EDF3',
+                actorBkg: '#2F3D52', actorTextColor: '#E6EDF3', actorBorder: '#A8C7FA', actorLineColor: '#9DA9B6',
+                signalColor: '#B6C2CF', signalTextColor: '#E6EDF3', labelBoxBkgColor: '#373E47', labelBoxBorderColor: '#444C56',
+                labelTextColor: '#E6EDF3', loopTextColor: '#E6EDF3', noteBkgColor: '#45402C', noteTextColor: '#E6EDF3',
+                noteBorderColor: '#FDD663', activationBkgColor: '#3A4E6E', activationBorderColor: '#A8C7FA', sequenceNumberColor: '#062E6F',
+                gridColor: '#444C56', section0: '#2D333B', section1: '#22272E', section2: '#2D333B', section3: '#22272E',
+                taskBkgColor: '#3A4E6E', taskBorderColor: '#A8C7FA', taskTextColor: '#E6EDF3', taskTextLightColor: '#E6EDF3',
+                taskTextDarkColor: '#E6EDF3', taskTextOutsideColor: '#B6C2CF', taskTextClickableColor: '#A8C7FA',
+                activeTaskBkgColor: '#4A6390', activeTaskBorderColor: '#A8C7FA', doneTaskBkgColor: '#2F4A38', doneTaskBorderColor: '#81C995',
+                critBkgColor: '#563634', critBorderColor: '#F28B82', todayLineColor: '#FDD663'
+            };
+            /* Per-node fills written in the diagram source are light tints; dark mode swaps them. */
+            var DARK_FILLS = { '#E8F0FE': '#2F3D52', '#E6F4EA': '#2F4A38', '#FEF7E0': '#45402C', '#FCE8E6': '#563634' };
+            var nodes = Array.prototype.slice.call(document.querySelectorAll('.mermaid'));
+            nodes.forEach(function (n) { n.dataset.src = n.textContent; });
+            function render() {
+                var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+                mermaid.initialize({
+                    startOnLoad: false, theme: 'base', darkMode: dark,
+                    themeVariables: Object.assign({ darkMode: dark }, dark ? DARK : LIGHT),
+                    flowchart: { curve: 'basis', padding: 20 },
+                    sequence: { actorMargin: 60, useMaxWidth: true },
+                    gantt: { axisFormat: '%m/%d' }
+                });
+                nodes.forEach(function (n) {
+                    var src = n.dataset.src;
+                    if (dark) Object.keys(DARK_FILLS).forEach(function (k) { src = src.split(k).join(DARK_FILLS[k]); });
+                    n.removeAttribute('data-processed');
+                    n.textContent = src;
+                });
+                mermaid.run({ nodes: nodes });
+            }
+            render();
+            var baseToggle = window.toggleTheme;
+            window.toggleTheme = function () { baseToggle(); render(); };
+        })();
 
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
@@ -1084,7 +1063,6 @@ graph TD
             });
         });
     </script>
-    <script src="../assets/js/neural-bg.js"></script>
 
     <!-- Diagram lightbox: click any diagram to view it at full size -->
     <div class="dlg-overlay" id="dlgOverlay" hidden role="dialog" aria-modal="true" aria-label="Diagram, expanded">
@@ -1092,20 +1070,20 @@ graph TD
       <div class="dlg-stage" id="dlgStage"></div>
     </div>
     <style>
-      .dlg-overlay{position:fixed;inset:0;z-index:9000;background:rgba(6,9,14,.93);backdrop-filter:blur(5px);
+      .dlg-overlay{position:fixed;inset:0;z-index:9000;background:rgba(32,33,36,.6);
         display:flex;overflow:auto;padding:4vh 3vw;cursor:zoom-out}
       .dlg-overlay[hidden]{display:none}
-      .dlg-stage{margin:auto;background:#0d1117;border:1px solid #2a3142;border-radius:12px;padding:20px;cursor:default}
-      .dlg-stage svg{display:block;max-width:calc(96vw - 44px)!important;width:auto!important;height:auto!important}
-      .dlg-close{position:fixed;top:18px;right:22px;z-index:9010;font:600 16px/1 monospace;
-        color:#c9d3e0;background:#161c26;border:1px solid #2a3142;border-radius:8px;
-        width:36px;height:36px;cursor:pointer;transition:.15s}
-      .dlg-close:hover{color:#fff;background:#232b38;border-color:#3a4356}
+      .dlg-stage{margin:auto;background:var(--gz-canvas);border:1px solid var(--gz-line);border-radius:var(--gz-r);padding:24px;cursor:default;box-shadow:var(--gz-elev)}
+      .dlg-stage svg{display:block;max-width:calc(96vw - 52px)!important;width:auto!important;height:auto!important}
+      .dlg-close{position:fixed;top:18px;right:22px;z-index:9010;font:500 16px/1 var(--gz-display);
+        color:var(--gz-ink);background:var(--gz-canvas);border:1px solid var(--gz-line);border-radius:50%;
+        width:40px;height:40px;cursor:pointer;transition:.15s}
+      .dlg-close:hover{background:var(--gz-surface-2);box-shadow:var(--gz-elev)}
       .diagram-wrap{position:relative;cursor:zoom-in}
-      .diagram-wrap .zoom-hint{position:absolute;top:12px;right:14px;font:500 10px/1 monospace;letter-spacing:.06em;
-        color:#8b95a8;border:1px solid #2a3142;border-radius:6px;padding:4px 8px;background:rgba(13,17,23,.7);
-        opacity:.6;pointer-events:none;transition:opacity .15s}
-      .diagram-wrap:hover .zoom-hint{opacity:1;color:#c9d3e0}
+      .diagram-wrap .zoom-hint{position:absolute;top:14px;right:14px;font:500 12px/1 var(--gz-display);
+        color:var(--gz-text-3);border:1px solid var(--gz-line);border-radius:999px;padding:6px 10px;background:var(--gz-canvas);
+        opacity:.8;pointer-events:none;transition:opacity .15s}
+      .diagram-wrap:hover .zoom-hint{opacity:1;color:var(--gz-ink)}
     </style>
     <script>
     (function(){

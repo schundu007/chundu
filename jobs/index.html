@@ -24,8 +24,6 @@
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <!-- Theme JS (load early to prevent flash) -->
     <script src="../assets/js/theme.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -35,107 +33,33 @@
     <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <style>
-        /* Dark Theme Variables (Default) */
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #111118;
-            --bg-tertiary: #18181f;
-            --bg-card: rgba(255, 255, 255, 0.03);
-            --text-primary: #ffffff;
-            --text-secondary: #a1a1aa;
-            --text-muted: #71717a;
-            --accent-blue: #3b82f6;
-            --accent-purple: #8b5cf6;
-            --accent-cyan: #06b6d4;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-border-hover: rgba(255, 255, 255, 0.15);
-            --white: #ffffff;
-            --light: #18181f;
-            --light-alt: #1f1f28;
-            --dark: #ffffff;
-            --border: rgba(255, 255, 255, 0.1);
-            --primary: #3b82f6;
-            --primary-dark: #0a66c2;
-            --primary-light: rgba(118, 185, 0, 0.2);
-            --radius: 8px;
-            --radius-lg: 12px;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        /* Google, Gen-Z tokens for this page (genz.css supplies --gz-*). */
+        html[data-theme] {
+            --primary: var(--gz-blue);
+            --primary-dark: var(--gz-blue-hover);
+            --primary-light: var(--gz-blue-soft);
+            --white: var(--gz-on-blue);
+            --light: var(--gz-surface-2);
+            --light-alt: var(--gz-line);
+            --dark: var(--gz-ink);
+            --border: var(--gz-line);
+            --radius: 14px;
+            --radius-lg: 20px;
+            --shadow: var(--gz-elev);
+            --jb-green: #188038;
+            --jb-green-t: #E6F4EA;
+            --jb-yellow: #B06000;
+            --jb-yellow-t: #FEF7E0;
+            --jb-red: #C5221F;
+            --jb-red-t: #FCE8E6;
         }
-
-        /* Light Theme Variables */
-        [data-theme="light"] {
-            --bg-primary: #f8fafc;
-            --bg-secondary: #ffffff;
-            --bg-tertiary: #f1f5f9;
-            --bg-card: rgba(0, 0, 0, 0.02);
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --text-muted: #94a3b8;
-            --accent-blue: #0a66c2;
-            --accent-purple: #7c3aed;
-            --accent-cyan: #0891b2;
-            --glass-bg: rgba(0, 0, 0, 0.02);
-            --glass-border: rgba(0, 0, 0, 0.08);
-            --glass-border-hover: rgba(0, 0, 0, 0.15);
-            --white: #ffffff;
-            --light: #f1f5f9;
-            --light-alt: #e2e8f0;
-            --dark: #0f172a;
-            --border: rgba(0, 0, 0, 0.1);
-            --primary: #0a66c2;
-            --primary-dark: #1d4ed8;
-            --primary-light: rgba(118, 185, 0, 0.15);
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        /* Light theme specific overrides */
-        [data-theme="light"] .jobs-topbar {
-            background: #ffffff;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        [data-theme="light"] .jobs-table-wrapper {
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        }
-
-        [data-theme="light"] .jobs-table th {
-            background: #f1f5f9;
-        }
-
-        [data-theme="light"] .jobs-table tr:hover {
-            background: rgba(118, 185, 0, 0.04);
-        }
-
-        [data-theme="light"] .company-tag {
-            background: #f1f5f9;
-            border-color: #e2e8f0;
-        }
-
-        [data-theme="light"] .company-tag:hover {
-            background: #e2e8f0;
-        }
-
-        [data-theme="light"] .jd-modal {
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-
-        [data-theme="light"] .jd-modal-overlay {
-            background: rgba(0, 0, 0, 0.5);
-        }
-
-        [data-theme="light"] .pagination {
-            background: #ffffff;
-        }
-
-        [data-theme="light"] .search-box input,
-        [data-theme="light"] .filter-select {
-            background: #ffffff;
-            border-color: #e2e8f0;
-        }
-
-        [data-theme="light"] .ticker-bar {
-            background: linear-gradient(90deg, #1e3a5f, #1e40af);
+        html[data-theme='dark'] {
+            --jb-green: #81C995;
+            --jb-green-t: rgba(129, 201, 149, .14);
+            --jb-yellow: #FDD663;
+            --jb-yellow-t: rgba(253, 214, 99, .12);
+            --jb-red: #F28B82;
+            --jb-red-t: rgba(242, 139, 130, .14);
         }
 
         /* Theme Toggle Button */
@@ -242,7 +166,7 @@
         }
 
         .claude-modal-close:hover {
-            background: #ef4444;
+            background: var(--jb-red);
             color: white;
         }
 
@@ -253,7 +177,7 @@
             font-weight: 600;
             color: var(--text-primary);
             border-bottom: 1px solid var(--glass-border);
-            background: linear-gradient(135deg, rgba(118, 185, 0, 0.1), rgba(118, 185, 0, 0.1));
+            background: var(--gz-blue-soft);
         }
 
         .claude-modal-body {
@@ -316,7 +240,7 @@
         }
 
         .claude-btn {
-            background: linear-gradient(135deg, #0957b0, #8b5cf6);
+            background: var(--gz-blue);
             color: white;
             border: none;
             padding: 0.75rem 1.5rem;
@@ -332,19 +256,19 @@
 
         .claude-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(118, 185, 0, 0.4);
+            box-shadow: 0 4px 12px var(--gz-blue-soft);
         }
 
         .resume-text {
-            font-family: 'JetBrains Mono', monospace;
+            font-family: var(--gz-mono);
             font-size: 0.8rem;
             line-height: 1.6;
         }
 
         .error {
-            color: #ef4444;
+            color: var(--jb-red);
             padding: 1rem;
-            background: rgba(239, 68, 68, 0.1);
+            background: var(--jb-red-t);
             border-radius: 8px;
         }
 
@@ -356,7 +280,7 @@
         }
 
         .ai-btn {
-            background: linear-gradient(135deg, #0957b0, #8b5cf6);
+            background: var(--gz-blue);
             color: white;
             border: none;
             padding: 0.35rem 0.5rem;
@@ -371,13 +295,13 @@
 
         .ai-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 2px 8px rgba(118, 185, 0, 0.4);
+            box-shadow: 0 2px 8px var(--gz-blue-soft);
         }
 
-        .ai-btn.analyze { background: linear-gradient(135deg, #3b82f6, #0a66c2); }
-        .ai-btn.match { background: linear-gradient(135deg, #10b981, #059669); }
-        .ai-btn.cover { background: linear-gradient(135deg, #f59e0b, #d97706); }
-        .ai-btn.resume { background: linear-gradient(135deg, #ec4899, #db2777); }
+        .ai-btn.analyze { background: var(--gz-blue); }
+        .ai-btn.match { background: var(--jb-green); }
+        .ai-btn.cover { background: var(--jb-yellow); }
+        .ai-btn.resume { background: var(--gz-blue); }
 
         /* ============ SETTINGS PANEL ============ */
         .panel-settings {
@@ -430,14 +354,14 @@
             border-radius: 8px;
             color: var(--text-primary);
             font-size: 0.8rem;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: var(--gz-mono);
         }
 
         .settings-field input:focus,
         .settings-field select:focus {
             outline: none;
-            border-color: #0957b0;
-            box-shadow: 0 0 0 3px rgba(118, 185, 0, 0.2);
+            border-color: var(--gz-blue);
+            box-shadow: 0 0 0 3px var(--gz-blue-soft);
         }
 
         .settings-field small {
@@ -448,7 +372,7 @@
         }
 
         .settings-field small a {
-            color: #0957b0;
+            color: var(--gz-blue);
         }
 
         .api-key-input-wrapper {
@@ -495,22 +419,22 @@
         }
 
         .settings-btn.save {
-            background: linear-gradient(135deg, #0957b0, #8b5cf6);
+            background: var(--gz-blue);
             color: white;
         }
 
         .settings-btn.test {
-            background: linear-gradient(135deg, #10b981, #059669);
+            background: var(--jb-green);
             color: white;
         }
 
         .settings-btn.export {
-            background: linear-gradient(135deg, #3b82f6, #0a66c2);
+            background: var(--gz-blue);
             color: white;
         }
 
         .settings-btn.import {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
+            background: var(--jb-yellow);
             color: white;
         }
 
@@ -529,27 +453,26 @@
 
         .settings-status.success {
             display: block;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            color: #10b981;
+            background: var(--jb-green-t);
+            border: 1px solid var(--jb-green-t);
+            color: var(--jb-green);
         }
 
         .settings-status.error {
             display: block;
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #ef4444;
+            background: var(--jb-red-t);
+            border: 1px solid var(--jb-red-t);
+            color: var(--jb-red);
         }
 
         .settings-status.info {
             display: block;
-            background: rgba(118, 185, 0, 0.1);
-            border: 1px solid rgba(118, 185, 0, 0.3);
-            color: #0957b0;
+            background: var(--gz-blue-soft);
+            border: 1px solid var(--gz-blue-soft);
+            color: var(--gz-blue);
         }
 
         body {
-            background: var(--bg-primary) !important;
             color: var(--text-primary);
             margin: 0;
             padding: 0;
@@ -596,15 +519,15 @@
             margin-top: 1rem;
             position: relative !important;
             z-index: 50 !important;
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
-            border-top: 3px solid #3b82f6 !important;
+            background: var(--gz-canvas) !important;
+            border-top: 1px solid var(--gz-line) !important;
             padding: 1.5rem 1rem !important;
-            box-shadow: 0 -4px 20px rgba(118, 185, 0, 0.2) !important;
+            box-shadow: 0 -4px 20px var(--gz-blue-soft) !important;
         }
 
         .doc-manager-section h3 {
             font-size: 1rem !important;
-            color: #fff !important;
+            color: var(--gz-ink) !important;
         }
 
         /* Minimal Top Bar */
@@ -654,8 +577,8 @@
 
         /* Fresh Jobs Ticker - Compact */
         .fresh-jobs-ticker {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: white;
+            background: var(--gz-canvas);
+            color: var(--gz-ink);
             padding: 6px 0;
             overflow: hidden;
             position: relative;
@@ -728,13 +651,13 @@
         }
 
         .ticker-item .title {
-            color: #fff;
+            color: var(--gz-ink);
         }
 
         .ticker-item .time {
-            color: #4ade80;
+            color: var(--jb-green);
             font-size: 0.65rem;
-            background: rgba(74, 222, 128, 0.15);
+            background: var(--jb-green-t);
             padding: 1px 6px;
             border-radius: 8px;
         }
@@ -978,7 +901,7 @@
 
         .salary-text {
             font-size: 0.75rem;
-            color: #22c55e;
+            color: var(--jb-green);
             font-weight: 600;
         }
 
@@ -1005,18 +928,18 @@
         }
 
         .worktype-badge.remote {
-            background: rgba(34, 197, 94, 0.15);
-            color: #22c55e;
+            background: var(--jb-green-t);
+            color: var(--jb-green);
         }
 
         .worktype-badge.hybrid {
-            background: rgba(118, 185, 0, 0.15);
-            color: #3b82f6;
+            background: var(--gz-blue-soft);
+            color: var(--gz-blue);
         }
 
         .worktype-badge.onsite {
-            background: rgba(249, 115, 22, 0.15);
-            color: #f97316;
+            background: var(--jb-yellow-t);
+            color: var(--jb-yellow);
         }
 
         .col-description {
@@ -1026,7 +949,7 @@
         }
 
         .col-description:hover {
-            background: rgba(118, 185, 0, 0.05);
+            background: var(--gz-blue-soft);
         }
 
         .col-apply {
@@ -1080,8 +1003,8 @@
         .remote-badge {
             display: inline-block;
             padding: 0.1rem 0.4rem;
-            background: rgba(34, 197, 94, 0.1);
-            color: #16a34a;
+            background: var(--jb-green-t);
+            color: var(--jb-green);
             font-size: 0.6rem;
             font-weight: 600;
             border-radius: 50px;
@@ -1105,33 +1028,33 @@
         }
 
         .ats-excellent {
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
-            color: #16a34a;
-            border: 1px solid rgba(34, 197, 94, 0.3);
+            background: var(--jb-green-t);
+            color: var(--jb-green);
+            border: 1px solid var(--jb-green-t);
         }
 
         .ats-good {
-            background: linear-gradient(135deg, rgba(118, 185, 0, 0.2), rgba(118, 185, 0, 0.1));
-            color: #3b82f6;
-            border: 1px solid rgba(118, 185, 0, 0.3);
+            background: var(--gz-blue-soft);
+            color: var(--gz-blue);
+            border: 1px solid var(--gz-blue-soft);
         }
 
         .ats-fair {
-            background: linear-gradient(135deg, rgba(234, 179, 8, 0.2), rgba(234, 179, 8, 0.1));
-            color: #ca8a04;
-            border: 1px solid rgba(234, 179, 8, 0.3);
+            background: var(--jb-yellow-t);
+            color: var(--jb-yellow);
+            border: 1px solid var(--jb-yellow-t);
         }
 
         .ats-low {
-            background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(249, 115, 22, 0.1));
-            color: #ea580c;
-            border: 1px solid rgba(249, 115, 22, 0.3);
+            background: var(--jb-yellow-t);
+            color: var(--jb-yellow);
+            border: 1px solid var(--jb-yellow-t);
         }
 
         .ats-poor {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1));
-            color: #dc2626;
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            background: var(--jb-red-t);
+            color: var(--jb-red);
+            border: 1px solid var(--jb-red-t);
         }
 
         .ats-tooltip {
@@ -1180,8 +1103,8 @@
         }
 
         .ats-tooltip-content .ats-keyword-tag {
-            background: rgba(118, 185, 0, 0.15);
-            color: #76B900;
+            background: var(--gz-blue-soft);
+            color: var(--gz-blue);
             padding: 0.1rem 0.4rem;
             border-radius: 3px;
         }
@@ -1193,8 +1116,8 @@
 
         /* ATS Filter Highlight */
         .ats-filter-active {
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(118, 185, 0, 0.1)) !important;
-            border-color: #16a34a !important;
+            background: var(--jb-green-t) !important;
+            border-color: var(--jb-green) !important;
         }
 
         .date-text {
@@ -1202,7 +1125,7 @@
         }
 
         .date-new {
-            color: #16a34a;
+            color: var(--jb-green);
             font-weight: 600;
         }
 
@@ -1216,19 +1139,19 @@
         }
 
         /* Distance priority colors - green (close) to yellow/orange (far) */
-        .priority-1 { background: rgba(34, 197, 94, 0.15); color: #16a34a; }
-        .priority-2 { background: rgba(34, 197, 94, 0.12); color: #22c55e; }
-        .priority-3 { background: rgba(10, 102, 194, 0.15); color: #0957b0; }
-        .priority-4 { background: rgba(234, 179, 8, 0.15); color: #ca8a04; }
-        .priority-5 { background: rgba(249, 115, 22, 0.12); color: #ea580c; }
-        .priority-6 { background: rgba(118, 185, 0, 0.12); color: #0a66c2; }
-        .priority-7 { background: rgba(118, 185, 0, 0.1); color: #3b82f6; }
-        .priority-8 { background: rgba(236, 72, 153, 0.12); color: #db2777; }
-        .priority-9 { background: rgba(168, 85, 247, 0.12); color: #a855f7; }
-        .priority-10 { background: rgba(6, 182, 212, 0.12); color: #0891b2; }
-        .priority-11 { background: rgba(148, 163, 184, 0.15); color: #64748b; }
-        .priority-12 { background: rgba(148, 163, 184, 0.12); color: #94a3b8; }
-        .priority-99 { background: rgba(239, 68, 68, 0.1); color: #dc2626; }
+        .priority-1 { background: var(--jb-green-t); color: var(--jb-green); }
+        .priority-2 { background: var(--jb-green-t); color: var(--jb-green); }
+        .priority-3 { background: var(--gz-blue-soft); color: var(--gz-blue); }
+        .priority-4 { background: var(--jb-yellow-t); color: var(--jb-yellow); }
+        .priority-5 { background: var(--jb-yellow-t); color: var(--jb-yellow); }
+        .priority-6 { background: var(--gz-blue-soft); color: var(--gz-blue); }
+        .priority-7 { background: var(--gz-blue-soft); color: var(--gz-blue); }
+        .priority-8 { background: var(--gz-blue-soft); color: var(--gz-blue); }
+        .priority-9 { background: var(--gz-blue-soft); color: var(--gz-blue); }
+        .priority-10 { background: var(--gz-blue-soft); color: var(--gz-blue); }
+        .priority-11 { background: var(--gz-surface-2); color: var(--gz-text-3); }
+        .priority-12 { background: var(--gz-surface-2); color: var(--gz-text-3); }
+        .priority-99 { background: var(--jb-red-t); color: var(--jb-red); }
 
         .description-text {
             color: var(--text-muted);
@@ -1252,17 +1175,17 @@
 
         .desc-tools {
             color: var(--accent-cyan);
-            font-family: monospace;
+            font-family: var(--gz-mono);
             font-size: 0.65rem;
         }
 
         .desc-pay {
-            color: #16a34a;
+            color: var(--jb-green);
             font-weight: 600;
         }
 
         .desc-remote {
-            color: #f59e0b;
+            color: var(--jb-yellow);
             font-size: 0.6rem;
         }
 
@@ -1375,17 +1298,17 @@
 
         .jd-tag {
             padding: 0.35rem 0.75rem;
-            background: rgba(118, 185, 0, 0.1);
-            border: 1px solid rgba(118, 185, 0, 0.2);
+            background: var(--gz-blue-soft);
+            border: 1px solid var(--gz-blue-soft);
             border-radius: 50px;
             font-size: 0.75rem;
             color: var(--accent-blue);
-            font-family: monospace;
+            font-family: var(--gz-mono);
         }
 
         .jd-pay-box {
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.2);
+            background: var(--jb-green-t);
+            border: 1px solid var(--jb-green-t);
             border-radius: 8px;
             padding: 1rem;
         }
@@ -1393,7 +1316,7 @@
         .jd-pay-box .pay-range {
             font-size: 1.25rem;
             font-weight: 700;
-            color: #16a34a;
+            color: var(--jb-green);
         }
 
         .jd-pay-box .pay-detail {
@@ -1479,7 +1402,7 @@
             width: 24px;
             height: 24px;
             background: var(--bg-tertiary);
-            color: #4ade80;
+            color: var(--jb-green);
             border: none;
             border-radius: var(--radius);
             cursor: pointer;
@@ -1487,9 +1410,9 @@
         }
 
         .resume-btn:hover {
-            background: #16a34a;
+            background: var(--jb-green);
             color: var(--white);
-            border-color: #16a34a;
+            border-color: var(--jb-green);
             transform: translateY(-1px);
         }
 
@@ -1504,7 +1427,7 @@
             width: 24px;
             height: 24px;
             background: var(--bg-tertiary);
-            color: #ef4444;
+            color: var(--jb-red);
             border: none;
             border-radius: var(--radius);
             cursor: pointer;
@@ -1512,9 +1435,9 @@
         }
 
         .exclude-btn:hover {
-            background: #ef4444;
+            background: var(--jb-red);
             color: var(--white);
-            border-color: #ef4444;
+            border-color: var(--jb-red);
         }
 
         .exclude-btn i {
@@ -1528,7 +1451,7 @@
             width: 24px;
             height: 24px;
             background: var(--bg-tertiary);
-            color: #22c55e;
+            color: var(--jb-green);
             border: none;
             border-radius: var(--radius);
             cursor: pointer;
@@ -1536,9 +1459,9 @@
         }
 
         .restore-btn:hover {
-            background: #22c55e;
+            background: var(--jb-green);
             color: var(--white);
-            border-color: #22c55e;
+            border-color: var(--jb-green);
         }
 
         .restore-btn i {
@@ -1564,9 +1487,9 @@
         }
 
         .excluded-toggle.active {
-            background: rgba(239, 68, 68, 0.1);
-            border-color: #ef4444;
-            color: #ef4444;
+            background: var(--jb-red-t);
+            border-color: var(--jb-red);
+            color: var(--jb-red);
         }
 
         .excluded-toggle .count {
@@ -1578,7 +1501,7 @@
         }
 
         .excluded-toggle.active .count {
-            background: rgba(239, 68, 68, 0.2);
+            background: var(--jb-red-t);
         }
 
         .backup-controls {
@@ -1606,7 +1529,7 @@
         .backup-btn:hover {
             border-color: var(--primary);
             color: var(--primary);
-            background: rgba(118, 185, 0, 0.1);
+            background: var(--gz-blue-soft);
         }
 
         .backup-btn i {
@@ -1615,7 +1538,7 @@
 
         .excluded-row {
             opacity: 0.6;
-            background: rgba(239, 68, 68, 0.05) !important;
+            background: var(--jb-red-t) !important;
         }
 
         .applied-btn {
@@ -1625,7 +1548,7 @@
             width: 24px;
             height: 24px;
             background: var(--bg-tertiary);
-            color: #f59e0b;
+            color: var(--jb-yellow);
             border: none;
             border-radius: var(--radius);
             cursor: pointer;
@@ -1633,9 +1556,9 @@
         }
 
         .applied-btn:hover {
-            background: #f59e0b;
+            background: var(--jb-yellow);
             color: var(--white);
-            border-color: #f59e0b;
+            border-color: var(--jb-yellow);
         }
 
         .applied-btn i {
@@ -1643,22 +1566,22 @@
         }
 
         .applied-btn.is-applied {
-            background: #f59e0b;
+            background: var(--jb-yellow);
             color: var(--white);
-            border-color: #f59e0b;
+            border-color: var(--jb-yellow);
         }
 
         .applied-btn.is-applied:hover {
-            background: #d97706;
-            border-color: #d97706;
+            background: var(--jb-yellow);
+            border-color: var(--jb-yellow);
         }
 
         .applied-row {
-            background: rgba(245, 158, 11, 0.08) !important;
+            background: var(--jb-yellow-t) !important;
         }
 
         .applied-row .role-title {
-            color: #f59e0b;
+            color: var(--jb-yellow);
         }
 
         .applied-badge {
@@ -1666,8 +1589,8 @@
             align-items: center;
             gap: 0.25rem;
             font-size: 0.6rem;
-            color: #f59e0b;
-            background: rgba(245, 158, 11, 0.15);
+            color: var(--jb-yellow);
+            background: var(--jb-yellow-t);
             padding: 0.1rem 0.4rem;
             border-radius: 4px;
             margin-left: 0.5rem;
@@ -1678,22 +1601,22 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.5rem 0.75rem;
-            background: rgba(245, 158, 11, 0.1);
-            border: 1px solid #f59e0b;
+            background: var(--jb-yellow-t);
+            border: 1px solid var(--jb-yellow);
             border-radius: var(--radius);
             font-size: 0.75rem;
-            color: #f59e0b;
+            color: var(--jb-yellow);
             text-decoration: none;
             transition: all 0.2s;
         }
 
         .applied-link:hover {
-            background: #f59e0b;
+            background: var(--jb-yellow);
             color: var(--white);
         }
 
         .applied-link .count {
-            background: rgba(245, 158, 11, 0.2);
+            background: var(--jb-yellow-t);
             padding: 0.1rem 0.4rem;
             border-radius: 10px;
             font-size: 0.65rem;
@@ -1898,7 +1821,7 @@
             border-color: var(--primary);
             color: var(--primary);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(118, 185, 0, 0.25);
+            box-shadow: 0 4px 12px var(--gz-blue-soft);
         }
 
         .company-link-logo {
@@ -1928,7 +1851,7 @@
             gap: 0.5rem;
             padding: 0.6rem 1rem;
             border: 2px solid var(--primary);
-            background: rgba(118, 185, 0, 0.05);
+            background: var(--gz-blue-soft);
             color: var(--primary);
             border-radius: var(--radius);
             font-size: 0.85rem;
@@ -1945,7 +1868,7 @@
         /* GitHub Token Settings */
         .github-settings {
             background: var(--bg-tertiary);
-            border: 1px solid rgba(251, 191, 36, 0.3);
+            border: 1px solid var(--jb-yellow-t);
             border-radius: 8px;
             padding: 1rem;
             margin-bottom: 1rem;
@@ -1962,7 +1885,7 @@
         .github-settings-header h4 {
             margin: 0;
             font-size: 0.9rem;
-            color: #fbbf24;
+            color: var(--jb-yellow);
         }
 
         .github-settings-content {
@@ -1976,7 +1899,7 @@
         .github-settings input[type="password"] {
             width: 100%;
             padding: 0.5rem 0.75rem;
-            border: 1px solid rgba(251, 191, 36, 0.4);
+            border: 1px solid var(--jb-yellow-t);
             border-radius: 6px;
             font-size: 0.85rem;
             margin-bottom: 0.5rem;
@@ -1987,7 +1910,7 @@
 
         .github-settings .btn-save-token {
             padding: 0.4rem 0.75rem;
-            background: #d97706;
+            background: var(--jb-yellow);
             color: white;
             border: none;
             border-radius: 6px;
@@ -1997,12 +1920,12 @@
         }
 
         .github-settings .btn-save-token:hover {
-            background: #b45309;
+            background: var(--jb-yellow);
         }
 
         .github-settings p {
             font-size: 0.8rem;
-            color: #fbbf24;
+            color: var(--jb-yellow);
             margin: 0 0 0.75rem 0;
             line-height: 1.4;
         }
@@ -2015,13 +1938,13 @@
         }
 
         .token-status.configured {
-            background: rgba(34, 197, 94, 0.2);
-            color: #4ade80;
+            background: var(--jb-green-t);
+            color: var(--jb-green);
         }
 
         .token-status.not-configured {
-            background: rgba(239, 68, 68, 0.2);
-            color: #f87171;
+            background: var(--jb-red-t);
+            color: var(--jb-red);
         }
 
         .updating-indicator {
@@ -2029,8 +1952,8 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.5rem 1rem;
-            background: rgba(118, 185, 0, 0.2);
-            color: #76B900;
+            background: var(--gz-blue-soft);
+            color: var(--gz-blue);
             border-radius: 6px;
             font-size: 0.85rem;
         }
@@ -2042,7 +1965,7 @@
         /* Upload Section */
         .upload-section {
             background: var(--bg-tertiary);
-            border: 1px solid rgba(34, 197, 94, 0.3);
+            border: 1px solid var(--jb-green-t);
             border-radius: 8px;
             padding: 1rem;
             margin-bottom: 1rem;
@@ -2058,7 +1981,7 @@
         .upload-section-header h4 {
             margin: 0;
             font-size: 0.9rem;
-            color: #4ade80;
+            color: var(--jb-green);
         }
 
         .upload-section-content {
@@ -2090,7 +2013,7 @@
             display: block;
             font-size: 0.8rem;
             font-weight: 600;
-            color: #4ade80;
+            color: var(--jb-green);
             margin-bottom: 0.25rem;
         }
 
@@ -2098,7 +2021,7 @@
         .upload-form-group select {
             width: 100%;
             padding: 0.5rem 0.75rem;
-            border: 1px solid rgba(34, 197, 94, 0.3);
+            border: 1px solid var(--jb-green-t);
             border-radius: 6px;
             font-size: 0.85rem;
             box-sizing: border-box;
@@ -2109,7 +2032,7 @@
         .upload-form-group input[type="file"] {
             width: 100%;
             padding: 0.4rem;
-            border: 2px dashed rgba(34, 197, 94, 0.4);
+            border: 2px dashed var(--jb-green-t);
             border-radius: 6px;
             font-size: 0.8rem;
             background: var(--bg-secondary);
@@ -2119,12 +2042,12 @@
 
         .upload-form-group input[type="file"]:hover {
             background: var(--bg-tertiary);
-            border-color: #4ade80;
+            border-color: var(--jb-green);
         }
 
         .btn-upload {
             padding: 0.6rem 1.25rem;
-            background: #16a34a;
+            background: var(--jb-green);
             color: white;
             border: none;
             border-radius: 6px;
@@ -2137,11 +2060,11 @@
         }
 
         .btn-upload:hover {
-            background: #15803d;
+            background: var(--jb-green);
         }
 
         .btn-upload:disabled {
-            background: #9ca3af;
+            background: var(--gz-line);
             cursor: not-allowed;
         }
 
@@ -2150,9 +2073,9 @@
             padding: 0.75rem;
             background: var(--bg-secondary);
             border-radius: 6px;
-            border: 1px solid rgba(34, 197, 94, 0.3);
+            border: 1px solid var(--jb-green-t);
             font-size: 0.85rem;
-            color: #4ade80;
+            color: var(--jb-green);
             display: none;
         }
 
@@ -2163,22 +2086,22 @@
         }
 
         .upload-status.error {
-            border-color: rgba(239, 68, 68, 0.4);
-            color: #f87171;
-            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--jb-red-t);
+            color: var(--jb-red);
+            background: var(--jb-red-t);
         }
 
         .upload-status.success {
-            border-color: rgba(34, 197, 94, 0.4);
-            color: #4ade80;
-            background: rgba(34, 197, 94, 0.1);
+            border-color: var(--jb-green-t);
+            color: var(--jb-green);
+            background: var(--jb-green-t);
         }
 
         /* Delete Button */
         .btn-delete {
-            background: rgba(239, 68, 68, 0.15);
-            color: #f87171;
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            background: var(--jb-red-t);
+            color: var(--jb-red);
+            border: 1px solid var(--jb-red-t);
             padding: 0.4rem 0.6rem;
             border-radius: 6px;
             font-size: 0.75rem;
@@ -2187,9 +2110,9 @@
         }
 
         .btn-delete:hover {
-            background: #dc2626;
+            background: var(--jb-red);
             color: white;
-            border-color: #dc2626;
+            border-color: var(--jb-red);
         }
 
         .btn-delete:disabled {
@@ -2224,7 +2147,7 @@
 
         .delete-confirm-dialog h3 {
             margin: 0 0 0.5rem;
-            color: #f87171;
+            color: var(--jb-red);
         }
 
         .delete-confirm-dialog p {
@@ -2237,7 +2160,7 @@
             background: var(--bg-tertiary);
             padding: 0.5rem;
             border-radius: 6px;
-            font-family: monospace;
+            font-family: var(--gz-mono);
             font-size: 0.85rem;
             margin-bottom: 1rem;
             word-break: break-all;
@@ -2269,12 +2192,12 @@
         }
 
         .btn-confirm-delete {
-            background: #dc2626;
+            background: var(--jb-red);
             color: white;
         }
 
         .btn-confirm-delete:hover {
-            background: #b91c1c;
+            background: var(--jb-red);
         }
 
         /* ============ SLIDE-OUT PANEL ============ */
@@ -2380,7 +2303,7 @@
         .slideout-tab.active {
             color: var(--primary);
             border-bottom: 2px solid var(--primary);
-            background: rgba(118, 185, 0, 0.05);
+            background: var(--gz-blue-soft);
         }
 
         .slideout-content {
@@ -2442,7 +2365,7 @@
         .panel-link:hover {
             border-color: var(--primary);
             color: var(--primary);
-            background: rgba(118, 185, 0, 0.1);
+            background: var(--gz-blue-soft);
         }
 
         .panel-link img {
@@ -2495,13 +2418,13 @@
             right: 0;
             top: 50%;
             transform: translateY(-50%);
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            background: var(--gz-blue);
             border: none;
             padding: 1rem 0.5rem;
             border-radius: 8px 0 0 8px;
             cursor: pointer;
             z-index: 998;
-            box-shadow: -2px 0 15px rgba(118, 185, 0, 0.4);
+            box-shadow: -2px 0 15px var(--gz-blue-soft);
             transition: all 0.2s;
             writing-mode: vertical-rl;
             text-orientation: mixed;
@@ -2509,7 +2432,7 @@
 
         .slideout-toggle:hover {
             padding-right: 0.75rem;
-            box-shadow: -4px 0 20px rgba(118, 185, 0, 0.6);
+            box-shadow: -4px 0 20px var(--gz-blue-soft);
         }
 
         .slideout-toggle span {
@@ -2539,26 +2462,453 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ══════ Google, Gen-Z register for the jobs app ══════
+           Ink and grey type; blue only for the primary action, links and focus;
+           green / yellow / red only for status. Pills for every control, 44px inputs,
+           20–28px rounds on surfaces, 1px hairlines, elevation on hover. */
+        html[data-theme] body { padding-top: 64px; }
+        html[data-theme] .main-content,
+        html[data-theme] .jobs-section { background: transparent; }
+        html[data-theme] .jb-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+        html[data-theme] .jobs-container { width: auto; max-width: 1600px !important; margin: 0 auto; padding: 0 24px !important; }
+
+        /* Top bar: one row of quiet actions under the site nav */
+        html[data-theme] .jobs-topbar {
+            position: static; justify-content: flex-end; padding: 0; background: transparent;
+            border: 0; box-shadow: none; margin: 0;
+        }
+        html[data-theme] .jobs-stats { margin-left: auto; }
+        html[data-theme] .jobs-topbar-actions { gap: 6px; }
+        html[data-theme] .topbar-link {
+            height: 36px; padding: 0 14px; border-radius: 999px; color: var(--gz-text); font-size: 14px; font-weight: 500;
+            transition: background .15s var(--gz-ease);
+        }
+        html[data-theme] .topbar-link:hover { background: var(--gz-surface-2); color: var(--gz-ink); }
+        html[data-theme] .jobs-topbar .theme-toggle { background: transparent; color: var(--gz-text); transform: none; }
+        html[data-theme] .jobs-topbar .theme-toggle:hover { background: var(--gz-surface-2); color: var(--gz-ink); transform: none; }
+
+        /* Fresh-jobs ticker: a hairline strip with an ink pill label */
+        html[data-theme] .fresh-jobs-ticker {
+            margin: 0 0 14px; padding: 0; height: 44px; display: flex; align-items: center;
+            background: var(--gz-canvas); color: var(--gz-ink); border: 1px solid var(--gz-line); border-radius: 999px;
+        }
+        html[data-theme] .ticker-label {
+            top: 5px; bottom: 5px; left: 6px; height: auto; padding: 0 14px; border-radius: 999px;
+            background: var(--gz-ink); color: var(--gz-canvas); font-size: 13px; font-weight: 500; box-shadow: none;
+        }
+        html[data-theme] .ticker-label i { animation: none; color: #FBBC04; }
+        html[data-theme] .ticker-wrapper { margin-left: 128px; margin-right: 16px; }
+        html[data-theme] .ticker-item { font-size: 14px; border-right: 1px solid var(--gz-line); }
+        html[data-theme] .ticker-item .company { color: var(--gz-ink); font-weight: 500; }
+        html[data-theme] .ticker-item .title { color: var(--gz-text); }
+        html[data-theme] .ticker-item .time {
+            color: var(--jb-green); background: var(--jb-green-t); font-size: 12px; padding: 2px 8px; border-radius: 999px;
+        }
+
+        /* Heading row: big title, stat chips */
+        html[data-theme] .jobs-section { padding: 28px 0 40px; }
+        html[data-theme] .jobs-header { margin-bottom: 18px; gap: 12px 24px; align-items: flex-end; }
+        html[data-theme] .jobs-header h2 {
+            font-size: clamp(36px, 4.4vw, 56px); line-height: 1.02; letter-spacing: -0.04em; font-weight: 500; color: var(--gz-ink);
+        }
+        html[data-theme] .jobs-stats { gap: 8px; flex-wrap: wrap; }
+        html[data-theme] .jobs-stat {
+            height: 36px; padding: 0 14px; border-radius: 999px; background: var(--gz-surface-2);
+            font-size: 13.5px; color: var(--gz-text-3); gap: 8px;
+        }
+        html[data-theme] .jobs-stat i { color: var(--gz-text-3); }
+        html[data-theme] .jobs-stat strong { color: var(--gz-ink); font-family: var(--gz-display); font-weight: 500; font-size: 15px; }
+
+        /* Filters: 44px pill search, 14px-round selects, pill buttons */
+        html[data-theme] .filters-bar { gap: 8px; margin-bottom: 14px; }
+        html[data-theme] .search-box input,
+        html[data-theme] .filter-select,
+        html[data-theme] .settings-field input,
+        html[data-theme] .settings-field select,
+        html[data-theme] .github-settings input[type="password"],
+        html[data-theme] .upload-form-group input[type="text"],
+        html[data-theme] .upload-form-group select {
+            height: 44px; border: 1px solid var(--gz-line); border-radius: 14px; background: var(--gz-canvas);
+            color: var(--gz-ink); font-family: var(--gz-display); font-size: 14.5px; box-shadow: none;
+            transition: border-color .15s var(--gz-ease), box-shadow .15s var(--gz-ease);
+        }
+        html[data-theme] .search-box input { padding: 0 16px 0 42px; border-radius: 999px; }
+        html[data-theme] .search-box i { left: 16px; font-size: 14px; color: var(--gz-text-3); }
+        html[data-theme] .filter-select { padding: 0 36px 0 14px; min-width: 150px; }
+        html[data-theme] .settings-field input,
+        html[data-theme] .settings-field select { padding: 0 14px; font-family: var(--gz-display); }
+        html[data-theme] .api-key-input-wrapper input { padding-right: 44px; font-family: var(--gz-mono); font-size: 13.5px; }
+        html[data-theme] .search-box input:focus,
+        html[data-theme] .filter-select:focus,
+        html[data-theme] .settings-field input:focus,
+        html[data-theme] .settings-field select:focus,
+        html[data-theme] .github-settings input[type="password"]:focus,
+        html[data-theme] .upload-form-group input:focus,
+        html[data-theme] .upload-form-group select:focus {
+            outline: none; border-color: var(--gz-blue); box-shadow: 0 0 0 3px var(--gz-focus);
+        }
+        html[data-theme] .filter-select option { background: var(--gz-canvas); color: var(--gz-ink); }
+
+        html[data-theme] .refresh-btn,
+        html[data-theme] .excluded-toggle,
+        html[data-theme] .applied-link {
+            height: 44px; padding: 0 18px; border-radius: 999px; font-family: var(--gz-display);
+            font-size: 14.5px; font-weight: 500; gap: 8px; transform: none;
+            transition: background .15s var(--gz-ease), box-shadow .15s var(--gz-ease), color .15s var(--gz-ease);
+        }
+        html[data-theme] .refresh-btn { background: var(--gz-blue); color: var(--gz-on-blue); border: 1px solid transparent; }
+        html[data-theme] .refresh-btn:hover { background: var(--gz-blue-hover); box-shadow: var(--gz-elev); }
+        html[data-theme] .excluded-toggle,
+        html[data-theme] .applied-link { background: var(--gz-canvas); color: var(--gz-ink); border: 1px solid var(--gz-line); }
+        html[data-theme] .excluded-toggle:hover,
+        html[data-theme] .applied-link:hover { background: var(--gz-surface-2); color: var(--gz-ink); border-color: var(--gz-line); }
+        html[data-theme] .excluded-toggle.active { background: var(--gz-ink); color: var(--gz-canvas); border-color: var(--gz-ink); }
+        html[data-theme] .excluded-toggle .count,
+        html[data-theme] .applied-link .count,
+        html[data-theme] .company-tag .count {
+            min-width: 22px; height: 22px; padding: 0 7px; display: inline-flex; align-items: center; justify-content: center;
+            border-radius: 999px; background: var(--gz-surface-2); color: var(--gz-ink); font-size: 12px; font-weight: 500;
+        }
+        html[data-theme] .excluded-toggle.active .count { background: rgba(255, 255, 255, .18); color: inherit; }
+        html[data-theme='dark'] .excluded-toggle.active .count { background: rgba(0, 0, 0, .14); }
+        html[data-theme] .applied-link:hover .count { background: var(--gz-canvas); }
+        html[data-theme] .applied-link i { color: var(--jb-green); }
+        html[data-theme] .backup-controls { border-left: 1px solid var(--gz-line); margin-left: 4px; padding-left: 10px; gap: 6px; }
+        html[data-theme] .backup-btn {
+            width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--gz-line); background: var(--gz-canvas); color: var(--gz-text);
+        }
+        html[data-theme] .backup-btn:hover { background: var(--gz-surface-2); color: var(--gz-ink); border-color: var(--gz-line); }
+
+        /* Company filter: pill chips, active filled ink */
+        html[data-theme] .company-tags { gap: 8px; margin-bottom: 18px; }
+        html[data-theme] .company-tag {
+            height: 36px; padding: 0 8px 0 14px; border: 1px solid var(--gz-line); border-radius: 999px;
+            background: var(--gz-canvas); color: var(--gz-ink); font-family: var(--gz-display); font-size: 14px; font-weight: 500; gap: 8px;
+        }
+        html[data-theme] .company-tag:hover { background: var(--gz-surface-2); color: var(--gz-ink); border-color: var(--gz-line); }
+        html[data-theme] .company-tag.active { background: var(--gz-ink); color: var(--gz-canvas); border-color: var(--gz-ink); }
+        html[data-theme] .company-tag.active .count { background: rgba(255, 255, 255, .18); color: inherit; }
+        html[data-theme='dark'] .company-tag.active .count { background: rgba(0, 0, 0, .14); }
+
+        /* Table: one big rounded surface, hairline rows */
+        html[data-theme] .jobs-table-wrapper,
+        html[data-theme] [data-theme] .jobs-table-wrapper {
+            border: 1px solid var(--gz-line); border-radius: var(--gz-r); background: var(--gz-canvas); box-shadow: none;
+        }
+        html[data-theme] .jobs-table { font-size: 14px; }
+        html[data-theme] .jobs-table th {
+            background: var(--gz-surface); color: var(--gz-text-3); font-weight: 500; font-size: 13px;
+            padding: 14px 16px; border-bottom: 1px solid var(--gz-line);
+        }
+        html[data-theme] .jobs-table th.sortable:hover { background: var(--gz-surface-2); color: var(--gz-ink); }
+        html[data-theme] .jobs-table td { padding: 14px 16px; border-bottom: 1px solid var(--gz-line); color: var(--gz-text); }
+        html[data-theme] .jobs-table tbody tr:hover { background: var(--gz-surface); }
+        html[data-theme] .col-description:hover { background: var(--gz-surface-2); }
+        html[data-theme] .role-title { font-size: 15px; font-weight: 500; color: var(--gz-ink); }
+        html[data-theme] .role-dept { font-size: 12.5px; color: var(--gz-text-3); }
+        html[data-theme] .company-name { font-size: 14px; font-weight: 500; color: var(--gz-ink); gap: 8px; }
+        html[data-theme] .company-logo { width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 1px solid var(--gz-line); }
+        html[data-theme] .location-text { font-size: 13px; color: var(--gz-text); }
+        html[data-theme] .location-text i { color: var(--gz-text-3); }
+        html[data-theme] .date-text { color: var(--gz-text-3); font-size: 13px; }
+        html[data-theme] .date-new { color: var(--jb-green); font-weight: 500; font-size: 13px; }
+        html[data-theme] .salary-text { color: var(--gz-ink); font-weight: 500; font-size: 13.5px; }
+        html[data-theme] .salary-text.no-salary { color: var(--gz-text-3); font-style: normal; font-weight: 400; }
+        html[data-theme] .description-text { font-size: 13px; line-height: 1.5; color: var(--gz-text); }
+        html[data-theme] .description-text:hover { color: var(--gz-ink); }
+        html[data-theme] .desc-focus { color: var(--gz-ink); font-weight: 500; }
+        html[data-theme] .desc-tools { color: var(--gz-text-3); font-family: var(--gz-mono); font-size: 12px; }
+        html[data-theme] .desc-pay { color: var(--jb-green); font-weight: 500; }
+        html[data-theme] .desc-remote { color: var(--gz-text-3); font-size: 12px; }
+
+        /* Badges: pills, status colour only */
+        html[data-theme] .worktype-badge,
+        html[data-theme] .distance-badge,
+        html[data-theme] .remote-badge,
+        html[data-theme] .applied-badge,
+        html[data-theme] .ats-score-badge,
+        html[data-theme] .token-status {
+            display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 999px; border: 0;
+            font-family: var(--gz-display); font-size: 12px; font-weight: 500; text-transform: none; letter-spacing: 0;
+        }
+        html[data-theme] .worktype-badge.remote { background: var(--jb-green-t); color: var(--jb-green); }
+        html[data-theme] .worktype-badge.hybrid { background: var(--gz-blue-soft); color: var(--gz-blue); }
+        html[data-theme] .worktype-badge.onsite { background: var(--gz-surface-2); color: var(--gz-text); }
+        html[data-theme] .priority-1, html[data-theme] .priority-2 { background: var(--jb-green-t); color: var(--jb-green); }
+        html[data-theme] .priority-3, html[data-theme] .priority-4, html[data-theme] .priority-5,
+        html[data-theme] .priority-6, html[data-theme] .priority-7 { background: var(--gz-blue-soft); color: var(--gz-blue); }
+        html[data-theme] .priority-8, html[data-theme] .priority-9, html[data-theme] .priority-10,
+        html[data-theme] .priority-11, html[data-theme] .priority-12 { background: var(--gz-surface-2); color: var(--gz-text); }
+        html[data-theme] .priority-99 { background: var(--jb-red-t); color: var(--jb-red); }
+        html[data-theme] .ats-excellent { background: var(--jb-green-t); color: var(--jb-green); }
+        html[data-theme] .ats-good { background: var(--gz-blue-soft); color: var(--gz-blue); }
+        html[data-theme] .ats-fair, html[data-theme] .ats-low { background: var(--jb-yellow-t); color: var(--jb-yellow); }
+        html[data-theme] .ats-poor { background: var(--jb-red-t); color: var(--jb-red); }
+        html[data-theme] .ats-tooltip .ats-tooltip-content {
+            background: var(--gz-canvas); border: 1px solid var(--gz-line); border-radius: var(--gz-r-md); box-shadow: var(--gz-elev);
+        }
+        html[data-theme] .ats-tooltip-content .ats-keyword-tag { border-radius: 999px; padding: 2px 8px; background: var(--gz-blue-soft); color: var(--gz-blue); }
+        html[data-theme] .ats-filter-active { background: var(--jb-green-t) !important; border-color: var(--gz-line) !important; }
+        html[data-theme] .token-status.configured { background: var(--jb-green-t); color: var(--jb-green); }
+        html[data-theme] .token-status.not-configured { background: var(--jb-red-t); color: var(--jb-red); }
+
+        /* Row actions: Apply is the one filled pill; the rest are round icon buttons */
+        html[data-theme] .apply-actions { gap: 6px; }
+        html[data-theme] .apply-btn {
+            height: 34px; padding: 0 14px; border-radius: 999px; background: var(--gz-blue); color: var(--gz-on-blue);
+            font-size: 13px; font-weight: 500; gap: 6px;
+        }
+        html[data-theme] .apply-btn:hover { background: var(--gz-blue-hover); color: var(--gz-on-blue); box-shadow: var(--gz-elev); }
+        html[data-theme] .applied-btn,
+        html[data-theme] .exclude-btn,
+        html[data-theme] .restore-btn,
+        html[data-theme] .cover-letter-btn,
+        html[data-theme] .resume-btn {
+            width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--gz-line); background: var(--gz-canvas);
+            color: var(--gz-text); transform: none;
+        }
+        html[data-theme] .applied-btn:hover,
+        html[data-theme] .restore-btn:hover,
+        html[data-theme] .resume-btn:hover { background: var(--jb-green-t); color: var(--jb-green); border-color: transparent; transform: none; }
+        html[data-theme] .exclude-btn:hover { background: var(--jb-red-t); color: var(--jb-red); border-color: transparent; }
+        html[data-theme] .cover-letter-btn:hover { background: var(--gz-blue-soft); color: var(--gz-blue); border-color: transparent; }
+        html[data-theme] .applied-btn.is-applied,
+        html[data-theme] .applied-btn.is-applied:hover { background: var(--jb-green-t); color: var(--jb-green); border-color: transparent; }
+        html[data-theme] .applied-row { background: var(--jb-green-t) !important; }
+        html[data-theme] .applied-row .role-title { color: var(--gz-ink); }
+        html[data-theme] .applied-badge { background: var(--jb-green-t); color: var(--jb-green); }
+        html[data-theme] .excluded-row { background: var(--gz-surface) !important; }
+
+        html[data-theme] .ai-actions { gap: 4px; flex-wrap: wrap; margin-top: 8px; }
+        html[data-theme] .ai-btn,
+        html[data-theme] .ai-btn.analyze,
+        html[data-theme] .ai-btn.match,
+        html[data-theme] .ai-btn.cover,
+        html[data-theme] .ai-btn.resume {
+            height: 28px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--gz-line);
+            background: var(--gz-canvas); color: var(--gz-text); font-family: var(--gz-display); font-size: 12px; font-weight: 500;
+            gap: 5px; transform: none; box-shadow: none;
+        }
+        html[data-theme] .ai-btn:hover { background: var(--gz-surface-2); color: var(--gz-ink); transform: none; box-shadow: none; }
+        html[data-theme] .ai-btn i { color: var(--gz-text-3); }
+
+        /* Loading, empty, pagination */
+        html[data-theme] .loading-row td { color: var(--gz-text-3); padding: 40px; }
+        html[data-theme] .loading-spinner { border: 2px solid var(--gz-line); border-top-color: var(--gz-blue); }
+        html[data-theme] .empty-state i { color: var(--gz-text-3); font-size: 40px; }
+        html[data-theme] .empty-state h3 { color: var(--gz-ink); font-size: 22px; }
+        html[data-theme] .empty-state p { color: var(--gz-text); }
+        html[data-theme] .pagination,
+        html[data-theme] [data-theme] .pagination {
+            margin-top: 14px; padding: 10px 10px 10px 20px; background: var(--gz-canvas);
+            border: 1px solid var(--gz-line); border-radius: 999px;
+        }
+        html[data-theme] .pagination-info { font-size: 14px; color: var(--gz-text-3); }
+        html[data-theme] .pagination-btns { gap: 4px; align-items: center; }
+        html[data-theme] .page-btn {
+            min-width: 40px; height: 40px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent;
+            color: var(--gz-text); font-family: var(--gz-display); font-size: 14px; font-weight: 500;
+        }
+        html[data-theme] .page-btn:hover:not(:disabled) { background: var(--gz-surface-2); color: var(--gz-ink); }
+        html[data-theme] .page-btn.active { background: var(--gz-ink); color: var(--gz-canvas); }
+
+        /* Resources tab and slide-out panel */
+        html[data-theme] .slideout-toggle {
+            top: auto; bottom: 24px; right: 24px; transform: none; writing-mode: horizontal-tb;
+            height: 48px; padding: 0 20px; border-radius: 999px; background: var(--gz-canvas);
+            border: 1px solid var(--gz-line); box-shadow: var(--gz-elev);
+        }
+        html[data-theme] .slideout-toggle:hover { padding-right: 20px; background: var(--gz-surface-2); box-shadow: var(--gz-elev); }
+        html[data-theme] .slideout-toggle span { color: var(--gz-ink); font-family: var(--gz-display); font-size: 13.5px; font-weight: 500; gap: 8px; }
+        html[data-theme] .slideout-overlay { background: rgba(32, 33, 36, .4); }
+        html[data-theme] .slideout-panel {
+            top: 8px; height: calc(100vh - 16px); width: 420px; right: -440px; background: var(--gz-canvas);
+            border: 1px solid var(--gz-line); border-radius: var(--gz-r); box-shadow: var(--gz-elev); overflow: hidden;
+        }
+        html[data-theme] .slideout-panel.open { right: 8px; }
+        html[data-theme] .slideout-header { background: transparent; border-bottom: 0; padding: 18px 20px 6px; }
+        html[data-theme] .slideout-header h3 { font-size: 24px; font-weight: 500; letter-spacing: -0.02em; color: var(--gz-ink); }
+        html[data-theme] .slideout-header h3 i { display: none; }
+        html[data-theme] .slideout-close {
+            width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; color: var(--gz-text); font-size: 16px;
+        }
+        html[data-theme] .slideout-close:hover { background: var(--gz-surface-2); color: var(--gz-ink); }
+        /* Segmented control: one chunky pill, active segment filled ink */
+        html[data-theme] .slideout-tabs {
+            margin: 8px 20px 4px; padding: 4px; gap: 4px; border: 1px solid var(--gz-line); border-radius: 999px;
+            background: var(--gz-surface);
+        }
+        html[data-theme] .slideout-tab {
+            height: 40px; padding: 0 10px; border-radius: 999px; border: 0; color: var(--gz-text);
+            font-family: var(--gz-display); font-size: 14px; font-weight: 500; white-space: nowrap; flex: 1 1 auto;
+        }
+        html[data-theme] .slideout-tab:hover { background: var(--gz-surface-2); color: var(--gz-ink); }
+        html[data-theme] .slideout-tab.active,
+        html[data-theme] .slideout-tab.active:hover { background: var(--gz-ink); color: var(--gz-canvas); border: 0; }
+        html[data-theme] .slideout-content { padding: 14px 20px 20px; }
+        html[data-theme] .panel-link-group-title {
+            border-bottom: 0; padding: 0; margin: 4px 0 8px; text-transform: none; letter-spacing: 0;
+            font-size: 13px; font-weight: 500; color: var(--gz-text-3);
+        }
+        html[data-theme] .panel-link-grid { gap: 6px; }
+        html[data-theme] .panel-link,
+        html[data-theme] .panel-github-link,
+        html[data-theme] .company-link-btn {
+            min-height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--gz-line); background: var(--gz-canvas);
+            color: var(--gz-ink); font-size: 13px; font-weight: 500; gap: 8px; transform: none; box-shadow: none;
+        }
+        html[data-theme] .panel-link i, html[data-theme] .panel-github-link i { color: var(--gz-text-3); font-size: 13px; }
+        html[data-theme] .panel-link img { border-radius: 50%; }
+        html[data-theme] .panel-link:hover,
+        html[data-theme] .panel-github-link:hover,
+        html[data-theme] .company-link-btn:hover { background: var(--gz-surface-2); color: var(--gz-ink); border-color: var(--gz-line); transform: none; box-shadow: none; }
+        html[data-theme] .panel-github-link { min-height: 44px; font-size: 14px; }
+        html[data-theme] .panel-doc-list { background: var(--gz-surface); border-radius: var(--gz-r-md); padding: 12px; }
+
+        /* Settings */
+        html[data-theme] .panel-settings { padding: 0; }
+        html[data-theme] .settings-group { background: var(--gz-surface); border-radius: var(--gz-r-md); padding: 20px; margin-bottom: 12px; }
+        html[data-theme] .settings-group-title { font-size: 17px; font-weight: 500; color: var(--gz-ink); gap: 10px; }
+        html[data-theme] .settings-group-title i { color: var(--gz-text-3); }
+        html[data-theme] .settings-description,
+        html[data-theme] .settings-field small { font-size: 13px; color: var(--gz-text-3); }
+        html[data-theme] .settings-field label { font-size: 13px; color: var(--gz-text); }
+        html[data-theme] .toggle-visibility { right: 6px; width: 34px; height: 34px; border-radius: 50%; padding: 0; }
+        html[data-theme] .toggle-visibility:hover { background: var(--gz-surface-2); }
+        html[data-theme] .settings-btn,
+        html[data-theme] .settings-btn.save,
+        html[data-theme] .settings-btn.test,
+        html[data-theme] .settings-btn.export,
+        html[data-theme] .settings-btn.import {
+            height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--gz-line); background: var(--gz-canvas);
+            color: var(--gz-ink); font-family: var(--gz-display); font-size: 13.5px; font-weight: 500; transform: none; box-shadow: none;
+        }
+        html[data-theme] .settings-btn.save { background: var(--gz-blue); color: var(--gz-on-blue); border-color: transparent; }
+        html[data-theme] .settings-btn:hover { background: var(--gz-surface-2); transform: none; box-shadow: none; }
+        html[data-theme] .settings-btn.save:hover { background: var(--gz-blue-hover); box-shadow: var(--gz-elev); }
+        html[data-theme] .settings-status { border-radius: 14px; border: 0; font-size: 13.5px; }
+        html[data-theme] .settings-status.success { background: var(--jb-green-t); color: var(--jb-green); }
+        html[data-theme] .settings-status.error { background: var(--jb-red-t); color: var(--jb-red); }
+        html[data-theme] .settings-status.info { background: var(--gz-blue-soft); color: var(--gz-blue); }
+
+        /* Hidden document manager (kept for its JS) */
+        html[data-theme] .github-settings,
+        html[data-theme] .upload-section { background: var(--gz-surface); border: 1px solid var(--gz-line); border-radius: var(--gz-r-md); }
+        html[data-theme] .github-settings-header h4,
+        html[data-theme] .upload-section-header h4 { color: var(--gz-ink); font-weight: 500; }
+        html[data-theme] .github-settings p,
+        html[data-theme] .upload-form-group label { color: var(--gz-text); font-weight: 500; }
+        html[data-theme] .upload-btn,
+        html[data-theme] .btn-upload,
+        html[data-theme] .github-settings .btn-save-token {
+            height: 40px; padding: 0 18px; border-radius: 999px; border: 0; background: var(--gz-blue); color: var(--gz-on-blue); font-weight: 500;
+        }
+        html[data-theme] .btn-upload:disabled { background: var(--gz-surface-2); color: var(--gz-text-3); }
+        html[data-theme] .upload-form-group input[type="file"] { border: 1px dashed var(--gz-line); border-radius: 14px; }
+        html[data-theme] .upload-status { border: 0; border-radius: 14px; background: var(--jb-green-t); color: var(--jb-green); }
+        html[data-theme] .upload-status.error { background: var(--jb-red-t); color: var(--jb-red); }
+        html[data-theme] .btn-delete {
+            border-radius: 999px; border: 1px solid var(--gz-line); background: var(--gz-canvas); color: var(--jb-red); height: 32px; padding: 0 12px;
+        }
+        html[data-theme] .btn-delete:hover { background: var(--jb-red-t); color: var(--jb-red); border-color: transparent; }
+        html[data-theme] .updating-indicator { border-radius: 999px; background: var(--gz-blue-soft); color: var(--gz-blue); }
+
+        /* Dialogs: big rounds, elevation, a plain scrim */
+        html[data-theme] .jd-modal-overlay,
+        html[data-theme] [data-theme] .jd-modal-overlay,
+        html[data-theme] .claude-modal-overlay,
+        html[data-theme] .delete-confirm-overlay { background: rgba(32, 33, 36, .5); backdrop-filter: none; }
+        html[data-theme] .jd-modal,
+        html[data-theme] .claude-modal-content,
+        html[data-theme] .delete-confirm-dialog {
+            background: var(--gz-canvas); border: 1px solid var(--gz-line); border-radius: var(--gz-r); box-shadow: var(--gz-elev);
+        }
+        html[data-theme] .jd-modal-header { border-bottom: 1px solid var(--gz-line); padding: 24px 28px 18px; }
+        html[data-theme] .jd-modal-title h2 { font-size: 28px; line-height: 1.15; letter-spacing: -0.025em; color: var(--gz-ink); }
+        html[data-theme] .jd-modal-title .company { color: var(--gz-text); font-size: 15px; font-weight: 500; }
+        html[data-theme] .jd-modal-close,
+        html[data-theme] .claude-modal-close {
+            width: 40px; height: 40px; padding: 0; border-radius: 50%; display: grid; place-items: center;
+            background: transparent; color: var(--gz-text); font-size: 22px;
+        }
+        html[data-theme] .jd-modal-close:hover,
+        html[data-theme] .claude-modal-close:hover { background: var(--gz-surface-2); color: var(--gz-ink); }
+        html[data-theme] .jd-modal-body { padding: 22px 28px; }
+        html[data-theme] .jd-section h3 {
+            font-size: 17px; font-weight: 500; color: var(--gz-ink); text-transform: none; letter-spacing: -0.01em;
+        }
+        html[data-theme] .jd-section h3 i { color: var(--gz-text-3); margin-right: 6px; }
+        html[data-theme] .jd-section li { color: var(--gz-text); font-size: 15px; }
+        html[data-theme] .jd-section li::before { content: ''; top: 16px; width: 6px; height: 6px; border-radius: 50%; background: var(--gz-text-3); }
+        html[data-theme] .jd-tag {
+            display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px;
+            border: 1px solid var(--gz-line); background: var(--gz-canvas); color: var(--gz-ink);
+            font-family: var(--gz-display); font-size: 12.5px; font-weight: 500;
+        }
+        html[data-theme] .jd-pay-box { background: var(--jb-green-t); border: 0; border-radius: var(--gz-r-md); padding: 16px 20px; }
+        html[data-theme] .jd-pay-box .pay-range { color: var(--gz-ink); font-weight: 500; font-size: 24px; letter-spacing: -0.02em; }
+        html[data-theme] .jd-pay-box .pay-detail { color: var(--gz-text); }
+        html[data-theme] .jd-full-desc { background: var(--gz-surface); border-radius: var(--gz-r-md); padding: 18px 20px; font-size: 14px; color: var(--gz-text); }
+        html[data-theme] .jd-modal-footer { border-top: 1px solid var(--gz-line); padding: 14px 20px 14px 28px; gap: 8px; align-items: center; }
+
+        html[data-theme] .claude-modal-title {
+            background: transparent; border-bottom: 1px solid var(--gz-line); padding: 24px 72px 18px 28px;
+            font-size: 24px; font-weight: 500; letter-spacing: -0.02em; color: var(--gz-ink);
+        }
+        html[data-theme] .claude-modal-body { padding: 22px 28px; color: var(--gz-text); }
+        html[data-theme] .claude-modal-body pre,
+        html[data-theme] .claude-modal-body code { background: var(--gz-surface-2); color: var(--gz-ink); font-family: var(--gz-mono); }
+        html[data-theme] .claude-modal-body pre { border-radius: 14px; }
+        html[data-theme] .claude-modal-body code { border-radius: 6px; }
+        html[data-theme] .claude-actions { border-top: 1px solid var(--gz-line); gap: 8px; flex-wrap: wrap; }
+        html[data-theme] .claude-btn {
+            height: 44px; padding: 0 20px; border-radius: 999px; border: 0; background: var(--gz-blue); color: var(--gz-on-blue);
+            font-family: var(--gz-display); font-size: 14.5px; font-weight: 500; transform: none; box-shadow: none;
+        }
+        html[data-theme] .claude-btn:hover { background: var(--gz-blue-hover); transform: none; box-shadow: var(--gz-elev); }
+        html[data-theme] .resume-text { font-family: var(--gz-mono); font-size: 13px; }
+        html[data-theme] .error { color: var(--jb-red); background: var(--jb-red-t); border-radius: 14px; }
+        html[data-theme] .delete-confirm-dialog h3 { color: var(--gz-ink); }
+        html[data-theme] .delete-confirm-dialog .filename { background: var(--gz-surface-2); border-radius: 10px; font-family: var(--gz-mono); }
+        html[data-theme] .delete-confirm-buttons button { height: 44px; padding: 0 22px; border-radius: 999px; font-weight: 500; font-family: var(--gz-display); }
+        html[data-theme] .btn-cancel { background: var(--gz-canvas); color: var(--gz-ink); border: 1px solid var(--gz-line) !important; }
+        html[data-theme] .btn-cancel:hover { background: var(--gz-surface-2); }
+        html[data-theme] .btn-confirm-delete { background: #C5221F; color: #fff; }
+        html[data-theme='dark'] .btn-confirm-delete { background: #F28B82; color: #601410; }
+        html[data-theme] .btn-confirm-delete:hover { box-shadow: var(--gz-elev); background: #A50E0E; }
+        html[data-theme='dark'] .btn-confirm-delete:hover { background: #F6AEA9; }
+
+        @media (max-width: 768px) {
+            html[data-theme] .jobs-container { padding: 0 16px !important; }
+            html[data-theme] .filters-bar { flex-direction: row; }
+            html[data-theme] .search-box, html[data-theme] .filter-select { width: 100%; flex: 1 1 100%; }
+            html[data-theme] .pagination { border-radius: var(--gz-r-md); padding: 12px 16px; }
+            html[data-theme] .slideout-panel { width: calc(100% - 16px); right: -110%; }
+        }
     </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/genz.css">
 </head>
 <body>
     <!-- Neural Network Background -->
     <canvas id="neural-bg"></canvas>
 
     <!-- Password Protection Overlay -->
-    <div id="password-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-primary, #0a0a0f); z-index: 99999; display: flex; align-items: center; justify-content: center;">
-        <div style="background: var(--bg-secondary, #111118); padding: 28px 32px; border-radius: 10px; text-align: center; max-width: 380px; width: 90%; border: 1px solid var(--bg-tertiary, #18181f);">
-            <i class="fas fa-lock" style="font-size: 24px; color: #76B900; margin-bottom: 14px;"></i>
-            <h2 style="margin: 0 0 8px; font-size: 1.125rem; color: var(--text-primary, #ffffff);">Private Page</h2>
-            <p style="color: var(--text-secondary, #a1a1aa); font-size: 0.875rem; margin-bottom: 18px;">This page is restricted. Enter password to continue.</p>
+    <div id="password-overlay" style="position: fixed; inset: 0; background: var(--gz-canvas); z-index: 99999; display: flex; align-items: center; justify-content: center; padding: 16px;">
+        <div style="background: var(--gz-canvas); padding: 32px; border-radius: var(--gz-r); text-align: center; max-width: 400px; width: 100%; border: 1px solid var(--gz-line);">
+            <i class="fas fa-lock" style="font-size: 24px; color: var(--gz-text-3); margin-bottom: 14px;"></i>
+            <h2 style="margin: 0 0 8px; font-size: 26px; color: var(--gz-ink);">Private Page</h2>
+            <p style="color: var(--gz-text); font-size: 15px; margin-bottom: 20px;">This page is restricted. Enter password to continue.</p>
             <input type="password" id="password-input" placeholder="Enter password"
-                   style="width: 100%; padding: 10px 14px; border: 1px solid var(--bg-tertiary, #18181f); border-radius: 8px; font-size: 15px; margin-bottom: 12px; box-sizing: border-box; background: var(--bg-primary, #0a0a0f); color: var(--text-primary, #ffffff);"
+                   style="width: 100%; height: 44px; padding: 0 16px; border: 1px solid var(--gz-line); border-radius: 14px; font-size: 15px; margin-bottom: 12px; box-sizing: border-box; background: var(--gz-canvas); color: var(--gz-ink); font-family: var(--gz-display);"
                    onkeypress="if(event.key==='Enter') checkPassword()">
             <button onclick="checkPassword()"
-                    style="width: 100%; height: 36px; padding: 0 12px; background: #76B900; color: white; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; font-weight: 600;">
+                    style="width: 100%; height: 44px; padding: 0 22px; background: var(--gz-blue); color: var(--gz-on-blue); border: none; border-radius: 999px; font-size: 15px; cursor: pointer; font-weight: 500; font-family: var(--gz-display);">
                 Unlock
             </button>
-            <p id="password-error" style="color: #f87171; margin-top: 12px; font-size: 0.875rem; display: none;">Incorrect password</p>
+            <p id="password-error" style="color: var(--jb-red); margin-top: 12px; font-size: 14px; display: none;">Incorrect password</p>
         </div>
     </div>
 
@@ -2584,7 +2934,7 @@
                 document.getElementById('password-overlay').style.display = 'none';
             } else {
                 document.getElementById('password-error').style.display = 'block';
-                document.getElementById('password-input').style.borderColor = '#ef4444';
+                document.getElementById('password-input').style.borderColor = 'var(--jb-red)';
             }
         }
 
@@ -2609,37 +2959,6 @@
             </ul>
         </div>
     </nav>
-
-    <!-- Minimal Top Bar for Full Screen Mode -->
-    <div class="jobs-topbar">
-        <div class="jobs-topbar-title">
-            <i class="fas fa-briefcase"></i>
-            Job <span>Listings</span>
-        </div>
-        <div class="jobs-topbar-actions">
-            <a href="../" class="topbar-link">
-                <i class="fas fa-home"></i> Portfolio
-            </a>
-            <a href="../#resume" class="topbar-link">
-                <i class="fas fa-file-alt"></i> Resume
-            </a>
-            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" style="background: none; border: none; cursor: pointer; color: var(--text-secondary); font-size: 1rem;">
-                <i class="fas fa-moon"></i>
-            </button>
-        </div>
-    </div>
-
-    <!-- Fresh Jobs Ticker - Last 6 Hours -->
-    <div class="fresh-jobs-ticker">
-        <div class="ticker-label">
-            <i class="fas fa-bolt"></i> LAST 6 HRS
-        </div>
-        <div class="ticker-wrapper">
-            <div class="ticker-content" id="freshJobsTicker">
-                <span class="ticker-item">Loading fresh job postings...</span>
-            </div>
-        </div>
-    </div>
 
     <!-- Slide-out Panel Toggle Button -->
     <button class="slideout-toggle" onclick="toggleSlideoutPanel()">
@@ -2676,12 +2995,12 @@
                     <div class="panel-link-group">
                         <div class="panel-link-group-title">LinkedIn - Recent Jobs</div>
                         <div class="panel-link-grid">
-                            <a href="https://www.linkedin.com/jobs/search/?keywords=%22Staff%20DevOps%20Engineer%22&location=United%20States&f_TPR=r10800&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="panel-link"><i class="fab fa-linkedin" style="color: #0077b5;"></i> Staff DevOps (3h)</a>
-                            <a href="https://www.linkedin.com/jobs/search/?keywords=%22DevOps%20Engineer%22&location=United%20States&f_TPR=r10800&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="panel-link"><i class="fab fa-linkedin" style="color: #0077b5;"></i> DevOps (3h)</a>
-                            <a href="https://www.linkedin.com/jobs/search/?keywords=%22Site%20Reliability%20Engineer%22&location=United%20States&f_TPR=r10800&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="panel-link"><i class="fab fa-linkedin" style="color: #0077b5;"></i> SRE (3h)</a>
-                            <a href="https://www.linkedin.com/jobs/search/?keywords=%22Infrastructure%20Engineer%22&location=United%20States&f_TPR=r10800&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="panel-link"><i class="fab fa-linkedin" style="color: #0077b5;"></i> Infra Eng (3h)</a>
-                            <a href="https://www.linkedin.com/jobs/search/?keywords=%22ML%20infrastructure%22%20OR%20%22AI%20infrastructure%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="panel-link"><i class="fab fa-linkedin" style="color: #0077b5;"></i> AI/ML Infra (6h)</a>
-                            <a href="https://www.linkedin.com/jobs/search/?keywords=%22Forward%20Deployed%20Engineer%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="panel-link"><i class="fab fa-linkedin" style="color: #0077b5;"></i> FDE (6h)</a>
+                            <a href="https://www.linkedin.com/jobs/search/?keywords=%22Staff%20DevOps%20Engineer%22&location=United%20States&f_TPR=r10800&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="panel-link"><i class="fab fa-linkedin"></i> Staff DevOps (3h)</a>
+                            <a href="https://www.linkedin.com/jobs/search/?keywords=%22DevOps%20Engineer%22&location=United%20States&f_TPR=r10800&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="panel-link"><i class="fab fa-linkedin"></i> DevOps (3h)</a>
+                            <a href="https://www.linkedin.com/jobs/search/?keywords=%22Site%20Reliability%20Engineer%22&location=United%20States&f_TPR=r10800&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="panel-link"><i class="fab fa-linkedin"></i> SRE (3h)</a>
+                            <a href="https://www.linkedin.com/jobs/search/?keywords=%22Infrastructure%20Engineer%22&location=United%20States&f_TPR=r10800&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="panel-link"><i class="fab fa-linkedin"></i> Infra Eng (3h)</a>
+                            <a href="https://www.linkedin.com/jobs/search/?keywords=%22ML%20infrastructure%22%20OR%20%22AI%20infrastructure%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="panel-link"><i class="fab fa-linkedin"></i> AI/ML Infra (6h)</a>
+                            <a href="https://www.linkedin.com/jobs/search/?keywords=%22Forward%20Deployed%20Engineer%22&location=United%20States&f_TPR=r21600&f_E=4&f_SB2=9&sortBy=DD" target="_blank" class="panel-link"><i class="fab fa-linkedin"></i> FDE (6h)</a>
                         </div>
                     </div>
                     <!-- Big Tech -->
@@ -2701,20 +3020,20 @@
                         <div class="panel-link-group-title">AI Companies</div>
                         <div class="panel-link-grid">
                             <a href="https://jobs.ashbyhq.com/openai" target="_blank" class="panel-link"><img src="../assets/images/logos/openai.png" alt="OpenAI"> OpenAI</a>
-                            <a href="https://job-boards.greenhouse.io/anthropic" target="_blank" class="panel-link"><i class="fas fa-robot" style="color: #d97706;"></i> Anthropic</a>
-                            <a href="https://job-boards.greenhouse.io/xai" target="_blank" class="panel-link"><i class="fas fa-bolt" style="color: #1d9bf0;"></i> xAI</a>
-                            <a href="https://jobs.ashbyhq.com/character/" target="_blank" class="panel-link"><i class="fas fa-comments" style="color: #8b5cf6;"></i> Character.AI</a>
+                            <a href="https://job-boards.greenhouse.io/anthropic" target="_blank" class="panel-link"><i class="fas fa-robot"></i> Anthropic</a>
+                            <a href="https://job-boards.greenhouse.io/xai" target="_blank" class="panel-link"><i class="fas fa-bolt"></i> xAI</a>
+                            <a href="https://jobs.ashbyhq.com/character/" target="_blank" class="panel-link"><i class="fas fa-comments"></i> Character.AI</a>
                         </div>
                     </div>
                     <!-- AI Infrastructure -->
                     <div class="panel-link-group">
                         <div class="panel-link-group-title">AI Infrastructure</div>
                         <div class="panel-link-grid">
-                            <a href="https://coreweave.com/careers" target="_blank" class="panel-link"><i class="fas fa-server" style="color: #22c55e;"></i> CoreWeave</a>
-                            <a href="https://www.crusoe.ai/about/careers" target="_blank" class="panel-link"><i class="fas fa-cloud" style="color: #3b82f6;"></i> Crusoe</a>
-                            <a href="https://lambda.ai/careers/open-roles" target="_blank" class="panel-link"><i class="fas fa-microchip" style="color: #8b5cf6;"></i> Lambda</a>
-                            <a href="https://job-boards.greenhouse.io/togetherai" target="_blank" class="panel-link"><i class="fas fa-cubes" style="color: #f59e0b;"></i> Together AI</a>
-                            <a href="https://www.baseten.co/resources/careers/" target="_blank" class="panel-link"><i class="fas fa-layer-group" style="color: #ef4444;"></i> Baseten</a>
+                            <a href="https://coreweave.com/careers" target="_blank" class="panel-link"><i class="fas fa-server"></i> CoreWeave</a>
+                            <a href="https://www.crusoe.ai/about/careers" target="_blank" class="panel-link"><i class="fas fa-cloud"></i> Crusoe</a>
+                            <a href="https://lambda.ai/careers/open-roles" target="_blank" class="panel-link"><i class="fas fa-microchip"></i> Lambda</a>
+                            <a href="https://job-boards.greenhouse.io/togetherai" target="_blank" class="panel-link"><i class="fas fa-cubes"></i> Together AI</a>
+                            <a href="https://www.baseten.co/resources/careers/" target="_blank" class="panel-link"><i class="fas fa-layer-group"></i> Baseten</a>
                             <a href="https://scale.com/careers" target="_blank" class="panel-link"><img src="../assets/images/logos/scaleai.png" alt="Scale AI"> Scale AI</a>
                         </div>
                     </div>
@@ -2725,7 +3044,7 @@
                             <a href="https://lifeattiktok.com/search" target="_blank" class="panel-link"><img src="../assets/images/logos/tiktok.png" alt="TikTok"> TikTok</a>
                             <a href="https://joinbytedance.com/search?recruitment_id_list=&job_category_id_list=&subject_id_list=&location_code_list=&keyword=&limit=12&offset=0" target="_blank" class="panel-link"><img src="../assets/images/logos/bytedance.png" alt="ByteDance"> ByteDance</a>
                             <a href="https://careers.salesforce.com/en/jobs/?search" target="_blank" class="panel-link"><img src="../assets/images/logos/salesforce.png" alt="Salesforce"> Salesforce</a>
-                            <a href="https://careers.adobe.com/us/en/search-results" target="_blank" class="panel-link"><i class="fab fa-adobe" style="color: #ff0000;"></i> Adobe</a>
+                            <a href="https://careers.adobe.com/us/en/search-results" target="_blank" class="panel-link"><i class="fab fa-adobe"></i> Adobe</a>
                         </div>
                     </div>
                     <!-- Finance -->
@@ -2751,134 +3070,134 @@
                     <div class="panel-link-group">
                         <div class="panel-link-group-title">Telecom</div>
                         <div class="panel-link-grid">
-                            <a href="https://mycareer.verizon.com/jobs/#content" target="_blank" class="panel-link"><i class="fas fa-signal" style="color: #cd040b;"></i> Verizon</a>
-                            <a href="https://careers.t-mobile.com/retail-jobs" target="_blank" class="panel-link"><i class="fas fa-mobile-alt" style="color: #e20074;"></i> T-Mobile</a>
-                            <a href="https://jobs.comcast.com/search-jobs/" target="_blank" class="panel-link"><i class="fas fa-tv" style="color: #0072bc;"></i> Comcast</a>
+                            <a href="https://mycareer.verizon.com/jobs/#content" target="_blank" class="panel-link"><i class="fas fa-signal"></i> Verizon</a>
+                            <a href="https://careers.t-mobile.com/retail-jobs" target="_blank" class="panel-link"><i class="fas fa-mobile-alt"></i> T-Mobile</a>
+                            <a href="https://jobs.comcast.com/search-jobs/" target="_blank" class="panel-link"><i class="fas fa-tv"></i> Comcast</a>
                         </div>
                     </div>
                     <!-- Cloud/SaaS -->
                     <div class="panel-link-group">
                         <div class="panel-link-group-title">Cloud/SaaS</div>
                         <div class="panel-link-grid">
-                            <a href="https://workday.wd5.myworkdayjobs.com/Workday" target="_blank" class="panel-link"><i class="fas fa-cloud" style="color: #0066cc;"></i> Workday</a>
-                            <a href="https://careers.servicenow.com/jobs/?search=&origin=global" target="_blank" class="panel-link"><i class="fas fa-cogs" style="color: #81b5a1;"></i> ServiceNow</a>
-                            <a href="https://careers.docusign.com/jobs" target="_blank" class="panel-link"><i class="fas fa-file-signature" style="color: #ffcc00;"></i> DocuSign</a>
-                            <a href="https://careers.zoom.us/" target="_blank" class="panel-link"><i class="fas fa-video" style="color: #2d8cff;"></i> Zoom</a>
-                            <a href="https://zendesk.wd1.myworkdayjobs.com/en-US/zendesk" target="_blank" class="panel-link"><i class="fas fa-headset" style="color: #03363d;"></i> Zendesk</a>
-                            <a href="https://www.atlassian.com/company/careers/all-jobs" target="_blank" class="panel-link"><i class="fab fa-atlassian" style="color: #0052cc;"></i> Atlassian</a>
-                            <a href="https://www.databricks.com/company/careers/open-positions" target="_blank" class="panel-link"><i class="fas fa-database" style="color: #ff3621;"></i> Databricks</a>
-                            <a href="https://careers.veeva.com/job-search-results/?search=&remote=false&ts=&regions=&office_locations=" target="_blank" class="panel-link"><i class="fas fa-flask" style="color: #f58022;"></i> Veeva</a>
-                            <a href="https://www.dynatrace.com/careers/jobs/" target="_blank" class="panel-link"><i class="fas fa-chart-line" style="color: #1496ff;"></i> Dynatrace</a>
+                            <a href="https://workday.wd5.myworkdayjobs.com/Workday" target="_blank" class="panel-link"><i class="fas fa-cloud"></i> Workday</a>
+                            <a href="https://careers.servicenow.com/jobs/?search=&origin=global" target="_blank" class="panel-link"><i class="fas fa-cogs"></i> ServiceNow</a>
+                            <a href="https://careers.docusign.com/jobs" target="_blank" class="panel-link"><i class="fas fa-file-signature"></i> DocuSign</a>
+                            <a href="https://careers.zoom.us/" target="_blank" class="panel-link"><i class="fas fa-video"></i> Zoom</a>
+                            <a href="https://zendesk.wd1.myworkdayjobs.com/en-US/zendesk" target="_blank" class="panel-link"><i class="fas fa-headset"></i> Zendesk</a>
+                            <a href="https://www.atlassian.com/company/careers/all-jobs" target="_blank" class="panel-link"><i class="fab fa-atlassian"></i> Atlassian</a>
+                            <a href="https://www.databricks.com/company/careers/open-positions" target="_blank" class="panel-link"><i class="fas fa-database"></i> Databricks</a>
+                            <a href="https://careers.veeva.com/job-search-results/?search=&remote=false&ts=&regions=&office_locations=" target="_blank" class="panel-link"><i class="fas fa-flask"></i> Veeva</a>
+                            <a href="https://www.dynatrace.com/careers/jobs/" target="_blank" class="panel-link"><i class="fas fa-chart-line"></i> Dynatrace</a>
                         </div>
                     </div>
                     <!-- Security -->
                     <div class="panel-link-group">
                         <div class="panel-link-group-title">Security</div>
                         <div class="panel-link-grid">
-                            <a href="https://jobs.paloaltonetworks.com/en" target="_blank" class="panel-link"><i class="fas fa-shield-alt" style="color: #fa582d;"></i> Palo Alto Networks</a>
-                            <a href="https://www.sentinelone.com/jobs/" target="_blank" class="panel-link"><i class="fas fa-user-shield" style="color: #6b2cf5;"></i> SentinelOne</a>
-                            <a href="https://careers.cisco.com/global/en/splunk/search-page" target="_blank" class="panel-link"><i class="fas fa-search" style="color: #65a637;"></i> Splunk</a>
-                            <a href="https://www.checkout.com/jobs" target="_blank" class="panel-link"><i class="fas fa-credit-card" style="color: #0d9f63;"></i> Checkout</a>
+                            <a href="https://jobs.paloaltonetworks.com/en" target="_blank" class="panel-link"><i class="fas fa-shield-alt"></i> Palo Alto Networks</a>
+                            <a href="https://www.sentinelone.com/jobs/" target="_blank" class="panel-link"><i class="fas fa-user-shield"></i> SentinelOne</a>
+                            <a href="https://careers.cisco.com/global/en/splunk/search-page" target="_blank" class="panel-link"><i class="fas fa-search"></i> Splunk</a>
+                            <a href="https://www.checkout.com/jobs" target="_blank" class="panel-link"><i class="fas fa-credit-card"></i> Checkout</a>
                         </div>
                     </div>
                     <!-- Semiconductors/Hardware -->
                     <div class="panel-link-group">
                         <div class="panel-link-group-title">Semiconductors/Hardware</div>
                         <div class="panel-link-grid">
-                            <a href="https://careers.qualcomm.com/careers" target="_blank" class="panel-link"><i class="fas fa-microchip" style="color: #3253dc;"></i> Qualcomm</a>
-                            <a href="https://marvell.wd1.myworkdayjobs.com/MarvellCareers" target="_blank" class="panel-link"><i class="fas fa-microchip" style="color: #b51f2e;"></i> Marvell</a>
-                            <a href="https://careers.arm.com/search-jobs" target="_blank" class="panel-link"><i class="fas fa-microchip" style="color: #0091bd;"></i> ARM</a>
-                            <a href="https://broadcom.wd1.myworkdayjobs.com/External_Career" target="_blank" class="panel-link"><i class="fas fa-microchip" style="color: #cc092f;"></i> Broadcom/VMware</a>
-                            <a href="https://careers.hpe.com/us/en/search-results" target="_blank" class="panel-link"><i class="fas fa-server" style="color: #01a982;"></i> HPE</a>
-                            <a href="https://jobs.dell.com/en/search-jobs" target="_blank" class="panel-link"><i class="fas fa-desktop" style="color: #007db8;"></i> Dell</a>
-                            <a href="https://careers.netapp.com/" target="_blank" class="panel-link"><i class="fas fa-hdd" style="color: #0067c5;"></i> NetApp</a>
-                            <a href="https://careers.nutanix.com/en/jobs/" target="_blank" class="panel-link"><i class="fas fa-cubes" style="color: #024da1;"></i> Nutanix</a>
+                            <a href="https://careers.qualcomm.com/careers" target="_blank" class="panel-link"><i class="fas fa-microchip"></i> Qualcomm</a>
+                            <a href="https://marvell.wd1.myworkdayjobs.com/MarvellCareers" target="_blank" class="panel-link"><i class="fas fa-microchip"></i> Marvell</a>
+                            <a href="https://careers.arm.com/search-jobs" target="_blank" class="panel-link"><i class="fas fa-microchip"></i> ARM</a>
+                            <a href="https://broadcom.wd1.myworkdayjobs.com/External_Career" target="_blank" class="panel-link"><i class="fas fa-microchip"></i> Broadcom/VMware</a>
+                            <a href="https://careers.hpe.com/us/en/search-results" target="_blank" class="panel-link"><i class="fas fa-server"></i> HPE</a>
+                            <a href="https://jobs.dell.com/en/search-jobs" target="_blank" class="panel-link"><i class="fas fa-desktop"></i> Dell</a>
+                            <a href="https://careers.netapp.com/" target="_blank" class="panel-link"><i class="fas fa-hdd"></i> NetApp</a>
+                            <a href="https://careers.nutanix.com/en/jobs/" target="_blank" class="panel-link"><i class="fas fa-cubes"></i> Nutanix</a>
                         </div>
                     </div>
                     <!-- Entertainment/Media -->
                     <div class="panel-link-group">
                         <div class="panel-link-group-title">Entertainment/Media</div>
                         <div class="panel-link-grid">
-                            <a href="https://jobs.disneycareers.com/search-jobs?glat=37.42827&glon=-121.90662" target="_blank" class="panel-link"><i class="fas fa-magic" style="color: #0057b8;"></i> Disney</a>
-                            <a href="https://careers.paramount.com/" target="_blank" class="panel-link"><i class="fas fa-film" style="color: #0068c8;"></i> Paramount</a>
-                            <a href="https://www.nbcunicareers.com/" target="_blank" class="panel-link"><i class="fas fa-broadcast-tower" style="color: #5a1d7a;"></i> NBCUniversal</a>
-                            <a href="https://jobs.ea.com/en_US/careers" target="_blank" class="panel-link"><i class="fas fa-gamepad" style="color: #ff4747;"></i> EA</a>
-                            <a href="https://careers.snap.com/jobs" target="_blank" class="panel-link"><i class="fab fa-snapchat" style="color: #fffc00;"></i> Snap</a>
+                            <a href="https://jobs.disneycareers.com/search-jobs?glat=37.42827&glon=-121.90662" target="_blank" class="panel-link"><i class="fas fa-magic"></i> Disney</a>
+                            <a href="https://careers.paramount.com/" target="_blank" class="panel-link"><i class="fas fa-film"></i> Paramount</a>
+                            <a href="https://www.nbcunicareers.com/" target="_blank" class="panel-link"><i class="fas fa-broadcast-tower"></i> NBCUniversal</a>
+                            <a href="https://jobs.ea.com/en_US/careers" target="_blank" class="panel-link"><i class="fas fa-gamepad"></i> EA</a>
+                            <a href="https://careers.snap.com/jobs" target="_blank" class="panel-link"><i class="fab fa-snapchat"></i> Snap</a>
                         </div>
                     </div>
                     <!-- E-commerce/Real Estate -->
                     <div class="panel-link-group">
                         <div class="panel-link-group-title">E-commerce/Real Estate</div>
                         <div class="panel-link-grid">
-                            <a href="https://zillow.wd5.myworkdayjobs.com/Zillow_Group_External" target="_blank" class="panel-link"><i class="fas fa-home" style="color: #006aff;"></i> Zillow</a>
-                            <a href="https://careers.redfin.com/us/en" target="_blank" class="panel-link"><i class="fas fa-home" style="color: #a02021;"></i> Redfin</a>
-                            <a href="https://careers.etsy.com/jobs/search?query=" target="_blank" class="panel-link"><i class="fab fa-etsy" style="color: #f45800;"></i> Etsy</a>
-                            <a href="https://careers.expediagroup.com/jobs/" target="_blank" class="panel-link"><i class="fas fa-plane" style="color: #ffc72c;"></i> Expedia</a>
-                            <a href="https://www.lifeatcanva.com/en/jobs/#results" target="_blank" class="panel-link"><i class="fas fa-paint-brush" style="color: #00c4cc;"></i> Canva</a>
+                            <a href="https://zillow.wd5.myworkdayjobs.com/Zillow_Group_External" target="_blank" class="panel-link"><i class="fas fa-home"></i> Zillow</a>
+                            <a href="https://careers.redfin.com/us/en" target="_blank" class="panel-link"><i class="fas fa-home"></i> Redfin</a>
+                            <a href="https://careers.etsy.com/jobs/search?query=" target="_blank" class="panel-link"><i class="fab fa-etsy"></i> Etsy</a>
+                            <a href="https://careers.expediagroup.com/jobs/" target="_blank" class="panel-link"><i class="fas fa-plane"></i> Expedia</a>
+                            <a href="https://www.lifeatcanva.com/en/jobs/#results" target="_blank" class="panel-link"><i class="fas fa-paint-brush"></i> Canva</a>
                         </div>
                     </div>
                     <!-- FinTech/HR Tech -->
                     <div class="panel-link-group">
                         <div class="panel-link-group-title">FinTech/HR Tech</div>
                         <div class="panel-link-grid">
-                            <a href="https://www.revolut.com/careers/" target="_blank" class="panel-link"><i class="fas fa-wallet" style="color: #0075eb;"></i> Revolut</a>
-                            <a href="https://www.rippling.com/careers/open-roles" target="_blank" class="panel-link"><i class="fas fa-users-cog" style="color: #f5a623;"></i> Rippling</a>
-                            <a href="https://jobs.deel.com/job-boards/klarna" target="_blank" class="panel-link"><i class="fas fa-shopping-bag" style="color: #ffb3c7;"></i> Klarna</a>
-                            <a href="https://jobs.sap.com/search/" target="_blank" class="panel-link"><i class="fas fa-cubes" style="color: #0070f2;"></i> SAP</a>
+                            <a href="https://www.revolut.com/careers/" target="_blank" class="panel-link"><i class="fas fa-wallet"></i> Revolut</a>
+                            <a href="https://www.rippling.com/careers/open-roles" target="_blank" class="panel-link"><i class="fas fa-users-cog"></i> Rippling</a>
+                            <a href="https://jobs.deel.com/job-boards/klarna" target="_blank" class="panel-link"><i class="fas fa-shopping-bag"></i> Klarna</a>
+                            <a href="https://jobs.sap.com/search/" target="_blank" class="panel-link"><i class="fas fa-cubes"></i> SAP</a>
                         </div>
                     </div>
                     <!-- Autonomous/Defense -->
                     <div class="panel-link-group">
                         <div class="panel-link-group-title">Autonomous/Defense</div>
                         <div class="panel-link-grid">
-                            <a href="https://aurora.tech/careers" target="_blank" class="panel-link"><i class="fas fa-car" style="color: #00c3ff;"></i> Aurora</a>
-                            <a href="https://jobs.lever.co/shieldai" target="_blank" class="panel-link"><i class="fas fa-fighter-jet" style="color: #1a365d;"></i> Shield AI</a>
-                            <a href="https://www.palantir.com/careers" target="_blank" class="panel-link"><i class="fas fa-satellite" style="color: #101820;"></i> Palantir</a>
-                            <a href="https://careers.intuitive.com/en/jobs/" target="_blank" class="panel-link"><i class="fas fa-robot" style="color: #0071c5;"></i> Intuitive Surgical</a>
+                            <a href="https://aurora.tech/careers" target="_blank" class="panel-link"><i class="fas fa-car"></i> Aurora</a>
+                            <a href="https://jobs.lever.co/shieldai" target="_blank" class="panel-link"><i class="fas fa-fighter-jet"></i> Shield AI</a>
+                            <a href="https://www.palantir.com/careers" target="_blank" class="panel-link"><i class="fas fa-satellite"></i> Palantir</a>
+                            <a href="https://careers.intuitive.com/en/jobs/" target="_blank" class="panel-link"><i class="fas fa-robot"></i> Intuitive Surgical</a>
                         </div>
                     </div>
                     <!-- AI/ML Startups -->
                     <div class="panel-link-group">
                         <div class="panel-link-group-title">AI/ML Startups</div>
                         <div class="panel-link-grid">
-                            <a href="https://apply.workable.com/huggingface/#jobs" target="_blank" class="panel-link"><i class="fas fa-smile" style="color: #ffd21e;"></i> Hugging Face</a>
-                            <a href="https://www.midjourney.com/careers" target="_blank" class="panel-link"><i class="fas fa-image" style="color: #191a1a;"></i> Midjourney</a>
-                            <a href="https://sambanova.ai/company/careers" target="_blank" class="panel-link"><i class="fas fa-brain" style="color: #ff6b00;"></i> SambaNova</a>
-                            <a href="https://contextual.ai/careers" target="_blank" class="panel-link"><i class="fas fa-comments" style="color: #4f46e5;"></i> Contextual AI</a>
-                            <a href="https://you.com/careers#open-roles" target="_blank" class="panel-link"><i class="fas fa-search" style="color: #0066ff;"></i> You.com</a>
+                            <a href="https://apply.workable.com/huggingface/#jobs" target="_blank" class="panel-link"><i class="fas fa-smile"></i> Hugging Face</a>
+                            <a href="https://www.midjourney.com/careers" target="_blank" class="panel-link"><i class="fas fa-image"></i> Midjourney</a>
+                            <a href="https://sambanova.ai/company/careers" target="_blank" class="panel-link"><i class="fas fa-brain"></i> SambaNova</a>
+                            <a href="https://contextual.ai/careers" target="_blank" class="panel-link"><i class="fas fa-comments"></i> Contextual AI</a>
+                            <a href="https://you.com/careers#open-roles" target="_blank" class="panel-link"><i class="fas fa-search"></i> You.com</a>
                         </div>
                     </div>
                     <!-- Data/DevTools -->
                     <div class="panel-link-group">
                         <div class="panel-link-group-title">Data/DevTools</div>
                         <div class="panel-link-grid">
-                            <a href="https://www.getdbt.com/about-us/careers#roles" target="_blank" class="panel-link"><i class="fas fa-code-branch" style="color: #ff694a;"></i> dbt Labs</a>
-                            <a href="https://www.starburst.io/careers/open-roles/" target="_blank" class="panel-link"><i class="fas fa-star" style="color: #4e2a84;"></i> Starburst</a>
-                            <a href="https://upstash.com/careers" target="_blank" class="panel-link"><i class="fas fa-database" style="color: #00e9a3;"></i> Upstash</a>
-                            <a href="https://www.ibm.com/careers/search?q=hashicorp" target="_blank" class="panel-link"><i class="fas fa-cubes" style="color: #000000;"></i> HashiCorp</a>
+                            <a href="https://www.getdbt.com/about-us/careers#roles" target="_blank" class="panel-link"><i class="fas fa-code-branch"></i> dbt Labs</a>
+                            <a href="https://www.starburst.io/careers/open-roles/" target="_blank" class="panel-link"><i class="fas fa-star"></i> Starburst</a>
+                            <a href="https://upstash.com/careers" target="_blank" class="panel-link"><i class="fas fa-database"></i> Upstash</a>
+                            <a href="https://www.ibm.com/careers/search?q=hashicorp" target="_blank" class="panel-link"><i class="fas fa-cubes"></i> HashiCorp</a>
                         </div>
                     </div>
                     <!-- Travel/Airlines -->
                     <div class="panel-link-group">
                         <div class="panel-link-group-title">Travel/Airlines</div>
                         <div class="panel-link-grid">
-                            <a href="https://jobs.aa.com/go/A-Day-in-the-Life/8179400/?markerViewed=&carouselIndex=&facetFilters=%7B%7D&pageNumber=0" target="_blank" class="panel-link"><i class="fas fa-plane" style="color: #0078d2;"></i> American Airlines</a>
-                            <a href="https://delta.avature.net/en_US/careers#/" target="_blank" class="panel-link"><i class="fas fa-plane" style="color: #003366;"></i> Delta</a>
+                            <a href="https://jobs.aa.com/go/A-Day-in-the-Life/8179400/?markerViewed=&carouselIndex=&facetFilters=%7B%7D&pageNumber=0" target="_blank" class="panel-link"><i class="fas fa-plane"></i> American Airlines</a>
+                            <a href="https://delta.avature.net/en_US/careers#/" target="_blank" class="panel-link"><i class="fas fa-plane"></i> Delta</a>
                         </div>
                     </div>
                     <!-- Healthcare/Biotech -->
                     <div class="panel-link-group">
                         <div class="panel-link-group-title">Healthcare/Biotech</div>
                         <div class="panel-link-grid">
-                            <a href="https://tempus.wd5.myworkdayjobs.com/Tempus_Careers" target="_blank" class="panel-link"><i class="fas fa-dna" style="color: #4db6ac;"></i> Tempus</a>
-                            <a href="https://ro.co/careers/#open-roles" target="_blank" class="panel-link"><i class="fas fa-heartbeat" style="color: #ff5722;"></i> Ro</a>
+                            <a href="https://tempus.wd5.myworkdayjobs.com/Tempus_Careers" target="_blank" class="panel-link"><i class="fas fa-dna"></i> Tempus</a>
+                            <a href="https://ro.co/careers/#open-roles" target="_blank" class="panel-link"><i class="fas fa-heartbeat"></i> Ro</a>
                         </div>
                     </div>
                     <!-- CDN/Infrastructure -->
                     <div class="panel-link-group">
                         <div class="panel-link-group-title">CDN/Infrastructure</div>
                         <div class="panel-link-grid">
-                            <a href="https://jobs.akamai.com/en/sites/CX_1/jobs" target="_blank" class="panel-link"><i class="fas fa-globe" style="color: #0096d6;"></i> Akamai</a>
+                            <a href="https://jobs.akamai.com/en/sites/CX_1/jobs" target="_blank" class="panel-link"><i class="fas fa-globe"></i> Akamai</a>
                         </div>
                     </div>
                 </div>
@@ -2899,7 +3218,7 @@
                 <div class="panel-settings">
                     <div class="settings-group">
                         <div class="settings-group-title">
-                            <i class="fas fa-robot" style="color: #8b5cf6;"></i> AI Assistant Settings
+                            <i class="fas fa-robot"></i> AI Assistant
                         </div>
                         <p class="settings-description">Enter your Anthropic API key to enable AI-powered job analysis, skills matching, cover letter and resume generation.</p>
                         <div class="settings-field">
@@ -2931,7 +3250,7 @@
                     </div>
                     <div class="settings-group">
                         <div class="settings-group-title">
-                            <i class="fas fa-database" style="color: #3b82f6;"></i> Data Management
+                            <i class="fas fa-database"></i> Data Management
                         </div>
                         <div class="settings-actions">
                             <button class="settings-btn export" onclick="exportJobData()">
@@ -2949,10 +3268,6 @@
     </div>
 
     <main class="main-content">
-    <!-- Page Header -->
-    <header class="page-header">
-        <h1>Job <span>Listings</span></h1>
-    </header>
 
     <!-- Quick Links and Documents moved to slide-out panel -->
     <!-- Jobs Section -->
@@ -2960,7 +3275,7 @@
         <div class="jobs-container">
             <!-- Header with Stats -->
             <div class="jobs-header">
-                <h2>Live Job <span>Listings</span></h2>
+                <h2>Job listings</h2>
                 <div class="jobs-stats">
                     <div class="jobs-stat">
                         <i class="fas fa-briefcase"></i>
@@ -2973,6 +3288,28 @@
                     <div class="jobs-stat">
                         <i class="fas fa-clock"></i>
                         <span>Updated: <strong id="last-updated">--</strong></span>
+                    </div>
+                </div>
+                <div class="jobs-topbar">
+                    <div class="jobs-topbar-actions">
+                        <a href="../#resume" class="topbar-link">
+                            <i class="fas fa-file-alt"></i> Resume
+                        </a>
+                        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fresh Jobs Ticker - Last 6 Hours -->
+            <div class="fresh-jobs-ticker">
+                <div class="ticker-label">
+                    <i class="fas fa-bolt"></i> Last 6 hrs
+                </div>
+                <div class="ticker-wrapper">
+                    <div class="ticker-content" id="freshJobsTicker">
+                        <span class="ticker-item">Loading fresh job postings...</span>
                     </div>
                 </div>
             </div>
@@ -3068,7 +3405,7 @@
             <!-- Pagination -->
             <div class="pagination" id="pagination" style="display: none;">
                 <div class="pagination-info">
-                    Showing <span id="showing-start">1</span>-<span id="showing-end">25</span> of <span id="showing-total">0</span> jobs
+                    Showing <span id="showing-start">1</span>–<span id="showing-end">25</span><span class="jb-sr-only"> of <span id="showing-total">0</span> jobs</span>
                 </div>
                 <div class="pagination-btns" id="pagination-btns">
                     <!-- Populated by JavaScript -->
@@ -3094,16 +3431,16 @@
             <!-- GitHub Token Settings -->
             <div class="github-settings">
                 <div class="github-settings-header" onclick="toggleGithubSettings()">
-                    <i class="fas fa-key" style="color: #d97706;"></i>
+                    <i class="fas fa-key" style="color: var(--jb-yellow);"></i>
                     <h4>GitHub Auto-Sync Settings</h4>
                     <span id="token-status" class="token-status not-configured">Not Configured</span>
-                    <i id="settings-chevron" class="fas fa-chevron-down" style="color: #92400e; margin-left: 0.5rem;"></i>
+                    <i id="settings-chevron" class="fas fa-chevron-down" style="color: var(--jb-yellow); margin-left: 0.5rem;"></i>
                 </div>
                 <div id="github-settings-content" class="github-settings-content">
                     <p>
                         <i class="fas fa-info-circle"></i>
                         Enter your GitHub Personal Access Token (with repo scope) to automatically update the manifest when you set active documents.
-                        <a href="https://github.com/settings/tokens/new?scopes=repo&description=Resume%20Manager" target="_blank" style="color: #d97706;">Create token</a>
+                        <a href="https://github.com/settings/tokens/new?scopes=repo&description=Resume%20Manager" target="_blank" style="color: var(--jb-yellow);">Create token</a>
                     </p>
                     <input type="password" id="github-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
                     <button class="btn-save-token" onclick="saveGithubToken()">
@@ -3115,9 +3452,9 @@
             <!-- Upload Section -->
             <div class="upload-section">
                 <div class="upload-section-header" onclick="toggleUploadSection()">
-                    <i class="fas fa-cloud-upload-alt" style="color: #16a34a;"></i>
+                    <i class="fas fa-cloud-upload-alt" style="color: var(--jb-green);"></i>
                     <h4>Upload New Document</h4>
-                    <i id="upload-chevron" class="fas fa-chevron-down" style="color: #166534; margin-left: 0.5rem;"></i>
+                    <i id="upload-chevron" class="fas fa-chevron-down" style="color: var(--jb-green); margin-left: 0.5rem;"></i>
                 </div>
                 <div id="upload-section-content" class="upload-section-content">
                     <div class="upload-form">
@@ -3203,11 +3540,11 @@
         // ============ THEME TOGGLE ============
         function toggleTheme() {
             const html = document.documentElement;
-            const currentTheme = html.getAttribute('data-theme') || 'dark';
+            const currentTheme = html.getAttribute('data-theme') || 'light';
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
             html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('jobsTheme', newTheme);
+            try { localStorage.setItem('portfolio-theme', newTheme); } catch (e) {}
 
             // Update toggle button icon
             const toggle = document.querySelector('.theme-toggle');
@@ -3220,7 +3557,8 @@
 
         // Initialize theme from localStorage
         (function() {
-            const savedTheme = localStorage.getItem('jobsTheme') || 'dark';
+            let savedTheme = 'light';
+            try { savedTheme = localStorage.getItem('portfolio-theme') || 'light'; } catch (e) {}
             document.documentElement.setAttribute('data-theme', savedTheme);
 
             // Set correct icon on load
@@ -3278,10 +3616,10 @@
                     if (data.resumes && data.resumes.length > 0) {
                         html += '<div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 0.25rem;">Resumes</div>';
                         data.resumes.forEach(doc => {
-                            const isActive = doc.active ? '<span style="color: #22c55e; font-size: 0.65rem; margin-left: auto;"><i class="fas fa-check-circle"></i></span>' : '';
+                            const isActive = doc.active ? '<span style="color: var(--jb-green); font-size: 0.65rem; margin-left: auto;"><i class="fas fa-check-circle"></i></span>' : '';
                             html += `
-                                <a href="../assets/resume/${doc.file}" target="_blank" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 6px; text-decoration: none; color: var(--text-secondary); font-size: 0.75rem; border: none;">
-                                    <i class="fas fa-file-alt" style="color: #3b82f6;"></i>
+                                <a href="../assets/resume/${doc.file}" target="_blank" style="display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; background: var(--gz-canvas); border-radius: 999px; text-decoration: none; color: var(--gz-ink); font-size: 13.5px; font-weight: 500; border: 1px solid var(--gz-line);">
+                                    <i class="fas fa-file-alt" style="color: var(--gz-text-3);"></i>
                                     <span style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${doc.name}</span>
                                     ${isActive}
                                 </a>
@@ -3293,10 +3631,10 @@
                     if (data.coverLetters && data.coverLetters.length > 0) {
                         html += '<div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-top: 0.75rem; margin-bottom: 0.25rem;">Cover Letters</div>';
                         data.coverLetters.forEach(doc => {
-                            const isActive = doc.active ? '<span style="color: #22c55e; font-size: 0.65rem; margin-left: auto;"><i class="fas fa-check-circle"></i></span>' : '';
+                            const isActive = doc.active ? '<span style="color: var(--jb-green); font-size: 0.65rem; margin-left: auto;"><i class="fas fa-check-circle"></i></span>' : '';
                             html += `
-                                <a href="../assets/resume/${doc.file}" target="_blank" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 6px; text-decoration: none; color: var(--text-secondary); font-size: 0.75rem; border: none;">
-                                    <i class="fas fa-envelope" style="color: #8b5cf6;"></i>
+                                <a href="../assets/resume/${doc.file}" target="_blank" style="display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; background: var(--gz-canvas); border-radius: 999px; text-decoration: none; color: var(--gz-ink); font-size: 13.5px; font-weight: 500; border: 1px solid var(--gz-line);">
+                                    <i class="fas fa-envelope" style="color: var(--gz-text-3);"></i>
                                     <span style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${doc.name}</span>
                                     ${isActive}
                                 </a>
@@ -4621,7 +4959,7 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             // Skills Match indicator (compact) - show first
             if (parsed.skillsMatch.total > 0) {
                 const pct = parsed.skillsMatch.matchPercent;
-                const color = pct >= 80 ? '#16a34a' : pct >= 60 ? '#f59e0b' : pct >= 40 ? '#f97316' : '#ef4444';
+                const color = pct >= 80 ? 'var(--jb-green)' : pct >= 60 ? 'var(--jb-yellow)' : pct >= 40 ? 'var(--jb-yellow)' : 'var(--jb-red)';
                 parts.push(`<span class="desc-match" style="color: ${color}; font-weight: 600; font-size: 0.7rem;">Match: ${pct}%</span>`);
             }
 
@@ -4629,7 +4967,7 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             if (tools.length > 0) {
                 const toolsDisplay = tools.map(t => {
                     const isMatched = parsed.skillsMatch.matched.includes(t);
-                    return `<span style="color: ${isMatched ? '#16a34a' : '#ef4444'}; font-size: 0.65rem;">${t.toUpperCase()}</span>`;
+                    return `<span style="color: ${isMatched ? 'var(--jb-green)' : 'var(--jb-red)'}; font-size: 0.65rem;">${t.toUpperCase()}</span>`;
                 }).join(' · ');
                 parts.push(`<span class="desc-tools">${toolsDisplay}</span>`);
             }
@@ -4819,8 +5157,12 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                     <div class="jd-pay-box">`;
                 if (parsed.payInfo.ranges.length > 0) {
                     html += `<div class="pay-range">${escapeHtml(parsed.payInfo.ranges[0])}</div>`;
-                    if (parsed.payInfo.ranges.length > 1) {
-                        html += `<div class="pay-detail">Additional ranges: ${escapeHtml(parsed.payInfo.ranges.slice(1).join(', '))}</div>`;
+                    // Show only ranges whose amounts differ from the headline range (the parser often repeats it)
+                    const amounts = r => (String(r).match(/\$[\d,.]+[KkMm]?/g) || []).join('|');
+                    const seen = new Set([amounts(parsed.payInfo.ranges[0])]);
+                    const extra = parsed.payInfo.ranges.slice(1).filter(r => { const k = amounts(r); if (seen.has(k)) return false; seen.add(k); return true; });
+                    if (extra.length > 0) {
+                        html += `<div class="pay-detail">Additional ranges: ${escapeHtml(extra.join(', '))}</div>`;
                     }
                 }
                 if (parsed.payInfo.basePayGrade) {
@@ -4830,18 +5172,19 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                     html += `<div class="pay-detail">Equity Grade: ${escapeHtml(parsed.payInfo.equityGrade)}</div>`;
                 }
                 if (parsed.payInfo.bonus) {
-                    html += `<div class="pay-detail" style="color: #f59e0b;">+ ${escapeHtml(parsed.payInfo.bonus)}</div>`;
+                    html += `<div class="pay-detail" style="color: var(--jb-yellow);">+ ${escapeHtml(parsed.payInfo.bonus)}</div>`;
                 }
                 html += `</div></div>`;
             }
 
             // Work Model (if detected)
             if (parsed.workModel && parsed.workModel.type) {
-                const modelColor = parsed.workModel.type === 'Remote' ? '#16a34a' : parsed.workModel.type === 'Hybrid' ? '#f59e0b' : '#0957b0';
+                const modelColor = parsed.workModel.type === 'Remote' ? 'var(--jb-green)' : parsed.workModel.type === 'Hybrid' ? 'var(--gz-blue)' : 'var(--gz-text)';
+                const modelTint = parsed.workModel.type === 'Remote' ? 'var(--jb-green-t)' : parsed.workModel.type === 'Hybrid' ? 'var(--gz-blue-soft)' : 'var(--gz-surface-2)';
                 html += `<div class="jd-section">
                     <h3><i class="fas fa-building"></i> Work Model</h3>
                     <div class="jd-tags">
-                        <span class="jd-tag" style="background: ${modelColor}22; color: ${modelColor}; border-color: ${modelColor}44;">
+                        <span class="jd-tag" style="background: ${modelTint}; color: ${modelColor}; border-color: transparent;">
                             ${parsed.workModel.type}${parsed.workModel.details ? ': ' + parsed.workModel.details : ''}
                         </span>
                     </div>
@@ -4871,7 +5214,7 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
             // Skills Match Section
             if (parsed.skillsMatch.total > 0) {
                 const pct = parsed.skillsMatch.matchPercent;
-                const pctColor = pct >= 80 ? '#16a34a' : pct >= 60 ? '#f59e0b' : pct >= 40 ? '#f97316' : '#ef4444';
+                const pctColor = pct >= 80 ? 'var(--jb-green)' : pct >= 60 ? 'var(--jb-yellow)' : pct >= 40 ? 'var(--jb-yellow)' : 'var(--jb-red)';
                 html += `<div class="jd-section">
                     <h3><i class="fas fa-check-double"></i> Skills Match
                         <span style="font-size: 0.9rem; color: ${pctColor}; font-weight: 700; margin-left: 0.5rem;">
@@ -4882,9 +5225,9 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 // Matched skills (green)
                 if (parsed.skillsMatch.matched.length > 0) {
                     html += `<div style="margin-bottom: 0.75rem;">
-                        <span style="color: #16a34a; font-weight: 600; font-size: 0.8rem;"><i class="fas fa-check"></i> You Have:</span>
+                        <span style="color: var(--jb-green); font-weight: 600; font-size: 0.8rem;"><i class="fas fa-check"></i> You Have:</span>
                         <div class="jd-tags" style="margin-top: 0.35rem;">
-                            ${parsed.skillsMatch.matched.map(t => `<span class="jd-tag" style="background: rgba(22, 163, 74, 0.15); color: #16a34a; border-color: rgba(22, 163, 74, 0.3);">${t.toUpperCase()}</span>`).join('')}
+                            ${parsed.skillsMatch.matched.map(t => `<span class="jd-tag" style="background: var(--jb-green-t); color: var(--jb-green); border-color: var(--jb-green-t);">${t.toUpperCase()}</span>`).join('')}
                         </div>
                     </div>`;
                 }
@@ -4892,9 +5235,9 @@ ${USER_PROFILE.certifications.map(c => `• ${c}`).join('\n')}
                 // Missing skills (red)
                 if (parsed.skillsMatch.missing.length > 0) {
                     html += `<div>
-                        <span style="color: #ef4444; font-weight: 600; font-size: 0.8rem;"><i class="fas fa-times"></i> To Learn:</span>
+                        <span style="color: var(--jb-red); font-weight: 600; font-size: 0.8rem;"><i class="fas fa-times"></i> To Learn:</span>
                         <div class="jd-tags" style="margin-top: 0.35rem;">
-                            ${parsed.skillsMatch.missing.map(t => `<span class="jd-tag" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239, 68, 68, 0.3);">${t.toUpperCase()}</span>`).join('')}
+                            ${parsed.skillsMatch.missing.map(t => `<span class="jd-tag" style="background: var(--jb-red-t); color: var(--jb-red); border-color: var(--jb-red-t);">${t.toUpperCase()}</span>`).join('')}
                         </div>
                     </div>`;
                 }
@@ -5532,7 +5875,7 @@ ${jobData.description}
                             <button onclick="downloadText('cover-letter-${job.company.toLowerCase().replace(/\s+/g, '-')}.txt', '${escapeHtml(result)}')" class="claude-btn">
                                 <i class="fas fa-file-alt"></i> Download TXT
                             </button>
-                            <button onclick="downloadCoverLetter(jobsMap['${job.id}'])" class="claude-btn" style="background: linear-gradient(135deg, #0a66c2, #7c3aed);">
+                            <button onclick="downloadCoverLetter(jobsMap['${job.id}'])" class="claude-btn">
                                 <i class="fas fa-file-word"></i> Download DOCX
                             </button>
                         </div>
@@ -5571,7 +5914,7 @@ ${jobData.description}
                             <button onclick="downloadText('resume-${job.company.toLowerCase().replace(/\s+/g, '-')}.txt', document.querySelector('.resume-text').textContent)" class="claude-btn">
                                 <i class="fas fa-file-alt"></i> Download TXT
                             </button>
-                            <button onclick="downloadResume(jobsMap['${job.id}'])" class="claude-btn" style="background: linear-gradient(135deg, #0a66c2, #7c3aed);">
+                            <button onclick="downloadResume(jobsMap['${job.id}'])" class="claude-btn">
                                 <i class="fas fa-file-word"></i> Download DOCX
                             </button>
                         </div>
@@ -6705,10 +7048,9 @@ ${jobData.description}
                                 <i class="fas fa-map-marker-alt"></i>
                                 ${escapeHtml(job.location.substring(0, 30))}
                             </span>
-                            ${isRemote ? '<span class="remote-badge">Remote</span>' : ''}
                         </td>
                         <td class="col-distance">
-                            <span class="distance-badge priority-${getDistancePriority(job.location)}">${getDistanceLabel(getDistancePriority(job.location))}</span>
+                            ${[6, 7].includes(getDistancePriority(job.location)) ? '' : `<span class="distance-badge priority-${getDistancePriority(job.location)}">${getDistanceLabel(getDistancePriority(job.location))}</span>`}
                         </td>
                         <td class="col-worktype">
                             <span class="worktype-badge ${(job.workType || 'onsite').toLowerCase()}">${job.workType || 'Onsite'}</span>
@@ -7386,7 +7728,7 @@ ${jobData.description}
                     <h3><i class="fas fa-exclamation-triangle"></i> Delete Document</h3>
                     <p>Are you sure you want to permanently delete this ${type === 'resume' ? 'resume' : 'cover letter'}?</p>
                     <div class="filename">${displayName}<br><small>${filename}</small></div>
-                    <p style="color: #dc2626; font-weight: 600;">This action cannot be undone!</p>
+                    <p style="color: var(--jb-red); font-weight: 600;">This action cannot be undone!</p>
                     <div class="delete-confirm-buttons">
                         <button class="btn-cancel" onclick="cancelDelete()">Cancel</button>
                         <button class="btn-confirm-delete" onclick="executeDelete()">
@@ -7413,8 +7755,8 @@ ${jobData.description}
             // Update dialog to show loading
             overlay.querySelector('.delete-confirm-dialog').innerHTML = `
                 <div style="padding: 1rem;">
-                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: #dc2626;"></i>
-                    <p style="margin-top: 1rem; color: #4b5563;">Deleting from GitHub...</p>
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--jb-red);"></i>
+                    <p style="margin-top: 1rem; color: var(--gz-text);">Deleting from GitHub...</p>
                 </div>
             `;
 
@@ -7565,7 +7907,7 @@ ${jobData.description}
             } catch (error) {
                 console.error('Error loading document manifest:', error);
                 document.getElementById('doc-manager-content').innerHTML = `
-                    <p style="color: #dc2626; text-align: center;">
+                    <p style="color: var(--jb-red); text-align: center;">
                         <i class="fas fa-exclamation-triangle"></i> Error loading documents
                     </p>
                 `;
@@ -7579,7 +7921,7 @@ ${jobData.description}
             let html = `
                 <!-- Resumes Section -->
                 <h4 style="margin: 0 0 1rem; color: var(--dark); font-size: 1rem;">
-                    <i class="fas fa-file-alt" style="color: var(--primary); margin-right: 0.5rem;"></i>
+                    <i class="fas fa-file-alt" style="color: var(--gz-text-3); margin-right: 0.5rem;"></i>
                     Resumes <span style="color: var(--text-muted); font-weight: 400;">(${documentsManifest.resumes.length} available)</span>
                 </h4>
                 <div style="display: grid; gap: 0.5rem; margin-bottom: 1.5rem;">
@@ -7589,11 +7931,11 @@ ${jobData.description}
                 const isActive = resume.active;
                 html += `
                     <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1rem;
-                         background: ${isActive ? 'rgba(22, 163, 74, 0.05)' : 'var(--light)'};
-                         border: 1px solid ${isActive ? '#16a34a' : 'var(--border)'};
-                         border-radius: 8px;">
+                         background: ${isActive ? 'var(--jb-green-t)' : 'var(--gz-canvas)'};
+                         border: 1px solid ${isActive ? 'transparent' : 'var(--border)'};
+                         border-radius: 20px;">
                         <i class="fas ${isActive ? 'fa-check-circle' : 'fa-file-alt'}"
-                           style="color: ${isActive ? '#16a34a' : 'var(--primary)'}; font-size: 1.25rem;"></i>
+                           style="color: ${isActive ? 'var(--jb-green)' : 'var(--gz-text-3)'}; font-size: 1.25rem;"></i>
                         <div style="flex: 1;">
                             <div style="font-weight: 600; color: var(--dark); font-size: 0.9rem;">${resume.name}</div>
                             <div style="font-size: 0.75rem; color: var(--text-muted);">${resume.file}</div>
@@ -7607,12 +7949,12 @@ ${jobData.description}
                             <i class="fas fa-download"></i>
                         </a>
                         ${isActive ? `
-                            <span style="background: #16a34a; color: white; padding: 0.25rem 0.6rem; border-radius: 50px; font-size: 0.7rem; font-weight: 600;">
+                            <span style="background: var(--jb-green-t); color: var(--jb-green); padding: 0 10px; height: 24px; display: inline-flex; align-items: center; border-radius: 999px; font-size: 12px; font-weight: 500;">
                                 ACTIVE
                             </span>
                         ` : `
                             <button onclick="setActiveResume('${resume.file}')"
-                                    style="background: var(--primary); color: white; border: none; padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;">
+                                    style="background: var(--gz-blue); color: var(--gz-on-blue); border: none; height: 34px; padding: 0 14px; border-radius: 999px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: var(--gz-display);">
                                 Set Active
                             </button>
                         `}
@@ -7628,7 +7970,7 @@ ${jobData.description}
 
                 <!-- Cover Letters Section -->
                 <h4 style="margin: 0 0 1rem; color: var(--dark); font-size: 1rem;">
-                    <i class="fas fa-envelope-open-text" style="color: #a855f7; margin-right: 0.5rem;"></i>
+                    <i class="fas fa-envelope-open-text" style="color: var(--gz-text-3); margin-right: 0.5rem;"></i>
                     Cover Letters <span style="color: var(--text-muted); font-weight: 400;">(${documentsManifest.coverLetters.length} available)</span>
                 </h4>
                 <div style="display: grid; gap: 0.5rem;">
@@ -7638,11 +7980,11 @@ ${jobData.description}
                 const isActive = letter.active;
                 html += `
                     <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1rem;
-                         background: ${isActive ? 'rgba(168, 85, 247, 0.05)' : 'var(--light)'};
-                         border: 1px solid ${isActive ? '#a855f7' : 'var(--border)'};
-                         border-radius: 8px;">
+                         background: ${isActive ? 'var(--jb-green-t)' : 'var(--gz-canvas)'};
+                         border: 1px solid ${isActive ? 'transparent' : 'var(--border)'};
+                         border-radius: 20px;">
                         <i class="fas ${isActive ? 'fa-check-circle' : 'fa-envelope-open-text'}"
-                           style="color: ${isActive ? '#a855f7' : '#a855f7'}; font-size: 1.25rem;"></i>
+                           style="color: ${isActive ? 'var(--jb-green)' : 'var(--gz-text-3)'}; font-size: 1.25rem;"></i>
                         <div style="flex: 1;">
                             <div style="font-weight: 600; color: var(--dark); font-size: 0.9rem;">${letter.name}</div>
                             <div style="font-size: 0.75rem; color: var(--text-muted);">${letter.file}</div>
@@ -7656,12 +7998,12 @@ ${jobData.description}
                             <i class="fas fa-download"></i>
                         </a>
                         ${isActive ? `
-                            <span style="background: #a855f7; color: white; padding: 0.25rem 0.6rem; border-radius: 50px; font-size: 0.7rem; font-weight: 600;">
+                            <span style="background: var(--jb-green-t); color: var(--jb-green); padding: 0 10px; height: 24px; display: inline-flex; align-items: center; border-radius: 999px; font-size: 12px; font-weight: 500;">
                                 ACTIVE
                             </span>
                         ` : `
                             <button onclick="setActiveCoverLetter('${letter.file}')"
-                                    style="background: #a855f7; color: white; border: none; padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer;">
+                                    style="background: var(--gz-blue); color: var(--gz-on-blue); border: none; height: 34px; padding: 0 14px; border-radius: 999px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: var(--gz-display);">
                                 Set Active
                             </button>
                         `}
@@ -7746,6 +8088,5 @@ ${jobData.description}
         fetchAllJobs();
     </script>
     <!-- Neural Network Background -->
-    <script src="../assets/js/neural-bg.js"></script>
 </body>
 </html>

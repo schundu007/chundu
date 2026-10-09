@@ -115,7 +115,7 @@ const STYLE = `
         .tg-section { margin-top: 2.75rem; scroll-margin-top: 90px; }
         .tg-sec-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.1rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--bg-tertiary); }
         .tg-sec-head h2 { font-size: 1.6rem; letter-spacing: -0.02em; margin: 0; }
-        .tg-count { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--accent-highlight); background: rgba(118,185,0,0.12); padding: 0.15rem 0.55rem; border-radius: var(--radius-full); }
+        .tg-count { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--accent-highlight); background: rgba(26, 115, 232,0.12); padding: 0.15rem 0.55rem; border-radius: var(--radius-full); }
         .tg-topics-line { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin-left: auto; }
 
         /* Card grid */
@@ -163,10 +163,9 @@ const STYLE = `
 
 export function renderHtml(data) {
   const updated = (data.generated_at || '').slice(0, 10);
-  const totalRepos = data.categories.reduce((a, c) => a + c.repos.length, 0);
 
   const catNav = data.categories
-    .map((c) => `<a href="#${esc(c.key)}">${esc(c.title)} <span class="n">${c.repos.length}</span></a>`)
+    .map((c) => `<a href="#${esc(c.key)}">${esc(c.title)}</a>`)
     .join('');
 
   const sections = data.categories
@@ -203,7 +202,6 @@ export function renderHtml(data) {
         <section class="tg-section" id="${esc(cat.key)}">
             <div class="tg-sec-head">
                 <h2>${esc(cat.title)}</h2>
-                <span class="tg-count">${cat.repos.length} repos</span>
                 <span class="tg-topics-line">${cat.queried_topics.map((t) => esc(t)).join(' · ')}</span>
             </div>
             <div class="tg-grid">${cards}
@@ -230,7 +228,6 @@ export function renderHtml(data) {
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css?v=12">
     <!-- Theme JS (load early to prevent flash) -->
@@ -241,22 +238,18 @@ export function renderHtml(data) {
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 ${STYLE}
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/genz.css">
 </head>
 <body>
     <!-- Neural Network Background -->
-    <canvas id="neural-bg"></canvas>
 ${NAV}
 
     <main class="main-content">
         <header class="page-header tg-hero">
             <h1>Trending GitHub Repos</h1>
-            <p class="tg-lead">Top ${esc(data.top_n)} per category across DevOps, Platform Engineering, MLOps, SRE, LLMOps, and GPU infrastructure &mdash; ranked by <strong>star velocity</strong> (average stars gained per month over each repo's lifetime, so fast risers beat all-time giants).</p>
-            <div class="kpi-strip tg-kpis">
-                <div class="kpi-cell"><div class="kpi-value">${totalRepos}</div><div class="kpi-label">Repos tracked</div></div>
-                <div class="kpi-cell"><div class="kpi-value">${data.categories.length}</div><div class="kpi-label">Categories</div></div>
-                <div class="kpi-cell"><div class="kpi-value">&#9733;/mo</div><div class="kpi-label">Ranked by velocity</div></div>
-                <div class="kpi-cell"><div class="kpi-value">${esc(updated)}</div><div class="kpi-label">Last updated</div></div>
-            </div>
+            <p class="tg-lead">Top ${esc(data.top_n)} per category, ranked by <strong>star velocity</strong>: average stars gained per month over each repo's lifetime, so fast risers beat all-time giants. Updated ${esc(updated)}.</p>
         </header>
 
         <nav class="tg-catnav" aria-label="Categories">${catNav}</nav>
@@ -285,8 +278,6 @@ ${FOOTER}
             });
         }
     </script>
-    <!-- Neural Network Background -->
-    <script src="../assets/js/neural-bg.js"></script>
 </body>
 </html>
 `;

@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <title>Five build lessons from a giant GPU project — explained in plain English</title>
     <meta property="og:type" content="article">
     <meta property="og:title" content="Five build lessons from a giant GPU project — explained in plain English">
@@ -127,6 +126,207 @@
   .prob{font-size:12.5px}
   @media(max-width:640px){.wrap{padding-left:20px;padding-right:20px}}
 </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/genz.css">
+<style id="gz-skin">
+  /* ── Google, Gen-Z skin ──────────────────────────────────────────────
+     Light canvas with the still four-colour glow, ink and grey type, and
+     Google's four colours only as accents: links and the primary accent
+     (blue), status (green / yellow / red) and diagram series. Hairlines,
+     big rounds on panels, pills on every control. */
+  :root{
+    --void:#FFFFFF; --panel:#FFFFFF; --panel-2:#F8FAFD; --raise:#F0F4F9;
+    --code-bg:#F8FAFD; --code-head:#F0F4F9;
+    --line:#E1E3E1; --line-2:#E1E3E1;
+    --ink:#1F1F1F; --ink-2:#444746; --muted:#5E5E5E;
+    --red:#EA4335; --ember:#1A73E8;
+    --grad:linear-gradient(#1A73E8,#1A73E8);
+    --pass:#188038; --run:#B06000; --fail:#C5221F;
+    --link:#1A73E8;
+    --r:20px;
+    --glow:none; --shadow:none;
+    --elev:0 1px 2px 0 rgba(60,64,67,.3),0 1px 3px 1px rgba(60,64,67,.15);
+    --display:'Google Sans','Roboto',system-ui,sans-serif;
+    --body:'Google Sans','Roboto',system-ui,sans-serif;
+    --mono:'Roboto Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --chip-py:#1A73E8; --chip-yaml:#C5221F; --chip-sh:#188038;
+  }
+  body{
+    background-color:#fff;
+    background-image:
+      radial-gradient(52% 44% at 4% 0%,rgba(66,133,244,.13),transparent 72%),
+      radial-gradient(48% 42% at 98% 2%,rgba(234,67,53,.08),transparent 72%),
+      radial-gradient(50% 46% at 96% 100%,rgba(251,188,4,.12),transparent 72%),
+      radial-gradient(46% 42% at 2% 100%,rgba(52,168,83,.09),transparent 72%);
+    background-attachment:fixed;background-repeat:no-repeat;
+    color:var(--ink-2);letter-spacing:0;
+  }
+  body::before{inset:auto;top:0;left:0;right:0;height:3px;z-index:70;mask-image:none;-webkit-mask-image:none;
+    background:linear-gradient(90deg,#4285F4 0 25%,#EA4335 25% 50%,#FBBC04 50% 75%,#34A853 75% 100%)}
+  body::after{display:none}
+  ::selection{background:#E8F0FE;color:#1F1F1F}
+  :focus-visible{outline:2px solid rgba(26,115,232,.4);border-radius:6px}
+  .progress{top:3px;height:2px}
+
+  .topbar{top:3px;background:rgba(255,255,255,.86);backdrop-filter:saturate(1.4) blur(12px)}
+  .brand{font-family:var(--display);font-size:16px;font-weight:500;letter-spacing:-.01em}
+  .brand .dot{background:#34A853;box-shadow:0 0 0 3px rgba(52,168,83,.2);animation:none}
+  .topnav{gap:4px;font-family:var(--display);font-size:14px}
+  .topnav a{display:inline-flex;align-items:center;height:34px;padding:0 14px;border-radius:999px;color:var(--ink-2);font-weight:500}
+  .topnav a:hover{background:#F0F4F9;color:var(--ink)}
+
+  .series{top:61px;background:rgba(255,255,255,.86);backdrop-filter:saturate(1.4) blur(10px)}
+  .series .wrap{min-height:52px;height:auto;gap:6px}
+  .series-k,.series .slabel{font-family:var(--display);font-size:13px;letter-spacing:0;text-transform:none;font-weight:500;color:var(--muted)}
+  .series a{font-family:var(--display);font-size:13.5px;font-weight:500;color:var(--ink);height:34px;display:inline-flex;align-items:center;
+    padding:0 14px;border-radius:999px;border:1px solid var(--line);background:#fff}
+  .series a:hover{background:#F0F4F9;color:var(--ink);border-color:var(--line)}
+  .series a.here,.series a.active{color:#fff;background:#1F1F1F;border-color:#1F1F1F;font-weight:500}
+
+  .hero{padding:56px 0 32px}
+  .eyebrow{font-family:var(--display);font-size:14px;letter-spacing:0;text-transform:none;font-weight:500;color:var(--muted)}
+  .eyebrow::after{background:var(--line)}
+  h1{font-family:var(--display);font-weight:500;font-size:clamp(40px,5.4vw,72px);line-height:1.02;letter-spacing:-.04em;color:var(--ink)}
+  h1 .amp{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:inherit}
+  h2,h3{font-family:var(--display);font-weight:500;letter-spacing:-.02em;color:var(--ink)}
+  .lede{color:var(--ink-2)}
+  .lede b,p b,li b,strong{color:var(--ink);font-weight:500}
+  .kicker{font-family:var(--display);font-size:14px}
+  .kicker b{color:var(--ink);font-weight:500}
+  .disc{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:18px 22px}
+  .disc .pill{font-family:var(--display);border-radius:999px;background:#F0F4F9;border:0;color:var(--ink)}
+  .provenance{border-left:1px solid var(--line)}
+  .provenance b{color:var(--ink);font-weight:500}
+  .byline .who{font-weight:500}
+
+  .sn,.shead .sn{color:var(--ember);font-family:var(--mono);font-weight:500}
+  .prob{font-family:var(--display);font-size:14px;letter-spacing:0;text-transform:none;color:var(--muted)}
+  .shead::after{display:none}
+  h4.mini,.side h4{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:13px;font-weight:500;color:var(--muted);opacity:1}
+  .side a.active{color:var(--ink);border-left-color:var(--ember);font-weight:500}
+  .side a.active .sn{color:var(--ember)}
+  li::marker{color:var(--ember);opacity:1}
+  ul li::before{color:var(--ember)}
+
+  code,p code,li code{font-family:var(--mono);background:#F0F4F9;border:0;border-radius:6px;color:var(--ink)}
+  pre{background:#F8FAFD;border:1px solid var(--line);border-radius:16px}
+  pre code,pre[class*=language-] code{background:none;color:var(--ink)}
+
+  .take{background:#fff;border:1px solid var(--line);border-radius:var(--r)}
+  .take b{color:var(--ink)}
+  .note{background:rgba(26,115,232,.06);border:1px solid rgba(26,115,232,.2);border-radius:var(--r)}
+  .note::before{display:none}
+  .note .tag{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:13.5px;font-weight:500;color:#1A73E8}
+  .note.blue .tag{color:#1A73E8}
+  .note.green{background:rgba(52,168,83,.07);border-color:rgba(52,168,83,.25)}
+  .note.green .tag{color:#188038}
+
+  .tldr{gap:12px}
+  .tldr .c{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+  .tldr .c .n{color:var(--ember);font-weight:500}
+  .tldr .c .t{font-weight:500;font-size:15px}
+
+  .stats{gap:12px;background:none;border:0;border-radius:0;overflow:visible}
+  .stat{background:#F0F4F9;border-radius:var(--r);padding:18px 20px}
+  .stat::before{display:none}
+  .stat .n,.stat .n.grad{font-family:var(--display);font-size:clamp(26px,2.4vw,34px);font-weight:500;letter-spacing:-.035em;
+    background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--ink)}
+  .stat .l{font-family:var(--display);font-size:13px;letter-spacing:0;color:var(--muted)}
+
+  .pill{font-family:var(--display);letter-spacing:0;text-transform:none;border-radius:999px;font-size:12px;font-weight:500}
+  .pill.pass{color:#188038;border-color:rgba(52,168,83,.3);background:rgba(52,168,83,.08)}
+  .pill.run{color:#B06000;border-color:rgba(251,188,4,.4);background:rgba(251,188,4,.12)}
+  .pill.fail{color:#C5221F;border-color:rgba(234,67,53,.3);background:rgba(234,67,53,.08)}
+
+  details.code{border-radius:var(--r);background:#fff}
+  details.code>summary{background:#F8FAFD}
+  details.code>summary:hover{background:#F0F4F9}
+  .chev{color:var(--ember)}
+  .fname{font-weight:500}
+  .lang{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:12px;font-weight:500;border-radius:999px;
+    color:var(--ink);background:#F0F4F9;border:0;padding:3px 10px}
+  details.code pre{background:#F8FAFD!important;border:0!important}
+  details.code pre::-webkit-scrollbar-thumb{background:#C4C7C5}
+  .copy,.expand{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:12.5px;font-weight:500;border-radius:999px;
+    background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .copy:hover,.expand:hover{background:#F0F4F9;color:var(--ink);border-color:var(--line)}
+  .copy.ok{color:#188038;border-color:rgba(52,168,83,.4)}
+
+  .diagram{border-radius:var(--r);background:#fff}
+  .diagram .cap{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:14px;font-weight:500;color:var(--muted);opacity:1}
+  .diagram .zoom-hint{font-family:var(--display);letter-spacing:0;border-radius:999px;color:var(--ink);background:#fff}
+  .mermaid .nodeLabel,.mermaid .edgeLabel,.mermaid span.nodeLabel{color:#1F1F1F!important}
+  .mermaid .cluster .nodeLabel,.mermaid .cluster span{fill:#1F1F1F!important;color:#1F1F1F!important;font-weight:500!important}
+
+  .fstep{border-radius:var(--r)}
+  .fstep .fk{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:12.5px}
+  .fstep .ft{font-weight:500}
+  .farrow{color:var(--muted);opacity:1}
+  .fstep.accent{border-color:rgba(26,115,232,.4);box-shadow:none}
+
+  .group-h .dot{background:#1A73E8}
+  .group-h h3{font-weight:500}
+  .card{border-radius:var(--r)}
+  .card::before{display:none}
+  .cf-name{font-weight:500}
+  .fpath a:hover{color:var(--ink)}
+  .block .bl{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:13.5px;font-weight:500;color:var(--muted)}
+  .pc .col{border-radius:16px}
+  .pc .col.pros,.pc .col.cons{border-top:1px solid var(--line)}
+  .pc .col h4{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:14px;font-weight:500}
+  .pc .col.pros h4,.pc .pros li::before{color:#188038}
+  .pc .col.cons h4,.pc .cons li::before{color:#C5221F}
+  .pc li code{background:#F0F4F9;border:0}
+  .flag{font-family:var(--display);letter-spacing:0;border-radius:999px;color:#B06000;border-color:rgba(251,188,4,.45);background:rgba(251,188,4,.12)}
+  .mod-intro{border-radius:var(--r)}
+  .mod-intro::before{display:none}
+  .mod-intro .split .s{border-radius:16px}
+  .mod-intro .split .s b{font-family:var(--display);letter-spacing:0;font-weight:500;font-size:13.5px}
+  .toolcard,.mcard{border-radius:var(--r)}
+  .toolcard .tn,.mcard .mn{font-family:var(--display);font-weight:500}
+  .verdict{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:12.5px;font-weight:500;border-radius:999px}
+  .verdict.adopt{color:#188038;border-color:rgba(52,168,83,.4);background:rgba(52,168,83,.08)}
+  .verdict.partial{color:#B06000;border-color:rgba(251,188,4,.45);background:rgba(251,188,4,.12)}
+  .verdict.skip{color:#C5221F;border-color:rgba(234,67,53,.35);background:rgba(234,67,53,.08)}
+  .verdict.watch{color:#1A73E8;border-color:rgba(26,115,232,.35);background:#E8F0FE}
+  .wh .w{border-radius:16px}
+  .wh .w.help,.wh .w.nohelp{border-left:1px solid var(--line)}
+  .wh .w .wl{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:13.5px;font-weight:500}
+  .wh .w.help .wl{color:#188038}
+  .wh .w.nohelp .wl{color:#C5221F}
+  .mcard .mcat{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:12px;border-radius:999px;border:0;background:#F0F4F9;color:var(--ink);padding:3px 10px}
+  .mcard .fit{font-family:var(--display);border-top:1px solid var(--line)}
+  .mcard .fit b{color:var(--ink);font-weight:500}
+  .rec{background:#E8F0FE;border:1px solid rgba(26,115,232,.25);border-radius:var(--r);box-shadow:none}
+  .rec .rl{font-family:var(--display);letter-spacing:0;text-transform:none;font-size:14px;font-weight:500;color:#1A73E8}
+
+  .foot{background:transparent}
+  .foot .links,.foot .c{font-family:var(--display)}
+  .foot .links a{color:var(--ink-2)}
+  .foot .links a:hover{color:var(--ink)}
+
+  /* Overlays (their own <style> blocks sit later in <body>, hence the html prefix). */
+  html .embed-overlay,html .dlg-overlay{background:rgba(31,31,31,.36);backdrop-filter:none}
+  html .embed-modal{border:1px solid var(--line);border-radius:28px;box-shadow:var(--elev);background:#fff}
+  html .embed-bar{background:#F8FAFD}
+  html .embed-title{font-family:var(--display);font-weight:500}
+  html .embed-open{font-family:var(--display);font-weight:500}
+  html .embed-close,html .dlg-close{border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink)}
+  html .embed-close:hover,html .dlg-close:hover{color:var(--ink);background:#F0F4F9;border-color:var(--line)}
+  html .embed-if{background:#fff}
+  html .embed-note{font-family:var(--display);background:#F8FAFD}
+  html .dlg-stage{border-radius:var(--r);background:#fff}
+
+  /* Prism tokens in Google's four */
+  .token.comment,.token.prolog,.token.doctype,.token.cdata{color:#5E5E5E;font-style:italic}
+  .token.punctuation,.token.operator{color:#444746}
+  .token.keyword,.token.atrule,.token.important,.token.selector,.token.tag{color:#1A73E8}
+  .token.string,.token.char,.token.attr-value,.token.inserted,.token.regex{color:#188038}
+  .token.number,.token.boolean,.token.constant,.token.symbol,.token.deleted{color:#C5221F}
+  .token.function,.token.class-name,.token.builtin,.token.property,.token.attr-name,.token.key{color:#B06000}
+  .token.variable,.token.parameter{color:#1F1F1F}
+</style>
 </head>
 <body>
 <div class="progress" id="progress" aria-hidden="true"></div>
@@ -159,7 +359,7 @@
 
 <header class="hero">
   <div class="wrap">
-    <p class="eyebrow">How big software gets built · About the code, not the people</p>
+    <p class="eyebrow">How big software gets built</p>
     <h1>Five build lessons from a giant GPU project</h1>
     <p class="lede">On a big software project, a robot does the building. Every time somebody changes the code, a computer builds the whole thing again and runs all the tests. People call this <b>CI</b>, short for continuous integration.<br><br>ROCm/TheRock is AMD's open project. It builds all of AMD's GPU software in one go — the compiler, the parts that run your program, and the maths and AI libraries. It does this for many models of GPU, on both Windows and Linux.<br><br>Read the code behind its CI and five good ideas jump out. None of them are only for AMD. You could use any of them on any big project whose code is split across many separate folders. Each of those folders is called a <b>repo</b>.<br><br>Here are the five, and the real problem each one fixes.</p>
     <div class="kicker">
@@ -168,7 +368,7 @@
       <span><b>What it is about:</b> how the build is put together</span>
     </div>
     <div class="disc">
-      <span class="pill">no names</span> Everything below comes from the <b>public</b> ROCm/TheRock code, which anyone is free to read and reuse. I read it in July 2026. It is about <b>the code and the ideas in it</b> — not about any person who wrote it, and it says nothing good or bad about anybody. I had no inside information. The public code is my only source.
+      Everything below comes from the <b>public</b> ROCm/TheRock code, which anyone is free to read and reuse. I read it in July 2026. It is about <b>the code and the ideas in it</b> — not about any person who wrote it, and it says nothing good or bad about anybody. I had no inside information. The public code is my only source.
     </div>
   </div>
 </header>
@@ -276,7 +476,7 @@ build:
 <footer class="foot">
   <div class="wrap">
     <div>
-      <div style="font-family:var(--mono);font-weight:600">Sudhakar Chundu</div>
+      <div style="font-family:var(--display);font-weight:500;color:var(--ink)">Sudhakar Chundu</div>
       <div class="c">Platform / CI &amp; Build-Infrastructure Engineer · San Jose, CA</div>
     </div>
     <div class="links">
@@ -286,7 +486,7 @@ build:
       <a href="https://www.sudhakarchundu.org/" target="_blank" rel="noopener">Home</a>
     </div>
   </div>
-  <div class="wrap" style="margin-top:16px"><span class="c">© 2026 Sudhakar Chundu. All of this comes from the public ROCm/TheRock code, which anyone is free to read.</span></div>
+  <div class="wrap" style="margin-top:16px"><span class="c">© 2026 Sudhakar Chundu</span></div>
 </footer>
 
 <style>

@@ -100,6 +100,7 @@ added to the site must match it; update that file first if a fact changes.
 
 **Shared assets:**
 - `assets/css/style.css` - Global design system (~1,760 lines) using CSS custom properties; dark (default) and light themes with glassmorphism effects, gradient accents, and responsive breakpoints
+- `assets/css/genz.css` - **The look (loaded last on every page):** Google, Gen-Z register. Google Sans display at 500 weight, Google's four colours only as accents (blue primary action/links, green status, the four-colour rule and Gemini backdrop glow), all text ink/grey, 1px hairlines, 20–28px cards, pill controls. It remaps style.css's tokens under `html[data-theme]`, so a page must load `theme.js`; standalone blog posts carry the same tokens in their own inline CSS. Each fact/label appears once per page (no repeated banners, tags or stats).
 - `assets/js/theme.js` - Theme toggle (dark/light mode persistence via localStorage, key: `portfolio-theme`)
 - `assets/js/neural-bg.js` - Animated neural network canvas background (`NeuralNetwork` class with particles and mouse interaction)
 - `assets/js/firebase-config.js` - Firebase initialization (Firestore + Auth); gracefully falls back when not configured
@@ -111,7 +112,7 @@ added to the site must match it; update that file first if a fact changes.
 - `assets/resume/manifest.json` - Resume/cover letter metadata with active flag; `.docx` files for download
 
 **External dependencies (CDN):**
-- Google Fonts: Sora, Plus Jakarta Sans, JetBrains Mono
+- Google Fonts: Google Sans, Roboto Mono (genz.css); Mona Sans / JetBrains Mono still linked by style.css pages
 - Font Awesome 6.5.1
 - Firebase SDK 9.23.0 (app, auth, firestore — compat mode)
 - marked.js (Markdown rendering on jobs page)

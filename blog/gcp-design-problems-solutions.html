@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js"></script>
 <style>
 
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Instrument+Sans:wght@400;600;700&family=Fraunces:opsz,wght@9..144,700&display=swap');
 
   :root {
     --bg: #0c0f14;
@@ -552,11 +551,125 @@ body {
   background: rgba(37,99,235,0.1);
 }
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 <style>
   /* highlight.js: colorize tokens while keeping the code-block container styling */
   .code-block pre { margin: 0; background: none; padding: 0; }
   .code-block code.hljs { background: transparent; padding: 0; white-space: pre-wrap; font: inherit; color: inherit; }
+</style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/genz.css">
+<style id="gz-skin">
+  /* ── Google, Gen-Z skin (agrees with /assets/css/genz.css: same tokens, light by default,
+     html[data-theme=dark] through the toggle). Ink and greys for text; blue for links and the
+     accent; green / yellow / red only for difficulty and callout status. ── */
+  html[data-theme]{
+    --bg:var(--gz-canvas); --surface:var(--gz-canvas); --surface2:var(--gz-surface); --border:var(--gz-line);
+    --accent:var(--gz-blue); --accent2:#188038; --accent3:#B06000; --danger:#C5221F; --purple:var(--gz-blue);
+    --text:var(--gz-text); --text-muted:var(--gz-text-3);
+    --tint-blue:rgba(26,115,232,.06); --tint-green:rgba(52,168,83,.08); --tint-yellow:rgba(251,188,4,.12); --tint-red:rgba(234,67,53,.08);
+  }
+  html[data-theme='dark']{ --accent2:#81C995; --accent3:#FDD663; --danger:#F28B82;
+    --tint-blue:rgba(168,199,250,.10); --tint-green:rgba(129,201,149,.10); --tint-yellow:rgba(253,214,99,.10); --tint-red:rgba(242,139,130,.10); }
+  html[data-theme] body{font-family:var(--gz-display);font-size:16px;line-height:1.65;color:var(--gz-text);padding-top:60px}
+  html[data-theme] p,html[data-theme] li{color:var(--gz-text)}
+  html[data-theme] strong{color:var(--gz-ink);font-weight:500}
+
+  /* top bar: glass, four-colour rule, pill controls */
+  html[data-theme] .top-nav{height:60px;padding:0 24px;background:var(--nav-bg);backdrop-filter:saturate(1.4) blur(12px);
+    -webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--gz-line)}
+  html[data-theme] .top-nav::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,#4285F4 0 25%,#EA4335 25% 50%,#FBBC04 50% 75%,#34A853 75% 100%)}
+  html[data-theme] .top-nav a{display:inline-flex;align-items:center;height:36px;padding:0 16px;border-radius:999px;
+    font-family:var(--gz-display);font-size:14.5px;font-weight:500;color:var(--gz-ink)}
+  html[data-theme] .top-nav a:hover{background:var(--gz-surface-2);color:var(--gz-ink)}
+  html[data-theme] .theme-toggle{display:inline-flex;width:auto;height:36px;padding:0 16px;border-radius:999px;
+    border:1px solid var(--gz-line);background:var(--gz-canvas);color:var(--gz-ink);font-family:var(--gz-display);font-size:14px;font-weight:500}
+  html[data-theme] .theme-toggle:hover{background:var(--gz-surface-2)}
+
+  /* sidebar */
+  html[data-theme] body > nav.sidebar{border-bottom:0}
+  html[data-theme] body > nav.sidebar::before{display:none}
+  html[data-theme] .sidebar{top:60px;height:calc(100vh - 60px);background:var(--gz-canvas);border-right:1px solid var(--gz-line);padding:16px 10px}
+  html[data-theme] .sidebar-header{border-bottom:0;padding:4px 12px 8px}
+  html[data-theme] .sidebar-header h3{font-family:var(--gz-display);font-size:15px;font-weight:500;color:var(--gz-text-3)}
+  html[data-theme] .sidebar-part-title{font-family:var(--gz-display);font-size:14px;font-weight:500;letter-spacing:0;text-transform:none;
+    color:var(--gz-ink);background:none;border-left:0;border-radius:999px;padding:8px 12px}
+  html[data-theme] .sidebar-part-title:hover{background:var(--gz-surface-2)}
+  html[data-theme] .sidebar-questions a{font-size:13.5px;color:var(--gz-text);border-left:0;border-radius:999px;padding:6px 12px 6px 14px}
+  html[data-theme] .sidebar-questions a:hover{color:var(--gz-ink);background:var(--gz-surface-2)}
+  html[data-theme] .sidebar-questions a.active{color:var(--gz-blue);background:var(--gz-blue-soft)}
+  html[data-theme] .sidebar-q-num{font-family:var(--gz-mono);font-weight:500;color:var(--gz-text-3)}
+  html[data-theme] .sidebar-questions a.active .sidebar-q-num{color:var(--gz-blue)}
+
+  /* title, contents, part headers */
+  html[data-theme] .title-page{text-align:left;padding:48px 0 32px;border-bottom:1px solid var(--gz-line)}
+  html[data-theme] .title-page h1{font-family:var(--gz-display);font-weight:500;font-size:clamp(40px,5.4vw,72px);line-height:1.02;letter-spacing:-.04em;color:var(--gz-ink)}
+  html[data-theme] .title-page .title-sub{font-family:var(--gz-display);font-size:clamp(20px,2vw,26px);font-weight:400;letter-spacing:-.01em;color:var(--gz-text);margin:6px 0 18px}
+  html[data-theme] .title-page .subtitle{color:var(--gz-text);font-size:16px;margin-bottom:18px}
+  html[data-theme] .title-page .meta{color:var(--gz-text-3);font-size:15px}
+  html[data-theme] .title-page .meta strong{color:var(--gz-ink)}
+  html[data-theme] .toc{background:var(--gz-canvas);border:1px solid var(--gz-line);border-radius:var(--gz-r);padding:24px 28px}
+  html[data-theme] .toc h2{font-family:var(--gz-display);font-size:22px;font-weight:500;letter-spacing:-.02em;color:var(--gz-ink)}
+  html[data-theme] .toc a{color:var(--gz-ink);font-size:16px;padding:10px 0;border-bottom:1px solid var(--gz-line)}
+  html[data-theme] .toc a:last-child{border-bottom:0}
+  html[data-theme] .toc a:hover{color:var(--gz-blue)}
+  html[data-theme] .toc .toc-count{font-family:var(--gz-display);font-size:14px;color:var(--gz-text-3)}
+  html[data-theme] .part-divider{border-top:1px solid var(--gz-line);opacity:1}
+  html[data-theme] .header{border-bottom:0;margin-bottom:2rem}
+  html[data-theme] .header .part-label{display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:999px;
+    background:var(--gz-surface-2);color:var(--gz-ink);font-family:var(--gz-display);font-size:13px;font-weight:500;letter-spacing:0;text-transform:none}
+  html[data-theme] .header h1{font-family:var(--gz-display);font-weight:500;font-size:clamp(30px,3.6vw,48px);line-height:1.08;letter-spacing:-.034em;color:var(--gz-ink);margin-top:10px}
+  html[data-theme] .header .subtitle{color:var(--gz-text);font-size:16px}
+
+  /* question cards */
+  html[data-theme] .question-block{background:var(--gz-canvas);border:1px solid var(--gz-line);border-radius:var(--gz-r);padding:36px 32px 28px;box-shadow:none}
+  html[data-theme] .question-block::before{top:-14px;left:24px;height:28px;display:inline-flex;align-items:center;padding:0 12px;border-radius:999px;
+    background:var(--gz-ink);color:var(--gz-canvas);font-family:var(--gz-display);font-size:12.5px;font-weight:500;letter-spacing:.01em}
+  html[data-theme] .tag{display:inline-flex;align-items:center;height:26px;padding:0 11px;border-radius:999px;border:0;
+    font-family:var(--gz-display);font-size:12.5px;font-weight:500;letter-spacing:0;text-transform:none}
+  html[data-theme] .tag-hard{background:var(--tint-red);color:var(--danger)}
+  html[data-theme] .tag-medium{background:var(--tint-yellow);color:var(--accent3)}
+  html[data-theme] .tag-easy{background:var(--tint-green);color:var(--accent2)}
+  /* the category is already in the card's number badge ("Q1 — SYSTEM DESIGN"), so the chip repeated it */
+  html[data-theme] .tag-cat{display:none}
+  html[data-theme] .question-text{font-family:var(--gz-display);font-size:clamp(20px,1.7vw,24px);font-weight:500;letter-spacing:-.015em;line-height:1.35;color:var(--gz-ink)}
+  html[data-theme] h3{font-family:var(--gz-display);font-size:18px;font-weight:500;letter-spacing:-.01em;text-transform:none;color:var(--gz-ink)}
+  html[data-theme] .diagram-wrapper{background:var(--gz-surface);border:1px solid var(--gz-line);border-radius:var(--gz-r-md)}
+  html[data-theme] .key-points,html[data-theme] .interview-tip,html[data-theme] .warn-box{border:1px solid var(--gz-line);border-radius:var(--gz-r-md);padding:16px 20px;margin:1rem 0;font-style:normal;color:var(--gz-text)}
+  html[data-theme] .key-points{background:var(--tint-blue);border-color:rgba(26,115,232,.2)}
+  html[data-theme] .interview-tip{background:var(--tint-green);border-color:rgba(52,168,83,.25)}
+  html[data-theme] .warn-box{background:var(--tint-yellow);border-color:rgba(251,188,4,.4)}
+  html[data-theme] .terraform-block,html[data-theme] .code-block{background:var(--gz-surface);border:1px solid var(--gz-line);border-radius:16px;
+    padding:18px 20px;margin:1rem 0;font-family:var(--gz-mono);font-size:13px;line-height:1.6;color:var(--gz-ink);overflow-x:auto;white-space:pre-wrap;word-wrap:break-word}
+  html[data-theme] .terraform-block .comment{color:var(--gz-text-3)}
+  html[data-theme] .terraform-block .keyword{color:var(--gz-blue)}
+  html[data-theme] .terraform-block .string{color:var(--accent2)}
+  html[data-theme] .terraform-block .attr{color:var(--accent3)}
+  html[data-theme] .separator,html[data-theme] .sep{border:0;border-top:1px solid var(--gz-line)}
+  html[data-theme] .nav-footer{border-top:1px solid var(--gz-line)}
+  html[data-theme] .nav-footer span{font-family:var(--gz-display);font-size:14px;color:var(--gz-text-3)}
+  html[data-theme] .back-top{display:inline-flex;align-items:center;height:40px;padding:0 18px;border-radius:999px;border:1px solid var(--gz-line);
+    background:var(--gz-canvas);color:var(--gz-ink);font-family:var(--gz-display);font-size:14px;font-weight:500;text-decoration:none}
+  html[data-theme] .back-top:hover{background:var(--gz-surface-2);color:var(--gz-ink)}
+
+  /* highlight.js tokens in Google's four */
+  html[data-theme] .hljs{color:var(--gz-ink);background:transparent}
+  html[data-theme] .hljs-comment,html[data-theme] .hljs-quote,html[data-theme] .hljs-meta{color:var(--gz-text-3);font-style:italic}
+  html[data-theme] .hljs-keyword,html[data-theme] .hljs-selector-tag,html[data-theme] .hljs-built_in,html[data-theme] .hljs-name,html[data-theme] .hljs-tag{color:var(--gz-blue)}
+  html[data-theme] .hljs-string,html[data-theme] .hljs-regexp,html[data-theme] .hljs-addition{color:var(--accent2)}
+  html[data-theme] .hljs-number,html[data-theme] .hljs-literal,html[data-theme] .hljs-deletion,html[data-theme] .hljs-symbol{color:var(--danger)}
+  html[data-theme] .hljs-attr,html[data-theme] .hljs-attribute,html[data-theme] .hljs-title,html[data-theme] .hljs-section,html[data-theme] .hljs-variable,html[data-theme] .hljs-template-variable,html[data-theme] .hljs-type,html[data-theme] .hljs-params,html[data-theme] .hljs-property,html[data-theme] .hljs-bullet{color:var(--accent3)}
+  html[data-theme] .hljs-punctuation,html[data-theme] .hljs-operator{color:var(--gz-text)}
+
+  /* diagram lightbox */
+  html[data-theme] .dlg-overlay{background:rgba(31,31,31,.4);backdrop-filter:none}
+  html[data-theme] .dlg-stage{background:var(--gz-canvas);border:1px solid var(--gz-line);border-radius:var(--gz-r)}
+  html[data-theme] .dlg-close{border-radius:50%;background:var(--gz-canvas);color:var(--gz-ink);border:1px solid var(--gz-line);font-family:var(--gz-display)}
+  html[data-theme] .dlg-close:hover{background:var(--gz-surface-2);color:var(--gz-ink);border-color:var(--gz-line)}
+  html[data-theme] .diagram-wrapper .zoom-hint{font-family:var(--gz-display);font-size:12px;letter-spacing:0;color:var(--gz-ink);
+    background:var(--gz-canvas);border:1px solid var(--gz-line);border-radius:999px}
+  html[data-theme] .diagram-wrapper:hover .zoom-hint{color:var(--gz-ink)}
 </style>
 </head>
 <body>
@@ -672,7 +785,7 @@ if (savedTheme) {
 <!-- TITLE -->
 <div class="title-page">
   <h1>GCP Design Problems & Solutions</h1>
-  <h1 style="font-size:2rem; margin-top:0;">Cloud Infrastructure Patterns & Architecture</h1>
+  <p class="title-sub">Cloud Infrastructure Patterns &amp; Architecture</p>
   <p class="subtitle">42 Questions &bull; 26 Architecture Diagrams &bull; Code Examples &bull; Best Practices</p>
   <p class="meta">Prepared for <strong>Sudhakar Chundu</strong></p>
   <p class="meta">Platform &amp; DevOps Architect &bull; Infrastructure Solutions &bull; 18+ Years Experience</p>
@@ -695,7 +808,7 @@ if (savedTheme) {
 <div class="header">
 <div class="part-label">Part 1 of 6</div>
 <h1>Infrastructure Design &amp; Architecture</h1>
-<p class="subtitle">GCP Cloud Infrastructure Engineer Interview — Most Heavily Tested Category (8 Questions) • Prepared for Sudhakar Chundu</p>
+<p class="subtitle">GCP Cloud Infrastructure Engineer Interview — Most Heavily Tested Category (8 Questions)</p>
 </div>
 <!-- ============================================================ -->
 <!-- QUESTION 1 -->
@@ -1266,7 +1379,7 @@ graph TB
 <div class="header">
 <div class="part-label">Part 2 of 6</div>
 <h1>TPU/GPU Specific Questions</h1>
-<p class="subtitle">Critical for Google Cloud Infrastructure Engineer Role — 10 Questions • Prepared for Sudhakar Chundu</p>
+<p class="subtitle">Critical for Google Cloud Infrastructure Engineer Role — 10 Questions</p>
 </div>
 <!-- Q1 -->
 <div class="question-block" id="q2-1" data-number="Q1 — TPU KNOWLEDGE">
@@ -1789,7 +1902,7 @@ spec:
 <div class="header">
 <div class="part-label">Part 3 of 6</div>
 <h1>GKE &amp; Kubernetes</h1>
-<p class="subtitle">Heavily Tested Category — 8 Questions • Prepared for Sudhakar Chundu</p>
+<p class="subtitle">Heavily Tested Category — 8 Questions</p>
 </div>
 <!-- GKE Q1 -->
 <div class="question-block" id="q3-1" data-number="Q1 — FUNDAMENTALS">
@@ -2384,7 +2497,7 @@ graph TB
 <div class="header">
 <div class="part-label">Part 5 of 6</div>
 <h1>Infrastructure as Code &amp; CI/CD</h1>
-<p class="subtitle">5 Questions — Core DevOps Competency • Prepared for Sudhakar Chundu</p>
+<p class="subtitle">5 Questions — Core DevOps Competency</p>
 </div>
 <!-- IAC Q1 -->
 <div class="question-block" id="q5-1" data-number="Q1 — TERRAFORM">
@@ -2706,7 +2819,7 @@ spec:
 <div class="header" style="margin-top:1rem">
 <div class="part-label">Part 6 of 6</div>
 <h1>Consulting &amp; Customer Scenario Questions</h1>
-<p class="subtitle">5 Questions — Soft Skills + Technical Sales • Prepared for Sudhakar Chundu</p>
+<p class="subtitle">5 Questions — Soft Skills + Technical Sales</p>
 </div>
 <!-- CONSULT Q1 -->
 <div class="question-block" id="q6-1" data-number="Q1 — SALES ENGINEERING">
@@ -2848,7 +2961,7 @@ signal.signal(signal.SIGTERM, handle_preemption)</div>
 
 <!-- Back to top -->
 <div style="text-align:center; padding:3rem 0; border-top:1px solid var(--border); margin-top:3rem;">
-  <a href="#toc" style="color:var(--accent); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:0.85rem;">&#8593; Back to Table of Contents</a>
+  <a href="#toc" class="back-top">&#8593; Back to Table of Contents</a>
 </div>
 
 </div><!-- End main-content -->
@@ -2886,27 +2999,38 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
-  mermaid.initialize({
-    startOnLoad: true,
-    theme: 'dark',
-    themeVariables: {
-      primaryColor: '#1e3a5f',
-      primaryTextColor: '#e2e8f0',
-      primaryBorderColor: '#4a9eff',
-      lineColor: '#4a9eff',
-      secondaryColor: '#1c2230',
-      tertiaryColor: '#151922',
-      nodeTextColor: '#e2e8f0',
-      fontSize: '13px'
-    },
-    flowchart: {
-      curve: 'basis',
-      padding: 15,
-      nodeSpacing: 40,
-      rankSpacing: 50,
-      useMaxWidth: true
-    }
-  });
+  (function(){
+    var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'base',
+      themeVariables: dark ? {
+        darkMode: true, background: '#2D333B',
+        primaryColor: '#373E47', primaryTextColor: '#E6EDF3', primaryBorderColor: '#A8C7FA',
+        lineColor: '#B6C2CF', secondaryColor: '#2D333B', tertiaryColor: '#22272E',
+        clusterBkg: '#2D333B', clusterBorder: '#545D68', nodeTextColor: '#E6EDF3', textColor: '#E6EDF3',
+        edgeLabelBackground: '#2D333B', titleColor: '#E6EDF3',
+        fontFamily: 'Google Sans, Roboto, system-ui, sans-serif', fontSize: '13px'
+      } : {
+        darkMode: false, background: '#F8FAFD',
+        primaryColor: '#FFFFFF', primaryTextColor: '#1F1F1F', primaryBorderColor: '#1A73E8',
+        lineColor: '#5E5E5E', secondaryColor: '#E8F0FE', tertiaryColor: '#F0F4F9',
+        clusterBkg: '#F0F4F9', clusterBorder: '#C4C7C5', nodeTextColor: '#1F1F1F', textColor: '#1F1F1F',
+        edgeLabelBackground: '#FFFFFF', titleColor: '#1F1F1F',
+        fontFamily: 'Google Sans, Roboto, system-ui, sans-serif', fontSize: '13px'
+      },
+      flowchart: {
+        curve: 'basis',
+        padding: 15,
+        nodeSpacing: 40,
+        rankSpacing: 50,
+        useMaxWidth: true
+      }
+    });
+    // Render after the web fonts load so every label is measured in its final font.
+    var run = function(){ try { var r = mermaid.run({ querySelector: '.mermaid' }); if (r && r.catch) r.catch(function(){}); } catch (e) {} };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(run); else window.addEventListener('load', run);
+  })();
 </script>
 
 <!-- Syntax highlighting (auto-detect: bash / gcloud / yaml / json) -->

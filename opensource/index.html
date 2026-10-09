@@ -25,7 +25,6 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css?v=13">
     <!-- Theme JS (load early to prevent flash) -->
@@ -193,7 +192,7 @@
         }
 
         .github-link-secondary:hover {
-            border-color: rgba(118, 185, 0, 0.35);
+            border-color: rgba(26, 115, 232, 0.35);
             color: var(--accent-blue);
         }
 
@@ -227,7 +226,7 @@
         .repo-card:hover,
         .gist-card:hover,
         .article-card:hover {
-            border-color: rgba(118, 185, 0, 0.35);
+            border-color: rgba(26, 115, 232, 0.35);
         }
 
         .repo-header {
@@ -425,6 +424,9 @@
             }
         }
     </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/genz.css">
 </head>
 <body>
     <!-- Neural Network Background -->
@@ -466,7 +468,6 @@
         <!-- Page Header -->
         <header class="page-header">
             <h1>Open Source</h1>
-            <p>GitHub repositories, gists, and technical articles on cloud infrastructure and DevOps.</p>
         </header>
 
         <!-- Upstream Contributions -->
@@ -483,9 +484,6 @@
                         <span class="repo-name">osdu/infra-azure-provisioning</span>
                     </div>
                     <p class="repo-description">Azure deployment and provisioning for the OSDU Data Platform &mdash; AKS, Terraform and Bicep IaC, Istio service mesh, and Azure DevOps pipelines. Built with the global OSDU Forum community while delivering the platform for ExxonMobil, Chevron, BP, and Shell.</p>
-                    <div class="repo-meta">
-                        <span class="repo-meta-item"><i class="fas fa-building-columns"></i>The Open Group</span>
-                    </div>
                 </a>
                 <a class="repo-card" href="https://community.opengroup.org/osdu/platform/deployment-and-operations/terraform-deployment-aws" target="_blank" rel="noopener noreferrer">
                     <div class="repo-header">
@@ -493,9 +491,6 @@
                         <span class="repo-name">osdu/terraform-deployment-aws</span>
                     </div>
                     <p class="repo-description">AWS deployment for the OSDU Data Platform &mdash; reusable Terraform modules (VPC, EKS, RDS, DynamoDB, S3, IAM), multi-tenant landing zones on Well-Architected principles, and GitOps release automation.</p>
-                    <div class="repo-meta">
-                        <span class="repo-meta-item"><i class="fas fa-building-columns"></i>The Open Group</span>
-                    </div>
                 </a>
                 <a class="repo-card" href="https://cariara.com/tools/forc" target="_blank" rel="noopener noreferrer">
                     <div class="repo-header">
@@ -845,6 +840,5 @@
         });
     </script>
     <!-- Neural Network Background -->
-    <script src="../assets/js/neural-bg.js"></script>
 </body>
 </html>

@@ -25,7 +25,6 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css?v=13">
     <!-- Theme JS (load early to prevent flash) -->
@@ -103,6 +102,9 @@
             .blog-outro { flex-direction: column; align-items: flex-start; }
         }
     </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/genz.css">
 </head>
 <body>
     <!-- Neural Network Background -->
@@ -144,7 +146,6 @@
         <!-- Page Header -->
         <header class="page-header">
             <h1>Projects</h1>
-            <p>Enterprise projects, conference talks, publications, and blog articles across cloud infrastructure, performance engineering, and SRE practice.</p>
         </header>
 
         <!-- Enterprise Projects -->
@@ -160,7 +161,7 @@
                         <span class="panel-meta">Trackonomy · Oct 2023 – Jan 2026 · San Jose, CA</span>
                     </div>
                     <div class="panel-body">
-                        <p>Enterprise AI/ML platforms for 12+ clients across pharma, airlines, government, manufacturing, healthcare, and IoT in 8 countries — LLM/GenAI at scale, 200+ microservices at 99.97% uptime, zero critical findings across SOC2, HIPAA, and FedRAMP.</p>
+                        <p>Enterprise AI/ML platforms for 12+ clients in 8 countries — LLM/GenAI at scale across 200+ microservices.</p>
                         <div class="kpi-strip">
                             <div class="kpi-cell"><div class="kpi-value">50+/day</div><div class="kpi-label">Zero-downtime deployments</div></div>
                             <div class="kpi-cell"><div class="kpi-value">65</div><div class="kpi-label">GPU platform scale</div></div>
@@ -208,11 +209,11 @@
                         <div>
                         <div class="sub-label">Key Responsibilities</div>
                         <div class="ledger-row">
-                            <div class="ledger-meta">GPU 45→78%</div>
-                            <div><div class="ledger-sub">65-GPU multi-tenant platform — Slurm, K8s, Triton; utilization 45→78%.</div></div>
+                            <div class="ledger-meta">GPU</div>
+                            <div><div class="ledger-sub">Multi-tenant GPU platform on Slurm, K8s and Triton.</div></div>
                         </div>
                         <div class="ledger-row">
-                            <div class="ledger-meta">-95% FAILS</div>
+                            <div class="ledger-meta">DATABRICKS</div>
                             <div><div class="ledger-sub">Databricks crisis — JVM profiling found driver memory leak; failures −95%.</div></div>
                         </div>
                         <div class="ledger-row">
@@ -220,15 +221,15 @@
                             <div><div class="ledger-sub">FinOps tooling — real-time cost visibility, rightsizing, spot automation.</div></div>
                         </div>
                         <div class="ledger-row">
-                            <div class="ledger-meta">p99 -40%</div>
+                            <div class="ledger-meta">PERFORMANCE</div>
                             <div><div class="ledger-sub">Kernel tuning + perf/strace profiling; GPU profiling with dcgm.</div></div>
                         </div>
                         <div class="ledger-row">
-                            <div class="ledger-meta">0 FINDINGS</div>
+                            <div class="ledger-meta">COMPLIANCE</div>
                             <div><div class="ledger-sub">SOC2, HIPAA, FedRAMP with zero critical findings.</div></div>
                         </div>
                         <div class="ledger-row">
-                            <div class="ledger-meta">TEAM 0→6</div>
+                            <div class="ledger-meta">TEAM</div>
                             <div><div class="ledger-sub">Infrastructure team built 0→6 engineers with on-call rotations.</div></div>
                         </div>
                         </div>
@@ -271,12 +272,11 @@
                         <span class="panel-meta">Wipro Technologies · Feb 2020 – Oct 2023 · Hyderabad, India</span>
                     </div>
                     <div class="panel-body">
-                        <p>Cloud architecture for OSDU R3 on AWS and Azure across major energy clients — GPU-accelerated ingestion and ML pipelines for petabyte-scale seismic data.</p>
+                        <p>Cloud architecture for OSDU across major energy clients — GPU-accelerated ingestion and ML pipelines for seismic data.</p>
                         <div class="kpi-strip">
                             <div class="kpi-cell"><div class="kpi-value">5+</div><div class="kpi-label">Global enterprises</div></div>
                             <div class="kpi-cell"><div class="kpi-value">PB</div><div class="kpi-label">Scale data processing</div></div>
                             <div class="kpi-cell"><div class="kpi-value">R3</div><div class="kpi-label">OSDU Forum upstream</div></div>
-                            <div class="kpi-cell"><div class="kpi-value">2</div><div class="kpi-label">Clouds — AWS &amp; Azure</div></div>
                         </div>
                         <figure class="arch">
                             <img src="../assets/images/osdu-azure-architecture.png" alt="OSDU Azure Architecture">
@@ -370,14 +370,12 @@
                         <div class="kpi-strip">
                             <div class="kpi-cell"><div class="kpi-value">$6M</div><div class="kpi-label">Infrastructure budget</div></div>
                             <div class="kpi-cell"><div class="kpi-value">5</div><div class="kpi-label">Engineer team led</div></div>
-                            <div class="kpi-cell"><div class="kpi-value">CI/CD</div><div class="kpi-label">Jenkins · Ansible · DevSecOps</div></div>
-                            <div class="kpi-cell"><div class="kpi-value">6</div><div class="kpi-label">Compliance regimes</div></div>
                             <div class="kpi-cell"><div class="kpi-value">RTO &lt;4h</div><div class="kpi-label">DR / business continuity</div></div>
                         </div>
                         <div class="sub-label">Key Engagements</div>
                         <div class="ledger-row">
                             <div class="ledger-meta">2018–2020</div>
-                            <div><div class="ledger-title">Harvard Pilgrim Health Care</div><div class="ledger-sub">Built and ran the delivery platform for regulated healthcare workloads: Jenkins/Ansible CI/CD pipelines with DevSecOps controls (HashiCorp Vault secrets, SonarQube, OWASP) enforced in every release. Led cloud modernization of HIPAA/HITRUST-regulated AI/ML applications onto AWS with GPU-enabled EKS clusters and NFS-backed persistent storage; implemented a compliant ML pipeline with end-to-end encryption, audit logging, and secure model serving. Architected the migration against HIPAA, HITRUST, PCI, GDPR, SOC2, and FedRAMP; designed and exercised DR and business-continuity plans. Led a 5-engineer team and a $6M infrastructure budget.</div></div>
+                            <div><div class="ledger-title">Harvard Pilgrim Health Care</div><div class="ledger-sub">HashiCorp Vault secrets, SonarQube and OWASP controls enforced in every release; NFS-backed persistent storage; an ML pipeline with end-to-end encryption, audit logging and secure model serving; DR and business-continuity plans designed and exercised.</div></div>
                         </div>
                         <div class="sub-label">Compliance</div>
                         <div class="row-tags">
@@ -387,10 +385,6 @@
                             <span class="tag">GDPR</span>
                             <span class="tag">SOC2</span>
                             <span class="tag">FedRAMP</span>
-                        </div>
-                        <div class="sub-label">Enterprise Clients</div>
-                        <div class="row-tags">
-                            <span class="tag">Harvard Pilgrim Health Care</span>
                         </div>
                         <div class="sub-label">Technology Stack</div>
                         <div class="row-tags">
@@ -415,9 +409,8 @@
                         <span class="panel-meta">Tata Consultancy Services · May 2007 – Jun 2018 · Hyderabad, India &amp; onsite FL / MD / OH</span>
                     </div>
                     <div class="panel-body">
-                        <p>11 years across Fortune 500 clients in regulated industries — Linux/Unix administration into cloud architecture and infrastructure leadership, early Docker/Kubernetes adoption (2013–14), multi-cloud migrations.</p>
+                        <p>Fortune 500 clients in regulated industries — Linux/Unix administration into cloud architecture, infrastructure leadership and multi-cloud migrations.</p>
                         <div class="kpi-strip">
-                            <div class="kpi-cell"><div class="kpi-value">11</div><div class="kpi-label">Years progressive growth</div></div>
                             <div class="kpi-cell"><div class="kpi-value">12+</div><div class="kpi-label">Facility buildouts</div></div>
                             <div class="kpi-cell"><div class="kpi-value">4</div><div class="kpi-label">Fortune 500 clients</div></div>
                             <div class="kpi-cell"><div class="kpi-value">2013–14</div><div class="kpi-label">Early Docker/K8s adoption</div></div>
@@ -438,14 +431,6 @@
                         <div class="ledger-row">
                             <div class="ledger-meta">2007–2011</div>
                             <div><div class="ledger-title">Verizon &amp; Owens Corning</div><div class="ledger-sub">Deep Linux/Unix administration with WebSphere/WebLogic middleware. JVM optimization, clustering, and HA configurations; large-scale bare-metal production systems serving millions of users.</div></div>
-                        </div>
-                        <div class="sub-label">Enterprise Clients</div>
-                        <div class="row-tags">
-                            <span class="tag">CNA Insurance</span>
-                            <span class="tag">PricewaterhouseCoopers</span>
-                            <span class="tag">Verizon</span>
-                            <span class="tag">Owens Corning</span>
-                            <span class="tag">ASML</span>
                         </div>
                         <div class="sub-label">Technology Stack</div>
                         <div class="row-tags">
@@ -799,6 +784,5 @@
         document.getElementById('reset-filter').addEventListener('click', () => applyFilter('all'));
     </script>
     <!-- Neural Network Background -->
-    <script src="../assets/js/neural-bg.js"></script>
 </body>
 </html>

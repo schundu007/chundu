@@ -18,62 +18,70 @@
     <meta property="og:site_name" content="Sudhakar Chundu">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="404 - Page Not Found | Sudhakar Chundu">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="/assets/js/theme.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Mona Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: 15px;
+            font-size: 16px;
             line-height: 1.55;
-            background: #0d1117;
-            color: #e6edf3;
-            padding: 120px 24px;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 48px 16px;
         }
         .container {
-            max-width: 480px;
+            max-width: 520px;
             margin: 0 auto;
+            padding: 40px 36px;
+            background: var(--gz-canvas);
+            border: 1px solid var(--gz-line);
+            border-radius: var(--gz-r);
         }
         .code {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 3rem;
-            font-weight: 700;
-            color: #76B900;
+            font-family: var(--gz-display);
+            font-size: clamp(72px, 12vw, 120px);
+            font-weight: 500;
+            letter-spacing: -0.05em;
+            color: var(--gz-ink);
             line-height: 1;
         }
         h1 {
-            font-size: 1.125rem;
-            font-weight: 700;
-            margin: 0.75rem 0 0.5rem;
+            font-size: 24px;
+            margin: 12px 0 8px;
         }
         p {
-            font-size: 0.875rem;
-            color: #a1a1aa;
-            margin-bottom: 1.5rem;
+            color: var(--gz-text);
+            margin-bottom: 24px;
         }
-        a {
+        html[data-theme] a.home-btn {
             display: inline-flex;
             align-items: center;
-            min-height: 36px;
-            padding: 0 0.875rem;
-            background: #76B900;
-            color: #0d1117;
+            min-height: 44px;
+            padding: 0 22px;
+            background: var(--gz-blue);
+            color: var(--gz-on-blue);
             text-decoration: none;
-            border-radius: 6px;
-            font-size: 0.875rem;
-            font-weight: 600;
+            border-radius: 999px;
+            font-size: 15px;
+            font-weight: 500;
+            transition: background .15s var(--gz-ease), box-shadow .15s var(--gz-ease);
         }
-        a:hover {
-            background: #7cb0fa;
+        html[data-theme] a.home-btn:hover {
+            background: var(--gz-blue-hover);
+            color: var(--gz-on-blue);
+            box-shadow: var(--gz-elev);
         }
     </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/genz.css">
 </head>
 <body>
     <div class="container">
         <div class="code">404</div>
         <h1>Page Not Found</h1>
         <p>The page you're looking for doesn't exist or has been moved.</p>
-        <a href="/">Back to overview</a>
+        <a class="home-btn" href="/">Back to overview</a>
     </div>
 </body>
 </html>

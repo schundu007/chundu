@@ -16,7 +16,6 @@
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css?v=12">
     <!-- Theme JS (load early to prevent flash) -->
@@ -60,7 +59,7 @@
         .tg-section { margin-top: 2.75rem; scroll-margin-top: 90px; }
         .tg-sec-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.1rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--bg-tertiary); }
         .tg-sec-head h2 { font-size: 1.6rem; letter-spacing: -0.02em; margin: 0; }
-        .tg-count { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--accent-highlight); background: rgba(118,185,0,0.12); padding: 0.15rem 0.55rem; border-radius: var(--radius-full); }
+        .tg-count { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--accent-highlight); background: rgba(26, 115, 232,0.12); padding: 0.15rem 0.55rem; border-radius: var(--radius-full); }
         .tg-topics-line { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin-left: auto; }
 
         /* Card grid */
@@ -105,10 +104,12 @@
             .tg-topics-line { display: none; }
         }
     </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/genz.css">
 </head>
 <body>
     <!-- Neural Network Background -->
-    <canvas id="neural-bg"></canvas>
 
     <nav>
         <div class="nav-container">
@@ -144,21 +145,14 @@
     <main class="main-content">
         <header class="page-header tg-hero">
             <h1>Trending GitHub Repos</h1>
-            <p class="tg-lead">Top 10 per category across DevOps, Platform Engineering, MLOps, SRE, LLMOps, and GPU infrastructure &mdash; ranked by <strong>star velocity</strong> (average stars gained per month over each repo's lifetime, so fast risers beat all-time giants).</p>
-            <div class="kpi-strip tg-kpis">
-                <div class="kpi-cell"><div class="kpi-value">60</div><div class="kpi-label">Repos tracked</div></div>
-                <div class="kpi-cell"><div class="kpi-value">6</div><div class="kpi-label">Categories</div></div>
-                <div class="kpi-cell"><div class="kpi-value">&#9733;/mo</div><div class="kpi-label">Ranked by velocity</div></div>
-                <div class="kpi-cell"><div class="kpi-value">2026-10-05</div><div class="kpi-label">Last updated</div></div>
-            </div>
+            <p class="tg-lead">Top 10 per category, ranked by <strong>star velocity</strong>: average stars gained per month over each repo's lifetime, so fast risers beat all-time giants. Updated 2026-10-05.</p>
         </header>
 
-        <nav class="tg-catnav" aria-label="Categories"><a href="#devops">DevOps <span class="n">10</span></a><a href="#platform-engineering">Platform Engineering <span class="n">10</span></a><a href="#mlops-aiml-pipelines">MLOps / AIML Pipelines <span class="n">10</span></a><a href="#sre-observability">SRE / Observability <span class="n">10</span></a><a href="#ai-platform-llmops">AI Platform / LLMOps <span class="n">10</span></a><a href="#gpu-infra">GPU Stack / Infrastructure <span class="n">10</span></a></nav>
+        <nav class="tg-catnav" aria-label="Categories"><a href="#devops">DevOps</a><a href="#platform-engineering">Platform Engineering</a><a href="#mlops-aiml-pipelines">MLOps / AIML Pipelines</a><a href="#sre-observability">SRE / Observability</a><a href="#ai-platform-llmops">AI Platform / LLMOps</a><a href="#gpu-infra">GPU Stack / Infrastructure</a></nav>
 
         <section class="tg-section" id="devops">
             <div class="tg-sec-head">
                 <h2>DevOps</h2>
-                <span class="tg-count">10 repos</span>
                 <span class="tg-topics-line">devops · gitops · infrastructure-as-code</span>
             </div>
             <div class="tg-grid">
@@ -337,7 +331,6 @@
         <section class="tg-section" id="platform-engineering">
             <div class="tg-sec-head">
                 <h2>Platform Engineering</h2>
-                <span class="tg-count">10 repos</span>
                 <span class="tg-topics-line">platform-engineering · internal-developer-platform · backstage</span>
             </div>
             <div class="tg-grid">
@@ -516,7 +509,6 @@
         <section class="tg-section" id="mlops-aiml-pipelines">
             <div class="tg-sec-head">
                 <h2>MLOps / AIML Pipelines</h2>
-                <span class="tg-count">10 repos</span>
                 <span class="tg-topics-line">mlops · ml-pipeline · machine-learning-operations</span>
             </div>
             <div class="tg-grid">
@@ -695,7 +687,6 @@
         <section class="tg-section" id="sre-observability">
             <div class="tg-sec-head">
                 <h2>SRE / Observability</h2>
-                <span class="tg-count">10 repos</span>
                 <span class="tg-topics-line">sre · observability · site-reliability-engineering</span>
             </div>
             <div class="tg-grid">
@@ -874,7 +865,6 @@
         <section class="tg-section" id="ai-platform-llmops">
             <div class="tg-sec-head">
                 <h2>AI Platform / LLMOps</h2>
-                <span class="tg-count">10 repos</span>
                 <span class="tg-topics-line">llmops · llm-ops · ai-infrastructure · llm-inference</span>
             </div>
             <div class="tg-grid">
@@ -1053,7 +1043,6 @@
         <section class="tg-section" id="gpu-infra">
             <div class="tg-sec-head">
                 <h2>GPU Stack / Infrastructure</h2>
-                <span class="tg-count">10 repos</span>
                 <span class="tg-topics-line">gpu · cuda · gpu-computing</span>
             </div>
             <div class="tg-grid">
@@ -1270,7 +1259,5 @@
             });
         }
     </script>
-    <!-- Neural Network Background -->
-    <script src="../assets/js/neural-bg.js"></script>
 </body>
 </html>
