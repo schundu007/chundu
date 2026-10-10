@@ -136,3 +136,86 @@ body.sh-drawer .sh-status { z-index: 1000; }
 .sh-topbar .nav-user-wrapper { position: relative; }
 .sh-topbar .nav-user { display: flex; padding: 0; border: 1px solid var(--gz-line); border-radius: 50%; background: none; cursor: pointer; }
 .sh-topbar .nav-user-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; display: block; }
+
+/* ══════════════════════════════════════════════════════════════
+   TYPE SCALE — one hierarchy for every page inside the shell.
+   display  page title (h1)            40 → 52px  Google Sans 500
+   h2       section heading            24px       Google Sans 500, "~/" accent
+   h3       panel / card title         18px       Google Sans 500
+   lead     intro paragraph            17px
+   body     paragraphs, descriptions   15px / 1.65
+   meta     dates, orgs, tags (mono)   12.5px
+   label    eyebrows, chips (mono)     11px uppercase
+   ══════════════════════════════════════════════════════════════ */
+:root {
+    --t-display: clamp(40px, 3.6vw, 52px);
+    --t-h2: 24px;
+    --t-h3: 18px;
+    --t-metric: 28px;
+    --t-lead: 17px;
+    --t-body: 15px;
+    --t-meta: 12.5px;
+    --t-label: 11px;
+}
+
+/* Page title */
+html[data-theme] .sh-shell main h1,
+html[data-theme] .sh-shell .page-header h1 { font-size: var(--t-display); line-height: 1.08; letter-spacing: -0.03em; font-weight: 500; margin: 0 0 12px; }
+html[data-theme] .sh-shell .page-header { padding: 32px 0 24px; margin-bottom: 8px; }
+html[data-theme] .sh-shell .page-header p,
+html[data-theme] .sh-shell .section-header p,
+html[data-theme] .sh-shell .tg-lead,
+html[data-theme] .sh-shell .paper-subtitle { font-size: var(--t-lead); line-height: 1.6; color: var(--gz-text); max-width: 68ch; }
+html[data-theme] .sh-shell .page-header .sh-cmd,
+html[data-theme] .sh-cmd { font-size: 13px; line-height: 1.4; margin: 0 0 12px; font-family: var(--gz-mono); color: #188038; }
+html[data-theme='dark'] .sh-shell .page-header .sh-cmd, html[data-theme='dark'] .sh-cmd { color: #81C995; }
+
+/* Section heading */
+html[data-theme] .sh-shell main .section-header h2,
+html[data-theme] .sh-shell main .tg-sec-head h2,
+html[data-theme] .sh-shell main .content-section > h2,
+html[data-theme] .sh-shell main .paper-section > h2,
+html[data-theme] .sh-shell main .section > h2 { font-size: var(--t-h2); line-height: 1.25; letter-spacing: -0.015em; font-weight: 500; margin: 0 0 6px; }
+html[data-theme] .sh-shell main .section-header h2::before,
+html[data-theme] .sh-shell main .tg-sec-head h2::before { content: '~/'; font-family: var(--gz-mono); font-size: .8em; font-weight: 400; color: var(--gz-blue); margin-right: 2px; }
+html[data-theme] .sh-shell main .section-header { margin-bottom: 20px; }
+html[data-theme] .sh-shell main .section { padding-top: 40px; }
+
+/* Panel / card title */
+html[data-theme] .sh-shell main .panel-head h2,
+html[data-theme] .sh-shell main .panel h2,
+html[data-theme] .sh-shell main h3 { font-size: var(--t-h3); line-height: 1.35; letter-spacing: -0.01em; font-weight: 500; }
+html[data-theme] .sh-shell main h4 { font-size: 16px; line-height: 1.4; font-weight: 500; }
+html[data-theme] .sh-shell main .article-title,
+html[data-theme] .sh-shell main .repo-name,
+html[data-theme] .sh-shell main .tg-name,
+html[data-theme] .sh-shell main .ledger-title { font-size: 16px; line-height: 1.4; font-weight: 500; }
+
+/* Big numbers */
+html[data-theme] .sh-shell main .kpi-value,
+html[data-theme] .sh-shell main .metric { font-size: var(--t-metric); line-height: 1.15; letter-spacing: -0.025em; font-weight: 500; }
+html[data-theme] .sh-shell main .tg-stars { font-size: 22px; }
+
+/* Body copy */
+html[data-theme] .sh-shell main p,
+html[data-theme] .sh-shell main li,
+html[data-theme] .sh-shell main .ledger-sub,
+html[data-theme] .sh-shell main .repo-description,
+html[data-theme] .sh-shell main .tg-desc,
+html[data-theme] .sh-shell main .dir-desc { font-size: var(--t-body); line-height: 1.65; }
+
+/* Meta + labels */
+html[data-theme] .sh-shell main .ledger-meta,
+html[data-theme] .sh-shell main .panel-meta,
+html[data-theme] .sh-shell main .repo-meta-item,
+html[data-theme] .sh-shell main .entry-category,
+html[data-theme] .sh-shell main .tg-topics-line,
+html[data-theme] .sh-shell main .kpi-label,
+html[data-theme] .sh-shell main .tag,
+html[data-theme] .sh-shell main .index-label,
+html[data-theme] .sh-shell main .username,
+html[data-theme] .sh-shell main .entry-date { font-size: var(--t-meta); }
+html[data-theme] .sh-shell main .sub-label,
+html[data-theme] .sh-shell main .contact-label,
+html[data-theme] .sh-shell main .github-stat-label,
+html[data-theme] .sh-shell main .entry-flag { font-size: var(--t-label); letter-spacing: .08em; }

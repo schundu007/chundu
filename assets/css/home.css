@@ -103,3 +103,26 @@ html[data-theme] .card h3 { margin: 8px 0 2px; font-size: 1.02rem; font-weight: 
     .earlier-row { grid-template-columns: 1fr; gap: .25rem; }
     .status-strip a { margin-left: 0; }
 }
+
+/* Homepage on the shared type scale (tokens in shell.css). The hero name is
+   the one place that steps above --t-display; everything else maps 1:1. */
+html[data-theme] .sh-shell .hero h1 { font-size: clamp(44px, 5vw, 64px); line-height: 1.02; letter-spacing: -0.035em; margin: 0; }
+html[data-theme] .sh-shell .hero .cmd { font-size: 13px; line-height: 1.4; margin: 0 0 16px; }
+html[data-theme] .sh-shell .hero .role { font-size: 18px; margin: 16px 0 20px; }
+html[data-theme] .sh-shell .hero p.lede { font-size: var(--t-lead); line-height: 1.7; }
+html[data-theme] .sh-shell .blk-head h2 { font-family: var(--gz-display); font-size: var(--t-h2); line-height: 1.25; font-weight: 500; letter-spacing: -0.015em; text-transform: none; }
+html[data-theme] .sh-shell .blk-head h2 .tilde { font-family: var(--gz-mono); font-size: .8em; font-weight: 400; margin-right: 2px; }
+html[data-theme] .sh-shell .blk-head a, .blk-note { font-size: var(--t-meta); }
+html[data-theme] .sh-shell .card h3 { font-size: var(--t-h3); margin: 8px 0 4px; }
+html[data-theme] .sh-shell .card .org { font-size: var(--t-meta); line-height: 1.5; }
+html[data-theme] .sh-shell .card p.desc { font-size: var(--t-body); }
+html[data-theme] .sh-shell .card-meta, .tags, .earlier-row .when, .quote .who, #apps .dir-url, .cert-list .k { font-size: var(--t-meta); }
+html[data-theme] .sh-shell .badge { font-size: var(--t-label); }
+html[data-theme] .sh-shell .earlier-row .what, .cert-list li { font-size: var(--t-body); }
+html[data-theme] .sh-shell .earlier-row .num { font-size: var(--t-meta); }
+html[data-theme] .sh-shell .quote blockquote { font-size: var(--t-lead); line-height: 1.55; }
+html[data-theme] .sh-shell #apps .dir-name { font-size: 16px; }
+html[data-theme] .sh-shell #apps .dir-desc { font-size: 14px; }
+html[data-theme] .sh-shell .links li { font-size: 14px; }
+html[data-theme] .sh-shell .status-strip { font-size: var(--t-meta); }
+html[data-theme] .sh-shell .btn-g { font-size: 13px; }
