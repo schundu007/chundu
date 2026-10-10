@@ -68,7 +68,7 @@ Copy `api/.env.example` to `api/.env` and configure:
 The frontend is a static HTML/CSS/JS site served via GitHub Pages. No build step or framework.
 
 **Main pages:**
-- `index.html` - Single-page overview: identity header, About, KPI strip, experience ledger, recommendations, resume panel, focus areas, and the auto-generated "Live Apps & Tools" directory
+- `index.html` - Single-page overview in an IDE-style shell (sticky top bar, file-tree sidebar with scroll-spy, vim-like status bar): `$ cat ~/about.md` hero with typed role line, `~/experience` + credentials/education, `~/work` (3 headline projects + earlier list), the auto-generated `~/apps` directory, recommendations, and `~/contact` with the `#resume` card. Shell styles are inline in the page and sit on genz.css tokens
 - `404.html` - Custom 404 error page
 - `projects/index.html` - Enterprise projects, conference talks, publications, and the blog index (anchors: `#conferences`, `#publications`, `#blog`)
 - `opensource/index.html` - Upstream OSDU contributions, GitHub repos/gists (live API), and Medium articles

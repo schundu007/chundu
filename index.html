@@ -38,338 +38,6 @@
     <!-- Theme JS (load early to prevent flash) -->
     <script src="assets/js/theme.js"></script>
 
-    <style>
-        /* Increased base font size and content width for readability */
-        html { font-size: 18px; }
-        body { font-size: 1rem; }
-        .main-content { max-width: 1320px; }
-
-        /* Ambient Background Canvas */
-        #neural-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            will-change: transform;
-        }
-
-        /* Identity header (book-style: bare) */
-        .identity {
-            margin-top: 76px;
-            padding: 0;
-            background: transparent;
-            border: none;
-            display: flex;
-            align-items: center;
-            gap: 1.25rem;
-            flex-wrap: wrap;
-        }
-
-        .identity-photo {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: center top;
-            border: 1px solid var(--bg-tertiary);
-            flex-shrink: 0;
-        }
-
-        .identity-main {
-            flex: 1;
-            min-width: 240px;
-        }
-
-        .identity-main h1 {
-            margin-bottom: 0.125rem;
-            font-size: 1.75rem;
-            font-weight: 900;
-            letter-spacing: -0.025em;
-        }
-
-        .identity-role {
-            font-size: 0.8125rem;
-            color: var(--text-secondary);
-        }
-
-        .identity-role strong {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .identity-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.375rem;
-            margin-top: 0.375rem;
-            font-family: var(--font-mono);
-            font-size: 0.6875rem;
-            color: var(--text-secondary);
-        }
-
-        .identity-status .dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: #34d399;
-            flex-shrink: 0;
-        }
-
-        .identity-actions {
-            display: flex;
-            gap: 0.625rem;
-            flex-wrap: wrap;
-        }
-
-        /* Universe-style ticker strip (static) */
-        .ticker {
-            margin-top: 12px;
-            padding: 0.55rem 0;
-            border-top: 1px solid var(--bg-tertiary);
-            border-bottom: 1px solid var(--bg-tertiary);
-            overflow: hidden;
-            white-space: nowrap;
-            font-family: var(--font-sans);
-            font-size: 0.8125rem;
-            font-weight: 800;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--text-primary);
-            text-align: center;
-        }
-
-        .ticker .sep {
-            color: var(--accent-highlight);
-            margin: 0 0.875rem;
-        }
-
-        /* Dashboard grid */
-        .dash-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-            gap: 12px;
-            align-items: start;
-            margin-top: 12px;
-        }
-
-        .dash-col {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            min-width: 0;
-        }
-
-        @media (max-width: 900px) {
-            .dash-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Experience ledger extras */
-        .ledger-company {
-            color: var(--accent-blue);
-            font-weight: 500;
-        }
-
-        .ledger-clients {
-            font-family: var(--font-mono);
-            font-size: 0.6875rem;
-            color: var(--text-muted);
-            margin-top: 0.25rem;
-        }
-
-        /* Focus list */
-        .focus-list {
-            display: grid;
-            grid-template-columns: 1fr;
-        }
-
-        .focus-row {
-            display: flex;
-            gap: 0.625rem;
-            align-items: baseline;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid var(--bg-tertiary);
-        }
-
-        .focus-row:last-child {
-            border-bottom: none;
-        }
-
-        .focus-row i {
-            font-size: 0.6875rem;
-            color: var(--accent-blue);
-            width: 14px;
-            text-align: center;
-            flex-shrink: 0;
-        }
-
-        .focus-row .focus-name {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            white-space: nowrap;
-        }
-
-        .focus-row .focus-detail {
-            font-size: 0.71875rem;
-            color: var(--text-muted);
-            font-family: var(--font-mono);
-        }
-
-        /* Quotes */
-        .quote-row {
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--bg-tertiary);
-        }
-
-        .quote-row:last-child {
-            border-bottom: none;
-        }
-
-        .quote-text {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            line-height: 1.55;
-            margin-bottom: 0.375rem;
-        }
-
-        .quote-attr {
-            font-family: var(--font-mono);
-            font-size: 0.6875rem;
-            color: var(--text-muted);
-        }
-
-        .quote-attr strong {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        /* Resume panel */
-        .resume-meta {
-            font-family: var(--font-mono);
-            font-size: 0.6875rem;
-            color: var(--text-muted);
-        }
-
-        .resume-file-row {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 0;
-        }
-
-        .resume-file-row > i {
-            font-size: 1.125rem;
-            color: var(--accent-blue);
-            flex-shrink: 0;
-        }
-
-        .resume-file-info {
-            flex: 1;
-            min-width: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 0.125rem;
-        }
-
-        .resume-file-name {
-            font-size: 0.8125rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .resume-file-sub {
-            font-size: 0.6875rem;
-            color: var(--text-muted);
-            font-family: var(--font-mono);
-        }
-
-        .resume-admin {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.625rem 0;
-            border-top: 1px solid var(--bg-tertiary);
-        }
-
-        .resume-admin[hidden] {
-            display: none;
-        }
-
-        .resume-admin .btn {
-            min-height: 30px;
-            padding: 0.25rem 0.75rem;
-            font-size: 0.75rem;
-        }
-
-        .resume-admin-status {
-            font-family: var(--font-mono);
-            font-size: 0.6875rem;
-            color: var(--text-muted);
-        }
-
-        .resume-admin-status.error {
-            color: #f87171;
-        }
-
-        /* Quick links */
-        .quicklinks {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .quicklink {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 0.75rem 0.5rem 0;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            border-bottom: 1px solid var(--bg-tertiary);
-            transition: var(--transition-fast);
-        }
-
-        .quicklink:nth-child(odd) {
-            border-right: 1px solid var(--bg-tertiary);
-        }
-
-        .quicklink:nth-last-child(-n+2) {
-            border-bottom: none;
-        }
-
-        .quicklink:hover {
-            color: var(--accent-blue);
-            background: rgba(26, 115, 232, 0.04);
-        }
-
-        .quicklink i {
-            font-size: 0.6875rem;
-            width: 14px;
-            text-align: center;
-            color: var(--accent-blue);
-        }
-
-        @media (max-width: 560px) {
-            .identity {
-                margin-top: 64px;
-                padding: 16px;
-            }
-
-            .identity-actions {
-                width: 100%;
-            }
-
-            .identity-actions .btn {
-                flex: 1;
-            }
-        }
-    </style>
     <script type="application/ld+json">
 {
         "@context": "https://schema.org",
@@ -438,301 +106,351 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/genz.css">
+    <style>
+        /* ── IDE shell: top bar · file-tree sidebar · main · status bar ──
+           Layout after a terminal/editor; colour, type and shape stay in the
+           Google register from genz.css (ink text, blue action, four-colour
+           rule, Google Sans display, Roboto Mono for the "terminal" voice). */
+        html { font-size: 16px; scroll-behavior: smooth; scroll-padding-top: 72px; }
+        @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+        html[data-theme] body { margin: 0; padding-bottom: 34px; }
+
+        .skip { position: absolute; left: -999px; top: 8px; z-index: 300; padding: 8px 14px; border-radius: 999px; background: var(--gz-blue); color: var(--gz-on-blue) !important; }
+        .skip:focus { left: 12px; }
+
+        /* Top bar */
+        .topbar { position: sticky; top: 0; z-index: 100; height: 56px; display: flex; align-items: center; gap: 1rem; padding: 0 20px; background: var(--nav-bg); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--gz-line); }
+        .topbar::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: linear-gradient(90deg, #4285F4 0 25%, #EA4335 25% 50%, #FBBC04 50% 75%, #34A853 75%); }
+        .brand { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--gz-mono); font-weight: 500; font-size: .95rem; color: var(--gz-ink) !important; text-decoration: none; }
+        .brand .prompt { color: #34A853; }
+        .crumb { font-family: var(--gz-mono); font-size: .8rem; color: var(--gz-text-3); }
+        .topnav { margin-left: auto; display: flex; align-items: center; gap: .25rem; }
+        html[data-theme] .topnav a { font-family: var(--gz-mono); font-size: .85rem; color: var(--gz-text); padding: 6px 12px; border-radius: 999px; text-decoration: none; transition: background .2s var(--gz-ease), color .2s; }
+        html[data-theme] .topnav a:hover { background: var(--gz-surface-2); color: var(--gz-ink); }
+        html[data-theme] .topnav a.active { background: var(--gz-ink); color: var(--gz-canvas); }
+        .chip-btn { display: inline-flex; align-items: center; gap: .4rem; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--gz-line); background: transparent; color: var(--gz-text); font-family: var(--gz-mono); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; }
+        .chip-btn:hover { background: var(--gz-surface-2); color: var(--gz-ink); }
+        .chip-btn .on { color: var(--gz-ink); font-weight: 500; }
+        .chip-btn .off { opacity: .5; }
+        .menu-btn { display: none; }
+        .topbar .nav-auth .btn-signin { height: 32px; padding: 0 14px; border-radius: 999px; font-size: .8rem; }
+
+        /* Shell */
+        .shell { display: grid; grid-template-columns: 232px minmax(0, 1fr); max-width: 1440px; margin: 0 auto; }
+        .tree { position: sticky; top: 56px; align-self: start; height: calc(100vh - 56px - 34px); overflow-y: auto; padding: 24px 16px 20px 20px; border-right: 1px solid var(--gz-line); display: flex; flex-direction: column; gap: 22px; font-family: var(--gz-mono); font-size: .84rem; box-sizing: border-box; }
+        .tree ul { list-style: none; margin: 0; padding: 0; }
+        .tree ul ul { margin-left: 14px; }
+        .tree li { position: relative; padding-left: 16px; }
+        .tree li::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; border-left: 1px solid var(--gz-line); }
+        .tree li:last-child::before { bottom: auto; height: 15px; }
+        .tree li::after { content: ''; position: absolute; left: 0; top: 15px; width: 10px; border-top: 1px solid var(--gz-line); }
+        html[data-theme] .tree a { display: block; padding: 4px 8px; border-radius: 8px; color: var(--gz-text); text-decoration: none; }
+        html[data-theme] .tree a:hover { background: var(--gz-surface-2); color: var(--gz-ink); }
+        html[data-theme] .tree a.current { background: var(--gz-blue-soft); color: var(--gz-blue); }
+        .tree-label { margin: 0 0 8px; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gz-text-3); }
+        html[data-theme] .elsewhere a { display: flex; align-items: center; gap: .55rem; padding: 3px 0; color: var(--gz-text); text-decoration: none; font-size: .8rem; }
+        html[data-theme] .elsewhere a:hover { color: var(--gz-blue); }
+        .elsewhere i { width: 14px; text-align: center; color: var(--gz-text-3); }
+        .otw-card { margin-top: auto; padding: 12px 14px; border: 1px solid var(--gz-line); border-radius: var(--gz-r-sm); background: var(--gz-canvas); }
+        .otw-card p { margin: 8px 0 0; font-size: .76rem; line-height: 1.5; color: var(--gz-text); }
+        .badge { display: inline-flex; align-items: center; gap: .4rem; padding: 2px 9px; border-radius: 999px; font-family: var(--gz-mono); font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; border: 1px solid currentColor; white-space: nowrap; }
+        .badge.green { color: var(--accent-green); }
+        .badge.green::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+        .badge.grey { color: var(--gz-text-3); }
+
+        /* Main */
+        .main { min-width: 0; padding: 40px clamp(20px, 4vw, 56px) 64px; }
+        .main > section { max-width: 1080px; }
+
+        .hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 40px; align-items: center; padding: 16px 0 40px; border-bottom: 1px solid var(--gz-line); }
+        .cmd { font-family: var(--gz-mono); font-size: .85rem; color: #188038; margin: 0 0 18px; }
+        html[data-theme='dark'] .cmd { color: #81C995; }
+        html[data-theme] .hero h1 { margin: 0; font-size: clamp(2.6rem, 6vw, 4.6rem); line-height: 1.02; letter-spacing: -0.035em; font-weight: 500; }
+        .role { margin: 18px 0 22px; font-family: var(--gz-mono); font-size: clamp(1rem, 1.8vw, 1.25rem); color: var(--gz-blue); min-height: 1.5em; }
+        .caret { display: inline-block; width: .55em; height: 1.1em; margin-left: 2px; vertical-align: -.18em; background: var(--gz-blue); animation: blink 1.05s steps(1) infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+        @media (prefers-reduced-motion: reduce) { .caret { animation: none; } }
+        .hero p.lede { margin: 0 0 14px; max-width: 60ch; font-size: 1.02rem; line-height: 1.7; color: var(--gz-text); }
+        .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+        .btn-g { display: inline-flex; align-items: center; gap: .5rem; height: 44px; padding: 0 22px; border-radius: 999px; font-family: var(--gz-mono); font-size: .86rem; font-weight: 500; text-decoration: none; border: 1px solid var(--gz-line); color: var(--gz-ink) !important; background: var(--gz-canvas); transition: box-shadow .2s var(--gz-ease), background .2s; box-sizing: border-box; }
+        .btn-g:hover { box-shadow: var(--gz-elev); background: var(--gz-surface); }
+        .btn-g.primary { background: var(--gz-blue); border-color: var(--gz-blue); color: var(--gz-on-blue) !important; }
+        .btn-g.primary:hover { background: var(--gz-blue-hover); }
+        .avatar { width: clamp(180px, 20vw, 240px); aspect-ratio: 1; border-radius: 50%; padding: 6px; box-sizing: border-box; background: conic-gradient(#4285F4 0 25%, #EA4335 0 50%, #FBBC04 0 75%, #34A853 0); }
+        .avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; object-position: center top; border: 5px solid var(--gz-canvas); display: block; box-sizing: border-box; }
+
+        .status-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 32px 0 8px; padding: 12px 18px; border: 1px solid var(--gz-line); border-radius: var(--gz-r-sm); background: var(--gz-canvas); font-family: var(--gz-mono); font-size: .8rem; color: var(--gz-text); }
+        .status-strip .sep { color: var(--gz-text-3); }
+        .status-strip a { margin-left: auto; text-decoration: none; font-weight: 500; }
+
+        .blk { padding-top: 48px; }
+        .blk-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 18px; }
+        html[data-theme] .blk-head h2 { margin: 0; font-family: var(--gz-mono); font-size: 1.15rem; font-weight: 500; letter-spacing: 0; text-transform: uppercase; }
+        .blk-head h2 .tilde { color: var(--gz-blue); }
+        .blk-head a { font-family: var(--gz-mono); font-size: .8rem; text-decoration: none; }
+
+        .two-col { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+        .stack { display: flex; flex-direction: column; gap: 12px; }
+        .card { padding: 18px 20px; border: 1px solid var(--gz-line); border-radius: var(--gz-r-md); background: var(--gz-canvas); transition: box-shadow .2s var(--gz-ease); }
+        .card:hover { box-shadow: var(--gz-elev); }
+        .card-meta { display: flex; justify-content: space-between; align-items: center; gap: .5rem; font-family: var(--gz-mono); font-size: .74rem; color: var(--gz-text-3); }
+        html[data-theme] .card h3 { margin: 8px 0 2px; font-size: 1.02rem; font-weight: 500; }
+        .card .org { margin: 0; font-family: var(--gz-mono); font-size: .8rem; color: var(--gz-blue); }
+        .card p.desc { margin: 10px 0 0; font-size: .92rem; line-height: 1.65; color: var(--gz-text); }
+
+        .cert-list { list-style: none; margin: 0; padding: 0; }
+        .cert-list li { display: flex; gap: .7rem; align-items: baseline; padding: 9px 0; border-bottom: 1px solid var(--gz-line); font-size: .92rem; color: var(--gz-ink); }
+        .cert-list li:last-child { border-bottom: 0; }
+        .cert-list .k { font-family: var(--gz-mono); font-size: .72rem; color: var(--gz-text-3); min-width: 3.2rem; }
+
+        .work-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+        .metric { display: block; font-size: 1.7rem; font-weight: 500; letter-spacing: -0.03em; color: var(--gz-ink); line-height: 1.15; margin-top: 6px; }
+        .tags { margin-top: 14px; font-family: var(--gz-mono); font-size: .72rem; color: var(--gz-text-3); }
+        .earlier { margin-top: 14px; border: 1px solid var(--gz-line); border-radius: var(--gz-r-md); background: var(--gz-canvas); }
+        .earlier-row { display: grid; grid-template-columns: 9rem minmax(0, 1fr) auto; gap: 1rem; align-items: baseline; padding: 14px 20px; border-bottom: 1px solid var(--gz-line); }
+        .earlier-row:last-child { border-bottom: 0; }
+        .earlier-row .when { font-family: var(--gz-mono); font-size: .74rem; color: var(--gz-text-3); }
+        .earlier-row .what { font-size: .92rem; color: var(--gz-text); }
+        .earlier-row .what strong { font-weight: 500; }
+        .earlier-row .num { font-family: var(--gz-mono); font-size: .8rem; color: var(--gz-ink); white-space: nowrap; }
+
+        .quotes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+        .quote { margin: 0; }
+        .quote blockquote { margin: 0; font-size: 1rem; line-height: 1.55; color: var(--gz-ink); }
+        .quote .who { margin: 14px 0 0; font-family: var(--gz-mono); font-size: .74rem; color: var(--gz-text-3); }
+        .quote .who strong { font-weight: 500; }
+
+        #apps .dir-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+        #apps .dir-card { display: flex; flex-direction: column; gap: .45rem; padding: 18px 20px; border: 1px solid var(--gz-line); border-radius: var(--gz-r-md); background: var(--gz-canvas); text-decoration: none; transition: box-shadow .2s var(--gz-ease); }
+        #apps .dir-card:hover { box-shadow: var(--gz-elev); }
+        #apps .dir-card-top { display: flex; justify-content: space-between; align-items: center; gap: .5rem; }
+        #apps .dir-name { font-size: 1rem; font-weight: 500; color: var(--gz-ink); }
+        #apps .dir-card-top i { font-size: .72rem; color: var(--gz-text-3); }
+        #apps .dir-card:hover .dir-name { color: var(--gz-blue); }
+        #apps .dir-desc { margin: 0; font-size: .86rem; line-height: 1.55; color: var(--gz-text); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        #apps .dir-url { margin-top: auto; padding-top: 4px; font-family: var(--gz-mono); font-size: .7rem; color: var(--gz-text-3); }
+
+        .contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+        .links { list-style: none; margin: 0; padding: 0; font-family: var(--gz-mono); font-size: .88rem; }
+        .links li { padding: 7px 0; border-bottom: 1px solid var(--gz-line); display: flex; gap: .8rem; }
+        .links li:last-child { border-bottom: 0; }
+        .links .k { min-width: 5.5rem; color: var(--gz-text-3); }
+        .links a { text-decoration: none; overflow-wrap: anywhere; }
+        .resume-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+        .resume-admin { display: flex; align-items: center; gap: .5rem; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--gz-line); }
+        .resume-admin[hidden] { display: none; }
+        .resume-admin .btn { min-height: 30px; padding: .25rem .75rem; font-size: .75rem; }
+        .resume-admin-status { font-family: var(--gz-mono); font-size: .7rem; color: var(--gz-text-3); }
+        .resume-admin-status.error { color: #EA4335; }
+
+        /* Status bar (editor footer) */
+        .statusbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 90; height: 34px; display: flex; align-items: center; gap: 12px; padding: 0 16px; background: var(--nav-bg); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-top: 1px solid var(--gz-line); font-family: var(--gz-mono); font-size: .72rem; color: var(--gz-text-3); box-sizing: border-box; }
+        html[data-theme] .statusbar { margin: 0; text-align: left; }
+        .statusbar .mode { padding: 1px 8px; border-radius: 6px; background: #188038; color: #fff; font-weight: 500; letter-spacing: .06em; }
+        .statusbar .mid { margin: 0 auto; }
+        .statusbar .right { white-space: nowrap; }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .work-grid, .quotes { grid-template-columns: 1fr; }
+            .two-col { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 900px) {
+            .shell { grid-template-columns: 1fr; }
+            .tree { position: fixed; top: 56px; left: 0; width: 260px; height: calc(100dvh - 90px); z-index: 95; background: var(--gz-canvas); transform: translateX(-102%); transition: transform .25s var(--gz-ease); box-shadow: var(--gz-elev); }
+            body.tree-open .tree { transform: none; }
+            .menu-btn { display: inline-flex; }
+            html[data-theme] .topnav a { display: none; }
+            .topnav { margin-left: auto; }
+            .crumb { display: none; }
+        }
+        @media (max-width: 640px) {
+            .topbar { padding: 0 16px; gap: .5rem; }
+            .topbar .nav-auth, .chip-btn .lbl { display: none; }
+            .main { padding: 24px 16px 48px; }
+            .hero { grid-template-columns: 1fr; gap: 24px; }
+            .avatar { order: -1; width: 128px; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .earlier-row { grid-template-columns: 1fr; gap: .25rem; }
+            .status-strip a { margin-left: 0; }
+            .statusbar .mid, #status-file { display: none; }
+            .statusbar .right { margin-left: auto; }
+        }
+    </style>
 </head>
 <body>
-    <!-- Neural Network Background -->
-    <canvas id="neural-bg"></canvas>
+    <a class="skip" href="#main">Skip to content</a>
 
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <a href="./" class="logo">
-                <img src="assets/images/profile.jpg" alt="Sudhakar Chundu" class="logo-icon">
-                Sudhakar Chundu
-            </a>
-            <ul class="nav-links">
-                <li><a href="./" class="active">Overview</a></li>
-                <li><a href="projects/">Projects</a></li>
-                <li><a href="opensource/">Open Source</a></li>
-                <li><a href="trending-gitrepos/">Trending</a></li>
-                <div class="nav-social">
-                    <a href="https://github.com/schundu007" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/schundu007/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                </div>
-                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
-                    <i class="fas fa-moon"></i>
-                    <i class="fas fa-sun"></i>
-                </button>
-                <div class="nav-auth">
-                    <button class="btn-signin" onclick="showLoginModal()">Sign In</button>
-                </div>
-            </ul>
-            <button class="mobile-menu-btn" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+    <header class="topbar">
+        <button class="chip-btn menu-btn" type="button" aria-label="Toggle file tree" aria-expanded="false" id="menu-btn"><i class="fas fa-bars"></i></button>
+        <a href="/" class="brand"><span class="prompt">&gt;_</span> sudhakar</a>
+        <span class="crumb" id="crumb">~/about.md</span>
+        <nav class="topnav" aria-label="Primary">
+            <a href="#about" class="active">about</a>
+            <a href="projects/">work</a>
+            <a href="opensource/">open source</a>
+            <a href="projects/#blog">writing</a>
+            <a href="trending-gitrepos/">trending</a>
+            <a href="#contact">contact</a>
+        </nav>
+        <button class="chip-btn" type="button" onclick="toggleTheme()" aria-label="Toggle colour theme" id="theme-btn">
+            <i class="fas fa-circle-half-stroke"></i><span class="lbl"><span data-t="dark">dark</span> <span data-t="light">light</span></span>
+        </button>
+        <div class="nav-auth">
+            <button class="btn-signin" onclick="showLoginModal()">Sign In</button>
         </div>
-    </nav>
+    </header>
 
-    <main class="main-content">
-        <!-- Identity header -->
-        <header class="identity">
-            <img src="assets/images/profile.jpg" alt="Sudhakar Chundu" class="identity-photo" loading="eager">
-            <div class="identity-main">
-                <h1>Sudhakar Chundu</h1>
-                <p class="identity-role"><strong>Platform &amp; DevOps Architect</strong> · SRE · GPU Infrastructure · Platform Engineering · FinOps</p>
-                <span class="identity-status"><span class="dot"></span>Open to staff-level IC roles · US-based</span>
+    <div class="shell">
+        <aside class="tree" id="tree" aria-label="Site sections">
+            <nav class="tree-nav" aria-label="Sections">
+                <ul>
+                    <li><a href="#about">about</a></li>
+                    <li><a href="#experience">experience</a></li>
+                    <li><a href="#work">work/</a>
+                        <ul>
+                            <li><a href="#work">gpu platform</a></li>
+                            <li><a href="#work">finops</a></li>
+                            <li><a href="#work">ci/cd</a></li>
+                            <li><a href="projects/">all projects</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#apps">apps/</a></li>
+                    <li><a href="projects/#blog">writing/</a></li>
+                    <li><a href="opensource/">opensource/</a></li>
+                    <li><a href="trending-gitrepos/">trending/</a></li>
+                    <li><a href="#contact">contact</a></li>
+                </ul>
+            </nav>
+            <div class="elsewhere">
+                <p class="tree-label">Elsewhere</p>
+                <a href="https://github.com/schundu007" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>github</a>
+                <a href="https://www.linkedin.com/in/schundu007/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i>linkedin</a>
+                <a href="https://schundu.medium.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-medium"></i>medium</a>
+                <a href="assets/resume/Sudhakar_Chundu_Master_Resume.pdf" class="resume-download" download><i class="far fa-file-lines"></i>résumé.pdf</a>
             </div>
-            <div class="identity-actions">
-                <a href="assets/resume/Sudhakar_Chundu_Master_Resume.pdf" class="btn btn-primary resume-download" download>
-                    <i class="fas fa-download"></i>
-                    Download Resume
-                </a>
-                <a href="https://www.linkedin.com/in/schundu007/" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-linkedin"></i>
-                    LinkedIn
-                </a>
+            <div class="otw-card">
+                <span class="badge green">Open to work</span>
+                <p>Staff-level IC roles in SRE, platform &amp; GPU infrastructure · US-based.</p>
             </div>
-        </header>
+        </aside>
 
-        <!-- About (merged from /about/) -->
-        <section class="section" id="about" aria-labelledby="about-title">
-            <div class="section-header">
-                <h2 id="about-title">About</h2>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.6;">
-                <p>18+ years across the full evolution of cloud computing — bare-metal data centers to multi-cloud Kubernetes to GPU-accelerated AI/ML platforms — for Fortune 500 clients in energy, healthcare, insurance and telecom. Currently a Platform &amp; DevOps Architect at CloudScouts.</p>
-                <p>Performance engineering is the specialty, profiled with flame graphs, strace and Wireshark. Primary on-call owner running SRE end to end: SLOs, error budgets, blameless postmortems, chaos engineering, AIOps. Certified AWS SA Professional, Azure SA Expert, GCP Professional Cloud Architect, CKA and HashiCorp Terraform Associate. B.E. Mechanical Engineering, Acharya Nagarjuna University (2005).</p>
-                
-            </div>
-        </section>
+        <main class="main" id="main">
+            <section class="hero" id="about" data-file="~/about.md">
+                <div>
+                    <p class="cmd">$ cat ~/about.md</p>
+                    <h1>Sudhakar<br>Chundu</h1>
+                    <p class="role"><span id="typed">Platform &amp; DevOps Architect</span><span class="caret" aria-hidden="true"></span></p>
+                    <p class="lede">18+ years across the full evolution of cloud computing: bare-metal data centers to multi-cloud Kubernetes to GPU-accelerated AI/ML platforms, for Fortune 500 clients in energy, healthcare, insurance and telecom.</p>
+                    <p class="lede">I run SRE end to end as primary on-call owner (SLOs, error budgets, blameless postmortems), and performance engineering is the specialty: flame graphs, strace, Wireshark.</p>
+                    <div class="cta">
+                        <a href="#work" class="btn-g primary">View selected work →</a>
+                        <a href="projects/#blog" class="btn-g">Read the blog</a>
+                    </div>
+                </div>
+                <div class="avatar"><img src="assets/images/profile.jpg" alt="Sudhakar Chundu" loading="eager"></div>
+            </section>
 
-        <!-- Selected projects from earlier roles -->
-        <section class="section" id="highlights" aria-labelledby="highlights-title">
-            <div class="section-header">
-                <h2 id="highlights-title">Selected Projects</h2>
-            </div>
-            <style>
-                #highlights .hl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 1rem; }
-                #highlights .hl-card { display: flex; flex-direction: column; gap: 0.5rem; padding: 1.1rem 1.2rem; background: var(--bg-card); border: 1px solid var(--bg-tertiary); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); }
-                #highlights .hl-org { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
-                #highlights .hl-metric { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 1.25rem; font-weight: 700; color: var(--accent-highlight); line-height: 1.2; }
-                #highlights .hl-name { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); }
-                #highlights .hl-desc { font-size: 0.8125rem; line-height: 1.5; color: var(--text-secondary); margin: 0; }
-                #highlights .hl-stack { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); margin-top: auto; }
-            </style>
-            <p class="hl-group">Trackonomy · 2023–2026</p>
-            <div class="hl-grid">
-                <article class="hl-card is-lead">
-                                        <span class="hl-metric">65 GPUs · 99.97%</span>
-                    <span class="hl-name">Bare-metal GPU training platform</span>
-                    <p class="hl-desc">Designed and ran an 8-node GPU cluster from scratch. Utilization went from 45% to 78%, queue waits fell 60% and p99 latency fell 40%.</p>
-                    <span class="hl-stack">Slurm · Slinky · NVIDIA BCM · Kubernetes</span>
-                </article>
-                <article class="hl-card">
-                                        <span class="hl-metric">−73% · $8M+/yr</span>
-                    <span class="hl-name">Cloud cost takeout</span>
-                    <p class="hl-desc">Cut infrastructure spend from $10M to $2.7M a year, with zero critical findings across SOC 2, HIPAA and FedRAMP.</p>
-                    <span class="hl-stack">FinOps · Terraform · Datadog</span>
-                </article>
-                <article class="hl-card">
-                                        <span class="hl-metric">Days → 15 min</span>
-                    <span class="hl-name">CI/CD for 100+ applications</span>
-                    <p class="hl-desc">GitOps delivery platform running 50+ zero-downtime deployments a day. Cycle time dropped 95%.</p>
-                    <span class="hl-stack">ArgoCD · Kubernetes · GitOps</span>
-                </article>
-            </div>
-            <p class="hl-group">Earlier</p>
-            <div class="hl-grid">
-                <article class="hl-card">
-                    <span class="hl-org">Wipro · OSDU · 2020–2023</span>
-                    <span class="hl-metric">99.95–99.99%</span>
-                    <span class="hl-name">OSDU energy data platform</span>
-                    <p class="hl-desc">Built the OSDU R3 platform on AKS and then EKS with DR at RPO &lt;1h / RTO &lt;4h. The deployment code is contributed <a href="opensource/">upstream</a>.</p>
-                    <span class="hl-stack">Azure · AWS · Terraform · Kubernetes</span>
-                </article>
-                <article class="hl-card">
-                    <span class="hl-org">NTT Data · 2018–2020</span>
-                    <span class="hl-metric">HIPAA · HITRUST</span>
-                    <span class="hl-name">Healthcare cloud modernization</span>
-                    <p class="hl-desc">Moved regulated AI/ML workloads to GPU-enabled EKS, with DevSecOps pipelines (Vault, SonarQube, OWASP) built into every release.</p>
-                    <span class="hl-stack">AWS EKS · Jenkins · Ansible · Vault</span>
-                </article>
-                <article class="hl-card">
-                    <span class="hl-org">TCS · 2007–2018</span>
-                    <span class="hl-metric">12+ buildouts</span>
-                    <span class="hl-name">Early container adoption &amp; cloud migration</span>
-                    <p class="hl-desc">Adopted Docker and Kubernetes early, in 2013&ndash;14, and led migrations to AWS, Azure and OpenStack with teams of up to 14.</p>
-                    <span class="hl-stack">AWS · Azure · OpenStack · Docker</span>
-                </article>
-            </div>
-        </section>
+            <section aria-label="Availability">
+                <div class="status-strip">
+                    <span>SRE · GPU Infra · Platform · FinOps</span>
+                    <span class="sep">·</span>
+                    <span>AWS · Azure · GCP · CKA · Terraform certified</span>
+                    <a href="assets/resume/Sudhakar_Chundu_Master_Resume.pdf" class="resume-download" download>résumé.pdf →</a>
+                </div>
+            </section>
 
-        <!-- Dashboard panels -->
-        <div class="dash-grid">
-            <!-- Left column: experience ledger -->
-            <div class="dash-col">
-                <section class="panel" aria-labelledby="exp-title">
-                    <div class="panel-head">
-                        <h2 id="exp-title">Experience</h2>
+            <section class="blk two-col" id="experience" data-file="~/experience.md">
+                <div>
+                    <div class="blk-head"><h2><span class="tilde">~/</span>experience</h2></div>
+                    <div class="stack">
+                        <article class="card">
+                            <div class="card-meta"><span>2026 – now</span><span class="badge grey">Contract · IBM</span></div>
+                            <h3>Platform &amp; DevOps Architect</h3>
+                            <p class="org">CloudScouts · Client: AT&amp;T</p>
+                            <p class="desc">Shared delivery platform for an Azure data and AI estate: 6,000+ pipeline runs a day, Terraform-provisioned private networking, and 50+ data sources under policy-as-code.</p>
+                        </article>
+                        <article class="card">
+                            <div class="card-meta"><span>2023 – 2026</span></div>
+                            <h3>Principal Cloud Architect</h3>
+                            <p class="org">Trackonomy Systems</p>
+                            <p class="desc">Owned platform, reliability and cost for 200+ microservices serving 12+ enterprise clients across 8 countries, leading a 6-engineer team.</p>
+                        </article>
+                        <article class="card">
+                            <div class="card-meta"><span>2020 – 2023</span></div>
+                            <h3>Cloud &amp; SRE Architect, OSDU Data Platform</h3>
+                            <p class="org">Wipro Technologies · ExxonMobil · Chevron · BP · Shell</p>
+                            <p class="desc">Processed exabytes of seismic data for four supermajors. Reusable Terraform modules and multi-tenant landing zones cut deployment time 80%.</p>
+                        </article>
+                        <article class="card">
+                            <div class="card-meta"><span>2018 – 2020</span></div>
+                            <h3>Platform &amp; DevOps Architect, Healthcare</h3>
+                            <p class="org">NTT Data Services · Harvard Pilgrim</p>
+                            <p class="desc">Delivery platform for regulated workloads against HIPAA, HITRUST, PCI, SOC2 and FedRAMP. Led a 5-engineer team and a $6M infrastructure budget.</p>
+                        </article>
+                        <article class="card">
+                            <div class="card-meta"><span>2007 – 2018</span></div>
+                            <h3>Multi-Cloud Architect / Sr. Infrastructure Engineer</h3>
+                            <p class="org">Tata Consultancy Services · CNA · PwC · Verizon · Owens Corning</p>
+                            <p class="desc">Eleven years from Linux/Unix administration to cloud architecture, running bare-metal production systems serving millions of users.</p>
+                        </article>
                     </div>
-                    <div class="ledger-row">
-                        <div class="ledger-meta">2026 – now</div>
-                        <div>
-                            <div class="ledger-title">Platform &amp; DevOps Architect · <span class="ledger-company">CloudScouts</span></div>
-                            <p class="ledger-sub">Shared delivery platform for an Azure data and AI estate &mdash; CI/CD at <strong>6,000+ pipeline runs/day</strong>, Terraform-provisioned private networking, and <strong>50+ data sources</strong> under policy-as-code.</p>
-                            <div class="ledger-clients">Contracted to IBM · Client: AT&amp;T · Azure DevOps · Terraform</div>
-                        </div>
+                </div>
+                <div>
+                    <div class="blk-head"><h2><span class="tilde">~/</span>credentials</h2></div>
+                    <div class="card">
+                        <ul class="cert-list">
+                            <li><span class="k">AWS</span>Solutions Architect – Professional</li>
+                            <li><span class="k">Azure</span>Solutions Architect Expert</li>
+                            <li><span class="k">GCP</span>Professional Cloud Architect</li>
+                            <li><span class="k">CNCF</span>Certified Kubernetes Administrator</li>
+                            <li><span class="k">HCP</span>Terraform Associate</li>
+                        </ul>
                     </div>
-                    <div class="ledger-row">
-                        <div class="ledger-meta">2023 – 2026</div>
-                        <div>
-                            <div class="ledger-title">Principal Cloud Architect · <span class="ledger-company">Trackonomy Systems</span></div>
-                            <p class="ledger-sub">Owned platform, reliability and cost for 200+ microservices serving <strong>12+ enterprise clients across 8 countries</strong>, leading a 6-engineer team.</p>
-                            </div>
-                    </div>
-                    <div class="ledger-row">
-                        <div class="ledger-meta">2020 – 2023</div>
-                        <div>
-                            <div class="ledger-title">Cloud &amp; SRE Architect, OSDU Data Platform · <span class="ledger-company">Wipro Technologies</span></div>
-                            <p class="ledger-sub">Processed <strong>exabytes of seismic data</strong> for four supermajors. Built 5+ reusable Terraform modules and multi-tenant landing zones, cutting deployment time 80%, and ran 24x7 on-call.</p>
-                            <div class="ledger-clients">ExxonMobil · Chevron · BP · Shell</div>
-                        </div>
-                    </div>
-                    <div class="ledger-row">
-                        <div class="ledger-meta">2018 – 2020</div>
-                        <div>
-                            <div class="ledger-title">Platform &amp; DevOps Architect, Healthcare · <span class="ledger-company">NTT Data Services</span></div>
-                            <p class="ledger-sub">Built the delivery platform for regulated healthcare workloads on <strong>Jenkins/Ansible CI/CD pipelines</strong>. Added NFS-backed persistent storage and a compliant ML pipeline with end-to-end encryption, audit logging and secure model serving. Architected the migration against <strong>HIPAA, HITRUST, PCI, GDPR, SOC2 and FedRAMP</strong>; designed and exercised DR and business-continuity plans. Led a <strong>5-engineer team</strong> and a <strong>$6M infrastructure budget</strong>.</p>
-                            <div class="ledger-clients">Harvard Pilgrim</div>
-                        </div>
-                    </div>
-                    <div class="ledger-row">
-                        <div class="ledger-meta">2007 – 2018</div>
-                        <div>
-                            <div class="ledger-title">Multi-Cloud Architect / Sr. Infrastructure Engineer · <span class="ledger-company">Tata Consultancy Services</span></div>
-                            <p class="ledger-sub">Eleven-year progression from Linux/Unix administration to cloud architecture and infrastructure leadership across four Fortune 500 clients, running bare-metal production systems serving millions of users, with WebSphere/WebLogic middleware and JVM tuning underneath.</p>
-                            <div class="ledger-clients">CNA Insurance · PwC · Verizon · Owens Corning</div>
-                        </div>
-                    </div>
-                </section>
+                    <div class="blk-head" style="margin-top:28px"><h2><span class="tilde">~/</span>education</h2></div>
+                    <article class="card">
+                        <div class="card-meta"><span>2005</span></div>
+                        <h3>B.E. Mechanical Engineering</h3>
+                        <p class="org">Acharya Nagarjuna University</p>
+                    </article>
+                </div>
+            </section>
 
-                <!-- Recommendations -->
-                <section class="panel" aria-labelledby="rec-title">
-                    <div class="panel-head">
-                        <h2 id="rec-title">Recommendations</h2>
-                        <a href="https://www.linkedin.com/in/schundu007/details/recommendations/" target="_blank" rel="noopener noreferrer" class="panel-link">All 12 on LinkedIn →</a>
-                    </div>
-                    <div class="quote-row">
-                        <p class="quote-text">"A rare ability to combine deep technical expertise with clear, practical decision-making."</p>
-                        <p class="quote-attr"><strong>Nirali Patidar</strong> · TPM Leader, AI/ML · ex-Atlassian, Cisco, Oracle</p>
-                    </div>
-                    <div class="quote-row">
-                        <p class="quote-text">"He architected our CI/CD pipelines reducing deployment time by 95%."</p>
-                        <p class="quote-attr"><strong>Kasi Viswanath</strong> · Senior DevOps Engineer · Trackonomy</p>
-                    </div>
-                    <div class="quote-row">
-                        <p class="quote-text">"His expertise enabled Trackonomy to successfully complete our first SOC2 Type II audit."</p>
-                        <p class="quote-attr"><strong>Keith Abrams</strong> · General Counsel · Trackonomy Systems</p>
-                    </div>
-                </section>
-            </div>
+            <section class="blk" id="work" data-file="~/work/">
+                <div class="blk-head"><h2><span class="tilde">~/</span>work</h2><a href="projects/">all projects →</a></div>
+                <div class="work-grid">
+                    <article class="card">
+                        <div class="card-meta"><span>Trackonomy · GPU</span></div>
+                        <span class="metric">65 GPUs · 99.97%</span>
+                        <h3>Bare-metal GPU training platform</h3>
+                        <p class="desc">An 8-node GPU cluster built from scratch. Utilization rose from 45% to 78%; queue waits fell 60%.</p>
+                        <div class="tags">Slurm · Slinky · NVIDIA BCM · Kubernetes</div>
+                    </article>
+                    <article class="card">
+                        <div class="card-meta"><span>Trackonomy · FinOps</span></div>
+                        <span class="metric">−73% · $8M+/yr</span>
+                        <h3>Cloud cost takeout</h3>
+                        <p class="desc">Spend cut from $10M to $2.7M a year, with zero critical findings across SOC 2, HIPAA and FedRAMP.</p>
+                        <div class="tags">FinOps · Terraform · Datadog</div>
+                    </article>
+                    <article class="card">
+                        <div class="card-meta"><span>Trackonomy · CI/CD</span></div>
+                        <span class="metric">Days → 15 min</span>
+                        <h3>GitOps for 100+ applications</h3>
+                        <p class="desc">50+ zero-downtime deployments a day; delivery cycle time dropped 95%.</p>
+                        <div class="tags">ArgoCD · Kubernetes · GitOps</div>
+                    </article>
+                </div>
+                <div class="earlier">
+                    <div class="earlier-row"><span class="when">Wipro · 2020–23</span><span class="what"><strong>OSDU energy data platform</strong> on AKS then EKS, deployment code contributed <a href="opensource/">upstream</a></span><span class="num">99.95–99.99%</span></div>
+                    <div class="earlier-row"><span class="when">NTT Data · 2018–20</span><span class="what"><strong>Healthcare cloud modernization</strong>: regulated AI/ML on GPU-enabled EKS</span><span class="num">HIPAA · HITRUST</span></div>
+                    <div class="earlier-row"><span class="when">TCS · 2007–18</span><span class="what"><strong>Early Docker &amp; Kubernetes</strong> (2013–14) and migrations to AWS, Azure, OpenStack</span><span class="num">12+ buildouts</span></div>
+                </div>
+            </section>
 
-            <!-- Right column: resume, focus, platforms, links -->
-            <div class="dash-col">
-                <section class="panel" id="resume" aria-labelledby="resume-title">
-                    <div class="panel-head">
-                        <h2 id="resume-title">Resume</h2>
-                        <span id="resume-meta" class="resume-meta">Bundled copy</span>
-                    </div>
-                    <div class="resume-file-row">
-                        <i class="fas fa-file-word"></i>
-                        <div class="resume-file-info">
-                            <span class="resume-file-name">Master Resume (.docx)</span>
-                            <span id="resume-file-sub" class="resume-file-sub">Editable Word version</span>
-                        </div>
-                        <a href="assets/resume/Sudhakar_Chundu_Master_Resume.docx" class="btn btn-outline" download>
-                            <i class="fas fa-download"></i>
-                            Download
-                        </a>
-                    </div>
-                    <div id="resume-admin" class="resume-admin" hidden>
-                        <input type="file" id="resume-upload-input" accept=".docx,.pdf" hidden>
-                        <button class="btn btn-secondary" id="resume-update-btn" onclick="document.getElementById('resume-upload-input').click()">
-                            <i class="fas fa-upload"></i>
-                            Update
-                        </button>
-                        <button class="btn btn-outline" id="resume-delete-btn">
-                            <i class="fas fa-trash-alt"></i>
-                            Delete
-                        </button>
-                        <span id="resume-admin-status" class="resume-admin-status"></span>
-                    </div>
-                </section>
-
-                <section class="panel" aria-labelledby="focus-title">
-                    <div class="panel-head">
-                        <h2 id="focus-title">Focus Areas</h2>
-                    </div>
-                    <div class="focus-list">
-                        <div class="focus-row">
-                            <i class="fas fa-heartbeat"></i>
-                            <span class="focus-name">Reliability</span>
-                            <span class="focus-detail">SLOs · error budgets · 99.99%</span>
-                        </div>
-                        <div class="focus-row">
-                            <i class="fas fa-shield-alt"></i>
-                            <span class="focus-name">CI/CD Safety</span>
-                            <span class="focus-detail">GitOps · canary · rollback</span>
-                        </div>
-                        <div class="focus-row">
-                            <i class="fas fa-fire-extinguisher"></i>
-                            <span class="focus-name">Incident Response</span>
-                            <span class="focus-detail">MTTR &lt;15 min · postmortems</span>
-                        </div>
-                        <div class="focus-row">
-                            <i class="fas fa-chart-line"></i>
-                            <span class="focus-name">Observability</span>
-                            <span class="focus-detail">Prometheus · Grafana · Datadog</span>
-                        </div>
-                        <div class="focus-row">
-                            <i class="fas fa-robot"></i>
-                            <span class="focus-name">Toil Reduction</span>
-                            <span class="focus-detail">automation · self-service</span>
-                        </div>
-                        <div class="focus-row">
-                            <i class="fas fa-cloud"></i>
-                            <span class="focus-name">Cloud Infrastructure</span>
-                            <span class="focus-detail">AWS · Azure · GCP · K8s</span>
-                        </div>
-                        <div class="focus-row">
-                            <i class="fas fa-tachometer-alt"></i>
-                            <span class="focus-name">GPU Performance</span>
-                            <span class="focus-detail">CUDA · dcgm · kernel tuning</span>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div>
-
-        <section class="section" id="directory" aria-labelledby="directory-title">
-            <div class="section-header">
-                <h2 id="directory-title">Live Apps &amp; Tools</h2>
-                <p>Engineering platforms and tools I've built and run in production &mdash; each one live, and refreshed weekly from my GitHub.</p>
-            </div>
-            <style>
-                #directory .dir-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
-                #directory .dir-card { display: flex; flex-direction: column; gap: 0.5rem; padding: 1.1rem 1.2rem; background: var(--bg-card); border: 1px solid var(--bg-tertiary); border-radius: var(--radius-lg); text-decoration: none; box-shadow: var(--shadow-sm); transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast); }
-                #directory .dir-card:hover { transform: translateY(-3px); border-color: var(--glass-border-hover); box-shadow: var(--shadow-md); }
-                #directory .dir-card-top { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
-                #directory .dir-name { font-size: 1.05rem; font-weight: 700; color: var(--text-primary); }
-                #directory .dir-card-top i { color: var(--text-muted); font-size: 0.75rem; }
-                #directory .dir-card:hover .dir-name { color: var(--accent-highlight); }
-                #directory .dir-desc { font-size: 0.85rem; line-height: 1.5; color: var(--text-secondary); margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-                #directory .dir-url { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); margin-top: auto; }
-            </style>
-            <div class="dir-grid">
+            <section class="blk" id="apps" data-file="~/apps/">
+                <div class="blk-head"><h2><span class="tilde">~/</span>apps</h2><span class="crumb">live · refreshed weekly</span></div>
+                <div class="dir-grid">
                 <!-- DIRECTORY:START -->
                 <a class="dir-card" href="https://cariara.com/tools/forc" target="_blank" rel="noopener noreferrer">
                     <div class="dir-card-top"><span class="dir-name">CloudForge</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
@@ -760,28 +478,53 @@
                     <span class="dir-url">sudhakarchundu.org/trending-gitrepos</span>
                 </a>
                 <!-- DIRECTORY:END -->
-            </div>
-        </section>
+                </div>
+            </section>
 
-    </main>
+            <section class="blk" id="recommendations" data-file="~/recommendations.md">
+                <div class="blk-head"><h2><span class="tilde">~/</span>recommendations</h2><a href="https://www.linkedin.com/in/schundu007/details/recommendations/" target="_blank" rel="noopener noreferrer">all 12 on linkedin →</a></div>
+                <div class="quotes">
+                    <figure class="card quote"><blockquote>“A rare ability to combine deep technical expertise with clear, practical decision-making.”</blockquote><figcaption class="who"><strong>Nirali Patidar</strong> · TPM Leader, AI/ML</figcaption></figure>
+                    <figure class="card quote"><blockquote>“He architected our CI/CD pipelines reducing deployment time by 95%.”</blockquote><figcaption class="who"><strong>Kasi Viswanath</strong> · Sr. DevOps Engineer, Trackonomy</figcaption></figure>
+                    <figure class="card quote"><blockquote>“His expertise enabled Trackonomy to successfully complete our first SOC2 Type II audit.”</blockquote><figcaption class="who"><strong>Keith Abrams</strong> · General Counsel, Trackonomy</figcaption></figure>
+                </div>
+            </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <span class="footer-logo">Sudhakar Chundu</span>
-            <div class="footer-links">
-                <a href="#resume">Resume</a>
-                <a href="projects/#blog">Blog</a>
-                <a href="projects/">Projects</a>
-                <a href="contact/">Contact</a>
-            </div>
-            <div class="footer-social">
-                <a href="https://github.com/schundu007" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/schundu007/" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://schundu.medium.com/" target="_blank"><i class="fab fa-medium"></i></a>
-            </div>
-        </div>
-        <p>&copy; 2026 Sudhakar Chundu. All rights reserved.</p>
+            <section class="blk" id="contact" data-file="~/contact.md">
+                <div class="blk-head"><h2><span class="tilde">~/</span>contact</h2></div>
+                <div class="contact-grid">
+                    <div class="card">
+                        <ul class="links">
+                            <li><span class="k">email</span><a href="mailto:chundubabu@gmail.com">chundubabu@gmail.com</a></li>
+                            <li><span class="k">linkedin</span><a href="https://www.linkedin.com/in/schundu007/" target="_blank" rel="noopener noreferrer">in/schundu007</a></li>
+                            <li><span class="k">github</span><a href="https://github.com/schundu007" target="_blank" rel="noopener noreferrer">schundu007</a></li>
+                            <li><span class="k">medium</span><a href="https://schundu.medium.com/" target="_blank" rel="noopener noreferrer">schundu.medium.com</a></li>
+                        </ul>
+                    </div>
+                    <div class="card" id="resume">
+                        <div class="card-meta"><span>résumé</span><span id="resume-meta">Bundled copy</span></div>
+                        <h3>Master Resume</h3>
+                        <div class="resume-row">
+                            <a href="assets/resume/Sudhakar_Chundu_Master_Resume.pdf" class="btn-g primary resume-download" download><i class="fas fa-download"></i> PDF</a>
+                            <a href="assets/resume/Sudhakar_Chundu_Master_Resume.docx" class="btn-g" download><i class="fas fa-file-word"></i> .docx</a>
+                        </div>
+                        <div id="resume-admin" class="resume-admin" hidden>
+                            <input type="file" id="resume-upload-input" accept=".docx,.pdf" hidden>
+                            <button class="btn btn-secondary" id="resume-update-btn" onclick="document.getElementById('resume-upload-input').click()"><i class="fas fa-upload"></i> Update</button>
+                            <button class="btn btn-outline" id="resume-delete-btn"><i class="fas fa-trash-alt"></i> Delete</button>
+                            <span id="resume-admin-status" class="resume-admin-status"></span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="statusbar" aria-label="Status bar">
+        <span class="mode">NORMAL</span>
+        <span id="status-file">~/about.md</span>
+        <span class="mid">utf-8 · main</span>
+        <span class="right">Milpitas, CA · © 2026 Sudhakar Chundu</span>
     </footer>
 
     <!-- Firebase SDK -->
@@ -793,22 +536,73 @@
     <script src="assets/js/auth.js"></script>
 
     <script>
-        // Mobile menu toggle
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenuBtn.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-
-        // Close menu when clicking a link
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenuBtn.classList.remove('active');
-                navLinks.classList.remove('active');
+        // File-tree drawer (mobile)
+        (function() {
+            const btn = document.getElementById('menu-btn');
+            const tree = document.getElementById('tree');
+            btn.addEventListener('click', () => {
+                const open = document.body.classList.toggle('tree-open');
+                btn.setAttribute('aria-expanded', open);
             });
-        });
+            tree.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+                document.body.classList.remove('tree-open');
+                btn.setAttribute('aria-expanded', 'false');
+            }));
+        })();
+
+        // Theme chip: bold the active mode
+        (function() {
+            const btn = document.getElementById('theme-btn');
+            function paint() {
+                const t = document.documentElement.getAttribute('data-theme');
+                btn.querySelectorAll('[data-t]').forEach(s => {
+                    s.className = s.dataset.t === t ? 'on' : 'off';
+                });
+            }
+            new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+            paint();
+        })();
+
+        // Typed role line
+        (function() {
+            const el = document.getElementById('typed');
+            if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            const roles = ['Platform & DevOps Architect', 'Site Reliability Engineer', 'GPU Infrastructure', 'FinOps · Cost Engineering'];
+            let r = 0, i = roles[0].length, del = true;
+            function tick() {
+                const word = roles[r];
+                i += del ? -1 : 1;
+                el.textContent = word.slice(0, i);
+                let wait = del ? 35 : 70;
+                if (!del && i === word.length) { del = true; wait = 2200; }
+                else if (del && i === 0) { del = false; r = (r + 1) % roles.length; wait = 350; }
+                setTimeout(tick, wait);
+            }
+            setTimeout(tick, 2600);
+        })();
+
+        // Scroll-spy: highlight tree entry, update crumb + status bar
+        (function() {
+            const sections = document.querySelectorAll('main section[data-file]');
+            const crumb = document.getElementById('crumb');
+            const status = document.getElementById('status-file');
+            const links = document.querySelectorAll('.tree a[href^="#"]');
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (!e.isIntersecting) return;
+                    const id = e.target.id, file = e.target.dataset.file;
+                    crumb.textContent = file;
+                    status.textContent = file;
+                    let marked = false;
+                    links.forEach(a => {
+                        const hit = !marked && a.getAttribute('href') === '#' + id;
+                        a.classList.toggle('current', hit);
+                        if (hit) marked = true;
+                    });
+                });
+            }, { rootMargin: '-45% 0px -50% 0px' });
+            sections.forEach(s => io.observe(s));
+        })();
 
         // Resume file: public download + owner-only update/delete.
         // Uploaded copies live in Firebase Storage and override the bundled
@@ -899,6 +693,5 @@
         })();
     </script>
 
-    <!-- Neural Network Animation -->
 </body>
 </html>
