@@ -2890,10 +2890,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/genz.css">
+    <link rel="stylesheet" href="/assets/css/shell.css">
+    <style>/* IDE shell: the old fixed nav offset and footer-hiding rule no longer apply */
+    html[data-theme] body, body { padding-top: 0 !important; } .sh-status { display: flex !important; }
+    </style>
 </head>
-<body>
-    <!-- Neural Network Background -->
-    <canvas id="neural-bg"></canvas>
+<body class="sh-drawer" data-file="~/jobs/">
 
     <!-- Password Protection Overlay -->
     <div id="password-overlay" style="position: fixed; inset: 0; background: var(--gz-canvas); z-index: 99999; display: flex; align-items: center; justify-content: center; padding: 16px;">
@@ -2945,20 +2947,37 @@
     </script>
 
     <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <a href="../" class="logo">
-                <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu" class="logo-icon">
-                Sudhakar Chundu
-            </a>
-            <ul class="nav-links">
-                <li><a href="../">Overview</a></li>
-                <li><a href="../projects/">Projects</a></li>
-                <li><a href="../opensource/">Open Source</a></li>
-                <li><a href="../trending-gitrepos/">Trending</a></li>
-            </ul>
-        </div>
-    </nav>
+    <a class="sh-skip" href="#main">Skip to content</a>
+
+    <header class="sh-topbar">
+        <button class="sh-chip sh-menu" type="button" aria-label="Toggle file tree" aria-expanded="false" id="menu-btn"><i class="fas fa-bars"></i></button>
+        <a href="/" class="sh-brand"><span class="sh-prompt">&gt;_</span> sudhakar</a>
+        <span class="sh-crumb" id="crumb"></span>
+        <nav class="sh-topnav" aria-label="Primary">
+            <a href="/">about</a>
+            <a href="/projects/">work</a>
+            <a href="/opensource/">open source</a>
+            <a href="/projects/#blog">writing</a>
+            <a href="/trending-gitrepos/">trending</a>
+            <a href="/contact/">contact</a>
+        </nav>
+        <button class="sh-chip" type="button" onclick="toggleTheme()" aria-label="Toggle colour theme" id="theme-btn">
+            <i class="fas fa-circle-half-stroke"></i><span class="lbl"><span data-t="dark">dark</span> <span data-t="light">light</span></span>
+        </button>
+    </header>
+    <aside class="sh-tree" id="tree" aria-label="Site sections">
+            <div class="sh-elsewhere">
+                <p class="sh-label">Elsewhere</p>
+                <a href="https://github.com/schundu007" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>github</a>
+                <a href="https://www.linkedin.com/in/schundu007/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i>linkedin</a>
+                <a href="https://schundu.medium.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-medium"></i>medium</a>
+                <a href="/assets/resume/Sudhakar_Chundu_Master_Resume.pdf" download><i class="far fa-file-lines"></i>résumé.pdf</a>
+            </div>
+            <div class="sh-otw">
+                <span class="sh-badge">Open to work</span>
+                <p>Staff-level IC roles in SRE, platform &amp; GPU infrastructure · US-based.</p>
+            </div>
+        </aside>
 
     <!-- Slide-out Panel Toggle Button -->
     <button class="slideout-toggle" onclick="toggleSlideoutPanel()">
@@ -3267,7 +3286,7 @@
         </div>
     </div>
 
-    <main class="main-content">
+    <main class="main-content" id="main">
 
     <!-- Quick Links and Documents moved to slide-out panel -->
     <!-- Jobs Section -->
@@ -3523,17 +3542,11 @@
     </div>
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <span class="footer-logo">Sudhakar Chundu</span>
-            <div class="footer-links">
-                <a href="../#resume">Resume</a>
-                <a href="../projects/#blog">Blog</a>
-                <a href="../projects/">Projects</a>
-                <a href="../contact/">Contact</a>
-            </div>
-        </div>
-        <p>&copy; 2025 Sudhakar Chundu. Private job listings dashboard.</p>
+    <footer class="sh-status" aria-label="Status bar">
+        <span class="sh-mode">NORMAL</span>
+        <span id="status-file"></span>
+        <span class="sh-mid">utf-8 · main</span>
+        <span class="sh-right">Milpitas, CA · © 2026 Sudhakar Chundu</span>
     </footer>
 
     <script>
@@ -8087,6 +8100,6 @@ ${jobData.description}
         // Initialize - load jobs
         fetchAllJobs();
     </script>
-    <!-- Neural Network Background -->
+    <script src="/assets/js/shell.js"></script>
 </body>
 </html>

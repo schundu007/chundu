@@ -615,23 +615,46 @@
   .token.function,.token.class-name,.token.builtin,.token.property,.token.attr-name,.token.key{color:#B06000}
   .token.variable,.token.parameter{color:#1F1F1F}
 </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/shell.css">
+    <style>/* IDE-shell offsets: own bars sit under the 56px top bar */
+    .progress{top:56px !important} .series{top:56px !important} .side{top:122px !important} section{scroll-margin-top:122px !important} #flow{max-width:100%;overflow-x:auto}
+    </style>
 </head>
-<body>
+<body class="sh-drawer">
 <div class="progress" id="progress" aria-hidden="true"></div>
 
-<div class="topbar">
-  <div class="wrap">
-    <div class="brand"><span class="dot"></span>schundu · therock-ci</div>
-    <nav class="topnav">
-      <a href="#s1">Pipeline</a>
-      <a href="#s2">Files</a>
-      <a href="#s3">Fix</a>
-      <a href="#s4">Bigger bets</a>
-      <a href="#s5">More tools</a>
-      <a href="https://www.sudhakarchundu.org/">Home</a>
-    </nav>
-  </div>
-</div>
+    <a class="sh-skip" href="#main">Skip to content</a>
+
+    <header class="sh-topbar">
+        <button class="sh-chip sh-menu" type="button" aria-label="Toggle file tree" aria-expanded="false" id="menu-btn"><i class="fas fa-bars"></i></button>
+        <a href="/" class="sh-brand"><span class="sh-prompt">&gt;_</span> sudhakar</a>
+        <span class="sh-crumb" id="crumb"></span>
+        <nav class="sh-topnav" aria-label="Primary">
+            <a href="/">about</a>
+            <a href="/projects/">work</a>
+            <a href="/opensource/">open source</a>
+            <a href="/projects/#blog" class="active">writing</a>
+            <a href="/trending-gitrepos/">trending</a>
+            <a href="/contact/">contact</a>
+        </nav>
+        <button class="sh-chip" type="button" onclick="toggleTheme()" aria-label="Toggle colour theme" id="theme-btn">
+            <i class="fas fa-circle-half-stroke"></i><span class="lbl"><span data-t="dark">dark</span> <span data-t="light">light</span></span>
+        </button>
+    </header>
+    <aside class="sh-tree" id="tree" aria-label="Site sections">
+            <div class="sh-elsewhere">
+                <p class="sh-label">Elsewhere</p>
+                <a href="https://github.com/schundu007" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>github</a>
+                <a href="https://www.linkedin.com/in/schundu007/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i>linkedin</a>
+                <a href="https://schundu.medium.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-medium"></i>medium</a>
+                <a href="/assets/resume/Sudhakar_Chundu_Master_Resume.pdf" download><i class="far fa-file-lines"></i>résumé.pdf</a>
+            </div>
+            <div class="sh-otw">
+                <span class="sh-badge">Open to work</span>
+                <p>Staff-level IC roles in SRE, platform &amp; GPU infrastructure · US-based.</p>
+            </div>
+        </aside>
 
 <div class="series">
   <div class="wrap">
@@ -1370,5 +1393,12 @@ def affected(changed_paths: list[str], topo: BuildTopology) -&gt; Affected:
   document.addEventListener("keydown",function(e){ if(e.key==="Escape"&&!ov.hidden) closeDlg(); });
 })();
 </script>
+    <footer class="sh-status" aria-label="Status bar">
+        <span class="sh-mode">NORMAL</span>
+        <span id="status-file"></span>
+        <span class="sh-mid">utf-8 · main</span>
+        <span class="sh-right">Milpitas, CA · © 2026 Sudhakar Chundu</span>
+    </footer>
+    <script src="/assets/js/shell.js"></script>
 </body>
 </html>

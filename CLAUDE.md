@@ -69,7 +69,7 @@ The frontend is a static HTML/CSS/JS site served via GitHub Pages. No build step
 
 **Main pages:**
 - `index.html` - Single-page overview in an IDE-style shell (sticky top bar, file-tree sidebar with scroll-spy, vim-like status bar): `$ cat ~/about.md` hero with typed role line, `~/experience` + credentials/education, `~/work` (3 headline projects + earlier list), the auto-generated `~/apps` directory, recommendations, and `~/contact` with the `#resume` card. Its tree is hand-written (`data-static="true"`)
-- `404.html` - Custom 404 error page
+- `404.html` - Terminal-style 404 (`cd: no such file or directory`) with a did-you-mean suggestion; served for any missing path, so all its URLs are absolute. GitHub Pages only supports a custom 404 — 403/5xx responses come from GitHub's edge and cannot be customised
 - `projects/index.html` - Enterprise projects, conference talks, publications, and the blog index (anchors: `#conferences`, `#publications`, `#blog`)
 - `opensource/index.html` - Upstream OSDU contributions, GitHub repos/gists (live API), and Medium articles
 - `contact/index.html` - Contact channels
@@ -101,7 +101,11 @@ added to the site must match it; update that file first if a fact changes.
 **Shared assets:**
 - `assets/css/style.css` - Global design system (~1,760 lines) using CSS custom properties; dark (default) and light themes with glassmorphism effects, gradient accents, and responsive breakpoints
 - `assets/css/genz.css` - **The look (loaded last on every page):** Google, Gen-Z register. Google Sans display at 500 weight, Google's four colours only as accents (blue primary action/links, green status, the four-colour rule and Gemini backdrop glow), all text ink/grey, 1px hairlines, 20–28px cards, pill controls. It remaps style.css's tokens under `html[data-theme]`, so a page must load `theme.js`; standalone blog posts carry the same tokens in their own inline CSS. Each fact/label appears once per page (no repeated banners, tags or stats).
-- `assets/css/shell.css` + `assets/js/shell.js` - **IDE shell used by every main page** (load after genz.css). Markup contract: `header.topbar` → `.shell > aside.tree#tree + main#main` → `footer.statusbar`. shell.js fills the tree from its `SITE` list, expands the current page's `section[id]` headings, adds the `$ cd ~/page` line above `.page-header h1`, and runs scroll-spy (crumb + status bar), the mobile drawer, theme chip and the homepage's typed role (`#typed[data-roles]`). Add new pages to `SITE`.
+- `assets/css/shell.css` + `assets/js/shell.js` - **IDE shell chrome on every page** (load after genz.css). All classes are `sh-` prefixed so it can sit on pages with their own CSS, and chrome link styles are pinned with `!important`. Two variants:
+  - *Full shell* (index, projects, opensource, contact, trending, 404, MLOps + iOS posts): `header.sh-topbar` → `div.sh-shell > aside.sh-tree#tree + main#main` → `footer.sh-status`.
+  - *Drawer* (`body.sh-drawer` — long-form posts with their own TOC/layout, and the jobs dashboards): top bar + status bar, tree slides in from the menu button. Each post carries a small inline `<style>` that moves its own sticky bars/sidebars below the 56px top bar.
+  shell.js fills the tree from its `SITE` list (and `POSTS` under writing/ — add new posts there), expands the current page's `section[id]` headings, adds the `$ cd`/`$ cat` line above `.page-header h1`, and runs scroll-spy (crumb + status bar), drawer and theme chip. `body[data-file]` overrides the crumb; `body[data-toc="auto"]` lists a post's sections in the tree. Pages without `data-theme` (most posts) get light chrome tokens and no theme chip.
+- `assets/css/home.css` - Homepage-only content styles (hero, ~/experience, ~/work, ~/apps cards, contact/resume).
 - `assets/js/theme.js` - Theme toggle (dark/light mode persistence via localStorage, key: `portfolio-theme`)
 - `assets/js/neural-bg.js` - Animated neural network canvas background (`NeuralNetwork` class with particles and mouse interaction)
 - `assets/js/firebase-config.js` - Firebase initialization (Firestore + Auth); gracefully falls back when not configured
