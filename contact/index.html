@@ -97,44 +97,49 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/genz.css">
+    <link rel="stylesheet" href="/assets/css/shell.css">
 </head>
 <body>
-    <!-- Neural Network Background -->
-    <canvas id="neural-bg"></canvas>
 
     <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <a href="../" class="logo">
-                <img src="../assets/images/profile.jpg" alt="Sudhakar Chundu" class="logo-icon">
-                Sudhakar Chundu
-            </a>
-            <ul class="nav-links">
-                <li><a href="../">Overview</a></li>
-                <li><a href="../projects/">Projects</a></li>
-                <li><a href="../opensource/">Open Source</a></li>
-                <li><a href="../trending-gitrepos/">Trending</a></li>
-                <div class="nav-social">
-                    <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/schundu007/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                </div>
-                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
-                    <i class="fas fa-moon"></i>
-                    <i class="fas fa-sun"></i>
-                </button>
-                <div class="nav-auth">
-                    <button class="btn-signin" onclick="showLoginModal()">Sign In</button>
-                </div>
-            </ul>
-            <button class="mobile-menu-btn" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
+    <a class="skip" href="#main">Skip to content</a>
 
-    <main class="main-content">
+    <header class="topbar">
+        <button class="chip-btn menu-btn" type="button" aria-label="Toggle file tree" aria-expanded="false" id="menu-btn"><i class="fas fa-bars"></i></button>
+        <a href="/" class="brand"><span class="prompt">&gt;_</span> sudhakar</a>
+        <span class="crumb" id="crumb"></span>
+        <nav class="topnav" aria-label="Primary">
+            <a href="/">about</a>
+            <a href="/projects/">work</a>
+            <a href="/opensource/">open source</a>
+            <a href="/projects/#blog">writing</a>
+            <a href="/trending-gitrepos/">trending</a>
+            <a href="/contact/" class="active">contact</a>
+        </nav>
+        <button class="chip-btn" type="button" onclick="toggleTheme()" aria-label="Toggle colour theme" id="theme-btn">
+            <i class="fas fa-circle-half-stroke"></i><span class="lbl"><span data-t="dark">dark</span> <span data-t="light">light</span></span>
+        </button>
+        <div class="nav-auth">
+            <button class="btn-signin" onclick="showLoginModal()">Sign In</button>
+        </div>
+    </header>
+
+    <div class="shell">
+        <aside class="tree" id="tree" aria-label="Site sections">
+            <div class="elsewhere">
+                <p class="tree-label">Elsewhere</p>
+                <a href="https://github.com/schundu007" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>github</a>
+                <a href="https://www.linkedin.com/in/schundu007/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i>linkedin</a>
+                <a href="https://schundu.medium.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-medium"></i>medium</a>
+                <a href="/assets/resume/Sudhakar_Chundu_Master_Resume.pdf" download><i class="far fa-file-lines"></i>résumé.pdf</a>
+            </div>
+            <div class="otw-card">
+                <span class="badge green">Open to work</span>
+                <p>Staff-level IC roles in SRE, platform &amp; GPU infrastructure · US-based.</p>
+            </div>
+        </aside>
+
+    <main class="main-content" id="main">
         <!-- Page Header -->
         <header class="page-header">
             <h1>Contact</h1>
@@ -197,46 +202,20 @@
     </main>
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <span class="footer-logo">Sudhakar Chundu</span>
-            <div class="footer-links">
-                <a href="../#resume">Resume</a>
-                <a href="../projects/#blog">Blog</a>
-                <a href="../projects/">Projects</a>
-                <a href="./">Contact</a>
-            </div>
-            <div class="footer-social">
-                <a href="https://github.com/schundu007" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/schundu007/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                <a href="https://schundu.medium.com/" target="_blank" title="Medium"><i class="fab fa-medium"></i></a>
-            </div>
-        </div>
-        <p>&copy; 2026 Sudhakar Chundu. All rights reserved.</p>
+    </div>
+
+    <footer class="statusbar" aria-label="Status bar">
+        <span class="mode">NORMAL</span>
+        <span id="status-file"></span>
+        <span class="mid">utf-8 · main</span>
+        <span class="right">Milpitas, CA · © 2026 Sudhakar Chundu</span>
     </footer>
 
     <!-- Firebase Config and Auth -->
     <script src="../assets/js/firebase-config.js"></script>
     <script src="../assets/js/auth.js"></script>
+    <script src="/assets/js/shell.js"></script>
     <script src="../assets/js/comments.js"></script>
 
-    <script>
-        // Mobile menu toggle
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenuBtn.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenuBtn.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
-    </script>
-    <!-- Neural Network Background -->
-</body>
+    </body>
 </html>
