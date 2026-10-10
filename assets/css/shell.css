@@ -130,3 +130,9 @@ body.sh-drawer .sh-status { z-index: 1000; }
     :is(.sh-shell main, body.sh-drawer) pre { max-width: 100%; overflow-x: auto; }
     :is(.sh-shell main, body.sh-drawer) :not(pre) > code { overflow-wrap: anywhere; }
 }
+
+/* Signed-in state: auth.js swaps the Sign In button for an avatar + dropdown. */
+.sh-topbar .nav-auth { position: relative; display: flex; align-items: center; flex-shrink: 0; }
+.sh-topbar .nav-user-wrapper { position: relative; }
+.sh-topbar .nav-user { display: flex; padding: 0; border: 1px solid var(--gz-line); border-radius: 50%; background: none; cursor: pointer; }
+.sh-topbar .nav-user-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; display: block; }
