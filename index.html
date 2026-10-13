@@ -107,9 +107,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/genz.css">
     <link rel="stylesheet" href="/assets/css/shell.css?v=20261010d">
-    <link rel="stylesheet" href="/assets/css/home.css?v=20261010d">
+    <link rel="stylesheet" href="/assets/css/home.css?v=20261013e">
 </head>
-<body>
+<body class="sh-wide">
     <a class="sh-skip" href="#main">Skip to content</a>
 
     <header class="sh-topbar">
@@ -137,7 +137,6 @@
             <nav class="sh-tree-nav" aria-label="Sections">
                 <ul>
                     <li><a href="#about">about</a></li>
-                    <li><a href="#experience">experience</a></li>
                     <li><a href="#work">work/</a>
                         <ul>
                             <li><a href="#work">gpu platform</a></li>
@@ -146,7 +145,9 @@
                             <li><a href="projects/">all projects</a></li>
                         </ul>
                     </li>
+                    <li><a href="#experience">experience</a></li>
                     <li><a href="#apps">apps/</a></li>
+                    <li><a href="#recommendations">recommendations</a></li>
                     <li><a href="projects/#blog">writing/</a></li>
                     <li><a href="opensource/">opensource/</a></li>
                     <li><a href="trending-gitrepos/">trending/</a></li>
@@ -167,121 +168,177 @@
         </aside>
 
         <main class="main" id="main">
+            <!-- ═════════ HERO: drifting Google light (Stripe-style band) + a Waymo-style sensor sweep ═════════ -->
             <section class="hero" id="about" data-file="~/about.md">
-                <div>
-                    <p class="cmd">$ cat ~/about.md</p>
-                    <h1>Sudhakar<br>Chundu</h1>
-                    <p class="role"><span id="typed" data-roles="Platform &amp; DevOps Architect|Site Reliability Engineer|GPU Infrastructure|FinOps · Cost Engineering">Platform &amp; DevOps Architect</span><span class="caret" aria-hidden="true"></span></p>
-                    <p class="lede">18+ years across the full evolution of cloud computing: bare-metal data centers to multi-cloud Kubernetes to GPU-accelerated AI/ML platforms, for Fortune 500 clients in energy, healthcare, insurance and telecom.</p>
-                    <p class="lede">I run SRE end to end as primary on-call owner (SLOs, error budgets, blameless postmortems), and performance engineering is the specialty: flame graphs, strace, Wireshark.</p>
-                    <div class="cta">
-                        <a href="#work" class="btn-g primary">View selected work →</a>
-                        <a href="projects/#blog" class="btn-g">Read the blog</a>
+                <div class="hero-sky" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+                <div class="wrap hero-grid">
+                    <div class="hero-copy">
+                        <p class="eyebrow"><span class="g-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Open to Staff-level SRE, platform &amp; GPU infrastructure roles</p>
+                        <h1>Sudhakar Chundu</h1>
+                        <p class="role"><span id="typed" data-roles="Platform &amp; DevOps Architect|Site Reliability Engineer|GPU Infrastructure|FinOps · Cost Engineering">Platform &amp; DevOps Architect</span><span class="caret" aria-hidden="true"></span></p>
+                        <p class="lede">18+ years across the full evolution of cloud computing: bare-metal data centers to multi-cloud Kubernetes to GPU-accelerated AI/ML platforms, for Fortune 500 clients in energy, healthcare, insurance and telecom.</p>
+                        <div class="cta">
+                            <span class="magnet"><a href="#work" class="btn-g primary">View selected work <span class="arr" aria-hidden="true">→</span></a></span>
+                            <a href="#contact" class="btn-g">Get in touch</a>
+                        </div>
                     </div>
-                </div>
-                <div class="avatar"><img src="assets/images/profile.jpg" alt="Sudhakar Chundu" loading="eager"></div>
-            </section>
 
-            <section aria-label="Availability">
-                <div class="status-strip">
-                    <span>SRE · GPU Infra · Platform · FinOps</span>
-                    <span class="sep">·</span>
-                    <span>AWS · Azure · GCP · CKA · Terraform certified</span>
-                    <a href="assets/resume/Sudhakar_Chundu_Master_Resume.pdf" class="resume-download" download>résumé.pdf →</a>
+                    <div class="sensor" aria-hidden="true">
+                        <div class="sensor-rings"><i></i><i></i><i></i></div>
+                        <div class="sensor-sweep"></div>
+                        <span class="ping g-blue"   style="--a:24deg;  --r:44; --d:-5.6s">Kubernetes</span>
+                        <span class="ping g-green"  style="--a:72deg;  --r:47; --d:-4.8s">Terraform</span>
+                        <span class="ping g-yellow" style="--a:118deg; --r:41; --d:-4.0s">Slurm · GPU</span>
+                        <span class="ping g-red"    style="--a:160deg; --r:47; --d:-3.3s">ArgoCD</span>
+                        <span class="ping g-blue"   style="--a:206deg; --r:43; --d:-2.6s">AWS · Azure · GCP</span>
+                        <span class="ping g-green"  style="--a:252deg; --r:47; --d:-1.8s">Datadog</span>
+                        <span class="ping g-yellow" style="--a:298deg; --r:41; --d:-1.0s">SLOs</span>
+                        <span class="ping g-red"    style="--a:338deg; --r:47; --d:-0.4s">FinOps</span>
+                        <div class="sensor-core"><img src="assets/images/profile.jpg" alt="" loading="eager"></div>
+                    </div>
                 </div>
-            </section>
 
-            <section class="blk two-col" id="experience" data-file="~/experience.md">
-                <div>
-                    <div class="blk-head"><h2><span class="tilde">~/</span>Experience</h2></div>
-                    <div class="stack">
-                        <article class="card">
-                            <div class="card-meta"><span>2026 – now</span><span class="badge grey">Contract · IBM</span></div>
-                            <h3>Platform &amp; DevOps Architect</h3>
-                            <p class="org">CloudScouts · Client: AT&amp;T</p>
-                            <p class="desc">Shared delivery platform for an Azure data and AI estate: 6,000+ pipeline runs a day, Terraform-provisioned private networking, and 50+ data sources under policy-as-code.</p>
-                        </article>
-                        <article class="card">
-                            <div class="card-meta"><span>2023 – 2026</span></div>
-                            <h3>Principal Cloud Architect</h3>
-                            <p class="org">Trackonomy Systems</p>
-                            <p class="desc">Owned platform, reliability and cost for 200+ microservices serving 12+ enterprise clients across 8 countries, leading a 6-engineer team.</p>
-                        </article>
-                        <article class="card">
-                            <div class="card-meta"><span>2020 – 2023</span></div>
-                            <h3>Cloud &amp; SRE Architect, OSDU Data Platform</h3>
-                            <p class="org">Wipro Technologies · ExxonMobil · Chevron · BP · Shell</p>
-                            <p class="desc">Processed exabytes of seismic data for four supermajors. Reusable Terraform modules and multi-tenant landing zones cut deployment time 80%.</p>
-                        </article>
-                        <article class="card">
-                            <div class="card-meta"><span>2018 – 2020</span></div>
-                            <h3>Platform &amp; DevOps Architect, Healthcare</h3>
-                            <p class="org">NTT Data Services · Harvard Pilgrim</p>
-                            <p class="desc">Delivery platform for regulated workloads against HIPAA, HITRUST, PCI, SOC2 and FedRAMP. Led a 5-engineer team and a $6M infrastructure budget.</p>
-                        </article>
-                        <article class="card">
-                            <div class="card-meta"><span>2007 – 2018</span></div>
-                            <h3>Multi-Cloud Architect / Sr. Infrastructure Engineer</h3>
-                            <p class="org">Tata Consultancy Services · CNA · PwC · Verizon · Owens Corning</p>
-                            <p class="desc">Eleven years from Linux/Unix administration to cloud architecture, running bare-metal production systems serving millions of users.</p>
-                        </article>
-                    </div>
-                </div>
-                <div>
-                    <div class="blk-head"><h2><span class="tilde">~/</span>Credentials</h2></div>
-                    <div class="card">
-                        <ul class="cert-list">
-                            <li><span class="k">AWS</span>Solutions Architect – Professional</li>
-                            <li><span class="k">Azure</span>Solutions Architect Expert</li>
-                            <li><span class="k">GCP</span>Professional Cloud Architect</li>
-                            <li><span class="k">CNCF</span>Certified Kubernetes Administrator</li>
-                            <li><span class="k">HCP</span>Terraform Associate</li>
-                        </ul>
-                    </div>
-                    <div class="blk-head" style="margin-top:28px"><h2><span class="tilde">~/</span>Education</h2></div>
-                    <article class="card">
-                        <div class="card-meta"><span>2005</span></div>
-                        <h3>B.E. Mechanical Engineering</h3>
-                        <p class="org">Acharya Nagarjuna University</p>
-                    </article>
+                <!-- Stat band: one Google tone per tile, counted up on view -->
+                <div class="wrap">
+                    <dl class="stats">
+                        <div class="stat g-blue"><dt><span data-count="18">18</span>+ yrs</dt><dd>bare metal → cloud → GPU</dd></div>
+                        <div class="stat g-red"><dt><span data-count="99.97" data-dec="2">99.97</span>%</dt><dd>uptime on a 65-GPU training platform</dd></div>
+                        <div class="stat g-yellow"><dt>−<span data-count="73">73</span>%</dt><dd>cloud spend, $10M → $2.7M a year</dd></div>
+                        <div class="stat g-green"><dt><span data-count="15">15</span> min</dt><dd>delivery for 100+ apps, down from days</dd></div>
+                    </dl>
                 </div>
             </section>
 
+            <!-- Client marquee -->
+            <div class="clients" aria-label="Delivered for">
+                <p class="eyebrow-sm">Delivered for</p>
+                <div class="clients-track">
+                    <div class="clients-run">
+                        <span>AT&amp;T</span><span>ExxonMobil</span><span>Chevron</span><span>BP</span><span>Shell</span><span>Harvard Pilgrim</span><span>CNA</span><span>PwC</span><span>Verizon</span><span>Owens Corning</span>
+                        <span aria-hidden="true">AT&amp;T</span><span aria-hidden="true">ExxonMobil</span><span aria-hidden="true">Chevron</span><span aria-hidden="true">BP</span><span aria-hidden="true">Shell</span><span aria-hidden="true">Harvard Pilgrim</span><span aria-hidden="true">CNA</span><span aria-hidden="true">PwC</span><span aria-hidden="true">Verizon</span><span aria-hidden="true">Owens Corning</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═════════ WORK ═════════ -->
             <section class="blk" id="work" data-file="~/work/">
-                <div class="blk-head"><h2><span class="tilde">~/</span>Work</h2><a href="projects/">all projects →</a></div>
-                <div class="work-grid">
-                    <article class="card">
-                        <div class="card-meta"><span>Trackonomy · GPU</span></div>
-                        <span class="metric">65 GPUs · 99.97%</span>
-                        <h3>Bare-metal GPU training platform</h3>
-                        <p class="desc">An 8-node GPU cluster built from scratch. Utilization rose from 45% to 78%; queue waits fell 60%.</p>
-                        <div class="tags">Slurm · Slinky · NVIDIA BCM · Kubernetes</div>
-                    </article>
-                    <article class="card">
-                        <div class="card-meta"><span>Trackonomy · FinOps</span></div>
-                        <span class="metric">−73% · $8M+/yr</span>
-                        <h3>Cloud cost takeout</h3>
-                        <p class="desc">Spend cut from $10M to $2.7M a year, with zero critical findings across SOC 2, HIPAA and FedRAMP.</p>
-                        <div class="tags">FinOps · Terraform · Datadog</div>
-                    </article>
-                    <article class="card">
-                        <div class="card-meta"><span>Trackonomy · CI/CD</span></div>
-                        <span class="metric">Days → 15 min</span>
-                        <h3>GitOps for 100+ applications</h3>
-                        <p class="desc">50+ zero-downtime deployments a day; delivery cycle time dropped 95%.</p>
-                        <div class="tags">ArgoCD · Kubernetes · GitOps</div>
-                    </article>
-                </div>
-                <div class="earlier">
-                    <div class="earlier-row"><span class="when">Wipro · 2020–23</span><span class="what"><strong>OSDU energy data platform</strong> on AKS then EKS, deployment code contributed <a href="opensource/">upstream</a></span><span class="num">99.95–99.99%</span></div>
-                    <div class="earlier-row"><span class="when">NTT Data · 2018–20</span><span class="what"><strong>Healthcare cloud modernization</strong>: regulated AI/ML on GPU-enabled EKS</span><span class="num">HIPAA · HITRUST</span></div>
-                    <div class="earlier-row"><span class="when">TCS · 2007–18</span><span class="what"><strong>Early Docker &amp; Kubernetes</strong> (2013–14) and migrations to AWS, Azure, OpenStack</span><span class="num">12+ buildouts</span></div>
+                <div class="wrap">
+                    <div class="blk-head rv">
+                        <div>
+                            <p class="eyebrow-sm g-blue">Selected work</p>
+                            <h2>Platforms that run hot, <span class="soft">and cost less.</span></h2>
+                        </div>
+                        <a href="projects/" class="more">All projects →</a>
+                    </div>
+                    <div class="work-grid">
+                        <article class="feat rv g-blue">
+                            <p class="feat-meta">Trackonomy · GPU</p>
+                            <p class="metric">65 GPUs · 99.97%</p>
+                            <h3>Bare-metal GPU training platform</h3>
+                            <p class="desc">An 8-node GPU cluster built from scratch. Utilization rose from 45% to 78%; queue waits fell 60%.</p>
+                            <p class="tags">Slurm · Slinky · NVIDIA BCM · Kubernetes</p>
+                        </article>
+                        <article class="feat rv g-yellow" style="--delay:.08s">
+                            <p class="feat-meta">Trackonomy · FinOps</p>
+                            <p class="metric">−73% · $8M+/yr</p>
+                            <h3>Cloud cost takeout</h3>
+                            <p class="desc">Spend cut from $10M to $2.7M a year, with zero critical findings across SOC 2, HIPAA and FedRAMP.</p>
+                            <p class="tags">FinOps · Terraform · Datadog</p>
+                        </article>
+                        <article class="feat rv g-green" style="--delay:.16s">
+                            <p class="feat-meta">Trackonomy · CI/CD</p>
+                            <p class="metric">Days → 15 min</p>
+                            <h3>GitOps for 100+ applications</h3>
+                            <p class="desc">50+ zero-downtime deployments a day; delivery cycle time dropped 95%.</p>
+                            <p class="tags">ArgoCD · Kubernetes · GitOps</p>
+                        </article>
+                    </div>
+                    <div class="earlier rv">
+                        <div class="earlier-row"><span class="when">Wipro · 2020–23</span><span class="what"><strong>OSDU energy data platform</strong> on AKS then EKS, deployment code contributed <a href="opensource/">upstream</a></span><span class="num">99.95–99.99%</span></div>
+                        <div class="earlier-row"><span class="when">NTT Data · 2018–20</span><span class="what"><strong>Healthcare cloud modernization</strong>: regulated AI/ML on GPU-enabled EKS</span><span class="num">HIPAA · HITRUST</span></div>
+                        <div class="earlier-row"><span class="when">TCS · 2007–18</span><span class="what"><strong>Early Docker &amp; Kubernetes</strong> (2013–14) and migrations to AWS, Azure, OpenStack</span><span class="num">12+ buildouts</span></div>
+                    </div>
                 </div>
             </section>
 
+            <!-- ═════════ EXPERIENCE: a route that fills as you scroll ═════════ -->
+            <section class="blk tinted" id="experience" data-file="~/experience.md">
+                <div class="wrap">
+                    <div class="blk-head rv">
+                        <div>
+                            <p class="eyebrow-sm g-green">Experience</p>
+                            <h2>Eighteen years, <span class="soft">one route.</span></h2>
+                        </div>
+                    </div>
+                    <div class="exp-grid">
+                        <ol class="route" id="route">
+                            <li class="stop rv">
+                                <p class="when">2026 – now <span class="pill">Contract · IBM</span></p>
+                                <h3>Platform &amp; DevOps Architect</h3>
+                                <p class="org">CloudScouts · Client: AT&amp;T</p>
+                                <p class="desc">Shared delivery platform for an Azure data and AI estate: 6,000+ pipeline runs a day, Terraform-provisioned private networking, and 50+ data sources under policy-as-code.</p>
+                            </li>
+                            <li class="stop rv">
+                                <p class="when">2023 – 2026</p>
+                                <h3>Principal Cloud Architect</h3>
+                                <p class="org">Trackonomy Systems</p>
+                                <p class="desc">Owned platform, reliability and cost for 200+ microservices serving 12+ enterprise clients across 8 countries, leading a 6-engineer team.</p>
+                            </li>
+                            <li class="stop rv">
+                                <p class="when">2020 – 2023</p>
+                                <h3>Cloud &amp; SRE Architect, OSDU Data Platform</h3>
+                                <p class="org">Wipro Technologies · ExxonMobil · Chevron · BP · Shell</p>
+                                <p class="desc">Processed exabytes of seismic data for four supermajors. Reusable Terraform modules and multi-tenant landing zones cut deployment time 80%.</p>
+                            </li>
+                            <li class="stop rv">
+                                <p class="when">2018 – 2020</p>
+                                <h3>Platform &amp; DevOps Architect, Healthcare</h3>
+                                <p class="org">NTT Data Services · Harvard Pilgrim</p>
+                                <p class="desc">Delivery platform for regulated workloads against HIPAA, HITRUST, PCI, SOC2 and FedRAMP. Led a 5-engineer team and a $6M infrastructure budget.</p>
+                            </li>
+                            <li class="stop rv">
+                                <p class="when">2007 – 2018</p>
+                                <h3>Multi-Cloud Architect / Sr. Infrastructure Engineer</h3>
+                                <p class="org">Tata Consultancy Services · CNA · PwC · Verizon · Owens Corning</p>
+                                <p class="desc">Eleven years from Linux/Unix administration to cloud architecture, running bare-metal production systems serving millions of users.</p>
+                            </li>
+                        </ol>
+                        <aside class="exp-side">
+                            <div class="pane rv">
+                                <p class="eyebrow-sm">How I work</p>
+                                <p class="side-copy">I run SRE end to end as primary on-call owner (SLOs, error budgets, blameless postmortems), and performance engineering is the specialty: flame graphs, strace, Wireshark.</p>
+                            </div>
+                            <div class="pane rv">
+                                <p class="eyebrow-sm">Credentials</p>
+                                <ul class="cert-list">
+                                    <li><span class="k g-yellow">AWS</span>Solutions Architect – Professional</li>
+                                    <li><span class="k g-blue">Azure</span>Solutions Architect Expert</li>
+                                    <li><span class="k g-red">GCP</span>Professional Cloud Architect</li>
+                                    <li><span class="k g-blue">CNCF</span>Certified Kubernetes Administrator</li>
+                                    <li><span class="k g-green">HCP</span>Terraform Associate</li>
+                                </ul>
+                            </div>
+                            <div class="pane rv">
+                                <p class="eyebrow-sm">Education · 2005</p>
+                                <h3>B.E. Mechanical Engineering</h3>
+                                <p class="org">Acharya Nagarjuna University</p>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═════════ APPS (generated) ═════════ -->
             <section class="blk" id="apps" data-file="~/apps/">
-                <div class="blk-head"><h2><span class="tilde">~/</span>Apps</h2><span class="blk-note">live · refreshed weekly</span></div>
-                <div class="dir-grid">
+                <div class="wrap">
+                    <div class="blk-head rv">
+                        <div>
+                            <p class="eyebrow-sm g-yellow">Live apps</p>
+                            <h2>Things I ship <span class="soft">on the side.</span></h2>
+                        </div>
+                        <span class="more">Refreshed weekly</span>
+                    </div>
+                    <div class="dir-grid rv">
                 <!-- DIRECTORY:START -->
                 <a class="dir-card" href="https://cariara.com/tools/forc" target="_blank" rel="noopener noreferrer">
                     <div class="dir-card-top"><span class="dir-name">CloudForge</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></div>
@@ -309,41 +366,56 @@
                     <span class="dir-url">sudhakarchundu.org/trending-gitrepos</span>
                 </a>
                 <!-- DIRECTORY:END -->
-                </div>
-            </section>
-
-            <section class="blk" id="recommendations" data-file="~/recommendations.md">
-                <div class="blk-head"><h2><span class="tilde">~/</span>Recommendations</h2><a href="https://www.linkedin.com/in/schundu007/details/recommendations/" target="_blank" rel="noopener noreferrer">all 12 on linkedin →</a></div>
-                <div class="quotes">
-                    <figure class="card quote"><blockquote>“A rare ability to combine deep technical expertise with clear, practical decision-making.”</blockquote><figcaption class="who"><strong>Nirali Patidar</strong> · TPM Leader, AI/ML</figcaption></figure>
-                    <figure class="card quote"><blockquote>“He architected our CI/CD pipelines reducing deployment time by 95%.”</blockquote><figcaption class="who"><strong>Kasi Viswanath</strong> · Sr. DevOps Engineer, Trackonomy</figcaption></figure>
-                    <figure class="card quote"><blockquote>“His expertise enabled Trackonomy to successfully complete our first SOC2 Type II audit.”</blockquote><figcaption class="who"><strong>Keith Abrams</strong> · General Counsel, Trackonomy</figcaption></figure>
-                </div>
-            </section>
-
-            <section class="blk" id="contact" data-file="~/contact.md">
-                <div class="blk-head"><h2><span class="tilde">~/</span>Contact</h2></div>
-                <div class="contact-grid">
-                    <div class="card">
-                        <ul class="links">
-                            <li><span class="k">email</span><a href="mailto:chundubabu@gmail.com">chundubabu@gmail.com</a></li>
-                            <li><span class="k">linkedin</span><a href="https://www.linkedin.com/in/schundu007/" target="_blank" rel="noopener noreferrer">in/schundu007</a></li>
-                            <li><span class="k">github</span><a href="https://github.com/schundu007" target="_blank" rel="noopener noreferrer">schundu007</a></li>
-                            <li><span class="k">medium</span><a href="https://schundu.medium.com/" target="_blank" rel="noopener noreferrer">schundu.medium.com</a></li>
-                        </ul>
                     </div>
-                    <div class="card" id="resume">
-                        <div class="card-meta"><span>résumé</span><span id="resume-meta">Bundled copy</span></div>
-                        <h3>Master Resume</h3>
-                        <div class="resume-row">
-                            <a href="assets/resume/Sudhakar_Chundu_Master_Resume.pdf" class="btn-g primary resume-download" download><i class="fas fa-download"></i> PDF</a>
-                            <a href="assets/resume/Sudhakar_Chundu_Master_Resume.docx" class="btn-g" download><i class="fas fa-file-word"></i> .docx</a>
+                </div>
+            </section>
+
+            <!-- ═════════ RECOMMENDATIONS ═════════ -->
+            <section class="blk" id="recommendations" data-file="~/recommendations.md">
+                <div class="wrap">
+                    <div class="blk-head rv">
+                        <div>
+                            <p class="eyebrow-sm g-red">Recommendations</p>
+                            <h2>In their words.</h2>
                         </div>
-                        <div id="resume-admin" class="resume-admin" hidden>
-                            <input type="file" id="resume-upload-input" accept=".docx,.pdf" hidden>
-                            <button class="btn btn-secondary" id="resume-update-btn" onclick="document.getElementById('resume-upload-input').click()"><i class="fas fa-upload"></i> Update</button>
-                            <button class="btn btn-outline" id="resume-delete-btn"><i class="fas fa-trash-alt"></i> Delete</button>
-                            <span id="resume-admin-status" class="resume-admin-status"></span>
+                        <a href="https://www.linkedin.com/in/schundu007/details/recommendations/" class="more" target="_blank" rel="noopener noreferrer">All 12 on LinkedIn →</a>
+                    </div>
+                    <div class="quotes">
+                        <figure class="quote rv g-blue"><blockquote>“A rare ability to combine deep technical expertise with clear, practical decision-making.”</blockquote><figcaption class="who"><strong>Nirali Patidar</strong> · TPM Leader, AI/ML</figcaption></figure>
+                        <figure class="quote rv g-green" style="--delay:.08s"><blockquote>“He architected our CI/CD pipelines reducing deployment time by 95%.”</blockquote><figcaption class="who"><strong>Kasi Viswanath</strong> · Sr. DevOps Engineer, Trackonomy</figcaption></figure>
+                        <figure class="quote rv g-yellow" style="--delay:.16s"><blockquote>“His expertise enabled Trackonomy to successfully complete our first SOC2 Type II audit.”</blockquote><figcaption class="who"><strong>Keith Abrams</strong> · General Counsel, Trackonomy</figcaption></figure>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═════════ CONTACT: closing card with glow ═════════ -->
+            <section class="blk" id="contact" data-file="~/contact.md">
+                <div class="wrap">
+                    <div class="close rv">
+                        <div class="close-glow" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+                        <div class="close-copy">
+                            <p class="eyebrow-sm g-blue">Contact</p>
+                            <h2>Building something that <span class="soft">has to stay up?</span></h2>
+                            <ul class="links">
+                                <li><span class="k">email</span><a href="mailto:chundubabu@gmail.com">chundubabu@gmail.com</a></li>
+                                <li><span class="k">linkedin</span><a href="https://www.linkedin.com/in/schundu007/" target="_blank" rel="noopener noreferrer">in/schundu007</a></li>
+                                <li><span class="k">github</span><a href="https://github.com/schundu007" target="_blank" rel="noopener noreferrer">schundu007</a></li>
+                                <li><span class="k">medium</span><a href="https://schundu.medium.com/" target="_blank" rel="noopener noreferrer">schundu.medium.com</a></li>
+                            </ul>
+                        </div>
+                        <div class="pane resume-card" id="resume">
+                            <p class="feat-meta"><span>Résumé</span><span id="resume-meta">Bundled copy</span></p>
+                            <h3>Master Resume</h3>
+                            <div class="resume-row">
+                                <span class="magnet"><a href="assets/resume/Sudhakar_Chundu_Master_Resume.pdf" class="btn-g primary resume-download" download><i class="fas fa-download"></i> PDF</a></span>
+                                <a href="assets/resume/Sudhakar_Chundu_Master_Resume.docx" class="btn-g" download><i class="fas fa-file-word"></i> .docx</a>
+                            </div>
+                            <div id="resume-admin" class="resume-admin" hidden>
+                                <input type="file" id="resume-upload-input" accept=".docx,.pdf" hidden>
+                                <button class="btn btn-secondary" id="resume-update-btn" onclick="document.getElementById('resume-upload-input').click()"><i class="fas fa-upload"></i> Update</button>
+                                <button class="btn btn-outline" id="resume-delete-btn"><i class="fas fa-trash-alt"></i> Delete</button>
+                                <span id="resume-admin-status" class="resume-admin-status"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -366,6 +438,7 @@
     <script src="assets/js/firebase-config.js"></script>
     <script src="assets/js/auth.js"></script>
     <script src="/assets/js/shell.js?v=20261010d"></script>
+    <script src="/assets/js/home.js?v=20261013e"></script>
 
     <script>
         // Resume file: public download + owner-only update/delete.
