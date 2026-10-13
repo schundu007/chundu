@@ -198,8 +198,9 @@ html[data-theme='dark'] #main .hero-sky i { opacity: .55; }
 
 /* Closing contact card with the drifting glow */
 #main #contact { padding-bottom: clamp(64px, 8vw, 112px); }
-#main .close { position: relative; isolation: isolate; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; padding: clamp(28px, 5vw, 56px); border: 1px solid var(--gz-line); border-radius: 32px; background: var(--gz-surface); }
-#main .close-glow { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+#main .close { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: start; padding: clamp(28px, 5vw, 56px); border: 1px solid var(--gz-line); border-radius: 32px; background: var(--gz-surface); }
+/* The glow clips itself, so the card never clips its own text. */
+#main .close-glow { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; border-radius: inherit; }
 #main .close-glow i { position: absolute; width: 520px; height: 520px; border-radius: 50%; opacity: .16; -webkit-mask-image: radial-gradient(closest-side, #000 20%, transparent); mask-image: radial-gradient(closest-side, #000 20%, transparent); animation: glow-drift 18s ease-in-out infinite alternate; will-change: transform; }
 #main .close-glow i:nth-child(1) { background: #4285F4; left: -10%; top: -40%; }
 #main .close-glow i:nth-child(2) { background: #EA4335; left: 35%; top: -60%; opacity: .08; animation-delay: -5s; }
@@ -214,7 +215,7 @@ html[data-theme='dark'] #main .close-glow i { opacity: .1; }
 #main .links .k { min-width: 5.5rem; color: var(--gz-text-3); }
 #main .links a { text-decoration: none; overflow-wrap: anywhere; }
 #main .links a:hover { text-decoration: underline; }
-#main .resume-card { background: var(--gz-canvas); }
+#main .resume-card { align-self: center; background: var(--gz-canvas); }
 #main .resume-card h3 { margin: 8px 0 0; font-size: 22px; }
 #main .resume-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
 #main .resume-admin { display: flex; align-items: center; gap: .5rem; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--gz-line); }
