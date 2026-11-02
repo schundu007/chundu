@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-26T15:33:39.231Z",
-  "count": 5,
+  "generated_at": "2026-11-02T18:55:16.492Z",
+  "count": 6,
   "entries": [
     {
       "name": "CloudForge",
@@ -31,6 +31,13 @@
       "url": "/trending-gitrepos/",
       "description": "Weekly-ranked trending repos across DevOps, Platform, MLOps, SRE, LLMOps, and GPU infra.",
       "host": "sudhakarchundu.org/trending-gitrepos"
+    },
+    {
+      "name": "Jfrog Oidc Serverless",
+      "url": "https://jfrog-oidc.vercel.app",
+      "description": "Short-lived JFrog tokens for Cloud Run and Azure serverless via OIDC",
+      "host": "jfrog-oidc.vercel.app",
+      "ts": 1793596922000
     }
   ]
 }
