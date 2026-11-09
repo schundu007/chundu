@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-02T18:55:16.492Z",
+  "generated_at": "2026-11-09T19:16:28.585Z",
   "count": 6,
   "entries": [
     {
@@ -37,7 +37,7 @@
       "url": "https://jfrog-oidc.vercel.app",
       "description": "Short-lived JFrog tokens for Cloud Run and Azure serverless via OIDC",
       "host": "jfrog-oidc.vercel.app",
-      "ts": 1793596922000
+      "ts": 1793984244000
     }
   ]
 }
