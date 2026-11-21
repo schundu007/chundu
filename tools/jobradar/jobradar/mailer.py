@@ -6,6 +6,7 @@ import time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+from .pay import parse_pay
 from .scoring import age_days
 
 
@@ -35,8 +36,9 @@ def _row(j):
             f'<td style="padding:7px 8px;vertical-align:top;color:#5e5e5e;font-size:12px;white-space:nowrap">{age}</td></tr>')
 
 
-def build(groups, ui_url, total):
+def build(groups, ui_url, total, floor=0):
     """groups: list of (company, shown_jobs, hidden_count)."""
+    pay_note = f"${floor // 1000}K or more" if floor else "any amount"
     parts = []
     for company, jobs, more in groups:
         parts.append(f'<tr><td colspan="4" style="padding:14px 8px 4px;font-size:15px;font-weight:700;'
@@ -49,7 +51,7 @@ def build(groups, ui_url, total):
     names = [g[0] for g in groups]
     body = (f'<div style="font-family:Arial,Helvetica,sans-serif;max-width:780px;color:#1f1f1f">'
             f'<h2 style="margin:0 0 4px">Job Radar: {total} new role-fit jobs at {len(names)} companies</h2>'
-            f'<p style="color:#5e5e5e;margin:0 0 6px">Best 3 per company shown. Fit is a score out of 100.</p>'
+            f'<p style="color:#5e5e5e;margin:0 0 6px">Best 3 per company shown. Pay range reaches {pay_note}. Fit is a score out of 100.</p>'
             f'<table style="border-collapse:collapse;width:100%">'
             f'<tr style="text-align:left;color:#5e5e5e;font-size:12px"><th style="padding:6px 8px">Fit</th>'
             f'<th style="padding:6px 8px">Job and location</th><th style="padding:6px 8px">Pay</th>'
@@ -91,6 +93,12 @@ def digest(cfg, store, ui_url, force=False, out_dir=None):
     max_age = int(f.get("max_age_days" if first else "email_max_age_days", 14))  # first email covers the backlog
     cands = [j for j in store.to_email(int(f.get("min_score_email", 60)))
              if j["company"].lower() not in blocked and (age_days(j.get("posted") or "") or 0) <= max_age]
+    floor = int(f.get("min_pay_top", 0))
+    if floor:  # pay range must reach the floor (top of range); jobs with no pay listed only if allowed
+        def pay_ok(j):
+            r = parse_pay(j.get("pay") or "")
+            return r[1] >= floor if r else bool(f.get("include_unlisted_pay", False))
+        cands = [j for j in cands if pay_ok(j)]
     if cfg["email"].get("skip_no_sponsorship", True):
         cands = [j for j in cands if not any("sponsor" in x.lower() or "citizen" in x.lower() for x in j["flags"])]
     backlog = [j["uid"] for j in store.to_email(0)]
@@ -98,7 +106,7 @@ def digest(cfg, store, ui_url, force=False, out_dir=None):
         return dict(sent=False, reason="no new matches")
     groups = pick(cfg, cands)
     if groups:
-        subject, body = build(groups, ui_url, len(cands))
+        subject, body = build(groups, ui_url, len(cands), floor)
     else:
         subject, body = ("Job Radar: test email, no new matches right now",
                          "<p>Job Radar email is working. New matches will arrive here.</p>")

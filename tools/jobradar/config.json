@@ -26,7 +26,9 @@
     "min_score_show": 45,
     "min_score_email": 60,
     "max_age_days": 45,
-    "email_max_age_days": 14
+    "email_max_age_days": 14,
+    "min_pay_top": 225000,
+    "include_unlisted_pay": false
   },
   "exclude_companies": [
     "Microsoft",

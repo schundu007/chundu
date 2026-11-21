@@ -116,6 +116,7 @@
             <a href="/opensource/">open source</a>
             <a href="/projects/#blog">writing</a>
             <a href="/trending-gitrepos/">trending</a>
+            <a href="/jobs/radar/" class="active">jobs</a>
             <a href="/contact/">contact</a>
         </nav>
         <button class="sh-chip" type="button" onclick="toggleTheme()" aria-label="Toggle colour theme" id="theme-btn">
@@ -159,7 +160,7 @@
                     <option value="70">Fit 70+</option><option value="80">Fit 80+</option>
                 </select>
                 <select id="minPay" aria-label="Minimum pay">
-                    <option value="0">Any pay</option><option value="150">Top of range $150K+</option><option value="200">Top of range $200K+</option>
+                    <option value="0">Any pay</option><option value="150">Top of range $150K+</option><option value="200">Top of range $200K+</option><option value="225" selected>Top of range $225K+ (your base)</option>
                     <option value="250">Top of range $250K+</option><option value="300">Top of range $300K+</option><option value="400">Top of range $400K+</option>
                 </select>
                 <select id="days" aria-label="Posted within">
@@ -176,7 +177,7 @@
                     <button data-s="applied">Applied</button><button data-s="hidden">Hidden</button><button data-s="all">All</button>
                 </div>
                 <label class="rd-check"><input type="checkbox" id="bay"> Bay Area or remote</label>
-                <label class="rd-check"><input type="checkbox" id="haspay"> Has pay listed</label>
+                <label class="rd-check"><input type="checkbox" id="haspay"> Also show jobs with no pay listed</label>
                 <label class="rd-check"><input type="checkbox" id="nospon" checked> Hide "no visa sponsorship"</label>
                 <label class="rd-check"><input type="checkbox" id="top1"> Top AI and chip companies only</label>
             </div>
@@ -214,18 +215,23 @@
             var m = (p || "").match(/\$(\d+)K/g); if (!m) return 0;
             return Math.max.apply(null, m.map(function (x) { return +x.replace(/\D/g, ""); }));
         }
+        function payOk(j) {  // top of the posted range must reach the chosen floor
+            var floor = +$("#minPay").value;
+            if (!floor) return true;
+            if (!j.pay_hi && !payTop(j.pay)) return $("#haspay").checked;
+            return (j.pay_hi ? j.pay_hi / 1000 : payTop(j.pay)) >= floor;
+        }
         function when(ts) { return new Date(ts * 1000).toLocaleString([], { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }); }
 
         function list() {
             var q = $("#q").value.trim().toLowerCase(), co = $("#company").value, min = +$("#minFit").value,
-                pay = +$("#minPay").value, days = +$("#days").value;
+                days = +$("#days").value;
             var rows = JOBS.filter(function (j) {
                 var s = status(j);
                 if (TAB === "all" ? s === "hidden" : s !== TAB) return false;
                 if (j.score < min || (co && j.company !== co)) return false;
                 if (days && age(j.posted) > days) return false;
-                if (pay && payTop(j.pay) < pay) return false;
-                if ($("#haspay").checked && !j.pay) return false;
+                if (!payOk(j)) return false;
                 if ($("#bay").checked && !BAY.test(j.location || "")) return false;
                 if ($("#nospon").checked && (j.flags || []).some(function (f) { return /sponsorship|citizen/i.test(f); })) return false;
                 if ($("#top1").checked && TOP.indexOf(j.company) < 0) return false;
@@ -245,7 +251,7 @@
         }
 
         function stats() {
-            var min = +$("#minFit").value, live = JOBS.filter(function (j) { return j.score >= min && status(j) !== "hidden"; });
+            var min = +$("#minFit").value, live = JOBS.filter(function (j) { return j.score >= min && status(j) !== "hidden" && payOk(j); });
             var n = function (f) { return live.filter(f).length; };
             var items = [
                 [n(function (j) { return age(j.posted) <= 1; }), "posted in the last day", function () { $("#days").value = "1"; setTab("new"); }],
@@ -305,7 +311,7 @@
 
         function companies() {
             var c = {};
-            JOBS.forEach(function (j) { if (j.score >= +$("#minFit").value) c[j.company] = (c[j.company] || 0) + 1; });
+            JOBS.forEach(function (j) { if (j.score >= +$("#minFit").value && payOk(j)) c[j.company] = (c[j.company] || 0) + 1; });
             var sel = $("#company"), cur = sel.value;
             sel.innerHTML = '<option value="">All companies</option>' + Object.keys(c).sort().map(function (k) {
                 return '<option value="' + esc(k) + '">' + esc(k) + " (" + c[k] + ")</option>"; }).join("");
@@ -318,6 +324,7 @@
                 " companies · updated " + when(META.updated) + " · checked every " + (META.every_hours || 3) + " hours";
             $("#rd-note").innerHTML = "Fit is a score out of 100: job title match (up to 45), level (15), your skills in the job text (30) " +
                 "and location (10), minus points for no visa sponsorship, US citizens only or security clearance. " +
+                "Pay filter uses the top of each posted range, so a $180K to $260K job counts for $225K+. " +
                 "Save, Applied and Hide are kept in this browser only." +
                 ((META.sites_failed || []).length ? " Sites that failed on the last check: " + esc(META.sites_failed.join(", ")) + "." : "");
             companies(); render();
@@ -325,11 +332,11 @@
         }).catch(function () { $("#list").innerHTML = '<div class="rd-empty">Could not load the job list. Refresh to try again.</div>'; });
 
         ["#q", "#company", "#minFit", "#minPay", "#days", "#sort", "#bay", "#haspay", "#nospon", "#top1"].forEach(function (id) {
-            $(id).addEventListener(id === "#q" ? "input" : "change", function () { SHOW = 50; if (id === "#minFit") companies(); render(); });
+            $(id).addEventListener(id === "#q" ? "input" : "change", function () { SHOW = 50; if (id === "#minFit" || id === "#minPay" || id === "#haspay") companies(); render(); });
         });
         [].forEach.call(document.querySelectorAll("#tabs button"), function (b) { b.onclick = function () { setTab(b.dataset.s); }; });
     })();
     </script>
-    <script src="/assets/js/shell.js?v=20261010d"></script>
+    <script src="/assets/js/shell.js?v=20261121a"></script>
 </body>
 </html>

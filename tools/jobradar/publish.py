@@ -20,6 +20,7 @@ sys.path.insert(0, HERE)
 
 from jobradar import mailer  # noqa: E402
 from jobradar.engine import Runner  # noqa: E402
+from jobradar.pay import parse_pay  # noqa: E402
 from jobradar.scoring import age_days  # noqa: E402
 from jobradar.store import Store  # noqa: E402
 
@@ -60,11 +61,14 @@ def export(cfg, store):
         if a is not None and a > max_age:
             continue
         loc = (j.get("location") or "").split(" [")[0].replace(" (United States of America)", "")
+        rng = parse_pay(j.get("pay") or "") or (0, 0)
         jobs.append(dict(uid=j["uid"], company=j["company"], title=j["title"], location=loc[:160], url=j["url"],
-                         posted=j.get("posted") or "", pay=j.get("pay") or "", score=j["score"],
+                         posted=j.get("posted") or "", pay=j.get("pay") or "", pay_lo=rng[0], pay_hi=rng[1],
+                         score=j["score"],
                          reasons=j["reasons"], flags=j["flags"], first_seen=int(j["first_seen"])))
     src = store.get("sources", {})
     meta = dict(updated=int(time.time()), every_hours=cfg["schedule"]["every_hours"],
+                min_pay_top=int(f.get("min_pay_top", 0)),
                 companies=sorted(c["name"] for c in cfg["companies"]
                                  if c.get("enabled", True) and c["name"].lower() not in blocked),
                 sites_ok=sum(1 for v in src.values() if v.get("ok")),

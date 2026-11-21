@@ -43,6 +43,7 @@ const NAV = `
             <a href="/opensource/">open source</a>
             <a href="/projects/#blog">writing</a>
             <a href="/trending-gitrepos/" class="active">trending</a>
+            <a href="/jobs/radar/">jobs</a>
             <a href="/contact/">contact</a>
         </nav>
         <button class="sh-chip" type="button" onclick="toggleTheme()" aria-label="Toggle colour theme" id="theme-btn">
@@ -259,7 +260,7 @@ ${FOOTER}
     <script src="../assets/js/firebase-config.js"></script>
     <script src="../assets/js/auth.js"></script>
 
-    <script src="/assets/js/shell.js?v=20261010d"></script>
+    <script src="/assets/js/shell.js?v=20261121a"></script>
 </body>
 </html>
 `;

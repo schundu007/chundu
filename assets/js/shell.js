@@ -8,6 +8,7 @@
         { path: '/opensource/', label: 'opensource/', file: '~/opensource/' },
         { path: '/projects/#blog', label: 'writing/', file: '~/writing/' },
         { path: '/trending-gitrepos/', label: 'trending/', file: '~/trending/' },
+        { path: '/jobs/radar/', label: 'jobs/', file: '~/jobs/' },
         { path: '/contact/', label: 'contact', file: '~/contact.md' }
     ];
 
