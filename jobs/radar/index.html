@@ -178,7 +178,6 @@
                 </div>
                 <label class="rd-check"><input type="checkbox" id="bay"> Bay Area or remote</label>
                 <label class="rd-check"><input type="checkbox" id="haspay"> Also show jobs with no pay listed</label>
-                <label class="rd-check"><input type="checkbox" id="nospon" checked> Hide "no visa sponsorship"</label>
                 <label class="rd-check"><input type="checkbox" id="top1"> Top AI and chip companies only</label>
             </div>
 
@@ -233,7 +232,6 @@
                 if (days && age(j.posted) > days) return false;
                 if (!payOk(j)) return false;
                 if ($("#bay").checked && !BAY.test(j.location || "")) return false;
-                if ($("#nospon").checked && (j.flags || []).some(function (f) { return /sponsorship|citizen/i.test(f); })) return false;
                 if ($("#top1").checked && TOP.indexOf(j.company) < 0) return false;
                 if (q && (j.title + " " + j.company + " " + j.location).toLowerCase().indexOf(q) < 0) return false;
                 return true;
@@ -323,7 +321,8 @@
             $("#rd-sub").textContent = JOBS.length + " role-fit jobs from " + (META.companies || []).length +
                 " companies · updated " + when(META.updated) + " · checked every " + (META.every_hours || 3) + " hours";
             $("#rd-note").innerHTML = "Fit is a score out of 100: job title match (up to 45), level (15), your skills in the job text (30) " +
-                "and location (10), minus points for no visa sponsorship, US citizens only or security clearance. " +
+                "and location (10). Jobs that refuse visa sponsorship or need US citizenship, a green card, US-person status " +
+                "or a security clearance are removed, since they are closed to H-1B holders. " +
                 "Pay filter uses the top of each posted range, so a $180K to $260K job counts for $225K+. " +
                 "Save, Applied and Hide are kept in this browser only." +
                 ((META.sites_failed || []).length ? " Sites that failed on the last check: " + esc(META.sites_failed.join(", ")) + "." : "");
@@ -331,7 +330,7 @@
             try { localStorage.setItem(SEEN, Math.floor(Date.now() / 1000)); } catch (e) {}
         }).catch(function () { $("#list").innerHTML = '<div class="rd-empty">Could not load the job list. Refresh to try again.</div>'; });
 
-        ["#q", "#company", "#minFit", "#minPay", "#days", "#sort", "#bay", "#haspay", "#nospon", "#top1"].forEach(function (id) {
+        ["#q", "#company", "#minFit", "#minPay", "#days", "#sort", "#bay", "#haspay", "#top1"].forEach(function (id) {
             $(id).addEventListener(id === "#q" ? "input" : "change", function () { SHOW = 50; if (id === "#minFit" || id === "#minPay" || id === "#haspay") companies(); render(); });
         });
         [].forEach.call(document.querySelectorAll("#tabs button"), function (b) { b.onclick = function () { setTab(b.dataset.s); }; });

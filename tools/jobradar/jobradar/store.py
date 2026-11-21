@@ -60,6 +60,10 @@ class Store:
             r = db.execute("SELECT snippet, location, url, posted, pay FROM jobs WHERE uid=?", (uid,)).fetchone()
         return dict(desc=r[0] or "", location=r[1], url=r[2], posted=r[3], pay=r[4]) if r else None
 
+    def delete(self, uid):
+        with self.lock, self._db() as db:
+            db.execute("DELETE FROM jobs WHERE uid=?", (uid,))
+
     def touch(self, uids):
         now = time.time()
         with self.lock, self._db() as db:

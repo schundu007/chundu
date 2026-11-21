@@ -88,6 +88,8 @@ class Runner:
                     if res:
                         self.store.upsert(job, res)
                         matched += 1
+                    else:  # no longer a fit under current rules (for example visa or clearance)
+                        self.store.delete(job["uid"])
                     continue
                 if job["uid"] in seen:
                     continue
@@ -114,6 +116,8 @@ class Runner:
             set_pay(job)
             res = score_job(job, cfg)
             if not res:
+                if job["uid"] in in_db:
+                    self.store.delete(job["uid"])
                 continue
             matched += 1
             if self.store.upsert(job, res):

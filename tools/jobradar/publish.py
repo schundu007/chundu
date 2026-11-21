@@ -54,7 +54,10 @@ def export(cfg, store):
     blocked = {b.lower() for b in cfg.get("exclude_companies", [])}
     max_age, min_show = int(f.get("max_age_days", 45)), int(f.get("min_score_show", 45))
     jobs = []
+    fresh = time.time() - 3 * 3600 * float(cfg["schedule"].get("every_hours", 3))  # drop postings that closed
     for j in store.jobs(min_show):
+        if (j.get("last_seen") or 0) < fresh:
+            continue
         if j["company"].lower() in blocked:
             continue
         a = age_days(j.get("posted") or "")

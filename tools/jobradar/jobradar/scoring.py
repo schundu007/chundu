@@ -71,6 +71,38 @@ def title_check(title, prof):
     return min(45, pts), [h[0] for h in hits[:3]]
 
 
+# Jobs an H-1B holder cannot take. EEO lines ("without regard to ... citizenship") are not matched.
+VISA_RULES = [
+    ("No visa sponsorship", r"(not|unable to|cannot|can't|won't|will not|do not|does not|don't|doesn't|no longer)\s+"
+                            r"(be\s+)?(currently\s+)?(eligible\s+for\s+|offer(ing)?\s+|provide\s+|able to\s+|support\s+|sponsor\s*)"
+                            r"([a-z-]+\s+){0,3}(visa\s+|immigration\s+|employment\s+)?sponsor"),
+    ("No visa sponsorship", r"without\s+(the\s+)?(need\s+for\s+|requiring\s+|requirement\s+of\s+)?(current\s+or\s+future\s+|future\s+)?"
+                            r"(visa\s+|employment\s+|immigration\s+)?sponsorship"),
+    ("No visa sponsorship", r"sponsorship\s+(is\s+|will\s+)?not\s+(be\s+)?(available|offered|provided|possible|considered)"),
+    ("No visa sponsorship", r"\bno\s+(visa\s+|h-?1b\s+)?sponsorship"),
+    ("US citizens only", r"(must|required to|requires?|requirement|only|need to)\s+(be\s+)?(a\s+)?(u\.?\s?s\.?|united states)\s+citizen"),
+    ("US citizens only", r"(u\.?\s?s\.?|united states)\s+citizenship\s+(is\s+)?(required|requirement|needed|mandatory)"),
+    ("US citizens only", r"(requires?|required|must have)\s+(u\.?\s?s\.?|united states)\s+citizenship"),
+    ("Citizen or green card only", r"citizens?\s+(or|and/or|/)\s+(lawful\s+)?(permanent\s+residents?|green\s+card)"),
+    ("Citizen or green card only", r"green\s+card\s+holders?(?!\s+sponsor)"),
+    ("US person only", r"(u\.?\s?s\.?|united states)\s+person(s)?\b(?!nel)[^.]{0,80}(required|requirement|must|only|eligible)"),
+    ("US person only", r"(must|required to|requires?)\s+(be\s+)?(a\s+)?(u\.?\s?s\.?|united states)\s+person"),
+    ("US person only", r"\bitar\b"),
+    ("Clearance needed", r"(security|secret|government|dod|federal)\s+clearance|ts/sci|top\s+secret|\bpublic\s+trust\b|"
+                         r"\bclearance\s+(is\s+)?(required|needed|eligib)|(active|current|obtain|maintain)\s+(a\s+)?clearance"),
+]
+VISA_TITLE = r"\b(federal|fedramp|government|public sector|cleared|clearance|ts/sci|top secret|dod|gov ?cloud|zfg|usg)\b"
+
+
+def visa_block(desc, title=""):
+    if re.search(VISA_TITLE, (title or "").lower()):
+        return "Government or cleared role"
+    for label, pat in VISA_RULES:
+        if re.search(pat, desc):
+            return label
+    return None
+
+
 def score_job(job, cfg):
     prof = cfg["profile"]
     title_pts, title_hits = title_check(job["title"], prof)
@@ -100,15 +132,12 @@ def score_job(job, cfg):
     reasons.append(loc_label)
 
     penalty = 0
-    for pat, label, pen in [
-        (r"(not|unable to|cannot|can't|won't|will not)\s+(be\s+)?(eligible\s+for\s+|offer\s+|provide\s+|able to\s+)?(visa\s+)?sponsor",
-         "No visa sponsorship", prof.get("no_sponsorship_penalty", 15)),
-        (r"(security clearance|active clearance|ts/sci|top secret)", "Clearance needed", 10),
-        (r"(must be a|requires?|required to be a)\s+u\.?s\.?\s+citizen", "US citizen only", 15),
-    ]:
-        if re.search(pat, desc):
-            flags.append(label)
-            penalty += pen
+    blocked = visa_block(desc, job["title"])
+    if blocked:
+        if prof.get("drop_visa_blocked", True):  # H-1B: these jobs are never shown or emailed
+            return None
+        flags.append(blocked)
+        penalty += 40
 
     # first "N+ years of ... experience" phrase is usually the real requirement
     m = re.search(r"(\d{1,2})\+?\s*(?:or more\s+)?years?(?:\s+of)?[^.]{0,60}?experience", desc)
