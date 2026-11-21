@@ -1,0 +1,63 @@
+name: Job Radar
+
+# Every 3 hours: read the careers sites in tools/jobradar/config.json, score jobs for role fit,
+# publish jobs/radar/data/jobs.json (shown at /jobs/radar/) and email new matches.
+# This job ONLY ever commits jobs/radar/data/ — the rest of the site is never modified.
+# Email needs the repo secret JOBRADAR_GMAIL_APP_PASSWORD; without it the page still updates.
+
+on:
+  schedule:
+    - cron: '17 */3 * * *'
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - 'tools/jobradar/**'
+      - '.github/workflows/jobradar.yml'
+
+concurrency:
+  group: jobradar
+  cancel-in-progress: false
+
+jobs:
+  radar:
+    name: Check job sites and publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      # Remembers which jobs were already seen and emailed between runs.
+      - name: Restore Job Radar state
+        uses: actions/cache@v4
+        with:
+          path: tools/jobradar/data
+          key: jobradar-state-${{ github.run_id }}
+          restore-keys: jobradar-state-
+
+      - name: Check job sites, publish, email
+        env:
+          JOBRADAR_GMAIL_APP_PASSWORD: ${{ secrets.JOBRADAR_GMAIL_APP_PASSWORD }}
+        run: python tools/jobradar/publish.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- jobs/radar/data/; then
+            echo "No changes."
+            exit 0
+          fi
+          git add jobs/radar/data/
+          git commit -m "chore(jobradar): refresh job matches"
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push && exit 0
+            sleep 5
+          done
+          exit 1

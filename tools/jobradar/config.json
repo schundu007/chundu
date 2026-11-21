@@ -1,0 +1,848 @@
+{
+  "ui": {
+    "host": "127.0.0.1",
+    "port": 8765
+  },
+  "schedule": {
+    "every_hours": 3,
+    "email_after_each_check": true
+  },
+  "email": {
+    "enabled": true,
+    "to": "chundubabu@gmail.com",
+    "from": "chundubabu@gmail.com",
+    "smtp_host": "smtp.gmail.com",
+    "smtp_port": 587,
+    "app_password": "",
+    "app_password_env": "JOBRADAR_GMAIL_APP_PASSWORD",
+    "first_digest_max": 40,
+    "max_per_email": 60,
+    "per_company": 3,
+    "max_companies": 30,
+    "skip_no_sponsorship": true
+  },
+  "filters": {
+    "us_only": true,
+    "min_score_show": 45,
+    "min_score_email": 60,
+    "max_age_days": 45,
+    "email_max_age_days": 14
+  },
+  "exclude_companies": [
+    "Microsoft",
+    "Databricks",
+    "PayPal",
+    "TikTok",
+    "ByteDance"
+  ],
+  "search_queries": [
+    "devops",
+    "site reliability",
+    "platform engineer",
+    "infrastructure",
+    "cloud engineer",
+    "kubernetes",
+    "build and release",
+    "ci/cd",
+    "hpc",
+    "mlops",
+    "cloud architect",
+    "developer infrastructure"
+  ],
+  "workday_pages": 2,
+  "detail_limit_per_company": 80,
+  "parallel": 6,
+  "profile": {
+    "min_title_points": 14,
+    "title_core": {
+      "site reliability": 32,
+      "sre": 32,
+      "devops": 32,
+      "devsecops": 32,
+      "platform engineer": 30,
+      "platform engineering": 30,
+      "infrastructure": 28,
+      "infra": 24,
+      "cloud engineer": 30,
+      "cloud architect": 30,
+      "cloud infrastructure": 32,
+      "kubernetes": 30,
+      "ci/cd": 30,
+      "cicd": 30,
+      "build systems": 28,
+      "build": 14,
+      "release engineer": 28,
+      "release": 14,
+      "delivery": 10,
+      "reliability": 26,
+      "production engineer": 26,
+      "hpc": 26,
+      "cluster": 22,
+      "fleet": 16,
+      "compute": 14,
+      "gpu": 18,
+      "mlops": 26,
+      "ml infrastructure": 30,
+      "ml platform": 28,
+      "developer infrastructure": 30,
+      "developer productivity": 26,
+      "developer experience": 16,
+      "eda": 24,
+      "observability": 26,
+      "provisioning": 22,
+      "automation": 12,
+      "platform": 16,
+      "cloud": 18,
+      "systems engineer": 16,
+      "solutions architect": 12,
+      "architect": 14,
+      "capacity": 14,
+      "identity": 10,
+      "security engineer": 10,
+      "network": 10,
+      "storage": 12
+    },
+    "title_exclude": [
+      "intern",
+      "internship",
+      "new grad",
+      "new college",
+      "university",
+      "graduate",
+      "apprentice",
+      "co-op",
+      "recruiter",
+      "recruiting",
+      "sourcer",
+      "counsel",
+      "attorney",
+      "legal",
+      "paralegal",
+      "sales",
+      "account executive",
+      "account manager",
+      "marketing",
+      "technician",
+      "mechanical",
+      "electrical engineer",
+      "accountant",
+      "accounting",
+      "finance",
+      "payroll",
+      "tax",
+      "program manager",
+      "project manager",
+      "product manager",
+      "product marketing",
+      "customer success",
+      "support engineer",
+      "designer",
+      "construction",
+      "commissioning",
+      "manufacturing quality",
+      "supply chain",
+      "procurement",
+      "sourcing",
+      "facilities",
+      "data center technician",
+      "rtl",
+      "asic",
+      "verification engineer",
+      "physical design",
+      "analog",
+      "firmware",
+      "researcher",
+      "research scientist",
+      "data scientist",
+      "writer",
+      "editor",
+      "executive assistant",
+      "partner",
+      "go-to-market",
+      "business development",
+      "deal desk",
+      "enablement",
+      "talent"
+    ],
+    "seniority": {
+      "distinguished": 15,
+      "principal": 15,
+      "staff": 14,
+      "lead": 11,
+      "architect": 11,
+      "senior": 9,
+      "sr": 9,
+      "sr.": 9,
+      "manager": 5,
+      "director": 6,
+      "head of": 6
+    },
+    "skills": {
+      "terraform": 3,
+      "kubernetes": 3,
+      "k8s": 2,
+      "helm": 2,
+      "argo": 3,
+      "gitops": 2,
+      "github actions": 2,
+      "jenkins": 1,
+      "gitlab": 1,
+      "azure": 2,
+      "aws": 2,
+      "gcp": 2,
+      "google cloud": 1,
+      "docker": 1,
+      "ansible": 2,
+      "vault": 2,
+      "prometheus": 2,
+      "grafana": 2,
+      "datadog": 2,
+      "opentelemetry": 2,
+      "slurm": 3,
+      "gpu": 2,
+      "cuda": 1,
+      "hpc": 2,
+      "python": 1,
+      "bash": 1,
+      "linux": 1,
+      "ci/cd": 2,
+      "slo": 2,
+      "incident": 1,
+      "on-call": 1,
+      "oidc": 2,
+      "zero trust": 1,
+      "opa": 1,
+      "policy as code": 1,
+      "finops": 1,
+      "kafka": 1,
+      "elasticsearch": 1,
+      "mlops": 2,
+      "kubeflow": 1,
+      "mlflow": 1,
+      "ray": 1,
+      "bazel": 2,
+      "buildkite": 2,
+      "eks": 2,
+      "aks": 2,
+      "gke": 2,
+      "openshift": 1,
+      "istio": 1,
+      "cilium": 1,
+      "karpenter": 1,
+      "devsecops": 2,
+      "sbom": 1,
+      "observability": 2,
+      "capacity planning": 1,
+      "multi-cloud": 2,
+      "infrastructure as code": 2,
+      "site reliability": 2,
+      "jfrog": 1,
+      "artifactory": 1,
+      "sonarqube": 1,
+      "snyk": 1,
+      "lsf": 2,
+      "eda": 1
+    },
+    "preferred_cities": [
+      "san francisco",
+      "san jose",
+      "santa clara",
+      "sunnyvale",
+      "mountain view",
+      "palo alto",
+      "milpitas",
+      "fremont",
+      "cupertino",
+      "menlo park",
+      "redwood city",
+      "san mateo",
+      "foster city",
+      "bay area",
+      "oakland",
+      "berkeley",
+      "san bruno",
+      "south san francisco",
+      "los gatos",
+      "campbell",
+      "burlingame"
+    ],
+    "no_sponsorship_penalty": 15
+  },
+  "companies": [
+    {
+      "name": "OpenAI",
+      "type": "ashby",
+      "slug": "openai",
+      "tier": 1,
+      "enabled": true
+    },
+    {
+      "name": "Anthropic",
+      "type": "greenhouse",
+      "slug": "anthropic",
+      "tier": 1,
+      "enabled": true
+    },
+    {
+      "name": "NVIDIA",
+      "type": "workday",
+      "tenant": "nvidia",
+      "host": "wd5",
+      "site": "NVIDIAExternalCareerSite",
+      "tier": 1,
+      "enabled": true
+    },
+    {
+      "name": "AMD",
+      "type": "amd",
+      "tier": 1,
+      "enabled": true
+    },
+    {
+      "name": "Intel",
+      "type": "workday",
+      "tenant": "intel",
+      "host": "wd1",
+      "site": "External",
+      "tier": 1,
+      "enabled": true
+    },
+    {
+      "name": "Google",
+      "type": "google",
+      "tier": 1,
+      "enabled": true
+    },
+    {
+      "name": "Apple",
+      "type": "apple",
+      "tier": 1,
+      "enabled": true
+    },
+    {
+      "name": "ASML",
+      "type": "asml",
+      "tier": 1,
+      "enabled": true
+    },
+    {
+      "name": "Qualcomm",
+      "type": "eightfold",
+      "host": "careers.qualcomm.com",
+      "domain": "qualcomm.com",
+      "tier": 1,
+      "enabled": true
+    },
+    {
+      "name": "xAI",
+      "type": "greenhouse",
+      "slug": "xai",
+      "tier": 1,
+      "enabled": true
+    },
+    {
+      "name": "CoreWeave",
+      "type": "greenhouse",
+      "slug": "coreweave",
+      "tier": 1,
+      "enabled": true
+    },
+    {
+      "name": "Crusoe",
+      "type": "ashby",
+      "slug": "crusoe",
+      "tier": 1,
+      "enabled": true
+    },
+    {
+      "name": "Lambda",
+      "type": "ashby",
+      "slug": "lambda",
+      "tier": 1,
+      "enabled": true
+    },
+    {
+      "name": "Perplexity",
+      "type": "ashby",
+      "slug": "perplexity",
+      "tier": 1,
+      "enabled": true
+    },
+    {
+      "name": "Cohere",
+      "type": "ashby",
+      "slug": "cohere",
+      "tier": 1,
+      "enabled": true
+    },
+    {
+      "name": "Scale AI",
+      "type": "greenhouse",
+      "slug": "scaleai",
+      "tier": 1,
+      "enabled": true
+    },
+    {
+      "name": "Together AI",
+      "type": "greenhouse",
+      "slug": "togetherai",
+      "tier": 1,
+      "enabled": true
+    },
+    {
+      "name": "Salesforce",
+      "type": "workday",
+      "tenant": "salesforce",
+      "host": "wd12",
+      "site": "External_Career_Site",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Adobe",
+      "type": "workday",
+      "tenant": "adobe",
+      "host": "wd5",
+      "site": "external_experienced",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Cisco",
+      "type": "workday",
+      "tenant": "cisco",
+      "host": "wd5",
+      "site": "Cisco_Careers",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Marvell",
+      "type": "workday",
+      "tenant": "marvell",
+      "host": "wd1",
+      "site": "MarvellCareers",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "KLA",
+      "type": "workday",
+      "tenant": "kla",
+      "host": "wd1",
+      "site": "Search",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Applied Materials",
+      "type": "workday",
+      "tenant": "amat",
+      "host": "wd1",
+      "site": "External",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Micron",
+      "type": "workday",
+      "tenant": "micron",
+      "host": "wd1",
+      "site": "External",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "HPE",
+      "type": "workday",
+      "tenant": "hpe",
+      "host": "wd5",
+      "site": "Jobsathpe",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Workday",
+      "type": "workday",
+      "tenant": "workday",
+      "host": "wd5",
+      "site": "Workday",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Visa",
+      "type": "workday",
+      "tenant": "visa",
+      "host": "wd5",
+      "site": "Visa",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Broadcom",
+      "type": "workday",
+      "tenant": "broadcom",
+      "host": "wd1",
+      "site": "External_Career",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Cadence",
+      "type": "workday",
+      "tenant": "cadence",
+      "host": "wd1",
+      "site": "External_Careers",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "ServiceNow",
+      "type": "smartrecruiters",
+      "slug": "ServiceNow",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Autodesk",
+      "type": "workday",
+      "tenant": "autodesk",
+      "host": "wd1",
+      "site": "Ext",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Analog Devices",
+      "type": "workday",
+      "tenant": "analogdevices",
+      "host": "wd1",
+      "site": "External",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Cloudflare",
+      "type": "greenhouse",
+      "slug": "cloudflare",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Stripe",
+      "type": "greenhouse",
+      "slug": "stripe",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Datadog",
+      "type": "greenhouse",
+      "slug": "datadog",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Snowflake",
+      "type": "ashby",
+      "slug": "snowflake",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Waymo",
+      "type": "greenhouse",
+      "slug": "waymo",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Anduril",
+      "type": "greenhouse",
+      "slug": "andurilindustries",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Nuro",
+      "type": "greenhouse",
+      "slug": "nuro",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Tenstorrent",
+      "type": "greenhouse",
+      "slug": "tenstorrent",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "SambaNova",
+      "type": "greenhouse",
+      "slug": "sambanovasystems",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Lightmatter",
+      "type": "greenhouse",
+      "slug": "lightmatter",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Figma",
+      "type": "greenhouse",
+      "slug": "figma",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Robinhood",
+      "type": "greenhouse",
+      "slug": "robinhood",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Airbnb",
+      "type": "greenhouse",
+      "slug": "airbnb",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Pinterest",
+      "type": "greenhouse",
+      "slug": "pinterest",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Reddit",
+      "type": "greenhouse",
+      "slug": "reddit",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Coinbase",
+      "type": "greenhouse",
+      "slug": "coinbase",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Zscaler",
+      "type": "greenhouse",
+      "slug": "zscaler",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Okta",
+      "type": "greenhouse",
+      "slug": "okta",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "MongoDB",
+      "type": "greenhouse",
+      "slug": "mongodb",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Elastic",
+      "type": "greenhouse",
+      "slug": "elastic",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "GitLab",
+      "type": "greenhouse",
+      "slug": "gitlab",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Samsara",
+      "type": "greenhouse",
+      "slug": "samsara",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Roblox",
+      "type": "greenhouse",
+      "slug": "roblox",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Lyft",
+      "type": "greenhouse",
+      "slug": "lyft",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Instacart",
+      "type": "greenhouse",
+      "slug": "instacart",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Brex",
+      "type": "greenhouse",
+      "slug": "brex",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Affirm",
+      "type": "greenhouse",
+      "slug": "affirm",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Twilio",
+      "type": "greenhouse",
+      "slug": "twilio",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Grafana Labs",
+      "type": "greenhouse",
+      "slug": "grafanalabs",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Chainguard",
+      "type": "greenhouse",
+      "slug": "chainguard",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "PagerDuty",
+      "type": "greenhouse",
+      "slug": "pagerduty",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Fivetran",
+      "type": "greenhouse",
+      "slug": "fivetran",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Discord",
+      "type": "greenhouse",
+      "slug": "discord",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Dropbox",
+      "type": "greenhouse",
+      "slug": "dropbox",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "ClickHouse",
+      "type": "ashby",
+      "slug": "clickhouse",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Temporal",
+      "type": "ashby",
+      "slug": "temporal",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Baseten",
+      "type": "ashby",
+      "slug": "baseten",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Modal",
+      "type": "ashby",
+      "slug": "modal",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Cursor",
+      "type": "ashby",
+      "slug": "cursor",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Sierra",
+      "type": "ashby",
+      "slug": "sierra",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Harvey",
+      "type": "ashby",
+      "slug": "harvey",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Notion",
+      "type": "ashby",
+      "slug": "notion",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Ramp",
+      "type": "ashby",
+      "slug": "ramp",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "ElevenLabs",
+      "type": "ashby",
+      "slug": "elevenlabs",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Supabase",
+      "type": "ashby",
+      "slug": "supabase",
+      "tier": 2,
+      "enabled": true
+    },
+    {
+      "name": "Replit",
+      "type": "ashby",
+      "slug": "replit",
+      "tier": 2,
+      "enabled": true
+    }
+  ]
+}

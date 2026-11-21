@@ -3,3 +3,7 @@
 .DS_Store
 .gstack/
 .playwright-mcp/
+
+# Job Radar local state (kept in the Actions cache, not in git)
+tools/jobradar/data/
+__pycache__/

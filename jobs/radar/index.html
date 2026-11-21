@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GGNQHMGCLH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-GGNQHMGCLH');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Radar | Sudhakar Chundu</title>
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Job Radar | Sudhakar Chundu">
+    <meta property="og:description" content="Role-fit DevOps, SRE, platform and cloud infrastructure jobs at top tech companies, with pay ranges, refreshed every 3 hours.">
+    <meta property="og:url" content="https://www.sudhakarchundu.org/jobs/radar/">
+    <meta property="og:site_name" content="Sudhakar Chundu">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Job Radar | Sudhakar Chundu">
+    <meta name="twitter:description" content="Role-fit DevOps, SRE, platform and cloud infrastructure jobs at top tech companies, with pay ranges, refreshed every 3 hours.">
+    <meta name="description" content="Role-fit DevOps, SRE, platform and cloud infrastructure jobs at top tech companies, with pay ranges, refreshed every 3 hours.">
+    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="../../assets/js/theme.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/css/style.css?v=13">
+    <style>
+        body { margin: 0; }
+        #neural-bg, .page-header { display: none !important; }
+        .main-content { max-width: 100%; padding: 0; margin: 0; min-height: calc(100vh - 64px); }
+        .rd { max-width: 1280px; margin: 0 auto; padding: 32px 24px 72px; }
+        .rd-top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 8px; }
+        .rd-title { margin: 0; font-family: var(--gz-display); font-size: var(--t-display, clamp(36px, 4.4vw, 52px)); font-weight: 500;
+                    letter-spacing: -0.04em; line-height: 1.02; color: var(--gz-ink); }
+        .rd-sub { margin: 10px 0 0; color: var(--gz-text-3); font-size: 15px; }
+        .rd-links { display: flex; gap: 8px; flex-wrap: wrap; }
+        .rd-pill { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; border: 1px solid var(--gz-line);
+                   border-radius: 999px; background: var(--gz-canvas); font-size: 14px; font-weight: 500; text-decoration: none; cursor: pointer; }
+        html[data-theme] .rd-pill { color: var(--gz-ink); }
+        html[data-theme] .rd-pill:hover { background: var(--gz-surface-2); color: var(--gz-ink); }
+        .rd-stats { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 18px; }
+        .rd-stat { display: flex; align-items: baseline; gap: 8px; padding: 10px 18px; border-radius: 999px; background: var(--gz-surface-2);
+                   border: 1px solid transparent; cursor: pointer; font: inherit; color: inherit; }
+        .rd-stat:hover { border-color: var(--gz-line); }
+        .rd-stat b { font-size: 22px; font-weight: 500; letter-spacing: -0.02em; color: var(--gz-ink); }
+        .rd-stat span { font-size: 13.5px; color: var(--gz-text-3); }
+        .rd-filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+        .rd-filters input[type=search], .rd-filters select { height: 40px; padding: 0 14px; border: 1px solid var(--gz-line); border-radius: 999px;
+                   background: var(--gz-canvas); color: var(--gz-ink); font: inherit; font-size: 14px; }
+        .rd-filters input[type=search] { flex: 1 1 260px; min-width: 200px; }
+        .rd-check { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; color: var(--gz-text); white-space: nowrap; }
+        .rd-tabs { display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px; background: var(--gz-surface-2); }
+        .rd-tabs button { height: 34px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: var(--gz-text-3);
+                   font: inherit; font-size: 13.5px; cursor: pointer; }
+        .rd-tabs button.on { background: var(--gz-canvas); color: var(--gz-ink); box-shadow: var(--gz-elev); }
+        .rd-list { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+        .rd-job { display: grid; grid-template-columns: 56px 1fr auto; gap: 16px; align-items: start; padding: 16px 18px;
+                  border: 1px solid var(--gz-line); border-radius: var(--gz-r-md, 20px); background: var(--gz-canvas); }
+        .rd-job.is-hidden { opacity: .55; }
+        .rd-fit { text-align: center; border-radius: 14px; padding: 8px 0 6px; background: var(--gz-surface-2); }
+        .rd-fit b { display: block; font-size: 20px; font-weight: 500; color: var(--gz-ink); line-height: 1.1; }
+        .rd-fit small { font-size: 10.5px; color: var(--gz-text-3); text-transform: uppercase; letter-spacing: .06em; }
+        .rd-fit.hi { background: #E6F4EA; } .rd-fit.hi b { color: #188038; }
+        .rd-fit.mid { background: var(--gz-blue-soft); } .rd-fit.mid b { color: var(--gz-blue); }
+        html[data-theme='dark'] .rd-fit.hi { background: rgba(129, 201, 149, .14); } html[data-theme='dark'] .rd-fit.hi b { color: #81C995; }
+        .rd-name { font-size: 16px; font-weight: 500; text-decoration: none; }
+        html[data-theme] .rd-name, html[data-theme] .rd-name:visited { color: var(--gz-ink); }
+        html[data-theme] .rd-name:hover { color: var(--gz-blue); text-decoration: underline; }
+        .rd-meta { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 6px; font-size: 14px; color: var(--gz-text); }
+        .rd-meta i { width: 14px; color: var(--gz-text-3); font-size: 12px; margin-right: 4px; }
+        .rd-co { font-weight: 500; color: var(--gz-ink); }
+        .rd-pay { font-weight: 500; color: #188038; }
+        html[data-theme='dark'] .rd-pay { color: #81C995; }
+        .rd-nopay { color: var(--gz-text-3); }
+        .rd-why { margin-top: 6px; font-size: 12.5px; color: var(--gz-text-3); font-family: var(--gz-mono); }
+        .rd-chip { display: inline-block; margin-left: 8px; padding: 1px 8px; border-radius: 999px; font-size: 11.5px; vertical-align: 2px; }
+        .rd-chip.new { background: #E6F4EA; color: #188038; font-weight: 500; }
+        .rd-chip.flag { background: #FCE8E6; color: #C5221F; }
+        .rd-chip.st { background: var(--gz-blue-soft); color: var(--gz-blue); }
+        .rd-acts { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+        .rd-acts button { height: 32px; padding: 0 12px; border: 1px solid var(--gz-line); border-radius: 999px; background: var(--gz-canvas);
+                   color: var(--gz-text); font: inherit; font-size: 12.5px; cursor: pointer; }
+        .rd-acts button:hover { background: var(--gz-surface-2); }
+        .rd-acts button.on { background: var(--gz-ink); border-color: var(--gz-ink); color: var(--gz-canvas); }
+        .rd-empty { padding: 56px 16px; text-align: center; color: var(--gz-text-3); border: 1px dashed var(--gz-line); border-radius: var(--gz-r-md, 20px); }
+        .rd-more { margin: 18px 0; text-align: center; color: var(--gz-text-3); font-size: 13.5px; }
+        .rd-note { margin-top: 26px; font-size: 13px; color: var(--gz-text-3); line-height: 1.6; }
+        @media (max-width: 760px) {
+            .rd { padding: 24px 14px 56px; }
+            .rd-job { grid-template-columns: 48px 1fr; }
+            .rd-acts { grid-column: 1 / -1; justify-content: flex-start; }
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/genz.css">
+    <link rel="stylesheet" href="/assets/css/shell.css?v=20261010d">
+    <style>/* IDE shell: the old fixed nav offset and footer-hiding rule no longer apply */
+    html[data-theme] body, body { padding-top: 0 !important; } .sh-status { display: flex !important; }
+    </style>
+</head>
+<body class="sh-drawer" data-file="~/jobs/radar/">
+    <a class="sh-skip" href="#main">Skip to content</a>
+
+    <header class="sh-topbar">
+        <button class="sh-chip sh-menu" type="button" aria-label="Toggle file tree" aria-expanded="false" id="menu-btn"><i class="fas fa-bars"></i></button>
+        <a href="/" class="sh-brand"><span class="sh-prompt">&gt;_</span> sudhakar</a>
+        <span class="sh-crumb" id="crumb"></span>
+        <nav class="sh-topnav" aria-label="Primary">
+            <a href="/">about</a>
+            <a href="/projects/">work</a>
+            <a href="/opensource/">open source</a>
+            <a href="/projects/#blog">writing</a>
+            <a href="/trending-gitrepos/">trending</a>
+            <a href="/contact/">contact</a>
+        </nav>
+        <button class="sh-chip" type="button" onclick="toggleTheme()" aria-label="Toggle colour theme" id="theme-btn">
+            <i class="fas fa-circle-half-stroke"></i><span class="lbl"><span data-t="dark">dark</span> <span data-t="light">light</span></span>
+        </button>
+    </header>
+    <aside class="sh-tree" id="tree" aria-label="Site sections">
+            <div class="sh-elsewhere">
+                <p class="sh-label">Elsewhere</p>
+                <a href="https://github.com/schundu007" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>github</a>
+                <a href="https://www.linkedin.com/in/schundu007/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i>linkedin</a>
+                <a href="https://schundu.medium.com/" target="_blank" rel="noopener noreferrer"><i class="fab fa-medium"></i>medium</a>
+                <a href="/assets/resume/Sudhakar_Chundu_Master_Resume.pdf" download><i class="far fa-file-lines"></i>résumé.pdf</a>
+            </div>
+            <div class="sh-otw">
+                <span class="sh-badge">Open to work</span>
+                <p>Staff-level IC roles in SRE, platform &amp; GPU infrastructure · US-based.</p>
+            </div>
+        </aside>
+
+    <main class="main-content" id="main">
+        <div class="rd">
+            <div class="rd-top">
+                <div>
+                    <h1 class="rd-title">Job radar</h1>
+                    <p class="rd-sub" id="rd-sub">Role-fit DevOps, SRE, platform and cloud infrastructure jobs at top companies, checked every 3 hours.</p>
+                </div>
+                <div class="rd-links">
+                    <a class="rd-pill" href="../"><i class="fas fa-arrow-left"></i> All jobs</a>
+                    <a class="rd-pill" href="https://github.com/schundu007/chundu/actions/workflows/jobradar.yml" target="_blank" rel="noopener"><i class="fas fa-rotate"></i> Run a check</a>
+                </div>
+            </div>
+
+            <div class="rd-stats" id="rd-stats"></div>
+
+            <div class="rd-filters">
+                <input type="search" id="q" placeholder="Search title, company or city (kubernetes, NVIDIA, Santa Clara)" aria-label="Search jobs">
+                <select id="company" aria-label="Company"><option value="">All companies</option></select>
+                <select id="minFit" aria-label="Minimum fit">
+                    <option value="45">Fit 45+</option><option value="55">Fit 55+</option><option value="60" selected>Fit 60+</option>
+                    <option value="70">Fit 70+</option><option value="80">Fit 80+</option>
+                </select>
+                <select id="minPay" aria-label="Minimum pay">
+                    <option value="0">Any pay</option><option value="150">Top of range $150K+</option><option value="200">Top of range $200K+</option>
+                    <option value="250">Top of range $250K+</option><option value="300">Top of range $300K+</option><option value="400">Top of range $400K+</option>
+                </select>
+                <select id="days" aria-label="Posted within">
+                    <option value="0">Any date</option><option value="1">Posted today</option><option value="3">Last 3 days</option>
+                    <option value="7">Last 7 days</option><option value="14" selected>Last 14 days</option><option value="30">Last 30 days</option>
+                </select>
+                <select id="sort" aria-label="Sort">
+                    <option value="mix">Mix companies (best of each first)</option><option value="fit">Best fit first</option><option value="new">Newest first</option><option value="pay">Highest pay first</option>
+                </select>
+            </div>
+            <div class="rd-filters">
+                <div class="rd-tabs" id="tabs" role="tablist">
+                    <button data-s="new" class="on">To review</button><button data-s="saved">Saved</button>
+                    <button data-s="applied">Applied</button><button data-s="hidden">Hidden</button><button data-s="all">All</button>
+                </div>
+                <label class="rd-check"><input type="checkbox" id="bay"> Bay Area or remote</label>
+                <label class="rd-check"><input type="checkbox" id="haspay"> Has pay listed</label>
+                <label class="rd-check"><input type="checkbox" id="nospon" checked> Hide "no visa sponsorship"</label>
+                <label class="rd-check"><input type="checkbox" id="top1"> Top AI and chip companies only</label>
+            </div>
+
+            <div class="rd-list" id="list"><div class="rd-empty">Loading jobs…</div></div>
+            <div class="rd-more" id="more"></div>
+            <p class="rd-note" id="rd-note"></p>
+        </div>
+    </main>
+
+    <footer class="sh-status" aria-label="Status bar">
+        <span class="sh-mode">NORMAL</span>
+        <span id="status-file"></span>
+        <span class="sh-mid">utf-8 · main</span>
+        <span class="sh-right">Milpitas, CA · © 2026 Sudhakar Chundu</span>
+    </footer>
+
+    <script>
+    (function () {
+        var $ = function (s) { return document.querySelector(s); };
+        var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+            return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+        var TOP = ["OpenAI","Anthropic","NVIDIA","AMD","Intel","Google","Apple","ASML","Qualcomm","xAI","CoreWeave","Crusoe",
+                   "Lambda","Perplexity","Cohere","Scale AI","Together AI","Tenstorrent","SambaNova","Lightmatter","Marvell",
+                   "KLA","Applied Materials","Micron","Broadcom","Cadence"];
+        var BAY = /san francisco|san jose|santa clara|sunnyvale|mountain view|palo alto|milpitas|fremont|cupertino|menlo park|redwood city|san mateo|foster city|bay area|oakland|berkeley|remote/i;
+        var KEY = "jobradar-status", SEEN = "jobradar-lastvisit";
+        var JOBS = [], META = {}, TAB = "new", SHOW = 50, ST = {}, LAST = 0;
+        try { ST = JSON.parse(localStorage.getItem(KEY) || "{}"); LAST = +localStorage.getItem(SEEN) || 0; } catch (e) {}
+        function save() { try { localStorage.setItem(KEY, JSON.stringify(ST)); } catch (e) {} }
+        function status(j) { return ST[j.uid] || "new"; }
+        function age(iso) { if (!iso) return 999; return Math.max(0, Math.floor((Date.now() - new Date(iso + "T12:00:00")) / 864e5)); }
+        function ago(iso) { var d = age(iso); return d === 999 ? "" : d === 0 ? "posted today" : d === 1 ? "posted yesterday" : "posted " + d + " days ago"; }
+        function payTop(p) {  // "$184K – $288K + equity" -> 288
+            var m = (p || "").match(/\$(\d+)K/g); if (!m) return 0;
+            return Math.max.apply(null, m.map(function (x) { return +x.replace(/\D/g, ""); }));
+        }
+        function when(ts) { return new Date(ts * 1000).toLocaleString([], { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }); }
+
+        function list() {
+            var q = $("#q").value.trim().toLowerCase(), co = $("#company").value, min = +$("#minFit").value,
+                pay = +$("#minPay").value, days = +$("#days").value;
+            var rows = JOBS.filter(function (j) {
+                var s = status(j);
+                if (TAB === "all" ? s === "hidden" : s !== TAB) return false;
+                if (j.score < min || (co && j.company !== co)) return false;
+                if (days && age(j.posted) > days) return false;
+                if (pay && payTop(j.pay) < pay) return false;
+                if ($("#haspay").checked && !j.pay) return false;
+                if ($("#bay").checked && !BAY.test(j.location || "")) return false;
+                if ($("#nospon").checked && (j.flags || []).some(function (f) { return /sponsorship|citizen/i.test(f); })) return false;
+                if ($("#top1").checked && TOP.indexOf(j.company) < 0) return false;
+                if (q && (j.title + " " + j.company + " " + j.location).toLowerCase().indexOf(q) < 0) return false;
+                return true;
+            });
+            var sorted = rows.sort({
+                fit: function (a, b) { return b.score - a.score || (b.posted || "").localeCompare(a.posted || ""); },
+                "new": function (a, b) { return (b.posted || "").localeCompare(a.posted || "") || b.score - a.score; },
+                pay: function (a, b) { return payTop(b.pay) - payTop(a.pay) || b.score - a.score; },
+                mix: function (a, b) { return b.score - a.score; }
+            }[$("#sort").value]);
+            if ($("#sort").value !== "mix") return sorted;
+            var seen = {}, out = [];  // round robin: every company's best job, then every company's second best...
+            sorted.forEach(function (j) { var n = seen[j.company] = (seen[j.company] || 0) + 1; j._r = n; });
+            return sorted.slice().sort(function (a, b) { return a._r - b._r || b.score - a.score; });
+        }
+
+        function stats() {
+            var min = +$("#minFit").value, live = JOBS.filter(function (j) { return j.score >= min && status(j) !== "hidden"; });
+            var n = function (f) { return live.filter(f).length; };
+            var items = [
+                [n(function (j) { return age(j.posted) <= 1; }), "posted in the last day", function () { $("#days").value = "1"; setTab("new"); }],
+                [n(function (j) { return age(j.posted) <= 7; }), "this week", function () { $("#days").value = "7"; setTab("new"); }],
+                [LAST ? n(function (j) { return j.first_seen > LAST; }) : 0, "new since your last visit", null],
+                [JOBS.filter(function (j) { return status(j) === "saved"; }).length, "saved", function () { setTab("saved"); }],
+                [JOBS.filter(function (j) { return status(j) === "applied"; }).length, "applied", function () { setTab("applied"); }]
+            ];
+            $("#rd-stats").innerHTML = items.map(function (s, i) {
+                return '<button class="rd-stat" data-i="' + i + '"><b>' + s[0] + "</b><span>" + s[1] + "</span></button>"; }).join("");
+            [].forEach.call(document.querySelectorAll(".rd-stat"), function (el) {
+                el.onclick = function () { var f = items[+el.dataset.i][2]; if (f) { f(); render(); } }; });
+        }
+
+        function render() {
+            stats();
+            var rows = list(), box = $("#list");
+            if (!rows.length) {
+                box.innerHTML = '<div class="rd-empty">No jobs match these filters. Try a lower fit score, any pay, or a longer date range.</div>';
+                $("#more").textContent = ""; return;
+            }
+            box.innerHTML = rows.slice(0, SHOW).map(function (j) {
+                var s = status(j), cls = j.score >= 75 ? "hi" : j.score >= 60 ? "mid" : "";
+                var isNew = LAST && j.first_seen > LAST;
+                var flags = (j.flags || []).map(function (f) { return '<span class="rd-chip flag">' + esc(f) + "</span>"; }).join("");
+                var b = function (v, l) { return '<button data-uid="' + esc(j.uid) + '" data-s="' + v + '" class="' + (s === v ? "on" : "") + '">' + l + "</button>"; };
+                return '<article class="rd-job' + (s === "hidden" ? " is-hidden" : "") + '">' +
+                    '<div class="rd-fit ' + cls + '" title="Role fit score out of 100"><b>' + j.score + "</b><small>fit</small></div>" +
+                    '<div><a class="rd-name" href="' + esc(j.url) + '" target="_blank" rel="noopener">' + esc(j.title) + "</a>" +
+                    (isNew ? '<span class="rd-chip new">New</span>' : "") + flags +
+                    (TAB === "all" && s !== "new" ? '<span class="rd-chip st">' + esc(s) + "</span>" : "") +
+                    '<div class="rd-meta"><span class="rd-co"><i class="fas fa-building"></i>' + esc(j.company) + "</span>" +
+                    '<span><i class="fas fa-location-dot"></i>' + esc((j.location || "Location not listed").slice(0, 120)) + "</span>" +
+                    (j.pay ? '<span class="rd-pay"><i class="fas fa-dollar-sign"></i>' + esc(j.pay) + "</span>"
+                           : '<span class="rd-nopay"><i class="fas fa-dollar-sign"></i>Pay not listed</span>') +
+                    "<span><i class=\"far fa-clock\"></i>" + ago(j.posted) + "</span></div>" +
+                    '<div class="rd-why">' + esc((j.reasons || []).join(" · ")) + "</div></div>" +
+                    '<div class="rd-acts">' + b("saved", "Save") + b("applied", "Applied") + b("hidden", "Hide") + "</div></article>";
+            }).join("");
+            $("#more").innerHTML = rows.length > SHOW
+                ? '<button class="rd-pill" id="more-btn">Show more (' + (rows.length - SHOW) + " left)</button>" : rows.length + " jobs";
+            if ($("#more-btn")) $("#more-btn").onclick = function () { SHOW += 50; render(); };
+            [].forEach.call(box.querySelectorAll(".rd-acts button"), function (btn) {
+                btn.onclick = function () {
+                    var u = btn.dataset.uid, v = btn.dataset.s;
+                    if ((ST[u] || "new") === v) delete ST[u]; else ST[u] = v;
+                    save(); render();
+                };
+            });
+        }
+
+        function setTab(t) {
+            TAB = t; SHOW = 50;
+            [].forEach.call(document.querySelectorAll("#tabs button"), function (b) { b.classList.toggle("on", b.dataset.s === t); });
+            render();
+        }
+
+        function companies() {
+            var c = {};
+            JOBS.forEach(function (j) { if (j.score >= +$("#minFit").value) c[j.company] = (c[j.company] || 0) + 1; });
+            var sel = $("#company"), cur = sel.value;
+            sel.innerHTML = '<option value="">All companies</option>' + Object.keys(c).sort().map(function (k) {
+                return '<option value="' + esc(k) + '">' + esc(k) + " (" + c[k] + ")</option>"; }).join("");
+            sel.value = cur;
+        }
+
+        fetch("data/jobs.json?t=" + Date.now()).then(function (r) { return r.json(); }).then(function (d) {
+            JOBS = d.jobs || []; META = d.meta || {};
+            $("#rd-sub").textContent = JOBS.length + " role-fit jobs from " + (META.companies || []).length +
+                " companies · updated " + when(META.updated) + " · checked every " + (META.every_hours || 3) + " hours";
+            $("#rd-note").innerHTML = "Fit is a score out of 100: job title match (up to 45), level (15), your skills in the job text (30) " +
+                "and location (10), minus points for no visa sponsorship, US citizens only or security clearance. " +
+                "Save, Applied and Hide are kept in this browser only." +
+                ((META.sites_failed || []).length ? " Sites that failed on the last check: " + esc(META.sites_failed.join(", ")) + "." : "");
+            companies(); render();
+            try { localStorage.setItem(SEEN, Math.floor(Date.now() / 1000)); } catch (e) {}
+        }).catch(function () { $("#list").innerHTML = '<div class="rd-empty">Could not load the job list. Refresh to try again.</div>'; });
+
+        ["#q", "#company", "#minFit", "#minPay", "#days", "#sort", "#bay", "#haspay", "#nospon", "#top1"].forEach(function (id) {
+            $(id).addEventListener(id === "#q" ? "input" : "change", function () { SHOW = 50; if (id === "#minFit") companies(); render(); });
+        });
+        [].forEach.call(document.querySelectorAll("#tabs button"), function (b) { b.onclick = function () { setTab(b.dataset.s); }; });
+    })();
+    </script>
+    <script src="/assets/js/shell.js?v=20261010d"></script>
+</body>
+</html>

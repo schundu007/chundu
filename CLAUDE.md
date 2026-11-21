@@ -77,6 +77,7 @@ The frontend is a static HTML/CSS/JS site served via GitHub Pages. No build step
 - `blog/*.html` - Standalone long-form engineering deep dives
 - `jobs/index.html` - Job listings page with `JobsAPI` client connecting to backend API (falls back to localStorage if API unavailable)
 - `jobs/applied/index.html` - Applied jobs tracker
+- `jobs/radar/index.html` - Job Radar: role-fit jobs with pay ranges from ~78 company careers sites. Static page that reads `jobs/radar/data/jobs.json` (generated — do not hand-edit); Save/Applied/Hide live in localStorage (`jobradar-status`)
 
 **Redirect stubs** (meta-refresh, kept for old inbound links — do not add content here):
 `about/` → `/#about`, `resume/` → `/#resume`, `profile/` → `/`,
@@ -92,6 +93,10 @@ added to the site must match it; update that file first if a fact changes.
   the Live Apps cards into `index.html` between the `<!-- DIRECTORY:START/END -->` markers.
   Pinned apps live in the `PINNED` array. Run:
   `GITHUB_TOKEN=$(gh auth token) node directory/scripts/build-directory.mjs`
+- `tools/jobradar/publish.py` → writes `jobs/radar/data/jobs.json` and emails new matches.
+  Run every 3 hours by `.github/workflows/jobradar.yml` (needs repo secret `JOBRADAR_GMAIL_APP_PASSWORD`
+  for email). Companies, roles, skills, weights and blocked companies live in `tools/jobradar/config.json`.
+  Local run: `python tools/jobradar/publish.py --no-email`
 - `trending-gitrepos/scripts/render.mjs` → renders `trending-gitrepos/index.html`.
   Contains hard-coded social links; update them there too.
 
@@ -196,7 +201,7 @@ Python CLI tool (`job_automation.py`) for automated job searching and AI-powered
 
 - **Frontend:** GitHub Pages deploys automatically from `main` branch. Custom domain via `CNAME` file (`www.sudhakarchundu.org`).
 - **API backend:** Runs locally or on a server (port 8001). `database.py` handles Railway-style `postgres://` URLs.
-- No CI/CD pipeline, GitHub Actions, Dockerfile, or test suite exists.
+- GitHub Actions: `directory.yml` and `trending-gitrepos.yml` (weekly), `jobradar.yml` (every 3 hours). No Dockerfile or test suite.
 
 ## Key Conventions
 
