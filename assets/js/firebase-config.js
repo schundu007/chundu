@@ -2,14 +2,15 @@
 // Replace these values with your Firebase project config from:
 // Firebase Console > Project Settings > Your Apps > Web App > Config
 
+// Project chundu-portfolio-auth (2026-11-22). Replaced authforportpolio, whose
+// Auth stayed stuck in PROJECT_SOFT_DELETED after the project was restored.
 const firebaseConfig = {
-    apiKey: "AIzaSyDnKjY9l5L8ph0Fd_Ec0IT1lh6wljMKo0Q",
-    authDomain: "authforportpolio.firebaseapp.com",
-    projectId: "authforportpolio",
-    storageBucket: "authforportpolio.firebasestorage.app",
-    messagingSenderId: "110343952224",
-    appId: "1:110343952224:web:151e4ae223c3dacfb67005",
-    measurementId: "G-KKJG33GF2X"
+    apiKey: "AIzaSyDo3YehhFpjr7GzE_6ldw9VOKomowQlrUY",
+    authDomain: "chundu-portfolio-auth.firebaseapp.com",
+    projectId: "chundu-portfolio-auth",
+    storageBucket: "chundu-portfolio-auth.firebasestorage.app",
+    messagingSenderId: "244406289620",
+    appId: "1:244406289620:web:dd1dd34d8e6ebc76ba2741"
 };
 
 // Check if Firebase is configured with real credentials
