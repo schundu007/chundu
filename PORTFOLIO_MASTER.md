@@ -179,7 +179,7 @@ frame for any new portfolio section:
 
 ## 9. Positioning
 
-- Target: Staff / Principal IC — DevOps, Platform Engineering, SRE, GPU-AI infrastructure
+- Target: Staff / Senior Staff / Principal IC — DevOps, Platform Engineering, SRE, GPU-AI infrastructure
 - Bay Area (Milpitas) · open to Austin/Plano · full-time or contract
 - Differentiators, in order: 65-GPU bare-metal platform ownership · 
   $8M cost takeout · agentic infra tooling (cloudforge) · 18 years from Linux admin to GPU platforms

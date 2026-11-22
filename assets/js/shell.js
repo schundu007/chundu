@@ -107,9 +107,15 @@
     function themeChip() {
         const btn = document.getElementById('theme-btn');
         if (!btn) return;
+        btn.classList.add('sh-theme');
+        const icon = btn.querySelector('i');
         function paint() {
             const t = document.documentElement.getAttribute('data-theme');
-            btn.querySelectorAll('[data-t]').forEach(s => { s.className = s.dataset.t === t ? 'on' : 'off'; });
+            // Icon shows the theme you switch TO: moon in light mode, sun in dark mode.
+            if (icon) icon.className = t === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+            const next = t === 'light' ? 'dark' : 'light';
+            btn.setAttribute('aria-label', 'Switch to ' + next + ' theme');
+            btn.title = 'Switch to ' + next + ' theme';
         }
         new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
         paint();

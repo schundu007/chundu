@@ -219,3 +219,7 @@ html[data-theme] .sh-shell main .sub-label,
 html[data-theme] .sh-shell main .contact-label,
 html[data-theme] .sh-shell main .github-stat-label,
 html[data-theme] .sh-shell main .entry-flag { font-size: var(--t-label); letter-spacing: .08em; }
+
+/* Theme toggle: a single round icon button (sun/moon set by shell.js) */
+#theme-btn.sh-chip { width: 32px; padding: 0; justify-content: center; font-size: 14px; }
+#theme-btn .lbl { display: none; }
