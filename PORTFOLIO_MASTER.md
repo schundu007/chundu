@@ -153,6 +153,11 @@ the Open Source page and the experience ledger.
 
 ## 7. Naming rules
 
+- **Show industries, not client names** (decided 2026-11-22). The homepage strip lists domains only:
+  Healthcare (Humana, Harvard Pilgrim) · Insurance (CNA) · BFSI (PwC) · Energy / Oil & Gas
+  (ExxonMobil, Chevron, BP, Shell) · Telecom (Verizon, **Ericsson**) · Semiconductors (ASML) ·
+  Manufacturing (Owens Corning) · Supply-chain IoT (Trackonomy). Ericsson was missing from the
+  client list until 2026-11-22; employer for that engagement not yet recorded.
 - **Never publish a commit count for the OSDU repos.** The 2,317 figure was the
   repos' combined total, not a personal attribution — removed 2026-09-18. Refer to
   the work as upstream contribution and let the public repos speak.
