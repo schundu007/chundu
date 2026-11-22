@@ -3147,7 +3147,7 @@ result = df.groupby("pickup_zone").agg({"fare_amount": "sum"})
 
   <h3 class="sub">Why This Case Study Matters in Practice</h3>
   <ul class="blt">
-    <li>The ADLS Gen2 layer feeding these benchmarked pipelines is the same storage tier I build and operate on the AT&T platform — this case study is the GPU compute side of an architecture whose storage side I work in daily.</li>
+    <li>The ADLS Gen2 layer feeding these benchmarked pipelines is the same storage tier I build and operate on the Humana platform — this case study is the GPU compute side of an architecture whose storage side I work in daily.</li>
     <li>AT&T's "simpler" conclusion — one cluster for everything — matches what I saw running multi-tier infrastructure at Trackonomy. Separate CPU and GPU cluster policies create real operational overhead for little gain.</li>
     <li>The Parquet/Snappy vs Zstandard finding matters to build engineering: the GPU Parquet reader in cuDF has to be built and tested against both, and knowing which compression a major enterprise actually benefits from is the kind of domain knowledge that should shape those build matrices.</li>
   </ul>
@@ -4203,7 +4203,7 @@ az identity federated-credential create \
     subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
     # No client-secret needed — workload identity federation</pre>
 
-  <div class="note note-g"><strong>Your AT&T ADLS Gen2 experience</strong> connects here directly. Azure Data Lake Storage Gen2 uses Azure RBAC + ACL for access control — the same RBAC model you configured for Databricks Unity Catalog and Synapse Analytics at AT&T applies to configuring storage access for RAPIDS Azure CI pipelines.</div>
+  <div class="note note-g"><strong>Your Humana ADLS Gen2 experience</strong> connects here directly. Azure Data Lake Storage Gen2 uses Azure RBAC + ACL for access control — the same RBAC model you configured for Databricks Unity Catalog and Synapse Analytics at Humana applies to configuring storage access for RAPIDS Azure CI pipelines.</div>
 
   <div class="exp-block">
   <h4 class="exp-title">RAPIDS CI costs are spiking on AWS this month — GPU runner costs are 3x Normal — Investigation and Root Cause</h4>
@@ -4869,7 +4869,7 @@ rapids_cpm_find(rmm 26.02.00
     <tbody>
       <tr>
         <td class="key">ADLS Gen2 integration</td>
-        <td>Configured Azure Data Lake Storage Gen2 (hierarchical namespace) as the dataset storage backend for OSDU. Set up RBAC ACLs for per-tenant data isolation. This experience directly led to the AT&T ADLS Gen2 Administrator contract role.</td>
+        <td>Configured Azure Data Lake Storage Gen2 (hierarchical namespace) as the dataset storage backend for OSDU. Set up RBAC ACLs for per-tenant data isolation. This experience directly led to the Humana HPC Platform &amp; DevOps Architect contract role.</td>
       </tr>
       <tr>
         <td class="key">Workload Identity migration</td>
@@ -5007,7 +5007,7 @@ rapids_cpm_find(rmm 26.02.00
     <li><strong class="hl">Kubernetes-native security (IRSA / Workload Identity)</strong> — All OSDU cloud credentials are managed via OIDC federation — no long-lived keys. RAPIDS CI uses the same pattern (OIDC role-to-assume). Implementing this from scratch across three clouds provides deep understanding of the security model.</li>
     <li><strong class="hl">GitOps with Helm + Flux/ArgoCD</strong> — OSDU microservice deployments are GitOps-driven (Flux on Azure, ArgoCD on AWS/GCP). RAPIDS production GPU clusters use ArgoCD. The operational patterns — image tag updates, sync policies, health checks, rollback triggers — are identical.</li>
     <li><strong class="hl">Open source community operations</strong> — Contributing to The Open Group's OSDU Forum (Shell, BP, Chevron as industry partners, AWS/Microsoft/Google as cloud partners) requires the same open source practices as the rapidsai GitHub org: PR workflows, DCO compliance, cross-organisation code review, release cadences.</li>
-    <li><strong class="hl">ADLS Gen2 experience (AT&T link)</strong> — Azure OSDU work on ADLS Gen2 hierarchical namespace storage directly led to the AT&T ADLS Gen2 Administrator role, which in turn connects to AT&T's GPU-accelerated Spark RAPIDS workload (3 trillion rows/month) documented in Part B of this guide.</li>
+    <li><strong class="hl">ADLS Gen2 experience (Humana link)</strong> — Azure OSDU work on ADLS Gen2 hierarchical namespace storage directly led to the Humana HPC Platform &amp; DevOps Architect role, whose storage tier is the same pattern behind AT&T's published GPU-accelerated Spark RAPIDS workload (3 trillion rows/month) documented in Part B of this guide.</li>
   </ul>
 
   <div class="exp-block">

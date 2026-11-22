@@ -36,7 +36,7 @@ may re-frame titles per application; the site uses the *Canonical* column only.
 
 | Period | Employer | Canonical title | Location |
 | --- | --- | --- | --- |
-| Feb 2026 – present | **CloudScouts** — contracted to IBM; client **AT&T**, on IBM watsonx | **Platform & DevOps Architect** | Plano, TX (remote) |
+| Feb 2026 – present | **CloudScouts** — contracted to **Humana** | **HPC Platform & DevOps Architect** | Kentucky (remote) |
 | Oct 2023 – Jan 2026 | Trackonomy Systems Inc | **Principal Cloud Architect** | San Jose, CA |
 | Feb 2020 – Oct 2023 | Wipro Technologies (OSDU — Azure as FTE, then AWS as contractor) | **Cloud & SRE Architect, OSDU Data Platform** | Hyderabad, India |
 | Aug 2018 – Feb 2020 | NTT Data Services | Cloud & DevOps Architect (Healthcare) | Hyderabad, India |
@@ -156,8 +156,9 @@ the Open Source page and the experience ledger.
 - **Never publish a commit count for the OSDU repos.** The 2,317 figure was the
   repos' combined total, not a personal attribution — removed 2026-09-18. Refer to
   the work as upstream contribution and let the public repos speak.
-- **Never write "AT&T Chief Data Office"** — the client is **AT&T**, full stop.
-  Always name the chain: *CloudScouts &rarr; contracted to IBM &rarr; client AT&T*.
+- **The current client is Humana** (changed from AT&T 2026-11-21) — never name AT&T
+  as a client. Always name the chain: *CloudScouts &rarr; contracted to Humana* (IBM removed from the chain 2026-11-22).
+  (AT&T may still appear in the RAPIDS blog only as NVIDIA's published case study.)
 - **Site positioning headline: "Platform & DevOps Architect"** (decided 2026-09-18),
   used in the hero, `<title>`, og tags, contact page, blog bylines and JSON-LD.
   "Staff DevOps Engineer" is retained only as a search keyword in `<meta keywords>`.
