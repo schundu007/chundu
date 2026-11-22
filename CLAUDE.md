@@ -202,6 +202,11 @@ Python CLI tool (`job_automation.py`) for automated job searching and AI-powered
 - **Frontend:** GitHub Pages deploys automatically from `main` branch. Custom domain via `CNAME` file (`www.sudhakarchundu.org`).
 - **API backend:** Runs locally or on a server (port 8001). `database.py` handles Railway-style `postgres://` URLs.
 - GitHub Actions: `directory.yml` and `trending-gitrepos.yml` (weekly), `jobradar.yml` (every 3 hours). No Dockerfile or test suite.
+- GitHub's own cron for `jobradar.yml` fires unreliably (~every 10 h), so Google Cloud Scheduler job
+  `jobradar-every-3h` (project `chundu-portfolio-auth`, us-central1, `17 */3 * * *` UTC) calls the
+  workflow_dispatch API. It authenticates with a fine-grained GitHub PAT (this repo, Actions: write) stored in
+  Secret Manager as `jobradar-gh-token` and copied into the job's Authorization header — when the PAT expires,
+  add a new secret version and update the job header (`gcloud scheduler jobs update http ... --update-headers`).
 
 ## Key Conventions
 
