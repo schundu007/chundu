@@ -153,7 +153,8 @@ the Open Source page and the experience ledger.
 
 ## 7. Naming rules
 
-- **Show industries, not client names** (decided 2026-11-22). The homepage strip lists domains only:
+- **Homepage "Industries" strip shows domains, not client names** (decided 2026-11-22; applies to
+  that strip only — client names stay everywhere else). It lists:
   Healthcare (Humana, Harvard Pilgrim) · Insurance (CNA) · BFSI (PwC) · Energy / Oil & Gas
   (ExxonMobil, Chevron, BP, Shell) · Telecom (Verizon, **Ericsson**) · Semiconductors (ASML) ·
   Manufacturing (Owens Corning) · Supply-chain IoT (Trackonomy). Ericsson was missing from the
