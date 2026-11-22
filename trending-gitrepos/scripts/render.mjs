@@ -257,7 +257,7 @@ ${sections}
 ${FOOTER}
 
     <!-- Firebase Config and Auth (shared nav Sign In) -->
-    <script src="../assets/js/firebase-config.js?v=20261122a"></script>
+    <script src="../assets/js/firebase-config.js?v=20261122b"></script>
     <script src="../assets/js/auth.js"></script>
 
     <script src="/assets/js/shell.js?v=20261121a"></script>
